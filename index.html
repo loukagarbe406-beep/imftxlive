@@ -15,21 +15,25 @@
       --cardH: 520px;
       --r: 26px;
 
-      --bg0:#000;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.08);
+      --bg: #000;
       --stroke: rgba(255,255,255,.14);
       --stroke2: rgba(255,255,255,.18);
-      --txtDim: rgba(255,255,255,.72);
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.10);
+      --dim: rgba(255,255,255,.72);
       --shadow: 0 28px 110px rgba(0,0,0,.78);
 
-      --accent: #ffffff;         /* look premium: blanc */
-      --accentSoft: rgba(255,255,255,.14);
-      --ok: #22c55e;
-      --warn: #fb923c;
+      --ok:#22c55e;
+      --warn:#fb923c;
+
+      /* Gate gradient (inspiré de ton image mais en dark theme) */
+      --g1:#0b1220;
+      --g2:#0a2d4d;
+      --g3:#2a1b55;
     }
+
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:var(--bg0);color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
+    html,body{height:100%;margin:0;background:var(--bg);color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
     a{color:inherit;text-decoration:none}
     button{font-family:inherit}
 
@@ -296,112 +300,132 @@
     footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
     /* =========================
-       TELEGRAM GATE (PRO NOIR)
+       TELEGRAM RECTANGLE (comme ton exemple, mais dark)
        ========================= */
     .gate{
       position:fixed; inset:0; z-index:9999;
       display:none; place-items:center;
-      background:rgba(0,0,0,.76);
+      background:rgba(0,0,0,.78);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
+      padding:18px;
     }
     .gate.show{display:grid;}
-    .gateCard{
-      width:min(720px, calc(100vw - 28px));
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.16);
-      background:
-        radial-gradient(800px 220px at 10% 0%, rgba(255,255,255,.09), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      box-shadow: 0 40px 160px rgba(0,0,0,.85);
-      overflow:hidden;
-      position:relative;
-    }
-    .gateGlow{
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(520px 160px at 20% 0%, rgba(255,255,255,.12), transparent 55%),
-        radial-gradient(420px 160px at 90% 20%, rgba(255,255,255,.08), transparent 58%);
-      pointer-events:none;
-      opacity:.9;
-    }
-    .gateInner{
-      position:relative;
-      padding:18px 18px 16px;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-    }
-    .gateTop{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-    }
-    .gateBadge{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:8px 12px;border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      font-weight:900;font-size:12px;letter-spacing:.2px;
-    }
-    .gateBadge i{opacity:.9}
-    .gateClose{
-      width:40px;height:40px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(0,0,0,.25);
-      color:#fff;
-      cursor:pointer;
-      display:grid;place-items:center;
-      opacity:.8;
-    }
-    .gateClose:hover{opacity:1}
 
-    .gateMain{
-      display:flex;gap:14px;align-items:center;
-      padding:14px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.26);
+    .gateRect{
+      width:min(920px, 100%);
+      border-radius:28px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow: 0 50px 170px rgba(0,0,0,.86);
+      position:relative;
+      background:
+        radial-gradient(1200px 420px at 20% 10%, rgba(255,255,255,.10), transparent 60%),
+        linear-gradient(135deg, var(--g1) 0%, var(--g2) 45%, var(--g3) 100%);
+    }
+    .gateRect::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(700px 240px at 85% 70%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.20));
+      pointer-events:none;
+    }
+
+    .gateInner{
+      position:relative; z-index:2;
+      padding:26px 26px 24px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:22px;
+      align-items:center;
+    }
+
+    .gateLeft{
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
     }
     .gateAvatar{
-      width:64px;height:64px;border-radius:18px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
+      width:78px;height:78px;border-radius:22px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.25);
       overflow:hidden;
       flex:0 0 auto;
-      box-shadow:0 14px 40px rgba(0,0,0,.55);
-      position:relative;
-    }
-    .gateAvatar::after{
-      content:"";position:absolute;inset:0;
-      background:linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.35));
-      pointer-events:none;
+      box-shadow:0 18px 60px rgba(0,0,0,.55);
     }
     .gateAvatar img{width:100%;height:100%;object-fit:cover;display:block}
-    .gateText{min-width:0}
-    .gateTitle{font-weight:900;font-size:20px;line-height:1.1;margin:0}
-    .gateSub{margin-top:6px;color:rgba(255,255,255,.74);font-size:13px;line-height:1.35}
 
-    .gateActions{
-      display:flex;flex-wrap:wrap;gap:10px;
-      align-items:center;
+    .gateText{min-width:0}
+    .gateH1{
+      margin:0;
+      font-size:30px;
+      font-weight:1000;
+      letter-spacing:.2px;
+      line-height:1.1;
+      text-transform:uppercase;
+    }
+    .gateH1 .warn{opacity:.95}
+    .gateH2{
+      margin:14px 0 0;
+      font-size:22px;
+      font-weight:900;
+      line-height:1.25;
+    }
+    .gateH2 .emoji{margin-right:10px}
+    .gateDesc{
+      margin-top:10px;
+      font-size:13px;
+      color:rgba(255,255,255,.78);
+      line-height:1.45;
+    }
+
+    .gateRight{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:12px;
+    }
+    .gateBtns{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
     .gateBtn{
       display:inline-flex;align-items:center;gap:10px;
-      padding:11px 14px;border-radius:999px;
+      padding:12px 16px;border-radius:14px;
       border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.08);
+      background:rgba(0,0,0,.25);
       color:#fff;
       font-weight:900;
       cursor:pointer;
       transition:.15s;
+      white-space:nowrap;
     }
-    .gateBtn:hover{background:rgba(255,255,255,.12)}
+    .gateBtn:hover{background:rgba(0,0,0,.35)}
     .gateBtn.primary{
       background:#fff;color:#000;border-color:#fff;
     }
     .gateBtn.primary:hover{opacity:.92}
-    .gateHint{
-      font-size:12px;color:rgba(255,255,255,.62);
+
+    .gateMini{
+      font-size:12px;
+      color:rgba(255,255,255,.70);
+      text-align:right;
+      max-width:360px;
     }
+    .gateClose{
+      position:absolute; top:16px; right:16px; z-index:3;
+      width:42px;height:42px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.28);
+      color:#fff;
+      cursor:pointer;
+      display:grid;place-items:center;
+      opacity:.85;
+    }
+    .gateClose:hover{opacity:1}
 
     @media (min-width: 1400px){
       :root{ --cardW: 1100px; --cardH: 560px; }
@@ -426,6 +450,14 @@
       .eventMid{justify-content:flex-start}
       .eventRight{align-items:flex-start}
       .midTeam b{max-width:160px}
+
+      .gateInner{grid-template-columns:1fr;gap:16px}
+      .gateRight{align-items:flex-start}
+      .gateBtns{justify-content:flex-start}
+      .gateMini{text-align:left;max-width:none}
+      .gateH1{font-size:26px}
+      .gateH2{font-size:20px}
+      .gateAvatar{width:68px;height:68px;border-radius:18px}
     }
   </style>
 </head>
@@ -445,43 +477,52 @@
     </div>
   </header>
 
-  <!-- GATE TELEGRAM PRO -->
+  <!-- GATE RECTANGLE (comme ton exemple, texte bien mis) -->
   <div id="gate" class="gate" aria-hidden="true">
-    <div class="gateCard" role="dialog" aria-modal="true" aria-label="Accès">
-      <div class="gateGlow"></div>
+    <div class="gateRect" role="dialog" aria-modal="true" aria-label="Accès sécurisé">
+      <button class="gateClose" id="gateClose" type="button" aria-label="Fermer">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
       <div class="gateInner">
-        <div class="gateTop">
-          <div class="gateBadge">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            ACCÈS SÉCURISÉ
-          </div>
-          <button class="gateClose" id="gateClose" type="button" aria-label="Fermer">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-
-        <div class="gateMain">
+        <div class="gateLeft">
           <div class="gateAvatar">
+            <!-- Mets une vraie image accessible : ex "pdp.png" à côté de l'index -->
             <img id="gateAvatarImg" alt="IMFTX+">
           </div>
+
           <div class="gateText">
-            <p class="gateTitle">Rejoins notre canal Telegram</p>
-            <div class="gateSub">
-              Le site peut changer à tout moment. Rejoins le canal secours pour rester informé.<br>
-              <span style="opacity:.9">Ensuite tu reviens ici et tu cliques sur “Continuer”.</span>
+            <h2 class="gateH1">
+              <span class="warn">⚠️</span>
+              LE SITE PEUT SAUTER À TOUT MOMENT
+              <span class="warn">⚠️</span>
+            </h2>
+
+            <div class="gateH2">
+              <span class="emoji">📣</span>
+              Rejoins vite notre canal secours<br>
+              pour être toujours informé !!
+            </div>
+
+            <div class="gateDesc">
+              Pour accéder au site, clique sur “Rejoignez ici !”. Ensuite reviens sur ton navigateur et clique sur “Continuer”.
             </div>
           </div>
         </div>
 
-        <div class="gateActions">
-          <a class="gateBtn primary" id="gateJoin" href="#" target="_blank" rel="noopener">
-            <i class="fa-brands fa-telegram"></i> Rejoindre maintenant
-          </a>
-          <button class="gateBtn" id="gateContinue" type="button">
-            <i class="fa-solid fa-lock-open"></i> Continuer
-          </button>
-          <span class="gateHint">Astuce : si Telegram s’ouvre, reviens sur ton navigateur.</span>
+        <div class="gateRight">
+          <div class="gateBtns">
+            <a class="gateBtn primary" id="gateJoin" href="#" target="_blank" rel="noopener">
+              Rejoignez ici ! <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <button class="gateBtn" id="gateContinue" type="button">
+              Continuer
+            </button>
+          </div>
+          <div class="gateMini">
+            Astuce : si Telegram s’ouvre, reviens sur le navigateur.<br>
+            (Le “join” réel ne peut pas être vérifié sans backend, donc on valide le clic.)
+          </div>
         </div>
       </div>
     </div>
@@ -532,22 +573,16 @@
     const TELEGRAM_INVITE_URL = "https://t.me/+llOGaNG7HeUzNmE0";
     const TG_STORAGE_KEY = "imftx_tg_ok_v1";
 
-    // Pdp canal (image que tu as envoyée) : intégrée en base64 pour que tout soit dans un seul index.
-    // Si tu préfères un fichier, remplace par: const CHANNEL_AVATAR = "pdp.png";
-    const CHANNEL_AVATAR = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAKACAYAAACm..." +
-      "AA==";
-    // ⚠️ IMPORTANT :
-    // Le base64 complet est très long. Pour éviter de flood ici, je l’ai raccourci.
-    // -> Fais comme ça à la place (recommandé) :
-    // 1) mets ta photo dans le même dossier que index.html
-    // 2) renomme-la: pdp.png
-    // 3) remplace la ligne CHANNEL_AVATAR par: const CHANNEL_AVATAR = "pdp.png";
+    // IMPORTANT :
+    // Mets ta photo de canal dans le même dossier que index.html et renomme-la "pdp.png"
+    // (sinon le navigateur ne peut pas afficher la photo)
+    const CHANNEL_AVATAR = "pdp.png";
 
-    // Bannière par défaut (tu peux changer)
+    // Bannière par défaut
     const DEFAULT_BANNER = "https://empire-sport.space/upload/cards/multiplex_28.png";
 
     /* =========================
-       1) TELEGRAM GATE (PRO)
+       1) TELEGRAM GATE
        ========================= */
     const gate = document.getElementById("gate");
     const gateJoin = document.getElementById("gateJoin");
@@ -562,6 +597,7 @@
 
     function isAllowed(){ return localStorage.getItem(TG_STORAGE_KEY) === "1"; }
     function allow(){ localStorage.setItem(TG_STORAGE_KEY, "1"); }
+
     function showGate(){
       gate.classList.add("show");
       gate.setAttribute("aria-hidden","false");
@@ -573,12 +609,11 @@
       document.body.style.overflow = "";
     }
 
-    // ouvrir le gate depuis la topbar
     [openGateTop, openGateIcon].forEach(el=>{
       el.addEventListener("click",(e)=>{ e.preventDefault(); showGate(); });
     });
 
-    // marque l’accès dès le clic "rejoindre" (front-only)
+    // Valide l'accès dès le clic "rejoindre" (front-only)
     gateJoin.addEventListener("click", () => { allow(); });
 
     gateContinue.addEventListener("click", () => {
@@ -586,26 +621,17 @@
       hideGate();
     });
 
-    // bouton X : on le laisse, mais si pas autorisé => on ré-ouvre direct au prochain clic
     gateClose.addEventListener("click", () => {
       if(isAllowed()) hideGate();
       else showGate();
     });
 
-    // clique dehors = rien (propre)
-    gate.addEventListener("click", (e) => {
-      if(e.target === gate){
-        if(isAllowed()) hideGate();
-        else showGate();
-      }
-    });
-
-    // bloque toute interaction tant que pas autorisé
+    // Empêche de cliquer sur le site tant que pas autorisé
     document.addEventListener("click", (e) => {
       if(isAllowed()) return;
 
-      const insideGateCard = e.target.closest(".gateCard");
-      if(gate.classList.contains("show") && insideGateCard) return;
+      const insideRect = e.target.closest(".gateRect");
+      if(gate.classList.contains("show") && insideRect) return;
 
       e.preventDefault();
       e.stopPropagation();
@@ -635,6 +661,9 @@
       }
     ];
 
+    /* =========================
+       3) STATUS AUTO
+       ========================= */
     const MATCH_DURATION_MIN = 135;
     function timeToMinutes(hhmm){
       const [h,m] = hhmm.split(":").map(Number);
@@ -651,6 +680,9 @@
     }
     todayMatches.forEach(m => m.status = computeStatus(m.time));
 
+    /* =========================
+       4) À LA UNE (slider)
+       ========================= */
     const matches = todayMatches.map(m => ({
       id: m.id,
       status: m.status,
@@ -677,7 +709,7 @@
       }));
 
     /* =========================
-       3) HERO + SLIDER
+       5) HERO + SLIDER RENDER
        ========================= */
     const bg = document.getElementById("bg");
     const heroTitle = document.getElementById("heroTitle");
@@ -717,7 +749,7 @@
       `;
     }
 
-    // Si tu veux une page lecteur, remplace "#" par `${m.id}.html`
+    // Si tu crées des pages, remplace "#" par `${m.id}.html`
     function cardHTML(m){
       const url = "#";
       return `
@@ -821,7 +853,7 @@
     window.addEventListener("resize", update);
 
     /* =========================
-       4) EVENTS LIST
+       6) EVENTS LIST
        ========================= */
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
