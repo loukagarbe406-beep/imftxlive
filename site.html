@@ -1,0 +1,123 @@
+
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>IMFTX+ — Stream</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:#000;color:#fff;font-family:'Outfit',sans-serif}
+  .wrap{min-height:100%;display:flex;flex-direction:column}
+  .top{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08)
+  }
+  .brand{font-weight:900;letter-spacing:.3px}
+  .btns{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.08);
+    color:#fff;padding:8px 12px;border-radius:12px;
+    font-weight:900;cursor:pointer
+  }
+  .btn.active{background:#111;border-color:#ef4444}
+  .stage{flex:1;display:flex;align-items:stretch}
+  .box{width:100%;position:relative;background:#000}
+  .cover{
+    position:absolute;inset:0;display:grid;place-items:center;
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.88));
+  }
+  .play{
+    border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.10);
+    color:#fff;padding:14px 18px;border-radius:999px;
+    font-weight:900;cursor:pointer
+  }
+  iframe{width:100%;height:100%;border:0;display:block;background:#000}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">IMFTX+</div>
+    <div class="btns" id="btns">
+      <button class="btn active" data-p="1">Player 1</button>
+      <button class="btn" data-p="2">Player 2</button>
+      <button class="btn" data-p="3">Player 3</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="box" id="box">
+      <div class="cover" id="cover">
+        <button class="play" id="playBtn">▶ Lancer le stream</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Tes players
+  const players = {
+    1: "https://bolaloca.my/player/4/20",
+    2: "https://bolaloca.my/player/2/20",
+    3: "https://bolaloca.my/player/3/20"
+  };
+
+  let current = 1;
+  let loaded = false;
+
+  const box = document.getElementById("box");
+  const cover = document.getElementById("cover");
+  const playBtn = document.getElementById("playBtn");
+  const btns = Array.from(document.querySelectorAll(".btn"));
+
+  function setActive(n){
+    btns.forEach(b => b.classList.toggle("active", Number(b.dataset.p)===n));
+  }
+
+  function makeIframe(url){
+    // MODE A: le moins bloquant sur mobile (pas de sandbox)
+    // Si tu veux remettre sandbox, dis-moi et je te fais un mode B.
+    return `
+      <iframe
+        id="player"
+        src="${url}"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        referrerpolicy="no-referrer"
+        loading="eager"
+      ></iframe>
+    `;
+  }
+
+  function load(n){
+    current = n;
+    setActive(n);
+
+    // On charge seulement après clic (mobile friendly)
+    box.innerHTML = makeIframe(players[n]);
+    loaded = true;
+  }
+
+  playBtn.addEventListener("click", () => load(current));
+
+  btns.forEach(b => {
+    b.addEventListener("click", () => {
+      const n = Number(b.dataset.p);
+      current = n;
+      setActive(n);
+      if(loaded){
+        const iframe = document.getElementById("player");
+        if(iframe) iframe.src = players[n];
+      }
+    });
+  });
+</script>
+</body>
+</html>
