@@ -1,83 +1,800 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Accès IMFTX+</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IMFTX+</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <style>
+    :root{
+      --max: 1400px;
+      --gap: 22px;
+      --cardW: 980px;
+      --cardH: 520px;
+      --r: 26px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:#000;color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
+    a{color:inherit;text-decoration:none}
+    header{position:fixed;top:0;left:0;right:0;z-index:50}
+    .topbar{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .brand{font-weight:900;letter-spacing:.3px;font-size:20px;opacity:.95}
+    .icons{display:flex;gap:14px;font-size:18px;align-items:center}
+    .icons a{opacity:.75}
+    .icons a:hover{opacity:1}
+    .ctaTop{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:10px 14px;border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.16);
+      font-weight:900;font-size:13px;
+    }
+    .ctaTop:hover{background:rgba(255,255,255,.16)}
+    .hero{
+      position:relative;
+      padding-top:74px;
+      padding-bottom:10px;
+      overflow:hidden;
+    }
+    .bg{
+      position:absolute;inset:0;
+      background-size:cover;background-position:center;
+      transform:scale(1.10);
+      filter: blur(16px) saturate(1.15) brightness(.62);
+      opacity:.96;
+    }
+    .hero::after{
+      content:"";position:absolute;inset:0;
+      background:
+        radial-gradient(1200px 700px at 50% 30%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.85) 70%, rgba(0,0,0,.98) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.92), rgba(0,0,0,.14), rgba(0,0,0,.92));
+      pointer-events:none;
+    }
+    .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 18px}
+    .centerHeader{text-align:center;padding:10px 0 10px}
+    .centerHeader h1{
+      margin:0;
+      font-size:36px;
+      font-weight:900;
+      line-height:1.05;
+      text-shadow:0 18px 40px rgba(0,0,0,.65);
+    }
+    .centerHeader .l1{margin-top:10px;opacity:.80;font-weight:700}
+    .centerHeader .l2{margin-top:6px;opacity:.65;font-style:italic}
 
-<style>
-body{
-  margin:0;
-  background:#000;
-  color:#fff;
-  font-family:system-ui;
-  display:grid;
-  place-items:center;
-  min-height:100vh;
-  padding:20px;
-}
-.box{
-  max-width:480px;
-  width:100%;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:18px;
-  padding:20px;
-  text-align:center;
-}
-h1{margin:0 0 10px}
-p{opacity:.7}
-.btn{
-  margin-top:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:14px;
-  border-radius:999px;
-  background:#229ED9;
-  color:#fff;
-  font-weight:900;
-  text-decoration:none;
-}
-.btn:hover{opacity:.9}
-.small{
-  margin-top:12px;
-  font-size:13px;
-  opacity:.6;
-}
-</style>
+    .sliderArea{position:relative;padding-top:6px;padding-bottom:2px}
+    .viewport{overflow:hidden}
+    .track{
+      display:flex;
+      gap:var(--gap);
+      transition:transform .55s ease;
+      will-change:transform;
+    }
+    .card{
+      flex:0 0 var(--cardW);
+      height:var(--cardH);
+      border-radius:var(--r);
+      overflow:hidden;
+      position:relative;
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 28px 100px rgba(0,0,0,.78);
+      background:rgba(255,255,255,.06);
+    }
+    .poster{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.01)}
+    .card::after{
+      content:"";position:absolute;inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.55) 70%, rgba(0,0,0,.92) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.62), rgba(0,0,0,.10), rgba(0,0,0,.62));
+      pointer-events:none;
+    }
+    .badge{
+      position:absolute;top:14px;left:14px;z-index:6;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 11px;border-radius:999px;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      font-weight:900;font-size:12px;
+    }
+    .dotOrange{width:9px;height:9px;border-radius:50%;background:#fb923c}
+    .dotGreen{width:9px;height:9px;border-radius:50%;background:#22c55e}
+
+    .cardArrow{
+      position:absolute;top:50%;transform:translateY(-50%);
+      width:54px;height:54px;border-radius:50%;
+      background:rgba(0,0,0,.32);
+      border:1px solid rgba(255,255,255,.16);
+      display:grid;place-items:center;
+      z-index:7;cursor:pointer;
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      user-select:none;
+    }
+    .cardArrow:hover{background:rgba(0,0,0,.45)}
+    .cardArrow span{font-size:34px;line-height:1}
+    .cardArrow.left{left:14px}
+    .cardArrow.right{right:14px}
+
+    .bottom{
+      position:absolute;left:18px;right:18px;bottom:16px;z-index:7;
+      display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+    }
+    .leftInfo{min-width:0}
+    .logosLine{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+    .teamLogo{
+      width:44px;height:44px;border-radius:50%;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.16);
+      padding:6px;object-fit:contain;
+    }
+    .vsPill{
+      width:34px;height:34px;border-radius:50%;
+      display:grid;place-items:center;
+      font-weight:900;font-size:12px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .cardTitle{font-size:24px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .cardSub{margin-top:6px;opacity:.72;font-style:italic;font-size:13px}
+
+    .watch{
+      display:inline-flex;align-items:center;
+      height:64px;padding:10px 14px;border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
+      overflow:hidden;white-space:nowrap;
+    }
+    .watch:hover{background:rgba(255,255,255,.18)}
+    .play{
+      width:54px;height:54px;border-radius:50%;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);
+      display:grid;place-items:center;
+      margin-right:14px;font-size:16px;
+    }
+    .watchTxt{font-weight:900;letter-spacing:.2px;padding-right:10px}
+
+    .dots{display:flex;justify-content:center;gap:8px;margin:6px 0 0}
+    .d{
+      width:10px;height:10px;border-radius:999px;
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.10);
+      cursor:pointer;transition:.2s
+    }
+    .d.active{width:38px;background:rgba(255,255,255,.82)}
+
+    .section{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:6px 18px 26px;
+      margin-top:-8px;
+      position:relative;
+      z-index:5;
+    }
+    .sectionHead{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
+    .sectionHead h2{margin:0;font-size:22px;font-weight:900}
+    .sectionHead span{opacity:.55;font-size:12px}
+
+    .rail{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
+    .rail::-webkit-scrollbar{display:none}
+    .mini{
+      flex:0 0 auto;width:300px;border-radius:18px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      box-shadow:0 18px 55px rgba(0,0,0,.55);
+      transition:.15s;
+    }
+    .mini:hover{transform:translateY(-2px)}
+    .miniImg{height:170px;background-size:cover;background-position:center;position:relative}
+    .miniImg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.82))}
+    .miniTop{
+      position:absolute;top:10px;left:10px;right:10px;z-index:2;
+      display:flex;justify-content:space-between;gap:10px;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      font-size:12px;font-weight:900;
+    }
+    .miniBody{padding:12px 12px 14px}
+    .miniTitle{font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .miniSub{margin-top:4px;font-size:12px;opacity:.65}
+
+    .eventsWrap{max-width:var(--max);margin:0 auto;padding:6px 18px 36px}
+    .filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 16px}
+    .chip{
+      border:1px solid rgba(255,255,255,.22);
+      background:transparent;
+      color:#fff;
+      padding:8px 14px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:13px;
+      cursor:pointer;
+      opacity:.9;
+    }
+    .chip.active{background:#fff;color:#000;border-color:#fff}
+
+    .eventRow{
+      display:grid;
+      grid-template-columns: 320px 1fr 220px;
+      gap:14px;
+      padding:14px 16px;
+      border-radius:14px;
+      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.12));
+      box-shadow: 0 18px 60px rgba(0,0,0,.45);
+      margin-bottom:10px;
+      align-items:center;
+    }
+    .eventLeft{display:flex;gap:12px;align-items:center;min-width:0}
+    .compLogo{
+      width:44px;height:44px;object-fit:contain;flex:0 0 auto;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
+    }
+    .eventTxt{min-width:0}
+    .eventTitle{font-weight:900;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .eventMeta{opacity:.75;font-size:13px;font-style:italic}
+
+    .eventMid{display:flex;align-items:center;justify-content:center;gap:18px}
+    .midTeam{display:flex;align-items:center;gap:10px;min-width:0}
+    .midTeam b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+    .midLogo{width:34px;height:34px;object-fit:contain;filter: drop-shadow(0 8px 14px rgba(0,0,0,.45))}
+    .midVS{opacity:.7;font-weight:900}
+
+    .eventRight{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+    .rightPill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:900;font-size:12px;
+      backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px);
+    }
+    .sportTag{opacity:.85;font-size:12px;font-weight:800}
+
+    @media (min-width: 1400px){
+      :root{ --cardW: 1100px; --cardH: 560px; }
+    }
+    @media (max-width: 980px){
+      :root{
+        --max: 1200px;
+        --cardW: calc(100vw - 36px);
+        --cardH: 340px;
+        --gap: 14px;
+        --r: 20px;
+      }
+      .cardArrow{display:none}
+      .centerHeader h1{font-size:30px}
+      .bottom{left:14px;right:14px;bottom:12px;gap:12px}
+      .watch{height:52px;padding:8px 12px}
+      .play{width:42px;height:42px;margin-right:10px}
+      .watchTxt{font-size:14px}
+      .mini{width:280px}
+      .miniImg{height:160px}
+      .eventRow{grid-template-columns: 1fr;gap:10px;align-items:start}
+      .eventMid{justify-content:flex-start}
+      .eventRight{align-items:flex-start}
+      .midTeam b{max-width:160px}
+    }
+    footer{
+      border-top:1px solid rgba(255,255,255,.08);
+      padding:18px 0;
+      text-align:center;
+      opacity:.55;
+      font-size:12px;
+    }
+
+    /* ===== Telegram Gate ===== */
+    .tgGate{
+      position:fixed; inset:0; z-index:9999;
+      display:none; place-items:center;
+      background:rgba(0,0,0,.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .tgGate.show{display:grid;}
+    .tgModal{
+      width:min(520px, calc(100vw - 28px));
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.14);
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      box-shadow:0 30px 120px rgba(0,0,0,.75);
+      padding:18px 18px 16px;
+    }
+    .tgTitle{font-weight:900;font-size:22px;margin-bottom:8px}
+    .tgText{opacity:.85;line-height:1.35;margin-bottom:14px}
+    .tgBtns{display:flex;gap:10px;flex-wrap:wrap}
+    .tgBtn{
+      border:1px solid rgba(255,255,255,.22);
+      background:transparent;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:900;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .tgBtn.primary{
+      background:#fff;
+      color:#000;
+      border-color:#fff;
+    }
+    .tgBtn:hover{opacity:.92}
+    .tgSmall{margin-top:10px;font-size:12px;opacity:.65}
+  </style>
 </head>
 
 <body>
-<div class="box">
-  <h1>Accès réservé</h1>
-  <p>Pour accéder à IMFTX+, clique sur le bouton ci-dessous.</p>
+  <header>
+    <div class="topbar">
+      <div class="brand">IMFTX+</div>
+      <div class="icons">
+        <a class="ctaTop" href="#" id="joinTelegramTop" aria-label="Rejoindre Telegram">
+          <i class="fa-brands fa-telegram"></i> Rejoindre Telegram
+        </a>
+        <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+        <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+      </div>
+    </div>
+  </header>
 
-  <!-- 🔵 LIEN TELEGRAM -->
-  <a class="btn" href="https://t.me/TON_TELEGRAM" target="_blank" onclick="unlock()">
-    Rejoindre le Telegram
-  </a>
-
-  <div class="small">
-    L’accès sera débloqué automatiquement.
+  <!-- GATE TELEGRAM -->
+  <div id="tgGate" class="tgGate" aria-hidden="true">
+    <div class="tgModal">
+      <div class="tgTitle">Rejoindre le Telegram</div>
+      <div class="tgText">
+        Pour accéder au site, tu dois cliquer sur “Rejoindre Telegram”.
+        <br><span style="opacity:.75;font-size:12px">Ensuite tu reviens ici, et l’accès s’ouvre.</span>
+      </div>
+      <div class="tgBtns">
+        <a id="tgJoinBtn" class="tgBtn primary" href="#" target="_blank" rel="noopener">
+          <i class="fa-brands fa-telegram"></i> Rejoindre Telegram
+        </a>
+        <button id="tgAccessBtn" class="tgBtn" type="button">
+          J’ai rejoint / Continuer
+        </button>
+      </div>
+      <div class="tgSmall">Astuce : si Telegram s’ouvre, reviens ensuite sur le navigateur.</div>
+    </div>
   </div>
-</div>
 
-<script>
-function unlock(){
-  localStorage.setItem("imftx_access","1");
-  setTimeout(()=>{
-    window.location.href = "index.html";
-  }, 1200);
-}
-</script>
+  <section class="hero">
+    <div class="bg" id="bg"></div>
+    <div class="wrap">
+      <div class="centerHeader">
+        <h1 id="heroTitle"></h1>
+        <div class="l1" id="heroLeague"></div>
+        <div class="l2" id="heroTime"></div>
+      </div>
+
+      <div class="sliderArea">
+        <div class="viewport" id="viewport">
+          <div class="track" id="track"></div>
+        </div>
+        <div class="dots" id="dots"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="sectionHead">
+      <h2>À venir</h2>
+      <span>Programme</span>
+    </div>
+    <div class="rail" id="upcoming"></div>
+  </section>
+
+  <section class="eventsWrap">
+    <div class="sectionHead">
+      <h2>Événements</h2>
+      <span>Matchs du jour</span>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div id="eventsList"></div>
+  </section>
+
+  <footer>IMFTX+ — N°1 de la diffusion FR</footer>
+
+  <!-- UN SEUL LONG SCRIPT -->
   <script>
-if(localStorage.getItem("imftx_access") !== "1"){
-  window.location.href = "gate.html";
-}
-</script>
+    /* =========================
+       0) TELEGRAM GATE
+       ========================= */
+    // Mets ton lien ici :
+    const TELEGRAM_INVITE_URL = "https://t.me/TON_LIEN_ICI";
+    const TG_STORAGE_KEY = "tg_join_clicked_v1";
 
+    const tgGate = document.getElementById("tgGate");
+    const tgJoinBtn = document.getElementById("tgJoinBtn");
+    const tgAccessBtn = document.getElementById("tgAccessBtn");
+    const joinTelegramTop = document.getElementById("joinTelegramTop");
+
+    function openGate(){
+      tgGate.classList.add("show");
+      tgGate.setAttribute("aria-hidden","false");
+    }
+    function closeGate(){
+      tgGate.classList.remove("show");
+      tgGate.setAttribute("aria-hidden","true");
+    }
+    function isAllowed(){
+      return localStorage.getItem(TG_STORAGE_KEY) === "1";
+    }
+    function markAllowed(){
+      localStorage.setItem(TG_STORAGE_KEY, "1");
+    }
+
+    tgJoinBtn.href = TELEGRAM_INVITE_URL;
+
+    joinTelegramTop.addEventListener("click", (e) => {
+      e.preventDefault();
+      openGate();
+    });
+
+    // Autorise dès le clic (front-only)
+    tgJoinBtn.addEventListener("click", () => {
+      markAllowed();
+    });
+
+    tgAccessBtn.addEventListener("click", () => {
+      if(!isAllowed()){
+        openGate();
+        return;
+      }
+      closeGate();
+    });
+
+    // Bloque les clics tant que pas autorisé (hors pop-up)
+    document.addEventListener("click", (e) => {
+      if(isAllowed()) return;
+
+      const insideModal = e.target.closest(".tgModal");
+      if(tgGate.classList.contains("show") && insideModal) return;
+
+      // bloquer toute interaction/clic sur le site
+      e.preventDefault();
+      e.stopPropagation();
+      openGate();
+    }, true);
+
+    window.addEventListener("load", () => {
+      if(!isAllowed()) openGate();
+    });
+
+    /* =========================
+       1) PROGRAMME (AUJOURD'HUI)
+       ========================= */
+    const todayMatches = [
+      {
+        id:"manu-bournemouth",
+        time:"21:00",
+        comp:"Premier League",
+        match:"Manchester U. - Bournemouth",
+        a:"Manchester U.",
+        b:"Bournemouth",
+        aLogo:"https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg",
+        bLogo:"https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg",
+        status:"",
+        sport:"Football",
+        banner:"https://empire-sport.space/upload/cards/multiplex_28.png"
+      }
+    ];
+
+    /* =========================
+       1.1) STATUS AUTO
+       ========================= */
+    const MATCH_DURATION_MIN = 135; // 2h15
+    function timeToMinutes(hhmm){
+      const [h,m] = hhmm.split(":").map(Number);
+      return (h*60)+(m||0);
+    }
+    function computeStatus(hhmm){
+      const now = new Date();
+      const nowMin = now.getHours()*60 + now.getMinutes();
+      const start = timeToMinutes(hhmm);
+      const end = start + MATCH_DURATION_MIN;
+      if(nowMin < start) return "À venir";
+      if(nowMin >= start && nowMin < end) return "En cours";
+      return "Terminé";
+    }
+    todayMatches.forEach(m => m.status = computeStatus(m.time));
+
+    /* =========================
+       2) À LA UNE (slider)
+       ========================= */
+    const matches = todayMatches.map(m => ({
+      id: m.id,
+      status: m.status,
+      league: m.comp,
+      time: `Aujourd’hui · ${m.time}`,
+      aName: m.a,
+      bName: m.b,
+      title: m.match,
+      aLogo: m.aLogo,
+      bLogo: m.bLogo,
+      banner: m.banner
+    }));
+
+    /* =========================
+       3) À venir (rail)
+       ========================= */
+    const upcomingMatches = todayMatches
+      .filter(x => x.status === "À venir")
+      .sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time))
+      .map(x => ({
+        id:x.id,
+        status:x.status,
+        sport:x.sport,
+        title:x.match,
+        meta:`${x.comp} • Aujourd’hui · ${x.time}`,
+        banner:x.banner
+      }));
+
+    /* =========================
+       4) HERO + SLIDER (rendu)
+       ========================= */
+    const bg = document.getElementById("bg");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroLeague = document.getElementById("heroLeague");
+    const heroTime = document.getElementById("heroTime");
+    const track = document.getElementById("track");
+    const dots = document.getElementById("dots");
+    const viewport = document.getElementById("viewport");
+    const upcoming = document.getElementById("upcoming");
+
+    let idx = 0;
+
+    function setHero(m){
+      bg.style.backgroundImage = `url('${m.banner}')`;
+      heroTitle.textContent = `${m.aName} vs ${m.bName}`;
+      heroLeague.textContent = m.league;
+      heroTime.textContent = m.time;
+    }
+
+    function badgeHTML(m){
+      if(m.status === "En cours"){
+        return `<div class="badge"><span class="dotGreen"></span>En cours</div>`;
+      }
+      if(m.status === "Terminé"){
+        return `<div class="badge" style="opacity:.78"><span class="dotOrange"></span>Terminé</div>`;
+      }
+      return `<div class="badge"><span class="dotOrange"></span>À venir</div>`;
+    }
+
+    function logosBlock(m){
+      return `
+        <div class="logosLine">
+          <img class="teamLogo" src="${m.aLogo}" alt="${m.aName}">
+          <div class="vsPill">VS</div>
+          <img class="teamLogo" src="${m.bLogo}" alt="${m.bName}">
+        </div>
+      `;
+    }
+
+    // IMPORTANT :
+    // Ici on garde les liens "match" pour plus tard. Pour l’instant, ça ouvre #.
+    // Si tu crées des pages (ex: manu-bournemouth.html) remplace url par `${m.id}.html`
+    function cardHTML(m){
+      const url = "#";
+      return `
+        <div class="card">
+          <div class="poster" style="background-image:url('${m.banner}')"></div>
+          ${badgeHTML(m)}
+          <div class="cardArrow left" data-act="prev"><span>‹</span></div>
+          <div class="cardArrow right" data-act="next"><span>›</span></div>
+
+          <div class="bottom">
+            <div class="leftInfo">
+              ${logosBlock(m)}
+              <div class="cardTitle">${m.title}</div>
+              <div class="cardSub">${m.league} • ${m.time}</div>
+            </div>
+
+            <a class="watch" href="${url}" rel="noopener">
+              <div class="play">▶</div>
+              <div class="watchTxt">REGARDER</div>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    function dotHTML(i){
+      return `<div class="d ${i===0?'active':''}" id="d${i}" data-dot="${i}"></div>`;
+    }
+
+    function miniHTML(x){
+      const url = "#";
+      const dot = x.status === "En cours" ? "dotGreen" : "dotOrange";
+      return `
+        <a class="mini" href="${url}" rel="noopener">
+          <div class="miniImg" style="background-image:url('${x.banner}')">
+            <div class="miniTop">
+              <span class="pill"><span class="${dot}"></span>${x.status}</span>
+              <span class="pill">${x.sport}</span>
+            </div>
+          </div>
+          <div class="miniBody">
+            <div class="miniTitle">${x.title}</div>
+            <div class="miniSub">${x.meta}</div>
+          </div>
+        </a>
+      `;
+    }
+
+    function updateDots(){
+      for(let i=0;i<matches.length;i++){
+        const el=document.getElementById("d"+i);
+        if(el) el.classList.toggle("active", i===idx);
+      }
+    }
+
+    function update(){
+      const first=document.querySelector(".card");
+      if(!first) return;
+
+      const cardW = first.getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')) || 18;
+      const vw = viewport.getBoundingClientRect().width;
+      const centerOffset = Math.max(16, (vw - cardW) / 2);
+      const peekBias = Math.min(120, vw * 0.10);
+      const x = -(idx * (cardW + gap)) + centerOffset - peekBias;
+
+      track.style.transform = `translateX(${x}px)`;
+      setHero(matches[idx]);
+      updateDots();
+    }
+
+    function nextSlide(){
+      idx = (idx + 1) % matches.length;
+      update();
+    }
+    function prevSlide(){
+      idx = (idx - 1 + matches.length) % matches.length;
+      update();
+    }
+    function goTo(i){
+      idx = i;
+      update();
+    }
+
+    // Render slider
+    track.innerHTML = matches.map(cardHTML).join("");
+    dots.innerHTML = matches.map((_,i)=>dotHTML(i)).join("");
+    upcoming.innerHTML = upcomingMatches.map(miniHTML).join("");
+
+    // Events: arrows + dots
+    track.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-act]");
+      if(btn){
+        e.preventDefault();
+        if(btn.dataset.act === "next") nextSlide();
+        if(btn.dataset.act === "prev") prevSlide();
+      }
+    });
+
+    dots.addEventListener("click", (e) => {
+      const d = e.target.closest("[data-dot]");
+      if(!d) return;
+      e.preventDefault();
+      goTo(parseInt(d.dataset.dot, 10));
+    });
+
+    // Swipe
+    let startX=0;
+    track.addEventListener("touchstart", e => {
+      startX = e.touches[0].clientX;
+    }, {passive:true});
+    track.addEventListener("touchend", e => {
+      const endX = e.changedTouches[0].clientX;
+      const dx = endX - startX;
+      if(Math.abs(dx) > 40){
+        if(dx < 0) nextSlide();
+        else prevSlide();
+      }
+    }, {passive:true});
+
+    update();
+    window.addEventListener("resize", update);
+
+    /* =========================
+       5) ÉVÉNEMENTS (LISTE)
+       ========================= */
+    const eventsList = document.getElementById("eventsList");
+    const filtersEl = document.getElementById("filters");
+    const FILTERS = ["Tous Les Événements", "Football"];
+    let activeFilter = "Tous Les Événements";
+
+    const COMP_LOGOS = {
+      "Premier League": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png?20161224005103",
+      "Ligue 1": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fa/Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg/langfr-250px-Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg.png",
+      "Serie A": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Serie_A.svg/618px-Serie_A.svg.png",
+      "La Liga": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/LaLiga_logo_2023.svg/2048px-LaLiga_logo_2023.svg.png"
+    };
+
+    function renderFilters(){
+      filtersEl.innerHTML = FILTERS.map(f => {
+        const safe = f.replace(/"/g,'&quot;');
+        return `<button class="chip ${f===activeFilter?'active':''}" data-filter="${safe}">${f}</button>`;
+      }).join("");
+    }
+
+    filtersEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-filter]");
+      if(!btn) return;
+      activeFilter = btn.dataset.filter;
+      renderFilters();
+      renderEvents();
+    });
+
+    function statusPill(status){
+      if(status === "En cours"){
+        return `<span class="rightPill"><span class="dotGreen"></span>En cours</span>`;
+      }
+      if(status === "Terminé"){
+        return `<span class="rightPill" style="opacity:.75"><span class="dotOrange"></span>Terminé</span>`;
+      }
+      return `<span class="rightPill" style="background:rgba(251,146,60,.12);border-color:rgba(251,146,60,.25)"><span class="dotOrange"></span>À venir</span>`;
+    }
+
+    function rowHTML(m){
+      const url = "#";
+      const compLogo = COMP_LOGOS[m.comp] || "";
+      return `
+        <a class="eventRow" href="${url}" rel="noopener">
+          <div class="eventLeft">
+            ${compLogo ? `<img class="compLogo" src="${compLogo}" alt="${m.comp}">` : ``}
+            <div class="eventTxt">
+              <div class="eventTitle">${m.match}</div>
+              <div class="eventMeta">${m.comp} • Aujourd’hui · ${m.time}</div>
+            </div>
+          </div>
+
+          <div class="eventMid">
+            <div class="midTeam">
+              <img class="midLogo" src="${m.aLogo}" alt="${m.a}">
+              <b>${m.a}</b>
+            </div>
+            <div class="midVS">vs</div>
+            <div class="midTeam">
+              <b>${m.b}</b>
+              <img class="midLogo" src="${m.bLogo}" alt="${m.b}">
+            </div>
+          </div>
+
+          <div class="eventRight">
+            ${statusPill(m.status)}
+            <div class="sportTag">${m.sport}</div>
+          </div>
+        </a>
+      `;
+    }
+
+    function renderEvents(){
+      const list = todayMatches.filter(m => {
+        if(activeFilter === "Tous Les Événements") return true;
+        if(activeFilter === "Football") return m.sport === "Football";
+        return true;
+      });
+      eventsList.innerHTML = list.map(rowHTML).join("");
+    }
+
+    renderFilters();
+    renderEvents();
+  </script>
 </body>
 </html>
-
