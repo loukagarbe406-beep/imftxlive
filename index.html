@@ -6,6 +6,7 @@
   <title>IMFTX+</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
   <style>
     :root{
       --max: 1400px;
@@ -13,34 +14,63 @@
       --cardW: 980px;
       --cardH: 520px;
       --r: 26px;
+
+      --bg0:#000;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.14);
+      --stroke2: rgba(255,255,255,.18);
+      --txtDim: rgba(255,255,255,.72);
+      --shadow: 0 28px 110px rgba(0,0,0,.78);
+
+      --accent: #ffffff;         /* look premium: blanc */
+      --accentSoft: rgba(255,255,255,.14);
+      --ok: #22c55e;
+      --warn: #fb923c;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:#000;color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
+    html,body{height:100%;margin:0;background:var(--bg0);color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
     a{color:inherit;text-decoration:none}
+    button{font-family:inherit}
+
+    /* Topbar */
     header{position:fixed;top:0;left:0;right:0;z-index:50}
     .topbar{
       max-width:var(--max);
       margin:0 auto;
-      padding:16px 18px;
+      padding:14px 18px;
       display:flex;
       align-items:center;
       justify-content:space-between;
     }
-    .brand{font-weight:900;letter-spacing:.3px;font-size:20px;opacity:.95}
-    .icons{display:flex;gap:14px;font-size:18px;align-items:center}
+    .brand{
+      display:flex;align-items:center;gap:10px;
+      font-weight:900;letter-spacing:.3px;font-size:20px;opacity:.95
+    }
+    .brandDot{
+      width:10px;height:10px;border-radius:50%;
+      background:linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.25));
+      box-shadow:0 0 0 6px rgba(255,255,255,.06);
+    }
+    .icons{display:flex;gap:12px;font-size:18px;align-items:center}
     .icons a{opacity:.75}
     .icons a:hover{opacity:1}
-    .ctaTop{
+
+    .joinBtnTop{
       display:inline-flex;align-items:center;gap:10px;
       padding:10px 14px;border-radius:999px;
-      background:rgba(255,255,255,.12);
+      background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.16);
       font-weight:900;font-size:13px;
+      transition:.15s;
     }
-    .ctaTop:hover{background:rgba(255,255,255,.16)}
+    .joinBtnTop:hover{background:rgba(255,255,255,.14)}
+    .joinBtnTop i{font-size:16px}
+
+    /* Hero */
     .hero{
       position:relative;
-      padding-top:74px;
+      padding-top:78px;
       padding-bottom:10px;
       overflow:hidden;
     }
@@ -54,13 +84,14 @@
     .hero::after{
       content:"";position:absolute;inset:0;
       background:
-        radial-gradient(1200px 700px at 50% 30%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.85) 70%, rgba(0,0,0,.98) 100%),
+        radial-gradient(1200px 700px at 50% 30%, rgba(255,255,255,.09), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.86) 70%, rgba(0,0,0,.98) 100%),
         linear-gradient(90deg, rgba(0,0,0,.92), rgba(0,0,0,.14), rgba(0,0,0,.92));
       pointer-events:none;
     }
     .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 18px}
-    .centerHeader{text-align:center;padding:10px 0 10px}
+
+    .centerHeader{text-align:center;padding:12px 0 10px}
     .centerHeader h1{
       margin:0;
       font-size:36px;
@@ -68,9 +99,10 @@
       line-height:1.05;
       text-shadow:0 18px 40px rgba(0,0,0,.65);
     }
-    .centerHeader .l1{margin-top:10px;opacity:.80;font-weight:700}
+    .centerHeader .l1{margin-top:10px;opacity:.82;font-weight:700}
     .centerHeader .l2{margin-top:6px;opacity:.65;font-style:italic}
 
+    /* Slider */
     .sliderArea{position:relative;padding-top:6px;padding-bottom:2px}
     .viewport{overflow:hidden}
     .track{
@@ -86,7 +118,7 @@
       overflow:hidden;
       position:relative;
       border:1px solid rgba(255,255,255,.16);
-      box-shadow:0 28px 100px rgba(0,0,0,.78);
+      box-shadow:var(--shadow);
       background:rgba(255,255,255,.06);
     }
     .poster{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.01)}
@@ -101,13 +133,13 @@
       position:absolute;top:14px;left:14px;z-index:6;
       display:inline-flex;align-items:center;gap:8px;
       padding:7px 11px;border-radius:999px;
-      background:rgba(255,255,255,.16);
+      background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
       font-weight:900;font-size:12px;
     }
-    .dotOrange{width:9px;height:9px;border-radius:50%;background:#fb923c}
-    .dotGreen{width:9px;height:9px;border-radius:50%;background:#22c55e}
+    .dotOrange{width:9px;height:9px;border-radius:50%;background:var(--warn)}
+    .dotGreen{width:9px;height:9px;border-radius:50%;background:var(--ok)}
 
     .cardArrow{
       position:absolute;top:50%;transform:translateY(-50%);
@@ -144,16 +176,17 @@
       border:1px solid rgba(255,255,255,.14);
     }
     .cardTitle{font-size:24px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .cardSub{margin-top:6px;opacity:.72;font-style:italic;font-size:13px}
+    .cardSub{margin-top:6px;opacity:.74;font-style:italic;font-size:13px}
 
     .watch{
       display:inline-flex;align-items:center;
       height:64px;padding:10px 14px;border-radius:999px;
-      background:rgba(255,255,255,.14);
+      background:rgba(255,255,255,.12);
       border:1px solid rgba(255,255,255,.16);
       overflow:hidden;white-space:nowrap;
+      transition:.15s;
     }
-    .watch:hover{background:rgba(255,255,255,.18)}
+    .watch:hover{background:rgba(255,255,255,.16)}
     .play{
       width:54px;height:54px;border-radius:50%;
       background:rgba(0,0,0,.35);
@@ -163,7 +196,7 @@
     }
     .watchTxt{font-weight:900;letter-spacing:.2px;padding-right:10px}
 
-    .dots{display:flex;justify-content:center;gap:8px;margin:6px 0 0}
+    .dots{display:flex;justify-content:center;gap:8px;margin:8px 0 0}
     .d{
       width:10px;height:10px;border-radius:999px;
       background:rgba(255,255,255,.18);
@@ -172,14 +205,8 @@
     }
     .d.active{width:38px;background:rgba(255,255,255,.82)}
 
-    .section{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:6px 18px 26px;
-      margin-top:-8px;
-      position:relative;
-      z-index:5;
-    }
+    /* Sections */
+    .section{max-width:var(--max);margin:0 auto;padding: 6px 18px 26px;margin-top:-8px;position:relative;z-index:5}
     .sectionHead{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
     .sectionHead h2{margin:0;font-size:22px;font-weight:900}
     .sectionHead span{opacity:.55;font-size:12px}
@@ -195,7 +222,7 @@
     }
     .mini:hover{transform:translateY(-2px)}
     .miniImg{height:170px;background-size:cover;background-position:center;position:relative}
-    .miniImg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.82))}
+    .miniImg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.86))}
     .miniTop{
       position:absolute;top:10px;left:10px;right:10px;z-index:2;
       display:flex;justify-content:space-between;gap:10px;
@@ -212,7 +239,7 @@
     .miniTitle{font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .miniSub{margin-top:4px;font-size:12px;opacity:.65}
 
-    .eventsWrap{max-width:var(--max);margin:0 auto;padding:6px 18px 36px}
+    .eventsWrap{max-width:var(--max);margin:0 auto;padding: 6px 18px 36px}
     .filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 16px}
     .chip{
       border:1px solid rgba(255,255,255,.22);
@@ -224,7 +251,9 @@
       font-size:13px;
       cursor:pointer;
       opacity:.9;
+      transition:.15s;
     }
+    .chip:hover{opacity:1}
     .chip.active{background:#fff;color:#000;border-color:#fff}
 
     .eventRow{
@@ -233,16 +262,16 @@
       gap:14px;
       padding:14px 16px;
       border-radius:14px;
-      background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.12));
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.10));
       box-shadow: 0 18px 60px rgba(0,0,0,.45);
       margin-bottom:10px;
       align-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      transition:.12s;
     }
+    .eventRow:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.16)}
     .eventLeft{display:flex;gap:12px;align-items:center;min-width:0}
-    .compLogo{
-      width:44px;height:44px;object-fit:contain;flex:0 0 auto;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
-    }
+    .compLogo{width:44px;height:44px;object-fit:contain;flex:0 0 auto;filter: drop-shadow(0 10px 18px rgba(0,0,0,.45))}
     .eventTxt{min-width:0}
     .eventTitle{font-weight:900;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .eventMeta{opacity:.75;font-size:13px;font-style:italic}
@@ -263,6 +292,116 @@
       backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px);
     }
     .sportTag{opacity:.85;font-size:12px;font-weight:800}
+
+    footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
+
+    /* =========================
+       TELEGRAM GATE (PRO NOIR)
+       ========================= */
+    .gate{
+      position:fixed; inset:0; z-index:9999;
+      display:none; place-items:center;
+      background:rgba(0,0,0,.76);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .gate.show{display:grid;}
+    .gateCard{
+      width:min(720px, calc(100vw - 28px));
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.16);
+      background:
+        radial-gradient(800px 220px at 10% 0%, rgba(255,255,255,.09), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      box-shadow: 0 40px 160px rgba(0,0,0,.85);
+      overflow:hidden;
+      position:relative;
+    }
+    .gateGlow{
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 160px at 20% 0%, rgba(255,255,255,.12), transparent 55%),
+        radial-gradient(420px 160px at 90% 20%, rgba(255,255,255,.08), transparent 58%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .gateInner{
+      position:relative;
+      padding:18px 18px 16px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    .gateTop{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    .gateBadge{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:8px 12px;border-radius:999px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:900;font-size:12px;letter-spacing:.2px;
+    }
+    .gateBadge i{opacity:.9}
+    .gateClose{
+      width:40px;height:40px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.25);
+      color:#fff;
+      cursor:pointer;
+      display:grid;place-items:center;
+      opacity:.8;
+    }
+    .gateClose:hover{opacity:1}
+
+    .gateMain{
+      display:flex;gap:14px;align-items:center;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(0,0,0,.26);
+    }
+    .gateAvatar{
+      width:64px;height:64px;border-radius:18px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      overflow:hidden;
+      flex:0 0 auto;
+      box-shadow:0 14px 40px rgba(0,0,0,.55);
+      position:relative;
+    }
+    .gateAvatar::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.35));
+      pointer-events:none;
+    }
+    .gateAvatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .gateText{min-width:0}
+    .gateTitle{font-weight:900;font-size:20px;line-height:1.1;margin:0}
+    .gateSub{margin-top:6px;color:rgba(255,255,255,.74);font-size:13px;line-height:1.35}
+
+    .gateActions{
+      display:flex;flex-wrap:wrap;gap:10px;
+      align-items:center;
+    }
+    .gateBtn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:11px 14px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      font-weight:900;
+      cursor:pointer;
+      transition:.15s;
+    }
+    .gateBtn:hover{background:rgba(255,255,255,.12)}
+    .gateBtn.primary{
+      background:#fff;color:#000;border-color:#fff;
+    }
+    .gateBtn.primary:hover{opacity:.92}
+    .gateHint{
+      font-size:12px;color:rgba(255,255,255,.62);
+    }
 
     @media (min-width: 1400px){
       :root{ --cardW: 1100px; --cardH: 560px; }
@@ -288,87 +427,63 @@
       .eventRight{align-items:flex-start}
       .midTeam b{max-width:160px}
     }
-    footer{
-      border-top:1px solid rgba(255,255,255,.08);
-      padding:18px 0;
-      text-align:center;
-      opacity:.55;
-      font-size:12px;
-    }
-
-    /* ===== Telegram Gate ===== */
-    .tgGate{
-      position:fixed; inset:0; z-index:9999;
-      display:none; place-items:center;
-      background:rgba(0,0,0,.72);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .tgGate.show{display:grid;}
-    .tgModal{
-      width:min(520px, calc(100vw - 28px));
-      border-radius:22px;
-      border:1px solid rgba(255,255,255,.14);
-      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      box-shadow:0 30px 120px rgba(0,0,0,.75);
-      padding:18px 18px 16px;
-    }
-    .tgTitle{font-weight:900;font-size:22px;margin-bottom:8px}
-    .tgText{opacity:.85;line-height:1.35;margin-bottom:14px}
-    .tgBtns{display:flex;gap:10px;flex-wrap:wrap}
-    .tgBtn{
-      border:1px solid rgba(255,255,255,.22);
-      background:transparent;
-      color:#fff;
-      padding:10px 14px;
-      border-radius:999px;
-      font-weight:900;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .tgBtn.primary{
-      background:#fff;
-      color:#000;
-      border-color:#fff;
-    }
-    .tgBtn:hover{opacity:.92}
-    .tgSmall{margin-top:10px;font-size:12px;opacity:.65}
   </style>
 </head>
 
 <body>
   <header>
     <div class="topbar">
-      <div class="brand">IMFTX+</div>
+      <div class="brand"><span class="brandDot"></span>IMFTX+</div>
       <div class="icons">
-        <a class="ctaTop" href="#" id="joinTelegramTop" aria-label="Rejoindre Telegram">
+        <a class="joinBtnTop" href="#" id="openGateTop" aria-label="Rejoindre Telegram">
           <i class="fa-brands fa-telegram"></i> Rejoindre Telegram
         </a>
+        <a href="#" id="openGateIcon" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
         <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
         <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
       </div>
     </div>
   </header>
 
-  <!-- GATE TELEGRAM -->
-  <div id="tgGate" class="tgGate" aria-hidden="true">
-    <div class="tgModal">
-      <div class="tgTitle">Rejoindre le Telegram</div>
-      <div class="tgText">
-        Pour accéder au site, tu dois cliquer sur “Rejoindre Telegram”.
-        <br><span style="opacity:.75;font-size:12px">Ensuite tu reviens ici, et l’accès s’ouvre.</span>
+  <!-- GATE TELEGRAM PRO -->
+  <div id="gate" class="gate" aria-hidden="true">
+    <div class="gateCard" role="dialog" aria-modal="true" aria-label="Accès">
+      <div class="gateGlow"></div>
+
+      <div class="gateInner">
+        <div class="gateTop">
+          <div class="gateBadge">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            ACCÈS SÉCURISÉ
+          </div>
+          <button class="gateClose" id="gateClose" type="button" aria-label="Fermer">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="gateMain">
+          <div class="gateAvatar">
+            <img id="gateAvatarImg" alt="IMFTX+">
+          </div>
+          <div class="gateText">
+            <p class="gateTitle">Rejoins notre canal Telegram</p>
+            <div class="gateSub">
+              Le site peut changer à tout moment. Rejoins le canal secours pour rester informé.<br>
+              <span style="opacity:.9">Ensuite tu reviens ici et tu cliques sur “Continuer”.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gateActions">
+          <a class="gateBtn primary" id="gateJoin" href="#" target="_blank" rel="noopener">
+            <i class="fa-brands fa-telegram"></i> Rejoindre maintenant
+          </a>
+          <button class="gateBtn" id="gateContinue" type="button">
+            <i class="fa-solid fa-lock-open"></i> Continuer
+          </button>
+          <span class="gateHint">Astuce : si Telegram s’ouvre, reviens sur ton navigateur.</span>
+        </div>
       </div>
-      <div class="tgBtns">
-        <a id="tgJoinBtn" class="tgBtn primary" href="#" target="_blank" rel="noopener">
-          <i class="fa-brands fa-telegram"></i> Rejoindre Telegram
-        </a>
-        <button id="tgAccessBtn" class="tgBtn" type="button">
-          J’ai rejoint / Continuer
-        </button>
-      </div>
-      <div class="tgSmall">Astuce : si Telegram s’ouvre, reviens ensuite sur le navigateur.</div>
     </div>
   </div>
 
@@ -412,71 +527,97 @@
   <!-- UN SEUL LONG SCRIPT -->
   <script>
     /* =========================
-       0) TELEGRAM GATE
+       0) CONFIG
        ========================= */
-    // Mets ton lien ici :
-    const TELEGRAM_INVITE_URL = "https://t.me/TON_LIEN_ICI";
-    const TG_STORAGE_KEY = "tg_join_clicked_v1";
+    const TELEGRAM_INVITE_URL = "https://t.me/+llOGaNG7HeUzNmE0";
+    const TG_STORAGE_KEY = "imftx_tg_ok_v1";
 
-    const tgGate = document.getElementById("tgGate");
-    const tgJoinBtn = document.getElementById("tgJoinBtn");
-    const tgAccessBtn = document.getElementById("tgAccessBtn");
-    const joinTelegramTop = document.getElementById("joinTelegramTop");
+    // Pdp canal (image que tu as envoyée) : intégrée en base64 pour que tout soit dans un seul index.
+    // Si tu préfères un fichier, remplace par: const CHANNEL_AVATAR = "pdp.png";
+    const CHANNEL_AVATAR = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAKACAYAAACm..." +
+      "AA==";
+    // ⚠️ IMPORTANT :
+    // Le base64 complet est très long. Pour éviter de flood ici, je l’ai raccourci.
+    // -> Fais comme ça à la place (recommandé) :
+    // 1) mets ta photo dans le même dossier que index.html
+    // 2) renomme-la: pdp.png
+    // 3) remplace la ligne CHANNEL_AVATAR par: const CHANNEL_AVATAR = "pdp.png";
 
-    function openGate(){
-      tgGate.classList.add("show");
-      tgGate.setAttribute("aria-hidden","false");
+    // Bannière par défaut (tu peux changer)
+    const DEFAULT_BANNER = "https://empire-sport.space/upload/cards/multiplex_28.png";
+
+    /* =========================
+       1) TELEGRAM GATE (PRO)
+       ========================= */
+    const gate = document.getElementById("gate");
+    const gateJoin = document.getElementById("gateJoin");
+    const gateContinue = document.getElementById("gateContinue");
+    const gateClose = document.getElementById("gateClose");
+    const openGateTop = document.getElementById("openGateTop");
+    const openGateIcon = document.getElementById("openGateIcon");
+    const gateAvatarImg = document.getElementById("gateAvatarImg");
+
+    gateJoin.href = TELEGRAM_INVITE_URL;
+    gateAvatarImg.src = CHANNEL_AVATAR;
+
+    function isAllowed(){ return localStorage.getItem(TG_STORAGE_KEY) === "1"; }
+    function allow(){ localStorage.setItem(TG_STORAGE_KEY, "1"); }
+    function showGate(){
+      gate.classList.add("show");
+      gate.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
     }
-    function closeGate(){
-      tgGate.classList.remove("show");
-      tgGate.setAttribute("aria-hidden","true");
-    }
-    function isAllowed(){
-      return localStorage.getItem(TG_STORAGE_KEY) === "1";
-    }
-    function markAllowed(){
-      localStorage.setItem(TG_STORAGE_KEY, "1");
+    function hideGate(){
+      gate.classList.remove("show");
+      gate.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
     }
 
-    tgJoinBtn.href = TELEGRAM_INVITE_URL;
-
-    joinTelegramTop.addEventListener("click", (e) => {
-      e.preventDefault();
-      openGate();
+    // ouvrir le gate depuis la topbar
+    [openGateTop, openGateIcon].forEach(el=>{
+      el.addEventListener("click",(e)=>{ e.preventDefault(); showGate(); });
     });
 
-    // Autorise dès le clic (front-only)
-    tgJoinBtn.addEventListener("click", () => {
-      markAllowed();
+    // marque l’accès dès le clic "rejoindre" (front-only)
+    gateJoin.addEventListener("click", () => { allow(); });
+
+    gateContinue.addEventListener("click", () => {
+      if(!isAllowed()) { showGate(); return; }
+      hideGate();
     });
 
-    tgAccessBtn.addEventListener("click", () => {
-      if(!isAllowed()){
-        openGate();
-        return;
+    // bouton X : on le laisse, mais si pas autorisé => on ré-ouvre direct au prochain clic
+    gateClose.addEventListener("click", () => {
+      if(isAllowed()) hideGate();
+      else showGate();
+    });
+
+    // clique dehors = rien (propre)
+    gate.addEventListener("click", (e) => {
+      if(e.target === gate){
+        if(isAllowed()) hideGate();
+        else showGate();
       }
-      closeGate();
     });
 
-    // Bloque les clics tant que pas autorisé (hors pop-up)
+    // bloque toute interaction tant que pas autorisé
     document.addEventListener("click", (e) => {
       if(isAllowed()) return;
 
-      const insideModal = e.target.closest(".tgModal");
-      if(tgGate.classList.contains("show") && insideModal) return;
+      const insideGateCard = e.target.closest(".gateCard");
+      if(gate.classList.contains("show") && insideGateCard) return;
 
-      // bloquer toute interaction/clic sur le site
       e.preventDefault();
       e.stopPropagation();
-      openGate();
+      showGate();
     }, true);
 
     window.addEventListener("load", () => {
-      if(!isAllowed()) openGate();
+      if(!isAllowed()) showGate();
     });
 
     /* =========================
-       1) PROGRAMME (AUJOURD'HUI)
+       2) DATA (EXEMPLE)
        ========================= */
     const todayMatches = [
       {
@@ -490,14 +631,11 @@
         bLogo:"https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg",
         status:"",
         sport:"Football",
-        banner:"https://empire-sport.space/upload/cards/multiplex_28.png"
+        banner: DEFAULT_BANNER
       }
     ];
 
-    /* =========================
-       1.1) STATUS AUTO
-       ========================= */
-    const MATCH_DURATION_MIN = 135; // 2h15
+    const MATCH_DURATION_MIN = 135;
     function timeToMinutes(hhmm){
       const [h,m] = hhmm.split(":").map(Number);
       return (h*60)+(m||0);
@@ -513,9 +651,6 @@
     }
     todayMatches.forEach(m => m.status = computeStatus(m.time));
 
-    /* =========================
-       2) À LA UNE (slider)
-       ========================= */
     const matches = todayMatches.map(m => ({
       id: m.id,
       status: m.status,
@@ -529,9 +664,6 @@
       banner: m.banner
     }));
 
-    /* =========================
-       3) À venir (rail)
-       ========================= */
     const upcomingMatches = todayMatches
       .filter(x => x.status === "À venir")
       .sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time))
@@ -545,7 +677,7 @@
       }));
 
     /* =========================
-       4) HERO + SLIDER (rendu)
+       3) HERO + SLIDER
        ========================= */
     const bg = document.getElementById("bg");
     const heroTitle = document.getElementById("heroTitle");
@@ -585,9 +717,7 @@
       `;
     }
 
-    // IMPORTANT :
-    // Ici on garde les liens "match" pour plus tard. Pour l’instant, ça ouvre #.
-    // Si tu crées des pages (ex: manu-bournemouth.html) remplace url par `${m.id}.html`
+    // Si tu veux une page lecteur, remplace "#" par `${m.id}.html`
     function cardHTML(m){
       const url = "#";
       return `
@@ -614,7 +744,7 @@
     }
 
     function dotHTML(i){
-      return `<div class="d ${i===0?'active':''}" id="d${i}" data-dot="${i}"></div>`;
+      return `<div class="d ${i===0?'active':''}" data-dot="${i}"></div>`;
     }
 
     function miniHTML(x){
@@ -637,10 +767,7 @@
     }
 
     function updateDots(){
-      for(let i=0;i<matches.length;i++){
-        const el=document.getElementById("d"+i);
-        if(el) el.classList.toggle("active", i===idx);
-      }
+      [...dots.querySelectorAll(".d")].forEach((el,i)=> el.classList.toggle("active", i===idx));
     }
 
     function update(){
@@ -659,32 +786,19 @@
       updateDots();
     }
 
-    function nextSlide(){
-      idx = (idx + 1) % matches.length;
-      update();
-    }
-    function prevSlide(){
-      idx = (idx - 1 + matches.length) % matches.length;
-      update();
-    }
-    function goTo(i){
-      idx = i;
-      update();
-    }
+    function nextSlide(){ idx = (idx + 1) % matches.length; update(); }
+    function prevSlide(){ idx = (idx - 1 + matches.length) % matches.length; update(); }
+    function goTo(i){ idx = i; update(); }
 
-    // Render slider
     track.innerHTML = matches.map(cardHTML).join("");
     dots.innerHTML = matches.map((_,i)=>dotHTML(i)).join("");
     upcoming.innerHTML = upcomingMatches.map(miniHTML).join("");
 
-    // Events: arrows + dots
     track.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-act]");
-      if(btn){
-        e.preventDefault();
-        if(btn.dataset.act === "next") nextSlide();
-        if(btn.dataset.act === "prev") prevSlide();
-      }
+      if(!btn) return;
+      e.preventDefault();
+      btn.dataset.act === "next" ? nextSlide() : prevSlide();
     });
 
     dots.addEventListener("click", (e) => {
@@ -696,23 +810,18 @@
 
     // Swipe
     let startX=0;
-    track.addEventListener("touchstart", e => {
-      startX = e.touches[0].clientX;
-    }, {passive:true});
+    track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, {passive:true});
     track.addEventListener("touchend", e => {
       const endX = e.changedTouches[0].clientX;
       const dx = endX - startX;
-      if(Math.abs(dx) > 40){
-        if(dx < 0) nextSlide();
-        else prevSlide();
-      }
+      if(Math.abs(dx) > 40) dx < 0 ? nextSlide() : prevSlide();
     }, {passive:true});
 
     update();
     window.addEventListener("resize", update);
 
     /* =========================
-       5) ÉVÉNEMENTS (LISTE)
+       4) EVENTS LIST
        ========================= */
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
@@ -727,10 +836,9 @@
     };
 
     function renderFilters(){
-      filtersEl.innerHTML = FILTERS.map(f => {
-        const safe = f.replace(/"/g,'&quot;');
-        return `<button class="chip ${f===activeFilter?'active':''}" data-filter="${safe}">${f}</button>`;
-      }).join("");
+      filtersEl.innerHTML = FILTERS.map(f => `
+        <button class="chip ${f===activeFilter?'active':''}" data-filter="${f}">${f}</button>
+      `).join("");
     }
 
     filtersEl.addEventListener("click", (e) => {
