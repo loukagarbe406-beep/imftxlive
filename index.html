@@ -282,7 +282,7 @@
     footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
     /* =========================
-       GATE RECTANGLE (compact + auto)
+       GATE RECTANGLE (auto)
        ========================= */
     .gate{
       position:fixed; inset:0; z-index:9999;
@@ -367,18 +367,6 @@
       text-align:right;max-width:360px;
     }
 
-    .gateClose{
-      position:absolute; top:14px; right:14px; z-index:3;
-      width:42px;height:42px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(0,0,0,.28);
-      color:#fff;
-      cursor:pointer;
-      display:grid;place-items:center;
-      opacity:.85;
-    }
-    .gateClose:hover{opacity:1}
-
     @media (min-width: 1400px){
       :root{ --cardW: 1100px; --cardH: 560px; }
     }
@@ -392,12 +380,10 @@
       }
       .cardArrow{display:none}
       .centerHeader h1{font-size:30px}
-
       .bottom{left:14px;right:14px;bottom:12px;gap:12px}
       .watch{height:52px;padding:8px 12px}
       .play{width:42px;height:42px;margin-right:10px}
       .watchTxt{font-size:14px}
-
       .mini{width:280px}
       .miniImg{height:160px}
       .eventRow{grid-template-columns: 1fr;gap:10px;align-items:start}
@@ -405,7 +391,6 @@
       .eventRight{align-items:flex-start}
       .midTeam b{max-width:160px}
 
-      /* gate responsive */
       .gateInner{grid-template-columns:1fr;gap:14px}
       .gateRight{align-items:flex-start}
       .gateMini{text-align:left;max-width:none}
@@ -432,32 +417,22 @@
     </div>
   </header>
 
-  <!-- GATE RECTANGLE (compact, texte nickel, pas de continuer) -->
+  <!-- GATE (auto: pas de continuer) -->
   <div id="gate" class="gate" aria-hidden="true">
     <div class="gateRect" role="dialog" aria-modal="true" aria-label="Accès sécurisé">
-      <button class="gateClose" id="gateClose" type="button" aria-label="Fermer">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
       <div class="gateInner">
         <div class="gateLeft">
-          <div class="gateAvatar">
-            <img id="gateAvatarImg" alt="IMFTX+">
-          </div>
-
+          <div class="gateAvatar"><img id="gateAvatarImg" alt="IMFTX+"></div>
           <div class="gateText">
-            <h2 class="gateH1">⚠️ BIENVENUE SUR IMFTX+ ⚠️</h2>
-            <div class="gateH2">📣 Rejoins vite notre canal <br>pour être acceptez sur le site !!</div>
+            <h2 class="gateH1">⚠️ LE SITE PEUT SAUTER À TOUT MOMENT ⚠️</h2>
+            <div class="gateH2">📣 Rejoins vite notre canal secours<br>pour être toujours informé !!</div>
           </div>
         </div>
-
         <div class="gateRight">
           <a class="gateBtn" id="gateJoin" href="#" target="_blank" rel="noopener">
             Rejoignez ici ! <i class="fa-solid fa-arrow-right"></i>
           </a>
-          <div class="gateMini">
-            Après le clic, l’accès se débloque automatiquement ✅
-          </div>
+          <div class="gateMini">Après le clic, l’accès se débloque automatiquement ✅</div>
         </div>
       </div>
     </div>
@@ -505,19 +480,61 @@
        0) CONFIG
        ========================= */
     const TELEGRAM_INVITE_URL = "https://t.me/+llOGaNG7HeUzNmE0";
-    const TG_STORAGE_KEY = "imftx_tg_ok_v2";
+    const TG_STORAGE_KEY = "imftx_tg_ok_v3";
 
-    // ton image (discord) => affichage direct
     const CHANNEL_AVATAR = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?ex=6946e33b&is=694591bb&hm=f29ad949bfddcce871cc32b769788f5965fcf4e28d7183fbb6bade0a4f691d59&=&format=webp&quality=lossless";
 
-    const DEFAULT_BANNER = "https://empire-sport.space/upload/cards/multiplex_28.png";
+    // Pages lecteur: mets tes pages dans /html/ (ex: html/bologne-inter.html)
+    const PLAYER_FOLDER = "html";
+
+    // Logos / banners donnés
+    const ASSETS = {
+      coupeLogo: "https://empire-sport.space/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
+      multiplexBanner: "https://empire-sport.space/upload/cards/multiplex_31.png",
+
+      interBanner: "https://empire-sport.space/upload/banners/hellas-verona-vs-inter-milan.png",
+      bvbLogo: "https://empire-sport.space/upload/teambanks/djj2j8cg1nwamyc44nye0olnube1mx.png",
+      brestLogo: "https://empire-sport.space/upload/teambanks/jpdgvoxsfswpse3oskgrown31io2qa.png",
+      montpellierBanner: "https://empire-sport.space/event/canet-roussillon-vs-montpellier2025-12-19",
+      reimsLogo: "https://empire-sport.space/upload/teams/nxljk5kszt48p8fkerxs1dowpiw0ku.png",
+      lavalLogo: "https://empire-sport.space/upload/teams/kpdpockmozdtpanjck7d8tcsedv4vk.png",
+      angersLogo: "https://empire-sport.space/upload/teams/mp7vl6etdrmcmtqnm2mvoejnnnwdy9.png",
+      leMansPerignyLogo: "https://empire-sport.space/upload/teams/qhftetksteoqowccs609apvfgocnsn.png",
+      lensLogo: "https://empire-sport.space/upload/teambanks/539s1pm6c5uacewa39e37rhhtiem00.png"
+    };
 
     /* =========================
-       1) TELEGRAM GATE (AUTO)
+       1) LOGO FALLBACK (si tu n'as pas donné un logo)
+       ========================= */
+    function svgBadge(text){
+      const t = (text || "?").trim().slice(0,3).toUpperCase();
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140">
+          <defs>
+            <radialGradient id="g" cx="30%" cy="20%" r="90%">
+              <stop offset="0" stop-color="rgba(255,255,255,.22)"/>
+              <stop offset="1" stop-color="rgba(255,255,255,.06)"/>
+            </radialGradient>
+          </defs>
+          <rect x="0" y="0" width="140" height="140" rx="70" fill="url(#g)"/>
+          <circle cx="70" cy="70" r="68" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="3"/>
+          <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
+                font-family="Outfit, Arial" font-size="44" font-weight="900"
+                fill="rgba(255,255,255,.92)">${t}</text>
+        </svg>`;
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    }
+
+    function safeLogo(url, fallbackText){
+      if(typeof url === "string" && url.trim().length > 4) return url;
+      return svgBadge(fallbackText);
+    }
+
+    /* =========================
+       2) TELEGRAM GATE (auto)
        ========================= */
     const gate = document.getElementById("gate");
     const gateJoin = document.getElementById("gateJoin");
-    const gateClose = document.getElementById("gateClose");
     const openGateTop = document.getElementById("openGateTop");
     const openGateIcon = document.getElementById("openGateIcon");
     const gateAvatarImg = document.getElementById("gateAvatarImg");
@@ -527,7 +544,6 @@
 
     function isAllowed(){ return localStorage.getItem(TG_STORAGE_KEY) === "1"; }
     function allow(){ localStorage.setItem(TG_STORAGE_KEY, "1"); }
-
     function showGate(){
       gate.classList.add("show");
       gate.setAttribute("aria-hidden","false");
@@ -543,22 +559,11 @@
       el.addEventListener("click",(e)=>{ e.preventDefault(); showGate(); });
     });
 
-    // ✅ Auto: au clic "Rejoignez ici !" -> autorise + ferme direct
     gateJoin.addEventListener("click", () => {
       allow();
-      // ferme instant pour que le site apparaisse, pendant que Telegram s'ouvre
       setTimeout(hideGate, 60);
     });
 
-    gateClose.addEventListener("click", () => {
-      // si tu veux rendre ça 100% obligatoire, commente ces 2 lignes :
-      // if (isAllowed()) hideGate();
-      // else showGate();
-      // là: on force toujours l’accès via bouton join
-      showGate();
-    });
-
-    // Empêche de cliquer sur le site tant que pas autorisé
     document.addEventListener("click", (e) => {
       if(isAllowed()) return;
 
@@ -575,26 +580,154 @@
     });
 
     /* =========================
-       2) DATA (EXEMPLE)
+       3) PROGRAMME (TES MATCHS)
        ========================= */
+    // IMPORTANT :
+    // - Les liens "REGARDER" ouvrent: /html/<id>.html en NOUVEL ONGLET
+    // - Crée le dossier /html et tes pages dedans.
     const todayMatches = [
+      // Multiplex Coupe de France (ajout)
       {
-        id:"manu-bournemouth",
-        time:"21:00",
-        comp:"Premier League",
-        match:"Manchester U. - Bournemouth",
-        a:"Manchester U.",
-        b:"Bournemouth",
-        aLogo:"https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg",
-        bLogo:"https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg",
+        id:"multiplex-cdf",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Multiplex Coupe de France",
+        a:"Multiplex",
+        b:"Coupe de France",
+        aLogo: ASSETS.coupeLogo,
+        bLogo: ASSETS.coupeLogo,
         status:"",
         sport:"Football",
-        banner: DEFAULT_BANNER
+        banner: ASSETS.multiplexBanner
+      },
+
+      // Programme screenshot
+      {
+        id:"bologne-inter",
+        time:"20:00",
+        comp:"Coupe (Italie)",
+        match:"Bologne - Inter Milan",
+        a:"Bologne",
+        b:"Inter Milan",
+        aLogo: "", // pas donné -> fallback auto
+        bLogo: "", // pas donné -> fallback auto
+        status:"",
+        sport:"Football",
+        banner: ASSETS.interBanner
+      },
+      {
+        id:"dortmund-gladbach",
+        time:"20:30",
+        comp:"Coupe (Allemagne)",
+        match:"Dortmund - M'gladbach",
+        a:"Dortmund",
+        b:"M'gladbach",
+        aLogo: ASSETS.bvbLogo, // tu as donné "bvb"
+        bLogo: "", // pas donné -> fallback auto
+        status:"",
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
+      {
+        id:"avranches-brest",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Avranches - Brest",
+        a:"Avranches",
+        b:"Brest",
+        aLogo: "",
+        bLogo: ASSETS.brestLogo,
+        status:"",
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
+      {
+        id:"canet-montpellier",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Canet - Montpellier",
+        a:"Canet",
+        b:"Montpellier",
+        aLogo: "",
+        bLogo: "",
+        status:"",
+        sport:"Football",
+        banner: ASSETS.montpellierBanner
+      },
+      {
+        id:"guingamp-laval",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Guingamp - Laval",
+        a:"Guingamp",
+        b:"Laval",
+        aLogo: "",
+        bLogo: ASSETS.lavalLogo,
+        status:"",
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
+      {
+        id:"perigny-lemans",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Périgny - Le Mans",
+        a:"Périgny",
+        b:"Le Mans",
+        aLogo: ASSETS.leMansPerignyLogo,
+        bLogo: ASSETS.leMansPerignyLogo,
+        status:"",
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
+      {
+        id:"les-herbiers-angers",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Les Herbiers - Angers",
+        a:"Les Herbiers",
+        b:"Angers",
+        aLogo: "",
+        bLogo: ASSETS.angersLogo,
+        status:"",
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
+      {
+        id:"ic-croix-reims",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"IC Croix - Reims",
+        a:"IC Croix",
+        b:"Reims",
+        aLogo: "",
+        bLogo: ASSETS.reimsLogo,
+        status:"",
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
+      {
+        id:"lens-feignies",
+        time:"21:00",
+        comp:"Coupe de France",
+        match:"Lens - Feignies",
+        a:"Lens",
+        b:"Feignies",
+        aLogo: ASSETS.lensLogo,
+        bLogo: "",
+        status:"",
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
       }
-    ];
+    ].map(m => ({
+      ...m,
+      aLogo: safeLogo(m.aLogo, m.a),
+      bLogo: safeLogo(m.bLogo, m.b),
+      banner: (m.banner && String(m.banner).trim()) ? m.banner : ASSETS.multiplexBanner
+    }));
 
     /* =========================
-       3) STATUS AUTO
+       4) STATUS AUTO
        ========================= */
     const MATCH_DURATION_MIN = 135;
     function timeToMinutes(hhmm){
@@ -612,7 +745,12 @@
     }
     todayMatches.forEach(m => m.status = computeStatus(m.time));
 
-    const matches = todayMatches.map(m => ({
+    /* =========================
+       5) SLIDER (on met le multiplex + 2 grosses affiches)
+       ========================= */
+    const sliderIds = new Set(["multiplex-cdf","bologne-inter","dortmund-gladbach"]);
+    const sliderMatches = todayMatches.filter(m => sliderIds.has(m.id));
+    const matches = (sliderMatches.length ? sliderMatches : todayMatches).map(m => ({
       id: m.id,
       status: m.status,
       league: m.comp,
@@ -625,6 +763,9 @@
       banner: m.banner
     }));
 
+    /* =========================
+       6) À venir (rail)
+       ========================= */
     const upcomingMatches = todayMatches
       .filter(x => x.status === "À venir")
       .sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time))
@@ -638,7 +779,7 @@
       }));
 
     /* =========================
-       4) HERO + SLIDER
+       7) HERO + SLIDER RENDER
        ========================= */
     const bg = document.getElementById("bg");
     const heroTitle = document.getElementById("heroTitle");
@@ -678,21 +819,27 @@
       `;
     }
 
+    function playerUrl(matchId){
+      return `${PLAYER_FOLDER}/${matchId}.html`;
+    }
+
     function cardHTML(m){
-      const url = "#";
+      const url = playerUrl(m.id);
       return `
         <div class="card">
           <div class="poster" style="background-image:url('${m.banner}')"></div>
           ${badgeHTML(m)}
           <div class="cardArrow left" data-act="prev"><span>‹</span></div>
           <div class="cardArrow right" data-act="next"><span>›</span></div>
+
           <div class="bottom">
             <div class="leftInfo">
               ${logosBlock(m)}
               <div class="cardTitle">${m.title}</div>
               <div class="cardSub">${m.league} • ${m.time}</div>
             </div>
-            <a class="watch" href="${url}" rel="noopener">
+
+            <a class="watch" href="${url}" target="_blank" rel="noopener">
               <div class="play">▶</div>
               <div class="watchTxt">REGARDER</div>
             </a>
@@ -706,10 +853,10 @@
     }
 
     function miniHTML(x){
-      const url = "#";
+      const url = playerUrl(x.id);
       const dot = x.status === "En cours" ? "dotGreen" : "dotOrange";
       return `
-        <a class="mini" href="${url}" rel="noopener">
+        <a class="mini" href="${url}" target="_blank" rel="noopener">
           <div class="miniImg" style="background-image:url('${x.banner}')">
             <div class="miniTop">
               <span class="pill"><span class="${dot}"></span>${x.status}</span>
@@ -778,18 +925,16 @@
     window.addEventListener("resize", update);
 
     /* =========================
-       5) EVENTS LIST
+       8) EVENTS LIST
        ========================= */
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
-    const FILTERS = ["Tous Les Événements", "Football"];
+
+    const FILTERS = ["Tous Les Événements", "Football", "Coupe de France"];
     let activeFilter = "Tous Les Événements";
 
     const COMP_LOGOS = {
-      "Premier League": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png?20161224005103",
-      "Ligue 1": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fa/Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg/langfr-250px-Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg.png",
-      "Serie A": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Serie_A.svg/618px-Serie_A.svg.png",
-      "La Liga": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/LaLiga_logo_2023.svg/2048px-LaLiga_logo_2023.svg.png"
+      "Coupe de France": ASSETS.coupeLogo
     };
 
     function renderFilters(){
@@ -817,10 +962,10 @@
     }
 
     function rowHTML(m){
-      const url = "#";
+      const url = playerUrl(m.id);
       const compLogo = COMP_LOGOS[m.comp] || "";
       return `
-        <a class="eventRow" href="${url}" rel="noopener">
+        <a class="eventRow" href="${url}" target="_blank" rel="noopener">
           <div class="eventLeft">
             ${compLogo ? `<img class="compLogo" src="${compLogo}" alt="${m.comp}">` : ``}
             <div class="eventTxt">
@@ -853,6 +998,7 @@
       const list = todayMatches.filter(m => {
         if(activeFilter === "Tous Les Événements") return true;
         if(activeFilter === "Football") return m.sport === "Football";
+        if(activeFilter === "Coupe de France") return m.comp === "Coupe de France";
         return true;
       });
       eventsList.innerHTML = list.map(rowHTML).join("");
@@ -863,4 +1009,3 @@
   </script>
 </body>
 </html>
-
