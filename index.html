@@ -329,9 +329,7 @@
       transition: .15s;
       user-select:none;
     }
-    .btnPrimary{
-      background:#fff; color:#000;
-    }
+    .btnPrimary{background:#fff; color:#000;}
     .btnPrimary:hover{transform:translateY(-1px)}
     .btnGhost{
       background:rgba(255,255,255,.10);
@@ -339,15 +337,9 @@
       border:1px solid rgba(255,255,255,.14);
     }
     .btnGhost:hover{background:rgba(255,255,255,.14)}
-    .gateNote{
-      margin-top:10px;
-      font-size:12px;
-      opacity:.55;
-    }
+    .gateNote{margin-top:10px;font-size:12px;opacity:.55}
 
-    @media (min-width: 1400px){
-      :root{ --cardW: 1100px; --cardH: 560px; }
-    }
+    @media (min-width: 1400px){ :root{ --cardW: 1100px; --cardH: 560px; } }
     @media (max-width: 980px){
       :root{ --max: 1200px; --cardW: calc(100vw - 36px); --cardH: 340px; --gap: 14px; --r: 20px; }
       .cardArrow{display:none}
@@ -458,7 +450,7 @@
     ========================= */
     const TELEGRAM_LINK = "https://t.me/+llOGaNG7HeUzNmE0";
     const TELEGRAM_PDP = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?ex=6946e33b&is=694591bb&hm=f29ad949bfddcce871cc32b769788f5965fcf4e28d7183fbb6bade0a4f691d59&=&format=webp&quality=lossless";
-    const TELEGRAM_BANNER = TELEGRAM_PDP; // on réutilise la même image pour faire propre
+    const TELEGRAM_BANNER = TELEGRAM_PDP;
 
     const ACCESS_KEY = "imftx_access_v1";
 
@@ -470,28 +462,20 @@
     const tgTop = document.getElementById("tgTop");
 
     tgTop.href = TELEGRAM_LINK;
-
     gateAvatar.src = TELEGRAM_PDP;
     gateBanner.style.backgroundImage = `url('${TELEGRAM_BANNER}')`;
 
-    function hasAccess(){
-      return localStorage.getItem(ACCESS_KEY) === "1";
-    }
-    function grantAccess(){
-      localStorage.setItem(ACCESS_KEY, "1");
-    }
+    function hasAccess(){ return localStorage.getItem(ACCESS_KEY) === "1"; }
+    function grantAccess(){ localStorage.setItem(ACCESS_KEY, "1"); }
 
-    // Gate: si pas accès -> afficher direct
     if(!hasAccess()){
       gate.classList.add("show");
       document.body.style.overflow = "hidden";
     }
 
     joinBtn.addEventListener("click", () => {
-      // on déverrouille (impossible de vérifier l’adhésion Telegram côté front, donc on fait "click-to-unlock")
       grantAccess();
       window.open(TELEGRAM_LINK, "_blank", "noopener");
-      // déverrouille automatiquement le site
       gate.classList.remove("show");
       document.body.style.overflow = "";
     });
@@ -507,65 +491,38 @@
     });
 
     /* =========================
-      DONNÉES (MATCHS DU JOUR)
-      - Bannières: Inter + Multiplex fournies
-      - Les autres: banner auto générée (canvas) => plus jamais "multiplex partout"
+      TES BANNIÈRES / LOGOS (ceux que tu as donnés)
+      -> on les met en direct, pas de raccourcis
     ========================= */
+    const ASSETS = {
+      // logos / visuels fournis
+      logoBologne: "https://empire-sport.space/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
+      logoBVB:     "https://empire-sport.space/upload/teambanks/djj2j8cg1nwamyc44nye0olnube1mx.png",
+      logoBrest:   "https://empire-sport.space/upload/teambanks/jpdgvoxsfswpse3oskgrown31io2qa.png",
+      logoLens:    "https://empire-sport.space/upload/teambanks/539s1pm6c5uacewa39e37rhhtiem00.png",
 
-    // Helpers: lien direct pour fichiers (Wikimedia/Wikipedia)
-    const WP = (filename, lang="commons") => {
-      // filename déjà encodé côté appel (on garde simple)
-      return lang === "commons"
-        ? `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}`
-        : `https://fr.wikipedia.org/wiki/Special:FilePath/${filename}`;
+      // bannières
+      bannerInter: "https://empire-sport.space/upload/banners/hellas-verona-vs-inter-milan.png",
+      bannerMultiplex: "https://empire-sport.space/upload/cards/multiplex_31.png",
+
+      // autres bannières que tu as collé (je les utilise pour les matchs restants)
+      banner1: "https://images.lindependant.fr/api/v1/images/view/607e99303e45466a7f4cd286/large/image.jpg?v=1",
+      banner2: "https://assets-fr.imgfoot.com/match-cover-fr-3000472963910107818-6776159835892173948.jpg",
+      banner3: "https://thumb.canalplus.pro/http/unsafe/1440x810/filters:quality(80)/canalplus-cdn.canal-plus.io/p1/unit/30543080/canal-ouah/STD169/myCANAL_16x9_sport_1920x1080-2025-12-12T151504.603-e_lV",
+      banner4: "https://assets-fr.imgfoot.com/match-cover-fr-29127771517931326-8739455938979179464.jpg",
+      banner5: "https://assets-fr.imgfoot.com/match-cover-fr-1192861957272617165-4068287927415629445.jpg"
     };
 
-    const COMP = {
-      "Coupe de France": {
-        name: "Coupe de France",
-        logo: WP("Coupe_de_France.svg") // Commons
-      },
-      "Coupe (Italie)": { name: "Coupe (Italie)", logo: WP("Coppa_Italia_logo.svg") }, // fallback possible (si absent, on gère)
-      "Coupe (Allemagne)": { name: "Coupe (Allemagne)", logo: "" }
-    };
+    // mini helper: si URL pas une image (rare), fallback
+    function isImageUrl(u){ return /\.(png|jpg|jpeg|webp|gif)(\?.*)?$/i.test(String(u||"")); }
+    function safeImg(u, fallback){
+      return isImageUrl(u) ? u : (fallback || "");
+    }
 
-    // Logos clubs (Wikipédia/Commons)
-    const TEAMS = {
-      bologne: { name:"Bologne", logo: WP("Bologna_F.C._1909_logo.svg") },
-      inter:   { name:"Inter Milan", logo: WP("FC_Internazionale_Milano_2021.svg") },
-
-      dortmund:{ name:"Dortmund", logo: WP("Borussia_Dortmund_logo.svg","fr") }, // page fr existe
-      gladbach:{ name:"M'gladbach", logo: WP("Logo_Borussia_M%C3%B6nchengladbach.svg","fr") },
-
-      avranches:{ name:"Avranches", logo: WP("Logo_US_Avranches_MSM.svg","fr") },
-      brest:    { name:"Brest", logo: WP("Logo_Stade_Brestois.svg","fr") },
-
-      canet:    { name:"Canet", logo: WP("Canet_Roussillon_FC_(logo).svg","fr") },
-      montpellier:{ name:"Montpellier", logo: WP("Montpellier_H%C3%A9rault_Sport_Club_(logo,_2000).svg") },
-
-      guingamp: { name:"Guingamp", logo: WP("Logo_EA_Guingamp_2019.svg") },
-      laval:    { name:"Laval", logo: WP("Logo_Stade_Lavallois_-_Ann%C3%A9es_1970_et_1980.svg") },
-
-      perigny:  { name:"Périgny", logo: "" }, // pas trouvé fiable sur Commons -> on laisse vide (auto fallback)
-      lemans:   { name:"Le Mans", logo: WP("Logo_Le_Mans_FC_-_2025.svg","fr") },
-
-      herbiers: { name:"Les Herbiers", logo: WP("Logo_Vend%C3%A9e_Herbiers_Football.svg","fr") },
-      angers:   { name:"Angers", logo: WP("Logo_Angers_SCO_2021.svg","fr") },
-
-      iccroix:  { name:"IC Croix", logo: WP("Logo_IC_Croix_Football.svg","fr") },
-      reims:    { name:"Reims", logo: WP("Stade_Reims.svg") },
-
-      lens:     { name:"Lens", logo: WP("Logo_RC_Lens_2024.svg","fr") },
-      feignies: { name:"Feignies", logo: WP("Logo_Entente_Feignies-Aulnoye_FC_2016.svg","fr") }
-    };
-
-    // Bannières fournies (vraies bannières)
-    const BANNERS = {
-      interMatch: "https://empire-sport.space/upload/banners/hellas-verona-vs-inter-milan.png",
-      multiplex:  "https://empire-sport.space/upload/cards/multiplex_31.png"
-      bvb :  "https://empire-sport.space/upload/cards/multiplex_31.png"
-    };
-
+    /* =========================
+      DONNÉES (MATCHS DU JOUR)
+      (j’ai gardé tes matchs, et je mets tes bannières à la place)
+    ========================= */
     const todayMatches = [
       {
         id:"multiplex-cdf",
@@ -574,9 +531,8 @@
         sport:"Football",
         match:"Multiplex Coupe de France",
         a:"Multiplex", b:"Coupe de France",
-        aLogo: COMP["Coupe de France"].logo,
-        bLogo: COMP["Coupe de France"].logo,
-        banner: BANNERS.multiplex
+        aLogo: "", bLogo: "",
+        banner: ASSETS.bannerMultiplex
       },
       {
         id:"bologne-inter",
@@ -584,9 +540,10 @@
         comp:"Coupe (Italie)",
         sport:"Football",
         match:"Bologne - Inter Milan",
-        a:TEAMS.bologne.name, b:TEAMS.inter.name,
-        aLogo:TEAMS.bologne.logo, bLogo:TEAMS.inter.logo,
-        banner: BANNERS.interMatch
+        a:"Bologne", b:"Inter Milan",
+        aLogo: ASSETS.logoBologne,
+        bLogo: "",
+        banner: ASSETS.bannerInter
       },
       {
         id:"dortmund-gladbach",
@@ -594,9 +551,10 @@
         comp:"Coupe (Allemagne)",
         sport:"Football",
         match:"Dortmund - M'gladbach",
-        a:TEAMS.dortmund.name, b:TEAMS.gladbach.name,
-        aLogo:TEAMS.dortmund.logo, bLogo:TEAMS.gladbach.logo,
-        banner: BANNERS.bvb
+        a:"Dortmund", b:"M'gladbach",
+        aLogo: ASSETS.logoBVB,
+        bLogo: "",
+        banner: ASSETS.banner2
       },
       {
         id:"avranches-brest",
@@ -604,9 +562,10 @@
         comp:"Coupe de France",
         sport:"Football",
         match:"Avranches - Brest",
-        a:TEAMS.avranches.name, b:TEAMS.brest.name,
-        aLogo:TEAMS.avranches.logo, bLogo:TEAMS.brest.logo,
-        banner: "" // auto
+        a:"Avranches", b:"Brest",
+        aLogo: "",
+        bLogo: ASSETS.logoBrest,
+        banner: ASSETS.banner1
       },
       {
         id:"canet-montpellier",
@@ -614,9 +573,10 @@
         comp:"Coupe de France",
         sport:"Football",
         match:"Canet - Montpellier",
-        a:TEAMS.canet.name, b:TEAMS.montpellier.name,
-        aLogo:TEAMS.canet.logo, bLogo:TEAMS.montpellier.logo,
-        banner: "" // auto
+        a:"Canet", b:"Montpellier",
+        aLogo: "",
+        bLogo: "",
+        banner: ASSETS.banner3
       },
       {
         id:"guingamp-laval",
@@ -624,9 +584,10 @@
         comp:"Coupe de France",
         sport:"Football",
         match:"Guingamp - Laval",
-        a:TEAMS.guingamp.name, b:TEAMS.laval.name,
-        aLogo:TEAMS.guingamp.logo, bLogo:TEAMS.laval.logo,
-        banner: "" // auto
+        a:"Guingamp", b:"Laval",
+        aLogo: "",
+        bLogo: "",
+        banner: ASSETS.banner4
       },
       {
         id:"perigny-lemans",
@@ -634,9 +595,10 @@
         comp:"Coupe de France",
         sport:"Football",
         match:"Périgny - Le Mans",
-        a:TEAMS.perigny.name, b:TEAMS.lemans.name,
-        aLogo:TEAMS.perigny.logo, bLogo:TEAMS.lemans.logo,
-        banner: "" // auto
+        a:"Périgny", b:"Le Mans",
+        aLogo: "",
+        bLogo: "",
+        banner: ASSETS.banner5
       },
       {
         id:"herbiers-angers",
@@ -644,9 +606,10 @@
         comp:"Coupe de France",
         sport:"Football",
         match:"Les Herbiers - Angers",
-        a:TEAMS.herbiers.name, b:TEAMS.angers.name,
-        aLogo:TEAMS.herbiers.logo, bLogo:TEAMS.angers.logo,
-        banner: "" // auto
+        a:"Les Herbiers", b:"Angers",
+        aLogo: "",
+        bLogo: "",
+        banner: ASSETS.banner2
       },
       {
         id:"iccroix-reims",
@@ -654,9 +617,10 @@
         comp:"Coupe de France",
         sport:"Football",
         match:"IC Croix - Reims",
-        a:TEAMS.iccroix.name, b:TEAMS.reims.name,
-        aLogo:TEAMS.iccroix.logo, bLogo:TEAMS.reims.logo,
-        banner: "" // auto
+        a:"IC Croix", b:"Reims",
+        aLogo: "",
+        bLogo: "",
+        banner: ASSETS.banner1
       },
       {
         id:"lens-feignies",
@@ -664,16 +628,22 @@
         comp:"Coupe de France",
         sport:"Football",
         match:"Lens - Feignies",
-        a:TEAMS.lens.name, b:TEAMS.feignies.name,
-        aLogo:TEAMS.lens.logo, bLogo:TEAMS.feignies.logo,
-        banner: "" // auto
+        a:"Lens", b:"Feignies",
+        aLogo: ASSETS.logoLens,
+        bLogo: "",
+        banner: ASSETS.banner4
       }
-    ];
+    ].map(m => ({
+      ...m,
+      aLogo: safeImg(m.aLogo, ""),
+      bLogo: safeImg(m.bLogo, ""),
+      banner: safeImg(m.banner, ASSETS.bannerMultiplex)
+    }));
 
     /* =========================
       STATUS AUTO
     ========================= */
-    const MATCH_DURATION_MIN = 135; // 2h15
+    const MATCH_DURATION_MIN = 135;
     function timeToMinutes(hhmm){
       const [h,m] = hhmm.split(":").map(Number);
       return (h*60)+(m||0);
@@ -690,167 +660,9 @@
     todayMatches.forEach(m => m.status = computeStatus(m.time));
 
     /* =========================
-      BANNIÈRES AUTO (CANVAS)
-      -> crée un visuel dark propre à chaque match avec les logos
+      VIEW MODELS
     ========================= */
-    const bannerCache = new Map();
-
-    function loadImg(src){
-      return new Promise((resolve,reject)=>{
-        if(!src){ resolve(null); return; }
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.onload = () => resolve(img);
-        img.onerror = () => resolve(null);
-        img.src = src;
-      });
-    }
-
-    async function makeAutoBanner({aLogo,bLogo,compLogo,title}){
-      const key = JSON.stringify({aLogo,bLogo,compLogo,title});
-      if(bannerCache.has(key)) return bannerCache.get(key);
-
-      const w = 1600, h = 900;
-      const c = document.createElement("canvas");
-      c.width = w; c.height = h;
-      const ctx = c.getContext("2d");
-
-      // fond gradient dark
-      const g = ctx.createLinearGradient(0,0,w,h);
-      g.addColorStop(0, "#0b1220");
-      g.addColorStop(0.55, "#050a14");
-      g.addColorStop(1, "#000000");
-      ctx.fillStyle = g;
-      ctx.fillRect(0,0,w,h);
-
-      // noise léger
-      for(let i=0;i<9000;i++){
-        const x = Math.random()*w, y=Math.random()*h;
-        ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.03})`;
-        ctx.fillRect(x,y,1,1);
-      }
-
-      const [A,B,C] = await Promise.all([loadImg(aLogo), loadImg(bLogo), loadImg(compLogo)]);
-
-      // halos
-      ctx.globalAlpha = 0.55;
-      ctx.fillStyle = "#0ea5e9";
-      ctx.beginPath(); ctx.arc(w*0.18,h*0.35,220,0,Math.PI*2); ctx.fill();
-      ctx.fillStyle = "#a855f7";
-      ctx.beginPath(); ctx.arc(w*0.82,h*0.68,260,0,Math.PI*2); ctx.fill();
-      ctx.globalAlpha = 1;
-
-      // logos en "blur" en fond
-      function drawBlurLogo(img, x, y, size, alpha){
-        if(!img) return;
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        ctx.filter = "blur(10px)";
-        ctx.drawImage(img, x-size/2, y-size/2, size, size);
-        ctx.restore();
-      }
-      drawBlurLogo(A, w*0.28, h*0.55, 520, 0.22);
-      drawBlurLogo(B, w*0.72, h*0.52, 520, 0.22);
-
-      // cartes logos net
-      function drawCardLogo(img, cx, cy){
-        if(!img) return;
-        const size = 240;
-        const r = 38;
-        const x = cx - size/2, y = cy - size/2;
-
-        // card
-        ctx.save();
-        ctx.fillStyle = "rgba(255,255,255,.08)";
-        ctx.strokeStyle = "rgba(255,255,255,.14)";
-        ctx.lineWidth = 3;
-
-        roundRect(ctx, x, y, size, size, r);
-        ctx.fill();
-        ctx.stroke();
-
-        // logo
-        ctx.shadowColor = "rgba(0,0,0,.55)";
-        ctx.shadowBlur = 24;
-        ctx.drawImage(img, x+38, y+38, size-76, size-76);
-        ctx.restore();
-      }
-
-      function roundRect(ctx, x, y, w, h, r){
-        ctx.beginPath();
-        ctx.moveTo(x+r, y);
-        ctx.arcTo(x+w, y, x+w, y+h, r);
-        ctx.arcTo(x+w, y+h, x, y+h, r);
-        ctx.arcTo(x, y+h, x, y, r);
-        ctx.arcTo(x, y, x+w, y, r);
-        ctx.closePath();
-      }
-
-      drawCardLogo(A, w*0.30, h*0.56);
-      drawCardLogo(B, w*0.70, h*0.56);
-
-      // VS
-      ctx.save();
-      ctx.globalAlpha = 0.95;
-      ctx.fillStyle = "rgba(255,255,255,.10)";
-      ctx.strokeStyle = "rgba(255,255,255,.18)";
-      ctx.lineWidth = 2;
-      const vsW = 150, vsH = 70;
-      roundRect(ctx, w/2 - vsW/2, h*0.56 - vsH/2, vsW, vsH, 26);
-      ctx.fill(); ctx.stroke();
-      ctx.fillStyle = "rgba(255,255,255,.92)";
-      ctx.font = "900 34px Outfit, system-ui, Arial";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText("VS", w/2, h*0.56);
-      ctx.restore();
-
-      // comp logo en haut
-      if(C){
-        ctx.save();
-        ctx.globalAlpha = 0.9;
-        ctx.drawImage(C, w*0.06, h*0.07, 92, 92);
-        ctx.restore();
-      }
-
-      // titre discret
-      ctx.save();
-      ctx.globalAlpha = 0.88;
-      ctx.fillStyle = "rgba(255,255,255,.92)";
-      ctx.font = "900 60px Outfit, system-ui, Arial";
-      ctx.textAlign = "left";
-      ctx.textBaseline = "bottom";
-      const t = (title || "").toUpperCase();
-      ctx.fillText(t.slice(0, 32), w*0.06, h*0.92);
-      ctx.restore();
-
-      // vignette sombre bas
-      ctx.save();
-      const gg = ctx.createLinearGradient(0,h*0.72,0,h);
-      gg.addColorStop(0,"rgba(0,0,0,0)");
-      gg.addColorStop(1,"rgba(0,0,0,.78)");
-      ctx.fillStyle = gg;
-      ctx.fillRect(0,h*0.68,w,h*0.32);
-      ctx.restore();
-
-      const data = c.toDataURL("image/jpeg", 0.86);
-      bannerCache.set(key, data);
-      return data;
-    }
-
-    /* =========================
-      BUILD VIEW MODELS
-    ========================= */
-    function compLogoFor(comp){
-      if(comp === "Coupe de France") return COMP["Coupe de France"].logo;
-      if(comp === "Coupe (Italie)") return ""; // optionnel
-      if(comp === "Coupe (Allemagne)") return "";
-      return "";
-    }
-
-    function formatToday(hhmm){
-      return `Aujourd’hui · ${hhmm}`;
-    }
+    function formatToday(hhmm){ return `Aujourd’hui · ${hhmm}`; }
 
     const matchesVM = todayMatches.map(m => ({
       id: m.id,
@@ -862,8 +674,8 @@
       title: m.match,
       aLogo: m.aLogo,
       bLogo: m.bLogo,
-      compLogo: compLogoFor(m.comp),
-      banner: m.banner || "" // auto si vide
+      compLogo: "",            // (si tu veux tu me donnes le logo coupe de france après)
+      banner: m.banner
     }));
 
     /* =========================
@@ -905,11 +717,7 @@
       `;
     }
 
-    function watchUrl(m){
-      // ici tu pourras plus tard pointer vers ton dossier /pages/xxxx.html etc.
-      // pour l'instant, on ouvre un placeholder dans un nouvel onglet
-      return `pages/${m.id}.html`;
-    }
+    function watchUrl(m){ return `pages/${m.id}.html`; }
 
     function cardHTML(m){
       return `
@@ -935,9 +743,7 @@
       `;
     }
 
-    function dotHTML(i){
-      return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`;
-    }
+    function dotHTML(i){ return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`; }
 
     function miniHTML(x){
       const dot = x.status === "En cours" ? "dotGreen" : "dotOrange";
@@ -993,46 +799,21 @@
     track.addEventListener("touchend", e => {
       const endX = e.changedTouches[0].clientX;
       const dx = endX - startX;
-      if(Math.abs(dx) > 40){
-        if(dx < 0) nextSlide();
-        else prevSlide();
-      }
+      if(Math.abs(dx) > 40){ dx < 0 ? nextSlide() : prevSlide(); }
     }, {passive:true});
 
     /* =========================
-      GÉNÉRATION DES BANNIÈRES MANQUANTES
-      (sinon tu vois que du multiplex)
-    ========================= */
-    async function ensureBanners(){
-      // On génère uniquement celles qui n'ont pas de vraie bannière
-      for(const m of matchesVM){
-        if(!m.banner){
-          m.banner = await makeAutoBanner({
-            aLogo: m.aLogo,
-            bLogo: m.bLogo,
-            compLogo: m.compLogo,
-            title: m.title
-          });
-        }
-      }
-    }
-
-    /* =========================
-      UPCOMING (à venir)
+      UPCOMING
     ========================= */
     function buildUpcoming(){
       const upcomingMatches = matchesVM
         .filter(x => x.status === "À venir")
         .sort((a,b)=> timeToMinutes(a.time.split("·")[1].trim()) - timeToMinutes(b.time.split("·")[1].trim()));
-
-      upcoming.innerHTML = upcomingMatches.map(m => miniHTML({
-        ...m,
-        sport: "Football"
-      })).join("");
+      upcoming.innerHTML = upcomingMatches.map(m => miniHTML({...m, sport:"Football"})).join("");
     }
 
     /* =========================
-      ÉVÉNEMENTS (LISTE + FILTRES)
+      EVENTS LIST + FILTRES
     ========================= */
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
@@ -1044,12 +825,7 @@
         `<button class="chip ${f===activeFilter?'active':''}" onclick="setFilter('${f.replace(/'/g,"\\'")}')">${f}</button>`
       ).join("");
     }
-
-    window.setFilter = (f) => {
-      activeFilter = f;
-      renderFilters();
-      renderEvents();
-    };
+    window.setFilter = (f) => { activeFilter=f; renderFilters(); renderEvents(); };
 
     function statusPill(status){
       if(status === "En cours") return `<span class="rightPill"><span class="dotGreen"></span>En cours</span>`;
@@ -1058,11 +834,9 @@
     }
 
     function rowHTML(m){
-      const compLogo = m.compLogo || (m.league === "Coupe de France" ? COMP["Coupe de France"].logo : "");
       return `
         <a class="eventRow" href="${watchUrl(m)}" target="_blank" rel="noopener">
           <div class="eventLeft">
-            ${compLogo ? `<img class="compLogo" src="${compLogo}" alt="${m.league}">` : ``}
             <div class="eventTxt">
               <div class="eventTitle">${m.title}</div>
               <div class="eventMeta">${m.league} • ${m.time}</div>
@@ -1096,8 +870,6 @@
         if(activeFilter === "Coupe de France") return m.league === "Coupe de France";
         return true;
       });
-
-      // tri par heure
       list.sort((a,b)=> timeToMinutes(a.time.split("·")[1].trim()) - timeToMinutes(b.time.split("·")[1].trim()));
       eventsList.innerHTML = list.map(rowHTML).join("");
     }
@@ -1105,24 +877,15 @@
     /* =========================
       INIT
     ========================= */
-    (async function init(){
-      // 1) bannières manquantes
-      await ensureBanners();
-
-      // 2) slider
+    (function init(){
       track.innerHTML = matchesVM.map(cardHTML).join("");
       dots.innerHTML = matchesVM.map((_,i)=>dotHTML(i)).join("");
-
-      // 3) sections
       buildUpcoming();
       renderFilters();
       renderEvents();
-
-      // 4) première vue
       update();
       window.addEventListener("resize", update);
     })();
   </script>
 </body>
 </html>
-
