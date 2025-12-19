@@ -72,5 +72,12 @@ function unlock(){
   }, 1200);
 }
 </script>
+  <script>
+if(localStorage.getItem("imftx_access") !== "1"){
+  window.location.href = "gate.html";
+}
+</script>
+
 </body>
 </html>
+
