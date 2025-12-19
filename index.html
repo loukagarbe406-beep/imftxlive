@@ -9,20 +9,10 @@
 
   <style>
     :root{
-      --max: 1400px;
-      --gap: 22px;
-      --cardW: 980px;
-      --cardH: 520px;
-      --r: 26px;
-
-      --bg:#000;
-      --shadow: 0 28px 110px rgba(0,0,0,.78);
-      --ok:#22c55e;
-      --warn:#fb923c;
-
-      --g1:#070a12;
-      --g2:#091a2e;
-      --g3:#22124f;
+      --max: 1400px; --gap: 22px; --cardW: 980px; --cardH: 520px; --r: 26px;
+      --bg:#000; --shadow: 0 28px 110px rgba(0,0,0,.78);
+      --ok:#22c55e; --warn:#fb923c;
+      --g1:#070a12; --g2:#091a2e; --g3:#22124f;
     }
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;background:var(--bg);color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
@@ -71,7 +61,6 @@
     .badge{position:absolute;top:14px;left:14px;z-index:6;display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-weight:900;font-size:12px}
     .dotOrange{width:9px;height:9px;border-radius:50%;background:var(--warn)}
     .dotGreen{width:9px;height:9px;border-radius:50%;background:var(--ok)}
-
     .cardArrow{position:absolute;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.32);border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;z-index:7;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);user-select:none}
     .cardArrow:hover{background:rgba(0,0,0,.45)}
     .cardArrow span{font-size:34px;line-height:1}
@@ -255,17 +244,19 @@
        CONFIG
        ========================= */
     const TELEGRAM_INVITE_URL = "https://t.me/+llOGaNG7HeUzNmE0";
-    const TG_STORAGE_KEY = "imftx_tg_ok_v4";
+    const TG_STORAGE_KEY = "imftx_tg_ok_v5";
     const CHANNEL_AVATAR = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?ex=6946e33b&is=694591bb&hm=f29ad949bfddcce871cc32b769788f5965fcf4e28d7183fbb6bade0a4f691d59&=&format=webp&quality=lossless";
     const PLAYER_FOLDER = "html";
 
+    // ✅ tes liens (Montpellier corrigé en PNG)
     const ASSETS = {
       coupeLogo: "https://empire-sport.space/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
       multiplexBanner: "https://empire-sport.space/upload/cards/multiplex_31.png",
+
       interBanner: "https://empire-sport.space/upload/banners/hellas-verona-vs-inter-milan.png",
       bvbLogo: "https://empire-sport.space/upload/teambanks/djj2j8cg1nwamyc44nye0olnube1mx.png",
       brestLogo: "https://empire-sport.space/upload/teambanks/jpdgvoxsfswpse3oskgrown31io2qa.png",
-      montpellierBanner: "https://empire-sport.space/event/canet-roussillon-vs-montpellier2025-12-19", // pas une image => fallback auto
+      montpellierBanner: "https://empire-sport.space/upload/teams/eqaf55lr0hktnoqaftkwv4hbl05npq.png",
       reimsLogo: "https://empire-sport.space/upload/teams/nxljk5kszt48p8fkerxs1dowpiw0ku.png",
       lavalLogo: "https://empire-sport.space/upload/teams/kpdpockmozdtpanjck7d8tcsedv4vk.png",
       angersLogo: "https://empire-sport.space/upload/teams/mp7vl6etdrmcmtqnm2mvoejnnnwdy9.png",
@@ -295,14 +286,6 @@
       if(typeof url === "string" && url.trim().length > 4) return url;
       return svgBadge(fallbackText);
     }
-
-    // ✅ bannière safe : si ce n’est pas une image, on fallback multiplex
-    function safeBanner(url){
-      const u = String(url||"").trim();
-      const ok = /\.(png|jpg|jpeg|webp|gif)(\?.*)?$/i.test(u);
-      return ok ? u : ASSETS.multiplexBanner;
-    }
-
     function playerUrl(matchId){
       return `${PLAYER_FOLDER}/${matchId}.html`;
     }
@@ -340,54 +323,155 @@
     window.addEventListener("load", () => { if(!isAllowed()) showGate(); });
 
     /* =========================
-       MATCHS (ton programme)
+       MATCHS (programme)
+       - bannières = tes liens
        ========================= */
     const todayMatches = [
-      { id:"multiplex-cdf", time:"20:45", comp:"Coupe de France", match:"Multiplex Coupe de France",
-        a:"Multiplex", b:"Coupe de France", aLogo:ASSETS.coupeLogo, bLogo:ASSETS.coupeLogo, sport:"Football", banner:ASSETS.multiplexBanner },
+      // Multiplex Coupe de France (bannière multiplex)
+      {
+        id:"multiplex-cdf",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Multiplex Coupe de France",
+        a:"Multiplex",
+        b:"Coupe de France",
+        aLogo: ASSETS.coupeLogo,
+        bLogo: ASSETS.coupeLogo,
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
 
-      { id:"bologne-inter", time:"20:00", comp:"Coupe (Italie)", match:"Bologne - Inter Milan",
-        a:"Bologne", b:"Inter Milan", aLogo:"", bLogo:"", sport:"Football", banner:ASSETS.interBanner },
+      // Bologne - Inter (bannière inter)
+      {
+        id:"bologne-inter",
+        time:"20:00",
+        comp:"Coupe (Italie)",
+        match:"Bologne - Inter Milan",
+        a:"Bologne",
+        b:"Inter Milan",
+        aLogo:"",
+        bLogo:"",
+        sport:"Football",
+        banner: ASSETS.interBanner
+      },
 
-      { id:"dortmund-gladbach", time:"20:30", comp:"Coupe (Allemagne)", match:"Dortmund - M'gladbach",
-        a:"Dortmund", b:"M'gladbach", aLogo:ASSETS.bvbLogo, bLogo:"", sport:"Football", banner:ASSETS.multiplexBanner },
+      // Dortmund - Gladbach (pas de bannière donnée => on met multiplex)
+      {
+        id:"dortmund-gladbach",
+        time:"20:30",
+        comp:"Coupe (Allemagne)",
+        match:"Dortmund - M'gladbach",
+        a:"Dortmund",
+        b:"M'gladbach",
+        aLogo: ASSETS.bvbLogo,
+        bLogo:"",
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
 
-      { id:"avranches-brest", time:"20:45", comp:"Coupe de France", match:"Avranches - Brest",
-        a:"Avranches", b:"Brest", aLogo:"", bLogo:ASSETS.brestLogo, sport:"Football", banner:ASSETS.multiplexBanner },
+      {
+        id:"avranches-brest",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Avranches - Brest",
+        a:"Avranches",
+        b:"Brest",
+        aLogo:"",
+        bLogo: ASSETS.brestLogo,
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
 
-      { id:"canet-montpellier", time:"20:45", comp:"Coupe de France", match:"Canet - Montpellier",
-        a:"Canet", b:"Montpellier", aLogo:"", bLogo:"", sport:"Football", banner:ASSETS.montpellierBanner },
+      // Canet - Montpellier (✅ bannière montpellier PNG)
+      {
+        id:"canet-montpellier",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Canet - Montpellier",
+        a:"Canet",
+        b:"Montpellier",
+        aLogo:"",
+        bLogo:"",
+        sport:"Football",
+        banner: ASSETS.montpellierBanner
+      },
 
-      { id:"guingamp-laval", time:"20:45", comp:"Coupe de France", match:"Guingamp - Laval",
-        a:"Guingamp", b:"Laval", aLogo:"", bLogo:ASSETS.lavalLogo, sport:"Football", banner:ASSETS.multiplexBanner },
+      {
+        id:"guingamp-laval",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Guingamp - Laval",
+        a:"Guingamp",
+        b:"Laval",
+        aLogo:"",
+        bLogo: ASSETS.lavalLogo,
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
 
-      { id:"perigny-lemans", time:"20:45", comp:"Coupe de France", match:"Périgny - Le Mans",
-        a:"Périgny", b:"Le Mans", aLogo:ASSETS.leMansPerignyLogo, bLogo:ASSETS.leMansPerignyLogo, sport:"Football", banner:ASSETS.multiplexBanner },
+      {
+        id:"perigny-lemans",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Périgny - Le Mans",
+        a:"Périgny",
+        b:"Le Mans",
+        aLogo: ASSETS.leMansPerignyLogo,
+        bLogo: ASSETS.leMansPerignyLogo,
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
 
-      { id:"les-herbiers-angers", time:"20:45", comp:"Coupe de France", match:"Les Herbiers - Angers",
-        a:"Les Herbiers", b:"Angers", aLogo:"", bLogo:ASSETS.angersLogo, sport:"Football", banner:ASSETS.multiplexBanner },
+      {
+        id:"les-herbiers-angers",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"Les Herbiers - Angers",
+        a:"Les Herbiers",
+        b:"Angers",
+        aLogo:"",
+        bLogo: ASSETS.angersLogo,
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
 
-      { id:"ic-croix-reims", time:"20:45", comp:"Coupe de France", match:"IC Croix - Reims",
-        a:"IC Croix", b:"Reims", aLogo:"", bLogo:ASSETS.reimsLogo, sport:"Football", banner:ASSETS.multiplexBanner },
+      {
+        id:"ic-croix-reims",
+        time:"20:45",
+        comp:"Coupe de France",
+        match:"IC Croix - Reims",
+        a:"IC Croix",
+        b:"Reims",
+        aLogo:"",
+        bLogo: ASSETS.reimsLogo,
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      },
 
-      { id:"lens-feignies", time:"21:00", comp:"Coupe de France", match:"Lens - Feignies",
-        a:"Lens", b:"Feignies", aLogo:ASSETS.lensLogo, bLogo:"", sport:"Football", banner:ASSETS.multiplexBanner }
+      {
+        id:"lens-feignies",
+        time:"21:00",
+        comp:"Coupe de France",
+        match:"Lens - Feignies",
+        a:"Lens",
+        b:"Feignies",
+        aLogo: ASSETS.lensLogo,
+        bLogo:"",
+        sport:"Football",
+        banner: ASSETS.multiplexBanner
+      }
     ].map(m => ({
       ...m,
       status:"",
       aLogo: safeLogo(m.aLogo, m.a),
-      bLogo: safeLogo(m.bLogo, m.b),
-      banner: safeBanner(m.banner)
+      bLogo: safeLogo(m.bLogo, m.b)
     }));
 
     /* =========================
        STATUS AUTO
        ========================= */
     const MATCH_DURATION_MIN = 135;
-    function timeToMinutes(hhmm){
-      const [h,m] = hhmm.split(":").map(Number);
-      return (h*60)+(m||0);
-    }
+    function timeToMinutes(hhmm){ const [h,m]=hhmm.split(":").map(Number); return (h*60)+(m||0); }
     function computeStatus(hhmm){
       const now = new Date();
       const nowMin = now.getHours()*60 + now.getMinutes();
@@ -400,30 +484,20 @@
     todayMatches.forEach(m => m.status = computeStatus(m.time));
 
     /* =========================
-       FEATURED (slider) + NO DOUBLONS
+       SLIDER (featured) + À venir sans doublons
        ========================= */
     const FEATURED_IDS = ["multiplex-cdf","bologne-inter","dortmund-gladbach"];
     const featuredSet = new Set(FEATURED_IDS);
 
-    const featuredMatches = FEATURED_IDS
-      .map(id => todayMatches.find(x => x.id === id))
-      .filter(Boolean);
+    const featuredMatches = FEATURED_IDS.map(id => todayMatches.find(x => x.id === id)).filter(Boolean);
+    const matches = (featuredMatches.length ? featuredMatches : todayMatches);
 
-    const sliderSource = featuredMatches.length ? featuredMatches : todayMatches;
-
-    const matches = sliderSource.map(m => ({
-      ...m,
-      league: m.comp,
-      timeText: `Aujourd’hui · ${m.time}`
-    }));
-
-    // ✅ “À venir” = programme sans les featured (plus de mélange)
     const upcomingMatches = todayMatches
       .filter(x => x.status === "À venir" && !featuredSet.has(x.id))
       .sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time));
 
     /* =========================
-       RENDER HERO + SLIDER
+       RENDER
        ========================= */
     const bg = document.getElementById("bg");
     const heroTitle = document.getElementById("heroTitle");
@@ -433,31 +507,20 @@
     const dots = document.getElementById("dots");
     const viewport = document.getElementById("viewport");
     const upcoming = document.getElementById("upcoming");
-
     let idx = 0;
 
     function setHero(m){
       bg.style.backgroundImage = `url('${m.banner}')`;
-
-      // ✅ multiplex: pas de "vs"
-      if(m.id === "multiplex-cdf"){
-        heroTitle.textContent = m.match;
-      } else {
-        heroTitle.textContent = `${m.a} vs ${m.b}`;
-      }
-
+      heroTitle.textContent = (m.id === "multiplex-cdf") ? m.match : `${m.a} vs ${m.b}`;
       heroLeague.textContent = m.comp;
       heroTime.textContent = `Aujourd’hui · ${m.time}`;
     }
-
     function badgeHTML(m){
       if(m.status === "En cours") return `<div class="badge"><span class="dotGreen"></span>En cours</div>`;
       if(m.status === "Terminé") return `<div class="badge" style="opacity:.78"><span class="dotOrange"></span>Terminé</div>`;
       return `<div class="badge"><span class="dotOrange"></span>À venir</div>`;
     }
-
     function logosBlock(m){
-      // multiplex: on montre juste le logo CDF + "VS" discret
       return `
         <div class="logosLine">
           <img class="teamLogo" src="${m.aLogo}" alt="${m.a}">
@@ -466,7 +529,6 @@
         </div>
       `;
     }
-
     function cardHTML(m){
       const url = playerUrl(m.id);
       return `
@@ -491,10 +553,7 @@
         </div>
       `;
     }
-
-    function dotHTML(i){
-      return `<div class="d ${i===0?'active':''}" data-dot="${i}"></div>`;
-    }
+    function dotHTML(i){ return `<div class="d ${i===0?'active':''}" data-dot="${i}"></div>`; }
 
     function miniHTML(m){
       const url = playerUrl(m.id);
@@ -515,28 +574,19 @@
       `;
     }
 
-    function updateDots(){
-      [...dots.querySelectorAll(".d")].forEach((el,i)=> el.classList.toggle("active", i===idx));
-    }
-
-    // ✅ Ajustement slider : centre propre (moins “mélangé”)
+    function updateDots(){ [...dots.querySelectorAll(".d")].forEach((el,i)=> el.classList.toggle("active", i===idx)); }
     function update(){
       const first=document.querySelector(".card");
       if(!first) return;
-
       const cardW = first.getBoundingClientRect().width;
       const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')) || 18;
       const vw = viewport.getBoundingClientRect().width;
       const centerOffset = Math.max(16, (vw - cardW) / 2);
-
-      // pas de "peekBias" agressif => rendu plus clean
       const x = -(idx * (cardW + gap)) + centerOffset;
-
       track.style.transform = `translateX(${x}px)`;
       setHero(matches[idx]);
       updateDots();
     }
-
     function nextSlide(){ idx = (idx + 1) % matches.length; update(); }
     function prevSlide(){ idx = (idx - 1 + matches.length) % matches.length; update(); }
     function goTo(i){ idx = i; update(); }
@@ -551,7 +601,6 @@
       e.preventDefault();
       btn.dataset.act === "next" ? nextSlide() : prevSlide();
     });
-
     dots.addEventListener("click", (e) => {
       const d = e.target.closest("[data-dot]");
       if(!d) return;
@@ -575,10 +624,8 @@
        ========================= */
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
-
     const FILTERS = ["Tous Les Événements", "Football", "Coupe de France"];
     let activeFilter = "Tous Les Événements";
-
     const COMP_LOGOS = { "Coupe de France": ASSETS.coupeLogo };
 
     function renderFilters(){
@@ -586,7 +633,6 @@
         <button class="chip ${f===activeFilter?'active':''}" data-filter="${f}">${f}</button>
       `).join("");
     }
-
     filtersEl.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-filter]");
       if(!btn) return;
@@ -600,7 +646,6 @@
       if(status === "Terminé") return `<span class="rightPill" style="opacity:.75"><span class="dotOrange"></span>Terminé</span>`;
       return `<span class="rightPill" style="background:rgba(251,146,60,.12);border-color:rgba(251,146,60,.25)"><span class="dotOrange"></span>À venir</span>`;
     }
-
     function rowHTML(m){
       const url = playerUrl(m.id);
       const compLogo = COMP_LOGOS[m.comp] || "";
@@ -633,7 +678,6 @@
         </a>
       `;
     }
-
     function renderEvents(){
       const list = todayMatches.filter(m => {
         if(activeFilter === "Tous Les Événements") return true;
@@ -643,7 +687,6 @@
       });
       eventsList.innerHTML = list.map(rowHTML).join("");
     }
-
     renderFilters();
     renderEvents();
   </script>
