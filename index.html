@@ -15,23 +15,16 @@
       --cardH: 520px;
       --r: 26px;
 
-      --bg: #000;
-      --stroke: rgba(255,255,255,.14);
-      --stroke2: rgba(255,255,255,.18);
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.10);
-      --dim: rgba(255,255,255,.72);
+      --bg:#000;
       --shadow: 0 28px 110px rgba(0,0,0,.78);
-
       --ok:#22c55e;
       --warn:#fb923c;
 
-      /* Gate gradient (inspiré de ton image mais en dark theme) */
-      --g1:#0b1220;
-      --g2:#0a2d4d;
-      --g3:#2a1b55;
+      /* Gate dark gradient */
+      --g1:#070a12;
+      --g2:#091a2e;
+      --g3:#22124f;
     }
-
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;background:var(--bg);color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
     a{color:inherit;text-decoration:none}
@@ -94,13 +87,9 @@
       pointer-events:none;
     }
     .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 18px}
-
     .centerHeader{text-align:center;padding:12px 0 10px}
     .centerHeader h1{
-      margin:0;
-      font-size:36px;
-      font-weight:900;
-      line-height:1.05;
+      margin:0;font-size:36px;font-weight:900;line-height:1.05;
       text-shadow:0 18px 40px rgba(0,0,0,.65);
     }
     .centerHeader .l1{margin-top:10px;opacity:.82;font-weight:700}
@@ -110,8 +99,7 @@
     .sliderArea{position:relative;padding-top:6px;padding-bottom:2px}
     .viewport{overflow:hidden}
     .track{
-      display:flex;
-      gap:var(--gap);
+      display:flex;gap:var(--gap);
       transition:transform .55s ease;
       will-change:transform;
     }
@@ -247,15 +235,9 @@
     .filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 16px}
     .chip{
       border:1px solid rgba(255,255,255,.22);
-      background:transparent;
-      color:#fff;
-      padding:8px 14px;
-      border-radius:999px;
-      font-weight:800;
-      font-size:13px;
-      cursor:pointer;
-      opacity:.9;
-      transition:.15s;
+      background:transparent;color:#fff;
+      padding:8px 14px;border-radius:999px;
+      font-weight:800;font-size:13px;cursor:pointer;opacity:.9;transition:.15s;
     }
     .chip:hover{opacity:1}
     .chip.active{background:#fff;color:#000;border-color:#fff}
@@ -300,7 +282,7 @@
     footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
     /* =========================
-       TELEGRAM RECTANGLE (comme ton exemple, mais dark)
+       GATE RECTANGLE (compact + auto)
        ========================= */
     .gate{
       position:fixed; inset:0; z-index:9999;
@@ -334,24 +316,19 @@
 
     .gateInner{
       position:relative; z-index:2;
-      padding:26px 26px 24px;
+      padding:24px 24px 22px;
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:22px;
+      grid-template-columns: 1.15fr .85fr;
+      gap:20px;
       align-items:center;
     }
 
-    .gateLeft{
-      display:flex;
-      gap:16px;
-      align-items:flex-start;
-    }
+    .gateLeft{display:flex;gap:14px;align-items:flex-start}
     .gateAvatar{
-      width:78px;height:78px;border-radius:22px;
+      width:74px;height:74px;border-radius:20px;
       border:1px solid rgba(255,255,255,.16);
       background:rgba(0,0,0,.25);
-      overflow:hidden;
-      flex:0 0 auto;
+      overflow:hidden;flex:0 0 auto;
       box-shadow:0 18px 60px rgba(0,0,0,.55);
     }
     .gateAvatar img{width:100%;height:100%;object-fit:cover;display:block}
@@ -359,64 +336,39 @@
     .gateText{min-width:0}
     .gateH1{
       margin:0;
-      font-size:30px;
+      font-size:26px;
       font-weight:1000;
       letter-spacing:.2px;
       line-height:1.1;
       text-transform:uppercase;
     }
-    .gateH1 .warn{opacity:.95}
     .gateH2{
-      margin:14px 0 0;
-      font-size:22px;
+      margin:12px 0 0;
+      font-size:18px;
       font-weight:900;
       line-height:1.25;
-    }
-    .gateH2 .emoji{margin-right:10px}
-    .gateDesc{
-      margin-top:10px;
-      font-size:13px;
-      color:rgba(255,255,255,.78);
-      line-height:1.45;
+      opacity:.95;
     }
 
-    .gateRight{
-      display:flex;
-      flex-direction:column;
-      align-items:flex-end;
-      gap:12px;
-    }
-    .gateBtns{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
+    .gateRight{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
     .gateBtn{
       display:inline-flex;align-items:center;gap:10px;
       padding:12px 16px;border-radius:14px;
       border:1px solid rgba(255,255,255,.16);
-      background:rgba(0,0,0,.25);
-      color:#fff;
-      font-weight:900;
+      background:#fff;color:#000;
+      font-weight:1000;
       cursor:pointer;
       transition:.15s;
       white-space:nowrap;
     }
-    .gateBtn:hover{background:rgba(0,0,0,.35)}
-    .gateBtn.primary{
-      background:#fff;color:#000;border-color:#fff;
-    }
-    .gateBtn.primary:hover{opacity:.92}
-
+    .gateBtn:hover{opacity:.92}
     .gateMini{
-      font-size:12px;
-      color:rgba(255,255,255,.70);
-      text-align:right;
-      max-width:360px;
+      font-size:12px;color:rgba(255,255,255,.70);
+      text-align:right;max-width:360px;
     }
+
     .gateClose{
-      position:absolute; top:16px; right:16px; z-index:3;
+      position:absolute; top:14px; right:14px; z-index:3;
       width:42px;height:42px;border-radius:14px;
       border:1px solid rgba(255,255,255,.14);
       background:rgba(0,0,0,.28);
@@ -440,10 +392,12 @@
       }
       .cardArrow{display:none}
       .centerHeader h1{font-size:30px}
+
       .bottom{left:14px;right:14px;bottom:12px;gap:12px}
       .watch{height:52px;padding:8px 12px}
       .play{width:42px;height:42px;margin-right:10px}
       .watchTxt{font-size:14px}
+
       .mini{width:280px}
       .miniImg{height:160px}
       .eventRow{grid-template-columns: 1fr;gap:10px;align-items:start}
@@ -451,13 +405,14 @@
       .eventRight{align-items:flex-start}
       .midTeam b{max-width:160px}
 
-      .gateInner{grid-template-columns:1fr;gap:16px}
+      /* gate responsive */
+      .gateInner{grid-template-columns:1fr;gap:14px}
       .gateRight{align-items:flex-start}
-      .gateBtns{justify-content:flex-start}
       .gateMini{text-align:left;max-width:none}
-      .gateH1{font-size:26px}
-      .gateH2{font-size:20px}
-      .gateAvatar{width:68px;height:68px;border-radius:18px}
+      .gateH1{font-size:22px}
+      .gateH2{font-size:16px}
+      .gateAvatar{width:64px;height:64px;border-radius:18px}
+      .gateBtn{width:100%;justify-content:center}
     }
   </style>
 </head>
@@ -477,7 +432,7 @@
     </div>
   </header>
 
-  <!-- GATE RECTANGLE (comme ton exemple, texte bien mis) -->
+  <!-- GATE RECTANGLE (compact, texte nickel, pas de continuer) -->
   <div id="gate" class="gate" aria-hidden="true">
     <div class="gateRect" role="dialog" aria-modal="true" aria-label="Accès sécurisé">
       <button class="gateClose" id="gateClose" type="button" aria-label="Fermer">
@@ -487,41 +442,21 @@
       <div class="gateInner">
         <div class="gateLeft">
           <div class="gateAvatar">
-            <!-- Mets une vraie image accessible : ex "pdp.png" à côté de l'index -->
             <img id="gateAvatarImg" alt="IMFTX+">
           </div>
 
           <div class="gateText">
-            <h2 class="gateH1">
-              <span class="warn">⚠️</span>
-              LE SITE PEUT SAUTER À TOUT MOMENT
-              <span class="warn">⚠️</span>
-            </h2>
-
-            <div class="gateH2">
-              <span class="emoji">📣</span>
-              Rejoins vite notre canal secours<br>
-              pour être toujours informé !!
-            </div>
-
-            <div class="gateDesc">
-              Pour accéder au site, clique sur “Rejoignez ici !”. Ensuite reviens sur ton navigateur et clique sur “Continuer”.
-            </div>
+            <h2 class="gateH1">⚠️ LE SITE PEUT SAUTER À TOUT MOMENT ⚠️</h2>
+            <div class="gateH2">📣 Rejoins vite notre canal secours<br>pour être toujours informé !!</div>
           </div>
         </div>
 
         <div class="gateRight">
-          <div class="gateBtns">
-            <a class="gateBtn primary" id="gateJoin" href="#" target="_blank" rel="noopener">
-              Rejoignez ici ! <i class="fa-solid fa-arrow-right"></i>
-            </a>
-            <button class="gateBtn" id="gateContinue" type="button">
-              Continuer
-            </button>
-          </div>
+          <a class="gateBtn" id="gateJoin" href="#" target="_blank" rel="noopener">
+            Rejoignez ici ! <i class="fa-solid fa-arrow-right"></i>
+          </a>
           <div class="gateMini">
-            Astuce : si Telegram s’ouvre, reviens sur le navigateur.<br>
-            (Le “join” réel ne peut pas être vérifié sans backend, donc on valide le clic.)
+            Après le clic, l’accès se débloque automatiquement ✅
           </div>
         </div>
       </div>
@@ -565,28 +500,23 @@
 
   <footer>IMFTX+ — N°1 de la diffusion FR</footer>
 
-  <!-- UN SEUL LONG SCRIPT -->
   <script>
     /* =========================
        0) CONFIG
        ========================= */
     const TELEGRAM_INVITE_URL = "https://t.me/+llOGaNG7HeUzNmE0";
-    const TG_STORAGE_KEY = "imftx_tg_ok_v1";
+    const TG_STORAGE_KEY = "imftx_tg_ok_v2";
 
-    // IMPORTANT :
-    // Mets ta photo de canal dans le même dossier que index.html et renomme-la "pdp.png"
-    // (sinon le navigateur ne peut pas afficher la photo)
-    const CHANNEL_AVATAR = "pdp.png";
+    // ton image (discord) => affichage direct
+    const CHANNEL_AVATAR = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?ex=6946e33b&is=694591bb&hm=f29ad949bfddcce871cc32b769788f5965fcf4e28d7183fbb6bade0a4f691d59&=&format=webp&quality=lossless";
 
-    // Bannière par défaut
     const DEFAULT_BANNER = "https://empire-sport.space/upload/cards/multiplex_28.png";
 
     /* =========================
-       1) TELEGRAM GATE
+       1) TELEGRAM GATE (AUTO)
        ========================= */
     const gate = document.getElementById("gate");
     const gateJoin = document.getElementById("gateJoin");
-    const gateContinue = document.getElementById("gateContinue");
     const gateClose = document.getElementById("gateClose");
     const openGateTop = document.getElementById("openGateTop");
     const openGateIcon = document.getElementById("openGateIcon");
@@ -613,17 +543,19 @@
       el.addEventListener("click",(e)=>{ e.preventDefault(); showGate(); });
     });
 
-    // Valide l'accès dès le clic "rejoindre" (front-only)
-    gateJoin.addEventListener("click", () => { allow(); });
-
-    gateContinue.addEventListener("click", () => {
-      if(!isAllowed()) { showGate(); return; }
-      hideGate();
+    // ✅ Auto: au clic "Rejoignez ici !" -> autorise + ferme direct
+    gateJoin.addEventListener("click", () => {
+      allow();
+      // ferme instant pour que le site apparaisse, pendant que Telegram s'ouvre
+      setTimeout(hideGate, 60);
     });
 
     gateClose.addEventListener("click", () => {
-      if(isAllowed()) hideGate();
-      else showGate();
+      // si tu veux rendre ça 100% obligatoire, commente ces 2 lignes :
+      // if (isAllowed()) hideGate();
+      // else showGate();
+      // là: on force toujours l’accès via bouton join
+      showGate();
     });
 
     // Empêche de cliquer sur le site tant que pas autorisé
@@ -680,9 +612,6 @@
     }
     todayMatches.forEach(m => m.status = computeStatus(m.time));
 
-    /* =========================
-       4) À LA UNE (slider)
-       ========================= */
     const matches = todayMatches.map(m => ({
       id: m.id,
       status: m.status,
@@ -709,7 +638,7 @@
       }));
 
     /* =========================
-       5) HERO + SLIDER RENDER
+       4) HERO + SLIDER
        ========================= */
     const bg = document.getElementById("bg");
     const heroTitle = document.getElementById("heroTitle");
@@ -749,7 +678,6 @@
       `;
     }
 
-    // Si tu crées des pages, remplace "#" par `${m.id}.html`
     function cardHTML(m){
       const url = "#";
       return `
@@ -758,14 +686,12 @@
           ${badgeHTML(m)}
           <div class="cardArrow left" data-act="prev"><span>‹</span></div>
           <div class="cardArrow right" data-act="next"><span>›</span></div>
-
           <div class="bottom">
             <div class="leftInfo">
               ${logosBlock(m)}
               <div class="cardTitle">${m.title}</div>
               <div class="cardSub">${m.league} • ${m.time}</div>
             </div>
-
             <a class="watch" href="${url}" rel="noopener">
               <div class="play">▶</div>
               <div class="watchTxt">REGARDER</div>
@@ -840,7 +766,6 @@
       goTo(parseInt(d.dataset.dot, 10));
     });
 
-    // Swipe
     let startX=0;
     track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, {passive:true});
     track.addEventListener("touchend", e => {
@@ -853,7 +778,7 @@
     window.addEventListener("resize", update);
 
     /* =========================
-       6) EVENTS LIST
+       5) EVENTS LIST
        ========================= */
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
