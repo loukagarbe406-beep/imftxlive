@@ -1,120 +1,257 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IMFTX+ — Live</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMFTX+ — Live</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-  <style>
-    *{box-sizing:border-box}
-    html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',system-ui,Arial}
-    header{max-width:1200px;margin:0 auto;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
-    .brand{font-weight:900}
-    .wrap{max-width:1200px;margin:0 auto;padding:0 16px 24px}
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
 
-    .grid{display:grid;grid-template-columns:1fr 340px;gap:14px;align-items:start}
-    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:900;font-size:20px}
+.back{opacity:.7;text-decoration:none;color:#fff}
+.back:hover{opacity:1}
 
-    .card{
-      border-radius:18px;overflow:hidden;
-      border:1px solid rgba(255,255,255,.12);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      box-shadow:0 30px 90px rgba(0,0,0,.65);
-    }
+.container{max-width:1200px;margin:0 auto;padding:0 16px 24px}
 
-    /* PLAYER */
-    .player{background:#000}
-    .cover{
-      width:100%;aspect-ratio:16/9;
-      display:grid;place-items:center;
-      background:radial-gradient(800px 420px at 30% 10%, rgba(255,255,255,.10), transparent 55%),
-                 linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.85));
-    }
-    .btn{
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.10);
-      color:#fff;padding:12px 16px;border-radius:999px;
-      font-weight:900;cursor:pointer
-    }
-    .btn:hover{background:rgba(255,255,255,.14)}
-    iframe{width:100%;aspect-ratio:16/9;border:0;display:block;background:#000}
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 330px;
+  gap:14px;
+  align-items:start;
+}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+}
 
-    .tabs{display:flex;gap:10px;padding:12px;flex-wrap:wrap}
-    .tab{
-      padding:10px 14px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.08);
-      font-weight:900;cursor:pointer
-    }
-    .tab.active{background:#fff;color:#000;border-color:#fff}
+/* ===== PLAYER ===== */
+.playerBox{
+  border-radius:22px;overflow:hidden;background:#000;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 30px 90px rgba(0,0,0,.75);
+  position:relative;
+}
+.cover{
+  width:100%;aspect-ratio:16/9;display:grid;place-items:center;
+  background:
+    radial-gradient(900px 420px at 30% 10%, rgba(255,255,255,.10), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.82));
+}
+.cover button{
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.10);
+  color:#fff;padding:14px 18px;border-radius:999px;
+  font-weight:900;cursor:pointer;display:flex;align-items:center;gap:10px
+}
+.cover button:hover{background:rgba(255,255,255,.14)}
+.playerFrame{width:100%;aspect-ratio:16/9;border:0;background:#000;display:block}
 
-    /* CHAT */
-    .chatHead{padding:12px;border-bottom:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,.22)}
-    .pill{display:inline-flex;gap:8px;align-items:center;font-size:12px;font-weight:900;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.14)}
-    .dot{width:9px;height:9px;border-radius:50%;background:#22c55e}
-    .msgs{height:520px;overflow:auto;padding:12px}
-    @media(max-width:900px){.msgs{height:360px}}
-    .msg{padding:10px;border-radius:14px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.10);margin:0 0 10px}
-    .top{display:flex;gap:8px;align-items:baseline;margin-bottom:6px;flex-wrap:wrap}
-    .user{font-weight:900}
-    .time{opacity:.65;font-size:12px}
-    .text{opacity:.92;white-space:pre-wrap;word-break:break-word}
+/* ===== PLAYER SELECT ===== */
+.playerSelect{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}
+.playerBtn{
+  padding:10px 14px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);
+  font-weight:900;cursor:pointer;
+  display:flex;align-items:center;gap:10px;
+}
+.playerBtn i{opacity:.9}
+.playerBtn:hover{background:rgba(255,255,255,.12)}
+.playerBtn.active{background:#fff;border-color:#fff;color:#000}
 
-    .form{padding:12px;border-top:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.22);display:grid;gap:10px}
-    .row{display:flex;gap:10px}
-    input{
-      width:100%;padding:10px 12px;border-radius:12px;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(0,0,0,.35);color:#fff;outline:none
-    }
-    input::placeholder{color:rgba(255,255,255,.45)}
-    .send{background:#fff;color:#000;font-weight:900}
-    .note{font-size:11px;opacity:.55}
-  </style>
+/* ===== INFO BAR ===== */
+.infoBar{
+  margin-top:14px;padding:14px 16px;border-radius:16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));
+  border:1px solid rgba(255,255,255,.10);
+  display:flex;justify-content:space-between;align-items:center;gap:14px
+}
+.infoLeft{display:flex;gap:12px;align-items:center;min-width:0}
+.leagueLogo{
+  width:38px;height:38px;border-radius:12px;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.14);
+  padding:7px;object-fit:contain;flex:0 0 auto;
+}
+.infoText{min-width:0}
+.infoText b{display:block;font-weight:900}
+.infoText .match{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.infoText span{font-size:13px;opacity:.75}
+
+.rightBox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.live{display:flex;align-items:center;gap:8px;font-weight:900}
+.dot{width:10px;height:10px;border-radius:50%;background:#22c55e}
+
+/* ✅ Compteur viewers */
+.viewers{
+  display:flex;align-items:center;gap:8px;
+  font-weight:900;padding:8px 12px;border-radius:999px;
+  background:rgba(0,0,0,.30);
+  border:1px solid rgba(255,255,255,.14)
+}
+.eye{width:18px;height:18px;fill:#fff;opacity:.9}
+
+@media(max-width:700px){
+  .infoBar{flex-direction:column;align-items:flex-start}
+  .rightBox{justify-content:flex-start}
+}
+
+/* ===== CHAT ===== */
+.chatBox{
+  border-radius:22px; overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  box-shadow:0 30px 90px rgba(0,0,0,.55);
+  position:sticky; top:12px;
+}
+@media(max-width:900px){
+  .chatBox{position:relative; top:auto}
+}
+.chatHead{
+  padding:12px 12px 10px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:rgba(0,0,0,.25);
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.chatHead b{font-weight:900}
+.chatOnline{
+  display:flex;align-items:center;gap:8px;
+  font-weight:900;font-size:12px;
+  padding:6px 10px;border-radius:999px;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.14);
+}
+.chatDot{width:9px;height:9px;border-radius:50%;background:#22c55e}
+
+.chatMessages{
+  height:520px;
+  padding:12px;
+  overflow:auto;
+}
+@media(max-width:900px){
+  .chatMessages{height:380px}
+}
+.msg{
+  margin:0 0 10px;
+  padding:10px 10px;
+  border-radius:14px;
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.10);
+}
+.msgTop{
+  display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;
+  margin-bottom:6px;
+}
+.msgUser{font-weight:900}
+.msgTime{opacity:.6;font-size:12px}
+.msgText{opacity:.92;line-height:1.25;white-space:pre-wrap;word-break:break-word}
+
+.chatForm{
+  padding:12px;
+  border-top:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.22);
+  display:grid; gap:10px;
+}
+.chatRow{display:flex; gap:10px}
+.inp{
+  width:100%;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(0,0,0,.35);
+  color:#fff;
+  outline:none;
+}
+.inp::placeholder{color:rgba(255,255,255,.45)}
+.send{
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.16);
+  background:#fff;
+  color:#000;
+  font-weight:900;
+  cursor:pointer;
+}
+.send:hover{opacity:.92}
+.smallNote{font-size:11px;opacity:.55}
+</style>
 </head>
 
 <body>
+
 <header>
   <div class="brand">IMFTX+</div>
-  <div style="opacity:.7">Live</div>
+  <a href="../index.html" class="back">← Retour</a>
 </header>
 
-<div class="wrap">
+<div class="container">
   <div class="grid">
 
-    <!-- STREAM -->
-    <div class="card">
-      <div class="player" id="playerBox">
-        <div class="cover">
-          <button class="btn" id="launch">▶ Lancer le stream</button>
+    <!-- LEFT: STREAM -->
+    <div>
+      <div class="playerBox" id="playerBox">
+        <div class="cover" id="cover">
+          <button id="launchBtn" type="button">
+            <span style="font-size:18px">▶</span> Lancer le stream
+          </button>
         </div>
       </div>
 
-      <div class="tabs">
-        <button class="tab active" onclick="setPlayer(1)">Player 1</button>
-        <button class="tab" onclick="setPlayer(2)">Player 2</button>
-        <button class="tab" onclick="setPlayer(3)">Player 3</button>
+      <div class="playerSelect">
+        <div class="playerBtn active" onclick="setPlayer(1)"><i class="fa-solid fa-play"></i> Player 1</div>
+        <div class="playerBtn" onclick="setPlayer(2)"><i class="fa-solid fa-play"></i> Player 2</div>
+        <div class="playerBtn" onclick="setPlayer(3)"><i class="fa-solid fa-play"></i> Player 3</div>
+      </div>
+
+      <div class="infoBar">
+        <div class="infoLeft">
+          <img class="leagueLogo" id="leagueLogo" src="" alt="Ligue">
+          <div class="infoText">
+            <b>Vous regardez</b>
+            <div class="match" id="matchName">—</div>
+            <span id="matchTime">Aujourd’hui · —</span>
+          </div>
+        </div>
+
+        <div class="rightBox">
+          <div class="viewers" title="Spectateurs en ligne">
+            <svg class="eye" viewBox="0 0 24 24">
+              <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            <span id="viewer-count">0</span>
+          </div>
+
+          <div class="live">
+            <span class="dot"></span>
+            <span id="liveText">En cours</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- CHAT -->
-    <aside class="card">
+    <!-- RIGHT: CHAT -->
+    <aside class="chatBox">
       <div class="chatHead">
         <b>Chat en direct</b>
-        <span class="pill"><span class="dot"></span><span id="online">—</span></span>
+        <span class="chatOnline"><span class="chatDot"></span><span id="chatOnline">—</span></span>
       </div>
 
-      <div class="msgs" id="msgs"></div>
+      <div class="chatMessages" id="chatMessages"></div>
 
-      <form class="form" id="form">
-        <input id="name" maxlength="16" placeholder="Pseudo" />
-        <div class="row">
-          <input id="text" maxlength="180" placeholder="Ton message..." />
-          <button class="btn send" type="submit">Envoyer</button>
+      <form class="chatForm" id="chatForm">
+        <input class="inp" id="chatName" maxlength="16" placeholder="Pseudo (ex: Allan)" />
+        <div class="chatRow">
+          <input class="inp" id="chatText" maxlength="180" placeholder="Ton message..." />
+          <button class="send" type="submit">Envoyer</button>
         </div>
-        <div class="note">Anti-spam activé.</div>
+        <div class="smallNote">Anti-spam activé. Reste cool.</div>
       </form>
     </aside>
 
@@ -122,117 +259,191 @@
 </div>
 
 <script>
-/* ===== CONFIG =====
-   IMPORTANT: mets ici tes URLs AUTORISÉES
-*/
-const MATCH_ID = "live-demo";
-const PLAYERS = {
-  1: "https://bolaloca.my/player/4/1",
-  2: "https://bolaloca.my/player/4/1",
-  3: "https://bolaloca.my/player/4/1"
+/* =============================
+   CONFIG MATCH (par URL ?m=)
+   Exemple: pages/match.html?m=om-monaco
+============================= */
+const PARAMS = new URLSearchParams(location.search);
+const KEY = PARAMS.get("m") || "demo";
+
+// Mets tes matchs ici (titre + heure + logo de compétition)
+const MATCHES = {
+  demo: {
+    id: "demo",
+    name: "OM - AS MONACO",
+    timeText: "Aujourd’hui · 20h45",
+    leagueLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fa/Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg/960px-Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg.png"
+  }
 };
 
+const MATCH = MATCHES[KEY] || MATCHES.demo;
+document.getElementById("matchName").textContent = MATCH.name;
+document.getElementById("matchTime").textContent = MATCH.timeText;
+document.getElementById("leagueLogo").src = MATCH.leagueLogo;
+
+// ⚠️ Mets ici des URLs OFFICIELLES / AUTORISÉES
+const players = {
+  1: "PLAYER_URL_1",
+  2: "PLAYER_URL_2",
+  3: "PLAYER_URL_3"
+};
+
+const buttons = document.querySelectorAll(".playerBtn");
 let loaded = false;
 
 function iframeHTML(url){
-  return `<iframe id="player" src="${url}" allowfullscreen allow="autoplay; fullscreen" loading="lazy"></iframe>`;
+  return `
+    <iframe
+      id="player"
+      class="playerFrame"
+      src="${url}"
+      allowfullscreen
+      allow="autoplay; fullscreen; picture-in-picture"
+      referrerpolicy="no-referrer"
+      loading="lazy"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups-to-escape-sandbox"
+    ></iframe>
+  `;
 }
 
-function load(n){
-  document.getElementById("playerBox").innerHTML = iframeHTML(PLAYERS[n]);
+function loadPlayer(n){
+  document.getElementById("playerBox").innerHTML = iframeHTML(players[n]);
   loaded = true;
   setActive(n);
 }
-function setActive(n){
-  document.querySelectorAll(".tab").forEach((b,i)=>b.classList.toggle("active", i===n-1));
-}
-window.setPlayer = (n) => {
-  if(!loaded) return load(n);
-  document.getElementById("player").src = PLAYERS[n];
+
+function setPlayer(n){
+  if(!loaded){ loadPlayer(n); return; }
+  document.getElementById("player").src = players[n];
   setActive(n);
-};
-document.getElementById("launch").addEventListener("click", ()=>load(1));
-
-/* ===== CHAT (PHP) ===== */
-const UID_KEY = "imftx_uid";
-function uid(){
-  let x = localStorage.getItem(UID_KEY);
-  if(!x){ x = "u"+Math.random().toString(16).slice(2)+Date.now().toString(16); localStorage.setItem(UID_KEY,x); }
-  return x;
 }
-const UID = uid();
 
-const msgsEl = document.getElementById("msgs");
-const onlineEl = document.getElementById("online");
-const form = document.getElementById("form");
-const nameEl = document.getElementById("name");
-const textEl = document.getElementById("text");
+function setActive(n){
+  buttons.forEach(b => b.classList.remove("active"));
+  buttons[n-1].classList.add("active");
+}
+
+document.getElementById("launchBtn").addEventListener("click", () => loadPlayer(1));
+
+/* ===== VIEWERS COUNTER (PHP) =====
+   Remplace counter.php si ton chemin est différent
+*/
+const VIEW_URL = `../counter.php?match=${encodeURIComponent(MATCH.id)}`;
+
+async function refreshCount(){
+  try{
+    const r = await fetch(VIEW_URL, { cache:"no-store" });
+    const t = await r.text();
+    const n = parseInt(t, 10);
+    if(!Number.isNaN(n)){
+      document.getElementById("viewer-count").textContent = String(n);
+    }
+  }catch(e){}
+}
+refreshCount();
+setInterval(refreshCount, 3000);
+</script>
+
+<script>
+/* ===== CHAT LIVE (PHP) ===== */
+const CHAT_MATCH_ID = MATCH.id;
+const CHAT_UID_KEY = "imftx_uid_v1";
+
+function getUID(){
+  let id = localStorage.getItem(CHAT_UID_KEY);
+  if(!id){
+    id = "u" + Math.random().toString(16).slice(2) + Date.now().toString(16);
+    localStorage.setItem(CHAT_UID_KEY, id);
+  }
+  return id;
+}
+const UID = getUID();
+
+const readURL = `../chat/chat_read.php?match=${encodeURIComponent(CHAT_MATCH_ID)}`;
+const pingURL = `../chat/chat_ping.php?match=${encodeURIComponent(CHAT_MATCH_ID)}&id=${encodeURIComponent(UID)}`;
+const sendURL = `../chat/chat_send.php`;
+
+const chatBox = document.getElementById("chatMessages");
+const onlineEl = document.getElementById("chatOnline");
+const form = document.getElementById("chatForm");
+const nameEl = document.getElementById("chatName");
+const textEl = document.getElementById("chatText");
 
 nameEl.value = localStorage.getItem("imftx_name") || "";
 
-const READ = `chat/chat_read.php?match=${encodeURIComponent(MATCH_ID)}`;
-const PING = `chat/chat_ping.php?match=${encodeURIComponent(MATCH_ID)}&id=${encodeURIComponent(UID)}`;
-const SEND = `chat/chat_send.php`;
-
-function esc(s){return (s||"").replace(/[&<>"']/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));}
-let lastN = -1;
-
-function render(list){
-  if(!Array.isArray(list)) return;
-  if(list.length===lastN) return;
-  lastN = list.length;
-
-  msgsEl.innerHTML = list.map(m=>{
-    const d = new Date((m.ts||0)*1000);
-    const hh = String(d.getHours()).padStart(2,"0");
-    const mm = String(d.getMinutes()).padStart(2,"0");
-    return `<div class="msg">
-      <div class="top"><span class="user">${esc(m.name)}</span><span class="time">${hh}:${mm}</span></div>
-      <div class="text">${esc(m.text)}</div>
-    </div>`;
-  }).join("");
-  msgsEl.scrollTop = msgsEl.scrollHeight;
+function escapeHTML(s){
+  return (s||"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
-async function ping(){ try{ await fetch(PING,{cache:"no-store"}); }catch(e){} }
-async function read(){
+let lastRenderedCount = -1;
+
+function renderMessages(messages){
+  if(!Array.isArray(messages)) return;
+  if(messages.length === lastRenderedCount) return;
+  lastRenderedCount = messages.length;
+
+  chatBox.innerHTML = messages.map(m => {
+    const dt = new Date((m.ts||0) * 1000);
+    const hh = String(dt.getHours()).padStart(2,"0");
+    const mm = String(dt.getMinutes()).padStart(2,"0");
+    return `
+      <div class="msg">
+        <div class="msgTop">
+          <span class="msgUser">${escapeHTML(m.name)}</span>
+          <span class="msgTime">${hh}:${mm}</span>
+        </div>
+        <div class="msgText">${escapeHTML(m.text)}</div>
+      </div>
+    `;
+  }).join("");
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+async function chatRead(){
   try{
-    const r = await fetch(READ,{cache:"no-store"});
+    const r = await fetch(readURL, { cache:"no-store" });
     const j = await r.json();
     if(j && j.ok){
       onlineEl.textContent = j.online ?? "—";
-      render(j.messages||[]);
+      renderMessages(j.messages || []);
     }
   }catch(e){}
 }
 
-form.addEventListener("submit", async (e)=>{
+async function chatPing(){
+  try{ await fetch(pingURL, { cache:"no-store" }); }catch(e){}
+}
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const name = (nameEl.value||"").trim();
-  const text = (textEl.value||"").trim();
+  const name = (nameEl.value || "").trim();
+  const text = (textEl.value || "").trim();
   if(!name || !text) return;
 
   localStorage.setItem("imftx_name", name);
 
   const fd = new FormData();
-  fd.append("match", MATCH_ID);
+  fd.append("match", CHAT_MATCH_ID);
   fd.append("uid", UID);
   fd.append("name", name);
   fd.append("text", text);
 
   try{
-    const r = await fetch(SEND,{method:"POST",body:fd});
+    const r = await fetch(sendURL, { method:"POST", body: fd });
     const j = await r.json();
     if(j && j.ok){
-      textEl.value="";
-      await read();
+      textEl.value = "";
+      await chatRead();
     }
   }catch(e){}
 });
 
-ping(); read();
-setInterval(ping, 5000);
-setInterval(read, 1500);
+chatPing();
+chatRead();
+setInterval(chatPing, 5000);
+setInterval(chatRead, 1500);
 </script>
+
 </body>
 </html>
