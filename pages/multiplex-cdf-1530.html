@@ -6,79 +6,68 @@
 <title>IMFTX+ — Live</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
-a{color:inherit;text-decoration:none}
 
 header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
 .brand{font-weight:900;font-size:20px}
-.back{opacity:.7}
-.back:hover{opacity:1}
+.back{opacity:.7;text-decoration:none;color:#fff}
 
 .container{max-width:1200px;margin:0 auto;padding:0 16px 24px}
 
-/* PLAYER */
+/* ===== PLAYER ===== */
 .playerBox{
   border-radius:22px;overflow:hidden;background:#000;
   border:1px solid rgba(255,255,255,.12);
   box-shadow:0 30px 90px rgba(0,0,0,.75);
+  position:relative;
 }
 .cover{
   width:100%;aspect-ratio:16/9;display:grid;place-items:center;
-  background:
-    radial-gradient(900px 420px at 30% 10%, rgba(255,255,255,.10), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.82));
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.75));
 }
 .cover button{
   border:1px solid rgba(255,255,255,.18);
   background:rgba(255,255,255,.10);
   color:#fff;padding:14px 18px;border-radius:999px;
-  font-weight:900;cursor:pointer;display:flex;align-items:center;gap:10px
+  font-weight:800;cursor:pointer;display:flex;align-items:center;gap:10px
 }
 .cover button:hover{background:rgba(255,255,255,.14)}
+
 .playerFrame{width:100%;aspect-ratio:16/9;border:0;background:#000;display:block}
 
-/* PLAYER SELECT */
+/* ===== PLAYER SELECT ===== */
 .playerSelect{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}
 .playerBtn{
-  padding:10px 14px;border-radius:12px;
-  border:1px solid rgba(255,255,255,.18);
+  padding:8px 14px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.2);
   background:rgba(255,255,255,.08);
-  font-weight:900;cursor:pointer;
+  font-weight:700;cursor:pointer
 }
-.playerBtn:hover{background:rgba(255,255,255,.12)}
-.playerBtn.active{background:#fff;border-color:#fff;color:#000}
+.playerBtn.active{background:#111;border-color:#ef4444;color:#fff}
 
-/* INFO BAR */
+/* ===== INFO BAR ===== */
 .infoBar{
   margin-top:14px;padding:14px 16px;border-radius:16px;
-  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));
-  border:1px solid rgba(255,255,255,.10);
-  display:flex;justify-content:space-between;align-items:center;gap:14px
+  background:#2a2a2a;display:flex;justify-content:space-between;align-items:center;gap:14px
 }
-.infoLeft{display:flex;gap:12px;align-items:center;min-width:0}
-.leagueLogo{
-  width:38px;height:38px;border-radius:12px;
-  background:rgba(0,0,0,.35);
-  border:1px solid rgba(255,255,255,.14);
-  padding:7px;object-fit:contain;flex:0 0 auto;
-}
-.infoText{min-width:0}
-.infoText b{display:block;font-weight:900}
-.infoText .match{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.infoText span{font-size:13px;opacity:.75}
+.infoLeft{display:flex;gap:12px;align-items:center}
+.leagueLogo{width:36px}
+.infoText b{display:block}
+.infoText span{font-size:13px;opacity:.7}
 
 .rightBox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
-.live{display:flex;align-items:center;gap:8px;font-weight:900}
+.live{display:flex;align-items:center;gap:8px;font-weight:800}
 .dot{width:10px;height:10px;border-radius:50%;background:#22c55e}
 
-/* COUNTER */
+/* ✅ Compteur */
 .viewers{
   display:flex;align-items:center;gap:8px;
   font-weight:900;padding:8px 12px;border-radius:999px;
-  background:rgba(0,0,0,.30);
+  background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.14)
 }
 .eye{width:18px;height:18px;fill:#fff;opacity:.9}
@@ -94,38 +83,41 @@ header{padding:14px 18px;display:flex;justify-content:space-between;align-items:
 
 <header>
   <div class="brand">IMFTX+</div>
-  <a href="../index.html" class="back">← Retour</a>
+  <a href="index.html" class="back">← Retour</a>
 </header>
 
 <div class="container">
 
   <!-- PLAYER -->
   <div class="playerBox" id="playerBox">
-    <div class="cover">
-      <button id="launchBtn" type="button">▶ Lancer le stream</button>
+    <div class="cover" id="cover">
+      <button onclick="loadPlayer(1)"><span style="font-size:18px">▶</span> Lancer le stream</button>
     </div>
   </div>
 
   <!-- PLAYER BUTTONS -->
   <div class="playerSelect">
-    <button class="playerBtn active" onclick="setPlayer(1)">Player 1</button>
-    <button class="playerBtn" onclick="setPlayer(2)">Player 2</button>
-    <button class="playerBtn" onclick="setPlayer(3)">Player 3</button>
+    <div class="playerBtn active" onclick="setPlayer(1)">Player 1</div>
+    <div class="playerBtn" onclick="setPlayer(2)">Player 2</div>
+    <div class="playerBtn" onclick="setPlayer(3)">Player 3</div>
   </div>
 
   <!-- INFO -->
   <div class="infoBar">
     <div class="infoLeft">
-      <img class="leagueLogo" id="leagueLogo" src="" alt="Ligue">
+      <img class="leagueLogo"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/f/fa/Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg/960px-Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg.png?20250806015730"
+           alt="Ligue 1">
       <div class="infoText">
         <b>Vous regardez</b>
-        <div class="match" id="matchName">—</div>
-        <span id="matchTime">Aujourd’hui · —</span>
+        OM - AS MONACO<br>
+        <span>Aujourd’hui · 20h45</span>
       </div>
     </div>
 
     <div class="rightBox">
-      <div class="viewers" title="Spectateurs en ligne">
+      <!-- ✅ Compteur live (PHP) -->
+      <div class="viewers" id="viewer-counter" title="Spectateurs en ligne">
         <svg class="eye" viewBox="0 0 24 24">
           <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
           <circle cx="12" cy="12" r="3"></circle>
@@ -135,7 +127,7 @@ header{padding:14px 18px;display:flex;justify-content:space-between;align-items:
 
       <div class="live">
         <span class="dot"></span>
-        <span>En cours</span>
+        En cours
       </div>
     </div>
   </div>
@@ -143,27 +135,15 @@ header{padding:14px 18px;display:flex;justify-content:space-between;align-items:
 </div>
 
 <script>
-/* ========= MATCH (à changer sur chaque page) ========= */
-const MATCH = {
-  id: "newcastle-chelsea",
-  name: "Newcastle - Chelsea",
-  timeText: "Aujourd’hui · 13h30",
-  leagueLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png"
+/* ===== PLAYER (anti popups via sandbox + click load) ===== */
+const players = {
+  1: "https://bolaloca.my/player/4/20",
+  2: "https://bolaloca.my/player/2/20",
+  3: "https://bolaloca.my/player/3/20"
 };
 
-/* ========= PLAYERS (URLs AUTORISÉES) ========= */
-const PLAYERS = {
-  1: "https://bolaloca.my/player/4/1",
-  2: "https://example.com/player2",
-  3: "https://example.com/player3"
-};
-
-document.getElementById("matchName").textContent = MATCH.name;
-document.getElementById("matchTime").textContent = MATCH.timeText;
-document.getElementById("leagueLogo").src = MATCH.leagueLogo;
-
-let loaded = false;
 const buttons = document.querySelectorAll(".playerBtn");
+let loaded = false;
 
 function iframeHTML(url){
   return `
@@ -172,7 +152,7 @@ function iframeHTML(url){
       class="playerFrame"
       src="${url}"
       allowfullscreen
-      allow="autoplay; fullscreen; picture-in-picture"
+      allow="autoplay; fullscreen"
       referrerpolicy="no-referrer"
       loading="lazy"
       sandbox="allow-scripts allow-same-origin allow-forms"
@@ -180,66 +160,48 @@ function iframeHTML(url){
   `;
 }
 
-function setActive(n){
-  buttons.forEach(b => b.classList.remove("active"));
-  buttons[n-1].classList.add("active");
-}
-
 function loadPlayer(n){
-  document.getElementById("playerBox").innerHTML = iframeHTML(PLAYERS[n]);
+  document.getElementById("playerBox").innerHTML = iframeHTML(players[n]);
   loaded = true;
   setActive(n);
 }
 
 function setPlayer(n){
   if(!loaded){ loadPlayer(n); return; }
-  document.getElementById("player").src = PLAYERS[n];
+  document.getElementById("player").src = players[n];
   setActive(n);
 }
 
-document.getElementById("launchBtn").addEventListener("click", () => loadPlayer(1));
-window.setPlayer = setPlayer;
+function setActive(n){
+  buttons.forEach(b => b.classList.remove("active"));
+  buttons[n-1].classList.add("active");
+}
 </script>
 
 <script>
-/* ========= COMPTEUR LIVE (Vercel + Upstash) ========= */
-function getOrCreateSID(){
-  const k = "imftx_sid";
-  let sid = localStorage.getItem(k);
-  if(!sid){
-    sid = crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
-    localStorage.setItem(k, sid);
-  }
-  return sid;
-}
+/* ===== ✅ COMPTEUR LIVE (SANS FIREBASE) =====
+   - appelé toutes les 3s
+   - match_id unique par page
+*/
 
-const sid = getOrCreateSID();
-
-async function pingOnline(){
-  try{
-    await fetch(`/api/online?match=${encodeURIComponent(MATCH.id)}&sid=${encodeURIComponent(sid)}`, { cache:"no-store" });
-  }catch(e){}
-}
+const MATCH_ID = "L1om-ASM"; // <= change ça pour chaque page
+const VIEW_URL = `counter.php?match=${encodeURIComponent(MATCH_ID)}`;
 
 async function refreshCount(){
   try{
-    const r = await fetch(`/api/view?match=${encodeURIComponent(MATCH.id)}`, { cache:"no-store" });
+    const r = await fetch(VIEW_URL, { cache: "no-store" });
     const t = await r.text();
     const n = parseInt(t, 10);
     if(!Number.isNaN(n)){
       document.getElementById("viewer-count").textContent = String(n);
     }
-  }catch(e){}
+  }catch(e){
+    // si erreur, on ne reset pas à 0 (important)
+  }
 }
 
-/* ping + refresh */
-pingOnline();
+// ping régulier
 refreshCount();
-
-/* ping toutes les 15s (important) */
-setInterval(pingOnline, 15000);
-
-/* refresh compteur toutes les 3s */
 setInterval(refreshCount, 3000);
 </script>
 
