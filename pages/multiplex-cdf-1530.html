@@ -6,25 +6,24 @@
 <title>IMFTX+ — Live</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
+a{color:inherit;text-decoration:none}
 
 header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
 .brand{font-weight:900;font-size:20px}
-.back{opacity:.7;text-decoration:none;color:#fff}
+.back{opacity:.7}
 .back:hover{opacity:1}
 
 .container{max-width:1200px;margin:0 auto;padding:0 16px 24px}
 
-/* player */
+/* PLAYER */
 .playerBox{
   border-radius:22px;overflow:hidden;background:#000;
   border:1px solid rgba(255,255,255,.12);
   box-shadow:0 30px 90px rgba(0,0,0,.75);
-  position:relative;
 }
 .cover{
   width:100%;aspect-ratio:16/9;display:grid;place-items:center;
@@ -41,19 +40,18 @@ header{padding:14px 18px;display:flex;justify-content:space-between;align-items:
 .cover button:hover{background:rgba(255,255,255,.14)}
 .playerFrame{width:100%;aspect-ratio:16/9;border:0;background:#000;display:block}
 
-/* buttons */
+/* PLAYER SELECT */
 .playerSelect{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}
 .playerBtn{
   padding:10px 14px;border-radius:12px;
   border:1px solid rgba(255,255,255,.18);
   background:rgba(255,255,255,.08);
   font-weight:900;cursor:pointer;
-  display:flex;align-items:center;gap:10px;
 }
 .playerBtn:hover{background:rgba(255,255,255,.12)}
 .playerBtn.active{background:#fff;border-color:#fff;color:#000}
 
-/* info */
+/* INFO BAR */
 .infoBar{
   margin-top:14px;padding:14px 16px;border-radius:16px;
   background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));
@@ -76,7 +74,7 @@ header{padding:14px 18px;display:flex;justify-content:space-between;align-items:
 .live{display:flex;align-items:center;gap:8px;font-weight:900}
 .dot{width:10px;height:10px;border-radius:50%;background:#22c55e}
 
-/* compteur (mode statique) */
+/* COUNTER */
 .viewers{
   display:flex;align-items:center;gap:8px;
   font-weight:900;padding:8px 12px;border-radius:999px;
@@ -101,20 +99,21 @@ header{padding:14px 18px;display:flex;justify-content:space-between;align-items:
 
 <div class="container">
 
+  <!-- PLAYER -->
   <div class="playerBox" id="playerBox">
     <div class="cover">
-      <button id="launchBtn" type="button">
-        <span style="font-size:18px">▶</span> Lancer le stream
-      </button>
+      <button id="launchBtn" type="button">▶ Lancer le stream</button>
     </div>
   </div>
 
+  <!-- PLAYER BUTTONS -->
   <div class="playerSelect">
-    <div class="playerBtn active" onclick="setPlayer(1)"><i class="fa-solid fa-play"></i> Player 1</div>
-    <div class="playerBtn" onclick="setPlayer(2)"><i class="fa-solid fa-play"></i> Player 2</div>
-    <div class="playerBtn" onclick="setPlayer(3)"><i class="fa-solid fa-play"></i> Player 3</div>
+    <button class="playerBtn active" onclick="setPlayer(1)">Player 1</button>
+    <button class="playerBtn" onclick="setPlayer(2)">Player 2</button>
+    <button class="playerBtn" onclick="setPlayer(3)">Player 3</button>
   </div>
 
+  <!-- INFO -->
   <div class="infoBar">
     <div class="infoLeft">
       <img class="leagueLogo" id="leagueLogo" src="" alt="Ligue">
@@ -126,12 +125,12 @@ header{padding:14px 18px;display:flex;justify-content:space-between;align-items:
     </div>
 
     <div class="rightBox">
-      <div class="viewers" title="Spectateurs (statique)">
+      <div class="viewers" title="Spectateurs en ligne">
         <svg class="eye" viewBox="0 0 24 24">
           <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
           <circle cx="12" cy="12" r="3"></circle>
         </svg>
-        <span id="viewer-count">—</span>
+        <span id="viewer-count">0</span>
       </div>
 
       <div class="live">
@@ -144,56 +143,29 @@ header{padding:14px 18px;display:flex;justify-content:space-between;align-items:
 </div>
 
 <script>
-/* ===== CONFIG PAGE (à éditer dans chaque fichier) ===== */
+/* ========= MATCH (à changer sur chaque page) ========= */
 const MATCH = {
-  id: "match-demo",
-  name: "Match — Démo",
-  timeText: "Aujourd’hui · 20h45",
+  id: "newcastle-chelsea",
+  name: "Newcastle - Chelsea",
+  timeText: "Aujourd’hui · 13h30",
   leagueLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png"
 };
 
-/*
-  Mets ici tes sources OFFICIELLES / AUTORISÉES.
-  Si tu laisses "", la page reste clean et ne charge rien.
-*/
-const players = {
-  1: "https://bolaloca.my/player/4/1",
-  2: "",
-  3: ""
+/* ========= PLAYERS (URLs AUTORISÉES) ========= */
+const PLAYERS = {
+  1: "https://example.com/player1",
+  2: "https://example.com/player2",
+  3: "https://example.com/player3"
 };
 
 document.getElementById("matchName").textContent = MATCH.name;
 document.getElementById("matchTime").textContent = MATCH.timeText;
 document.getElementById("leagueLogo").src = MATCH.leagueLogo;
 
-/* ===== viewer compteur (stable en static) =====
-   Sans backend, impossible d’avoir un vrai compteur unique.
-   Donc: petit compteur “propre” qui varie légèrement (illusion),
-   sans tracker les gens.
-*/
-let base = 180 + Math.floor(Math.random()*120);
-function tick(){
-  const n = base + Math.floor(Math.random()*12);
-  document.getElementById("viewer-count").textContent = String(n);
-}
-tick();
-setInterval(tick, 3500);
-
-/* ===== player loader ===== */
-const buttons = document.querySelectorAll(".playerBtn");
 let loaded = false;
+const buttons = document.querySelectorAll(".playerBtn");
 
 function iframeHTML(url){
-  if(!url){
-    return `
-      <div class="cover" style="aspect-ratio:16/9;">
-        <div style="text-align:center;max-width:520px;padding:0 18px;">
-          <div style="font-weight:900;font-size:18px;margin-bottom:6px;">Aucune source configurée</div>
-          <div style="opacity:.75;font-weight:700;">Ajoute un lien autorisé dans <b>players</b> (Player 1/2/3).</div>
-        </div>
-      </div>
-    `;
-  }
   return `
     <iframe
       id="player"
@@ -214,20 +186,61 @@ function setActive(n){
 }
 
 function loadPlayer(n){
-  document.getElementById("playerBox").innerHTML = iframeHTML(players[n]);
+  document.getElementById("playerBox").innerHTML = iframeHTML(PLAYERS[n]);
   loaded = true;
   setActive(n);
 }
 
 function setPlayer(n){
   if(!loaded){ loadPlayer(n); return; }
-  const frame = document.getElementById("player");
-  if(frame) frame.src = players[n];
-  else document.getElementById("playerBox").innerHTML = iframeHTML(players[n]);
+  document.getElementById("player").src = PLAYERS[n];
   setActive(n);
 }
 
 document.getElementById("launchBtn").addEventListener("click", () => loadPlayer(1));
+window.setPlayer = setPlayer;
+</script>
+
+<script>
+/* ========= COMPTEUR LIVE (Vercel + Upstash) ========= */
+function getOrCreateSID(){
+  const k = "imftx_sid";
+  let sid = localStorage.getItem(k);
+  if(!sid){
+    sid = crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2);
+    localStorage.setItem(k, sid);
+  }
+  return sid;
+}
+
+const sid = getOrCreateSID();
+
+async function pingOnline(){
+  try{
+    await fetch(`/api/online?match=${encodeURIComponent(MATCH.id)}&sid=${encodeURIComponent(sid)}`, { cache:"no-store" });
+  }catch(e){}
+}
+
+async function refreshCount(){
+  try{
+    const r = await fetch(`/api/view?match=${encodeURIComponent(MATCH.id)}`, { cache:"no-store" });
+    const t = await r.text();
+    const n = parseInt(t, 10);
+    if(!Number.isNaN(n)){
+      document.getElementById("viewer-count").textContent = String(n);
+    }
+  }catch(e){}
+}
+
+/* ping + refresh */
+pingOnline();
+refreshCount();
+
+/* ping toutes les 15s (important) */
+setInterval(pingOnline, 15000);
+
+/* refresh compteur toutes les 3s */
+setInterval(refreshCount, 3000);
 </script>
 
 </body>
