@@ -222,17 +222,17 @@ function getUID(){
 }
 
 const UID = getUID();
-const VIEW_URL = `/api/online?match=${encodeURIComponent(MATCH.id)}&id=${encodeURIComponent(UID)}`;
+const VIEW_URL = `/api/online?match=${encodeURIComponent(MATCH.id)}`;
 
 async function refreshCount(){
   try{
     const r = await fetch(VIEW_URL, { cache: "no-store" });
-    const t = await r.text();
-    const n = parseInt(t, 10);
-    if(!Number.isNaN(n)){
-      document.getElementById("viewer-count").textContent = String(n);
+    const j = await r.json();
+    if(j.count !== undefined){
+      document.getElementById("viewer-count").textContent = j.count;
     }
-  }catch(e){
+  }catch(e){}
+}
     // on garde la dernière valeur
   }
 }
