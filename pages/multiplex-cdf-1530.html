@@ -1,334 +1,209 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>IMFTX+ • Match</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#07090d;
-      --card:rgba(255,255,255,.06);
-      --line:rgba(255,255,255,.10);
-      --txt:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.65);
-      --pill:rgba(0,0,0,.35);
-      --shadow: 0 22px 90px rgba(0,0,0,.75);
-      --r:18px;
-      --max:1200px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:#000;color:var(--txt);font-family:Outfit,system-ui,Segoe UI,Roboto,Arial}
-    a{color:inherit;text-decoration:none}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMFTX+ — Live</title>
 
-    .wrap{max-width:var(--max);margin:0 auto;padding:18px}
-    .top{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:14px; margin-bottom:12px;
-    }
-    .brand{display:flex;align-items:center;gap:10px}
-    .logoMark{
-      width:34px;height:34px;border-radius:10px;
-      background:linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.04));
-      border:1px solid var(--line);
-      display:grid;place-items:center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      font-weight:900;
-    }
-    .titleBlock{min-width:0}
-    .h1{font-weight:900;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .sub{color:var(--muted);font-size:13px;margin-top:2px}
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-    .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .btn{
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.06);
-      color:var(--txt);
-      padding:10px 12px;
-      border-radius:999px;
-      font-weight:900;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      user-select:none;
-      transition:.15s;
-    }
-    .btn:hover{background:rgba(255,255,255,.10); transform:translateY(-1px)}
-    .btnPrimary{background:#fff;color:#000;border-color:#fff}
-    .btnPrimary:hover{background:#fff}
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
 
-    .layout{
-      display:grid;
-      grid-template-columns: 1fr 340px;
-      gap:14px;
-      align-items:start;
-    }
+header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:900;font-size:20px}
+.back{opacity:.7;text-decoration:none;color:#fff}
 
-    .playerCard{
-      border:1px solid var(--line);
-      background: radial-gradient(900px 420px at 30% 0%, rgba(255,255,255,.08), transparent 55%),
-                  linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
+.container{max-width:1200px;margin:0 auto;padding:0 16px 24px}
 
-    .tabs{
-      display:flex; gap:10px; padding:12px 12px 10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.22);
-    }
-    .tab{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--txt);
-      padding:10px 14px;
-      border-radius: 14px;
-      font-weight:900;
-      cursor:pointer;
-      transition:.15s;
-      display:inline-flex; align-items:center; gap:10px;
-    }
-    .tab:hover{background: rgba(255,255,255,.10)}
-    .tab.active{
-      background:#fff;color:#000;border-color:#fff;
-    }
-    .tab .dot{
-      width:9px;height:9px;border-radius:50%;
-      background:#22c55e;
-      display:inline-block;
-    }
+/* ===== PLAYER ===== */
+.playerBox{
+  border-radius:22px;overflow:hidden;background:#000;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 30px 90px rgba(0,0,0,.75);
+  position:relative;
+}
+.cover{
+  width:100%;aspect-ratio:16/9;display:grid;place-items:center;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.75));
+}
+.cover button{
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.10);
+  color:#fff;padding:14px 18px;border-radius:999px;
+  font-weight:800;cursor:pointer;display:flex;align-items:center;gap:10px
+}
+.cover button:hover{background:rgba(255,255,255,.14)}
 
-    .stage{
-      position:relative;
-      background: #000;
-      aspect-ratio: 16/9;
-    }
-    .frame{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      border:0;
-      background:#000;
-    }
-    .stageOverlay{
-      position:absolute; inset:0;
-      pointer-events:none;
-      background: radial-gradient(900px 420px at 50% 20%, rgba(255,255,255,.06), transparent 60%),
-                  linear-gradient(180deg, rgba(0,0,0,.00), rgba(0,0,0,.35));
-    }
+.playerFrame{width:100%;aspect-ratio:16/9;border:0;background:#000;display:block}
 
-    .note{
-      padding:10px 12px 12px;
-      color: var(--muted);
-      font-size:12px;
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
-      background: rgba(0,0,0,.18);
-      border-top: 1px solid rgba(255,255,255,.08);
-    }
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px; border-radius:999px;
-      background: var(--pill);
-      border:1px solid rgba(255,255,255,.12);
-      font-weight:900;
-      color: rgba(255,255,255,.88);
-    }
+/* ===== PLAYER SELECT ===== */
+.playerSelect{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}
+.playerBtn{
+  padding:8px 14px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.08);
+  font-weight:700;cursor:pointer
+}
+.playerBtn.active{background:#111;border-color:#ef4444;color:#fff}
 
-    .sideCard{
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
-      border-radius: var(--r);
-      overflow:hidden;
-      box-shadow: 0 18px 70px rgba(0,0,0,.55);
-      position: sticky;
-      top: 14px;
-    }
-    .sideHead{
-      padding:12px 12px 10px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      background: rgba(0,0,0,.22);
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .sideHead b{font-size:14px}
-    .sideBody{padding:12px}
-    .counterFrame{
-      width:100%;
-      height:520px;
-      border:0;
-      border-radius: 14px;
-      background:#000;
-    }
+/* ===== INFO BAR ===== */
+.infoBar{
+  margin-top:14px;padding:14px 16px;border-radius:16px;
+  background:#2a2a2a;display:flex;justify-content:space-between;align-items:center;gap:14px
+}
+.infoLeft{display:flex;gap:12px;align-items:center}
+.leagueLogo{width:36px}
+.infoText b{display:block}
+.infoText span{font-size:13px;opacity:.7}
 
-    .backLink{
-      color:rgba(255,255,255,.92);
-      font-weight:900;
-      opacity:.85;
-    }
-    .backLink:hover{opacity:1}
+.rightBox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.live{display:flex;align-items:center;gap:8px;font-weight:800}
+.dot{width:10px;height:10px;border-radius:50%;background:#22c55e}
 
-    @media (max-width: 980px){
-      .layout{grid-template-columns: 1fr}
-      .sideCard{position:relative; top:auto}
-      .counterFrame{height:420px}
-      .h1{font-size:15px}
-    }
-  </style>
+/* ✅ Compteur */
+.viewers{
+  display:flex;align-items:center;gap:8px;
+  font-weight:900;padding:8px 12px;border-radius:999px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14)
+}
+.eye{width:18px;height:18px;fill:#fff;opacity:.9}
+
+@media(max-width:700px){
+  .infoBar{flex-direction:column;align-items:flex-start}
+  .rightBox{justify-content:flex-start}
+}
+</style>
 </head>
-<body>
-  <div class="wrap">
-    <div class="top">
-      <div class="brand">
-        <div class="logoMark">+</div>
-        <div class="titleBlock">
-          <div class="h1" id="matchTitle">Match</div>
-          <div class="sub" id="matchSub">IMFTX+ • Lecteur</div>
-        </div>
-      </div>
 
-      <div class="actions">
-        <a class="backLink" href="../index.html">← Retour</a>
-        <button class="btn" id="btnRefresh">Rafraîchir</button>
-        <button class="btn btnPrimary" id="btnFull">Plein écran</button>
+<body>
+
+<header>
+  <div class="brand">IMFTX+</div>
+  <a href="index.html" class="back">← Retour</a>
+</header>
+
+<div class="container">
+
+  <!-- PLAYER -->
+  <div class="playerBox" id="playerBox">
+    <div class="cover" id="cover">
+      <button onclick="loadPlayer(1)"><span style="font-size:18px">▶</span> Lancer le stream</button>
+    </div>
+  </div>
+
+  <!-- PLAYER BUTTONS -->
+  <div class="playerSelect">
+    <div class="playerBtn active" onclick="setPlayer(1)">Player 1</div>
+    <div class="playerBtn" onclick="setPlayer(2)">Player 2</div>
+    <div class="playerBtn" onclick="setPlayer(3)">Player 3</div>
+  </div>
+
+  <!-- INFO -->
+  <div class="infoBar">
+    <div class="infoLeft">
+      <img class="leagueLogo"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/f/fa/Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg/960px-Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg.png?20250806015730"
+           alt="Ligue 1">
+      <div class="infoText">
+        <b>Vous regardez</b>
+        OM - AS MONACO<br>
+        <span>Aujourd’hui · 20h45</span>
       </div>
     </div>
 
-    <div class="layout">
-      <div class="playerCard">
-        <div class="tabs" id="tabs"></div>
-
-        <div class="stage" id="stage">
-          <iframe class="frame" id="playerFrame"
-                  referrerpolicy="no-referrer"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowfullscreen></iframe>
-          <div class="stageOverlay"></div>
-        </div>
-
-        <div class="note">
-          <span class="pill" id="statusPill">● Live</span>
-          <span class="pill" id="sourcePill">Source: Player 1</span>
-        </div>
+    <div class="rightBox">
+      <!-- ✅ Compteur live (PHP) -->
+      <div class="viewers" id="viewer-counter" title="Spectateurs en ligne">
+        <svg class="eye" viewBox="0 0 24 24">
+          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+        <span id="viewer-count">0</span>
       </div>
 
-      <div class="sideCard">
-        <div class="sideHead">
-          <b>Compteurs en direct</b>
-          <span class="pill">LIVE</span>
-        </div>
-        <div class="sideBody">
-          <iframe class="counterFrame"
-                  src="https://timberj.w3spaces.com/"
-                  loading="lazy"
-                  referrerpolicy="no-referrer"></iframe>
-        </div>
+      <div class="live">
+        <span class="dot"></span>
+        En cours
       </div>
     </div>
   </div>
 
-  <script>
-    /* ==========================================================
-       IMPORTANT
-       - Mets ici uniquement des URLs officielles / autorisées.
-       - Je ne peux pas aider à intégrer des liens non officiels.
-    =========================================================== */
+</div>
 
-    // 1) Matches (tu peux en ajouter / modifier)
-    const MATCHES = {
-      // exemple :
-      "real-sevilla": {
-        title: "Real Madrid - Sevilla",
-        sub: "Aujourd’hui • 21:00 • La Liga",
-        players: [
-          { name: "Player 1", url: "https://bolaloca.my/player/4/1" },
-          { name: "Player 2", url: "https://bolaloca.my/player/2/1" },
-          { name: "Player 3", url: "hhttps://bolaloca.my/player/3/1" },
-        ]
-      }
-    };
+<script>
+/* ===== PLAYER (anti popups via sandbox + click load) ===== */
+const players = {
+  1: "https://bolaloca.my/player/4/20",
+  2: "https://bolaloca.my/player/2/20",
+  3: "https://bolaloca.my/player/3/20"
+};
 
-    // 2) Match choisi via URL ?m=
-    const params = new URLSearchParams(location.search);
-    const matchKey = params.get("m") || Object.keys(MATCHES)[0];
-    const match = MATCHES[matchKey] || { title:"Match", sub:"", players:[] };
+const buttons = document.querySelectorAll(".playerBtn");
+let loaded = false;
 
-    // UI refs
-    const tabs = document.getElementById("tabs");
-    const frame = document.getElementById("playerFrame");
-    const matchTitle = document.getElementById("matchTitle");
-    const matchSub = document.getElementById("matchSub");
-    const sourcePill = document.getElementById("sourcePill");
-    const btnRefresh = document.getElementById("btnRefresh");
-    const btnFull = document.getElementById("btnFull");
-    const stage = document.getElementById("stage");
+function iframeHTML(url){
+  return `
+    <iframe
+      id="player"
+      class="playerFrame"
+      src="${url}"
+      allowfullscreen
+      allow="autoplay; fullscreen"
+      referrerpolicy="no-referrer"
+      loading="lazy"
+      sandbox="allow-scripts allow-same-origin allow-forms"
+    ></iframe>
+  `;
+}
 
-    matchTitle.textContent = match.title || "Match";
-    matchSub.textContent = match.sub || "IMFTX+ • Lecteur";
+function loadPlayer(n){
+  document.getElementById("playerBox").innerHTML = iframeHTML(players[n]);
+  loaded = true;
+  setActive(n);
+}
 
-    let active = 0;
+function setPlayer(n){
+  if(!loaded){ loadPlayer(n); return; }
+  document.getElementById("player").src = players[n];
+  setActive(n);
+}
 
-    function setPlayer(i){
-      active = i;
-      const p = match.players[i];
-      if(!p) return;
+function setActive(n){
+  buttons.forEach(b => b.classList.remove("active"));
+  buttons[n-1].classList.add("active");
+}
+</script>
 
-      // charge le player
-      frame.src = p.url;
-      sourcePill.textContent = "Source: " + p.name;
+<script>
+/* ===== ✅ COMPTEUR LIVE (SANS FIREBASE) =====
+   - appelé toutes les 3s
+   - match_id unique par page
+*/
 
-      // UI tabs active
-      [...tabs.querySelectorAll(".tab")].forEach((t, idx) => {
-        t.classList.toggle("active", idx === i);
-      });
+const MATCH_ID = "L1om-ASM"; // <= change ça pour chaque page
+const VIEW_URL = `counter.php?match=${encodeURIComponent(MATCH_ID)}`;
+
+async function refreshCount(){
+  try{
+    const r = await fetch(VIEW_URL, { cache: "no-store" });
+    const t = await r.text();
+    const n = parseInt(t, 10);
+    if(!Number.isNaN(n)){
+      document.getElementById("viewer-count").textContent = String(n);
     }
+  }catch(e){
+    // si erreur, on ne reset pas à 0 (important)
+  }
+}
 
-    function renderTabs(){
-      if(!match.players || match.players.length === 0){
-        tabs.innerHTML = `<div style="opacity:.7;font-weight:900;padding:10px 2px;">Aucun player configuré</div>`;
-        frame.src = "about:blank";
-        sourcePill.textContent = "Source: -";
-        return;
-      }
+// ping régulier
+refreshCount();
+setInterval(refreshCount, 3000);
+</script>
 
-      tabs.innerHTML = match.players.map((p, i) => `
-        <button class="tab ${i===0?"active":""}" type="button" data-i="${i}">
-          <span class="dot"></span>
-          ${p.name}
-        </button>
-      `).join("");
-
-      tabs.addEventListener("click", (e) => {
-        const btn = e.target.closest(".tab");
-        if(!btn) return;
-        const i = Number(btn.getAttribute("data-i"));
-        setPlayer(i);
-      });
-
-      setPlayer(0);
-    }
-
-    // Refresh
-    btnRefresh.addEventListener("click", () => {
-      const current = match.players[active];
-      if(!current) return;
-      frame.src = "about:blank";
-      setTimeout(() => frame.src = current.url, 50);
-    });
-
-    // Fullscreen
-    btnFull.addEventListener("click", async () => {
-      try{
-        if(document.fullscreenElement){
-          await document.exitFullscreen();
-        }else{
-          await stage.requestFullscreen();
-        }
-      }catch(e){
-        // rien
-      }
-    });
-
-    renderTabs();
-  </script>
 </body>
 </html>
