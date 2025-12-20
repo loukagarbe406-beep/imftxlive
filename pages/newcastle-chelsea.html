@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMFTX+ — Live</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
+a{color:inherit;text-decoration:none}
+
+header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:900;font-size:20px;letter-spacing:.2px}
+.back{opacity:.7}
+.back:hover{opacity:1}
+
+.container{max-width:1200px;margin:0 auto;padding:0 16px 26px}
+
+/* ===== PLAYER ===== */
+.playerBox{
+  border-radius:22px;overflow:hidden;background:#000;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 30px 90px rgba(0,0,0,.75);
+}
+.cover{
+  width:100%;aspect-ratio:16/9;display:grid;place-items:center;
+  background:
+    radial-gradient(900px 420px at 30% 10%, rgba(255,255,255,.10), transparent 55%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.82));
+}
+.cover button{
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.10);
+  color:#fff;padding:14px 18px;border-radius:999px;
+  font-weight:900;cursor:pointer;display:flex;align-items:center;gap:10px
+}
+.cover button:hover{background:rgba(255,255,255,.14)}
+
+.playerFrame{
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
+  background:#000;
+  display:block
+}
+
+/* ===== PLAYER SELECT ===== */
+.playerSelect{display:flex;gap:10px;margin:14px 0 10px;flex-wrap:wrap}
+.playerBtn{
+  padding:10px 14px;border-radius:12px;
+  border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.08);
+  font-weight:900;cursor:pointer;
+}
+.playerBtn:hover{background:rgba(255,255,255,.12)}
+.playerBtn.active{background:#fff;border-color:#fff;color:#000}
+
+/* ===== INFO BAR ===== */
+.infoBar{
+  margin-top:10px;padding:14px 16px;border-radius:16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));
+  border:1px solid rgba(255,255,255,.10);
+  display:flex;justify-content:space-between;align-items:center;gap:14px
+}
+.infoLeft{display:flex;gap:12px;align-items:center;min-width:0}
+.leagueLogo{
+  width:38px;height:38px;border-radius:12px;
+  background:rgba(0,0,0,.35);
+  border:1px solid rgba(255,255,255,.14);
+  padding:7px;object-fit:contain;flex:0 0 auto;
+}
+.infoText{min-width:0}
+.infoText b{display:block;font-weight:900}
+.infoText .match{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.infoText span{font-size:13px;opacity:.75}
+
+.rightBox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.live{display:flex;align-items:center;gap:8px;font-weight:900;opacity:.95}
+.dot{width:10px;height:10px;border-radius:50%;background:#22c55e}
+
+@media(max-width:700px){
+  .infoBar{flex-direction:column;align-items:flex-start}
+  .rightBox{justify-content:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">IMFTX+</div>
+  <a href="../index.html" class="back">← Retour</a>
+</header>
+
+<div class="container">
+
+  <!-- PLAYER -->
+  <div class="playerBox" id="playerBox">
+    <div class="cover">
+      <button id="launchBtn" type="button">▶ Lancer le stream</button>
+    </div>
+  </div>
+
+  <!-- PLAYERS -->
+  <div class="playerSelect">
+    <button class="playerBtn active" onclick="setPlayer(1)">Player 1</button>
+    <button class="playerBtn" onclick="setPlayer(2)">Player 2</button>
+    <button class="playerBtn" onclick="setPlayer(3)">Player 3</button>
+  </div>
+
+  <!-- INFO -->
+  <div class="infoBar">
+    <div class="infoLeft">
+      <img class="leagueLogo" id="leagueLogo" src="" alt="Ligue">
+      <div class="infoText">
+        <b>Vous regardez</b>
+        <div class="match" id="matchName">—</div>
+        <span id="matchTime">Aujourd’hui · —</span>
+      </div>
+    </div>
+
+    <div class="rightBox">
+      <div class="live">
+        <span class="dot"></span>
+        <span>En cours</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ========= MATCH (tu changes ici) ========= */
+const MATCH = {
+  name: "OM - AS MONACO",
+  timeText: "Aujourd’hui · 20h45",
+  leagueLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fa/Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg/960px-Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg.png"
+};
+
+/* ========= PLAYERS (remplace par tes liens) ========= */
+const PLAYERS = {
+  1: "https://example.com/player1",
+  2: "https://example.com/player2",
+  3: "https://example.com/player3"
+};
+
+document.getElementById("matchName").textContent = MATCH.name;
+document.getElementById("matchTime").textContent = MATCH.timeText;
+document.getElementById("leagueLogo").src = MATCH.leagueLogo;
+
+let loaded = false;
+const buttons = document.querySelectorAll(".playerBtn");
+
+function iframeHTML(url){
+  return `
+    <iframe
+      id="player"
+      class="playerFrame"
+      src="${url}"
+      allowfullscreen
+      allow="autoplay; fullscreen; picture-in-picture"
+      referrerpolicy="no-referrer"
+      loading="lazy"
+      sandbox="allow-scripts allow-same-origin allow-forms"
+    ></iframe>
+  `;
+}
+
+function setActive(n){
+  buttons.forEach(b => b.classList.remove("active"));
+  buttons[n-1].classList.add("active");
+}
+
+function loadPlayer(n){
+  document.getElementById("playerBox").innerHTML = iframeHTML(PLAYERS[n]);
+  loaded = true;
+  setActive(n);
+}
+
+function setPlayer(n){
+  if(!loaded){ loadPlayer(n); return; }
+  document.getElementById("player").src = PLAYERS[n];
+  setActive(n);
+}
+
+document.getElementById("launchBtn").addEventListener("click", () => loadPlayer(1));
+window.setPlayer = setPlayer;
+</script>
+
+</body>
+</html>
