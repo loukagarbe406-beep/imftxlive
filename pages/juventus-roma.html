@@ -1,47 +1,114 @@
-<div id="playerBox" class="playerBox"></div>
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IMFTX+ — Live</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* Ton style reste identique */
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
+header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:900;font-size:20px;letter-spacing:.2px}
+.back{opacity:.7}
+.container{max-width:1200px;margin:0 auto;padding:0 16px 26px}
+.playerBox{border-radius:22px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 90px rgba(0,0,0,.75);position:relative}
+.cover{width:100%;aspect-ratio:16/9;display:grid;place-items:center;background:radial-gradient(900px 420px at 30% 10%, rgba(255,255,255,.10), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.82))}
+.cover button{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.10);color:#fff;padding:14px 18px;border-radius:999px;font-weight:900;cursor:pointer}
+.playerFrame{width:100%;aspect-ratio:16/9;border:0;background:#000;display:block}
+.playerSelect{display:flex;gap:10px;margin:14px 0 10px;flex-wrap:wrap}
+.playerBtn{padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-weight:900;cursor:pointer}
+.playerBtn.active{background:#fff;border-color:#fff;color:#000}
+.infoBar{margin-top:10px;padding:14px 16px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center;gap:14px}
+.infoLeft{display:flex;gap:12px;align-items:center}
+.leagueLogo{width:38px;height:38px;border-radius:12px;padding:7px;object-fit:contain}
+.dot{width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:5px}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">IMFTX+</div>
+  <a href="#" class="back">← Retour</a>
+</header>
+
+<div class="container">
+  <div class="playerBox" id="playerBox">
+    <div class="cover">
+      <button id="launchBtn" type="button">▶ Lancer le stream</button>
+    </div>
+  </div>
+
+  <div class="playerSelect">
+    <button class="playerBtn active" onclick="setPlayer(1)">Player 1</button>
+    <button class="playerBtn" onclick="setPlayer(2)">Player 2</button>
+    <button class="playerBtn" onclick="setPlayer(3)">Player 3</button>
+  </div>
+
+  <div class="infoBar">
+    <div class="infoLeft">
+      <img class="leagueLogo" id="leagueLogo" src="" alt="">
+      <div class="infoText">
+        <b>Vous regardez</b>
+        <div id="matchName">—</div>
+        <span id="matchTime">—</span>
+      </div>
+    </div>
+    <div class="live"><span class="dot"></span>En cours</div>
+  </div>
+</div>
 
 <script>
-const PLAYERS = {
-  1: "https://bolaloca.my/player/4/138",
-  2: "https://bolaloca.my/player/4/138",
-  3: "https://bolaloca.my/player/4/138"
+const MATCH = {
+  name: "Newcastle - Chelsea",
+  timeText: "Aujourd’hui · 13h30",
+  leagueLogo: "https://static.vecteezy.com/system/resources/previews/010/994/477/original/premier-league-logo-symbol-with-name-white-design-england-football-european-countries-football-teams-illustration-with-purple-background-free-vector.jpg"
 };
 
-let current = 1;
+const PLAYERS = {
+  1: "https://bolaloca.my/player/4/11",
+  2: "https://bolaloca.my/player/2/11",
+  3: "https://bolaloca.my/player/3/11"
+};
 
-function renderPlayer(url){
-  const box = document.getElementById("playerBox");
-  box.innerHTML = `
+document.getElementById("matchName").textContent = MATCH.name;
+document.getElementById("matchTime").textContent = MATCH.timeText;
+document.getElementById("leagueLogo").src = MATCH.leagueLogo;
+
+let loaded = false;
+
+function iframeHTML(url){
+  // Modification ici : on retire "no-referrer" qui bloque souvent les mobiles
+  // On ajuste le sandbox pour être moins restrictif mais bloquer les popups
+  return `
     <iframe
       id="player"
       class="playerFrame"
       src="${url}"
       allowfullscreen
-      allow="autoplay; fullscreen; picture-in-picture"
-      referrerpolicy="no-referrer"
-      loading="lazy"
+      allow="autoplay; encrypted-media; fullscreen"
       sandbox="allow-scripts allow-same-origin allow-forms"
     ></iframe>
-
-    <div class="fallback" style="padding:12px; text-align:center;">
-      <a class="openBtn" href="${url}" target="_blank" rel="noopener"
-         style="display:inline-flex;gap:10px;align-items:center;
-                padding:12px 16px;border-radius:14px;
-                background:#fff;color:#000;font-weight:900;">
-        Ouvrir le stream ↗
-      </a>
-      <div style="margin-top:8px; opacity:.7; font-size:12px;">
-        Si l’embed est bloqué sur iPhone, clique ici.
-      </div>
-    </div>
   `;
 }
 
 function setPlayer(n){
-  current = n;
-  renderPlayer(PLAYERS[n]);
+  const btns = document.querySelectorAll(".playerBtn");
+  btns.forEach(b => b.classList.remove("active"));
+  btns[n-1].classList.add("active");
+
+  if(!loaded){
+    document.getElementById("playerBox").innerHTML = iframeHTML(PLAYERS[n]);
+    loaded = true;
+  } else {
+    document.getElementById("player").src = PLAYERS[n];
+  }
 }
 
-// charge player 1
-setPlayer(1);
+document.getElementById("launchBtn").addEventListener("click", () => setPlayer(1));
 </script>
+</body>
+</html>
