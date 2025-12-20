@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IMFTX+</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
@@ -159,12 +160,11 @@
     .miniTitle{font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .miniSub{margin-top:4px;font-size:12px;opacity:.65}
 
-    .eventsWrap{max-width:var(--max);margin:0 auto;padding: 6px 18px 36px}
+    .eventsWrap{max-width:var(--max);margin:0 auto;padding: 6px 18px 110px}
     .filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 16px}
     .chip{border:1px solid rgba(255,255,255,.22);background:transparent;color:#fff;padding:8px 14px;border-radius:999px;font-weight:800;font-size:13px;cursor:pointer;opacity:.9}
     .chip.active{background:#fff;color:#000;border-color:#fff}
 
-    /* ====== EVENT ROW (comme ton screen) ====== */
     .eventRow{
       display:flex; align-items:center; justify-content:space-between;
       gap:14px;
@@ -224,27 +224,90 @@
 
     footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
-    /* ====== GATE TELEGRAM ====== */
-    .gate{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:22px;background: rgba(0,0,0,.72);backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px)}
+    /* ====== TELEGRAM BAR (comme ton screen) ====== */
+    .gate{
+      position:fixed;
+      left:0; right:0;
+      bottom:18px;
+      z-index:9999;
+      display:none;
+      justify-content:center;
+      padding:0 16px;
+    }
     .gate.show{display:flex}
-    .gateCard{width:min(620px, 100%);border-radius:24px;border:1px solid rgba(255,255,255,.14);background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));box-shadow: 0 30px 120px rgba(0,0,0,.75);overflow:hidden;position:relative}
-    .gateBanner{height:150px;background-size:cover;background-position:center;position:relative}
-    .gateBanner::after{content:"";position:absolute;inset:0;background:radial-gradient(900px 260px at 20% 10%, rgba(255,255,255,.18), transparent 60%),linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.72))}
-    .gateBody{padding:16px 18px 18px}
-    .gateTop{display:flex;align-items:center;gap:14px;margin-top:-34px}
-    .gateAvatar{width:74px;height:74px;border-radius:22px;border:1px solid rgba(255,255,255,.16);background: rgba(255,255,255,.08);overflow:hidden;box-shadow: 0 18px 40px rgba(0,0,0,.45);flex: 0 0 auto}
-    .gateAvatar img{width:100%;height:100%;object-fit:cover}
-    .gateTitleWrap{min-width:0}
-    .gateTitle{margin:0;font-size:18px;font-weight:900;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .gateSub{margin-top:4px;opacity:.75;font-size:13px;font-weight:700}
-    .gateText{margin:12px 0 14px;font-size:14px;line-height:1.35;opacity:.86}
-    .gateActions{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{appearance:none;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-radius:14px;font-weight:900;letter-spacing:.2px;transition:.15s;user-select:none}
-    .btnPrimary{background:#fff;color:#000}
-    .btnPrimary:hover{transform:translateY(-1px)}
-    .btnGhost{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.14)}
-    .btnGhost:hover{background:rgba(255,255,255,.14)}
-    .gateNote{margin-top:10px;font-size:12px;opacity:.55}
+    .gateBar{
+      width:min(980px, 100%);
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.14);
+      background: radial-gradient(1200px 260px at 20% 10%, rgba(255,255,255,.10), transparent 60%),
+                  linear-gradient(90deg, rgba(25,33,68,.85), rgba(10,10,10,.75));
+      box-shadow: 0 30px 120px rgba(0,0,0,.75);
+      overflow:hidden;
+      position:relative;
+    }
+    .gateBar::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.35));
+      pointer-events:none;
+    }
+    .gateTopRow{
+      position:relative; z-index:2;
+      display:flex; align-items:center; gap:14px;
+      padding:14px 16px 10px;
+    }
+    .gatePfp{
+      width:56px;height:56px;border-radius:14px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.08);
+      flex:0 0 auto;
+    }
+    .gatePfp img{width:100%;height:100%;object-fit:cover}
+    .gateTxt{min-width:0}
+    .gateTitle{
+      font-weight:900;
+      font-size:18px;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      line-height:1.1;
+    }
+    .gateLine{
+      margin-top:6px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      opacity:.92;
+      font-weight:800;
+      font-size:13px;
+    }
+    .gateLine .muted{opacity:.85;font-weight:700}
+
+    .gateBtnRow{position:relative;z-index:2;padding:0 16px 12px}
+    .gateBtn{
+      width:100%;
+      border:0;
+      cursor:pointer;
+      border-radius:14px;
+      padding:14px 14px;
+      font-weight:900;
+      background:#fff;
+      color:#000;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      transition:.15s;
+    }
+    .gateBtn:hover{transform:translateY(-1px)}
+    .gateNote{
+      position:relative;z-index:2;
+      padding:0 16px 14px;
+      font-size:12px;
+      opacity:.7;
+      display:flex;gap:8px;align-items:center;
+    }
+    .gateNote i{color:#22c55e}
 
     @media (min-width: 1400px){ :root{ --cardW: 1100px; --cardH: 560px; } }
     @media (max-width: 980px){
@@ -257,12 +320,14 @@
       .watchTxt{font-size:14px}
       .mini{width:280px}
       .miniImg{height:160px}
-      .gateBanner{height:130px}
 
       .eventRow{flex-direction:column;align-items:stretch}
       .eventMid{justify-content:flex-start}
       .eventRight{justify-content:space-between}
       .midTeam b{max-width:160px}
+
+      .gate{bottom:12px}
+      .gateTitle{font-size:16px}
     }
   </style>
 </head>
@@ -317,124 +382,93 @@
 
   <footer>IMFTX+ — N°1 de la diffusion FR</footer>
 
-  <!-- GATE TELEGRAM -->
+  <!-- TELEGRAM BAR -->
   <div class="gate" id="gate">
-    <div class="gateCard">
-      <div class="gateBanner" id="gateBanner"></div>
-      <div class="gateBody">
-        <div class="gateTop">
-          <div class="gateAvatar">
-            <img id="gateAvatar" alt="Photo du canal">
+    <div class="gateBar">
+      <div class="gateTopRow">
+        <div class="gatePfp">
+          <img id="gateAvatar" alt="IMFTX+">
+        </div>
+        <div class="gateTxt">
+          <div class="gateTitle">BIENVENUE SUR IMFTX+</div>
+          <div class="gateLine">
+            <span>REJOINS LE TELEGRAM POUR AVOIR ACCÈS AU SITE</span>
           </div>
-          <div class="gateTitleWrap">
-            <h3 class="gateTitle">Rejoins le canal Telegram (accès)</h3>
-            <div class="gateSub">IMFTX+ • Canal secours</div>
-          </div>
         </div>
+      </div>
 
-        <div class="gateText">
-          ⚠️ Le site peut sauter à tout moment. Rejoins vite le canal pour rester informé.
-        </div>
+      <div class="gateBtnRow">
+        <button class="gateBtn" id="joinBtn">
+          Rejoignez ici ! <span style="font-weight:900;">→</span>
+        </button>
+      </div>
 
-        <div class="gateActions">
-          <button class="btn btnPrimary" id="joinBtn">
-            <i class="fa-brands fa-telegram"></i>
-            Rejoindre
-          </button>
-          <button class="btn btnGhost" id="copyBtn">
-            <i class="fa-regular fa-copy"></i>
-            Copier le lien
-          </button>
-        </div>
-
-        <div class="gateNote">Après “Rejoindre”, l’accès se débloque automatiquement.</div>
+      <div class="gateNote">
+        Après le clic, l’accès se débloque automatiquement <i class="fa-solid fa-square-check"></i>
       </div>
     </div>
   </div>
 
   <script>
     /* =========================
-      TELEGRAM (GATE)
+      TELEGRAM BAR (access simple)
     ========================= */
     const TELEGRAM_LINK = "https://t.me/+llOGaNG7HeUzNmE0";
-    const TELEGRAM_PDP  = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?ex=6946e33b&is=694591bb&hm=f29ad949bfddcce871cc32b769788f5965fcf4e28d7183fbb6bade0a4f691d59&=&format=webp&quality=lossless";
-    const TELEGRAM_BANNER = TELEGRAM_PDP;
+    const TELEGRAM_PDP  = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?format=webp&quality=lossless";
     const ACCESS_KEY = "imftx_access_v1";
 
     const gate = document.getElementById("gate");
     const joinBtn = document.getElementById("joinBtn");
-    const copyBtn = document.getElementById("copyBtn");
     const gateAvatar = document.getElementById("gateAvatar");
-    const gateBanner = document.getElementById("gateBanner");
     const tgTop = document.getElementById("tgTop");
 
     tgTop.href = TELEGRAM_LINK;
     gateAvatar.src = TELEGRAM_PDP;
-    gateBanner.style.backgroundImage = `url('${TELEGRAM_BANNER}')`;
 
     const hasAccess = () => localStorage.getItem(ACCESS_KEY) === "1";
     const grantAccess = () => localStorage.setItem(ACCESS_KEY, "1");
 
     if(!hasAccess()){
       gate.classList.add("show");
-      document.body.style.overflow = "hidden";
     }
+
     joinBtn.addEventListener("click", () => {
       grantAccess();
       window.open(TELEGRAM_LINK, "_blank", "noopener");
       gate.classList.remove("show");
-      document.body.style.overflow = "";
-    });
-    copyBtn.addEventListener("click", async () => {
-      try{
-        await navigator.clipboard.writeText(TELEGRAM_LINK);
-        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copié';
-        setTimeout(() => copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copier le lien', 1200);
-      }catch(e){
-        alert("Copie impossible sur cet appareil. Lien: " + TELEGRAM_LINK);
-      }
     });
 
     /* =========================
-      LOGOS (pour le bas)
-      -> si un logo wiki fail, on laisse l'image teambank si dispo, sinon on met un placeholder
+      LOGOS
     ========================= */
     const WP = (filename) => `https://fr.wikipedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}`;
 
-    function safeLogo(primary, fallback){
-      return { primary, fallback: fallback || "" };
-    }
-
     const LOGOS = {
-      newcastle: safeLogo(WP("Logo Newcastle United FC.svg")),
-      chelsea:   safeLogo(WP("Logo Chelsea.svg")),
+      newcastle: WP("Logo Newcastle United FC.svg"),
+      chelsea:   WP("Logo Chelsea.svg"),
 
-      maur:      safeLogo("https://empire-sport.space/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png"),
-      lille:     safeLogo(WP("Logo LOSC Lille.svg")),
+      maur:      "https://empire-sport.space/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png",
+      lille:     WP("Logo LOSC Lille.svg"),
 
-      mancity:   safeLogo(WP("Logo Manchester City 2016.svg")),
-      westham:   safeLogo(WP("Logo West Ham United.svg")),
+      mancity:   WP("Logo Manchester City 2016.svg"),
+      westham:   WP("Logo West Ham United.svg"),
 
-      leipzig:   safeLogo(WP("Logo RB Leipzig 2020.svg")),
-      lever:     safeLogo(WP("Bayer 04 Leverkusen (logo).svg")),
+      leipzig:   WP("Logo RB Leipzig 2020.svg"),
+      lever:     WP("Bayer 04 Leverkusen (logo).svg"),
 
-      spurs:     safeLogo(WP("Logo Tottenham Hotspur.svg")),
-      liverpool: safeLogo(WP("Logo FC Liverpool.svg")),
+      spurs:     WP("Logo Tottenham Hotspur.svg"),
+      liverpool: WP("Logo FC Liverpool.svg"),
 
-      juve:      safeLogo(WP("Logo Juventus.svg")),
-      roma:      safeLogo(WP("Logo AS Roma 2017.svg")),
+      juve:      WP("Logo Juventus.svg"),
+      roma:      WP("Logo AS Roma 2017.svg"),
 
-      psg:       safeLogo(WP("Logo Paris Saint-Germain 2024.svg")),
-      vff:       safeLogo("https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png"),
+      psg:       WP("Logo Paris Saint-Germain 2024.svg"),
+      vff:       "https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png",
 
-      real:      safeLogo(WP("Logo Real Madrid.svg")),
-      sevilla:   safeLogo(WP("Logo Séville FC.svg"))
+      real:      WP("Logo Real Madrid.svg"),
+      sevilla:   WP("Logo Séville FC.svg")
     };
 
-    /* =========================
-      LEAGUE ICONS (petit icon à gauche du titre)
-      -> simple (tu pourras changer après)
-    ========================= */
     const LEAGUES = {
       "Premier League": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png",
       "Coupe de France": "https://empire-sport.space/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
@@ -444,133 +478,65 @@
       "Coupe": ""
     };
 
-    /* =========================
-      MATCHS DU JOUR
-      IMPORTANT: ICI ON MET LES VRAIES BANNIÈRES
-      -> comme ça tu n’as PLUS les cercles / pas de génération canvas
-    ========================= */
     const todayMatches = [
-      {
-        id:"newcastle-chelsea",
-        time:"13:30",
-        comp:"Premier League",
-        sport:"Football",
-        match:"Newcastle - Chelsea",
-        a:"Newcastle", b:"Chelsea",
-        aLogo: LOGOS.newcastle.primary,
-        bLogo: LOGOS.chelsea.primary,
-        // bannière (celle que tu as donnée)
+      { id:"newcastle-chelsea", time:"13:30", comp:"Premier League", sport:"Football",
+        match:"Newcastle - Chelsea", a:"Newcastle", b:"Chelsea",
+        aLogo: LOGOS.newcastle, bLogo: LOGOS.chelsea,
         banner:"https://empire-sport.space/upload/teambanks/yhlqzjaotlwkxiltncol1wtwc3gerb.png"
       },
-      {
-        id:"maur-lusita-lille",
-        time:"15:30",
-        comp:"Coupe",
-        sport:"Football",
-        match:"Maur Lusita - Lille",
-        a:"Maur Lusita", b:"Lille",
-        aLogo: LOGOS.maur.primary,
-        bLogo: LOGOS.lille.primary,
+      { id:"maur-lusita-lille", time:"15:30", comp:"Coupe", sport:"Football",
+        match:"Maur Lusita - Lille", a:"Maur Lusita", b:"Lille",
+        aLogo: LOGOS.maur, bLogo: LOGOS.lille,
         banner:"https://empire-sport.space/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png"
       },
-      {
-        id:"multiplex-cdf-1530",
-        time:"15:30",
-        comp:"Coupe de France",
-        sport:"Football",
-        match:"Multiplex Coupe de France",
-        a:"Multiplex", b:"Coupe de France",
+      { id:"multiplex-cdf-1530", time:"15:30", comp:"Coupe de France", sport:"Football",
+        match:"Multiplex Coupe de France", a:"Multiplex", b:"Coupe de France",
         aLogo:"", bLogo:"",
         banner:"https://empire-sport.space/upload/cards/multiplex_32.png"
       },
-      {
-        id:"mancity-westham",
-        time:"16:00",
-        comp:"Premier League",
-        sport:"Football",
-        match:"Manchester City - West Ham United",
-        a:"Manchester City", b:"West Ham United",
-        aLogo: LOGOS.mancity.primary,
-        bLogo: LOGOS.westham.primary,
+      { id:"mancity-westham", time:"16:00", comp:"Premier League", sport:"Football",
+        match:"Manchester City - West Ham United", a:"Manchester City", b:"West Ham United",
+        aLogo: LOGOS.mancity, bLogo: LOGOS.westham,
         banner:"https://empire-sport.space/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png"
       },
-      {
-        id:"multiplex-premier-league",
-        time:"16:00",
-        comp:"Premier League",
-        sport:"Football",
-        match:"Multiplex Premier League",
-        a:"Multiplex", b:"Premier League",
+      { id:"multiplex-premier-league", time:"16:00", comp:"Premier League", sport:"Football",
+        match:"Multiplex Premier League", a:"Multiplex", b:"Premier League",
         aLogo:"", bLogo:"",
         banner:"https://empire-sport.space/upload/cards/multiplex_33.png"
       },
-      {
-        id:"leipzig-leverkusen",
-        time:"18:30",
-        comp:"Bundesliga",
-        sport:"Football",
-        match:"RB Leipzig - Bayer Leverkusen",
-        a:"RB Leipzig", b:"Bayer Leverkusen",
-        aLogo: LOGOS.leipzig.primary,
-        bLogo: LOGOS.lever.primary,
+      { id:"leipzig-leverkusen", time:"18:30", comp:"Bundesliga", sport:"Football",
+        match:"RB Leipzig - Bayer Leverkusen", a:"RB Leipzig", b:"Bayer Leverkusen",
+        aLogo: LOGOS.leipzig, bLogo: LOGOS.lever,
         banner:"https://empire-sport.space/upload/teambanks/5xj4np6wt3clqh2pioqsxcki56nsy1.png"
       },
-      {
-        id:"tottenham-liverpool",
-        time:"18:30",
-        comp:"Premier League",
-        sport:"Football",
-        match:"Tottenham Hotspur - Liverpool",
-        a:"Tottenham Hotspur", b:"Liverpool",
-        aLogo: LOGOS.spurs.primary,
-        bLogo: LOGOS.liverpool.primary,
+      { id:"tottenham-liverpool", time:"18:30", comp:"Premier League", sport:"Football",
+        match:"Tottenham Hotspur - Liverpool", a:"Tottenham Hotspur", b:"Liverpool",
+        aLogo: LOGOS.spurs, bLogo: LOGOS.liverpool,
         banner:"https://empire-sport.space/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png"
       },
-      {
-        id:"juventus-roma",
-        time:"20:45",
-        comp:"Serie A",
-        sport:"Football",
-        match:"Juventus - Roma",
-        a:"Juventus", b:"Roma",
-        aLogo: LOGOS.juve.primary,
-        bLogo: LOGOS.roma.primary,
+      { id:"juventus-roma", time:"20:45", comp:"Serie A", sport:"Football",
+        match:"Juventus - Roma", a:"Juventus", b:"Roma",
+        aLogo: LOGOS.juve, bLogo: LOGOS.roma,
         banner:"https://empire-sport.space/upload/teambanks/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png"
       },
-      {
-        id:"psg-vendee-fontenay",
-        time:"21:00",
-        comp:"Coupe de France",
-        sport:"Football",
-        match:"Paris SG - Vendée Fontenay Foot",
-        a:"Paris SG", b:"Vendée Fontenay Foot",
-        aLogo: LOGOS.psg.primary,
-        bLogo: LOGOS.vff.primary,
+      { id:"psg-vendee-fontenay", time:"21:00", comp:"Coupe de France", sport:"Football",
+        match:"Paris SG - Vendée Fontenay Foot", a:"Paris SG", b:"Vendée Fontenay Foot",
+        aLogo: LOGOS.psg, bLogo: LOGOS.vff,
         banner:"https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png"
       },
-      {
-        id:"real-sevilla",
-        time:"21:00",
-        comp:"La Liga",
-        sport:"Football",
-        match:"Real Madrid - Sevilla",
-        a:"Real Madrid", b:"Sevilla",
-        aLogo: LOGOS.real.primary,
-        bLogo: LOGOS.sevilla.primary,
+      { id:"real-sevilla", time:"21:00", comp:"La Liga", sport:"Football",
+        match:"Real Madrid - Sevilla", a:"Real Madrid", b:"Sevilla",
+        aLogo: LOGOS.real, bLogo: LOGOS.sevilla,
         banner:"https://empire-sport.space/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png"
       }
     ];
 
-    /* =========================
-      STATUS + COUNTDOWN
-    ========================= */
     const MATCH_DURATION_MIN = 135;
 
     function timeToMinutes(hhmm){
       const [h,m] = hhmm.split(":").map(Number);
       return (h*60)+(m||0);
     }
-
     function computeStatus(hhmm){
       const now = new Date();
       const nowMin = now.getHours()*60 + now.getMinutes();
@@ -580,28 +546,22 @@
       if(nowMin >= start && nowMin < end) return "En cours";
       return "Terminé";
     }
-
     function countdownTo(hhmm){
       const now = new Date();
       const target = new Date(now);
       const [h,m] = hhmm.split(":").map(Number);
       target.setHours(h, m, 0, 0);
-
       let diff = target.getTime() - now.getTime();
       if(diff <= 0) return "";
-
       const totalSec = Math.floor(diff/1000);
       const hh = Math.floor(totalSec/3600);
       const mm = Math.floor((totalSec%3600)/60);
       const ss = totalSec%60;
-
-      // style comme ton screen : 5h18m20s
       return `${hh}h ${String(mm).padStart(2,"0")}m ${String(ss).padStart(2,"0")}s`;
     }
 
     todayMatches.forEach(m => m.status = computeStatus(m.time));
-
-    function formatToday(hhmm){ return `Aujourd’hui · ${hhmm}`; }
+    const formatToday = (hhmm) => `Aujourd’hui · ${hhmm}`;
 
     const matchesVM = todayMatches.map(m => ({
       id: m.id,
@@ -619,9 +579,6 @@
       sport: m.sport
     }));
 
-    /* =========================
-      IMG FALLBACK (si logo wiki bug)
-    ========================= */
     const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
         <defs>
@@ -635,19 +592,9 @@
     `);
 
     function imgOnError(el){
-      if(!el.dataset.fallbackTried){
-        el.dataset.fallbackTried = "1";
-        // si on a une fallback (teambank), on tente, sinon placeholder
-        const fb = el.getAttribute("data-fallback");
-        el.src = fb || PLACEHOLDER;
-      }else{
-        el.src = PLACEHOLDER;
-      }
+      el.src = PLACEHOLDER;
     }
 
-    /* =========================
-      RENDER (slider + rail + events)
-    ========================= */
     const bg = document.getElementById("bg");
     const heroTitle = document.getElementById("heroTitle");
     const heroLeague = document.getElementById("heroLeague");
@@ -656,7 +603,6 @@
     const dots = document.getElementById("dots");
     const viewport = document.getElementById("viewport");
     const upcoming = document.getElementById("upcoming");
-
     let idx = 0;
 
     function setHero(m){
@@ -673,13 +619,11 @@
     }
 
     function logosBlock(m){
-      const aFb = (m.aName === "Maur Lusita") ? "https://empire-sport.space/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png" : "";
-      const bFb = (m.bName === "Vendée Fontenay Foot") ? "https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png" : "";
       return `
         <div class="logosLine">
-          <img class="teamLogo" src="${m.aLogo || PLACEHOLDER}" data-fallback="${aFb}" onerror="imgOnError(this)" alt="${m.aName}">
+          <img class="teamLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.aName}">
           <div class="vsPill">VS</div>
-          <img class="teamLogo" src="${m.bLogo || PLACEHOLDER}" data-fallback="${bFb}" onerror="imgOnError(this)" alt="${m.bName}">
+          <img class="teamLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.bName}">
         </div>
       `;
     }
@@ -701,7 +645,7 @@
               <div class="cardSub">${m.league} • ${m.time}</div>
             </div>
 
-            <a class="watch" href="${watchUrl(m)}" target="_blank" rel="noopener">
+            <a class="watch" href="${watchUrl(m)}">
               <div class="play">▶</div>
               <div class="watchTxt">REGARDER</div>
             </a>
@@ -717,7 +661,7 @@
     function miniHTML(m){
       const dot = m.status === "En cours" ? "dotGreen" : "dotOrange";
       return `
-        <a class="mini" href="${watchUrl(m)}" target="_blank" rel="noopener">
+        <a class="mini" href="${watchUrl(m)}">
           <div class="miniImg" style="background-image:url('${m.banner}')">
             <div class="miniTop">
               <span class="pill"><span class="${dot}"></span>${m.status}</span>
@@ -764,7 +708,6 @@
     window.goTo = goTo;
     window.imgOnError = imgOnError;
 
-    // swipe mobile
     let startX = 0;
     track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, {passive:true});
     track.addEventListener("touchend", e => {
@@ -782,9 +725,6 @@
       upcoming.innerHTML = up.map(miniHTML).join("");
     }
 
-    /* =========================
-      EVENTS (bas) -> style comme ton screen + countdown
-    ========================= */
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
     const FILTERS = ["Tous Les Événements", "Premier League", "Coupe de France", "Serie A", "La Liga", "Bundesliga", "Coupe"];
@@ -810,15 +750,12 @@
     }
 
     function rowHTML(m){
-      const aFb = (m.aName === "Maur Lusita") ? "https://empire-sport.space/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png" : "";
-      const bFb = (m.bName === "Vendée Fontenay Foot") ? "https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png" : "";
-
       const leagueIcon = m.leagueIcon ? `
         <span class="leagueIcon"><img src="${m.leagueIcon}" alt=""></span>
       ` : `<span class="leagueIcon"><span style="opacity:.7;font-weight:900;font-size:12px;">🏟️</span></span>`;
 
       return `
-        <a class="eventRow" href="${watchUrl(m)}" target="_blank" rel="noopener">
+        <a class="eventRow" href="${watchUrl(m)}">
           <div class="eventLeft">
             ${leagueIcon}
             <div class="eventTxt">
@@ -829,13 +766,13 @@
 
           <div class="eventMid">
             <div class="midTeam">
-              <img class="midLogo" src="${m.aLogo || PLACEHOLDER}" data-fallback="${aFb}" onerror="imgOnError(this)" alt="${m.aName}">
+              <img class="midLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.aName}">
               <b>${m.aName}</b>
             </div>
             <div class="midVS">vs</div>
             <div class="midTeam">
               <b>${m.bName}</b>
-              <img class="midLogo" src="${m.bLogo || PLACEHOLDER}" data-fallback="${bFb}" onerror="imgOnError(this)" alt="${m.bName}">
+              <img class="midLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.bName}">
             </div>
           </div>
 
@@ -858,9 +795,6 @@
       eventsList.innerHTML = list.map(rowHTML).join("");
     }
 
-    /* =========================
-      INIT + REFRESH countdown
-    ========================= */
     (function init(){
       track.innerHTML = matchesVM.map(cardHTML).join("");
       dots.innerHTML = matchesVM.map((_,i)=>dotHTML(i)).join("");
@@ -872,9 +806,7 @@
       update();
       window.addEventListener("resize", update);
 
-      // refresh countdown toutes les 1s (juste la liste events + badge si tu veux)
       setInterval(() => {
-        // update status aussi
         for(const m of matchesVM){
           m.status = computeStatus(m.timeRaw);
         }
