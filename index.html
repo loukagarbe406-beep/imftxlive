@@ -223,28 +223,27 @@
 
     footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
-    /* ====== GATE (option) ====== */
+    /* ====== GATE TELEGRAM ====== */
     .gate{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:22px;background: rgba(0,0,0,.72);backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px)}
     .gate.show{display:flex}
-    .gateCard{width:min(720px, 100%);border-radius:26px;border:1px solid rgba(255,255,255,.14);background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));box-shadow: 0 30px 120px rgba(0,0,0,.75);overflow:hidden;position:relative}
-    .gateBody{padding:18px}
-    .gateBanner{display:flex;align-items:center;gap:14px;padding:18px;border-radius:22px;background:
-      radial-gradient(900px 260px at 20% 10%, rgba(255,255,255,.14), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.08), rgba(0,0,0,.25));
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .gateLogo{width:52px;height:52px;border-radius:16px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.14);overflow:hidden;flex:0 0 auto}
-    .gateLogo img{width:100%;height:100%;object-fit:cover}
-    .gateTxt{min-width:0}
-    .gateTxt h3{margin:0;font-size:18px;font-weight:900;letter-spacing:.4px;text-transform:uppercase}
-    .gateTxt p{margin:6px 0 0;opacity:.78;font-weight:700}
-    .gateActions{margin-top:14px;display:flex;gap:12px;flex-wrap:wrap}
-    .btn{appearance:none;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 16px;border-radius:16px;font-weight:900;letter-spacing:.2px;transition:.15s;user-select:none}
-    .btnPrimary{background:#fff;color:#000;flex:1;min-width:220px}
+    .gateCard{width:min(620px, 100%);border-radius:24px;border:1px solid rgba(255,255,255,.14);background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));box-shadow: 0 30px 120px rgba(0,0,0,.75);overflow:hidden;position:relative}
+    .gateBanner{height:150px;background-size:cover;background-position:center;position:relative}
+    .gateBanner::after{content:"";position:absolute;inset:0;background:radial-gradient(900px 260px at 20% 10%, rgba(255,255,255,.18), transparent 60%),linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.72))}
+    .gateBody{padding:16px 18px 18px}
+    .gateTop{display:flex;align-items:center;gap:14px;margin-top:-34px}
+    .gateAvatar{width:74px;height:74px;border-radius:22px;border:1px solid rgba(255,255,255,.16);background: rgba(255,255,255,.08);overflow:hidden;box-shadow: 0 18px 40px rgba(0,0,0,.45);flex: 0 0 auto}
+    .gateAvatar img{width:100%;height:100%;object-fit:cover}
+    .gateTitleWrap{min-width:0}
+    .gateTitle{margin:0;font-size:18px;font-weight:900;letter-spacing:.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
+    .gateSub{margin-top:6px;opacity:.80;font-size:13px;font-weight:800;text-transform:uppercase}
+    .gateText{margin:12px 0 14px;font-size:14px;line-height:1.35;opacity:.86}
+    .gateActions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{appearance:none;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-radius:14px;font-weight:900;letter-spacing:.2px;transition:.15s;user-select:none}
+    .btnPrimary{background:#fff;color:#000}
     .btnPrimary:hover{transform:translateY(-1px)}
     .btnGhost{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.14)}
     .btnGhost:hover{background:rgba(255,255,255,.14)}
-    .gateNote{margin-top:10px;font-size:12px;opacity:.6}
+    .gateNote{margin-top:10px;font-size:12px;opacity:.55}
 
     @media (min-width: 1400px){ :root{ --cardW: 1100px; --cardH: 560px; } }
     @media (max-width: 980px){
@@ -257,6 +256,8 @@
       .watchTxt{font-size:14px}
       .mini{width:280px}
       .miniImg{height:160px}
+      .gateBanner{height:130px}
+
       .eventRow{flex-direction:column;align-items:stretch}
       .eventMid{justify-content:flex-start}
       .eventRight{justify-content:space-between}
@@ -315,22 +316,25 @@
 
   <footer>IMFTX+ — N°1 de la diffusion FR</footer>
 
-  <!-- GATE TELEGRAM (option) -->
+  <!-- GATE TELEGRAM -->
   <div class="gate" id="gate">
     <div class="gateCard">
+      <div class="gateBanner" id="gateBanner"></div>
       <div class="gateBody">
-        <div class="gateBanner">
-          <div class="gateLogo"><img id="gateAvatar" alt="IMFTX+"></div>
-          <div class="gateTxt">
-            <h3>BIENVENUE SUR IMFTX+</h3>
-            <p>Rejoins le Telegram pour avoir accès au site.</p>
+        <div class="gateTop">
+          <div class="gateAvatar">
+            <img id="gateAvatar" alt="Photo du canal">
+          </div>
+          <div class="gateTitleWrap">
+            <h3 class="gateTitle">BIENVENUE SUR IMFTX+</h3>
+            <div class="gateSub">REJOINS LE TELEGRAM POUR AVOIR ACCES AU SITE</div>
           </div>
         </div>
 
-        <div class="gateActions">
+        <div class="gateActions" style="margin-top:14px">
           <button class="btn btnPrimary" id="joinBtn">
             <i class="fa-brands fa-telegram"></i>
-            Rejoignez ici ! →
+            Rejoindre
           </button>
           <button class="btn btnGhost" id="copyBtn">
             <i class="fa-regular fa-copy"></i>
@@ -338,34 +342,35 @@
           </button>
         </div>
 
-        <div class="gateNote">Après le clic, l’accès se débloque automatiquement ✅</div>
+        <div class="gateNote">Après “Rejoindre”, l’accès se débloque automatiquement.</div>
       </div>
     </div>
   </div>
 
   <script>
-    /* ====== TELEGRAM (OPTION) ======
-       Mets SHOW_GATE = false si tu veux désactiver le popup.
-    */
-    const SHOW_GATE = false;
-
+    /* =========================
+      TELEGRAM (GATE)
+    ========================= */
     const TELEGRAM_LINK = "https://t.me/+llOGaNG7HeUzNmE0";
     const TELEGRAM_PDP  = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?ex=6946e33b&is=694591bb&hm=f29ad949bfddcce871cc32b769788f5965fcf4e28d7183fbb6bade0a4f691d59&=&format=webp&quality=lossless";
+    const TELEGRAM_BANNER = TELEGRAM_PDP;
     const ACCESS_KEY = "imftx_access_v1";
 
     const gate = document.getElementById("gate");
     const joinBtn = document.getElementById("joinBtn");
     const copyBtn = document.getElementById("copyBtn");
     const gateAvatar = document.getElementById("gateAvatar");
+    const gateBanner = document.getElementById("gateBanner");
     const tgTop = document.getElementById("tgTop");
 
     tgTop.href = TELEGRAM_LINK;
     gateAvatar.src = TELEGRAM_PDP;
+    gateBanner.style.backgroundImage = `url('${TELEGRAM_BANNER}')`;
 
     const hasAccess = () => localStorage.getItem(ACCESS_KEY) === "1";
     const grantAccess = () => localStorage.setItem(ACCESS_KEY, "1");
 
-    if(SHOW_GATE && !hasAccess()){
+    if(!hasAccess()){
       gate.classList.add("show");
       document.body.style.overflow = "hidden";
     }
@@ -385,78 +390,119 @@
       }
     });
 
-    /* ====== LOGOS / LEAGUES ====== */
+    /* =========================
+      LOGOS
+    ========================= */
     const WP = (filename) => `https://fr.wikipedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}`;
+    const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+            <stop stop-color="#111827"/>
+            <stop offset="1" stop-color="#000"/>
+          </linearGradient>
+        </defs>
+        <rect width="120" height="120" rx="60" fill="url(#g)"/>
+      </svg>
+    `);
+
+    function imgOnError(el){
+      if(!el.dataset.fallbackTried){
+        el.dataset.fallbackTried = "1";
+        const fb = el.getAttribute("data-fallback");
+        el.src = fb || PLACEHOLDER;
+      }else{
+        el.src = PLACEHOLDER;
+      }
+    }
+    window.imgOnError = imgOnError;
+
     const LOGOS = {
       newcastle: WP("Logo Newcastle United FC.svg"),
       chelsea:   WP("Logo Chelsea.svg"),
+      maur:      "https://empire-sport.space/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png",
+      lille:     WP("Logo LOSC Lille.svg"),
+      mancity:   WP("Logo Manchester City 2016.svg"),
+      westham:   WP("Logo West Ham United.svg"),
+      leipzig:   WP("Logo RB Leipzig 2020.svg"),
+      lever:     WP("Bayer 04 Leverkusen (logo).svg"),
+      spurs:     WP("Logo Tottenham Hotspur.svg"),
+      liverpool: WP("Logo FC Liverpool.svg"),
       juve:      WP("Logo Juventus.svg"),
       roma:      WP("Logo AS Roma 2017.svg"),
       psg:       WP("Logo Paris Saint-Germain 2024.svg"),
+      vff:       "https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png",
       real:      WP("Logo Real Madrid.svg"),
       sevilla:   WP("Logo Séville FC.svg")
     };
 
     const LEAGUES = {
       "Premier League": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png",
-      "Serie A": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/256px-Serie_A_logo_2022.svg.png",
       "Coupe de France": "https://empire-sport.space/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
-      "La Liga": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/LaLiga_logo_2023.svg/256px-LaLiga_logo_2023.svg.png"
+      "Serie A": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/256px-Serie_A_logo_2022.svg.png",
+      "La Liga": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/LaLiga_logo_2023.svg/256px-LaLiga_logo_2023.svg.png",
+      "Bundesliga": "https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/256px-Bundesliga_logo_%282017%29.svg.png",
+      "Coupe": ""
     };
 
-    /* ====== MATCHS ======
-       Tu peux garder tous les matchs ici.
-       Le SLIDER DU HAUT prendra SEULEMENT les 3 prochains matchs à venir automatiquement.
-    */
+    /* =========================
+      MATCHS DU JOUR
+    ========================= */
     const todayMatches = [
-      // (exemples) -> garde ou modifie
-      {
-        id:"newcastle-chelsea",
-        time:"13:30",
-        comp:"Premier League",
-        sport:"Football",
-        match:"Newcastle - Chelsea",
-        a:"Newcastle", b:"Chelsea",
-        aLogo: LOGOS.newcastle,
-        bLogo: LOGOS.chelsea,
-        banner:"https://empire-sport.space/upload/teambanks/yhlqzjaotlwkxiltncol1wtwc3gerb.png"
-      },
-      {
-        id:"juventus-roma",
-        time:"20:45",
-        comp:"Serie A",
-        sport:"Football",
-        match:"Juventus - Roma",
-        a:"Juventus", b:"Roma",
-        aLogo: LOGOS.juve,
-        bLogo: LOGOS.roma,
-        banner:"https://empire-sport.space/upload/teambanks/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png"
-      },
-      {
-        id:"psg-vendee-fontenay",
-        time:"21:00",
-        comp:"Coupe de France",
-        sport:"Football",
-        match:"Paris SG - Vendée Fontenay Foot",
-        a:"Paris SG", b:"Vendée Fontenay Foot",
-        aLogo: LOGOS.psg,
-        bLogo: "https://upload.wikimedia.org/wikipedia/fr/2/26/Logo_Vend%C3%A9e_Fontenay_Foot_-_2021.svg",
-        banner:"https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png"
-      },
-      {
-        id:"real-sevilla",
-        time:"21:00",
-        comp:"La Liga",
-        sport:"Football",
-        match:"Real Madrid - Sevilla",
-        a:"Real Madrid", b:"Sevilla",
-        aLogo: LOGOS.real,
-        bLogo: LOGOS.sevilla,
-        banner:"https://empire-sport.space/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png"
-      }
+      { id:"newcastle-chelsea", time:"13:30", comp:"Premier League", sport:"Football",
+        match:"Newcastle - Chelsea", a:"Newcastle", b:"Chelsea",
+        aLogo: LOGOS.newcastle, bLogo: LOGOS.chelsea,
+        banner:"https://empire-sport.space/upload/teambanks/yhlqzjaotlwkxiltncol1wtwc3gerb.png" },
+
+      { id:"maur-lusita-lille", time:"15:30", comp:"Coupe", sport:"Football",
+        match:"Maur Lusita - Lille", a:"Maur Lusita", b:"Lille",
+        aLogo: LOGOS.maur, bLogo: LOGOS.lille,
+        banner:"https://empire-sport.space/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png" },
+
+      { id:"multiplex-cdf-1530", time:"15:30", comp:"Coupe de France", sport:"Football",
+        match:"Multiplex Coupe de France", a:"Multiplex", b:"Coupe de France",
+        aLogo:"", bLogo:"",
+        banner:"https://empire-sport.space/upload/cards/multiplex_32.png" },
+
+      { id:"mancity-westham", time:"16:00", comp:"Premier League", sport:"Football",
+        match:"Manchester City - West Ham United", a:"Manchester City", b:"West Ham United",
+        aLogo: LOGOS.mancity, bLogo: LOGOS.westham,
+        banner:"https://empire-sport.space/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png" },
+
+      { id:"multiplex-premier-league", time:"16:00", comp:"Premier League", sport:"Football",
+        match:"Multiplex Premier League", a:"Multiplex", b:"Premier League",
+        aLogo:"", bLogo:"",
+        banner:"https://empire-sport.space/upload/cards/multiplex_33.png" },
+
+      { id:"leipzig-leverkusen", time:"18:30", comp:"Bundesliga", sport:"Football",
+        match:"RB Leipzig - Bayer Leverkusen", a:"RB Leipzig", b:"Bayer Leverkusen",
+        aLogo: LOGOS.leipzig, bLogo: LOGOS.lever,
+        banner:"https://empire-sport.space/upload/teambanks/5xj4np6wt3clqh2pioqsxcki56nsy1.png" },
+
+      { id:"tottenham-liverpool", time:"18:30", comp:"Premier League", sport:"Football",
+        match:"Tottenham Hotspur - Liverpool", a:"Tottenham Hotspur", b:"Liverpool",
+        aLogo: LOGOS.spurs, bLogo: LOGOS.liverpool,
+        banner:"https://empire-sport.space/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png" },
+
+      { id:"juventus-roma", time:"20:45", comp:"Serie A", sport:"Football",
+        match:"Juventus - Roma", a:"Juventus", b:"Roma",
+        aLogo: LOGOS.juve, bLogo: LOGOS.roma,
+        banner:"https://empire-sport.space/upload/teambanks/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png" },
+
+      { id:"psg-vendee-fontenay", time:"21:00", comp:"Coupe de France", sport:"Football",
+        match:"Paris SG - Vendée Fontenay Foot", a:"Paris SG", b:"Vendée Fontenay Foot",
+        aLogo: LOGOS.psg, bLogo: LOGOS.vff,
+        banner:"https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png" },
+
+      { id:"real-sevilla", time:"21:00", comp:"La Liga", sport:"Football",
+        match:"Real Madrid - Sevilla", a:"Real Madrid", b:"Sevilla",
+        aLogo: LOGOS.real, bLogo: LOGOS.sevilla,
+        banner:"https://empire-sport.space/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png" }
     ];
 
-    /* ====== STATUS + COUNTDOWN ====== */
+    /* =========================
+      STATUS + COUNTDOWN
+    ========================= */
     const MATCH_DURATION_MIN = 135;
 
     function timeToMinutes(hhmm){
@@ -493,49 +539,33 @@
 
     function formatToday(hhmm){ return `Aujourd’hui · ${hhmm}`; }
 
-    function rebuildVM(){
-      for(const m of todayMatches){
-        m.status = computeStatus(m.time);
-      }
+    function buildVM(){
       return todayMatches.map(m => ({
         id: m.id,
-        status: m.status,
         league: m.comp,
         leagueIcon: LEAGUES[m.comp] || "",
         time: formatToday(m.time),
         timeRaw: m.time,
-        aName: m.a,
-        bName: m.b,
+        aName: m.a, bName: m.b,
         title: m.match,
-        aLogo: m.aLogo,
-        bLogo: m.bLogo,
+        aLogo: m.aLogo, bLogo: m.bLogo,
         banner: m.banner,
-        sport: m.sport
+        sport: m.sport,
+        status: computeStatus(m.time)
       }));
     }
 
-    /* ====== IMG FALLBACK ====== */
-    const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-        <defs>
-          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-            <stop stop-color="#111827"/>
-            <stop offset="1" stop-color="#000"/>
-          </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="60" fill="url(#g)"/>
-      </svg>
-    `);
-
-    function imgOnError(el){
-      el.src = PLACEHOLDER;
+    /* =========================
+      LINKS
+      -> tu as demandé matchs.html
+    ========================= */
+    function watchUrl(m){
+      return `matchs.html?id=${encodeURIComponent(m.id)}`;
     }
-    window.imgOnError = imgOnError;
 
-    /* ====== LINKS (comme avant) ====== */
-    function watchUrl(m){ return `pages/${m.id}.html`; }
-
-    /* ====== RENDER ====== */
+    /* =========================
+      RENDER
+    ========================= */
     const bg = document.getElementById("bg");
     const heroTitle = document.getElementById("heroTitle");
     const heroLeague = document.getElementById("heroLeague");
@@ -547,11 +577,14 @@
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
 
-    const FILTERS = ["Tous Les Événements","Premier League","Serie A","Coupe de France","La Liga"];
+    // Slider = uniquement ces heures
+    const SLIDER_TIMES = new Set(["20:45", "21:00"]);
+
+    const FILTERS = ["Tous Les Événements", "Premier League", "Coupe de France", "Serie A", "La Liga", "Bundesliga", "Coupe"];
     let activeFilter = "Tous Les Événements";
 
+    let sliderList = [];
     let idx = 0;
-    let matchesVM = [];
 
     function setHero(m){
       bg.style.backgroundImage = `url('${m.banner}')`;
@@ -591,7 +624,7 @@
               <div class="cardSub">${m.league} • ${m.time}</div>
             </div>
 
-            <a class="watch" href="${watchUrl(m)}" rel="noopener">
+            <a class="watch" href="${watchUrl(m)}" target="_blank" rel="noopener">
               <div class="play">▶</div>
               <div class="watchTxt">REGARDER</div>
             </a>
@@ -607,7 +640,7 @@
     function miniHTML(m){
       const dot = m.status === "En cours" ? "dotGreen" : "dotOrange";
       return `
-        <a class="mini" href="${watchUrl(m)}" rel="noopener">
+        <a class="mini" href="${watchUrl(m)}" target="_blank" rel="noopener">
           <div class="miniImg" style="background-image:url('${m.banner}')">
             <div class="miniTop">
               <span class="pill"><span class="${dot}"></span>${m.status}</span>
@@ -622,14 +655,23 @@
       `;
     }
 
+    function renderFilters(){
+      filtersEl.innerHTML = FILTERS.map(f =>
+        `<button class="chip ${f===activeFilter?'active':''}" onclick="setFilter('${f.replace(/'/g,"\\'")}')">${f}</button>`
+      ).join("");
+    }
+    window.setFilter = (f) => { activeFilter = f; renderFilters(); renderEvents(); };
+
     function pillText(m){
       if(m.status === "En cours") return `En cours`;
       if(m.status === "Terminé") return `Terminé`;
       const cd = countdownTo(m.timeRaw);
       return cd ? cd : "À venir";
     }
+
     function pillDotClass(m){
-      return (m.status === "En cours") ? "dotGreen" : "dotOrange";
+      if(m.status === "En cours") return "dotGreen";
+      return "dotOrange";
     }
 
     function rowHTML(m){
@@ -638,7 +680,7 @@
       ` : `<span class="leagueIcon"><span style="opacity:.7;font-weight:900;font-size:12px;">🏟️</span></span>`;
 
       return `
-        <a class="eventRow" href="${watchUrl(m)}" rel="noopener">
+        <a class="eventRow" href="${watchUrl(m)}" target="_blank" rel="noopener">
           <div class="eventLeft">
             ${leagueIcon}
             <div class="eventTxt">
@@ -670,26 +712,19 @@
       `;
     }
 
-    function updateDots(list){
-      for(let i=0;i<list.length;i++){
+    // ===== SLIDER LOGIC (stable, pas de reset) =====
+    function updateDots(){
+      for(let i=0;i<sliderList.length;i++){
         const el = document.getElementById("d"+i);
         if(el) el.classList.toggle("active", i===idx);
       }
     }
 
-    function updateSlider(list){
-      if(list.length === 0){
-        track.innerHTML = `<div style="padding:40px;opacity:.7">Aucun match à venir.</div>`;
-        dots.innerHTML = "";
-        heroTitle.textContent = "—";
-        heroLeague.textContent = "";
-        heroTime.textContent = "";
-        bg.style.backgroundImage = "";
-        return;
-      }
-
+    function update(){
       const first = document.querySelector(".card");
-      const cardW = (first ? first.getBoundingClientRect().width : viewport.getBoundingClientRect().width);
+      if(!first) return;
+
+      const cardW = first.getBoundingClientRect().width;
       const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')) || 18;
       const vw = viewport.getBoundingClientRect().width;
       const centerOffset = Math.max(16, (vw - cardW) / 2);
@@ -697,13 +732,13 @@
       const x = -(idx * (cardW + gap)) + centerOffset - peekBias;
 
       track.style.transform = `translateX(${x}px)`;
-      setHero(list[idx]);
-      updateDots(list);
+      setHero(sliderList[idx] || sliderList[0]);
+      updateDots();
     }
 
-    function nextSlide(){ idx = (idx + 1) % sliderList.length; updateSlider(sliderList); }
-    function prevSlide(){ idx = (idx - 1 + sliderList.length) % sliderList.length; updateSlider(sliderList); }
-    function goTo(i){ idx = i; updateSlider(sliderList); }
+    function nextSlide(){ idx = (idx + 1) % sliderList.length; update(); }
+    function prevSlide(){ idx = (idx - 1 + sliderList.length) % sliderList.length; update(); }
+    function goTo(i){ idx = i; update(); }
 
     window.nextSlide = nextSlide;
     window.prevSlide = prevSlide;
@@ -720,59 +755,59 @@
       }
     }, {passive:true});
 
-    function renderFilters(){
-      filtersEl.innerHTML = FILTERS.map(f =>
-        `<button class="chip ${f===activeFilter?'active':''}" onclick="setFilter('${f.replace(/'/g,"\\'")}')">${f}</button>`
-      ).join("");
-    }
-    window.setFilter = (f) => { activeFilter = f; renderFilters(); renderEvents(); };
+    // ===== SECTIONS =====
+    let matchesVM = [];
 
-    function buildUpcoming(){
+    function renderUpcoming(){
       const up = matchesVM
         .filter(x => x.status === "À venir")
         .sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw));
-      upcoming.innerHTML = up.length ? up.map(miniHTML).join("") : `<div style="opacity:.7">Aucun match à venir</div>`;
+      upcoming.innerHTML = up.map(miniHTML).join("");
     }
 
     function renderEvents(){
       const list = matchesVM
         .filter(m => activeFilter === "Tous Les Événements" ? true : (m.league === activeFilter))
         .sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw));
-
       eventsList.innerHTML = list.map(rowHTML).join("");
     }
 
-    // SLIDER LIST = 3 prochains matchs À VENIR
-    let sliderList = [];
-
-    function buildSliderList(){
-      const upcomingSorted = matchesVM
-        .filter(m => m.status === "À venir")
+    function initSliderOnce(){
+      // Slider: uniquement les matchs ciblés (20:45 + 21:00)
+      sliderList = matchesVM
+        .filter(m => SLIDER_TIMES.has(m.timeRaw))
         .sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw));
 
-      sliderList = upcomingSorted.slice(0,3);
-      idx = 0;
+      // sécurité si jamais…
+      if(sliderList.length === 0) sliderList = matchesVM.slice(0,3);
 
       track.innerHTML = sliderList.map(cardHTML).join("");
-      dots.innerHTML = sliderList.map((_,i)=>dotHTML(i)).join("");
-      updateSlider(sliderList);
+      dots.innerHTML  = sliderList.map((_,i)=>dotHTML(i)).join("");
+
+      idx = 0;
+      update();
+      window.addEventListener("resize", update);
     }
 
     (function init(){
-      matchesVM = rebuildVM();
+      matchesVM = buildVM();
 
       renderFilters();
-      buildUpcoming();
+      renderUpcoming();
       renderEvents();
-      buildSliderList();
 
-      window.addEventListener("resize", ()=> updateSlider(sliderList));
+      // ✅ construit le slider UNE SEULE FOIS (plus de reset / bug)
+      initSliderOnce();
 
+      // ✅ refresh chaque seconde: uniquement status + listes (PAS le slider)
       setInterval(() => {
-        matchesVM = rebuildVM();
-        buildUpcoming();
+        matchesVM = buildVM();
+        renderUpcoming();
         renderEvents();
-        buildSliderList();
+        // on peut aussi juste refresh hero text/dots sans reconstruire:
+        if(sliderList[idx]){
+          sliderList[idx].status = computeStatus(sliderList[idx].timeRaw);
+        }
       }, 1000);
     })();
   </script>
