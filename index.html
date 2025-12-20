@@ -14,7 +14,6 @@
       --cardH: 520px;
       --r: 26px;
       --glass: rgba(255,255,255,.09);
-      --glass2: rgba(255,255,255,.13);
       --line: rgba(255,255,255,.14);
       --shadow: 0 28px 100px rgba(0,0,0,.78);
     }
@@ -23,28 +22,14 @@
     a{color:inherit;text-decoration:none}
     button{font-family:inherit}
     header{position:fixed;top:0;left:0;right:0;z-index:50}
-    .topbar{
-      max-width:var(--max); margin:0 auto; padding:16px 18px;
-      display:flex; align-items:center; justify-content:space-between;
-    }
+    .topbar{max-width:var(--max);margin:0 auto;padding:16px 18px;display:flex;align-items:center;justify-content:space-between}
     .brand{font-weight:900;letter-spacing:.3px;font-size:20px;opacity:.95}
     .icons{display:flex;gap:14px;font-size:18px;align-items:center}
     .icons a{opacity:.75}
     .icons a:hover{opacity:1}
 
-    .hero{
-      position:relative;
-      padding-top:74px;
-      padding-bottom:10px;
-      overflow:hidden;
-    }
-    .bg{
-      position:absolute; inset:0;
-      background-size:cover;background-position:center;
-      transform:scale(1.12);
-      filter: blur(16px) saturate(1.15) brightness(.62);
-      opacity:.96;
-    }
+    .hero{position:relative;padding-top:74px;padding-bottom:10px;overflow:hidden}
+    .bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.12);filter: blur(16px) saturate(1.15) brightness(.62);opacity:.96}
     .hero::after{
       content:"";position:absolute;inset:0;
       background:
@@ -55,30 +40,16 @@
     }
     .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 18px}
     .centerHeader{text-align:center;padding:10px 0 10px}
-    .centerHeader h1{
-      margin:0;font-size:36px;font-weight:900;line-height:1.05;
-      text-shadow:0 18px 40px rgba(0,0,0,.65);
-    }
+    .centerHeader h1{margin:0;font-size:36px;font-weight:900;line-height:1.05;text-shadow:0 18px 40px rgba(0,0,0,.65)}
     .centerHeader .l1{margin-top:10px;opacity:.80;font-weight:700}
     .centerHeader .l2{margin-top:6px;opacity:.65;font-style:italic}
 
     .sliderArea{position:relative;padding-top:6px;padding-bottom:2px}
     .viewport{overflow:hidden}
-    .track{
-      display:flex;gap:var(--gap);
-      transition:transform .55s ease;
-      will-change:transform;
-      padding-bottom:2px;
-    }
+    .track{display:flex;gap:var(--gap);transition:transform .55s ease;will-change:transform;padding-bottom:2px}
     .card{
-      flex:0 0 var(--cardW);
-      height:var(--cardH);
-      border-radius:var(--r);
-      overflow:hidden;
-      position:relative;
-      border:1px solid var(--line);
-      box-shadow:var(--shadow);
-      background: rgba(255,255,255,.05);
+      flex:0 0 var(--cardW);height:var(--cardH);border-radius:var(--r);overflow:hidden;position:relative;
+      border:1px solid var(--line);box-shadow:var(--shadow);background: rgba(255,255,255,.05);
     }
     .poster{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.01)}
     .card::after{
@@ -89,74 +60,50 @@
       pointer-events:none;
     }
     .badge{
-      position:absolute;top:14px;left:14px;z-index:6;
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 11px;border-radius:999px;
-      background:rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-      font-weight:900;font-size:12px;
+      position:absolute;top:14px;left:14px;z-index:6;display:inline-flex;align-items:center;gap:8px;
+      padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-weight:900;font-size:12px;
     }
-    .dotOrange{width:9px;height:9px;border-radius:50%;background:#fb923c;display:inline-block}
-    .dotGreen{width:9px;height:9px;border-radius:50%;background:#22c55e;display:inline-block}
+    .dotOrange,.dotGreen{width:9px;height:9px;border-radius:50%;display:inline-block}
+    .dotOrange{background:#fb923c}
+    .dotGreen{background:#22c55e}
 
     .cardArrow{
-      position:absolute;top:50%;transform:translateY(-50%);
-      width:54px;height:54px;border-radius:50%;
-      background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.16);
-      display:grid;place-items:center;
-      z-index:7;cursor:pointer;
-      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      position:absolute;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;
+      background:rgba(0,0,0,.30);border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;
+      z-index:7;cursor:pointer;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
     }
     .cardArrow:hover{background:rgba(0,0,0,.45)}
     .cardArrow span{font-size:34px;line-height:1}
     .cardArrow.left{left:14px}
     .cardArrow.right{right:14px}
 
-    .bottom{
-      position:absolute;left:18px;right:18px;bottom:16px;z-index:7;
-      display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
-    }
+    .bottom{position:absolute;left:18px;right:18px;bottom:16px;z-index:7;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
     .leftInfo{min-width:0}
     .logosLine{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
     .teamLogo{
       width:44px;height:44px;border-radius:50%;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
       padding:6px;object-fit:contain;
     }
     .compMiniLogo{
-      width:28px;height:28px;border-radius:10px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      padding:5px;object-fit:contain;
+      width:28px;height:28px;border-radius:10px;background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);padding:5px;object-fit:contain;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,.35));
     }
-    .vsPill{
-      width:34px;height:34px;border-radius:50%;
-      display:grid;place-items:center;font-weight:900;font-size:12px;
-      background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);
-    }
-    .cardTitle{
-      font-size:24px;font-weight:900;line-height:1.1;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    }
+    .vsPill{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:12px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14)}
+    .cardTitle{font-size:24px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .cardSub{margin-top:6px;opacity:.72;font-style:italic;font-size:13px}
+
     .watch{
-      display:inline-flex;align-items:center;
-      height:64px;padding:10px 14px;border-radius:999px;
-      background:rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.16);
+      display:inline-flex;align-items:center;height:64px;padding:10px 14px;border-radius:999px;
+      background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.16);
       overflow:hidden;white-space:nowrap;
     }
     .watch:hover{background:rgba(255,255,255,.18)}
     .play{
-      width:54px;height:54px;border-radius:50%;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.12);
-      display:grid;place-items:center;
-      margin-right:14px;font-size:16px;
+      width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;margin-right:14px;font-size:16px;
     }
     .watchTxt{font-weight:900;letter-spacing:.2px;padding-right:10px}
 
@@ -164,13 +111,7 @@
     .d{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.10);cursor:pointer;transition:.2s}
     .d.active{width:38px;background:rgba(255,255,255,.82)}
 
-    .section{
-      max-width:var(--max);
-      margin:0 auto;
-      padding: 6px 18px 26px;
-      margin-top: -8px;
-      position:relative; z-index:5;
-    }
+    .section{max-width:var(--max);margin:0 auto;padding: 6px 18px 26px;margin-top:-8px;position:relative;z-index:5}
     .sectionHead{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
     .sectionHead h2{margin:0;font-size:22px;font-weight:900}
     .sectionHead span{opacity:.55;font-size:12px}
@@ -178,25 +119,16 @@
     .rail{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
     .rail::-webkit-scrollbar{display:none}
     .mini{
-      flex:0 0 auto;width:300px;border-radius:18px;overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      box-shadow:0 18px 55px rgba(0,0,0,.55);
-      transition:.15s;
+      flex:0 0 auto;width:300px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);box-shadow:0 18px 55px rgba(0,0,0,.55);transition:.15s;
     }
     .mini:hover{transform:translateY(-2px)}
     .miniImg{height:170px;background-size:cover;background-position:center;position:relative}
     .miniImg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.86))}
-    .miniTop{
-      position:absolute;top:10px;left:10px;right:10px;z-index:2;
-      display:flex;justify-content:space-between;gap:10px;
-    }
+    .miniTop{position:absolute;top:10px;left:10px;right:10px;z-index:2;display:flex;justify-content:space-between;gap:10px}
     .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
       font-size:12px;font-weight:900;
     }
     .miniBody{padding:12px 12px 14px}
@@ -205,30 +137,19 @@
 
     .eventsWrap{max-width:var(--max);margin:0 auto;padding: 6px 18px 36px}
     .filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 16px}
-    .chip{
-      border:1px solid rgba(255,255,255,.22);
-      background:transparent;color:#fff;
-      padding:8px 14px;border-radius:999px;
-      font-weight:800;font-size:13px;cursor:pointer;opacity:.9;
-    }
+    .chip{border:1px solid rgba(255,255,255,.22);background:transparent;color:#fff;padding:8px 14px;border-radius:999px;font-weight:800;font-size:13px;cursor:pointer;opacity:.9}
     .chip.active{background:#fff;color:#000;border-color:#fff}
 
     .eventRow{
-      display:grid;grid-template-columns: 320px 1fr 220px;
-      gap:14px;padding:14px 16px;border-radius:14px;
+      display:grid;grid-template-columns: 320px 1fr 220px;gap:14px;padding:14px 16px;border-radius:14px;
       background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.10));
       box-shadow: 0 18px 60px rgba(0,0,0,.45);
-      margin-bottom:10px;align-items:center;
-      border: 1px solid rgba(255,255,255,.10);
+      margin-bottom:10px;align-items:center;border: 1px solid rgba(255,255,255,.10);
     }
     .eventLeft{display:flex;gap:12px;align-items:center;min-width:0}
     .compLogo{
-      width:44px;height:44px;object-fit:contain;flex:0 0 auto;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
-      border-radius:14px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.12);
-      padding:8px;
+      width:44px;height:44px;object-fit:contain;flex:0 0 auto;filter: drop-shadow(0 10px 18px rgba(0,0,0,.45));
+      border-radius:14px;background: rgba(255,255,255,.08);border: 1px solid rgba(255,255,255,.12);padding:8px;
     }
     .eventTxt{min-width:0}
     .eventTitle{font-weight:900;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -242,100 +163,31 @@
 
     .eventRight{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
     .rightPill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      font-weight:900;font-size:12px;
-      backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px);
+      display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);font-weight:900;font-size:12px;backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px);
     }
     .sportTag{opacity:.85;font-size:12px;font-weight:800}
-
     footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
-    /* ===================== GATE TELEGRAM ===================== */
-    .gate{
-      position:fixed; inset:0; z-index:9999;
-      display:none;
-      align-items:center; justify-content:center;
-      padding:22px;
-      background: rgba(0,0,0,.72);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    }
+    /* ========== GATE TELEGRAM ========== */
+    .gate{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:22px;background: rgba(0,0,0,.72);backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px)}
     .gate.show{display:flex}
-    .gateCard{
-      width:min(620px, 100%);
-      border-radius:24px;
-      border:1px solid rgba(255,255,255,.14);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      box-shadow: 0 30px 120px rgba(0,0,0,.75);
-      overflow:hidden;
-      position:relative;
-    }
-    .gateBanner{
-      height:150px;
-      background-size:cover;background-position:center;
-      position:relative;
-    }
-    .gateBanner::after{
-      content:""; position:absolute; inset:0;
-      background:
-        radial-gradient(900px 260px at 20% 10%, rgba(255,255,255,.18), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.72));
-    }
+    .gateCard{width:min(620px, 100%);border-radius:24px;border:1px solid rgba(255,255,255,.14);background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));box-shadow: 0 30px 120px rgba(0,0,0,.75);overflow:hidden;position:relative}
+    .gateBanner{height:150px;background-size:cover;background-position:center;position:relative}
+    .gateBanner::after{content:"";position:absolute;inset:0;background:radial-gradient(900px 260px at 20% 10%, rgba(255,255,255,.18), transparent 60%),linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.72))}
     .gateBody{padding:16px 18px 18px}
-    .gateTop{
-      display:flex; align-items:center; gap:14px;
-      margin-top:-34px;
-    }
-    .gateAvatar{
-      width:74px;height:74px;border-radius:22px;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.08);
-      overflow:hidden;
-      box-shadow: 0 18px 40px rgba(0,0,0,.45);
-      flex: 0 0 auto;
-    }
+    .gateTop{display:flex;align-items:center;gap:14px;margin-top:-34px}
+    .gateAvatar{width:74px;height:74px;border-radius:22px;border:1px solid rgba(255,255,255,.16);background: rgba(255,255,255,.08);overflow:hidden;box-shadow: 0 18px 40px rgba(0,0,0,.45);flex: 0 0 auto}
     .gateAvatar img{width:100%;height:100%;object-fit:cover}
     .gateTitleWrap{min-width:0}
-    .gateTitle{
-      margin:0;
-      font-size:18px;
-      font-weight:900;
-      letter-spacing:.2px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .gateSub{
-      margin-top:4px;
-      opacity:.75;
-      font-size:13px;
-      font-weight:700;
-    }
-    .gateText{
-      margin:12px 0 14px;
-      font-size:14px;
-      line-height:1.35;
-      opacity:.86;
-    }
-    .gateActions{display:flex; gap:10px; flex-wrap:wrap}
-    .btn{
-      appearance:none; border:0; cursor:pointer;
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:12px 14px;
-      border-radius:14px;
-      font-weight:900;
-      letter-spacing:.2px;
-      transition: .15s;
-      user-select:none;
-    }
-    .btnPrimary{background:#fff; color:#000;}
+    .gateTitle{margin:0;font-size:18px;font-weight:900;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .gateSub{margin-top:4px;opacity:.75;font-size:13px;font-weight:700}
+    .gateText{margin:12px 0 14px;font-size:14px;line-height:1.35;opacity:.86}
+    .gateActions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{appearance:none;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 14px;border-radius:14px;font-weight:900;letter-spacing:.2px;transition:.15s;user-select:none}
+    .btnPrimary{background:#fff;color:#000}
     .btnPrimary:hover{transform:translateY(-1px)}
-    .btnGhost{
-      background:rgba(255,255,255,.10);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.14);
-    }
+    .btnGhost{background:rgba(255,255,255,.10);color:#fff;border:1px solid rgba(255,255,255,.14)}
     .btnGhost:hover{background:rgba(255,255,255,.14)}
     .gateNote{margin-top:10px;font-size:12px;opacity:.55}
 
@@ -439,7 +291,7 @@
           </button>
         </div>
 
-        <div class="gateNote">Astuce : après avoir cliqué « Rejoindre », tu reviens ici → l’accès se fait automatiquement.</div>
+        <div class="gateNote">Après “Rejoindre”, l’accès se débloque automatiquement.</div>
       </div>
     </div>
   </div>
@@ -449,9 +301,8 @@
       CONFIG TELEGRAM
     ========================= */
     const TELEGRAM_LINK = "https://t.me/+llOGaNG7HeUzNmE0";
-    const TELEGRAM_PDP = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?ex=6946e33b&is=694591bb&hm=f29ad949bfddcce871cc32b769788f5965fcf4e28d7183fbb6bade0a4f691d59&=&format=webp&quality=lossless";
+    const TELEGRAM_PDP  = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?ex=6946e33b&is=694591bb&hm=f29ad949bfddcce871cc32b769788f5965fcf4e28d7183fbb6bade0a4f691d59&=&format=webp&quality=lossless";
     const TELEGRAM_BANNER = TELEGRAM_PDP;
-
     const ACCESS_KEY = "imftx_access_v1";
 
     const gate = document.getElementById("gate");
@@ -491,154 +342,151 @@
     });
 
     /* =========================
-      TES BANNIÈRES / LOGOS (ceux que tu as donnés)
-      -> on les met en direct, pas de raccourcis
+      HELPERS (LOGOS)
+      -> liens directs "Special:FilePath" (pas de raccourcis bizarres)
     ========================= */
-    const ASSETS = {
-      // logos / visuels fournis
-      logoBologne: "https://empire-sport.space/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
-      logoBVB:     "https://empire-sport.space/upload/teambanks/djj2j8cg1nwamyc44nye0olnube1mx.png",
-      logoBrest:   "https://empire-sport.space/upload/teambanks/jpdgvoxsfswpse3oskgrown31io2qa.png",
-      logoLens:    "https://empire-sport.space/upload/teambanks/539s1pm6c5uacewa39e37rhhtiem00.png",
+    const WP = (filename) => `https://fr.wikipedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}`;
 
-      // bannières
-      bannerInter: "https://empire-sport.space/upload/banners/hellas-verona-vs-inter-milan.png",
-      bannerMultiplex: "https://empire-sport.space/upload/cards/multiplex_31.png",
+    // Logos clubs (Wikipédia) + 2 clubs “petits” via tes liens teambanks
+    const TEAMS = {
+      newcastle: { name:"Newcastle", logo: WP("Logo Newcastle United FC.svg") },
+      chelsea:   { name:"Chelsea",   logo: WP("Logo Chelsea.svg") },
 
-      // autres bannières que tu as collé (je les utilise pour les matchs restants)
-      banner1: "https://images.lindependant.fr/api/v1/images/view/607e99303e45466a7f4cd286/large/image.jpg?v=1",
-      banner2: "https://assets-fr.imgfoot.com/match-cover-fr-3000472963910107818-6776159835892173948.jpg",
-      banner3: "https://thumb.canalplus.pro/http/unsafe/1440x810/filters:quality(80)/canalplus-cdn.canal-plus.io/p1/unit/30543080/canal-ouah/STD169/myCANAL_16x9_sport_1920x1080-2025-12-12T151504.603-e_lV",
-      banner4: "https://assets-fr.imgfoot.com/match-cover-fr-29127771517931326-8739455938979179464.jpg",
-      banner5: "https://assets-fr.imgfoot.com/match-cover-fr-1192861957272617165-4068287927415629445.jpg"
+      maur:      { name:"Maur Lusita", logo: "https://empire-sport.space/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png" },
+      lille:     { name:"Lille",     logo: WP("Logo LOSC Lille.svg") },
+
+      mancity:   { name:"Man City",  logo: WP("Logo Manchester City 2016.svg") },
+      westham:   { name:"West Ham",  logo: WP("Logo West Ham United.svg") },
+
+      leipzig:   { name:"RB Leipzig", logo: WP("Logo RB Leipzig 2020.svg") },
+      lever:     { name:"Leverkusen", logo: WP("Bayer 04 Leverkusen (logo).svg") },
+
+      spurs:     { name:"Tottenham", logo: WP("Logo Tottenham Hotspur.svg") },
+      liverpool: { name:"Liverpool", logo: WP("Logo FC Liverpool.svg") },
+
+      juve:      { name:"Juventus",  logo: WP("Logo Juventus.svg") },
+      roma:      { name:"Roma",      logo: WP("Logo AS Roma 2017.svg") },
+
+      psg:       { name:"Paris SG",  logo: WP("Logo Paris Saint-Germain 2024.svg") },
+      vff:       { name:"Vendée Fontenay", logo: "https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png" },
+
+      real:      { name:"Real Madrid", logo: WP("Logo Real Madrid.svg") },
+      sevilla:   { name:"Sevilla",     logo: WP("Logo Séville FC.svg") }
     };
 
-    // mini helper: si URL pas une image (rare), fallback
-    function isImageUrl(u){ return /\.(png|jpg|jpeg|webp|gif)(\?.*)?$/i.test(String(u||"")); }
-    function safeImg(u, fallback){
-      return isImageUrl(u) ? u : (fallback || "");
-    }
+    // Bannières fournies (multiplex)
+    const BANNERS = {
+      multiplexCDF: "https://empire-sport.space/upload/cards/multiplex_32.png",
+      multiplexPL:  "https://empire-sport.space/upload/cards/multiplex_33.png",
+    };
 
     /* =========================
-      DONNÉES (MATCHS DU JOUR)
-      (j’ai gardé tes matchs, et je mets tes bannières à la place)
+      MATCHS DU JOUR (le lendemain)
+      -> logos affichés partout (slider + événements)
+      -> bannières: multiplex = vraies bannières, le reste = auto (canvas) pour que ça rende propre
     ========================= */
     const todayMatches = [
       {
-        id:"multiplex-cdf",
-        time:"20:45",
+        id:"newcastle-chelsea",
+        time:"13:30",
+        comp:"Premier League",
+        sport:"Football",
+        match:"Newcastle - Chelsea",
+        a:TEAMS.newcastle.name, b:TEAMS.chelsea.name,
+        aLogo:TEAMS.newcastle.logo, bLogo:TEAMS.chelsea.logo,
+        banner:""
+      },
+      {
+        id:"maur-lusita-lille",
+        time:"15:30",
+        comp:"Coupe",
+        sport:"Football",
+        match:"Maur Lusita - Lille",
+        a:TEAMS.maur.name, b:TEAMS.lille.name,
+        aLogo:TEAMS.maur.logo, bLogo:TEAMS.lille.logo,
+        banner:""
+      },
+      {
+        id:"multiplex-cdf-1530",
+        time:"15:30",
         comp:"Coupe de France",
         sport:"Football",
         match:"Multiplex Coupe de France",
         a:"Multiplex", b:"Coupe de France",
-        aLogo: "", bLogo: "",
-        banner: ASSETS.bannerMultiplex
+        aLogo:"", bLogo:"",
+        banner:BANNERS.multiplexCDF
       },
       {
-        id:"bologne-inter",
-        time:"20:00",
-        comp:"Coupe (Italie)",
+        id:"mancity-westham",
+        time:"16:00",
+        comp:"Premier League",
         sport:"Football",
-        match:"Bologne - Inter Milan",
-        a:"Bologne", b:"Inter Milan",
-        aLogo: ASSETS.logoBologne,
-        bLogo: "",
-        banner: ASSETS.bannerInter
+        match:"Man City - West Ham",
+        a:TEAMS.mancity.name, b:TEAMS.westham.name,
+        aLogo:TEAMS.mancity.logo, bLogo:TEAMS.westham.logo,
+        banner:""
       },
       {
-        id:"dortmund-gladbach",
-        time:"20:30",
-        comp:"Coupe (Allemagne)",
+        id:"multiplex-pl",
+        time:"16:00",
+        comp:"Premier League",
         sport:"Football",
-        match:"Dortmund - M'gladbach",
-        a:"Dortmund", b:"M'gladbach",
-        aLogo: ASSETS.logoBVB,
-        bLogo: "",
-        banner: ASSETS.banner2
+        match:"Multiplex Premier League",
+        a:"Multiplex", b:"Premier League",
+        aLogo:"", bLogo:"",
+        banner:BANNERS.multiplexPL
       },
       {
-        id:"avranches-brest",
+        id:"leipzig-leverkusen",
+        time:"18:30",
+        comp:"Bundesliga",
+        sport:"Football",
+        match:"RB Leipzig - Bayer Leverkusen",
+        a:TEAMS.leipzig.name, b:TEAMS.lever.name,
+        aLogo:TEAMS.leipzig.logo, bLogo:TEAMS.lever.logo,
+        banner:""
+      },
+      {
+        id:"tottenham-liverpool",
+        time:"18:30",
+        comp:"Premier League",
+        sport:"Football",
+        match:"Tottenham - Liverpool",
+        a:TEAMS.spurs.name, b:TEAMS.liverpool.name,
+        aLogo:TEAMS.spurs.logo, bLogo:TEAMS.liverpool.logo,
+        banner:""
+      },
+      {
+        id:"juventus-roma",
         time:"20:45",
-        comp:"Coupe de France",
+        comp:"Serie A",
         sport:"Football",
-        match:"Avranches - Brest",
-        a:"Avranches", b:"Brest",
-        aLogo: "",
-        bLogo: ASSETS.logoBrest,
-        banner: ASSETS.banner1
+        match:"Juventus - Roma",
+        a:TEAMS.juve.name, b:TEAMS.roma.name,
+        aLogo:TEAMS.juve.logo, bLogo:TEAMS.roma.logo,
+        banner:""
       },
       {
-        id:"canet-montpellier",
-        time:"20:45",
-        comp:"Coupe de France",
-        sport:"Football",
-        match:"Canet - Montpellier",
-        a:"Canet", b:"Montpellier",
-        aLogo: "",
-        bLogo: "",
-        banner: ASSETS.banner3
-      },
-      {
-        id:"guingamp-laval",
-        time:"20:45",
-        comp:"Coupe de France",
-        sport:"Football",
-        match:"Guingamp - Laval",
-        a:"Guingamp", b:"Laval",
-        aLogo: "",
-        bLogo: "",
-        banner: ASSETS.banner4
-      },
-      {
-        id:"perigny-lemans",
-        time:"20:45",
-        comp:"Coupe de France",
-        sport:"Football",
-        match:"Périgny - Le Mans",
-        a:"Périgny", b:"Le Mans",
-        aLogo: "",
-        bLogo: "",
-        banner: ASSETS.banner5
-      },
-      {
-        id:"herbiers-angers",
-        time:"20:45",
-        comp:"Coupe de France",
-        sport:"Football",
-        match:"Les Herbiers - Angers",
-        a:"Les Herbiers", b:"Angers",
-        aLogo: "",
-        bLogo: "",
-        banner: ASSETS.banner2
-      },
-      {
-        id:"iccroix-reims",
-        time:"20:45",
-        comp:"Coupe de France",
-        sport:"Football",
-        match:"IC Croix - Reims",
-        a:"IC Croix", b:"Reims",
-        aLogo: "",
-        bLogo: "",
-        banner: ASSETS.banner1
-      },
-      {
-        id:"lens-feignies",
+        id:"psg-vendee-fontenay",
         time:"21:00",
         comp:"Coupe de France",
         sport:"Football",
-        match:"Lens - Feignies",
-        a:"Lens", b:"Feignies",
-        aLogo: ASSETS.logoLens,
-        bLogo: "",
-        banner: ASSETS.banner4
+        match:"Paris SG - Vendée Fontenay Foot",
+        a:TEAMS.psg.name, b:TEAMS.vff.name,
+        aLogo:TEAMS.psg.logo, bLogo:TEAMS.vff.logo,
+        banner:""
+      },
+      {
+        id:"real-sevilla",
+        time:"21:00",
+        comp:"La Liga",
+        sport:"Football",
+        match:"Real Madrid - Sevilla",
+        a:TEAMS.real.name, b:TEAMS.sevilla.name,
+        aLogo:TEAMS.real.logo, bLogo:TEAMS.sevilla.logo,
+        banner:""
       }
-    ].map(m => ({
-      ...m,
-      aLogo: safeImg(m.aLogo, ""),
-      bLogo: safeImg(m.bLogo, ""),
-      banner: safeImg(m.banner, ASSETS.bannerMultiplex)
-    }));
+    ];
 
     /* =========================
       STATUS AUTO
@@ -660,6 +508,139 @@
     todayMatches.forEach(m => m.status = computeStatus(m.time));
 
     /* =========================
+      BANNIÈRES AUTO (CANVAS)
+      -> pour éviter “que du multiplex” quand il manque des bannières
+    ========================= */
+    const bannerCache = new Map();
+
+    function loadImg(src){
+      return new Promise((resolve)=>{
+        if(!src){ resolve(null); return; }
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = src;
+      });
+    }
+
+    function roundRect(ctx, x, y, w, h, r){
+      ctx.beginPath();
+      ctx.moveTo(x+r, y);
+      ctx.arcTo(x+w, y, x+w, y+h, r);
+      ctx.arcTo(x+w, y+h, x, y+h, r);
+      ctx.arcTo(x, y+h, x, y, r);
+      ctx.arcTo(x, y, x+w, y, r);
+      ctx.closePath();
+    }
+
+    async function makeAutoBanner({aLogo,bLogo,title}){
+      const key = JSON.stringify({aLogo,bLogo,title});
+      if(bannerCache.has(key)) return bannerCache.get(key);
+
+      const w = 1600, h = 900;
+      const c = document.createElement("canvas");
+      c.width = w; c.height = h;
+      const ctx = c.getContext("2d");
+
+      // fond gradient dark
+      const g = ctx.createLinearGradient(0,0,w,h);
+      g.addColorStop(0, "#0b1220");
+      g.addColorStop(0.55, "#050a14");
+      g.addColorStop(1, "#000000");
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,w,h);
+
+      // halos
+      ctx.globalAlpha = 0.55;
+      ctx.fillStyle = "#0ea5e9";
+      ctx.beginPath(); ctx.arc(w*0.18,h*0.35,220,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle = "#a855f7";
+      ctx.beginPath(); ctx.arc(w*0.82,h*0.68,260,0,Math.PI*2); ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // noise léger
+      for(let i=0;i<7000;i++){
+        const x = Math.random()*w, y=Math.random()*h;
+        ctx.fillStyle = `rgba(255,255,255,${Math.random()*0.025})`;
+        ctx.fillRect(x,y,1,1);
+      }
+
+      const [A,B] = await Promise.all([loadImg(aLogo), loadImg(bLogo)]);
+
+      // logos flous en fond
+      function drawBlurLogo(img, x, y, size, alpha){
+        if(!img) return;
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.filter = "blur(10px)";
+        ctx.drawImage(img, x-size/2, y-size/2, size, size);
+        ctx.restore();
+      }
+      drawBlurLogo(A, w*0.28, h*0.55, 520, 0.22);
+      drawBlurLogo(B, w*0.72, h*0.52, 520, 0.22);
+
+      // cartes logo net
+      function drawCardLogo(img, cx, cy){
+        if(!img) return;
+        const size = 240, r = 38;
+        const x = cx - size/2, y = cy - size/2;
+
+        ctx.save();
+        ctx.fillStyle = "rgba(255,255,255,.08)";
+        ctx.strokeStyle = "rgba(255,255,255,.14)";
+        ctx.lineWidth = 3;
+        roundRect(ctx, x, y, size, size, r);
+        ctx.fill(); ctx.stroke();
+
+        ctx.shadowColor = "rgba(0,0,0,.55)";
+        ctx.shadowBlur = 24;
+        ctx.drawImage(img, x+38, y+38, size-76, size-76);
+        ctx.restore();
+      }
+
+      drawCardLogo(A, w*0.30, h*0.56);
+      drawCardLogo(B, w*0.70, h*0.56);
+
+      // VS
+      ctx.save();
+      ctx.globalAlpha = 0.95;
+      ctx.fillStyle = "rgba(255,255,255,.10)";
+      ctx.strokeStyle = "rgba(255,255,255,.18)";
+      ctx.lineWidth = 2;
+      const vsW = 150, vsH = 70;
+      roundRect(ctx, w/2 - vsW/2, h*0.56 - vsH/2, vsW, vsH, 26);
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = "rgba(255,255,255,.92)";
+      ctx.font = "900 34px Outfit, system-ui, Arial";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("VS", w/2, h*0.56);
+      ctx.restore();
+
+      // titre bas
+      ctx.save();
+      const gg = ctx.createLinearGradient(0,h*0.72,0,h);
+      gg.addColorStop(0,"rgba(0,0,0,0)");
+      gg.addColorStop(1,"rgba(0,0,0,.78)");
+      ctx.fillStyle = gg;
+      ctx.fillRect(0,h*0.68,w,h*0.32);
+
+      ctx.globalAlpha = 0.92;
+      ctx.fillStyle = "rgba(255,255,255,.92)";
+      ctx.font = "900 60px Outfit, system-ui, Arial";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "bottom";
+      const t = (title || "").toUpperCase();
+      ctx.fillText(t.slice(0, 34), w*0.06, h*0.94);
+      ctx.restore();
+
+      const data = c.toDataURL("image/jpeg", 0.86);
+      bannerCache.set(key, data);
+      return data;
+    }
+
+    /* =========================
       VIEW MODELS
     ========================= */
     function formatToday(hhmm){ return `Aujourd’hui · ${hhmm}`; }
@@ -674,8 +655,8 @@
       title: m.match,
       aLogo: m.aLogo,
       bLogo: m.bLogo,
-      compLogo: "",            // (si tu veux tu me donnes le logo coupe de france après)
-      banner: m.banner
+      banner: m.banner || "",
+      sport: m.sport
     }));
 
     /* =========================
@@ -706,10 +687,8 @@
     }
 
     function logosBlock(m){
-      const comp = m.compLogo ? `<img class="compMiniLogo" src="${m.compLogo}" alt="${m.league}">` : "";
       return `
         <div class="logosLine">
-          ${comp}
           <img class="teamLogo" src="${m.aLogo || ''}" alt="${m.aName}">
           <div class="vsPill">VS</div>
           <img class="teamLogo" src="${m.bLogo || ''}" alt="${m.bName}">
@@ -717,7 +696,9 @@
       `;
     }
 
-    function watchUrl(m){ return `pages/${m.id}.html`; }
+    function watchUrl(m){
+      return `pages/${m.id}.html`;
+    }
 
     function cardHTML(m){
       return `
@@ -743,21 +724,23 @@
       `;
     }
 
-    function dotHTML(i){ return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`; }
+    function dotHTML(i){
+      return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`;
+    }
 
-    function miniHTML(x){
-      const dot = x.status === "En cours" ? "dotGreen" : "dotOrange";
+    function miniHTML(m){
+      const dot = m.status === "En cours" ? "dotGreen" : "dotOrange";
       return `
-        <a class="mini" href="${watchUrl(x)}" target="_blank" rel="noopener">
-          <div class="miniImg" style="background-image:url('${x.banner}')">
+        <a class="mini" href="${watchUrl(m)}" target="_blank" rel="noopener">
+          <div class="miniImg" style="background-image:url('${m.banner}')">
             <div class="miniTop">
-              <span class="pill"><span class="${dot}"></span>${x.status}</span>
-              <span class="pill">${x.sport}</span>
+              <span class="pill"><span class="${dot}"></span>${m.status}</span>
+              <span class="pill">${m.sport}</span>
             </div>
           </div>
           <div class="miniBody">
-            <div class="miniTitle">${x.title}</div>
-            <div class="miniSub">${x.league} • ${x.time}</div>
+            <div class="miniTitle">${m.title}</div>
+            <div class="miniSub">${m.league} • ${m.time}</div>
           </div>
         </a>
       `;
@@ -799,25 +782,34 @@
     track.addEventListener("touchend", e => {
       const endX = e.changedTouches[0].clientX;
       const dx = endX - startX;
-      if(Math.abs(dx) > 40){ dx < 0 ? nextSlide() : prevSlide(); }
+      if(Math.abs(dx) > 40){
+        if(dx < 0) nextSlide(); else prevSlide();
+      }
     }, {passive:true});
 
-    /* =========================
-      UPCOMING
-    ========================= */
+    async function ensureBanners(){
+      for(const m of matchesVM){
+        if(!m.banner){
+          // si multiplex -> déjà ok, sinon auto
+          m.banner = await makeAutoBanner({ aLogo: m.aLogo, bLogo: m.bLogo, title: m.title });
+        }
+      }
+    }
+
     function buildUpcoming(){
-      const upcomingMatches = matchesVM
+      const up = matchesVM
         .filter(x => x.status === "À venir")
         .sort((a,b)=> timeToMinutes(a.time.split("·")[1].trim()) - timeToMinutes(b.time.split("·")[1].trim()));
-      upcoming.innerHTML = upcomingMatches.map(m => miniHTML({...m, sport:"Football"})).join("");
+      upcoming.innerHTML = up.map(miniHTML).join("");
     }
 
     /* =========================
-      EVENTS LIST + FILTRES
+      ÉVÉNEMENTS (LISTE + FILTRES)
     ========================= */
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
-    const FILTERS = ["Tous Les Événements", "Football", "Coupe de France"];
+
+    const FILTERS = ["Tous Les Événements", "Premier League", "Coupe de France", "Serie A", "La Liga", "Bundesliga"];
     let activeFilter = "Tous Les Événements";
 
     function renderFilters(){
@@ -825,7 +817,12 @@
         `<button class="chip ${f===activeFilter?'active':''}" onclick="setFilter('${f.replace(/'/g,"\\'")}')">${f}</button>`
       ).join("");
     }
-    window.setFilter = (f) => { activeFilter=f; renderFilters(); renderEvents(); };
+
+    window.setFilter = (f) => {
+      activeFilter = f;
+      renderFilters();
+      renderEvents();
+    };
 
     function statusPill(status){
       if(status === "En cours") return `<span class="rightPill"><span class="dotGreen"></span>En cours</span>`;
@@ -834,9 +831,12 @@
     }
 
     function rowHTML(m){
+      // compLogo “simple” (optionnel) : si tu veux je te mets les logos ligues après
+      const compLogo = "";
       return `
         <a class="eventRow" href="${watchUrl(m)}" target="_blank" rel="noopener">
           <div class="eventLeft">
+            ${compLogo ? `<img class="compLogo" src="${compLogo}" alt="${m.league}">` : ``}
             <div class="eventTxt">
               <div class="eventTitle">${m.title}</div>
               <div class="eventMeta">${m.league} • ${m.time}</div>
@@ -857,32 +857,32 @@
 
           <div class="eventRight">
             ${statusPill(m.status)}
-            <div class="sportTag">Football</div>
+            <div class="sportTag">${m.sport}</div>
           </div>
         </a>
       `;
     }
 
     function renderEvents(){
-      const list = matchesVM.filter(m => {
-        if(activeFilter === "Tous Les Événements") return true;
-        if(activeFilter === "Football") return true;
-        if(activeFilter === "Coupe de France") return m.league === "Coupe de France";
-        return true;
-      });
-      list.sort((a,b)=> timeToMinutes(a.time.split("·")[1].trim()) - timeToMinutes(b.time.split("·")[1].trim()));
+      const list = matchesVM
+        .filter(m => activeFilter === "Tous Les Événements" ? true : (m.league === activeFilter))
+        .sort((a,b)=> timeToMinutes(a.time.split("·")[1].trim()) - timeToMinutes(b.time.split("·")[1].trim()));
       eventsList.innerHTML = list.map(rowHTML).join("");
     }
 
     /* =========================
       INIT
     ========================= */
-    (function init(){
+    (async function init(){
+      await ensureBanners();
+
       track.innerHTML = matchesVM.map(cardHTML).join("");
       dots.innerHTML = matchesVM.map((_,i)=>dotHTML(i)).join("");
+
       buildUpcoming();
       renderFilters();
       renderEvents();
+
       update();
       window.addEventListener("resize", update);
     })();
