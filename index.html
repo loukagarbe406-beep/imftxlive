@@ -352,9 +352,7 @@
   </div>
 
   <script>
-    /* =========================
-      TELEGRAM (GATE)
-    ========================= */
+    /* ========= TELEGRAM GATE ========= */
     const TELEGRAM_LINK = "https://t.me/+llOGaNG7HeUzNmE0";
     const TELEGRAM_PDP  = "https://media.discordapp.net/attachments/1447687098751782993/1451634234707153027/image.png?ex=6946e33b&is=694591bb&hm=f29ad949bfddcce871cc32b769788f5965fcf4e28d7183fbb6bade0a4f691d59&=&format=webp&quality=lossless";
     const TELEGRAM_BANNER = TELEGRAM_PDP;
@@ -394,29 +392,11 @@
       }
     });
 
-    /* =========================
-      LOGOS / LEAGUES
-    ========================= */
-    const WP = (filename) => `https://fr.wikipedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}`;
-    const LOGOS = {
-      newcastle: WP("Logo Newcastle United FC.svg"),
-      chelsea:   WP("Logo Chelsea.svg"),
-      maur:      "https://upload.wikimedia.org/wikipedia/fr/thumb/8/89/Logo_US_Lusitanos_Saint-Maur_2018.svg/1200px-Logo_US_Lusitanos_Saint-Maur_2018.svg.png",
-      lille:     WP("Logo LOSC Lille.svg"),
-      mancity:   WP("Logo Manchester City 2016.svg"),
-      westham:   WP("Logo West Ham United.svg"),
-      leipzig:   WP("Logo RB Leipzig 2020.svg"),
-      lever:     WP("Bayer 04 Leverkusen (logo).svg"),
-      spurs:     WP("Logo Tottenham Hotspur.svg"),
-      liverpool: WP("Logo FC Liverpool.svg"),
-      juve:      WP("Logo Juventus.svg"),
-      roma:      WP("Logo AS Roma 2017.svg"),
-      psg:       WP("Logo Paris Saint-Germain 2024.svg"),
-      vff:       "https://upload.wikimedia.org/wikipedia/fr/2/26/Logo_Vend%C3%A9e_Fontenay_Foot_-_2021.svg",
-      real:      WP("Logo Real Madrid.svg"),
-      sevilla:   WP("Logo Séville FC.svg")
-    };
+    /* ========= LIEN UNIQUE POUR TOUS LES MATCHS ========= */
+    const MATCH_PAGE = "pages/matchs.html";
+    const watchUrl = () => MATCH_PAGE;
 
+    /* ========= LEAGUES ICONS ========= */
     const LEAGUES = {
       "Premier League": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png",
       "Coupe de France": "https://empire-sport.space/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
@@ -426,34 +406,31 @@
       "Coupe": ""
     };
 
-    /* =========================
-      MATCHS
-    ========================= */
+    const WP = (filename) => `https://fr.wikipedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}`;
+
+    /* ========= MATCHS ========= */
     const todayMatches = [
       {
-        id:"newcastle-chelsea",
         time:"13:30",
         comp:"Premier League",
         sport:"Football",
         match:"Newcastle - Chelsea",
         a:"Newcastle", b:"Chelsea",
-        aLogo: LOGOS.newcastle,
-        bLogo: LOGOS.chelsea,
+        aLogo: WP("Logo Newcastle United FC.svg"),
+        bLogo: WP("Logo Chelsea.svg"),
         banner:"https://empire-sport.space/upload/teambanks/yhlqzjaotlwkxiltncol1wtwc3gerb.png"
       },
       {
-        id:"maur-lusita-lille",
         time:"15:30",
         comp:"Coupe",
         sport:"Football",
         match:"Maur Lusita - Lille",
         a:"Maur Lusita", b:"Lille",
-        aLogo: LOGOS.maur,
-        bLogo: LOGOS.lille,
+        aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/8/89/Logo_US_Lusitanos_Saint-Maur_2018.svg/1200px-Logo_US_Lusitanos_Saint-Maur_2018.svg.png",
+        bLogo: WP("Logo LOSC Lille.svg"),
         banner:"https://empire-sport.space/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png"
       },
       {
-        id:"multiplex-cdf-1530",
         time:"15:30",
         comp:"Coupe de France",
         sport:"Football",
@@ -463,18 +440,16 @@
         banner:"https://empire-sport.space/upload/cards/multiplex_32.png"
       },
       {
-        id:"mancity-westham",
         time:"16:00",
         comp:"Premier League",
         sport:"Football",
         match:"Manchester City - West Ham United",
         a:"Manchester City", b:"West Ham United",
-        aLogo: LOGOS.mancity,
-        bLogo: LOGOS.westham,
+        aLogo: WP("Logo Manchester City 2016.svg"),
+        bLogo: WP("Logo West Ham United.svg"),
         banner:"https://empire-sport.space/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png"
       },
       {
-        id:"multiplex-premier-league",
         time:"16:00",
         comp:"Premier League",
         sport:"Football",
@@ -484,72 +459,58 @@
         banner:"https://empire-sport.space/upload/cards/multiplex_33.png"
       },
       {
-        id:"leipzig-leverkusen",
         time:"18:30",
         comp:"Bundesliga",
         sport:"Football",
         match:"RB Leipzig - Bayer Leverkusen",
         a:"RB Leipzig", b:"Bayer Leverkusen",
-        aLogo: LOGOS.leipzig,
-        bLogo: LOGOS.lever,
+        aLogo: WP("Logo RB Leipzig 2020.svg"),
+        bLogo: WP("Bayer 04 Leverkusen (logo).svg"),
         banner:"https://empire-sport.space/upload/teambanks/5xj4np6wt3clqh2pioqsxcki56nsy1.png"
       },
       {
-        id:"tottenham-liverpool",
         time:"18:30",
         comp:"Premier League",
         sport:"Football",
         match:"Tottenham Hotspur - Liverpool",
         a:"Tottenham Hotspur", b:"Liverpool",
-        aLogo: LOGOS.spurs,
-        bLogo: LOGOS.liverpool,
+        aLogo: WP("Logo Tottenham Hotspur.svg"),
+        bLogo: WP("Logo FC Liverpool.svg"),
         banner:"https://empire-sport.space/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png"
       },
       {
-        id:"juventus-roma",
         time:"20:45",
         comp:"Serie A",
         sport:"Football",
         match:"Juventus - Roma",
         a:"Juventus", b:"Roma",
-        aLogo: LOGOS.juve,
-        bLogo: LOGOS.roma,
+        aLogo: WP("Logo Juventus.svg"),
+        bLogo: WP("Logo AS Roma 2017.svg"),
         banner:"https://empire-sport.space/upload/teambanks/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png"
       },
       {
-        id:"psg-vendee-fontenay",
         time:"21:00",
         comp:"Coupe de France",
         sport:"Football",
         match:"Paris SG - Vendée Fontenay Foot",
         a:"Paris SG", b:"Vendée Fontenay Foot",
-        aLogo: LOGOS.psg,
-        bLogo: LOGOS.vff,
+        aLogo: WP("Logo Paris Saint-Germain 2024.svg"),
+        bLogo: "https://upload.wikimedia.org/wikipedia/fr/2/26/Logo_Vend%C3%A9e_Fontenay_Foot_-_2021.svg",
         banner:"https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png"
       },
       {
-        id:"real-sevilla",
         time:"21:00",
         comp:"La Liga",
         sport:"Football",
         match:"Real Madrid - Sevilla",
         a:"Real Madrid", b:"Sevilla",
-        aLogo: LOGOS.real,
-        bLogo: LOGOS.sevilla,
+        aLogo: WP("Logo Real Madrid.svg"),
+        bLogo: WP("Logo Séville FC.svg"),
         banner:"https://empire-sport.space/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png"
       }
     ];
 
-    /* =========================
-      LIEN STREAM (TU VOULAIS pages/matchs.html)
-    ========================= */
-    function watchUrl(){
-      return "pages/matchs.html";
-    }
-
-    /* =========================
-      STATUS + COUNTDOWN
-    ========================= */
+    /* ========= STATUS + COUNTDOWN ========= */
     const MATCH_DURATION_MIN = 135;
 
     function timeToMinutes(hhmm){
@@ -585,9 +546,7 @@
 
     function formatToday(hhmm){ return `Aujourd’hui · ${hhmm}`; }
 
-    /* =========================
-      IMG FALLBACK
-    ========================= */
+    /* ========= IMG FALLBACK ========= */
     const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
         <defs>
@@ -599,15 +558,10 @@
         <rect width="120" height="120" rx="60" fill="url(#g)"/>
       </svg>
     `);
-
-    function imgOnError(el){
-      el.src = PLACEHOLDER;
-    }
+    function imgOnError(el){ el.src = PLACEHOLDER; }
     window.imgOnError = imgOnError;
 
-    /* =========================
-      VIEWMODEL (recalc status)
-    ========================= */
+    /* ========= BUILD VM ========= */
     function buildVM(){
       return todayMatches.map(m => ({
         ...m,
@@ -622,25 +576,20 @@
       }));
     }
 
-    /* Slider = 3 prochains (ou en cours) */
+    /* Slider = 3 prochains / en cours (pas de boucle) */
     function pickTop3ForSlider(allVM){
       const now = new Date();
       const nowMin = now.getHours()*60 + now.getMinutes();
 
       const sorted = allVM.slice().sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw));
-
-      // On garde en priorité les matchs pas terminés
       const notFinished = sorted.filter(m => m.status !== "Terminé");
       const base = notFinished.length ? notFinished : sorted;
 
-      // On prend les prochains / en cours
       const next = base.filter(m => m.status === "En cours" || timeToMinutes(m.timeRaw) >= nowMin);
       return (next.length ? next : base).slice(0,3);
     }
 
-    /* =========================
-      RENDER
-    ========================= */
+    /* ========= RENDER ========= */
     const bg = document.getElementById("bg");
     const heroTitle = document.getElementById("heroTitle");
     const heroLeague = document.getElementById("heroLeague");
@@ -746,7 +695,7 @@
       updateDots();
     }
 
-    /* ✅ Pas de boucle => plus de bug retour au 1er */
+    /* ✅ pas de boucle => pas de retour au 1er */
     function nextSlide(){ idx = Math.min(idx + 1, sliderVM.length - 1); update(); }
     function prevSlide(){ idx = Math.max(idx - 1, 0); update(); }
     function goTo(i){ idx = Math.max(0, Math.min(i, sliderVM.length - 1)); update(); }
@@ -859,8 +808,6 @@
     (function init(){
       rebuildAll();
       window.addEventListener("resize", update);
-
-      // refresh countdown / status
       setInterval(() => rebuildAll(), 1000);
     })();
   </script>
