@@ -1,176 +1,3 @@
-<!doctype html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-<title>IMFTX+ — Live Streaming</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
-
-<style>
-  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif;overflow-x:hidden}
-  a{color:inherit;text-decoration:none}
-
-  header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
-  .brand{font-weight:900;font-size:22px;letter-spacing:-0.5px;color:#fff}
-  .back{opacity:.7;font-size:14px;font-weight:600}
-
-  .container{max-width:1000px;margin:0 auto;padding:0 12px 40px}
-
-  /* ===== PLAYER BOX ===== */
-  .playerBox{
-    position:relative;
-    width:100%;
-    aspect-ratio:16/9;
-    background:#080808;
-    border-radius:16px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,0.1);
-    box-shadow:0 20px 50px rgba(0,0,0,0.5);
-  }
-
-  .cover{
-    position:absolute;
-    inset:0;
-    display:grid;
-    place-items:center;
-    background:radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-    z-index:10;
-  }
-
-  .launchBtn{
-    background:#fff;
-    color:#000;
-    border:none;
-    padding:16px 28px;
-    border-radius:50px;
-    font-weight:900;
-    font-size:16px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    transition:transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  .launchBtn:active{transform:scale(0.95)}
-
-  .playerFrame{
-    width:100%;
-    height:100%;
-    border:0;
-    display:block;
-  }
-
-  /* ===== SELECTOR ===== */
-  .playerSelect{
-    display:grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap:10px;
-    margin:15px 0;
-  }
-  .playerBtn{
-    padding:12px;
-    border-radius:12px;
-    border:1px solid rgba(255,255,255,0.15);
-    background:rgba(255,255,255,0.05);
-    color:#fff;
-    font-weight:800;
-    font-size:13px;
-    cursor:pointer;
-    transition: 0.2s;
-  }
-  .playerBtn.active{background:#fff;color:#000;border-color:#fff}
-
-  /* ===== INFO BAR ===== */
-  .infoBar{
-    padding:16px;
-    border-radius:16px;
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-  }
-  .infoLeft{display:flex;gap:14px;align-items:center}
-  .leagueLogo{
-    width:42px;height:42px;
-    object-fit:contain;
-    background:rgba(255,255,255,0.05);
-    border-radius:10px;
-    padding:5px;
-  }
-  .infoText b{display:block;font-size:11px;text-transform:uppercase;opacity:0.5;letter-spacing:1px}
-  .infoText .match{font-weight:900;font-size:17px;margin:2px 0}
-  .infoText span{font-size:12px;opacity:0.7}
-
-  .liveBadge{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    background:rgba(34, 197, 94, 0.15);
-    color:#22c55e;
-    padding:6px 12px;
-    border-radius:8px;
-    font-weight:900;
-    font-size:12px;
-  }
-  .dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 1.5s infinite}
-
-  @keyframes pulse{
-    0%{opacity:1}
-    50%{opacity:0.4}
-    100%{opacity:1}
-  }
-
-  @media(max-width:600px){
-    .infoBar{flex-direction:column;align-items:flex-start;gap:15px}
-    .match{font-size:15px}
-  }
-</style>
-</head>
-<body>
-
-<header>
-  <div class="brand">IMFTX+</div>
-  <a href="../index.html" class="back">✕ Fermer</a>
-</header>
-
-<div class="container">
-
-  <div class="playerBox" id="viewport">
-    <div class="cover" id="cover">
-      <button class="launchBtn" onclick="startStream()">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        LANCER LE DIRECT
-      </button>
-    </div>
-    <div id="playerContainer" style="width:100%;height:100%"></div>
-  </div>
-
-  <div class="playerSelect">
-    <button class="playerBtn active" id="btn1" onclick="changePlayer(1)">PLAYER 1</button>
-    <button class="playerBtn" id="btn2" onclick="changePlayer(2)">PLAYER 2</button>
-    <button class="playerBtn" id="btn3" onclick="changePlayer(3)">PLAYER 3</button>
-  </div>
-
-  <div class="infoBar">
-    <div class="infoLeft">
-      <img class="leagueLogo" id="lLogo" src="" alt="Logo">
-      <div class="infoText">
-        <b>Direct</b>
-        <div class="match" id="mName">Chargement...</div>
-        <span id="mTime">--:--</span>
-      </div>
-    </div>
-    <div class="liveBadge">
-      <div class="dot"></div> LIVE
-    </div>
-  </div>
-
-</div>
-
-<script>
 /* Configuration */
 const MATCH_DATA = {
   name: "MAROC - COMORES",
@@ -193,15 +20,15 @@ let isStarted = false;
 let currentPlayer = 1;
 
 function getIframe(url) {
+  // On retire le sandbox et on change le referrerpolicy
   return `<iframe 
     src="${url}" 
     class="playerFrame" 
-    allow="autoplay; fullscreen; picture-in-picture" 
+    allow="autoplay; fullscreen; picture-in-picture; encrypted-media" 
     allowfullscreen 
     frameborder="0"
     scrolling="no"
-    sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
-    referrerpolicy="no-referrer">
+    referrerpolicy="origin">
   </iframe>`;
 }
 
@@ -216,10 +43,8 @@ function startStream() {
 
 function changePlayer(num) {
   if (num === currentPlayer && isStarted) return;
-  
   currentPlayer = num;
   
-  // UI Update
   document.querySelectorAll('.playerBtn').forEach(b => b.classList.remove('active'));
   document.getElementById('btn' + num).classList.add('active');
 
@@ -229,7 +54,3 @@ function changePlayer(num) {
     startStream();
   }
 }
-</script>
-
-</body>
-</html>
