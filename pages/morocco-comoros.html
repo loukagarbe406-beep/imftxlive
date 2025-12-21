@@ -2,192 +2,233 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>IMFTX+ — Live</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<title>IMFTX+ — Live Streaming</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
-a{color:inherit;text-decoration:none}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
 
-header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
-.brand{font-weight:900;font-size:20px;letter-spacing:.2px}
-.back{opacity:.7}
-.back:hover{opacity:1}
+  header{padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+  .brand{font-weight:900;font-size:22px;letter-spacing:-0.5px;color:#fff}
+  .back{opacity:.7;font-size:14px;font-weight:600}
 
-.container{max-width:1200px;margin:0 auto;padding:0 16px 26px}
+  .container{max-width:1000px;margin:0 auto;padding:0 12px 40px}
 
-/* ===== PLAYER ===== */
-.playerBox{
-  border-radius:22px;overflow:hidden;background:#000;
-  border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 30px 90px rgba(0,0,0,.75);
-}
-.cover{
-  width:100%;aspect-ratio:16/9;display:grid;place-items:center;
-  background:
-    radial-gradient(900px 420px at 30% 10%, rgba(255,255,255,.10), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.82));
-}
-.cover button{
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.10);
-  color:#fff;padding:14px 18px;border-radius:999px;
-  font-weight:900;cursor:pointer;display:flex;align-items:center;gap:10px
-}
-.cover button:hover{background:rgba(255,255,255,.14)}
+  /* ===== PLAYER BOX ===== */
+  .playerBox{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#080808;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+  }
 
-.playerFrame{
-  width:100%;
-  aspect-ratio:16/9;
-  border:0;
-  background:#000;
-  display:block
-}
+  .cover{
+    position:absolute;
+    inset:0;
+    display:grid;
+    place-items:center;
+    background:radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+    z-index:10;
+  }
 
-/* ===== PLAYER SELECT ===== */
-.playerSelect{display:flex;gap:10px;margin:14px 0 10px;flex-wrap:wrap}
-.playerBtn{
-  padding:10px 14px;border-radius:12px;
-  border:1px solid rgba(255,255,255,.18);
-  background:rgba(255,255,255,.08);
-  font-weight:900;cursor:pointer;
-}
-.playerBtn:hover{background:rgba(255,255,255,.12)}
-.playerBtn.active{background:#fff;border-color:#fff;color:#000}
+  .launchBtn{
+    background:#fff;
+    color:#000;
+    border:none;
+    padding:16px 28px;
+    border-radius:50px;
+    font-weight:900;
+    font-size:16px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    transition:transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .launchBtn:active{transform:scale(0.95)}
 
-/* ===== INFO BAR ===== */
-.infoBar{
-  margin-top:10px;padding:14px 16px;border-radius:16px;
-  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));
-  border:1px solid rgba(255,255,255,.10);
-  display:flex;justify-content:space-between;align-items:center;gap:14px
-}
-.infoLeft{display:flex;gap:12px;align-items:center;min-width:0}
-.leagueLogo{
-  width:38px;height:38px;border-radius:12px;
-  background:rgba(0,0,0,.35);
-  border:1px solid rgba(255,255,255,.14);
-  padding:7px;object-fit:contain;flex:0 0 auto;
-}
-.infoText{min-width:0}
-.infoText b{display:block;font-weight:900}
-.infoText .match{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.infoText span{font-size:13px;opacity:.75}
+  .playerFrame{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+  }
 
-.rightBox{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
-.live{display:flex;align-items:center;gap:8px;font-weight:900;opacity:.95}
-.dot{width:10px;height:10px;border-radius:50%;background:#22c55e}
+  /* ===== SELECTOR ===== */
+  .playerSelect{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:10px;
+    margin:15px 0;
+  }
+  .playerBtn{
+    padding:12px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.05);
+    color:#fff;
+    font-weight:800;
+    font-size:13px;
+    cursor:pointer;
+    transition: 0.2s;
+  }
+  .playerBtn.active{background:#fff;color:#000;border-color:#fff}
 
-@media(max-width:700px){
-  .infoBar{flex-direction:column;align-items:flex-start}
-  .rightBox{justify-content:flex-start}
-}
+  /* ===== INFO BAR ===== */
+  .infoBar{
+    padding:16px;
+    border-radius:16px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .infoLeft{display:flex;gap:14px;align-items:center}
+  .leagueLogo{
+    width:42px;height:42px;
+    object-fit:contain;
+    background:rgba(255,255,255,0.05);
+    border-radius:10px;
+    padding:5px;
+  }
+  .infoText b{display:block;font-size:11px;text-transform:uppercase;opacity:0.5;letter-spacing:1px}
+  .infoText .match{font-weight:900;font-size:17px;margin:2px 0}
+  .infoText span{font-size:12px;opacity:0.7}
+
+  .liveBadge{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:rgba(34, 197, 94, 0.15);
+    color:#22c55e;
+    padding:6px 12px;
+    border-radius:8px;
+    font-weight:900;
+    font-size:12px;
+  }
+  .dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 1.5s infinite}
+
+  @keyframes pulse{
+    0%{opacity:1}
+    50%{opacity:0.4}
+    100%{opacity:1}
+  }
+
+  @media(max-width:600px){
+    .infoBar{flex-direction:column;align-items:flex-start;gap:15px}
+    .match{font-size:15px}
+  }
 </style>
 </head>
-
 <body>
 
 <header>
   <div class="brand">IMFTX+</div>
-  <a href="../index.html" class="back">← Retour</a>
+  <a href="../index.html" class="back">✕ Fermer</a>
 </header>
 
 <div class="container">
 
-  <!-- PLAYER -->
-  <div class="playerBox" id="playerBox">
-    <div class="cover">
-      <button id="launchBtn" type="button">▶ Lancer le stream</button>
+  <div class="playerBox" id="viewport">
+    <div class="cover" id="cover">
+      <button class="launchBtn" onclick="startStream()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        LANCER LE DIRECT
+      </button>
     </div>
+    <div id="playerContainer" style="width:100%;height:100%"></div>
   </div>
 
-  <!-- PLAYERS -->
   <div class="playerSelect">
-    <button class="playerBtn active" onclick="setPlayer(1)">Player 1</button>
-    <button class="playerBtn" onclick="setPlayer(2)">Player 2</button>
-    <button class="playerBtn" onclick="setPlayer(3)">Player 3</button>
+    <button class="playerBtn active" id="btn1" onclick="changePlayer(1)">PLAYER 1</button>
+    <button class="playerBtn" id="btn2" onclick="changePlayer(2)">PLAYER 2</button>
+    <button class="playerBtn" id="btn3" onclick="changePlayer(3)">PLAYER 3</button>
   </div>
 
-  <!-- INFO -->
   <div class="infoBar">
     <div class="infoLeft">
-      <img class="leagueLogo" id="leagueLogo" src="" alt="Ligue">
+      <img class="leagueLogo" id="lLogo" src="" alt="Logo">
       <div class="infoText">
-        <b>Vous regardez</b>
-        <div class="match" id="matchName">—</div>
-        <span id="matchTime">Aujourd’hui · —</span>
+        <b>Direct</b>
+        <div class="match" id="mName">Chargement...</div>
+        <span id="mTime">--:--</span>
       </div>
     </div>
-
-    <div class="rightBox">
-      <div class="live">
-        <span class="dot"></span>
-        <span>En cours</span>
-      </div>
+    <div class="liveBadge">
+      <div class="dot"></div> LIVE
     </div>
   </div>
 
 </div>
 
 <script>
-/* ========= MATCH (tu changes ici) ========= */
-const MATCH = {
-  name: "MAROC - COMOROS",
-  timeText: "Aujourd’hui · 20h00",
-  leagueLogo: "https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png"
+/* Configuration */
+const MATCH_DATA = {
+  name: "MAROC - COMORES",
+  time: "Aujourd'hui • 20h00",
+  logo: "https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png"
 };
 
-/* ========= PLAYERS (remplace par tes liens) ========= */
-const PLAYERS = {
+const LINKS = {
   1: "https://bolaloca.my/player/4/2",
   2: "https://bolaloca.my/player/2/2",
   3: "https://bolaloca.my/player/3/2"
 };
 
-document.getElementById("matchName").textContent = MATCH.name;
-document.getElementById("matchTime").textContent = MATCH.timeText;
-document.getElementById("leagueLogo").src = MATCH.leagueLogo;
+/* Init */
+document.getElementById("mName").textContent = MATCH_DATA.name;
+document.getElementById("mTime").textContent = MATCH_DATA.time;
+document.getElementById("lLogo").src = MATCH_DATA.logo;
 
-let loaded = false;
-const buttons = document.querySelectorAll(".playerBtn");
+let isStarted = false;
+let currentPlayer = 1;
 
-function iframeHTML(url){
-  return `
-    <iframe
-      id="player"
-      class="playerFrame"
-      src="${url}"
-      allowfullscreen
-      allow="autoplay; fullscreen; picture-in-picture"
-      referrerpolicy="no-referrer"
-      loading="lazy"
-      sandbox="allow-scripts allow-same-origin allow-forms"
-    ></iframe>
-  `;
+function getIframe(url) {
+  return `<iframe 
+    src="${url}" 
+    class="playerFrame" 
+    allow="autoplay; fullscreen; picture-in-picture" 
+    allowfullscreen 
+    frameborder="0"
+    scrolling="no"
+    sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
+    referrerpolicy="no-referrer">
+  </iframe>`;
 }
 
-function setActive(n){
-  buttons.forEach(b => b.classList.remove("active"));
-  buttons[n-1].classList.add("active");
+function startStream() {
+  const container = document.getElementById("playerContainer");
+  const cover = document.getElementById("cover");
+  
+  container.innerHTML = getIframe(LINKS[1]);
+  cover.style.display = "none";
+  isStarted = true;
 }
 
-function loadPlayer(n){
-  document.getElementById("playerBox").innerHTML = iframeHTML(PLAYERS[n]);
-  loaded = true;
-  setActive(n);
-}
+function changePlayer(num) {
+  if (num === currentPlayer && isStarted) return;
+  
+  currentPlayer = num;
+  
+  // UI Update
+  document.querySelectorAll('.playerBtn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn' + num).classList.add('active');
 
-function setPlayer(n){
-  if(!loaded){ loadPlayer(n); return; }
-  document.getElementById("player").src = PLAYERS[n];
-  setActive(n);
+  if (isStarted) {
+    document.getElementById("playerContainer").innerHTML = getIframe(LINKS[num]);
+  } else {
+    startStream();
+  }
 }
-
-document.getElementById("launchBtn").addEventListener("click", () => loadPlayer(1));
-window.setPlayer = setPlayer;
 </script>
 
 </body>
