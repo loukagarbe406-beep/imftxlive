@@ -305,46 +305,33 @@
       "Serie A": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/256px-Serie_A_logo_2022.svg.png",
       "La Liga": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/LaLiga_logo_2023.svg/256px-LaLiga_logo_2023.svg.png",
       "Bundesliga": "https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/256px-Bundesliga_logo_%282017%29.svg.png",
+      "International": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/FIFA_logo_without_slogan.svg/256px-FIFA_logo_without_slogan.svg.png",
       "Coupe": ""
     };
 
-    /* ✅ ICI tu mets tes pages:
-       id doit correspondre au fichier html dans /pages
-       ex: id:"psg-ol" => /pages/psg-ol.html
-    */
+    /* ✅ Matchs affichés (Real/PSG/Juve supprimés) */
     const todayMatches = [
       {
-        id:"juventus-roma",
-        time:"20:45",
-        comp:"Serie A",
+        id:"morocco-comoros",
+        time:"21:00",
+        comp:"International",
         sport:"Football",
-        match:"Juventus - Roma",
-        a:"Juventus", b:"Roma",
-        aLogo:"https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Juventus.svg",
-        bLogo:"https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20AS%20Roma%202017.svg",
-        banner:"https://empire-sport.space/upload/teambanks/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png"
+        match:"Morocco - Comoros",
+        a:"Morocco", b:"Comoros",
+        aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Morocco.svg/256px-Flag_of_Morocco.svg.png",
+        bLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Flag_of_the_Comoros.svg/256px-Flag_of_the_Comoros.svg.png",
+        banner:"https://empire-sport.space/upload/banners/morocco-vs-uganda.png"
       },
       {
-        id:"psg-vendee-fontenay",
+        id:"lyon-saint-cyr-collonges",
         time:"21:00",
         comp:"Coupe de France",
         sport:"Football",
-        match:"Paris SG - Vendée Fontenay Foot",
-        a:"Paris SG", b:"Vendée Fontenay Foot",
-        aLogo:"https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Paris%20Saint-Germain%202024.svg",
-        bLogo:"https://upload.wikimedia.org/wikipedia/fr/2/26/Logo_Vend%C3%A9e_Fontenay_Foot_-_2021.svg",
-        banner:"https://empire-sport.space/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png"
-      },
-      {
-        id:"real-sevilla",
-        time:"21:00",
-        comp:"La Liga",
-        sport:"Football",
-        match:"Real Madrid - Sevilla",
-        a:"Real Madrid", b:"Sevilla",
-        aLogo:"https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Real%20Madrid.svg",
-        bLogo:"https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20S%C3%A9ville%20FC.svg",
-        banner:"https://empire-sport.space/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png"
+        match:"Lyon - Saint-Cyr Collonges",
+        a:"Lyon", b:"Saint-Cyr Collonges",
+        aLogo:"https://upload.wikimedia.org/wikipedia/fr/a/a5/Logo_Olympique_Lyonnais_-_2022.svg",
+        bLogo:"https://fc-stcyr-collonges.fr/wp-content/uploads/2022/12/logo-club.png",
+        banner:"https://empire-sport.space/upload/banners/real-betis-vs-lyon.png"
       }
     ];
 
@@ -467,6 +454,7 @@
         <div class="card">
           <div class="poster" style="background-image:url('${m.banner}')"></div>
           ${badgeHTML(m)}
+
           <div class="cardArrow left" onclick="prevSlide()"><span>‹</span></div>
           <div class="cardArrow right" onclick="nextSlide()"><span>›</span></div>
 
@@ -531,7 +519,6 @@
       updateDots();
     }
 
-    /* ✅ pas de boucle */
     function nextSlide(){ idx = Math.min(idx + 1, sliderVM.length - 1); update(); }
     function prevSlide(){ idx = Math.max(idx - 1, 0); update(); }
     function goTo(i){ idx = Math.max(0, Math.min(i, sliderVM.length - 1)); update(); }
@@ -539,7 +526,6 @@
     window.prevSlide = prevSlide;
     window.goTo = goTo;
 
-    // swipe mobile (sans boucle)
     let startX = 0;
     track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, {passive:true});
     track.addEventListener("touchend", e => {
@@ -559,7 +545,17 @@
 
     const eventsList = document.getElementById("eventsList");
     const filtersEl = document.getElementById("filters");
-    const FILTERS = ["Tous Les Événements", "Premier League", "Coupe de France", "Serie A", "La Liga", "Bundesliga", "Coupe"];
+
+    const FILTERS = [
+      "Tous Les Événements",
+      "International",
+      "Coupe de France",
+      "Premier League",
+      "Serie A",
+      "La Liga",
+      "Bundesliga",
+      "Coupe"
+    ];
     let activeFilter = "Tous Les Événements";
 
     function renderFilters(){
