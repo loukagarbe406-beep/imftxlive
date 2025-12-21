@@ -1,56 +1,151 @@
-/* Configuration */
-const MATCH_DATA = {
-  name: "MAROC - COMORES",
-  time: "Aujourd'hui • 20h00",
-  logo: "https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png"
-};
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>IMFTX+ — Live Direct</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #ff0000; --bg: #0a0a0a; --card: #161616; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Outfit', sans-serif; }
+        
+        header { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .brand { font-weight: 900; font-size: 22px; color: var(--accent); }
+        .back-btn { font-size: 14px; opacity: 0.6; text-decoration: none; color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 8px; }
 
-const LINKS = {
-  1: "https://bolaloca.my/player/4/2",
-  2: "https://bolaloca.my/player/2/2",
-  3: "https://bolaloca.my/player/3/2"
-};
+        .content { max-width: 900px; margin: 0 auto; padding: 15px; }
 
-/* Init */
-document.getElementById("mName").textContent = MATCH_DATA.name;
-document.getElementById("mTime").textContent = MATCH_DATA.time;
-document.getElementById("lLogo").src = MATCH_DATA.logo;
+        /* PLAYER AREA */
+        .video-wrapper { 
+            width: 100%; 
+            aspect-ratio: 16/9; 
+            background: #000; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        iframe { width: 100%; height: 100%; border: none; display: block; }
 
-let isStarted = false;
-let currentPlayer = 1;
+        .overlay {
+            position: absolute; inset: 0; z-index: 5;
+            background: linear-gradient(45deg, #000, #1a1a1a);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
 
-function getIframe(url) {
-  // On retire le sandbox et on change le referrerpolicy
-  return `<iframe 
-    src="${url}" 
-    class="playerFrame" 
-    allow="autoplay; fullscreen; picture-in-picture; encrypted-media" 
-    allowfullscreen 
-    frameborder="0"
-    scrolling="no"
-    referrerpolicy="origin">
-  </iframe>`;
-}
+        .play-btn {
+            background: #fff; color: #000; border: none; padding: 15px 30px;
+            border-radius: 50px; font-weight: 900; font-size: 16px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+        }
 
-function startStream() {
-  const container = document.getElementById("playerContainer");
-  const cover = document.getElementById("cover");
-  
-  container.innerHTML = getIframe(LINKS[1]);
-  cover.style.display = "none";
-  isStarted = true;
-}
+        /* CONTROLS */
+        .player-select { 
+            display: grid; grid-template-columns: repeat(3, 1fr); 
+            gap: 10px; margin: 20px 0; 
+        }
+        .btn-opt { 
+            background: var(--card); border: 1px solid rgba(255,255,255,0.1); 
+            color: #fff; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer;
+        }
+        .btn-opt.active { background: #fff; color: #000; border-color: #fff; }
 
-function changePlayer(num) {
-  if (num === currentPlayer && isStarted) return;
-  currentPlayer = num;
-  
-  document.querySelectorAll('.playerBtn').forEach(b => b.classList.remove('active'));
-  document.getElementById('btn' + num).classList.add('active');
+        /* INFO CARD */
+        .match-info {
+            background: var(--card); padding: 15px; border-radius: 15px;
+            display: flex; align-items: center; gap: 15px;
+        }
+        .logo-box { width: 50px; height: 50px; background: #000; border-radius: 10px; padding: 5px; }
+        .logo-box img { width: 100%; height: 100%; object-fit: contain; }
+        .details b { display: block; font-size: 18px; margin-bottom: 2px; }
+        .details span { font-size: 13px; opacity: 0.6; }
 
-  if (isStarted) {
-    document.getElementById("playerContainer").innerHTML = getIframe(LINKS[num]);
-  } else {
-    startStream();
-  }
-}
+        .live-tag {
+            margin-left: auto; background: rgba(255,0,0,0.1); color: var(--accent);
+            padding: 5px 10px; border-radius: 6px; font-weight: 900; font-size: 12px;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+
+        @media (max-width: 600px) {
+            .details b { font-size: 15px; }
+            .match-info { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="brand">IMFTX+</div>
+    <a href="../index.html" class="back-btn">Retour</a>
+</header>
+
+<div class="content">
+    <div class="video-wrapper" id="videoWrapper">
+        <div class="overlay" id="overlay">
+            <button class="play-btn" onclick="initPlayer(1)">▶ REGARDER LE LIVE</button>
+        </div>
+        <div id="playerTarget" style="width:100%; height:100%;"></div>
+    </div>
+
+    <div class="player-select">
+        <button class="btn-opt active" id="p1" onclick="initPlayer(1)">Serveur 1</button>
+        <button class="btn-opt" id="p2" onclick="initPlayer(2)">Serveur 2</button>
+        <button class="btn-opt" id="p3" onclick="initPlayer(3)">Serveur 3</button>
+    </div>
+
+    <div class="match-info">
+        <div class="logo-box">
+            <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png" alt="Cup">
+        </div>
+        <div class="details">
+            <b id="mName">MAROC - COMORES</b>
+            <span id="mTime">Coupe d'Afrique · 20h00</span>
+        </div>
+        <div class="live-tag">
+            <div class="dot"></div> LIVE
+        </div>
+    </div>
+</div>
+
+<script>
+    const LINKS = {
+        1: "https://bolaloca.my/player/4/2",
+        2: "https://bolaloca.my/player/2/2",
+        3: "https://bolaloca.my/player/3/2"
+    };
+
+    function initPlayer(num) {
+        // Supprimer l'overlay
+        document.getElementById('overlay').style.display = 'none';
+        
+        // Mise à jour visuelle des boutons
+        document.querySelectorAll('.btn-opt').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('p' + num).classList.add('active');
+
+        // Injection forcée de l'iframe pour éviter le blocage de cache
+        const target = document.getElementById('playerTarget');
+        
+        // On utilise l'URL avec un paramètre aléatoire pour forcer le rafraîchissement
+        const finalUrl = LINKS[num];
+        
+        target.innerHTML = `
+            <iframe 
+                src="${finalUrl}" 
+                allowfullscreen="true" 
+                webkitallowfullscreen="true" 
+                mozallowfullscreen="true" 
+                scrolling="no" 
+                frameborder="0" 
+                allow="autoplay; fullscreen; encrypted-media"
+                referrerpolicy="no-referrer">
+            </iframe>
+        `;
+    }
+</script>
+
+</body>
+</html>
