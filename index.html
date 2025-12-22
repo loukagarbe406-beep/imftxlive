@@ -4,98 +4,101 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IMFTX+</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
     :root{
-      --max: 1400px;
-      --gap: 22px;
-      --cardW: 980px;
-      --cardH: 520px;
-      --r: 26px;
+      --max: 1280px;
+      --bg: #000;
+      --card: rgba(255,255,255,.06);
       --line: rgba(255,255,255,.14);
-      --shadow: 0 28px 100px rgba(0,0,0,.78);
+      --shadow: 0 22px 90px rgba(0,0,0,.75);
+      --r: 22px;
+      --gap: 16px;
+      --good: #22c55e;
+      --warn: #fb923c;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:#000;color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
     a{color:inherit;text-decoration:none}
     button{font-family:inherit}
+    img{display:block}
 
-    header{position:fixed;top:0;left:0;right:0;z-index:50}
-    .topbar{max-width:var(--max);margin:0 auto;padding:16px 18px;display:flex;align-items:center;justify-content:space-between}
-    .brand{font-weight:900;letter-spacing:.3px;font-size:20px;opacity:.95}
+    header{position:fixed;inset:0 0 auto 0;z-index:50;background:linear-gradient(180deg, rgba(0,0,0,.88), rgba(0,0,0,.12));backdrop-filter: blur(10px)}
+    .topbar{max-width:var(--max);margin:0 auto;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:900;letter-spacing:.2px;font-size:20px;opacity:.98}
     .icons{display:flex;gap:14px;font-size:18px;align-items:center}
-    .icons a{opacity:.75}
+    .icons a{opacity:.70}
     .icons a:hover{opacity:1}
 
-    .hero{position:relative;padding-top:74px;padding-bottom:10px;overflow:hidden}
+    .hero{position:relative;padding-top:76px;padding-bottom:14px;overflow:hidden}
     .bg{
       position:absolute; inset:0;
       background-size:cover;background-position:center;
       transform:scale(1.12);
       filter: blur(16px) saturate(1.15) brightness(.62);
-      opacity:.96;
+      opacity:.98;
     }
     .hero::after{
       content:"";position:absolute;inset:0;
       background:
-        radial-gradient(1200px 700px at 50% 30%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.85) 70%, rgba(0,0,0,.98) 100%),
-        linear-gradient(90deg, rgba(0,0,0,.92), rgba(0,0,0,.14), rgba(0,0,0,.92));
+        radial-gradient(1000px 600px at 50% 25%, rgba(255,255,255,.10), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.84) 70%, rgba(0,0,0,.98) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.92), rgba(0,0,0,.12), rgba(0,0,0,.92));
       pointer-events:none;
     }
-    .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 18px}
-    .centerHeader{text-align:center;padding:10px 0 10px}
-    .centerHeader h1{margin:0;font-size:36px;font-weight:900;line-height:1.05;text-shadow:0 18px 40px rgba(0,0,0,.65)}
-    .centerHeader .l1{margin-top:10px;opacity:.80;font-weight:700}
-    .centerHeader .l2{margin-top:6px;opacity:.65;font-style:italic}
 
-    .sliderArea{position:relative;padding-top:6px;padding-bottom:2px}
+    .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 16px}
+    .centerHeader{text-align:center;padding:8px 0 10px}
+    .centerHeader h1{margin:0;font-size:34px;font-weight:900;line-height:1.05;text-shadow:0 16px 40px rgba(0,0,0,.65)}
+    .centerHeader .l1{margin-top:10px;opacity:.86;font-weight:800}
+    .centerHeader .l2{margin-top:6px;opacity:.66;font-style:italic}
+
+    /* Slider */
+    .sliderArea{position:relative;padding-top:6px}
     .viewport{overflow:hidden}
-    .track{display:flex;gap:var(--gap);transition:transform .55s ease;will-change:transform;padding-bottom:2px}
+    .track{
+      display:flex;gap:var(--gap);
+      transition:transform .55s ease;
+      will-change:transform;
+      padding-bottom:2px;
+    }
     .card{
-      flex:0 0 var(--cardW);height:var(--cardH);border-radius:var(--r);overflow:hidden;position:relative;
-      border:1px solid var(--line);box-shadow:var(--shadow);background: rgba(255,255,255,.05);
+      flex:0 0 980px;height:520px;
+      border-radius:var(--r);overflow:hidden;position:relative;
+      border:1px solid var(--line);box-shadow:var(--shadow);
+      background: var(--card);
     }
     .poster{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.01)}
     .card::after{
       content:"";position:absolute;inset:0;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.55) 70%, rgba(0,0,0,.92) 100%),
-        linear-gradient(90deg, rgba(0,0,0,.62), rgba(0,0,0,.10), rgba(0,0,0,.62));
+        linear-gradient(180deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.56) 70%, rgba(0,0,0,.92) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.62), rgba(0,0,0,.08), rgba(0,0,0,.62));
       pointer-events:none;
     }
     .badge{
-      position:absolute;top:14px;left:14px;z-index:6;display:inline-flex;align-items:center;gap:8px;
+      position:absolute;top:14px;left:14px;z-index:6;
+      display:inline-flex;align-items:center;gap:8px;
       padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);
       backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-weight:900;font-size:12px;
     }
-    .dotOrange,.dotGreen{width:9px;height:9px;border-radius:50%;display:inline-block}
-    .dotOrange{background:#fb923c}
-    .dotGreen{background:#22c55e}
+    .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+    .dot.warn{background:var(--warn)}
+    .dot.good{background:var(--good)}
 
-    .cardArrow{
-      position:absolute;top:50%;transform:translateY(-50%);
-      width:54px;height:54px;border-radius:50%;
-      background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.16);
-      display:grid;place-items:center;
-      z-index:7;cursor:pointer;
-      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    .bottom{
+      position:absolute;left:16px;right:16px;bottom:16px;z-index:7;
+      display:flex;align-items:flex-end;justify-content:space-between;gap:14px
     }
-    .cardArrow:hover{background:rgba(0,0,0,.45)}
-    .cardArrow span{font-size:34px;line-height:1}
-    .cardArrow.left{left:14px}
-    .cardArrow.right{right:14px}
-
-    .bottom{position:absolute;left:18px;right:18px;bottom:16px;z-index:7;display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
     .leftInfo{min-width:0}
     .logosLine{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
     .teamLogo{
       width:44px;height:44px;border-radius:50%;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
       padding:6px;object-fit:contain;
     }
     .vsPill{
@@ -106,63 +109,32 @@
       border:1px solid rgba(255,255,255,.14);
     }
     .cardTitle{font-size:24px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .cardSub{margin-top:6px;opacity:.72;font-style:italic;font-size:13px}
+    .cardSub{margin-top:6px;opacity:.74;font-style:italic;font-size:13px}
 
     .watch{
       display:inline-flex;align-items:center;
-      height:64px;padding:10px 14px;border-radius:999px;
+      height:62px;padding:10px 14px;border-radius:999px;
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.16);
       overflow:hidden;white-space:nowrap;
     }
     .watch:hover{background:rgba(255,255,255,.18)}
     .play{
-      width:54px;height:54px;border-radius:50%;
+      width:52px;height:52px;border-radius:50%;
       background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.12);
       display:grid;place-items:center;
-      margin-right:14px;font-size:16px;
+      margin-right:12px;font-size:16px;
     }
-    .watchTxt{font-weight:900;letter-spacing:.2px;padding-right:10px}
+    .watchTxt{font-weight:900;letter-spacing:.2px;padding-right:8px}
 
-    .dots{display:flex;justify-content:center;gap:8px;margin:6px 0 0}
-    .d{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.10);cursor:pointer;transition:.2s}
-    .d.active{width:38px;background:rgba(255,255,255,.82)}
-
-    .section{max-width:var(--max);margin:0 auto;padding: 6px 18px 26px;margin-top:-8px;position:relative;z-index:5}
+    /* Sections */
+    .eventsWrap{
+      max-width:var(--max);margin:0 auto;padding: 10px 16px 30px;position:relative;z-index:5
+    }
     .sectionHead{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
     .sectionHead h2{margin:0;font-size:22px;font-weight:900}
     .sectionHead span{opacity:.55;font-size:12px}
-
-    .rail{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none}
-    .rail::-webkit-scrollbar{display:none}
-    .mini{
-      flex:0 0 auto;width:300px;border-radius:18px;overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      box-shadow:0 18px 55px rgba(0,0,0,.55);
-      transition:.15s;
-    }
-    .mini:hover{transform:translateY(-2px)}
-    .miniImg{height:170px;background-size:cover;background-position:center;position:relative}
-    .miniImg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.86))}
-    .miniTop{position:absolute;top:10px;left:10px;right:10px;z-index:2;display:flex;justify-content:space-between;gap:10px}
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-      font-size:12px;font-weight:900;
-    }
-    .miniBody{padding:12px 12px 14px}
-    .miniTitle{font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .miniSub{margin-top:4px;font-size:12px;opacity:.65}
-
-    .eventsWrap{max-width:var(--max);margin:0 auto;padding: 6px 18px 36px}
-    .filters{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 16px}
-    .chip{border:1px solid rgba(255,255,255,.22);background:transparent;color:#fff;padding:8px 14px;border-radius:999px;font-weight:800;font-size:13px;cursor:pointer;opacity:.9}
-    .chip.active{background:#fff;color:#000;border-color:#fff}
 
     .eventRow{
       display:flex; align-items:center; justify-content:space-between;
@@ -172,7 +144,6 @@
       background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.07));
       border:1px solid rgba(255,255,255,.10);
       box-shadow: 0 18px 60px rgba(0,0,0,.45);
-      margin-bottom:10px;
     }
     .eventLeft{display:flex;align-items:center;gap:12px;min-width:0}
     .leagueIcon{
@@ -180,8 +151,7 @@
       background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.14);
       display:grid;place-items:center;
-      overflow:hidden;
-      flex:0 0 auto;
+      overflow:hidden;flex:0 0 auto;
     }
     .leagueIcon img{width:20px;height:20px;object-fit:contain;opacity:.95}
     .eventTxt{min-width:0}
@@ -195,20 +165,14 @@
       width:36px;height:36px;border-radius:999px;
       background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.14);
-      padding:6px;
-      object-fit:contain;
-      flex:0 0 auto;
+      padding:6px;object-fit:contain;flex:0 0 auto;
     }
     .midVS{
-      font-weight:900;
-      font-size:12px;
-      opacity:.75;
-      padding:6px 12px;
-      border-radius:999px;
+      font-weight:900;font-size:12px;opacity:.78;
+      padding:6px 12px;border-radius:999px;
       background:rgba(0,0,0,.30);
       border:1px solid rgba(255,255,255,.14);
     }
-
     .eventRight{display:flex;align-items:center;gap:10px;flex:0 0 auto}
     .timePill{
       display:inline-flex;align-items:center;gap:8px;
@@ -219,22 +183,19 @@
       backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px);
       white-space:nowrap;
     }
-    .sportTag{opacity:.85;font-size:12px;font-weight:900}
 
     footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
-    @media (min-width: 1400px){ :root{ --cardW: 1100px; --cardH: 560px; } }
+    @media (min-width: 1400px){
+      .card{flex-basis: 1080px;height:560px}
+    }
     @media (max-width: 980px){
-      :root{ --max: 1200px; --cardW: calc(100vw - 36px); --cardH: 340px; --gap: 14px; --r: 20px; }
-      .cardArrow{display:none}
+      .card{flex-basis: calc(100vw - 32px);height:340px}
       .centerHeader h1{font-size:30px}
       .bottom{left:14px;right:14px;bottom:12px;gap:12px}
       .watch{height:52px;padding:8px 12px}
       .play{width:42px;height:42px;margin-right:10px}
       .watchTxt{font-size:14px}
-      .mini{width:280px}
-      .miniImg{height:160px}
-
       .eventRow{flex-direction:column;align-items:stretch}
       .eventMid{justify-content:flex-start}
       .eventRight{justify-content:space-between}
@@ -260,80 +221,46 @@
 
     <div class="wrap">
       <div class="centerHeader">
-        <h1 id="heroTitle"></h1>
-        <div class="l1" id="heroLeague"></div>
-        <div class="l2" id="heroTime"></div>
+        <h1 id="heroTitle">Egypt vs Zimbabwe</h1>
+        <div class="l1" id="heroLeague">International</div>
+        <div class="l2" id="heroTime">Aujourd’hui · 20:00</div>
       </div>
 
       <div class="sliderArea">
         <div class="viewport" id="viewport">
           <div class="track" id="track"></div>
         </div>
-        <div class="dots" id="dots"></div>
       </div>
     </div>
-  </section>
-
-  <section class="section">
-    <div class="sectionHead">
-      <h2>À venir</h2>
-      <span>Programme</span>
-    </div>
-    <div class="rail" id="upcoming"></div>
   </section>
 
   <section class="eventsWrap">
     <div class="sectionHead">
       <h2>Événements</h2>
-      <span>Matchs du jour</span>
+      <span>Match du jour</span>
     </div>
-    <div class="filters" id="filters"></div>
     <div id="eventsList"></div>
   </section>
 
   <footer>IMFTX+ — N°1 de la diffusion FR</footer>
 
   <script>
-    /* ✅ IMPORTANT : 1 match = 1 page */
-    function watchUrl(m){
-      return `pages/${m.id}.html`;
-    }
+    // 1 match = 1 page : /pages/{id}.html
+    function watchUrl(m){ return `pages/${m.id}.html`; }
 
-    const LEAGUES = {
-      "Premier League": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png",
-      "Coupe de France": "https://empire-sport.space/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
-      "Serie A": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Serie_A_logo_2022.svg/256px-Serie_A_logo_2022.svg.png",
-      "La Liga": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/LaLiga_logo_2023.svg/256px-LaLiga_logo_2023.svg.png",
-      "Bundesliga": "https://upload.wikimedia.org/wikipedia/en/thumb/d/df/Bundesliga_logo_%282017%29.svg/256px-Bundesliga_logo_%282017%29.svg.png",
-      "International": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/FIFA_logo_without_slogan.svg/256px-FIFA_logo_without_slogan.svg.png",
-      "Coupe": ""
+    const MATCH = {
+      id: "egypt-zimbabwe",
+      time: "20:00",
+      comp: "International",
+      sport: "Football",
+      match: "Egypt - Zimbabwe",
+      a: "Egypt",
+      b: "Zimbabwe",
+      // Tu peux remplacer par logos officiels si tu veux
+      aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/256px-Flag_of_Egypt.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Flag_of_Zimbabwe.svg/256px-Flag_of_Zimbabwe.svg.png",
+      banner: "https://empire-sport.site/upload/banners/egypt-vs-zimbabwe.png"
     };
-
-    /* ✅ Matchs affichés (Real/PSG/Juve supprimés) */
-    const todayMatches = [
-      {
-        id:"morocco-comoros",
-        time:"21:00",
-        comp:"International",
-        sport:"Football",
-        match:"Morocco - Comoros",
-        a:"Morocco", b:"Comoros",
-        aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Morocco.svg/256px-Flag_of_Morocco.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Flag_of_the_Comoros.svg/256px-Flag_of_the_Comoros.svg.png",
-        banner:"https://empire-sport.space/upload/banners/morocco-vs-uganda.png"
-      },
-      {
-        id:"lyon-saint-cyr-collonges",
-        time:"21:00",
-        comp:"Coupe de France",
-        sport:"Football",
-        match:"Lyon - Saint-Cyr Collonges",
-        a:"Lyon", b:"Saint-Cyr Collonges",
-        aLogo:"https://upload.wikimedia.org/wikipedia/en/thumb/c/c6/Olympique_Lyonnais.svg/256px-Olympique_Lyonnais.svg.png",
-        bLogo:"",
-        banner:"https://empire-sport.space/upload/banners/real-betis-vs-lyon.png"
-      }
-    ];
 
     const MATCH_DURATION_MIN = 135;
 
@@ -360,7 +287,6 @@
 
       const diff = target.getTime() - now.getTime();
       if(diff <= 0) return "";
-
       const totalSec = Math.floor(diff/1000);
       const hh = Math.floor(totalSec/3600);
       const mm = Math.floor((totalSec%3600)/60);
@@ -370,99 +296,32 @@
 
     function formatToday(hhmm){ return `Aujourd’hui · ${hhmm}`; }
 
-    const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-        <defs>
-          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-            <stop stop-color="#111827"/>
-            <stop offset="1" stop-color="#000"/>
-          </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="60" fill="url(#g)"/>
-      </svg>
-    `);
-    function imgOnError(el){ el.src = PLACEHOLDER; }
-    window.imgOnError = imgOnError;
+    // HERO BG + CARD
+    document.getElementById("bg").style.backgroundImage = `url('${MATCH.banner}')`;
 
-    function buildVM(){
-      return todayMatches.map(m => ({
-        id: m.id,
-        status: computeStatus(m.time),
-        league: m.comp,
-        leagueIcon: LEAGUES[m.comp] || "",
-        timeLabel: formatToday(m.time),
-        timeRaw: m.time,
-        aName: m.a,
-        bName: m.b,
-        title: m.match,
-        aLogo: m.aLogo,
-        bLogo: m.bLogo,
-        banner: m.banner,
-        sport: m.sport
-      }));
-    }
-
-    /* slider = les 3 prochains (ou en cours) */
-    function pickTop3ForSlider(allVM){
-      const now = new Date();
-      const nowMin = now.getHours()*60 + now.getMinutes();
-      const sorted = allVM.slice().sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw));
-      const notFinished = sorted.filter(m => m.status !== "Terminé");
-      const base = notFinished.length ? notFinished : sorted;
-      const next = base.filter(m => m.status === "En cours" || timeToMinutes(m.timeRaw) >= nowMin);
-      return (next.length ? next : base).slice(0,3);
-    }
-
-    const bg = document.getElementById("bg");
-    const heroTitle = document.getElementById("heroTitle");
-    const heroLeague = document.getElementById("heroLeague");
-    const heroTime = document.getElementById("heroTime");
-    const track = document.getElementById("track");
-    const dots = document.getElementById("dots");
-    const viewport = document.getElementById("viewport");
-    const upcoming = document.getElementById("upcoming");
-
-    let idx = 0;
-    let matchesVM = [];
-    let sliderVM = [];
-
-    function setHero(m){
-      bg.style.backgroundImage = `url('${m.banner}')`;
-      heroTitle.textContent = `${m.aName} vs ${m.bName}`;
-      heroLeague.textContent = m.league;
-      heroTime.textContent = m.timeLabel;
-    }
-
-    function badgeHTML(m){
-      if(m.status === "En cours") return `<div class="badge"><span class="dotGreen"></span>En cours</div>`;
-      if(m.status === "Terminé") return `<div class="badge" style="opacity:.78"><span class="dotOrange"></span>Terminé</div>`;
-      return `<div class="badge"><span class="dotOrange"></span>À venir</div>`;
-    }
-
-    function logosBlock(m){
-      return `
-        <div class="logosLine">
-          <img class="teamLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.aName}">
-          <div class="vsPill">VS</div>
-          <img class="teamLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.bName}">
-        </div>
-      `;
+    function badgeHTML(status){
+      if(status === "En cours") return `<div class="badge"><span class="dot good"></span>En cours</div>`;
+      if(status === "Terminé") return `<div class="badge" style="opacity:.78"><span class="dot warn"></span>Terminé</div>`;
+      return `<div class="badge"><span class="dot warn"></span>À venir</div>`;
     }
 
     function cardHTML(m){
+      const status = computeStatus(m.time);
+      const timeLabel = formatToday(m.time);
       return `
         <div class="card">
           <div class="poster" style="background-image:url('${m.banner}')"></div>
-          ${badgeHTML(m)}
-
-          <div class="cardArrow left" onclick="prevSlide()"><span>‹</span></div>
-          <div class="cardArrow right" onclick="nextSlide()"><span>›</span></div>
+          ${badgeHTML(status)}
 
           <div class="bottom">
             <div class="leftInfo">
-              ${logosBlock(m)}
-              <div class="cardTitle">${m.title}</div>
-              <div class="cardSub">${m.league} • ${m.timeLabel}</div>
+              <div class="logosLine">
+                <img class="teamLogo" src="${m.aLogo}" alt="${m.a}">
+                <div class="vsPill">VS</div>
+                <img class="teamLogo" src="${m.bLogo}" alt="${m.b}">
+              </div>
+              <div class="cardTitle">${m.match}</div>
+              <div class="cardSub">${m.comp} • ${timeLabel}</div>
             </div>
 
             <a class="watch" href="${watchUrl(m)}" rel="noopener">
@@ -474,172 +333,63 @@
       `;
     }
 
-    function dotHTML(i){
-      return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`;
-    }
-
-    function miniHTML(m){
-      const dot = m.status === "En cours" ? "dotGreen" : "dotOrange";
-      return `
-        <a class="mini" href="${watchUrl(m)}" rel="noopener">
-          <div class="miniImg" style="background-image:url('${m.banner}')">
-            <div class="miniTop">
-              <span class="pill"><span class="${dot}"></span>${m.status}</span>
-              <span class="pill">${m.sport}</span>
-            </div>
-          </div>
-          <div class="miniBody">
-            <div class="miniTitle">${m.title}</div>
-            <div class="miniSub">${m.league} • ${m.timeLabel}</div>
-          </div>
-        </a>
-      `;
-    }
-
-    function updateDots(){
-      for(let i=0;i<sliderVM.length;i++){
-        const el = document.getElementById("d"+i);
-        if(el) el.classList.toggle("active", i===idx);
-      }
-    }
-
-    function update(){
-      const first = document.querySelector(".card");
-      if(!first || !sliderVM.length) return;
-
-      const cardW = first.getBoundingClientRect().width;
-      const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')) || 18;
-      const vw = viewport.getBoundingClientRect().width;
-      const centerOffset = Math.max(16, (vw - cardW) / 2);
-      const peekBias = Math.min(120, vw * 0.10);
-      const x = -(idx * (cardW + gap)) + centerOffset - peekBias;
-
-      track.style.transform = `translateX(${x}px)`;
-      setHero(sliderVM[idx]);
-      updateDots();
-    }
-
-    function nextSlide(){ idx = Math.min(idx + 1, sliderVM.length - 1); update(); }
-    function prevSlide(){ idx = Math.max(idx - 1, 0); update(); }
-    function goTo(i){ idx = Math.max(0, Math.min(i, sliderVM.length - 1)); update(); }
-    window.nextSlide = nextSlide;
-    window.prevSlide = prevSlide;
-    window.goTo = goTo;
-
-    let startX = 0;
-    track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, {passive:true});
-    track.addEventListener("touchend", e => {
-      const endX = e.changedTouches[0].clientX;
-      const dx = endX - startX;
-      if(Math.abs(dx) > 40){
-        if(dx < 0) nextSlide(); else prevSlide();
-      }
-    }, {passive:true});
-
-    function buildUpcoming(){
-      const up = matchesVM
-        .filter(x => x.status === "À venir")
-        .sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw));
-      upcoming.innerHTML = up.map(miniHTML).join("");
-    }
-
-    const eventsList = document.getElementById("eventsList");
-    const filtersEl = document.getElementById("filters");
-
-    const FILTERS = [
-      "Tous Les Événements",
-      "International",
-      "Coupe de France",
-      "Premier League",
-      "Serie A",
-      "La Liga",
-      "Bundesliga",
-      "Coupe"
-    ];
-    let activeFilter = "Tous Les Événements";
-
-    function renderFilters(){
-      filtersEl.innerHTML = FILTERS.map(f =>
-        `<button class="chip ${f===activeFilter?'active':''}" onclick="setFilter('${f.replace(/'/g,"\\'")}')">${f}</button>`
-      ).join("");
-    }
-    window.setFilter = (f) => { activeFilter = f; renderFilters(); renderEvents(); };
-
-    function pillText(m){
-      if(m.status === "En cours") return `En cours`;
-      if(m.status === "Terminé") return `Terminé`;
-      const cd = countdownTo(m.timeRaw);
-      return cd ? cd : "À venir";
-    }
-    function pillDotClass(m){
-      if(m.status === "En cours") return "dotGreen";
-      return "dotOrange";
-    }
-
     function rowHTML(m){
-      const leagueIcon = m.leagueIcon ? `
-        <span class="leagueIcon"><img src="${m.leagueIcon}" alt=""></span>
-      ` : `<span class="leagueIcon"><span style="opacity:.7;font-weight:900;font-size:12px;">🏟️</span></span>`;
+      const status = computeStatus(m.time);
+      const pill =
+        status === "En cours" ? "En cours" :
+        status === "Terminé" ? "Terminé" :
+        (countdownTo(m.time) || "À venir");
+
+      const dotClass = status === "En cours" ? "good" : "warn";
 
       return `
         <a class="eventRow" href="${watchUrl(m)}" rel="noopener">
           <div class="eventLeft">
-            ${leagueIcon}
+            <span class="leagueIcon"><span style="opacity:.85;font-weight:900;font-size:12px;">🌍</span></span>
             <div class="eventTxt">
-              <div class="eventTitle">${m.title}</div>
-              <div class="eventMeta">${m.league} • ${m.timeLabel}</div>
+              <div class="eventTitle">${m.match}</div>
+              <div class="eventMeta">${m.comp} • ${formatToday(m.time)}</div>
             </div>
           </div>
 
           <div class="eventMid">
             <div class="midTeam">
-              <img class="midLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.aName}">
-              <b>${m.aName}</b>
+              <img class="midLogo" src="${m.aLogo}" alt="${m.a}">
+              <b>${m.a}</b>
             </div>
             <div class="midVS">vs</div>
             <div class="midTeam">
-              <b>${m.bName}</b>
-              <img class="midLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.bName}">
+              <b>${m.b}</b>
+              <img class="midLogo" src="${m.bLogo}" alt="${m.b}">
             </div>
           </div>
 
           <div class="eventRight">
             <span class="timePill">
-              <span class="${pillDotClass(m)}"></span>
-              ${pillText(m)}
+              <span class="dot ${dotClass}"></span>
+              ${pill}
             </span>
-            <span class="sportTag">${m.sport}</span>
+            <span style="opacity:.88;font-size:12px;font-weight:900">${m.sport}</span>
           </div>
         </a>
       `;
     }
 
-    function renderEvents(){
-      const list = matchesVM
-        .filter(m => activeFilter === "Tous Les Événements" ? true : (m.league === activeFilter))
-        .sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw));
-      eventsList.innerHTML = list.map(rowHTML).join("");
+    function render(){
+      // header text
+      document.getElementById("heroTitle").textContent = `${MATCH.a} vs ${MATCH.b}`;
+      document.getElementById("heroLeague").textContent = MATCH.comp;
+      document.getElementById("heroTime").textContent = formatToday(MATCH.time);
+
+      // slider (1 seule carte)
+      document.getElementById("track").innerHTML = cardHTML(MATCH);
+
+      // events list (1 seule ligne)
+      document.getElementById("eventsList").innerHTML = rowHTML(MATCH);
     }
 
-    function rebuildAll(){
-      matchesVM = buildVM();
-      sliderVM = pickTop3ForSlider(matchesVM);
-      idx = Math.min(idx, Math.max(0, sliderVM.length - 1));
-
-      track.innerHTML = sliderVM.map(cardHTML).join("");
-      dots.innerHTML = sliderVM.map((_,i)=>dotHTML(i)).join("");
-
-      buildUpcoming();
-      renderFilters();
-      renderEvents();
-      update();
-    }
-
-    (function init(){
-      rebuildAll();
-      window.addEventListener("resize", update);
-      setInterval(() => rebuildAll(), 1000);
-    })();
+    render();
+    setInterval(render, 1000);
   </script>
 </body>
 </html>
