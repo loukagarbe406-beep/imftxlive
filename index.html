@@ -19,6 +19,8 @@
       --gap: 16px;
       --good: #22c55e;
       --warn: #fb923c;
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.55);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -50,7 +52,6 @@
         linear-gradient(90deg, rgba(0,0,0,.92), rgba(0,0,0,.12), rgba(0,0,0,.92));
       pointer-events:none;
     }
-
     .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 16px}
     .centerHeader{text-align:center;padding:8px 0 10px}
     .centerHeader h1{margin:0;font-size:34px;font-weight:900;line-height:1.05;text-shadow:0 16px 40px rgba(0,0,0,.65)}
@@ -60,17 +61,10 @@
     /* Slider */
     .sliderArea{position:relative;padding-top:6px}
     .viewport{overflow:hidden}
-    .track{
-      display:flex;gap:var(--gap);
-      transition:transform .55s ease;
-      will-change:transform;
-      padding-bottom:2px;
-    }
+    .track{display:flex;gap:var(--gap);transition:transform .55s ease;will-change:transform;padding-bottom:2px}
     .card{
-      flex:0 0 980px;height:520px;
-      border-radius:var(--r);overflow:hidden;position:relative;
-      border:1px solid var(--line);box-shadow:var(--shadow);
-      background: var(--card);
+      flex:0 0 980px;height:520px;border-radius:var(--r);overflow:hidden;position:relative;
+      border:1px solid var(--line);box-shadow:var(--shadow);background: var(--card);
     }
     .poster{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.01)}
     .card::after{
@@ -89,6 +83,21 @@
     .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
     .dot.warn{background:var(--warn)}
     .dot.good{background:var(--good)}
+
+    .cardArrow{
+      position:absolute;top:50%;transform:translateY(-50%);
+      width:54px;height:54px;border-radius:50%;
+      background:rgba(0,0,0,.30);
+      border:1px solid rgba(255,255,255,.16);
+      display:grid;place-items:center;
+      z-index:7;cursor:pointer;
+      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+      user-select:none;
+    }
+    .cardArrow:hover{background:rgba(0,0,0,.45)}
+    .cardArrow span{font-size:34px;line-height:1}
+    .cardArrow.left{left:14px}
+    .cardArrow.right{right:14px}
 
     .bottom{
       position:absolute;left:16px;right:16px;bottom:16px;z-index:7;
@@ -128,10 +137,12 @@
     }
     .watchTxt{font-weight:900;letter-spacing:.2px;padding-right:8px}
 
-    /* Sections */
-    .eventsWrap{
-      max-width:var(--max);margin:0 auto;padding: 10px 16px 30px;position:relative;z-index:5
-    }
+    .dots{display:flex;justify-content:center;gap:8px;margin:8px 0 0}
+    .d{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.10);cursor:pointer;transition:.2s}
+    .d.active{width:38px;background:rgba(255,255,255,.86)}
+
+    /* Events list */
+    .eventsWrap{max-width:var(--max);margin:0 auto;padding: 10px 16px 30px;position:relative;z-index:5}
     .sectionHead{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
     .sectionHead h2{margin:0;font-size:22px;font-weight:900}
     .sectionHead span{opacity:.55;font-size:12px}
@@ -144,6 +155,7 @@
       background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.07));
       border:1px solid rgba(255,255,255,.10);
       box-shadow: 0 18px 60px rgba(0,0,0,.45);
+      margin-bottom:10px;
     }
     .eventLeft{display:flex;align-items:center;gap:12px;min-width:0}
     .leagueIcon{
@@ -183,14 +195,14 @@
       backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px);
       white-space:nowrap;
     }
+    .sportTag{opacity:.88;font-size:12px;font-weight:900}
 
     footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
-    @media (min-width: 1400px){
-      .card{flex-basis: 1080px;height:560px}
-    }
+    @media (min-width: 1400px){ .card{flex-basis: 1080px;height:560px} }
     @media (max-width: 980px){
       .card{flex-basis: calc(100vw - 32px);height:340px}
+      .cardArrow{display:none}
       .centerHeader h1{font-size:30px}
       .bottom{left:14px;right:14px;bottom:12px;gap:12px}
       .watch{height:52px;padding:8px 12px}
@@ -221,15 +233,16 @@
 
     <div class="wrap">
       <div class="centerHeader">
-        <h1 id="heroTitle">Egypt vs Zimbabwe</h1>
-        <div class="l1" id="heroLeague">International</div>
-        <div class="l2" id="heroTime">Aujourd’hui · 20:00</div>
+        <h1 id="heroTitle"></h1>
+        <div class="l1" id="heroLeague"></div>
+        <div class="l2" id="heroTime"></div>
       </div>
 
       <div class="sliderArea">
         <div class="viewport" id="viewport">
           <div class="track" id="track"></div>
         </div>
+        <div class="dots" id="dots"></div>
       </div>
     </div>
   </section>
@@ -237,7 +250,7 @@
   <section class="eventsWrap">
     <div class="sectionHead">
       <h2>Événements</h2>
-      <span>Match du jour</span>
+      <span>Matchs du jour</span>
     </div>
     <div id="eventsList"></div>
   </section>
@@ -248,18 +261,10 @@
     // 1 match = 1 page : /pages/{id}.html
     function watchUrl(m){ return `pages/${m.id}.html`; }
 
-    const MATCH = {
-      id: "egypt-zimbabwe",
-      time: "20:00",
-      comp: "International",
-      sport: "Football",
-      match: "Egypt - Zimbabwe",
-      a: "Egypt",
-      b: "Zimbabwe",
-      // Tu peux remplacer par logos officiels si tu veux
-      aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/256px-Flag_of_Egypt.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Flag_of_Zimbabwe.svg/256px-Flag_of_Zimbabwe.svg.png",
-      banner: "https://empire-sport.site/upload/banners/egypt-vs-zimbabwe.png"
+    // Logos ligues (CAN pour pays)
+    const LEAGUES = {
+      "CAN": "https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png",
+      "Premier League": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png"
     };
 
     const MATCH_DURATION_MIN = 135;
@@ -268,7 +273,6 @@
       const [h,m] = hhmm.split(":").map(Number);
       return (h*60)+(m||0);
     }
-
     function computeStatus(hhmm){
       const now = new Date();
       const nowMin = now.getHours()*60 + now.getMinutes();
@@ -278,13 +282,11 @@
       if(nowMin >= start && nowMin < end) return "En cours";
       return "Terminé";
     }
-
     function countdownTo(hhmm){
       const now = new Date();
       const target = new Date(now);
       const [h,m] = hhmm.split(":").map(Number);
       target.setHours(h, m, 0, 0);
-
       const diff = target.getTime() - now.getTime();
       if(diff <= 0) return "";
       const totalSec = Math.floor(diff/1000);
@@ -293,35 +295,128 @@
       const ss = totalSec%60;
       return `${hh}h ${String(mm).padStart(2,"0")}m ${String(ss).padStart(2,"0")}s`;
     }
-
     function formatToday(hhmm){ return `Aujourd’hui · ${hhmm}`; }
 
-    // HERO BG + CARD
-    document.getElementById("bg").style.backgroundImage = `url('${MATCH.banner}')`;
+    const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+        <defs>
+          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+            <stop stop-color="#111827"/>
+            <stop offset="1" stop-color="#000"/>
+          </linearGradient>
+        </defs>
+        <rect width="120" height="120" rx="60" fill="url(#g)"/>
+      </svg>
+    `);
+    function imgOnError(el){ el.src = PLACEHOLDER; }
+    window.imgOnError = imgOnError;
 
-    function badgeHTML(status){
-      if(status === "En cours") return `<div class="badge"><span class="dot good"></span>En cours</div>`;
-      if(status === "Terminé") return `<div class="badge" style="opacity:.78"><span class="dot warn"></span>Terminé</div>`;
+    // ✅ MATCHS (clean)
+    const todayMatches = [
+      {
+        id: "nigeria-tanzania",
+        time: "18:30",
+        comp: "CAN",
+        sport: "Football",
+        match: "NIGERIA - TANZANIE",
+        a: "Nigeria",
+        b: "Tanzanie",
+        // drapeaux (simple & clean)
+        aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/256px-Flag_of_Nigeria.svg.png",
+        bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/256px-Flag_of_Tanzania.svg.png",
+        banner: "https://empire-sport.site/upload/events/erilvwbktz7ugfcei9tr90bnnvlauf.jpg"
+      },
+      {
+        id: "tunisia-uganda",
+        time: "21:00",
+        comp: "CAN",
+        sport: "Football",
+        match: "TUNISIE - OUGANDA",
+        a: "Tunisie",
+        b: "Ouganda",
+        aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/256px-Flag_of_Tunisia.svg.png",
+        bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Uganda.svg/256px-Flag_of_Uganda.svg.png",
+        banner: "https://empire-sport.site/upload/events/dwofkbauc8qedspz43c0qbylnx9kll.jpg"
+      },
+      {
+        id: "arsenal-crystal-palace",
+        time: "21:00",
+        comp: "Premier League",
+        sport: "Football",
+        match: "ARSENAL - CRYSTAL PALACE",
+        a: "Arsenal",
+        b: "Crystal Palace",
+        aLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/256px-Arsenal_FC.svg.png",
+        bLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Crystal_Palace_FC_logo.svg/256px-Crystal_Palace_FC_logo.svg.png",
+        banner: "https://empire-sport.site/upload/banners/burnley-vs-arsenal_01.png"
+      }
+    ];
+
+    // ---- VM helpers
+    function buildVM(){
+      return todayMatches
+        .map(m => ({
+          ...m,
+          status: computeStatus(m.time),
+          timeLabel: formatToday(m.time),
+          leagueIcon: LEAGUES[m.comp] || ""
+        }))
+        .sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time));
+    }
+
+    // Slider: prochain match (ou en cours), sinon le 1er
+    function pickHero(vm){
+      const now = new Date();
+      const nowMin = now.getHours()*60 + now.getMinutes();
+      const notFinished = vm.filter(x => x.status !== "Terminé");
+      const base = notFinished.length ? notFinished : vm;
+      const next = base.filter(x => x.status === "En cours" || timeToMinutes(x.time) >= nowMin);
+      return (next.length ? next : base)[0];
+    }
+
+    // ---- UI
+    const bg = document.getElementById("bg");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroLeague = document.getElementById("heroLeague");
+    const heroTime = document.getElementById("heroTime");
+    const track = document.getElementById("track");
+    const dots = document.getElementById("dots");
+    const viewport = document.getElementById("viewport");
+
+    let vm = [];
+    let slider = [];
+    let idx = 0;
+
+    function badgeHTML(m){
+      if(m.status === "En cours") return `<div class="badge"><span class="dot good"></span>En cours</div>`;
+      if(m.status === "Terminé") return `<div class="badge" style="opacity:.78"><span class="dot warn"></span>Terminé</div>`;
       return `<div class="badge"><span class="dot warn"></span>À venir</div>`;
     }
 
+    function logosBlock(m){
+      return `
+        <div class="logosLine">
+          <img class="teamLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.a}">
+          <div class="vsPill">VS</div>
+          <img class="teamLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.b}">
+        </div>
+      `;
+    }
+
     function cardHTML(m){
-      const status = computeStatus(m.time);
-      const timeLabel = formatToday(m.time);
       return `
         <div class="card">
           <div class="poster" style="background-image:url('${m.banner}')"></div>
-          ${badgeHTML(status)}
+          ${badgeHTML(m)}
+
+          <div class="cardArrow left" onclick="prevSlide()"><span>‹</span></div>
+          <div class="cardArrow right" onclick="nextSlide()"><span>›</span></div>
 
           <div class="bottom">
             <div class="leftInfo">
-              <div class="logosLine">
-                <img class="teamLogo" src="${m.aLogo}" alt="${m.a}">
-                <div class="vsPill">VS</div>
-                <img class="teamLogo" src="${m.bLogo}" alt="${m.b}">
-              </div>
+              ${logosBlock(m)}
               <div class="cardTitle">${m.match}</div>
-              <div class="cardSub">${m.comp} • ${timeLabel}</div>
+              <div class="cardSub">${m.comp} • ${m.timeLabel}</div>
             </div>
 
             <a class="watch" href="${watchUrl(m)}" rel="noopener">
@@ -333,63 +428,128 @@
       `;
     }
 
-    function rowHTML(m){
-      const status = computeStatus(m.time);
-      const pill =
-        status === "En cours" ? "En cours" :
-        status === "Terminé" ? "Terminé" :
-        (countdownTo(m.time) || "À venir");
+    function dotHTML(i){
+      return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`;
+    }
 
-      const dotClass = status === "En cours" ? "good" : "warn";
+    function setHero(m){
+      bg.style.backgroundImage = `url('${m.banner}')`;
+      heroTitle.textContent = `${m.a} vs ${m.b}`;
+      heroLeague.textContent = m.comp === "CAN" ? "CAN" : m.comp;
+      heroTime.textContent = m.timeLabel;
+    }
+
+    function updateDots(){
+      for(let i=0;i<slider.length;i++){
+        const el = document.getElementById("d"+i);
+        if(el) el.classList.toggle("active", i===idx);
+      }
+    }
+
+    function update(){
+      const first = document.querySelector(".card");
+      if(!first || !slider.length) return;
+
+      const cardW = first.getBoundingClientRect().width;
+      const gap = 16;
+      const vw = viewport.getBoundingClientRect().width;
+      const centerOffset = Math.max(16, (vw - cardW) / 2);
+      const peekBias = Math.min(120, vw * 0.10);
+      const x = -(idx * (cardW + gap)) + centerOffset - peekBias;
+
+      track.style.transform = `translateX(${x}px)`;
+      setHero(slider[idx]);
+      updateDots();
+    }
+
+    function nextSlide(){ idx = Math.min(idx + 1, slider.length - 1); update(); }
+    function prevSlide(){ idx = Math.max(idx - 1, 0); update(); }
+    function goTo(i){ idx = Math.max(0, Math.min(i, slider.length - 1)); update(); }
+    window.nextSlide = nextSlide;
+    window.prevSlide = prevSlide;
+    window.goTo = goTo;
+
+    // Events list row
+    function pillText(m){
+      if(m.status === "En cours") return `En cours`;
+      if(m.status === "Terminé") return `Terminé`;
+      const cd = countdownTo(m.time);
+      return cd ? cd : "À venir";
+    }
+    function pillDotClass(m){ return (m.status === "En cours") ? "good" : "warn"; }
+
+    function rowHTML(m){
+      const leagueIcon = m.leagueIcon
+        ? `<span class="leagueIcon"><img src="${m.leagueIcon}" alt=""></span>`
+        : `<span class="leagueIcon"><span style="opacity:.75;font-weight:900;font-size:12px;">🏟️</span></span>`;
 
       return `
         <a class="eventRow" href="${watchUrl(m)}" rel="noopener">
           <div class="eventLeft">
-            <span class="leagueIcon"><span style="opacity:.85;font-weight:900;font-size:12px;">🌍</span></span>
+            ${leagueIcon}
             <div class="eventTxt">
               <div class="eventTitle">${m.match}</div>
-              <div class="eventMeta">${m.comp} • ${formatToday(m.time)}</div>
+              <div class="eventMeta">${m.comp} • ${m.timeLabel}</div>
             </div>
           </div>
 
           <div class="eventMid">
             <div class="midTeam">
-              <img class="midLogo" src="${m.aLogo}" alt="${m.a}">
+              <img class="midLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.a}">
               <b>${m.a}</b>
             </div>
             <div class="midVS">vs</div>
             <div class="midTeam">
               <b>${m.b}</b>
-              <img class="midLogo" src="${m.bLogo}" alt="${m.b}">
+              <img class="midLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.b}">
             </div>
           </div>
 
           <div class="eventRight">
             <span class="timePill">
-              <span class="dot ${dotClass}"></span>
-              ${pill}
+              <span class="dot ${pillDotClass(m)}"></span>
+              ${pillText(m)}
             </span>
-            <span style="opacity:.88;font-size:12px;font-weight:900">${m.sport}</span>
+            <span class="sportTag">${m.sport}</span>
           </div>
         </a>
       `;
     }
 
-    function render(){
-      // header text
-      document.getElementById("heroTitle").textContent = `${MATCH.a} vs ${MATCH.b}`;
-      document.getElementById("heroLeague").textContent = MATCH.comp;
-      document.getElementById("heroTime").textContent = formatToday(MATCH.time);
-
-      // slider (1 seule carte)
-      document.getElementById("track").innerHTML = cardHTML(MATCH);
-
-      // events list (1 seule ligne)
-      document.getElementById("eventsList").innerHTML = rowHTML(MATCH);
+    function renderEvents(){
+      document.getElementById("eventsList").innerHTML = vm.map(rowHTML).join("");
     }
 
-    render();
-    setInterval(render, 1000);
+    function rebuild(){
+      vm = buildVM();
+      // slider = les 3 premiers (triés par heure)
+      slider = vm.slice(0,3);
+      // hero = prochain/en cours -> mets idx sur cet élément si présent dans slider
+      const hero = pickHero(vm);
+      const found = slider.findIndex(x => x.id === hero.id);
+      idx = found >= 0 ? found : 0;
+
+      track.innerHTML = slider.map(cardHTML).join("");
+      dots.innerHTML = slider.map((_,i)=>dotHTML(i)).join("");
+
+      renderEvents();
+      update();
+    }
+
+    // Swipe mobile (sans boucle)
+    let startX = 0;
+    track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, {passive:true});
+    track.addEventListener("touchend", e => {
+      const endX = e.changedTouches[0].clientX;
+      const dx = endX - startX;
+      if(Math.abs(dx) > 40){ if(dx < 0) nextSlide(); else prevSlide(); }
+    }, {passive:true});
+
+    (function init(){
+      rebuild();
+      window.addEventListener("resize", update);
+      setInterval(rebuild, 1000);
+    })();
   </script>
 </body>
 </html>
