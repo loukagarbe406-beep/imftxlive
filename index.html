@@ -68,44 +68,47 @@
       background:#000;
     }
 
-    /* ✅ FIX bannière: cover + center + pas d’étirement */
+    /* ✅ BANNIÈRE CLEAN */
     .cardBg{
       position:absolute; inset:0;
       background-size: cover;
       background-position: center;
       background-repeat:no-repeat;
       transform: scale(1.01);
-      filter: saturate(1.05) brightness(.92);
+      filter: saturate(1.05) brightness(.95);
     }
+
+    /* ✅ Overlay pour lisibilité texte + bouton (sans casser la bannière) */
     .card::after{
       content:""; position:absolute; inset:0;
       background:
-        radial-gradient(900px 560px at 40% 40%, rgba(255,255,255,.06), transparent 62%),
-        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.70) 74%, rgba(0,0,0,.90) 100%),
-        linear-gradient(90deg, rgba(0,0,0,.55), rgba(0,0,0,.10), rgba(0,0,0,.55));
+        radial-gradient(900px 560px at 45% 35%, rgba(255,255,255,.05), transparent 62%),
+        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.86) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.45), rgba(0,0,0,.08), rgba(0,0,0,.55));
       pointer-events:none;
     }
 
+    /* Top-left compact info (comme ton modèle) */
     .cardTop{
-      position:absolute; left:26px; top:22px; z-index:6;
-      display:flex; gap:14px; align-items:flex-start;
+      position:absolute; left:22px; top:18px; z-index:6;
+      display:flex; gap:12px; align-items:flex-start;
     }
     .compLogo{
-      width:56px; height:56px; border-radius:14px;
+      width:44px; height:44px; border-radius:12px;
       background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.14);
-      padding:8px;
+      padding:7px;
       backdrop-filter: blur(10px);
     }
     .compLogo img{width:100%;height:100%;object-fit:contain}
-    .topTxt .title{font-weight:900;font-size:30px;line-height:1.05}
-    .topTxt .meta{margin-top:6px;font-weight:900;opacity:.90}
-    .topTxt .time{margin-top:4px;opacity:.72;font-style:italic;font-weight:700}
+    .topTxt .meta{font-weight:900;opacity:.92}
+    .topTxt .time{margin-top:3px;opacity:.72;font-style:italic;font-weight:700}
 
+    /* Status / countdown chip */
     .chip{
-      position:absolute; left:26px; top:118px; z-index:7;
+      position:absolute; left:22px; top:74px; z-index:7;
       display:inline-flex; align-items:center; gap:8px;
-      padding:8px 12px; border-radius:999px;
+      padding:7px 11px; border-radius:999px;
       background:rgba(0,0,0,.45);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(10px);
@@ -116,52 +119,29 @@
     .dot.good{background:var(--good)}
     .dot.warn{background:var(--warn)}
 
-    .centerArt{
-      position:absolute; inset:0; z-index:5;
-      display:grid; place-items:center;
-      padding-top:22px;
-    }
-    .rings{
-      width:min(920px, 92%);
-      display:grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items:center;
-      gap:26px;
-    }
-    .ring{
-      width: 320px; height: 320px;
-      border-radius: 50%;
-      margin:0 auto;
-      position:relative;
-      display:grid;
-      place-items:center;
-      border:3px solid rgba(34,197,94,.30);
-      box-shadow: 0 30px 80px rgba(0,0,0,.55);
-      overflow:hidden;
-      background:rgba(0,0,0,.08);
-    }
-    .ring img{width:100%;height:100%;object-fit:cover}
-    .ring::after{
-      content:""; position:absolute; inset:0;
-      background:
-        radial-gradient(circle at 40% 35%, rgba(255,255,255,.14), transparent 56%),
-        radial-gradient(circle at 50% 78%, rgba(0,0,0,.22), transparent 56%);
-      pointer-events:none;
-    }
-    .midTrophy{
-      width: 180px;
-      opacity:.22;
-      filter: blur(.15px) drop-shadow(0 22px 55px rgba(0,0,0,.65));
-      transform: translateY(6px);
-    }
-    .midTrophy img{width:100%;height:auto;object-fit:contain}
-
+    /* ✅ BOTTOM TEXT (ton besoin) */
     .cardBottom{
-      position:absolute; left:26px; right:26px; bottom:18px; z-index:7;
+      position:absolute; left:22px; right:22px; bottom:16px; z-index:7;
       display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
     }
-    .bottomTitle{font-weight:900;font-size:22px;letter-spacing:-.2px}
-    .bottomSub{margin-top:4px;opacity:.70;font-style:italic;font-weight:800}
+    .bottomTitle{
+      font-weight:900;
+      font-size:26px;
+      letter-spacing:-.35px;
+      text-transform:none;
+    }
+    .bottomSub{
+      margin-top:4px;
+      font-weight:800;
+      opacity:.86;
+    }
+    .bottomTime{
+      margin-top:4px;
+      font-size:13px;
+      font-weight:700;
+      opacity:.65;
+      font-style:italic;
+    }
 
     .watchBtn{
       display:inline-flex;align-items:center;gap:12px;
@@ -232,6 +212,7 @@
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter:blur(10px);
       font-size:12px;font-weight:900;
+      white-space:nowrap;
     }
     .miniBody{padding:12px 12px 14px}
     .miniTitle{font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -284,14 +265,10 @@
 
     @media (max-width: 1180px){
       .card{flex-basis: calc(100vw - 36px); height: 420px;}
-      .ring{width:250px;height:250px}
-      .midTrophy{width:140px}
     }
     @media (max-width: 980px){
       .arrow{display:none}
       .card{height:360px}
-      .ring{width:190px;height:190px}
-      .midTrophy{width:110px}
       .row{flex-direction:column;align-items:stretch}
       .rowMid{justify-content:flex-start}
       .rowR{justify-content:space-between}
@@ -360,7 +337,6 @@
 
   const CAN_LOGO = "https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png";
   const PL_LOGO  = "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png";
-  const TROPHY_IMG = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/CAF_logo.svg/512px-CAF_logo.svg.png";
 
   // ✅ Tes matchs
   const MATCHES = [
@@ -370,7 +346,6 @@
       comp:"Coupe d'Afrique",
       compIcon: CAN_LOGO,
       sport:"Football",
-      title:"Nigeria vs Tanzania",
       a:"Nigeria",
       b:"Tanzania",
       aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/256px-Flag_of_Nigeria.svg.png",
@@ -383,7 +358,6 @@
       comp:"Premier League",
       compIcon: PL_LOGO,
       sport:"Football",
-      title:"Arsenal vs Crystal Palace",
       a:"Arsenal",
       b:"Crystal Palace",
       aLogo:"https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/256px-Arsenal_FC.svg.png",
@@ -396,7 +370,6 @@
       comp:"Coupe d'Afrique",
       compIcon: CAN_LOGO,
       sport:"Football",
-      title:"Tunisia vs Uganda",
       a:"Tunisia",
       b:"Uganda",
       aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/256px-Flag_of_Tunisia.svg.png",
@@ -440,7 +413,6 @@
 
   const vm = MATCHES.slice().sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time));
 
-  // DOM
   const viewport = document.getElementById("viewport");
   const track = document.getElementById("track");
   const dots = document.getElementById("dots");
@@ -460,7 +432,6 @@
         <div class="cardTop">
           <div class="compLogo"><img src="${m.compIcon}" alt=""></div>
           <div class="topTxt">
-            <div class="title">${m.title}</div>
             <div class="meta">${m.comp}</div>
             <div class="time">${todayLabel(m.time)}</div>
           </div>
@@ -471,18 +442,11 @@
           <span data-chiptext="${m.id}">À venir</span>
         </div>
 
-        <div class="centerArt">
-          <div class="rings">
-            <div class="ring"><img src="${m.aLogo}" alt="${m.a}"></div>
-            <div class="midTrophy"><img src="${TROPHY_IMG}" alt="CAF"></div>
-            <div class="ring"><img src="${m.bLogo}" alt="${m.b}"></div>
-          </div>
-        </div>
-
         <div class="cardBottom">
           <div>
-            <div class="bottomTitle">${m.a} - ${m.b}</div>
-            <div class="bottomSub">${m.comp} · ${todayLabel(m.time)}</div>
+            <div class="bottomTitle">${m.a} vs ${m.b}</div>
+            <div class="bottomSub">${m.comp}</div>
+            <div class="bottomTime">${todayLabel(m.time)}</div>
           </div>
 
           <a class="watchBtn" href="${watchUrl(m)}" rel="noopener">
@@ -563,8 +527,7 @@
     const vw = viewport.getBoundingClientRect().width;
     const centerOffset = Math.max(18, (vw - cardW)/2);
     const peekBias = Math.min(130, vw * 0.10);
-    const gap = 18;
-    const x = -(idx * (cardW + gap)) + centerOffset - peekBias;
+    const x = -(idx * (cardW + 18)) + centerOffset - peekBias;
 
     track.style.transform = `translateX(${x}px)`;
     updateDots();
@@ -582,7 +545,6 @@
     upcoming.innerHTML = up.map(miniHTML).join("");
   }
 
-  // ✅ Live update (sans rebuild slider)
   function updateLive(){
     const now = new Date();
     nowLabel.textContent = `Heure locale : ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
@@ -664,7 +626,6 @@
 
     window.addEventListener("resize", updateSliderPosition);
 
-    // update every second (texts) + rebuild upcoming only (safe)
     setInterval(() => {
       updateLive();
       buildUpcoming();
