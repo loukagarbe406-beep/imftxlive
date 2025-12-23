@@ -19,8 +19,6 @@
       --gap: 16px;
       --good: #22c55e;
       --warn: #fb923c;
-      --muted: rgba(255,255,255,.70);
-      --muted2: rgba(255,255,255,.55);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -54,11 +52,10 @@
     }
     .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 16px}
     .centerHeader{text-align:center;padding:8px 0 10px}
-    .centerHeader h1{margin:0;font-size:34px;font-weight:900;line-height:1.05;text-shadow:0 16px 40px rgba(0,0,0,.65)}
+    .centerHeader h1{margin:0;font-size:34px;font-weight:900;line-height:1.05;text-shadow:0 16px 40px rgba(0,0,0,.65);text-transform:uppercase}
     .centerHeader .l1{margin-top:10px;opacity:.86;font-weight:800}
     .centerHeader .l2{margin-top:6px;opacity:.66;font-style:italic}
 
-    /* Slider */
     .sliderArea{position:relative;padding-top:6px}
     .viewport{overflow:hidden}
     .track{display:flex;gap:var(--gap);transition:transform .55s ease;will-change:transform;padding-bottom:2px}
@@ -79,6 +76,7 @@
       display:inline-flex;align-items:center;gap:8px;
       padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);
       backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-weight:900;font-size:12px;
+      text-transform:uppercase;
     }
     .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
     .dot.warn{background:var(--warn)}
@@ -117,7 +115,7 @@
       background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.14);
     }
-    .cardTitle{font-size:24px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .cardTitle{font-size:24px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
     .cardSub{margin-top:6px;opacity:.74;font-style:italic;font-size:13px}
 
     .watch{
@@ -141,7 +139,6 @@
     .d{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.10);cursor:pointer;transition:.2s}
     .d.active{width:38px;background:rgba(255,255,255,.86)}
 
-    /* Events list */
     .eventsWrap{max-width:var(--max);margin:0 auto;padding: 10px 16px 30px;position:relative;z-index:5}
     .sectionHead{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
     .sectionHead h2{margin:0;font-size:22px;font-weight:900}
@@ -167,12 +164,12 @@
     }
     .leagueIcon img{width:20px;height:20px;object-fit:contain;opacity:.95}
     .eventTxt{min-width:0}
-    .eventTitle{font-weight:900;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .eventTitle{font-weight:900;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
     .eventMeta{opacity:.75;font-size:12px;font-style:italic}
 
     .eventMid{display:flex;align-items:center;gap:16px;min-width:0;flex:1;justify-content:center}
     .midTeam{display:flex;align-items:center;gap:10px;min-width:0}
-    .midTeam b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px;font-size:14px}
+    .midTeam b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px;font-size:14px;text-transform:uppercase}
     .midLogo{
       width:36px;height:36px;border-radius:999px;
       background:rgba(255,255,255,.10);
@@ -184,6 +181,7 @@
       padding:6px 12px;border-radius:999px;
       background:rgba(0,0,0,.30);
       border:1px solid rgba(255,255,255,.14);
+      text-transform:uppercase;
     }
     .eventRight{display:flex;align-items:center;gap:10px;flex:0 0 auto}
     .timePill{
@@ -194,8 +192,9 @@
       font-weight:900;font-size:12px;
       backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px);
       white-space:nowrap;
+      text-transform:uppercase;
     }
-    .sportTag{opacity:.88;font-size:12px;font-weight:900}
+    .sportTag{opacity:.88;font-size:12px;font-weight:900;text-transform:uppercase}
 
     footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
@@ -258,14 +257,51 @@
   <footer>IMFTX+ — N°1 de la diffusion FR</footer>
 
   <script>
-    // 1 match = 1 page : /pages/{id}.html
     function watchUrl(m){ return `pages/${m.id}.html`; }
 
-    // Logos ligues (CAN pour pays)
     const LEAGUES = {
       "CAN": "https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png",
       "Premier League": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png"
     };
+
+    const todayMatches = [
+      {
+        id: "nigeria-tanzania",
+        time: "18:30",
+        comp: "CAN",
+        sport: "Football",
+        match: "NIGERIA - TANZANIE",
+        a: "NIGERIA",
+        b: "TANZANIE",
+        aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/256px-Flag_of_Nigeria.svg.png",
+        bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/256px-Flag_of_Tanzania.svg.png",
+        banner: "https://empire-sport.site/upload/events/erilvwbktz7ugfcei9tr90bnnvlauf.jpg"
+      },
+      {
+        id: "tunisia-uganda",
+        time: "21:00",
+        comp: "CAN",
+        sport: "Football",
+        match: "TUNISIE - OUGANDA",
+        a: "TUNISIE",
+        b: "OUGANDA",
+        aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/256px-Flag_of_Tunisia.svg.png",
+        bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Uganda.svg/256px-Flag_of_Uganda.svg.png",
+        banner: "https://empire-sport.site/upload/events/dwofkbauc8qedspz43c0qbylnx9kll.jpg"
+      },
+      {
+        id: "arsenal-crystal-palace",
+        time: "21:00",
+        comp: "Premier League",
+        sport: "Football",
+        match: "ARSENAL - CRYSTAL PALACE",
+        a: "ARSENAL",
+        b: "CRYSTAL PALACE",
+        aLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/256px-Arsenal_FC.svg.png",
+        bLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Crystal_Palace_FC_logo.svg/256px-Crystal_Palace_FC_logo.svg.png",
+        banner: "https://empire-sport.site/upload/banners/burnley-vs-arsenal_01.png"
+      }
+    ];
 
     const MATCH_DURATION_MIN = 135;
 
@@ -293,88 +329,34 @@
       const hh = Math.floor(totalSec/3600);
       const mm = Math.floor((totalSec%3600)/60);
       const ss = totalSec%60;
-      return `${hh}h ${String(mm).padStart(2,"0")}m ${String(ss).padStart(2,"0")}s`;
+      return `${hh}H ${String(mm).padStart(2,"0")}M ${String(ss).padStart(2,"0")}S`;
     }
-    function formatToday(hhmm){ return `Aujourd’hui · ${hhmm}`; }
+    function formatToday(hhmm){ return `AUJOURD’HUI · ${hhmm}`; }
 
     const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-        <defs>
-          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-            <stop stop-color="#111827"/>
-            <stop offset="1" stop-color="#000"/>
-          </linearGradient>
-        </defs>
+        <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+          <stop stop-color="#111827"/><stop offset="1" stop-color="#000"/>
+        </linearGradient></defs>
         <rect width="120" height="120" rx="60" fill="url(#g)"/>
       </svg>
     `);
     function imgOnError(el){ el.src = PLACEHOLDER; }
     window.imgOnError = imgOnError;
 
-    // ✅ MATCHS (clean)
-    const todayMatches = [
-      {
-        id: "nigeria-tanzania",
-        time: "18:30",
-        comp: "CAN",
-        sport: "Football",
-        match: "NIGERIA - TANZANIE",
-        a: "Nigeria",
-        b: "Tanzanie",
-        // drapeaux (simple & clean)
-        aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/256px-Flag_of_Nigeria.svg.png",
-        bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/256px-Flag_of_Tanzania.svg.png",
-        banner: "https://empire-sport.site/upload/events/erilvwbktz7ugfcei9tr90bnnvlauf.jpg"
-      },
-      {
-        id: "tunisia-uganda",
-        time: "21:00",
-        comp: "CAN",
-        sport: "Football",
-        match: "TUNISIE - OUGANDA",
-        a: "Tunisie",
-        b: "Ouganda",
-        aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/256px-Flag_of_Tunisia.svg.png",
-        bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Uganda.svg/256px-Flag_of_Uganda.svg.png",
-        banner: "https://empire-sport.site/upload/events/dwofkbauc8qedspz43c0qbylnx9kll.jpg"
-      },
-      {
-        id: "arsenal-crystal-palace",
-        time: "21:00",
-        comp: "Premier League",
-        sport: "Football",
-        match: "ARSENAL - CRYSTAL PALACE",
-        a: "Arsenal",
-        b: "Crystal Palace",
-        aLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/256px-Arsenal_FC.svg.png",
-        bLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Crystal_Palace_FC_logo.svg/256px-Crystal_Palace_FC_logo.svg.png",
-        banner: "https://empire-sport.site/upload/banners/burnley-vs-arsenal_01.png"
-      }
-    ];
+    // --- build view model (trié)
+    const vm = todayMatches
+      .slice()
+      .sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time))
+      .map(m => ({
+        ...m,
+        leagueIcon: LEAGUES[m.comp] || ""
+      }));
 
-    // ---- VM helpers
-    function buildVM(){
-      return todayMatches
-        .map(m => ({
-          ...m,
-          status: computeStatus(m.time),
-          timeLabel: formatToday(m.time),
-          leagueIcon: LEAGUES[m.comp] || ""
-        }))
-        .sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time));
-    }
+    // Slider = 3 cartes (toutes)
+    const slider = vm.slice(0, 3);
 
-    // Slider: prochain match (ou en cours), sinon le 1er
-    function pickHero(vm){
-      const now = new Date();
-      const nowMin = now.getHours()*60 + now.getMinutes();
-      const notFinished = vm.filter(x => x.status !== "Terminé");
-      const base = notFinished.length ? notFinished : vm;
-      const next = base.filter(x => x.status === "En cours" || timeToMinutes(x.time) >= nowMin);
-      return (next.length ? next : base)[0];
-    }
-
-    // ---- UI
+    // DOM refs
     const bg = document.getElementById("bg");
     const heroTitle = document.getElementById("heroTitle");
     const heroLeague = document.getElementById("heroLeague");
@@ -382,15 +364,14 @@
     const track = document.getElementById("track");
     const dots = document.getElementById("dots");
     const viewport = document.getElementById("viewport");
+    const eventsList = document.getElementById("eventsList");
 
-    let vm = [];
-    let slider = [];
     let idx = 0;
 
-    function badgeHTML(m){
-      if(m.status === "En cours") return `<div class="badge"><span class="dot good"></span>En cours</div>`;
-      if(m.status === "Terminé") return `<div class="badge" style="opacity:.78"><span class="dot warn"></span>Terminé</div>`;
-      return `<div class="badge"><span class="dot warn"></span>À venir</div>`;
+    function badgeHTML(status){
+      if(status === "En cours") return `<div class="badge"><span class="dot good"></span>EN COURS</div>`;
+      if(status === "Terminé") return `<div class="badge" style="opacity:.78"><span class="dot warn"></span>TERMINÉ</div>`;
+      return `<div class="badge"><span class="dot warn"></span>À VENIR</div>`;
     }
 
     function logosBlock(m){
@@ -404,10 +385,11 @@
     }
 
     function cardHTML(m){
+      // badge + countdown seront mis à jour en live via updateLiveTexts()
       return `
-        <div class="card">
+        <div class="card" data-id="${m.id}">
           <div class="poster" style="background-image:url('${m.banner}')"></div>
-          ${badgeHTML(m)}
+          <div class="badge" data-badge-for="${m.id}"><span class="dot warn"></span>À VENIR</div>
 
           <div class="cardArrow left" onclick="prevSlide()"><span>‹</span></div>
           <div class="cardArrow right" onclick="nextSlide()"><span>›</span></div>
@@ -416,7 +398,7 @@
             <div class="leftInfo">
               ${logosBlock(m)}
               <div class="cardTitle">${m.match}</div>
-              <div class="cardSub">${m.comp} • ${m.timeLabel}</div>
+              <div class="cardSub">${m.comp.toUpperCase()} • <span data-time-for="${m.id}">${formatToday(m.time)}</span></div>
             </div>
 
             <a class="watch" href="${watchUrl(m)}" rel="noopener">
@@ -432,11 +414,50 @@
       return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`;
     }
 
+    function rowHTML(m){
+      // pill text updated in live update
+      return `
+        <a class="eventRow" href="${watchUrl(m)}" rel="noopener" data-row="${m.id}">
+          <div class="eventLeft">
+            ${
+              m.leagueIcon
+                ? `<span class="leagueIcon"><img src="${m.leagueIcon}" alt=""></span>`
+                : `<span class="leagueIcon"><span style="opacity:.75;font-weight:900;font-size:12px;">🏟️</span></span>`
+            }
+            <div class="eventTxt">
+              <div class="eventTitle">${m.match}</div>
+              <div class="eventMeta">${m.comp.toUpperCase()} • ${formatToday(m.time)}</div>
+            </div>
+          </div>
+
+          <div class="eventMid">
+            <div class="midTeam">
+              <img class="midLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.a}">
+              <b>${m.a}</b>
+            </div>
+            <div class="midVS">VS</div>
+            <div class="midTeam">
+              <b>${m.b}</b>
+              <img class="midLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.b}">
+            </div>
+          </div>
+
+          <div class="eventRight">
+            <span class="timePill">
+              <span class="dot warn" data-pill-dot="${m.id}"></span>
+              <span data-pill="${m.id}">À VENIR</span>
+            </span>
+            <span class="sportTag">${m.sport.toUpperCase()}</span>
+          </div>
+        </a>
+      `;
+    }
+
     function setHero(m){
       bg.style.backgroundImage = `url('${m.banner}')`;
-      heroTitle.textContent = `${m.a} vs ${m.b}`;
-      heroLeague.textContent = m.comp === "CAN" ? "CAN" : m.comp;
-      heroTime.textContent = m.timeLabel;
+      heroTitle.textContent = `${m.a} VS ${m.b}`;
+      heroLeague.textContent = m.comp.toUpperCase();
+      heroTime.textContent = formatToday(m.time);
     }
 
     function updateDots(){
@@ -469,71 +490,36 @@
     window.prevSlide = prevSlide;
     window.goTo = goTo;
 
-    // Events list row
-    function pillText(m){
-      if(m.status === "En cours") return `En cours`;
-      if(m.status === "Terminé") return `Terminé`;
-      const cd = countdownTo(m.time);
-      return cd ? cd : "À venir";
-    }
-    function pillDotClass(m){ return (m.status === "En cours") ? "good" : "warn"; }
+    // ✅ Live update SANS rebuild (donc pas de reset des flèches)
+    function updateLiveTexts(){
+      for(const m of vm){
+        const status = computeStatus(m.time);
 
-    function rowHTML(m){
-      const leagueIcon = m.leagueIcon
-        ? `<span class="leagueIcon"><img src="${m.leagueIcon}" alt=""></span>`
-        : `<span class="leagueIcon"><span style="opacity:.75;font-weight:900;font-size:12px;">🏟️</span></span>`;
+        // badge slider
+        const badgeEl = document.querySelector(`[data-badge-for="${m.id}"]`);
+        if(badgeEl){
+          badgeEl.outerHTML = badgeHTML(status).replace('<div class="badge"', `<div class="badge" data-badge-for="${m.id}"`);
+        }
 
-      return `
-        <a class="eventRow" href="${watchUrl(m)}" rel="noopener">
-          <div class="eventLeft">
-            ${leagueIcon}
-            <div class="eventTxt">
-              <div class="eventTitle">${m.match}</div>
-              <div class="eventMeta">${m.comp} • ${m.timeLabel}</div>
-            </div>
-          </div>
+        // hero time label (si match affiché)
+        if(slider[idx] && slider[idx].id === m.id){
+          heroTime.textContent = formatToday(m.time);
+        }
 
-          <div class="eventMid">
-            <div class="midTeam">
-              <img class="midLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.a}">
-              <b>${m.a}</b>
-            </div>
-            <div class="midVS">vs</div>
-            <div class="midTeam">
-              <b>${m.b}</b>
-              <img class="midLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.b}">
-            </div>
-          </div>
+        // pill list
+        const pillEl = document.querySelector(`[data-pill="${m.id}"]`);
+        const dotEl = document.querySelector(`[data-pill-dot="${m.id}"]`);
+        if(pillEl && dotEl){
+          let text = "À VENIR";
+          if(status === "En cours") text = "EN COURS";
+          else if(status === "Terminé") text = "TERMINÉ";
+          else text = (countdownTo(m.time) || "À VENIR");
 
-          <div class="eventRight">
-            <span class="timePill">
-              <span class="dot ${pillDotClass(m)}"></span>
-              ${pillText(m)}
-            </span>
-            <span class="sportTag">${m.sport}</span>
-          </div>
-        </a>
-      `;
-    }
-
-    function renderEvents(){
-      document.getElementById("eventsList").innerHTML = vm.map(rowHTML).join("");
-    }
-
-    function rebuild(){
-      vm = buildVM();
-      // slider = les 3 premiers (triés par heure)
-      slider = vm.slice(0,3);
-      // hero = prochain/en cours -> mets idx sur cet élément si présent dans slider
-      const hero = pickHero(vm);
-      const found = slider.findIndex(x => x.id === hero.id);
-      idx = found >= 0 ? found : 0;
-
-      track.innerHTML = slider.map(cardHTML).join("");
-      dots.innerHTML = slider.map((_,i)=>dotHTML(i)).join("");
-
-      renderEvents();
-      update();
+          pillEl.textContent = text;
+          dotEl.classList.toggle("good", status === "En cours");
+          dotEl.classList.toggle("warn", status !== "En cours");
+        }
+      }
     }
 
     // Swipe mobile (sans boucle)
@@ -545,10 +531,26 @@
       if(Math.abs(dx) > 40){ if(dx < 0) nextSlide(); else prevSlide(); }
     }, {passive:true});
 
+    // INIT (1 seule fois)
     (function init(){
-      rebuild();
+      track.innerHTML = slider.map(cardHTML).join("");
+      dots.innerHTML = slider.map((_,i)=>dotHTML(i)).join("");
+      eventsList.innerHTML = vm.map(rowHTML).join("");
+
+      // place hero sur le prochain match (ou en cours)
+      const nowMin = new Date().getHours()*60 + new Date().getMinutes();
+      const notFinished = vm.filter(x => computeStatus(x.time) !== "Terminé");
+      const base = notFinished.length ? notFinished : vm;
+      const next = base.filter(x => computeStatus(x.time) === "En cours" || timeToMinutes(x.time) >= nowMin);
+      const hero = (next.length ? next : base)[0];
+      const found = slider.findIndex(x => x.id === hero.id);
+      idx = found >= 0 ? found : 0;
+
+      update();
+      updateLiveTexts();
+
       window.addEventListener("resize", update);
-      setInterval(rebuild, 1000);
+      setInterval(updateLiveTexts, 1000); // ✅ refresh uniquement textes/statuts
     })();
   </script>
 </body>
