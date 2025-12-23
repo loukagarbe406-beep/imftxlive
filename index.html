@@ -10,548 +10,603 @@
 
   <style>
     :root{
-      --max: 1280px;
-      --bg: #000;
-      --card: rgba(255,255,255,.06);
-      --line: rgba(255,255,255,.14);
-      --shadow: 0 22px 90px rgba(0,0,0,.75);
+      --max: 1400px;
+      --bg: #050505;
+      --panel: #121212;
+      --row: #2a2a2a;
+      --line: rgba(255,255,255,.10);
+      --muted: rgba(255,255,255,.75);
+      --muted2: rgba(255,255,255,.55);
+      --shadow: 0 28px 110px rgba(0,0,0,.78);
       --r: 22px;
-      --gap: 16px;
+      --gap: 18px;
       --good: #22c55e;
-      --warn: #fb923c;
+      --warn: #f59e0b;
+      --chip: rgba(0,0,0,.38);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;background:var(--bg);color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:#fff;
+      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+    }
     a{color:inherit;text-decoration:none}
-    button{font-family:inherit}
     img{display:block}
 
-    header{position:fixed;inset:0 0 auto 0;z-index:50;background:linear-gradient(180deg, rgba(0,0,0,.88), rgba(0,0,0,.12));backdrop-filter: blur(10px)}
-    .topbar{max-width:var(--max);margin:0 auto;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
-    .brand{font-weight:900;letter-spacing:.2px;font-size:20px;opacity:.98}
+    /* Topbar */
+    header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(0,0,0,.75);backdrop-filter: blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .topbar{max-width:var(--max);margin:0 auto;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+    .brand{font-weight:900;letter-spacing:.2px;font-size:20px}
     .icons{display:flex;gap:14px;font-size:18px;align-items:center}
-    .icons a{opacity:.70}
+    .icons a{opacity:.72}
     .icons a:hover{opacity:1}
 
-    .hero{position:relative;padding-top:76px;padding-bottom:14px;overflow:hidden}
-    .bg{
-      position:absolute; inset:0;
-      background-size:cover;background-position:center;
-      transform:scale(1.12);
-      filter: blur(16px) saturate(1.15) brightness(.62);
-      opacity:.98;
-    }
-    .hero::after{
-      content:"";position:absolute;inset:0;
-      background:
-        radial-gradient(1000px 600px at 50% 25%, rgba(255,255,255,.10), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.84) 70%, rgba(0,0,0,.98) 100%),
-        linear-gradient(90deg, rgba(0,0,0,.92), rgba(0,0,0,.12), rgba(0,0,0,.92));
-      pointer-events:none;
-    }
-    .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 16px}
-    .centerHeader{text-align:center;padding:8px 0 10px}
-    .centerHeader h1{margin:0;font-size:34px;font-weight:900;line-height:1.05;text-shadow:0 16px 40px rgba(0,0,0,.65);text-transform:uppercase}
-    .centerHeader .l1{margin-top:10px;opacity:.86;font-weight:800}
-    .centerHeader .l2{margin-top:6px;opacity:.66;font-style:italic}
+    /* Hero */
+    .hero{padding-top:74px}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
+    .heroHead{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:18px 0 12px}
+    .heroHead h1{margin:0;font-size:28px;font-weight:900;letter-spacing:-.3px}
+    .heroHead .sub{opacity:.65;font-weight:700}
 
-    .sliderArea{position:relative;padding-top:6px}
+    /* Slider */
+    .slider{position:relative}
     .viewport{overflow:hidden}
-    .track{display:flex;gap:var(--gap);transition:transform .55s ease;will-change:transform;padding-bottom:2px}
+    .track{display:flex;gap:var(--gap);transition:transform .55s ease;will-change:transform;padding:10px 0 18px}
     .card{
-      flex:0 0 980px;height:520px;border-radius:var(--r);overflow:hidden;position:relative;
-      border:1px solid var(--line);box-shadow:var(--shadow);background: var(--card);
+      flex:0 0 1100px;
+      height: 520px;
+      border-radius: 26px;
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow);
+      background:#000;
     }
-    .poster{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.01)}
+    .cardBg{
+      position:absolute; inset:0;
+      background-size:cover; background-position:center;
+      filter:saturate(1.05) brightness(.82);
+      transform:scale(1.02);
+    }
     .card::after{
-      content:"";position:absolute;inset:0;
+      content:""; position:absolute; inset:0;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.04) 0%, rgba(0,0,0,.56) 70%, rgba(0,0,0,.92) 100%),
-        linear-gradient(90deg, rgba(0,0,0,.62), rgba(0,0,0,.08), rgba(0,0,0,.62));
+        radial-gradient(900px 560px at 40% 40%, rgba(255,255,255,.06), transparent 62%),
+        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.75) 72%, rgba(0,0,0,.90) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.58), rgba(0,0,0,.10), rgba(0,0,0,.58));
       pointer-events:none;
     }
-    .badge{
-      position:absolute;top:14px;left:14px;z-index:6;
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);
-      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-weight:900;font-size:12px;
-      text-transform:uppercase;
-    }
-    .dot{width:9px;height:9px;border-radius:50%;display:inline-block}
-    .dot.warn{background:var(--warn)}
-    .dot.good{background:var(--good)}
 
-    .cardArrow{
-      position:absolute;top:50%;transform:translateY(-50%);
-      width:54px;height:54px;border-radius:50%;
-      background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.16);
+    /* Top-left title block like your screenshot */
+    .cardTop{
+      position:absolute; left:26px; top:22px; z-index:5;
+      display:flex; gap:14px; align-items:flex-start;
+    }
+    .compLogo{
+      width:56px; height:56px; border-radius:14px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      padding:8px;
+      backdrop-filter: blur(10px);
+    }
+    .compLogo img{width:100%;height:100%;object-fit:contain}
+    .topTxt .title{font-weight:900;font-size:30px;line-height:1.05}
+    .topTxt .meta{margin-top:6px;font-weight:800;opacity:.85}
+    .topTxt .time{margin-top:4px;opacity:.72;font-style:italic}
+
+    /* Countdown chip */
+    .chip{
+      position:absolute; left:26px; top:118px; z-index:6;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:999px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(10px);
+      font-weight:900;
+      font-size:13px;
+    }
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot.good{background:var(--good)}
+    .dot.warn{background:var(--warn)}
+
+    /* Big circles area */
+    .centerArt{
+      position:absolute; inset:0; z-index:4;
+      display:grid; place-items:center;
+      padding-top:22px;
+    }
+    .rings{
+      width:min(920px, 92%);
+      display:grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items:center;
+      gap:26px;
+    }
+    .ring{
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      margin:0 auto;
+      position:relative;
+      display:grid;
+      place-items:center;
+      border:4px solid rgba(34,197,94,.35);
+      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+      background: rgba(0,0,0,.15);
+      overflow:hidden;
+    }
+    .ring img{width:100%;height:100%;object-fit:cover}
+    .midTrophy{
+      width: 180px;
+      opacity:.95;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,.65));
+    }
+    .midTrophy img{width:100%;height:auto;object-fit:contain}
+
+    /* Bottom bar inside card */
+    .cardBottom{
+      position:absolute; left:26px; right:26px; bottom:18px; z-index:6;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+    }
+    .miniTeams{display:flex;align-items:center;gap:10px;opacity:.92}
+    .badgeTeam{
+      width:44px;height:44px;border-radius:14px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      padding:6px;
       display:grid;place-items:center;
-      z-index:7;cursor:pointer;
-      backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    }
+    .badgeTeam img{width:100%;height:100%;object-fit:contain}
+    .miniTeams .vs{opacity:.7;font-weight:900}
+    .bottomTitle{
+      margin-top:10px;
+      font-weight:900;
+      font-size:22px;
+      letter-spacing:-.2px;
+    }
+    .bottomSub{margin-top:4px;opacity:.7;font-style:italic;font-weight:800}
+
+    .watchBtn{
+      display:inline-flex;align-items:center;gap:12px;
+      height:60px;padding:10px 18px;border-radius:999px;
+      background:rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.18);
+      font-weight:900;
+      overflow:hidden;
+    }
+    .watchBtn:hover{background:rgba(255,255,255,.22)}
+    .play{
+      width:44px;height:44px;border-radius:50%;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      display:grid;place-items:center;
+      font-size:14px;
+    }
+
+    /* Arrows */
+    .arrow{
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:56px;height:56px;border-radius:50%;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(10px);
+      display:grid;place-items:center;
+      z-index:10;
+      cursor:pointer;
       user-select:none;
     }
-    .cardArrow:hover{background:rgba(0,0,0,.45)}
-    .cardArrow span{font-size:34px;line-height:1}
-    .cardArrow.left{left:14px}
-    .cardArrow.right{right:14px}
+    .arrow:hover{background:rgba(0,0,0,.48)}
+    .arrow span{font-size:34px;line-height:1}
+    .arrow.left{left:18px}
+    .arrow.right{right:18px}
 
-    .bottom{
-      position:absolute;left:16px;right:16px;bottom:16px;z-index:7;
-      display:flex;align-items:flex-end;justify-content:space-between;gap:14px
-    }
-    .leftInfo{min-width:0}
-    .logosLine{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
-    .teamLogo{
-      width:44px;height:44px;border-radius:50%;
-      background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
-      padding:6px;object-fit:contain;
-    }
-    .vsPill{
-      width:34px;height:34px;border-radius:50%;
-      display:grid;place-items:center;
-      font-weight:900;font-size:12px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-    }
-    .cardTitle{font-size:24px;font-weight:900;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
-    .cardSub{margin-top:6px;opacity:.74;font-style:italic;font-size:13px}
+    /* Dots */
+    .dots{display:flex;justify-content:center;gap:8px;margin:0 0 18px}
+    .d{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.10);cursor:pointer;transition:.2s}
+    .d.active{width:40px;background:rgba(255,255,255,.86)}
 
-    .watch{
-      display:inline-flex;align-items:center;
-      height:62px;padding:10px 14px;border-radius:999px;
-      background:rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.16);
-      overflow:hidden;white-space:nowrap;
-    }
-    .watch:hover{background:rgba(255,255,255,.18)}
-    .play{
-      width:52px;height:52px;border-radius:50%;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.12);
-      display:grid;place-items:center;
-      margin-right:12px;font-size:16px;
-    }
-    .watchTxt{font-weight:900;letter-spacing:.2px;padding-right:8px}
+    /* List rows (like your 2nd screenshot) */
+    .listWrap{max-width:var(--max);margin:0 auto;padding: 0 18px 40px}
+    .listHead{display:flex;align-items:baseline;justify-content:space-between;margin:6px 0 12px}
+    .listHead h2{margin:0;font-size:22px;font-weight:900}
+    .listHead span{opacity:.6;font-size:12px}
 
-    .dots{display:flex;justify-content:center;gap:8px;margin:8px 0 0}
-    .d{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.10);cursor:pointer;transition:.2s}
-    .d.active{width:38px;background:rgba(255,255,255,.86)}
-
-    .eventsWrap{max-width:var(--max);margin:0 auto;padding: 10px 16px 30px;position:relative;z-index:5}
-    .sectionHead{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
-    .sectionHead h2{margin:0;font-size:22px;font-weight:900}
-    .sectionHead span{opacity:.55;font-size:12px}
-
-    .eventRow{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:14px;
+    .row{
+      background:#2f2f2f;
+      border-radius:14px;
       padding:14px 16px;
-      border-radius:16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.07));
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 18px 60px rgba(0,0,0,.45);
+      display:flex;align-items:center;justify-content:space-between;
+      gap:14px;
       margin-bottom:10px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.42);
+      border:1px solid rgba(255,255,255,.06);
     }
-    .eventLeft{display:flex;align-items:center;gap:12px;min-width:0}
-    .leagueIcon{
-      width:30px;height:30px;border-radius:10px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      display:grid;place-items:center;
-      overflow:hidden;flex:0 0 auto;
+    .rowL{display:flex;align-items:center;gap:12px;min-width:0}
+    .rowComp{
+      width:44px;height:44px;border-radius:12px;
+      background:rgba(0,0,0,.32);
+      border:1px solid rgba(255,255,255,.12);
+      padding:8px;
+      flex:0 0 auto;
     }
-    .leagueIcon img{width:20px;height:20px;object-fit:contain;opacity:.95}
-    .eventTxt{min-width:0}
-    .eventTitle{font-weight:900;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase}
-    .eventMeta{opacity:.75;font-size:12px;font-style:italic}
+    .rowComp img{width:100%;height:100%;object-fit:contain}
+    .rowTxt{min-width:0}
+    .rowTxt .t{font-weight:900;font-size:18px;line-height:1.1}
+    .rowTxt .m{opacity:.72;font-style:italic;font-weight:800;margin-top:4px}
 
-    .eventMid{display:flex;align-items:center;gap:16px;min-width:0;flex:1;justify-content:center}
-    .midTeam{display:flex;align-items:center;gap:10px;min-width:0}
-    .midTeam b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:230px;font-size:14px;text-transform:uppercase}
-    .midLogo{
-      width:36px;height:36px;border-radius:999px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      padding:6px;object-fit:contain;flex:0 0 auto;
-    }
-    .midVS{
-      font-weight:900;font-size:12px;opacity:.78;
-      padding:6px 12px;border-radius:999px;
+    .rowMid{display:flex;align-items:center;gap:18px;justify-content:center;flex:1;min-width:0}
+    .rowTeam{display:flex;align-items:center;gap:10px;min-width:0}
+    .rowTeam b{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+    .rowLogo{
+      width:40px;height:40px;border-radius:12px;
       background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.14);
-      text-transform:uppercase;
+      border:1px solid rgba(255,255,255,.12);
+      padding:7px;
+      flex:0 0 auto;
     }
-    .eventRight{display:flex;align-items:center;gap:10px;flex:0 0 auto}
-    .timePill{
+    .rowLogo img{width:100%;height:100%;object-fit:contain}
+    .vsPill{
+      padding:6px 10px;border-radius:999px;
+      background:rgba(0,0,0,.30);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:900;opacity:.8;
+    }
+
+    .rowR{display:flex;align-items:center;gap:12px;flex:0 0 auto}
+    .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:8px 12px;border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.32);
+      border:1px solid rgba(255,255,255,.12);
       font-weight:900;font-size:12px;
-      backdrop-filter: blur(10px);-webkit-backdrop-filter: blur(10px);
       white-space:nowrap;
-      text-transform:uppercase;
     }
-    .sportTag{opacity:.88;font-size:12px;font-weight:900;text-transform:uppercase}
+    .sport{opacity:.85;font-weight:900;font-size:12px}
 
-    footer{border-top:1px solid rgba(255,255,255,.08);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
+    footer{border-top:1px solid rgba(255,255,255,.06);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
 
-    @media (min-width: 1400px){ .card{flex-basis: 1080px;height:560px} }
+    @media (max-width: 1180px){
+      .card{flex-basis: calc(100vw - 36px); height: 420px;}
+      .ring{width:250px;height:250px}
+      .midTrophy{width:140px}
+    }
     @media (max-width: 980px){
-      .card{flex-basis: calc(100vw - 32px);height:340px}
-      .cardArrow{display:none}
-      .centerHeader h1{font-size:30px}
-      .bottom{left:14px;right:14px;bottom:12px;gap:12px}
-      .watch{height:52px;padding:8px 12px}
-      .play{width:42px;height:42px;margin-right:10px}
-      .watchTxt{font-size:14px}
-      .eventRow{flex-direction:column;align-items:stretch}
-      .eventMid{justify-content:flex-start}
-      .eventRight{justify-content:space-between}
-      .midTeam b{max-width:160px}
+      .arrow{display:none}
+      .heroHead h1{font-size:24px}
+      .card{height:360px}
+      .ring{width:190px;height:190px}
+      .midTrophy{width:110px}
+      .row{flex-direction:column;align-items:stretch}
+      .rowMid{justify-content:flex-start}
+      .rowR{justify-content:space-between}
+      .rowTeam b{max-width:160px}
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <div class="topbar">
-      <div class="brand">IMFTX+</div>
-      <div class="icons">
-        <a href="#" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
-        <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-        <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
-      </div>
+<header>
+  <div class="topbar">
+    <div class="brand">IMFTX+</div>
+    <div class="icons">
+      <a href="#" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+      <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+      <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
     </div>
-  </header>
+  </div>
+</header>
 
-  <section class="hero">
-    <div class="bg" id="bg"></div>
+<section class="hero">
+  <div class="wrap">
+    <div class="heroHead">
+      <div>
+        <h1>À la Une</h1>
+        <div class="sub">Sélection du jour</div>
+      </div>
+      <div class="sub" id="nowLabel"></div>
+    </div>
 
-    <div class="wrap">
-      <div class="centerHeader">
-        <h1 id="heroTitle"></h1>
-        <div class="l1" id="heroLeague"></div>
-        <div class="l2" id="heroTime"></div>
+    <div class="slider">
+      <div class="viewport" id="viewport">
+        <div class="track" id="track"></div>
       </div>
 
-      <div class="sliderArea">
-        <div class="viewport" id="viewport">
-          <div class="track" id="track"></div>
-        </div>
-        <div class="dots" id="dots"></div>
-      </div>
+      <div class="arrow left" onclick="prevSlide()"><span>‹</span></div>
+      <div class="arrow right" onclick="nextSlide()"><span>›</span></div>
+
+      <div class="dots" id="dots"></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="eventsWrap">
-    <div class="sectionHead">
-      <h2>Événements</h2>
-      <span>Matchs du jour</span>
-    </div>
-    <div id="eventsList"></div>
-  </section>
+<section class="listWrap">
+  <div class="listHead">
+    <h2>Événements</h2>
+    <span>Matchs du jour</span>
+  </div>
+  <div id="events"></div>
+</section>
 
-  <footer>IMFTX+ — N°1 de la diffusion FR</footer>
+<footer>IMFTX+ — N°1 de la diffusion FR</footer>
 
-  <script>
-    function watchUrl(m){ return `pages/${m.id}.html`; }
+<script>
+  // 1 match = 1 page : /pages/{id}.html
+  function watchUrl(m){ return `pages/${m.id}.html`; }
 
-    const LEAGUES = {
-      "CAN": "https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png",
-      "Premier League": "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png"
-    };
+  const CAN_LOGO = "https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png";
+  const PL_LOGO  = "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png";
 
-    const todayMatches = [
-      {
-        id: "nigeria-tanzania",
-        time: "18:30",
-        comp: "CAN",
-        sport: "Football",
-        match: "NIGERIA - TANZANIE",
-        a: "NIGERIA",
-        b: "TANZANIE",
-        aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/256px-Flag_of_Nigeria.svg.png",
-        bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/256px-Flag_of_Tanzania.svg.png",
-        banner: "https://empire-sport.site/upload/events/erilvwbktz7ugfcei9tr90bnnvlauf.jpg"
-      },
-      {
-        id: "tunisia-uganda",
-        time: "21:00",
-        comp: "CAN",
-        sport: "Football",
-        match: "TUNISIE - OUGANDA",
-        a: "TUNISIE",
-        b: "OUGANDA",
-        aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/256px-Flag_of_Tunisia.svg.png",
-        bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Uganda.svg/256px-Flag_of_Uganda.svg.png",
-        banner: "https://empire-sport.site/upload/events/dwofkbauc8qedspz43c0qbylnx9kll.jpg"
-      },
-      {
-        id: "arsenal-crystal-palace",
-        time: "21:00",
-        comp: "Premier League",
-        sport: "Football",
-        match: "ARSENAL - CRYSTAL PALACE",
-        a: "ARSENAL",
-        b: "CRYSTAL PALACE",
-        aLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/256px-Arsenal_FC.svg.png",
-        bLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Crystal_Palace_FC_logo.svg/256px-Crystal_Palace_FC_logo.svg.png",
-        banner: "https://empire-sport.site/upload/banners/burnley-vs-arsenal_01.png"
-      }
-    ];
-
-    const MATCH_DURATION_MIN = 135;
-
-    function timeToMinutes(hhmm){
-      const [h,m] = hhmm.split(":").map(Number);
-      return (h*60)+(m||0);
+  // ✅ Données (ton trio)
+  const MATCHES = [
+    {
+      id:"nigeria-tanzania",
+      time:"18:30",
+      comp:"Coupe d'Afrique",
+      compIcon: CAN_LOGO,
+      sport:"Football",
+      title:"Nigeria vs Tanzania",
+      a:"Nigeria",
+      b:"Tanzania",
+      aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/256px-Flag_of_Nigeria.svg.png",
+      bLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/256px-Flag_of_Tanzania.svg.png",
+      banner:"https://empire-sport.site/upload/events/erilvwbktz7ugfcei9tr90bnnvlauf.jpg"
+    },
+    {
+      id:"arsenal-crystal-palace",
+      time:"21:00",
+      comp:"Premier League",
+      compIcon: PL_LOGO,
+      sport:"Football",
+      title:"Arsenal vs Crystal Palace",
+      a:"Arsenal",
+      b:"Crystal Palace",
+      aLogo:"https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/256px-Arsenal_FC.svg.png",
+      bLogo:"https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Crystal_Palace_FC_logo.svg/256px-Crystal_Palace_FC_logo.svg.png",
+      banner:"https://empire-sport.site/upload/banners/burnley-vs-arsenal_01.png"
+    },
+    {
+      id:"tunisia-uganda",
+      time:"21:00",
+      comp:"Coupe d'Afrique",
+      compIcon: CAN_LOGO,
+      sport:"Football",
+      title:"Tunisia vs Uganda",
+      a:"Tunisia",
+      b:"Uganda",
+      aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/256px-Flag_of_Tunisia.svg.png",
+      bLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Uganda.svg/256px-Flag_of_Uganda.svg.png",
+      banner:"https://empire-sport.site/upload/events/dwofkbauc8qedspz43c0qbylnx9kll.jpg"
     }
-    function computeStatus(hhmm){
-      const now = new Date();
-      const nowMin = now.getHours()*60 + now.getMinutes();
-      const start = timeToMinutes(hhmm);
-      const end = start + MATCH_DURATION_MIN;
-      if(nowMin < start) return "À venir";
-      if(nowMin >= start && nowMin < end) return "En cours";
-      return "Terminé";
-    }
-    function countdownTo(hhmm){
-      const now = new Date();
-      const target = new Date(now);
-      const [h,m] = hhmm.split(":").map(Number);
-      target.setHours(h, m, 0, 0);
-      const diff = target.getTime() - now.getTime();
-      if(diff <= 0) return "";
-      const totalSec = Math.floor(diff/1000);
-      const hh = Math.floor(totalSec/3600);
-      const mm = Math.floor((totalSec%3600)/60);
-      const ss = totalSec%60;
-      return `${hh}H ${String(mm).padStart(2,"0")}M ${String(ss).padStart(2,"0")}S`;
-    }
-    function formatToday(hhmm){ return `AUJOURD’HUI · ${hhmm}`; }
+  ];
 
-    const PLACEHOLDER = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-        <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-          <stop stop-color="#111827"/><stop offset="1" stop-color="#000"/>
-        </linearGradient></defs>
-        <rect width="120" height="120" rx="60" fill="url(#g)"/>
-      </svg>
-    `);
-    function imgOnError(el){ el.src = PLACEHOLDER; }
-    window.imgOnError = imgOnError;
+  const TROPHY_IMG = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/CAF_logo.svg/512px-CAF_logo.svg.png";
 
-    // --- build view model (trié)
-    const vm = todayMatches
-      .slice()
-      .sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time))
-      .map(m => ({
-        ...m,
-        leagueIcon: LEAGUES[m.comp] || ""
-      }));
+  const MATCH_DURATION_MIN = 135;
 
-    // Slider = 3 cartes (toutes)
-    const slider = vm.slice(0, 3);
+  function timeToMinutes(hhmm){
+    const [h,m] = hhmm.split(":").map(Number);
+    return (h*60)+(m||0);
+  }
 
-    // DOM refs
-    const bg = document.getElementById("bg");
-    const heroTitle = document.getElementById("heroTitle");
-    const heroLeague = document.getElementById("heroLeague");
-    const heroTime = document.getElementById("heroTime");
-    const track = document.getElementById("track");
-    const dots = document.getElementById("dots");
-    const viewport = document.getElementById("viewport");
-    const eventsList = document.getElementById("eventsList");
+  function computeStatus(hhmm){
+    const now = new Date();
+    const nowMin = now.getHours()*60 + now.getMinutes();
+    const start = timeToMinutes(hhmm);
+    const end = start + MATCH_DURATION_MIN;
+    if(nowMin < start) return "À venir";
+    if(nowMin >= start && nowMin < end) return "En cours";
+    return "Terminé";
+  }
 
-    let idx = 0;
+  function countdownTo(hhmm){
+    const now = new Date();
+    const target = new Date(now);
+    const [h,m] = hhmm.split(":").map(Number);
+    target.setHours(h, m, 0, 0);
+    const diff = target.getTime() - now.getTime();
+    if(diff <= 0) return "";
+    const totalSec = Math.floor(diff/1000);
+    const hh = Math.floor(totalSec/3600);
+    const mm = Math.floor((totalSec%3600)/60);
+    const ss = totalSec%60;
+    return `${hh}h ${String(mm).padStart(2,"0")}m ${String(ss).padStart(2,"0")}s`;
+  }
 
-    function badgeHTML(status){
-      if(status === "En cours") return `<div class="badge"><span class="dot good"></span>EN COURS</div>`;
-      if(status === "Terminé") return `<div class="badge" style="opacity:.78"><span class="dot warn"></span>TERMINÉ</div>`;
-      return `<div class="badge"><span class="dot warn"></span>À VENIR</div>`;
-    }
+  function todayLabel(hhmm){ return `Aujourd'hui · ${hhmm}`; }
 
-    function logosBlock(m){
-      return `
-        <div class="logosLine">
-          <img class="teamLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.a}">
-          <div class="vsPill">VS</div>
-          <img class="teamLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.b}">
-        </div>
-      `;
-    }
+  const vm = MATCHES.slice().sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time));
 
-    function cardHTML(m){
-      // badge + countdown seront mis à jour en live via updateLiveTexts()
-      return `
-        <div class="card" data-id="${m.id}">
-          <div class="poster" style="background-image:url('${m.banner}')"></div>
-          <div class="badge" data-badge-for="${m.id}"><span class="dot warn"></span>À VENIR</div>
+  // Slider
+  const viewport = document.getElementById("viewport");
+  const track = document.getElementById("track");
+  const dots = document.getElementById("dots");
+  const events = document.getElementById("events");
+  const nowLabel = document.getElementById("nowLabel");
 
-          <div class="cardArrow left" onclick="prevSlide()"><span>‹</span></div>
-          <div class="cardArrow right" onclick="nextSlide()"><span>›</span></div>
+  let idx = 0;
 
-          <div class="bottom">
-            <div class="leftInfo">
-              ${logosBlock(m)}
-              <div class="cardTitle">${m.match}</div>
-              <div class="cardSub">${m.comp.toUpperCase()} • <span data-time-for="${m.id}">${formatToday(m.time)}</span></div>
-            </div>
+  function dotHTML(i){ return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`; }
 
-            <a class="watch" href="${watchUrl(m)}" rel="noopener">
-              <div class="play">▶</div>
-              <div class="watchTxt">REGARDER</div>
-            </a>
+  function cardHTML(m){
+    // chip content updated by updateLive()
+    return `
+      <div class="card" data-id="${m.id}">
+        <div class="cardBg" style="background-image:url('${m.banner}')"></div>
+
+        <div class="cardTop">
+          <div class="compLogo"><img src="${m.compIcon}" alt=""></div>
+          <div class="topTxt">
+            <div class="title">${m.title}</div>
+            <div class="meta">${m.comp}</div>
+            <div class="time">${todayLabel(m.time)}</div>
           </div>
         </div>
-      `;
-    }
 
-    function dotHTML(i){
-      return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`;
-    }
+        <div class="chip" data-chip="${m.id}">
+          <span class="dot warn" data-chipdot="${m.id}"></span>
+          <span data-chiptext="${m.id}">À venir</span>
+        </div>
 
-    function rowHTML(m){
-      // pill text updated in live update
-      return `
-        <a class="eventRow" href="${watchUrl(m)}" rel="noopener" data-row="${m.id}">
-          <div class="eventLeft">
-            ${
-              m.leagueIcon
-                ? `<span class="leagueIcon"><img src="${m.leagueIcon}" alt=""></span>`
-                : `<span class="leagueIcon"><span style="opacity:.75;font-weight:900;font-size:12px;">🏟️</span></span>`
-            }
-            <div class="eventTxt">
-              <div class="eventTitle">${m.match}</div>
-              <div class="eventMeta">${m.comp.toUpperCase()} • ${formatToday(m.time)}</div>
+        <div class="centerArt">
+          <div class="rings">
+            <div class="ring"><img src="${m.aLogo}" alt="${m.a}"></div>
+            <div class="midTrophy"><img src="${TROPHY_IMG}" alt="CAF"></div>
+            <div class="ring"><img src="${m.bLogo}" alt="${m.b}"></div>
+          </div>
+        </div>
+
+        <div class="cardBottom">
+          <div>
+            <div class="miniTeams">
+              <span class="badgeTeam"><img src="${m.aLogo}" alt=""></span>
+              <span class="vs">vs</span>
+              <span class="badgeTeam"><img src="${m.bLogo}" alt=""></span>
             </div>
+            <div class="bottomTitle">${m.a} - ${m.b}</div>
+            <div class="bottomSub">${m.comp} · ${todayLabel(m.time)}</div>
           </div>
 
-          <div class="eventMid">
-            <div class="midTeam">
-              <img class="midLogo" src="${m.aLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.a}">
-              <b>${m.a}</b>
-            </div>
-            <div class="midVS">VS</div>
-            <div class="midTeam">
-              <b>${m.b}</b>
-              <img class="midLogo" src="${m.bLogo || PLACEHOLDER}" onerror="imgOnError(this)" alt="${m.b}">
-            </div>
+          <a class="watchBtn" href="${watchUrl(m)}" rel="noopener">
+            <span class="play">▶</span>
+            <span>REGARDER</span>
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  function rowHTML(m){
+    // pill updated by updateLive()
+    return `
+      <a class="row" href="${watchUrl(m)}" rel="noopener">
+        <div class="rowL">
+          <span class="rowComp"><img src="${m.compIcon}" alt=""></span>
+          <div class="rowTxt">
+            <div class="t">${m.a} - ${m.b}</div>
+            <div class="m">${m.comp} · ${todayLabel(m.time)}</div>
           </div>
+        </div>
 
-          <div class="eventRight">
-            <span class="timePill">
-              <span class="dot warn" data-pill-dot="${m.id}"></span>
-              <span data-pill="${m.id}">À VENIR</span>
-            </span>
-            <span class="sportTag">${m.sport.toUpperCase()}</span>
+        <div class="rowMid">
+          <div class="rowTeam">
+            <span class="rowLogo"><img src="${m.aLogo}" alt=""></span>
+            <b>${m.a}</b>
           </div>
-        </a>
-      `;
-    }
+          <span class="vsPill">vs</span>
+          <div class="rowTeam">
+            <b>${m.b}</b>
+            <span class="rowLogo"><img src="${m.bLogo}" alt=""></span>
+          </div>
+        </div>
 
-    function setHero(m){
-      bg.style.backgroundImage = `url('${m.banner}')`;
-      heroTitle.textContent = `${m.a} VS ${m.b}`;
-      heroLeague.textContent = m.comp.toUpperCase();
-      heroTime.textContent = formatToday(m.time);
-    }
+        <div class="rowR">
+          <span class="pill">
+            <span class="dot warn" data-pilldot="${m.id}"></span>
+            <span data-pilltext="${m.id}">À venir</span>
+          </span>
+          <span class="sport">${m.sport}</span>
+        </div>
+      </a>
+    `;
+  }
 
-    function updateDots(){
-      for(let i=0;i<slider.length;i++){
-        const el = document.getElementById("d"+i);
-        if(el) el.classList.toggle("active", i===idx);
+  function updateDots(){
+    for(let i=0;i<vm.length;i++){
+      const el = document.getElementById("d"+i);
+      if(el) el.classList.toggle("active", i===idx);
+    }
+  }
+
+  function updateSliderPosition(){
+    const first = document.querySelector(".card");
+    if(!first) return;
+
+    const cardW = first.getBoundingClientRect().width;
+    const vw = viewport.getBoundingClientRect().width;
+    const centerOffset = Math.max(18, (vw - cardW)/2);
+    const peekBias = Math.min(130, vw * 0.10);
+    const x = -(idx * (cardW + parseFloat(getComputedStyle(track).gap || 18))) + centerOffset - peekBias;
+
+    track.style.transform = `translateX(${x}px)`;
+    updateDots();
+  }
+
+  function nextSlide(){ idx = Math.min(idx + 1, vm.length - 1); updateSliderPosition(); }
+  function prevSlide(){ idx = Math.max(idx - 1, 0); updateSliderPosition(); }
+  function goTo(i){ idx = Math.max(0, Math.min(i, vm.length - 1)); updateSliderPosition(); }
+  window.nextSlide = nextSlide;
+  window.prevSlide = prevSlide;
+  window.goTo = goTo;
+
+  // ✅ Live update (sans rebuild, donc pas de reset)
+  function updateLive(){
+    const now = new Date();
+    nowLabel.textContent = `Heure locale : ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
+
+    for(const m of vm){
+      const st = computeStatus(m.time);
+
+      // Slider chip
+      const chipText = document.querySelector(`[data-chiptext="${m.id}"]`);
+      const chipDot  = document.querySelector(`[data-chipdot="${m.id}"]`);
+      if(chipText && chipDot){
+        let txt = "À venir";
+        if(st === "En cours") txt = "En cours";
+        else if(st === "Terminé") txt = "Terminé";
+        else txt = countdownTo(m.time) || "À venir";
+
+        chipText.textContent = txt;
+        chipDot.classList.toggle("good", st === "En cours");
+        chipDot.classList.toggle("warn", st !== "En cours");
+      }
+
+      // List pill
+      const pillText = document.querySelector(`[data-pilltext="${m.id}"]`);
+      const pillDot  = document.querySelector(`[data-pilldot="${m.id}"]`);
+      if(pillText && pillDot){
+        let txt = "À venir";
+        if(st === "En cours") txt = "En cours";
+        else if(st === "Terminé") txt = "Terminé";
+        else txt = countdownTo(m.time) || "À venir";
+
+        pillText.textContent = txt;
+        pillDot.classList.toggle("good", st === "En cours");
+        pillDot.classList.toggle("warn", st !== "En cours");
       }
     }
+  }
 
-    function update(){
-      const first = document.querySelector(".card");
-      if(!first || !slider.length) return;
-
-      const cardW = first.getBoundingClientRect().width;
-      const gap = 16;
-      const vw = viewport.getBoundingClientRect().width;
-      const centerOffset = Math.max(16, (vw - cardW) / 2);
-      const peekBias = Math.min(120, vw * 0.10);
-      const x = -(idx * (cardW + gap)) + centerOffset - peekBias;
-
-      track.style.transform = `translateX(${x}px)`;
-      setHero(slider[idx]);
-      updateDots();
+  // Swipe mobile
+  let startX = 0;
+  track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, {passive:true});
+  track.addEventListener("touchend", e => {
+    const endX = e.changedTouches[0].clientX;
+    const dx = endX - startX;
+    if(Math.abs(dx) > 40){
+      if(dx < 0) nextSlide(); else prevSlide();
     }
+  }, {passive:true});
 
-    function nextSlide(){ idx = Math.min(idx + 1, slider.length - 1); update(); }
-    function prevSlide(){ idx = Math.max(idx - 1, 0); update(); }
-    function goTo(i){ idx = Math.max(0, Math.min(i, slider.length - 1)); update(); }
-    window.nextSlide = nextSlide;
-    window.prevSlide = prevSlide;
-    window.goTo = goTo;
+  (function init(){
+    track.innerHTML = vm.map(cardHTML).join("");
+    dots.innerHTML = vm.map((_,i)=>dotHTML(i)).join("");
+    events.innerHTML = vm.map(rowHTML).join("");
 
-    // ✅ Live update SANS rebuild (donc pas de reset des flèches)
-    function updateLiveTexts(){
-      for(const m of vm){
-        const status = computeStatus(m.time);
+    // Start on the next match (or live) if possible
+    const nowMin = new Date().getHours()*60 + new Date().getMinutes();
+    const notFinished = vm.filter(x => computeStatus(x.time) !== "Terminé");
+    const base = notFinished.length ? notFinished : vm;
+    const next = base.filter(x => computeStatus(x.time) === "En cours" || timeToMinutes(x.time) >= nowMin);
+    const hero = (next.length ? next : base)[0];
+    idx = Math.max(0, vm.findIndex(x => x.id === hero.id));
 
-        // badge slider
-        const badgeEl = document.querySelector(`[data-badge-for="${m.id}"]`);
-        if(badgeEl){
-          badgeEl.outerHTML = badgeHTML(status).replace('<div class="badge"', `<div class="badge" data-badge-for="${m.id}"`);
-        }
+    updateSliderPosition();
+    updateLive();
 
-        // hero time label (si match affiché)
-        if(slider[idx] && slider[idx].id === m.id){
-          heroTime.textContent = formatToday(m.time);
-        }
-
-        // pill list
-        const pillEl = document.querySelector(`[data-pill="${m.id}"]`);
-        const dotEl = document.querySelector(`[data-pill-dot="${m.id}"]`);
-        if(pillEl && dotEl){
-          let text = "À VENIR";
-          if(status === "En cours") text = "EN COURS";
-          else if(status === "Terminé") text = "TERMINÉ";
-          else text = (countdownTo(m.time) || "À VENIR");
-
-          pillEl.textContent = text;
-          dotEl.classList.toggle("good", status === "En cours");
-          dotEl.classList.toggle("warn", status !== "En cours");
-        }
-      }
-    }
-
-    // Swipe mobile (sans boucle)
-    let startX = 0;
-    track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, {passive:true});
-    track.addEventListener("touchend", e => {
-      const endX = e.changedTouches[0].clientX;
-      const dx = endX - startX;
-      if(Math.abs(dx) > 40){ if(dx < 0) nextSlide(); else prevSlide(); }
-    }, {passive:true});
-
-    // INIT (1 seule fois)
-    (function init(){
-      track.innerHTML = slider.map(cardHTML).join("");
-      dots.innerHTML = slider.map((_,i)=>dotHTML(i)).join("");
-      eventsList.innerHTML = vm.map(rowHTML).join("");
-
-      // place hero sur le prochain match (ou en cours)
-      const nowMin = new Date().getHours()*60 + new Date().getMinutes();
-      const notFinished = vm.filter(x => computeStatus(x.time) !== "Terminé");
-      const base = notFinished.length ? notFinished : vm;
-      const next = base.filter(x => computeStatus(x.time) === "En cours" || timeToMinutes(x.time) >= nowMin);
-      const hero = (next.length ? next : base)[0];
-      const found = slider.findIndex(x => x.id === hero.id);
-      idx = found >= 0 ? found : 0;
-
-      update();
-      updateLiveTexts();
-
-      window.addEventListener("resize", update);
-      setInterval(updateLiveTexts, 1000); // ✅ refresh uniquement textes/statuts
-    })();
-  </script>
+    window.addEventListener("resize", updateSliderPosition);
+    setInterval(updateLive, 1000);
+  })();
+</script>
 </body>
 </html>
