@@ -3,278 +3,270 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IMFTX+</title>
+  <title>IMFTX+ — Live</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
     :root{
-      --max: 1400px;
-      --bg:#050505;
+      --bg:#07080b;
+      --glass: rgba(255,255,255,.05);
+      --glass2: rgba(255,255,255,.07);
       --line: rgba(255,255,255,.10);
-      --shadow: 0 28px 110px rgba(0,0,0,.78);
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.52);
+      --shadow: 0 30px 120px rgba(0,0,0,.70);
       --r: 26px;
-      --gap: 18px;
-      --good:#22c55e;
-      --warn:#f59e0b;
+      --r2: 18px;
+      --max: 1180px;
+      --good: #22c55e;
+      --warn: #f59e0b;
+      --dead: rgba(255,255,255,.35);
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      background: radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.04), transparent 55%), var(--bg);
-      color:#fff;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      color:#fff;
+      background:
+        radial-gradient(1200px 800px at 50% -10%, rgba(255,255,255,.09), transparent 60%),
+        radial-gradient(900px 600px at 15% 90%, rgba(255,255,255,.04), transparent 60%),
+        var(--bg);
     }
     a{color:inherit;text-decoration:none}
     img{display:block}
 
+    /* NAVBAR */
     header{
       position:fixed;top:0;left:0;right:0;z-index:50;
-      background: rgba(0,0,0,.78);
-      backdrop-filter: blur(12px);
+      background: rgba(0,0,0,.48);
       border-bottom:1px solid rgba(255,255,255,.06);
+      backdrop-filter: blur(16px);
     }
-    .topbar{max-width:var(--max);margin:0 auto;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
-    .brand{font-weight:900;letter-spacing:.2px;font-size:20px}
-    .icons{display:flex;gap:14px;font-size:18px;align-items:center}
-    .icons a{opacity:.72}
-    .icons a:hover{opacity:1}
-
-    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
-    .hero{padding-top:74px}
-    .heroHead{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:18px 0 12px}
-    .heroHead h1{margin:0;font-size:28px;font-weight:900;letter-spacing:-.3px}
-    .heroHead .sub{opacity:.65;font-weight:800}
-
-    /* SLIDER */
-    .slider{position:relative}
-    .viewport{overflow:hidden}
-    .track{
-      display:flex;gap:var(--gap);
-      transition:transform .55s ease;
-      will-change:transform;
-      padding: 10px 0 10px;
+    .topbar{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
     }
+    .brand{
+      font-weight:900;
+      letter-spacing:.6px;
+      display:flex;align-items:center;gap:10px;
+      opacity:.95;
+    }
+    .brandDot{
+      width:10px;height:10px;border-radius:50%;
+      background: linear-gradient(180deg,#22c55e,#16a34a);
+      box-shadow: 0 0 0 6px rgba(34,197,94,.14);
+    }
+    .rightNav{display:flex;align-items:center;gap:10px}
+    .cta{
+      height:38px;
+      display:inline-flex;align-items:center;gap:10px;
+      padding:0 16px;border-radius:999px;
+      background:#fff;
+      color:#000;
+      font-weight:900;
+      font-size:12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    }
+    .cta:hover{opacity:.95}
+    .iconBtn{
+      width:38px;height:38px;border-radius:14px;
+      display:grid;place-items:center;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      opacity:.9;
+    }
+    .iconBtn:hover{opacity:1;background: rgba(255,255,255,.09)}
+    .iconBtn i{font-size:14px}
+
+    /* PAGE */
+    main{
+      max-width:var(--max);
+      margin:0 auto;
+      padding: 110px 20px 60px;
+    }
+
+    /* HERO */
+    .hero{
+      text-align:center;
+      padding: 28px 0 10px;
+    }
+    h1{
+      margin:0;
+      font-size:72px;
+      font-weight:900;
+      letter-spacing:-2px;
+      line-height:1;
+      text-shadow: 0 30px 90px rgba(0,0,0,.70);
+    }
+    .subtitle{
+      margin:14px auto 0;
+      max-width: 720px;
+      font-size:16px;
+      font-weight:700;
+      opacity:.70;
+      line-height:1.5;
+    }
+
+    /* SECTION */
+    .section{
+      margin-top: 36px;
+    }
+    .sectionHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 16px;
+    }
+    .sectionHead b{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:-.3px;
+    }
+    .sectionDot{
+      width:10px;height:10px;border-radius:50%;
+      background: var(--good);
+      box-shadow: 0 0 0 6px rgba(34,197,94,.14);
+    }
+    .sectionHead span{
+      opacity:.55;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    /* GRID */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    /* CARD */
     .card{
-      flex:0 0 1100px;
-      height: 520px;
       border-radius: var(--r);
-      position:relative;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.12);
+      background: var(--glass);
+      border:1px solid rgba(255,255,255,.10);
       box-shadow: var(--shadow);
+      transition: transform .18s ease, background .18s ease;
+    }
+    .card:hover{
+      transform: translateY(-4px);
+      background: var(--glass2);
+    }
+    .thumb{
+      height: 220px;
       background:#000;
-    }
-
-    /* ✅ BANNIÈRE CLEAN */
-    .cardBg{
-      position:absolute; inset:0;
       background-size: cover;
-      background-position: center;
-      background-repeat:no-repeat;
-      transform: scale(1.01);
-      filter: saturate(1.05) brightness(.95);
+      background-position:center;
+      position:relative;
     }
-
-    /* ✅ Overlay pour lisibilité texte + bouton (sans casser la bannière) */
-    .card::after{
-      content:""; position:absolute; inset:0;
-      background:
-        radial-gradient(900px 560px at 45% 35%, rgba(255,255,255,.05), transparent 62%),
-        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.86) 100%),
-        linear-gradient(90deg, rgba(0,0,0,.45), rgba(0,0,0,.08), rgba(0,0,0,.55));
+    .thumb::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.92));
       pointer-events:none;
     }
 
-    /* Top-left compact info (comme ton modèle) */
-    .cardTop{
-      position:absolute; left:22px; top:18px; z-index:6;
-      display:flex; gap:12px; align-items:flex-start;
-    }
-    .compLogo{
-      width:44px; height:44px; border-radius:12px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      padding:7px;
-      backdrop-filter: blur(10px);
-    }
-    .compLogo img{width:100%;height:100%;object-fit:contain}
-    .topTxt .meta{font-weight:900;opacity:.92}
-    .topTxt .time{margin-top:3px;opacity:.72;font-style:italic;font-weight:700}
-
-    /* Status / countdown chip */
-    .chip{
-      position:absolute; left:22px; top:74px; z-index:7;
-      display:inline-flex; align-items:center; gap:8px;
-      padding:7px 11px; border-radius:999px;
-      background:rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(10px);
-      font-weight:900;
-      font-size:13px;
-    }
-    .dot{width:10px;height:10px;border-radius:50%}
-    .dot.good{background:var(--good)}
-    .dot.warn{background:var(--warn)}
-
-    /* ✅ BOTTOM TEXT (ton besoin) */
-    .cardBottom{
-      position:absolute; left:22px; right:22px; bottom:16px; z-index:7;
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-    }
-    .bottomTitle{
-      font-weight:900;
-      font-size:26px;
-      letter-spacing:-.35px;
-      text-transform:none;
-    }
-    .bottomSub{
-      margin-top:4px;
-      font-weight:800;
-      opacity:.86;
-    }
-    .bottomTime{
-      margin-top:4px;
-      font-size:13px;
-      font-weight:700;
-      opacity:.65;
-      font-style:italic;
-    }
-
-    .watchBtn{
-      display:inline-flex;align-items:center;gap:12px;
-      height:60px;padding:10px 18px;border-radius:999px;
-      background: linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,.12));
-      border:1px solid rgba(255,255,255,.18);
-      font-weight:900;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.16);
-    }
-    .watchBtn:hover{background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.14));}
-    .play{
-      width:44px;height:44px;border-radius:50%;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      display:grid;place-items:center;
-      font-size:14px;
-    }
-
-    .arrow{
-      position:absolute; top:50%; transform:translateY(-50%);
-      width:56px;height:56px;border-radius:50%;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(10px);
-      display:grid;place-items:center;
-      z-index:10;
-      cursor:pointer;
-      user-select:none;
-    }
-    .arrow:hover{background:rgba(0,0,0,.48)}
-    .arrow span{font-size:34px;line-height:1}
-    .arrow.left{left:18px}
-    .arrow.right{right:18px}
-
-    .dots{display:flex;justify-content:center;gap:8px;margin: 6px 0 18px}
-    .d{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.10);cursor:pointer;transition:.2s}
-    .d.active{width:40px;background:rgba(255,255,255,.86)}
-
-    /* À venir rail */
-    .section{max-width:var(--max);margin:0 auto;padding: 0 18px 16px}
-    .sectionHead{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 12px}
-    .sectionHead h2{margin:0;font-size:22px;font-weight:900}
-    .sectionHead span{opacity:.6;font-size:12px}
-    .rail{display:flex;gap:14px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
-    .rail::-webkit-scrollbar{display:none}
-    .mini{
-      flex:0 0 auto;width:320px;border-radius:18px;overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      box-shadow:0 18px 55px rgba(0,0,0,.55);
-      transition:.15s;
-    }
-    .mini:hover{transform:translateY(-2px)}
-    .miniImg{
-      height:170px;
-      background-size:cover;background-position:center;background-repeat:no-repeat;
-      position:relative;
-    }
-    .miniImg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.86))}
-    .miniTop{
-      position:absolute;top:10px;left:10px;right:10px;z-index:2;
-      display:flex;justify-content:space-between;gap:10px
-    }
-    .pill{
+    /* STATUS BADGE */
+    .status{
+      position:absolute; left:14px; top:14px;
+      z-index:2;
       display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter:blur(10px);
-      font-size:12px;font-weight:900;
+      padding:7px 12px;border-radius:999px;
+      background: rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:900;
+      font-size:12px;
+      backdrop-filter: blur(10px);
+    }
+    .statusDot{width:9px;height:9px;border-radius:50%}
+    .statusDot.good{background: var(--good)}
+    .statusDot.warn{background: var(--warn)}
+    .statusDot.dead{background: var(--dead)}
+
+    /* CARD BODY */
+    .body{padding: 16px 16px 18px}
+    .title{
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:-.3px;
       white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
-    .miniBody{padding:12px 12px 14px}
-    .miniTitle{font-size:16px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .miniSub{margin-top:4px;font-size:12px;opacity:.65;font-style:italic;font-weight:800}
+    .meta{
+      margin-top:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      font-size:13px;
+      font-weight:800;
+      opacity:.72;
+    }
+    .btn{
+      margin-top:14px;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      height:46px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:900;
+      font-size:13px;
+    }
+    .btn:hover{background: rgba(255,255,255,.14)}
 
-    /* Events list */
-    .listWrap{max-width:var(--max);margin:0 auto;padding: 0 18px 40px}
-    .row{
-      background:#2f2f2f;
-      border-radius:14px;
-      padding:14px 16px;
-      display:flex;align-items:center;justify-content:space-between;
-      gap:14px;
-      margin-bottom:10px;
-      box-shadow: 0 18px 50px rgba(0,0,0,.42);
-      border:1px solid rgba(255,255,255,.06);
+    /* EMPTY MESSAGE */
+    .empty{
+      padding: 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      opacity:.65;
+      font-weight:800;
     }
-    .rowL{display:flex;align-items:center;gap:12px;min-width:0}
-    .rowComp{
-      width:44px;height:44px;border-radius:12px;
-      background:rgba(0,0,0,.32);
-      border:1px solid rgba(255,255,255,.12);
-      padding:8px;flex:0 0 auto;
-    }
-    .rowComp img{width:100%;height:100%;object-fit:contain}
-    .rowTxt{min-width:0}
-    .rowTxt .t{font-weight:900;font-size:18px;line-height:1.1}
-    .rowTxt .m{opacity:.72;font-style:italic;font-weight:800;margin-top:4px}
 
-    .rowMid{display:flex;align-items:center;gap:18px;justify-content:center;flex:1;min-width:0}
-    .rowTeam{display:flex;align-items:center;gap:10px;min-width:0}
-    .rowTeam b{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
-    .rowLogo{
-      width:40px;height:40px;border-radius:12px;
-      background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.12);
-      padding:7px;flex:0 0 auto;
+    /* FOOTER */
+    footer{
+      margin-top:56px;
+      border-top:1px solid rgba(255,255,255,.06);
+      padding: 18px 0;
+      opacity:.55;
+      font-size:12px;
+      display:flex;
+      justify-content:center;
+      gap:20px;
+      flex-wrap:wrap;
     }
-    .rowLogo img{width:100%;height:100%;object-fit:contain}
-    .vsPill{
-      padding:6px 10px;border-radius:999px;
-      background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.12);
-      font-weight:900;opacity:.85;
-    }
-    .rowR{display:flex;align-items:center;gap:12px;flex:0 0 auto}
-    .sport{opacity:.85;font-weight:900;font-size:12px}
+    footer a{opacity:.75}
+    footer a:hover{opacity:1}
 
-    footer{border-top:1px solid rgba(255,255,255,.06);padding:18px 0;text-align:center;opacity:.55;font-size:12px}
-
-    @media (max-width: 1180px){
-      .card{flex-basis: calc(100vw - 36px); height: 420px;}
+    @media(max-width:1000px){
+      .grid{grid-template-columns: repeat(2, 1fr)}
+      h1{font-size:56px}
     }
-    @media (max-width: 980px){
-      .arrow{display:none}
-      .card{height:360px}
-      .row{flex-direction:column;align-items:stretch}
-      .rowMid{justify-content:flex-start}
-      .rowR{justify-content:space-between}
-      .rowTeam b{max-width:160px}
-      .mini{width:280px}
-      .miniImg{height:160px}
+    @media(max-width:650px){
+      .grid{grid-template-columns: 1fr}
+      h1{font-size:44px}
+      .subtitle{font-size:14px}
     }
   </style>
 </head>
@@ -282,98 +274,84 @@
 <body>
 <header>
   <div class="topbar">
-    <div class="brand">IMFTX+</div>
-    <div class="icons">
-      <a href="#" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
-      <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-      <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+    <div class="brand"><span class="brandDot"></span> IMFTX+</div>
+
+    <div class="rightNav">
+      <a href="#" class="cta"><i class="fa-solid fa-bolt"></i> ACHÈTE TON IPTV</a>
+      <a class="iconBtn" href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+      <a class="iconBtn" href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+      <a class="iconBtn" href="#" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
     </div>
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap">
-    <div class="heroHead">
-      <div>
-        <h1>À la Une</h1>
-        <div class="sub">Sélection du jour</div>
-      </div>
-      <div class="sub" id="nowLabel"></div>
+<main>
+  <section class="hero">
+    <h1>IMFTX+</h1>
+    <p class="subtitle">
+      Une interface premium pour accéder rapidement aux matchs en direct.
+      CAN, Premier League et plus — en un clic.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="sectionHead">
+      <b><span class="sectionDot"></span> EN DIRECT</b>
+      <span>Matchs en cours</span>
     </div>
+    <div class="grid" id="liveGrid"></div>
+  </section>
 
-    <div class="slider">
-      <div class="viewport" id="viewport">
-        <div class="track" id="track"></div>
-      </div>
-
-      <div class="arrow left" onclick="prevSlide()"><span>‹</span></div>
-      <div class="arrow right" onclick="nextSlide()"><span>›</span></div>
-
-      <div class="dots" id="dots"></div>
+  <section class="section">
+    <div class="sectionHead">
+      <b><span class="sectionDot" style="background:var(--warn); box-shadow:0 0 0 6px rgba(245,158,11,.14)"></span> À VENIR</b>
+      <span>Matchs programmés</span>
     </div>
-  </div>
-</section>
+    <div class="grid" id="upGrid"></div>
+  </section>
 
-<section class="section">
-  <div class="sectionHead">
-    <h2>À venir</h2>
-    <span>Programme</span>
-  </div>
-  <div class="rail" id="upcoming"></div>
-</section>
+  <section class="section">
+    <div class="sectionHead">
+      <b><span class="sectionDot" style="background:rgba(255,255,255,.38); box-shadow:0 0 0 6px rgba(255,255,255,.08)"></span> TOUS LES MATCHS</b>
+      <span>Programme complet</span>
+    </div>
+    <div class="grid" id="allGrid"></div>
+  </section>
 
-<section class="listWrap">
-  <div class="sectionHead">
-    <h2>Événements</h2>
-    <span>Matchs du jour</span>
-  </div>
-  <div id="events"></div>
-</section>
-
-<footer>IMFTX+ — N°1 de la diffusion FR</footer>
+  <footer>
+    <a href="#">Mentions légales</a>
+    <a href="#">CGU</a>
+    <a href="#">Confidentialité</a>
+    <a href="#">DMCA</a>
+  </footer>
+</main>
 
 <script>
   function watchUrl(m){ return `pages/${m.id}.html`; }
 
-  const CAN_LOGO = "https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png";
-  const PL_LOGO  = "https://upload.wikimedia.org/wikipedia/fr/thumb/f/f2/Premier_League_Logo.svg/250px-Premier_League_Logo.svg.png";
-
-  // ✅ Tes matchs
   const MATCHES = [
     {
       id:"nigeria-tanzania",
-      time:"18:30",
-      comp:"Coupe d'Afrique",
-      compIcon: CAN_LOGO,
+      title:"NIGERIA - TANZANIE",
+      comp:"CAN",
       sport:"Football",
-      a:"Nigeria",
-      b:"Tanzania",
-      aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/256px-Flag_of_Nigeria.svg.png",
-      bLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/256px-Flag_of_Tanzania.svg.png",
+      time:"18:30",
       banner:"https://empire-sport.site/upload/events/erilvwbktz7ugfcei9tr90bnnvlauf.jpg"
     },
     {
       id:"arsenal-crystal-palace",
-      time:"21:00",
+      title:"ARSENAL - CRYSTAL PALACE",
       comp:"Premier League",
-      compIcon: PL_LOGO,
       sport:"Football",
-      a:"Arsenal",
-      b:"Crystal Palace",
-      aLogo:"https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/256px-Arsenal_FC.svg.png",
-      bLogo:"https://upload.wikimedia.org/wikipedia/en/thumb/0/0c/Crystal_Palace_FC_logo.svg/256px-Crystal_Palace_FC_logo.svg.png",
+      time:"21:00",
       banner:"https://empire-sport.site/upload/banners/burnley-vs-arsenal_01.png"
     },
     {
       id:"tunisia-uganda",
-      time:"21:00",
-      comp:"Coupe d'Afrique",
-      compIcon: CAN_LOGO,
+      title:"TUNISIE - OUGANDA",
+      comp:"CAN",
       sport:"Football",
-      a:"Tunisia",
-      b:"Uganda",
-      aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/256px-Flag_of_Tunisia.svg.png",
-      bLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Flag_of_Uganda.svg/256px-Flag_of_Uganda.svg.png",
+      time:"21:00",
       banner:"https://empire-sport.site/upload/events/dwofkbauc8qedspz43c0qbylnx9kll.jpg"
     }
   ];
@@ -382,255 +360,67 @@
 
   function timeToMinutes(hhmm){
     const [h,m] = hhmm.split(":").map(Number);
-    return (h*60)+(m||0);
+    return h*60 + m;
   }
 
-  function computeStatus(hhmm){
+  function statusOf(hhmm){
     const now = new Date();
     const nowMin = now.getHours()*60 + now.getMinutes();
     const start = timeToMinutes(hhmm);
     const end = start + MATCH_DURATION_MIN;
-    if(nowMin < start) return "À venir";
-    if(nowMin >= start && nowMin < end) return "En cours";
-    return "Terminé";
+    if(nowMin < start) return "UP";
+    if(nowMin >= start && nowMin < end) return "LIVE";
+    return "DONE";
   }
 
-  function countdownTo(hhmm){
-    const now = new Date();
-    const target = new Date(now);
-    const [h,m] = hhmm.split(":").map(Number);
-    target.setHours(h, m, 0, 0);
-    const diff = target.getTime() - now.getTime();
-    if(diff <= 0) return "";
-    const totalSec = Math.floor(diff/1000);
-    const hh = Math.floor(totalSec/3600);
-    const mm = Math.floor((totalSec%3600)/60);
-    const ss = totalSec%60;
-    return `${hh}h ${String(mm).padStart(2,"0")}m ${String(ss).padStart(2,"0")}s`;
+  function badge(st){
+    if(st==="LIVE") return {label:"LIVE", dot:"good"};
+    if(st==="UP")   return {label:"À VENIR", dot:"warn"};
+    return {label:"TERMINÉ", dot:"dead"};
   }
-
-  function todayLabel(hhmm){ return `Aujourd'hui · ${hhmm}`; }
-
-  const vm = MATCHES.slice().sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time));
-
-  const viewport = document.getElementById("viewport");
-  const track = document.getElementById("track");
-  const dots = document.getElementById("dots");
-  const events = document.getElementById("events");
-  const upcoming = document.getElementById("upcoming");
-  const nowLabel = document.getElementById("nowLabel");
-
-  let idx = 0;
-
-  function dotHTML(i){ return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`; }
 
   function cardHTML(m){
+    const st = statusOf(m.time);
+    const b = badge(st);
+
     return `
-      <div class="card" data-id="${m.id}">
-        <div class="cardBg" style="background-image:url('${m.banner}')"></div>
-
-        <div class="cardTop">
-          <div class="compLogo"><img src="${m.compIcon}" alt=""></div>
-          <div class="topTxt">
-            <div class="meta">${m.comp}</div>
-            <div class="time">${todayLabel(m.time)}</div>
+      <a class="card" href="${watchUrl(m)}">
+        <div class="thumb" style="background-image:url('${m.banner}')">
+          <div class="status">
+            <span class="statusDot ${b.dot}"></span>
+            ${b.label}
           </div>
         </div>
 
-        <div class="chip">
-          <span class="dot warn" data-chipdot="${m.id}"></span>
-          <span data-chiptext="${m.id}">À venir</span>
-        </div>
-
-        <div class="cardBottom">
-          <div>
-            <div class="bottomTitle">${m.a} vs ${m.b}</div>
-            <div class="bottomSub">${m.comp}</div>
-            <div class="bottomTime">${todayLabel(m.time)}</div>
+        <div class="body">
+          <div class="title">${m.title}</div>
+          <div class="meta">
+            <span>${m.sport} · ${m.comp}</span>
+            <span>${m.time}</span>
           </div>
-
-          <a class="watchBtn" href="${watchUrl(m)}" rel="noopener">
-            <span class="play">▶</span>
-            <span>REGARDER</span>
-          </a>
-        </div>
-      </div>
-    `;
-  }
-
-  function rowHTML(m){
-    return `
-      <a class="row" href="${watchUrl(m)}" rel="noopener">
-        <div class="rowL">
-          <span class="rowComp"><img src="${m.compIcon}" alt=""></span>
-          <div class="rowTxt">
-            <div class="t">${m.a} - ${m.b}</div>
-            <div class="m">${m.comp} · ${todayLabel(m.time)}</div>
-          </div>
-        </div>
-
-        <div class="rowMid">
-          <div class="rowTeam">
-            <span class="rowLogo"><img src="${m.aLogo}" alt=""></span>
-            <b>${m.a}</b>
-          </div>
-          <span class="vsPill">vs</span>
-          <div class="rowTeam">
-            <b>${m.b}</b>
-            <span class="rowLogo"><img src="${m.bLogo}" alt=""></span>
-          </div>
-        </div>
-
-        <div class="rowR">
-          <span class="pill">
-            <span class="dot warn" data-pilldot="${m.id}"></span>
-            <span data-pilltext="${m.id}">À venir</span>
-          </span>
-          <span class="sport">${m.sport}</span>
+          <div class="btn">REGARDER <i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
     `;
   }
 
-  function miniHTML(m){
-    return `
-      <a class="mini" href="${watchUrl(m)}" rel="noopener">
-        <div class="miniImg" style="background-image:url('${m.banner}')">
-          <div class="miniTop">
-            <span class="pill">
-              <span class="dot warn" data-minidot="${m.id}"></span>
-              <span data-minitext="${m.id}">À venir</span>
-            </span>
-            <span class="pill">${m.sport}</span>
-          </div>
-        </div>
-        <div class="miniBody">
-          <div class="miniTitle">${m.a} - ${m.b}</div>
-          <div class="miniSub">${m.comp} · ${todayLabel(m.time)}</div>
-        </div>
-      </a>
-    `;
+  function render(){
+    const all = MATCHES.slice().sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time));
+    const live = all.filter(m => statusOf(m.time) === "LIVE");
+    const up = all.filter(m => statusOf(m.time) === "UP");
+
+    document.getElementById("liveGrid").innerHTML =
+      live.length ? live.map(cardHTML).join("") : `<div class="empty">Aucun match en direct pour le moment.</div>`;
+
+    document.getElementById("upGrid").innerHTML =
+      up.length ? up.map(cardHTML).join("") : `<div class="empty">Aucun match à venir.</div>`;
+
+    document.getElementById("allGrid").innerHTML =
+      all.length ? all.map(cardHTML).join("") : `<div class="empty">Aucun match disponible.</div>`;
   }
 
-  function updateDots(){
-    for(let i=0;i<vm.length;i++){
-      const el = document.getElementById("d"+i);
-      if(el) el.classList.toggle("active", i===idx);
-    }
-  }
-
-  function updateSliderPosition(){
-    const first = document.querySelector(".card");
-    if(!first) return;
-
-    const cardW = first.getBoundingClientRect().width;
-    const vw = viewport.getBoundingClientRect().width;
-    const centerOffset = Math.max(18, (vw - cardW)/2);
-    const peekBias = Math.min(130, vw * 0.10);
-    const x = -(idx * (cardW + 18)) + centerOffset - peekBias;
-
-    track.style.transform = `translateX(${x}px)`;
-    updateDots();
-  }
-
-  function nextSlide(){ idx = Math.min(idx + 1, vm.length - 1); updateSliderPosition(); }
-  function prevSlide(){ idx = Math.max(idx - 1, 0); updateSliderPosition(); }
-  function goTo(i){ idx = Math.max(0, Math.min(i, vm.length - 1)); updateSliderPosition(); }
-  window.nextSlide = nextSlide;
-  window.prevSlide = prevSlide;
-  window.goTo = goTo;
-
-  function buildUpcoming(){
-    const up = vm.filter(m => computeStatus(m.time) === "À venir");
-    upcoming.innerHTML = up.map(miniHTML).join("");
-  }
-
-  function updateLive(){
-    const now = new Date();
-    nowLabel.textContent = `Heure locale : ${String(now.getHours()).padStart(2,"0")}:${String(now.getMinutes()).padStart(2,"0")}`;
-
-    for(const m of vm){
-      const st = computeStatus(m.time);
-
-      // slider chip
-      const chipText = document.querySelector(`[data-chiptext="${m.id}"]`);
-      const chipDot  = document.querySelector(`[data-chipdot="${m.id}"]`);
-      if(chipText && chipDot){
-        let txt = "À venir";
-        if(st === "En cours") txt = "En cours";
-        else if(st === "Terminé") txt = "Terminé";
-        else txt = countdownTo(m.time) || "À venir";
-        chipText.textContent = txt;
-
-        chipDot.classList.toggle("good", st === "En cours");
-        chipDot.classList.toggle("warn", st !== "En cours");
-      }
-
-      // list pill
-      const pillText = document.querySelector(`[data-pilltext="${m.id}"]`);
-      const pillDot  = document.querySelector(`[data-pilldot="${m.id}"]`);
-      if(pillText && pillDot){
-        let txt = "À venir";
-        if(st === "En cours") txt = "En cours";
-        else if(st === "Terminé") txt = "Terminé";
-        else txt = countdownTo(m.time) || "À venir";
-        pillText.textContent = txt;
-
-        pillDot.classList.toggle("good", st === "En cours");
-        pillDot.classList.toggle("warn", st !== "En cours");
-      }
-
-      // mini pills
-      const miniText = document.querySelector(`[data-minitext="${m.id}"]`);
-      const miniDot  = document.querySelector(`[data-minidot="${m.id}"]`);
-      if(miniText && miniDot){
-        let txt = "À venir";
-        if(st === "En cours") txt = "En cours";
-        else if(st === "Terminé") txt = "Terminé";
-        else txt = countdownTo(m.time) || "À venir";
-        miniText.textContent = txt;
-
-        miniDot.classList.toggle("good", st === "En cours");
-        miniDot.classList.toggle("warn", st !== "En cours");
-      }
-    }
-  }
-
-  // Swipe mobile
-  let startX = 0;
-  track.addEventListener("touchstart", e => { startX = e.touches[0].clientX; }, {passive:true});
-  track.addEventListener("touchend", e => {
-    const endX = e.changedTouches[0].clientX;
-    const dx = endX - startX;
-    if(Math.abs(dx) > 40){
-      if(dx < 0) nextSlide(); else prevSlide();
-    }
-  }, {passive:true});
-
-  (function init(){
-    track.innerHTML = vm.map(cardHTML).join("");
-    dots.innerHTML = vm.map((_,i)=>dotHTML(i)).join("");
-    events.innerHTML = vm.map(rowHTML).join("");
-
-    // start on next match/live
-    const nowMin = new Date().getHours()*60 + new Date().getMinutes();
-    const notFinished = vm.filter(x => computeStatus(x.time) !== "Terminé");
-    const base = notFinished.length ? notFinished : vm;
-    const next = base.filter(x => computeStatus(x.time) === "En cours" || timeToMinutes(x.time) >= nowMin);
-    const hero = (next.length ? next : base)[0];
-    idx = Math.max(0, vm.findIndex(x => x.id === hero.id));
-
-    buildUpcoming();
-    updateSliderPosition();
-    updateLive();
-
-    window.addEventListener("resize", updateSliderPosition);
-
-    setInterval(() => {
-      updateLive();
-      buildUpcoming();
-    }, 1000);
-  })();
+  render();
+  setInterval(render, 15000);
 </script>
 </body>
 </html>
