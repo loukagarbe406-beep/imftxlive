@@ -63,17 +63,6 @@
 
   <!-- PLAYER -->
   <section class="player-box relative w-full aspect-video" id="playerContainer">
-
-    <!-- Overlay (click to play) -->
-    <div id="overlay"
-         class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
-      <button onclick="loadVideo(1)"
-              class="px-8 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
-        ▶ LANCER LE STREAM
-      </button>
-      <p class="mt-4 text-white/50 font-semibold text-sm">Choisis un player si le 1 ne marche pas</p>
-    </div>
-
     <div id="videoTarget" class="w-full h-full"></div>
   </section>
 
@@ -95,8 +84,7 @@
 
   <!-- NOTE -->
   <section class="mt-8 p-5 rounded-2xl bg-white/5 border border-white/10 text-white/60 font-semibold">
-    Si un player est bloqué, passe au suivant.  
-    Sur mobile, mets en plein écran pour une meilleure qualité.
+    Si un player ne marche pas, passe au suivant.
   </section>
 
 </main>
@@ -120,11 +108,9 @@
   }
 
   function loadVideo(id){
-    document.getElementById("overlay").style.display = "none";
     setActive(id);
 
     const target = document.getElementById("videoTarget");
-
     target.innerHTML = `
       <iframe
         src="${SOURCES[id]}"
@@ -139,6 +125,9 @@
       </iframe>
     `;
   }
+
+  // ✅ Chargement automatique Player 1 au chargement de la page
+  loadVideo(1);
 </script>
 
 </body>
