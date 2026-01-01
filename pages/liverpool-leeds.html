@@ -13,37 +13,28 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background: radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.07), transparent 60%),
-                  linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
       color:#fff;
     }
-    .player-shell{
+    .player-box{
       border-radius:18px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.06);
       background: rgba(255,255,255,.03);
-      box-shadow: 0 25px 90px rgba(0,0,0,.65);
+      box-shadow: 0 25px 85px rgba(0,0,0,.65);
     }
-    iframe{
-      width:100%;height:100%;
-      border:0;display:block;
-      background:#000;
-    }
+    iframe{width:100%;height:100%;border:0;background:#000;display:block}
   </style>
 </head>
 
 <body>
 
-<!-- TOPBAR -->
-<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+<nav class="sticky top-0 z-40 bg-transparent backdrop-blur-sm border-b border-zinc-800/40">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(52,211,153,.15)]"></span>
-      <div class="text-2xl font-extrabold tracking-wide">IMFTX+</div>
-    </div>
+    <div class="text-3xl font-extrabold">IMFTX+</div>
 
     <a href="../index.html"
-       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-extrabold text-sm">
+       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
       <i class="fa-solid fa-arrow-left"></i> Retour
     </a>
   </div>
@@ -51,11 +42,10 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- MATCH HEADER -->
-  <section class="mb-7 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-    <div class="text-left">
+  <section class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+    <div>
       <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight" id="matchTitle">LIVERPOOL - LEEDS</h1>
-      <p class="mt-2 text-white/60 font-semibold" id="matchMeta">Premier League · 18:30</p>
+      <p class="mt-2 text-white/60 font-semibold" id="matchMeta">Match · 18:30</p>
     </div>
 
     <div class="flex items-center gap-3">
@@ -69,94 +59,78 @@
     </div>
   </section>
 
-  <!-- PLAYER -->
-  <section class="player-shell w-full aspect-video relative">
+  <section class="player-box relative w-full aspect-video" id="playerContainer">
 
-    <!-- Top overlay bar -->
-    <div class="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/70 to-black/0 pointer-events-none">
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 border border-white/10 text-xs font-extrabold">
-        <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span id="statusLabel">LIVE</span>
-      </div>
-
-      <div class="hidden md:inline-flex items-center gap-2 text-white/65 text-xs font-bold">
-        <i class="fa-solid fa-shield-halved"></i>
-        Popups bloquées côté page
-      </div>
+    <div id="overlay"
+         class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
+      <button onclick="loadVideo(1)"
+              class="px-8 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
+        ▶ LANCER LE STREAM
+      </button>
+      <p class="mt-4 text-white/50 font-semibold text-sm">Choisis un player si le 1 ne marche pas</p>
     </div>
 
     <div id="videoTarget" class="w-full h-full"></div>
   </section>
 
-  <!-- PLAYER BUTTONS -->
   <section class="mt-5 grid grid-cols-3 gap-3">
     <button id="btn1" onclick="loadVideo(1)"
-      class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95">
+            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
       PLAYER 1
     </button>
     <button id="btn2" onclick="loadVideo(2)"
-      class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15">
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
       PLAYER 2
     </button>
     <button id="btn3" onclick="loadVideo(3)"
-      class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15">
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
       PLAYER 3
     </button>
   </section>
 
-  <!-- INFO -->
-  <section class="mt-8 p-5 rounded-2xl bg-white/5 border border-white/10 text-white/65 font-semibold">
-    Si un player est bloqué, passe au suivant.
-    <span class="block mt-1 text-white/45 text-sm">
-      Sur mobile, si l’intégration est bloquée, le stream s’ouvre automatiquement.
-    </span>
+  <div id="externalLink" class="hidden mt-4 text-center">
+      <a id="directLink" href="#" target="_blank" class="text-amber-400 underline font-bold text-sm">
+          Le lecteur ne s'affiche pas ? Cliquez ici pour ouvrir le lien direct.
+      </a>
+  </div>
+
+  <section class="mt-8 p-5 rounded-2xl bg-white/5 border border-white/10 text-white/60 font-semibold">
+    Si un player est bloqué, passe au suivant.  
+    Sur mobile, mets en plein écran pour une meilleure qualité.
   </section>
 
 </main>
 
 <script>
-  // ✅ SOURCES PLAYERS
   const SOURCES = {
     1: "https://bolaloca.my/player/4/2",
     2: "https://bolaloca.my/player/2/2",
     3: "https://bolaloca.my/player/3/2"
   };
 
-  // ✅ Detect mobile / safari iOS
-  function isMobile(){
-    return window.matchMedia("(max-width: 900px)").matches
-      || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  }
-
-  // ✅ Buttons active state
   function setActive(id){
     [1,2,3].forEach(n=>{
       const b = document.getElementById("btn"+n);
-      if(!b) return;
       if(n===id){
-        b.className = "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95";
-      } else {
-        b.className = "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15";
+        b.className = "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base";
+      }else{
+        b.className = "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
       }
     });
   }
 
-  // ✅ Open direct = only ONE navigation (prevents random popups)
-  function openDirect(id){
-    window.location.href = SOURCES[id];
-  }
-
-  // ✅ Load iframe on PC, fallback direct on mobile
   function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("externalLink").classList.remove("hidden");
+    document.getElementById("directLink").href = SOURCES[id];
     setActive(id);
 
-    // Mobile => direct open (best way to avoid "embedding blocked")
-    if(isMobile()){
-      openDirect(id);
-      return;
-    }
-
     const target = document.getElementById("videoTarget");
+
+    // Modification des attributs pour le mobile :
+    // 1. Suppression du sandbox trop restrictif
+    // 2. Ajout de allow-top-navigation pour éviter certains messages d'erreur
+    // 3. Changement de la politique de Referrer
     target.innerHTML = `
       <iframe
         src="${SOURCES[id]}"
@@ -166,26 +140,11 @@
         scrolling="no"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-        referrerpolicy="no-referrer"
-        sandbox="allow-scripts allow-same-origin allow-forms">
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
       </iframe>
     `;
-
-    // If embed is blocked => fallback direct (PC rare but possible)
-    setTimeout(() => {
-      const iframe = target.querySelector("iframe");
-      if(!iframe) return;
-      try {
-        // Access triggers error if cross-blocked
-        iframe.contentWindow.location.href;
-      } catch(e){
-        openDirect(id);
-      }
-    }, 2200);
   }
-
-  // ✅ Autoload player 1
-  window.addEventListener("load", () => loadVideo(1));
 </script>
 
 </body>
