@@ -34,10 +34,7 @@
 <!-- NAV -->
 <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(52,211,153,.15)]"></span>
-      <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
-    </div>
+    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
     <a href="../index.html"
        class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
@@ -48,56 +45,31 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- MATCH INFO -->
-  <section class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
-    <div>
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase" id="matchTitle">
-        LIVERPOOL - LEEDS
-      </h1>
-      <p class="mt-2 text-white/60 font-semibold" id="matchMeta">Premier League · 18:30</p>
+  <!-- HEADER CENTER -->
+  <header class="text-center mb-8">
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
+      LIVERPOOL - LEEDS
+    </h1>
+    <p class="mt-2 text-white/55 font-semibold">
+      Premier League · 18:30
+    </p>
+
+    <div class="mt-4 flex items-center justify-center gap-4">
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg" alt="Liverpool">
+      <span class="text-white/40 font-extrabold">VS</span>
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg" alt="Leeds">
     </div>
+  </header>
 
-    <div class="flex items-center gap-3">
-      <img class="w-12 h-12 object-contain drop-shadow-lg"
-           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg"
-           alt="Liverpool">
-      <span class="text-white/40 font-bold">vs</span>
-      <img class="w-12 h-12 object-contain drop-shadow-lg"
-           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg"
-           alt="Leeds">
+  <!-- ✅ VIEWERS (CENTERED + SIMPLE) -->
+  <div class="flex justify-center mb-4">
+    <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
+      <span class="text-white/70">👤</span>
+      <span id="viewerCount">0</span>
     </div>
-  </section>
-
-  <!-- TOP ROW -->
-  <section class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-
-    <!-- LIVE badge -->
-    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-black/45 border border-white/10 text-sm font-extrabold">
-      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      LIVE
-      <span class="text-white/35">•</span>
-      <span class="text-white/70 font-bold">Streaming</span>
-    </div>
-
-    <!-- ✅ BIG VIEWERS BADGE -->
-    <div id="viewerBadge"
-      class="flex items-center gap-3 px-5 py-3 rounded-2xl bg-black/50 border border-white/10 shadow-[0_0_0_10px_rgba(0,0,0,.25)]">
-
-      <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/30">
-        <i class="fa-solid fa-eye text-emerald-300 text-xl"></i>
-        <span class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
-      </div>
-
-      <div class="leading-tight">
-        <div class="text-xs uppercase tracking-wider text-white/50 font-extrabold">Spectateurs</div>
-        <div class="text-2xl font-black">
-          <span id="viewerCount">--</span>
-          <span class="text-white/35 text-sm font-bold ml-1">en direct</span>
-        </div>
-      </div>
-    </div>
-
-  </section>
+  </div>
 
   <!-- PLAYER -->
   <section class="player-box relative w-full aspect-video">
@@ -138,22 +110,16 @@
     </a>
   </div>
 
-  <!-- NOTE -->
-  <section class="mt-8 p-5 rounded-2xl bg-white/5 border border-white/10 text-white/60 font-semibold">
-    Le compteur “Spectateurs” est réel (Firebase) et se met à jour automatiquement.
-  </section>
-
 </main>
 
-<!-- ✅ Firebase compat (pas module) -->
+<!-- Firebase compat -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
   /* ---------------------------
-     1) VIEWERS FIREBASE
+     VIEWERS FIREBASE
      --------------------------- */
-
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -171,7 +137,6 @@
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const viewerCountEl = document.getElementById("viewerCount");
-  const viewerBadgeEl = document.getElementById("viewerBadge");
 
   function formatViewers(n){
     if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
@@ -179,11 +144,7 @@
     return String(n);
   }
 
-  // Si la page est ouverte en file:// => Firebase peut être limité
-  if(location.protocol === "file:"){
-    viewerCountEl.textContent = "0";
-    viewerBadgeEl.classList.add("opacity-60");
-  } else {
+  if(location.protocol !== "file:"){
     const sessionRef = db.ref(`streams/${MATCH_ID}/sessions/${sessionId}`);
     const sessionsRoot = db.ref(`streams/${MATCH_ID}/sessions`);
 
@@ -194,7 +155,6 @@
 
     sessionRef.onDisconnect().remove();
 
-    // heartbeat : rend le compteur plus stable
     setInterval(() => {
       sessionRef.update({ lastSeen: firebase.database.ServerValue.TIMESTAMP });
     }, 20000);
@@ -202,17 +162,12 @@
     sessionsRoot.on("value", snap => {
       const sessions = snap.val() || {};
       viewerCountEl.textContent = formatViewers(Object.keys(sessions).length);
-      viewerBadgeEl.classList.remove("opacity-60");
-    }, err => {
-      viewerCountEl.textContent = "0";
-      viewerBadgeEl.classList.add("opacity-60");
     });
   }
 
   /* ---------------------------
-     2) PLAYER
+     PLAYER
      --------------------------- */
-
   const SOURCES = {
     1: "https://bolaloca.my/player/4/2",
     2: "https://bolaloca.my/player/2/2",
@@ -251,7 +206,6 @@
       </iframe>
     `;
 
-    // fallback lien direct si embed bloqué
     setTimeout(() => {
       const iframe = document.getElementById("streamFrame");
       if(!iframe) return;
