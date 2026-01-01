@@ -1,104 +1,220 @@
 <!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <title>IMFTX+ — Live</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;900&display=swap" rel="stylesheet">
-    <style>
-        body { margin: 0; background: #000; color: #fff; font-family: 'Outfit', sans-serif; }
-        .container { max-width: 800px; margin: 0 auto; padding: 10px; }
-        
-        /* PLAYER */
-        .player-area { 
-            width: 100%; aspect-ratio: 16/9; 
-            background: #080808; border-radius: 12px; 
-            overflow: hidden; position: relative;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        iframe { width: 100%; height: 100%; border: none; }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMFTX+ — Stream</title>
 
-        .overlay {
-            position: absolute; inset: 0; z-index: 10;
-            background: #000; display: grid; place-items: center;
-        }
-        .play-btn {
-            background: #fff; color: #000; border: none; padding: 14px 28px;
-            border-radius: 50px; font-weight: 900; cursor: pointer;
-        }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-        /* SERVEURS */
-        .server-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 15px 0; }
-        .s-btn { 
-            background: #111; border: 1px solid #222; color: #fff; 
-            padding: 12px; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 12px;
-        }
-        .s-btn.active { background: #fff; color: #000; border-color: #fff; }
-
-        /* MATCH INFO */
-        .info { 
-            background: #111; padding: 15px; border-radius: 15px; 
-            display: flex; align-items: center; gap: 12px;
-        }
-        .logo { width: 40px; height: 40px; object-fit: contain; }
-        .info b { display: block; font-size: 16px; }
-        .info span { font-size: 12px; opacity: 0.5; }
-    </style>
+  <style>
+    html,body{
+      height:100%;margin:0;
+      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:
+        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      color:#fff;
+    }
+    .player-box{
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 25px 90px rgba(0,0,0,.72);
+    }
+    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+  </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="player-area" id="pBox">
-        <div class="overlay" id="ovl">
-            <button class="play-btn" onclick="start(1)">LANCER LE MATCH</button>
-        </div>
-        <div id="video" style="width:100%;height:100%"></div>
+<!-- NAV -->
+<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
+
+    <a href="../index.html"
+       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
+      <i class="fa-solid fa-arrow-left"></i> Retour
+    </a>
+  </div>
+</nav>
+
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
+
+  <!-- HEADER CENTER -->
+  <header class="text-center mb-8">
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
+      SUNDERLAND - MAN CITY
+    </h1>
+    <p class="mt-2 text-white/55 font-semibold">
+      Premier League · 21:00
+    </p>
+
+    <div class="mt-4 flex items-center justify-center gap-4">
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Sunderland_A.F.C._logo.svg"
+           alt="Sunderland">
+      <span class="text-white/40 font-extrabold">VS</span>
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Manchester_City_FC_badge.svg"
+           alt="Manchester City">
+    </div>
+  </header>
+
+  <!-- VIEWERS (CENTERED + SIMPLE) -->
+  <div class="flex justify-center mb-4">
+    <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
+      <span class="text-white/70">👤</span>
+      <span id="viewerCount">0</span>
+    </div>
+  </div>
+
+  <!-- PLAYER -->
+  <section class="player-box relative w-full aspect-video">
+
+    <!-- Overlay -->
+    <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
+      <button onclick="loadVideo(1)"
+              class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
+        ▶ LANCER LE STREAM
+      </button>
+      <p class="mt-4 text-white/50 font-semibold text-sm">Si le player 1 ne marche pas → essaye le 2 / 3</p>
     </div>
 
-    <div class="server-list">
-        <button class="s-btn active" id="b1" onclick="start(1)">PLAYER 1</button>
-        <button class="s-btn" id="b2" onclick="start(2)">PLAYER 2</button>
-        <button class="s-btn" id="b3" onclick="start(3)">PLAYER 3</button>
-    </div>
+    <div id="videoTarget" class="w-full h-full"></div>
+  </section>
 
-    <div class="info">
-        <img class="logo" src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png">
-        <div>
-            <b>Ningeria - Tanzania</b>
-            <span>Direct · CAN 2025</span>
-        </div>
-    </div>
-</div>
+  <!-- PLAYERS -->
+  <section class="mt-5 grid grid-cols-3 gap-3">
+    <button id="btn1" onclick="loadVideo(1)"
+            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
+      PLAYER 1
+    </button>
+    <button id="btn2" onclick="loadVideo(2)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+      PLAYER 2
+    </button>
+    <button id="btn3" onclick="loadVideo(3)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+      PLAYER 3
+    </button>
+  </section>
+
+  <!-- DIRECT LINK -->
+  <div id="externalLink" class="hidden mt-4 text-center">
+    <a id="directLink" href="#" target="_blank"
+       class="text-amber-400 underline font-extrabold text-sm">
+      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+    </a>
+  </div>
+
+</main>
+
+<!-- Firebase compat -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-    const URLS = {
-        1: "https://bolaloca.my/player/4/1",
-        2: "https://bolaloca.my/player/2/1",
-        3: "https://bolaloca.my/player/3/1"
-    };
+  /* ---------------------------
+     VIEWERS FIREBASE
+     --------------------------- */
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+    authDomain: "imftxlive.firebaseapp.com",
+    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "imftxlive",
+    storageBucket: "imftxlive.firebasestorage.app",
+    messagingSenderId: "117057055374",
+    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+  };
 
-    function start(id) {
-        document.getElementById('ovl').style.display = 'none';
-        document.querySelectorAll('.s-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('b' + id).classList.add('active');
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-        const v = document.getElementById('video');
-        
-        /* LE SECRET POUR MOBILE :
-           On autorise 'allow-scripts' et 'allow-same-origin' pour que le flux marche.
-           On NE MET PAS 'allow-popups' pour essayer de bloquer les nouvelles fenêtres.
-           On ajoute 'allow-presentation' pour iPhone/Safari.
-        */
-        v.innerHTML = `
-            <iframe 
-                src="${URLS[id]}" 
-                allowfullscreen 
-                allow="autoplay; fullscreen"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        `;
-    }
+  const MATCH_ID = (location.pathname.split("/").pop() || "default").replace(".html","");
+  const sessionId = Math.random().toString(36).slice(2) + Date.now();
+
+  const viewerCountEl = document.getElementById("viewerCount");
+
+  function formatViewers(n){
+    if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
+    if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
+    return String(n);
+  }
+
+  if(location.protocol !== "file:"){
+    const sessionRef = db.ref(`streams/${MATCH_ID}/sessions/${sessionId}`);
+    const sessionsRoot = db.ref(`streams/${MATCH_ID}/sessions`);
+
+    sessionRef.set({
+      joinedAt: firebase.database.ServerValue.TIMESTAMP,
+      lastSeen: firebase.database.ServerValue.TIMESTAMP
+    });
+
+    sessionRef.onDisconnect().remove();
+
+    setInterval(() => {
+      sessionRef.update({ lastSeen: firebase.database.ServerValue.TIMESTAMP });
+    }, 20000);
+
+    sessionsRoot.on("value", snap => {
+      const sessions = snap.val() || {};
+      viewerCountEl.textContent = formatViewers(Object.keys(sessions).length);
+    });
+  }
+
+  /* ---------------------------
+     PLAYER
+     --------------------------- */
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
+  };
+
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.className = (n===id)
+        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
+        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
+    });
+  }
+
+  function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    setActive(id);
+
+    const ext = document.getElementById("externalLink");
+    const link = document.getElementById("directLink");
+    ext.classList.add("hidden");
+    link.href = SOURCES[id];
+
+    const target = document.getElementById("videoTarget");
+    target.innerHTML = `
+      <iframe
+        id="streamFrame"
+        src="${SOURCES[id]}"
+        allowfullscreen
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+      </iframe>
+    `;
+
+    setTimeout(() => {
+      const iframe = document.getElementById("streamFrame");
+      if(!iframe) return;
+      try { iframe.contentWindow.location.href; }
+      catch(e){ ext.classList.remove("hidden"); }
+    }, 2000);
+  }
 </script>
 
 </body>
