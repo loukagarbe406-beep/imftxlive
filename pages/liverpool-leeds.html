@@ -1,104 +1,144 @@
 <!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <title>IMFTX+ — Live</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;900&display=swap" rel="stylesheet">
-    <style>
-        body { margin: 0; background: #000; color: #fff; font-family: 'Outfit', sans-serif; }
-        .container { max-width: 800px; margin: 0 auto; padding: 10px; }
-        
-        /* PLAYER */
-        .player-area { 
-            width: 100%; aspect-ratio: 16/9; 
-            background: #080808; border-radius: 12px; 
-            overflow: hidden; position: relative;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        iframe { width: 100%; height: 100%; border: none; }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMFTX+ — Stream</title>
 
-        .overlay {
-            position: absolute; inset: 0; z-index: 10;
-            background: #000; display: grid; place-items: center;
-        }
-        .play-btn {
-            background: #fff; color: #000; border: none; padding: 14px 28px;
-            border-radius: 50px; font-weight: 900; cursor: pointer;
-        }
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-        /* SERVEURS */
-        .server-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 15px 0; }
-        .s-btn { 
-            background: #111; border: 1px solid #222; color: #fff; 
-            padding: 12px; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 12px;
-        }
-        .s-btn.active { background: #fff; color: #000; border-color: #fff; }
-
-        /* MATCH INFO */
-        .info { 
-            background: #111; padding: 15px; border-radius: 15px; 
-            display: flex; align-items: center; gap: 12px;
-        }
-        .logo { width: 40px; height: 40px; object-fit: contain; }
-        .info b { display: block; font-size: 16px; }
-        .info span { font-size: 12px; opacity: 0.5; }
-    </style>
+  <style>
+    html,body{
+      height:100%;margin:0;
+      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      color:#fff;
+    }
+    .player-box{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.06);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 25px 85px rgba(0,0,0,.65);
+    }
+    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+  </style>
 </head>
+
 <body>
 
-<div class="container">
-    <div class="player-area" id="pBox">
-        <div class="overlay" id="ovl">
-            <button class="play-btn" onclick="start(1)">LANCER LE MATCH</button>
-        </div>
-        <div id="video" style="width:100%;height:100%"></div>
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-40 bg-transparent backdrop-blur-sm border-b border-zinc-800/40">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-3xl font-extrabold">IMFTX+</div>
+
+    <a href="../index.html"
+       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
+      <i class="fa-solid fa-arrow-left"></i> Retour
+    </a>
+  </div>
+</nav>
+
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
+
+  <!-- MATCH INFO -->
+  <section class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+    <div>
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight" id="matchTitle">LIVERPOOL - LEEDS</h1>
+      <p class="mt-2 text-white/60 font-semibold" id="matchMeta">Match · 18:30</p>
     </div>
 
-    <div class="server-list">
-        <button class="s-btn active" id="b1" onclick="start(1)">PLAYER 1</button>
-        <button class="s-btn" id="b2" onclick="start(2)">PLAYER 2</button>
-        <button class="s-btn" id="b3" onclick="start(3)">PLAYER 3</button>
+    <div class="flex items-center gap-3">
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg"
+           alt="Liverpool">
+      <span class="text-white/40 font-bold">vs</span>
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg"
+           alt="Leeds">
+    </div>
+  </section>
+
+  <!-- PLAYER -->
+  <section class="player-box relative w-full aspect-video" id="playerContainer">
+
+    <!-- Overlay (click to play) -->
+    <div id="overlay"
+         class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
+      <button onclick="loadVideo(1)"
+              class="px-8 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
+        ▶ LANCER LE STREAM
+      </button>
+      <p class="mt-4 text-white/50 font-semibold text-sm">Choisis un player si le 1 ne marche pas</p>
     </div>
 
-    <div class="info">
-        <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUzpANNbMeBcDGugLzsmAKITHVNenJaOLlEw&s">
-        <div>
-            <b>OL - Saint cyr collonges</b>
-            <span>Direct · CAN 2025</span>
-        </div>
-    </div>
-</div>
+    <div id="videoTarget" class="w-full h-full"></div>
+  </section>
+
+  <!-- PLAYER SELECT -->
+  <section class="mt-5 grid grid-cols-3 gap-3">
+    <button id="btn1" onclick="loadVideo(1)"
+            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95">
+      PLAYER 1
+    </button>
+    <button id="btn2" onclick="loadVideo(2)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15">
+      PLAYER 2
+    </button>
+    <button id="btn3" onclick="loadVideo(3)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15">
+      PLAYER 3
+    </button>
+  </section>
+
+  <!-- NOTE -->
+  <section class="mt-8 p-5 rounded-2xl bg-white/5 border border-white/10 text-white/60 font-semibold">
+    Si un player est bloqué, passe au suivant.  
+    Sur mobile, mets en plein écran pour une meilleure qualité.
+  </section>
+
+</main>
 
 <script>
-    const URLS = {
-        1: "https://bolaloca.my/player/4/1",
-        2: "https://bolaloca.my/player/2/1",
-        3: "https://bolaloca.my/player/3/1"
-    };
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
+  };
 
-    function start(id) {
-        document.getElementById('ovl').style.display = 'none';
-        document.querySelectorAll('.s-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('b' + id).classList.add('active');
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      if(n===id){
+        b.className = "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95";
+      }else{
+        b.className = "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15";
+      }
+    });
+  }
 
-        const v = document.getElementById('video');
-        
-        /* LE SECRET POUR MOBILE :
-           On autorise 'allow-scripts' et 'allow-same-origin' pour que le flux marche.
-           On NE MET PAS 'allow-popups' pour essayer de bloquer les nouvelles fenêtres.
-           On ajoute 'allow-presentation' pour iPhone/Safari.
-        */
-        v.innerHTML = `
-            <iframe 
-                src="${URLS[id]}" 
-                allowfullscreen 
-                allow="autoplay; fullscreen"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        `;
-    }
+  function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    setActive(id);
+
+    const target = document.getElementById("videoTarget");
+
+    target.innerHTML = `
+      <iframe
+        src="${SOURCES[id]}"
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="no-referrer"
+        sandbox="allow-scripts allow-same-origin allow-forms">
+      </iframe>
+    `;
+  }
 </script>
 
 </body>
