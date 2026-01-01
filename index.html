@@ -1,228 +1,158 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Stream</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IMFTX+ — Live</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
       color:#fff;
     }
-    .player-box{
-      border-radius:18px;
+    .match-card{
+      background:linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      border-radius:14px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.03);
-      box-shadow: 0 25px 85px rgba(0,0,0,.65);
+      display:flex;
+      flex-direction:column;
+      height:220px;
+      padding:0;
+      transition: transform .18s ease, background .18s ease;
     }
-    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+    .match-card:hover{
+      transform: translateY(-3px);
+      background:linear-gradient(135deg,rgba(255,255,255,0.035),rgba(255,255,255,0.015));
+    }
+    .match-thumb{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      letter-spacing:.2px;
+      color:rgba(255,255,255,0.95);
+      font-size:22px;
+    }
+    .team-logo{
+      width:38px;height:38px;object-fit:contain;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.35));
+    }
+    @media(max-width:768px){
+      .match-card{height:170px}
+      .match-thumb{font-size:18px}
+      .team-logo{width:32px;height:32px}
+    }
   </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-40 bg-transparent backdrop-blur-sm border-b border-zinc-800/40">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(52,211,153,.15)]"></span>
-      <div class="text-3xl font-extrabold">IMFTX+</div>
-    </div>
+    <div class="text-3xl font-extrabold">IMFTX+</div>
 
-    <a href="../index.html"
-       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
-      <i class="fa-solid fa-arrow-left"></i> Retour
-    </a>
+    <!-- ✅ Réseaux en haut à droite -->
+    <div class="flex items-center gap-3">
+      <a href="https://discord.gg/FmWwePH5ET" target="_blank"
+         class="hidden md:inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white text-black font-bold text-sm hover:opacity-90">
+        <i class="fa-solid fa-bolt"></i> IPTV
+      </a>
+
+      <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank"
+         class="w-10 h-10 grid place-items-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10">
+        <i class="fa-brands fa-telegram text-lg"></i>
+      </a>
+
+      <a href="https://discord.gg/4ZFv9sa8" target="_blank"
+         class="w-10 h-10 grid place-items-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10">
+        <i class="fa-brands fa-discord text-lg"></i>
+      </a>
+    </div>
   </div>
 </nav>
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- MATCH INFO -->
-  <section class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
-    <div>
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase" id="matchTitle">
-        LIVERPOOL - LEEDS
-      </h1>
-      <p class="mt-2 text-white/60 font-semibold" id="matchMeta">Premier League · 18:30</p>
+  <header class="text-center mb-10">
+    <h1 class="text-4xl md:text-5xl font-extrabold">IMFTX+ LIVE</h1>
+    <p class="mt-2 text-zinc-400 max-w-xl mx-auto">N°1 de la diffusion française</p>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- ✅ 1 LIVERPOOL - LEEDS -->
+    <div class="match-card">
+      <div class="match-thumb bg-gradient-to-tr from-red-700 to-zinc-950">
+        (18h30) LIVERPOOL - LEEDS
+      </div>
+
+      <div class="match-meta flex justify-between items-center p-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg" alt="Liverpool">
+          <span class="font-semibold truncate">Liverpool</span>
+          <span class="text-zinc-500 font-bold">vs</span>
+          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg" alt="Leeds">
+          <span class="font-semibold truncate">Leeds</span>
+        </div>
+
+        <button onclick="openCustomStream('liverpool-leeds')"
+          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-lg hover:opacity-90">
+          Regarder
+        </button>
+      </div>
     </div>
 
-    <div class="flex items-center gap-3">
-      <img class="w-12 h-12 object-contain drop-shadow-lg"
-           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg"
-           alt="Liverpool">
-      <span class="text-white/40 font-bold">vs</span>
-      <img class="w-12 h-12 object-contain drop-shadow-lg"
-           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg"
-           alt="Leeds">
-    </div>
-  </section>
+    <!-- ✅ 2 SUNDERLAND - MAN CITY -->
+    <div class="match-card">
+      <div class="match-thumb bg-gradient-to-tr from-red-700 to-sky-600">
+        (21h00) SUNDERLAND - MAN CITY
+      </div>
 
-  <!-- STATUS + VIEWERS -->
-  <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
-    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 border border-white/10 text-xs font-extrabold">
-      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      LIVE
+      <div class="match-meta flex justify-between items-center p-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Sunderland%20AFC%201997.svg" alt="Sunderland">
+          <span class="font-semibold truncate">Sunderland</span>
+          <span class="text-zinc-500 font-bold">vs</span>
+          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Manchester%20City%202016.svg" alt="Man City">
+          <span class="font-semibold truncate">Man City</span>
+        </div>
+
+        <button onclick="openCustomStream('sunderland-man-city')"
+          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-lg hover:opacity-90">
+          Regarder
+        </button>
+      </div>
     </div>
 
-    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 border border-white/10 text-xs font-extrabold">
-      <i class="fa-solid fa-eye text-white/70"></i>
-      <span><span id="viewerCount">0</span> en direct</span>
-    </div>
   </div>
 
-  <!-- PLAYER -->
-  <section class="player-box relative w-full aspect-video" id="playerContainer">
+  <script>
+    function openCustomStream(matchId) {
+      const pages = {
+        "liverpool-leeds": "pages/liverpool-leeds.html",
+        "sunderland-man-city": "pages/sunderland-man-city.html"
+      };
 
-    <!-- Overlay -->
-    <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
-      <button onclick="loadVideo(1)"
-              class="px-8 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
-        ▶ LANCER LE STREAM
-      </button>
-      <p class="mt-4 text-white/50 font-semibold text-sm">
-        Si le player 1 ne marche pas, essaye le 2 ou le 3.
-      </p>
-    </div>
+      if (!pages[matchId]) return alert("Match introuvable");
+      // ✅ Redirection propre (pas de nouvel onglet)
+      window.location.href = pages[matchId];
+    }
+  </script>
 
-    <div id="videoTarget" class="w-full h-full"></div>
-  </section>
-
-  <!-- PLAYERS -->
-  <section class="mt-5 grid grid-cols-3 gap-3">
-    <button id="btn1" onclick="loadVideo(1)"
-            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
-      PLAYER 1
-    </button>
-    <button id="btn2" onclick="loadVideo(2)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      PLAYER 2
-    </button>
-    <button id="btn3" onclick="loadVideo(3)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      PLAYER 3
-    </button>
-  </section>
-
-  <!-- FALLBACK LINK -->
-  <div id="externalLink" class="hidden mt-4 text-center">
-    <a id="directLink" href="#" target="_blank"
-       class="text-amber-400 underline font-bold text-sm">
-      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-    </a>
-  </div>
-
-  <!-- NOTE -->
-  <section class="mt-8 p-5 rounded-2xl bg-white/5 border border-white/10 text-white/60 font-semibold">
-    Le compteur “en direct” est réel (Firebase).  
-    Si un player est bloqué, passe au suivant.
-  </section>
+  <footer class="w-full mt-20 text-center text-sm opacity-70 pb-6">
+    <h2 class="text-lg font-bold mb-2">À propos</h2>
+    <p>IMFTX+ — Plateforme de streaming. Mise à jour automatique.</p>
+  </footer>
 
 </main>
-
-<!-- ✅ FIREBASE + PLAYER SCRIPT -->
-<script type="module">
-  // ✅ Firebase SDK (CDN)
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import {
-    getDatabase, ref, set, onValue,
-    onDisconnect, serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-  // ✅ Ton Firebase Config
-  const firebaseConfig = {
-    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
-    authDomain: "imftxlive.firebaseapp.com",
-    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "imftxlive",
-    storageBucket: "imftxlive.firebasestorage.app",
-    messagingSenderId: "117057055374",
-    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
-  };
-
-  // ✅ Init Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  // ✅ matchId = nom du fichier (ex: liverpool-leeds.html => liverpool-leeds)
-  const MATCH_ID = location.pathname.split("/").pop().replace(".html","") || "default";
-  const sessionId = crypto.randomUUID();
-
-  // ✅ Session tracking
-  const sessionRef = ref(db, `streams/${MATCH_ID}/sessions/${sessionId}`);
-  const sessionsRoot = ref(db, `streams/${MATCH_ID}/sessions`);
-
-  await set(sessionRef, { joinedAt: serverTimestamp() });
-  onDisconnect(sessionRef).remove();
-
-  // ✅ Compteur en direct
-  onValue(sessionsRoot, (snap) => {
-    const sessions = snap.val() || {};
-    const count = Object.keys(sessions).length;
-    const el = document.getElementById("viewerCount");
-    if(el) el.textContent = count;
-  });
-
-  // ✅ Player sources
-  const SOURCES = {
-    1: "https://bolaloca.my/player/4/2",
-    2: "https://bolaloca.my/player/2/2",
-    3: "https://bolaloca.my/player/3/2"
-  };
-
-  function setActive(id){
-    [1,2,3].forEach(n=>{
-      const b = document.getElementById("btn"+n);
-      if(!b) return;
-      b.className = (n===id)
-        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
-        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
-    });
-  }
-
-  // ✅ Expose au HTML (onclick)
-  window.loadVideo = (id) => {
-    document.getElementById("overlay").style.display = "none";
-    setActive(id);
-
-    const ext = document.getElementById("externalLink");
-    const link = document.getElementById("directLink");
-    ext.classList.add("hidden");
-    link.href = SOURCES[id];
-
-    const target = document.getElementById("videoTarget");
-    target.innerHTML = `
-      <iframe
-        id="streamFrame"
-        src="${SOURCES[id]}"
-        allowfullscreen
-        scrolling="no"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-        referrerpolicy="origin"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-      </iframe>
-    `;
-
-    // ✅ Si embed bloqué => show direct link after 2s
-    setTimeout(() => {
-      const iframe = document.getElementById("streamFrame");
-      if(!iframe) return;
-      try { iframe.contentWindow.location.href; }
-      catch(e){ ext.classList.remove("hidden"); }
-    }, 2000);
-  };
-</script>
-
 </body>
 </html>
