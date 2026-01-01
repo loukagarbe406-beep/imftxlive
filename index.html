@@ -5,422 +5,154 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IMFTX+ — Live</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
-    :root{
-      --bg:#07080b;
-      --glass: rgba(255,255,255,.05);
-      --glass2: rgba(255,255,255,.07);
-      --line: rgba(255,255,255,.10);
-      --muted: rgba(255,255,255,.70);
-      --muted2: rgba(255,255,255,.52);
-      --shadow: 0 30px 120px rgba(0,0,0,.70);
-      --r: 26px;
-      --r2: 18px;
-      --max: 1180px;
-      --good: #22c55e;
-      --warn: #f59e0b;
-      --dead: rgba(255,255,255,.35);
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
+    html,body{
+      height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
       color:#fff;
-      background:
-        radial-gradient(1200px 800px at 50% -10%, rgba(255,255,255,.09), transparent 60%),
-        radial-gradient(900px 600px at 15% 90%, rgba(255,255,255,.04), transparent 60%),
-        var(--bg);
     }
-    a{color:inherit;text-decoration:none}
-    img{display:block}
-
-    /* NAVBAR */
-    header{
-      position:fixed;top:0;left:0;right:0;z-index:50;
-      background: rgba(0,0,0,.48);
-      border-bottom:1px solid rgba(255,255,255,.06);
-      backdrop-filter: blur(16px);
-    }
-    .topbar{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:16px 20px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .brand{
-      font-weight:900;
-      letter-spacing:.6px;
-      display:flex;align-items:center;gap:10px;
-      opacity:.95;
-    }
-    .brandDot{
-      width:10px;height:10px;border-radius:50%;
-      background: linear-gradient(180deg,#22c55e,#16a34a);
-      box-shadow: 0 0 0 6px rgba(34,197,94,.14);
-    }
-    .rightNav{display:flex;align-items:center;gap:10px}
-    .cta{
-      height:38px;
-      display:inline-flex;align-items:center;gap:10px;
-      padding:0 16px;border-radius:999px;
-      background:#fff;
-      color:#000;
-      font-weight:900;
-      font-size:12px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.35);
-    }
-    .cta:hover{opacity:.95}
-    .iconBtn{
-      width:38px;height:38px;border-radius:14px;
-      display:grid;place-items:center;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      opacity:.9;
-    }
-    .iconBtn:hover{opacity:1;background: rgba(255,255,255,.09)}
-    .iconBtn i{font-size:14px}
-
-    /* PAGE */
-    main{
-      max-width:var(--max);
-      margin:0 auto;
-      padding: 110px 20px 60px;
-    }
-
-    /* HERO */
-    .hero{
-      text-align:center;
-      padding: 28px 0 10px;
-    }
-    h1{
-      margin:0;
-      font-size:72px;
-      font-weight:900;
-      letter-spacing:-2px;
-      line-height:1;
-      text-shadow: 0 30px 90px rgba(0,0,0,.70);
-    }
-    .subtitle{
-      margin:14px auto 0;
-      max-width: 720px;
-      font-size:16px;
-      font-weight:700;
-      opacity:.70;
-      line-height:1.5;
-    }
-
-    /* SECTION */
-    .section{
-      margin-top: 36px;
-    }
-    .sectionHead{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom: 16px;
-    }
-    .sectionHead b{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-size:18px;
-      font-weight:900;
-      letter-spacing:-.3px;
-    }
-    .sectionDot{
-      width:10px;height:10px;border-radius:50%;
-      background: var(--good);
-      box-shadow: 0 0 0 6px rgba(34,197,94,.14);
-    }
-    .sectionHead span{
-      opacity:.55;
-      font-size:12px;
-      font-weight:800;
-    }
-
-    /* GRID */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    /* CARD */
-    .card{
-      border-radius: var(--r);
+    .match-card{
+      background:linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      border-radius:14px;
       overflow:hidden;
-      background: var(--glass);
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: var(--shadow);
+      display:flex;
+      flex-direction:column;
+      height:220px;
+      padding:0;
       transition: transform .18s ease, background .18s ease;
     }
-    .card:hover{
-      transform: translateY(-4px);
-      background: var(--glass2);
+    .match-card:hover{
+      transform: translateY(-3px);
+      background:linear-gradient(135deg,rgba(255,255,255,0.035),rgba(255,255,255,0.015));
     }
-    .thumb{
-      height: 220px;
-      background:#000;
-      background-size: cover;
-      background-position:center;
-      position:relative;
-    }
-    .thumb::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.04), rgba(0,0,0,.92));
-      pointer-events:none;
-    }
-
-    /* STATUS BADGE */
-    .status{
-      position:absolute; left:14px; top:14px;
-      z-index:2;
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 12px;border-radius:999px;
-      background: rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.14);
-      font-weight:900;
-      font-size:12px;
-      backdrop-filter: blur(10px);
-    }
-    .statusDot{width:9px;height:9px;border-radius:50%}
-    .statusDot.good{background: var(--good)}
-    .statusDot.warn{background: var(--warn)}
-    .statusDot.dead{background: var(--dead)}
-
-    /* CARD BODY */
-    .body{padding: 16px 16px 18px}
-    .title{
-      font-size:18px;
-      font-weight:900;
-      letter-spacing:-.3px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .meta{
-      margin-top:10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      font-size:13px;
-      font-weight:800;
-      opacity:.72;
-    }
-    .btn{
-      margin-top:14px;
-      width:100%;
+    .match-thumb{
+      flex:1;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
-      height:46px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      font-weight:900;
-      font-size:13px;
-    }
-    .btn:hover{background: rgba(255,255,255,.14)}
-
-    /* EMPTY MESSAGE */
-    .empty{
-      padding: 18px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      opacity:.65;
       font-weight:800;
+      letter-spacing:.2px;
+      color:rgba(255,255,255,0.95);
+      font-size:22px;
     }
-
-    /* FOOTER */
-    footer{
-      margin-top:56px;
-      border-top:1px solid rgba(255,255,255,.06);
-      padding: 18px 0;
-      opacity:.55;
-      font-size:12px;
-      display:flex;
-      justify-content:center;
-      gap:20px;
-      flex-wrap:wrap;
+    .team-logo{
+      width:38px;height:38px;object-fit:contain;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.35));
     }
-    footer a{opacity:.75}
-    footer a:hover{opacity:1}
-
-    @media(max-width:1000px){
-      .grid{grid-template-columns: repeat(2, 1fr)}
-      h1{font-size:56px}
-    }
-    @media(max-width:650px){
-      .grid{grid-template-columns: 1fr}
-      h1{font-size:44px}
-      .subtitle{font-size:14px}
+    @media(max-width:768px){
+      .match-card{height:170px}
+      .match-thumb{font-size:18px}
+      .team-logo{width:32px;height:32px}
     }
   </style>
 </head>
 
 <body>
-<header>
-  <div class="topbar">
-    <div class="brand"><span class="brandDot"></span> IMFTX+</div>
 
-    <div class="rightNav">
-      <a href="#" class="cta"><i class="fa-solid fa-bolt"></i> ACHÈTE TON IPTV</a>
-      <a class="iconBtn" href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
-      <a class="iconBtn" href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
-      <a class="iconBtn" href="#" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-40 bg-transparent backdrop-blur-sm border-b border-zinc-800/40">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-3xl font-extrabold">IMFTX+</div>
+
+    <!-- ✅ Réseaux en haut à droite -->
+    <div class="flex items-center gap-3">
+      <a href="https://discord.gg/FmWwePH5ET" target="_blank"
+         class="hidden md:inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white text-black font-bold text-sm hover:opacity-90">
+        <i class="fa-solid fa-bolt"></i> IPTV
+      </a>
+
+      <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank"
+         class="w-10 h-10 grid place-items-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10">
+        <i class="fa-brands fa-telegram text-lg"></i>
+      </a>
+
+      <a href="https://discord.gg/4ZFv9sa8" target="_blank"
+         class="w-10 h-10 grid place-items-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10">
+        <i class="fa-brands fa-discord text-lg"></i>
+      </a>
     </div>
   </div>
-</header>
+</nav>
 
-<main>
-  <section class="hero">
-    <h1>IMFTX+</h1>
-    <p class="subtitle">
-      Une interface premium pour accéder rapidement aux matchs en direct.
-      CAN, Premier League et plus — en un clic.
-    </p>
-  </section>
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <section class="section">
-    <div class="sectionHead">
-      <b><span class="sectionDot"></span> EN DIRECT</b>
-      <span>Matchs en cours</span>
+  <header class="text-center mb-10">
+    <h1 class="text-4xl md:text-5xl font-extrabold">IMFTX+ LIVE</h1>
+    <p class="mt-2 text-zinc-400 max-w-xl mx-auto">N°1 de la diffusion française</p>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- ✅ 1 LIVERPOOL - LEEDS -->
+    <div class="match-card">
+      <div class="match-thumb bg-gradient-to-tr from-red-700 to-zinc-950">
+        (18h30) LIVERPOOL - LEEDS
+      </div>
+
+      <div class="match-meta flex justify-between items-center p-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg" alt="Liverpool">
+          <span class="font-semibold truncate">Liverpool</span>
+          <span class="text-zinc-500 font-bold">vs</span>
+          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg" alt="Leeds">
+          <span class="font-semibold truncate">Leeds</span>
+        </div>
+
+        <button onclick="openCustomStream('liverpool-leeds')"
+          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-lg hover:opacity-90">
+          Regarder
+        </button>
+      </div>
     </div>
-    <div class="grid" id="liveGrid"></div>
-  </section>
 
-  <section class="section">
-    <div class="sectionHead">
-      <b><span class="sectionDot" style="background:var(--warn); box-shadow:0 0 0 6px rgba(245,158,11,.14)"></span> À VENIR</b>
-      <span>Matchs programmés</span>
+    <!-- ✅ 2 SUNDERLAND - MAN CITY -->
+    <div class="match-card">
+      <div class="match-thumb bg-gradient-to-tr from-red-700 to-sky-600">
+        (21h00) SUNDERLAND - MAN CITY
+      </div>
+
+      <div class="match-meta flex justify-between items-center p-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Sunderland%20AFC%201997.svg" alt="Sunderland">
+          <span class="font-semibold truncate">Sunderland</span>
+          <span class="text-zinc-500 font-bold">vs</span>
+          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Manchester%20City%202016.svg" alt="Man City">
+          <span class="font-semibold truncate">Man City</span>
+        </div>
+
+        <button onclick="openCustomStream('sunderland-man-city')"
+          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-lg hover:opacity-90">
+          Regarder
+        </button>
+      </div>
     </div>
-    <div class="grid" id="upGrid"></div>
-  </section>
 
-  <section class="section">
-    <div class="sectionHead">
-      <b><span class="sectionDot" style="background:rgba(255,255,255,.38); box-shadow:0 0 0 6px rgba(255,255,255,.08)"></span> TOUS LES MATCHS</b>
-      <span>Programme complet</span>
-    </div>
-    <div class="grid" id="allGrid"></div>
-  </section>
+  </div>
 
-  <footer>
-    <a href="#">Mentions légales</a>
-    <a href="#">CGU</a>
-    <a href="#">Confidentialité</a>
-    <a href="#">DMCA</a>
-  </footer>
-</main>
+  <script>
+    function openCustomStream(matchId) {
+      const pages = {
+        "liverpool-leeds": "pages/liverpool-leeds.html",
+        "sunderland-man-city": "pages/sunderland-man-city.html"
+      };
 
-<script>
-  function watchUrl(m){ return `pages/${m.id}.html`; }
-
-  const MATCHES = [
-    {
-      id:"nigeria-tanzania",
-      title:"NIGERIA - TANZANIE",
-      comp:"CAN",
-      sport:"Football",
-      time:"18:30",
-      banner:"https://empire-sport.site/upload/events/erilvwbktz7ugfcei9tr90bnnvlauf.jpg"
-    },
-    {
-      id:"arsenal-crystal-palace",
-      title:"ARSENAL - CRYSTAL PALACE",
-      comp:"Premier League",
-      sport:"Football",
-      time:"21:00",
-      banner:"https://empire-sport.site/upload/banners/burnley-vs-arsenal_01.png"
-    },
-    {
-      id:"tunisia-uganda",
-      title:"TUNISIE - OUGANDA",
-      comp:"CAN",
-      sport:"Football",
-      time:"21:00",
-      banner:"https://empire-sport.site/upload/events/dwofkbauc8qedspz43c0qbylnx9kll.jpg"
+      if (!pages[matchId]) return alert("Match introuvable");
+      // ✅ Redirection propre (pas de nouvel onglet)
+      window.location.href = pages[matchId];
     }
-  ];
+  </script>
 
-  const MATCH_DURATION_MIN = 135;
+  <footer class="w-full mt-20 text-center text-sm opacity-70 pb-6">
+    <h2 class="text-lg font-bold mb-2">À propos</h2>
+    <p>IMFTX+ — Plateforme de streaming. Mise à jour automatique.</p>
+  </footer>
 
-  function timeToMinutes(hhmm){
-    const [h,m] = hhmm.split(":").map(Number);
-    return h*60 + m;
-  }
-
-  function statusOf(hhmm){
-    const now = new Date();
-    const nowMin = now.getHours()*60 + now.getMinutes();
-    const start = timeToMinutes(hhmm);
-    const end = start + MATCH_DURATION_MIN;
-    if(nowMin < start) return "UP";
-    if(nowMin >= start && nowMin < end) return "LIVE";
-    return "DONE";
-  }
-
-  function badge(st){
-    if(st==="LIVE") return {label:"LIVE", dot:"good"};
-    if(st==="UP")   return {label:"À VENIR", dot:"warn"};
-    return {label:"TERMINÉ", dot:"dead"};
-  }
-
-  function cardHTML(m){
-    const st = statusOf(m.time);
-    const b = badge(st);
-
-    return `
-      <a class="card" href="${watchUrl(m)}">
-        <div class="thumb" style="background-image:url('${m.banner}')">
-          <div class="status">
-            <span class="statusDot ${b.dot}"></span>
-            ${b.label}
-          </div>
-        </div>
-
-        <div class="body">
-          <div class="title">${m.title}</div>
-          <div class="meta">
-            <span>${m.sport} · ${m.comp}</span>
-            <span>${m.time}</span>
-          </div>
-          <div class="btn">REGARDER <i class="fa-solid fa-arrow-right"></i></div>
-        </div>
-      </a>
-    `;
-  }
-
-  function render(){
-    const all = MATCHES.slice().sort((a,b)=> timeToMinutes(a.time) - timeToMinutes(b.time));
-    const live = all.filter(m => statusOf(m.time) === "LIVE");
-    const up = all.filter(m => statusOf(m.time) === "UP");
-
-    document.getElementById("liveGrid").innerHTML =
-      live.length ? live.map(cardHTML).join("") : `<div class="empty">Aucun match en direct pour le moment.</div>`;
-
-    document.getElementById("upGrid").innerHTML =
-      up.length ? up.map(cardHTML).join("") : `<div class="empty">Aucun match à venir.</div>`;
-
-    document.getElementById("allGrid").innerHTML =
-      all.length ? all.map(cardHTML).join("") : `<div class="empty">Aucun match disponible.</div>`;
-  }
-
-  render();
-  setInterval(render, 15000);
-</script>
+</main>
 </body>
 </html>
