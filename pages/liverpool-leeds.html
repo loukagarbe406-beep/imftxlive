@@ -1,45 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMFTX+ — Stream</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    html,body{
+      height:100%;margin:0;
+      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background: radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.07), transparent 60%),
+                  linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      color:#fff;
+    }
+    .player-shell{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 25px 90px rgba(0,0,0,.65);
+    }
+    iframe{
+      width:100%;height:100%;
+      border:0;display:block;
+      background:#000;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(52,211,153,.15)]"></span>
+      <div class="text-2xl font-extrabold tracking-wide">IMFTX+</div>
+    </div>
+
+    <a href="../index.html"
+       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-extrabold text-sm">
+      <i class="fa-solid fa-arrow-left"></i> Retour
+    </a>
+  </div>
+</nav>
+
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
+
+  <!-- MATCH HEADER -->
+  <section class="mb-7 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+    <div class="text-left">
+      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight" id="matchTitle">LIVERPOOL - LEEDS</h1>
+      <p class="mt-2 text-white/60 font-semibold" id="matchMeta">Premier League · 18:30</p>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg"
+           alt="Liverpool">
+      <span class="text-white/40 font-bold">vs</span>
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg"
+           alt="Leeds">
+    </div>
+  </section>
+
+  <!-- PLAYER -->
+  <section class="player-shell w-full aspect-video relative">
+
+    <!-- Top overlay bar -->
+    <div class="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-3 bg-gradient-to-b from-black/70 to-black/0 pointer-events-none">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 border border-white/10 text-xs font-extrabold">
+        <span id="statusDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="statusLabel">LIVE</span>
+      </div>
+
+      <div class="hidden md:inline-flex items-center gap-2 text-white/65 text-xs font-bold">
+        <i class="fa-solid fa-shield-halved"></i>
+        Popups bloquées côté page
+      </div>
+    </div>
+
+    <div id="videoTarget" class="w-full h-full"></div>
+  </section>
+
+  <!-- PLAYER BUTTONS -->
+  <section class="mt-5 grid grid-cols-3 gap-3">
+    <button id="btn1" onclick="loadVideo(1)"
+      class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95">
+      PLAYER 1
+    </button>
+    <button id="btn2" onclick="loadVideo(2)"
+      class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15">
+      PLAYER 2
+    </button>
+    <button id="btn3" onclick="loadVideo(3)"
+      class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15">
+      PLAYER 3
+    </button>
+  </section>
+
+  <!-- INFO -->
+  <section class="mt-8 p-5 rounded-2xl bg-white/5 border border-white/10 text-white/65 font-semibold">
+    Si un player est bloqué, passe au suivant.
+    <span class="block mt-1 text-white/45 text-sm">
+      Sur mobile, si l’intégration est bloquée, le stream s’ouvre automatiquement.
+    </span>
+  </section>
+
+</main>
+
 <script>
+  // ✅ SOURCES PLAYERS
   const SOURCES = {
     1: "https://bolaloca.my/player/4/2",
     2: "https://bolaloca.my/player/2/2",
     3: "https://bolaloca.my/player/3/2"
   };
 
-  // ✅ Détection mobile fiable
+  // ✅ Detect mobile / safari iOS
   function isMobile(){
-    return window.matchMedia("(max-width: 900px)").matches 
+    return window.matchMedia("(max-width: 900px)").matches
       || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   }
 
+  // ✅ Buttons active state
   function setActive(id){
     [1,2,3].forEach(n=>{
       const b = document.getElementById("btn"+n);
       if(!b) return;
       if(n===id){
         b.className = "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95";
-      }else{
+      } else {
         b.className = "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15";
       }
     });
   }
 
-  // ✅ fallback propre : ouvre le player directement
+  // ✅ Open direct = only ONE navigation (prevents random popups)
   function openDirect(id){
-    // ✅ même onglet
     window.location.href = SOURCES[id];
   }
 
-  // ✅ Charge iframe sur PC, redirige sur mobile
+  // ✅ Load iframe on PC, fallback direct on mobile
   function loadVideo(id){
     setActive(id);
 
-    // ✅ Mobile: on redirige (évite "embedding blocked")
+    // Mobile => direct open (best way to avoid "embedding blocked")
     if(isMobile()){
       openDirect(id);
       return;
     }
 
-    // ✅ PC: iframe intégré
     const target = document.getElementById("videoTarget");
     target.innerHTML = `
       <iframe
@@ -55,21 +171,22 @@
       </iframe>
     `;
 
-    // ✅ Si le player est bloqué même sur PC → fallback auto après 2s
+    // If embed is blocked => fallback direct (PC rare but possible)
     setTimeout(() => {
-      // si l'iframe n'a pas chargé, on fallback (ça arrive quand bloqué)
       const iframe = target.querySelector("iframe");
       if(!iframe) return;
       try {
-        // Certaines protections bloquent l'accès → catch
-        const test = iframe.contentWindow.location.href;
+        // Access triggers error if cross-blocked
+        iframe.contentWindow.location.href;
       } catch(e){
-        // blocked -> fallback
         openDirect(id);
       }
-    }, 2000);
+    }, 2200);
   }
 
-  // ✅ Charge player 1 automatiquement au démarrage
+  // ✅ Autoload player 1
   window.addEventListener("load", () => loadVideo(1));
 </script>
+
+</body>
+</html>
