@@ -62,7 +62,7 @@
     </div>
   </header>
 
-  <!-- ✅ VIEWERS STABLE -->
+  <!-- VIEWERS -->
   <div class="flex justify-center mb-4">
     <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
       <span class="text-white/70">👤</span>
@@ -108,7 +108,7 @@
   </div>
 
   <p class="mt-8 text-center text-white/40 text-sm font-semibold">
-    Si le stream bug, nous ne sommes pas responsables. Cela dépend de votre connexion. — L’équipe IMFTX+
+    Si le stream bug, cela dépend de votre connexion et de votre appareil. — L’équipe IMFTX+
   </p>
 
 </main>
@@ -118,103 +118,164 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* =============================
-     ✅ VIEWERS COUNTER (ULTRA STABLE)
-     ============================= */
+/* ===============================
+   ✅ VIEWERS COUNTER (STABLE ++)
+   - child_added / child_removed
+   - onDisconnect remove
+   - cleanup sessions fantômes
+   - leave manuel on refresh/close/hide
+================================= */
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
-    authDomain: "imftxlive.firebaseapp.com",
-    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "imftxlive",
-    storageBucket: "imftxlive.firebasestorage.app",
-    messagingSenderId: "117057055374",
-    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+  authDomain: "imftxlive.firebaseapp.com",
+  databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "imftxlive",
+  storageBucket: "imftxlive.firebasestorage.app",
+  messagingSenderId: "117057055374",
+  appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+};
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-  const MATCH_ID = (location.pathname.split("/").pop() || "default").replace(".html","");
-  const countRef = db.ref(`streams/${MATCH_ID}/viewers`);
-  const viewerCountEl = document.getElementById("viewerCount");
+const MATCH_ID = (location.pathname.split("/").pop() || "default").replace(".html","");
+const sessionsRoot = db.ref(`streams/${MATCH_ID}/sessions`);
+const viewerCountEl = document.getElementById("viewerCount");
 
-  function formatViewers(n){
-    n = Number(n || 0);
-    if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
-    if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
-    return String(n);
+// ✅ id stable par navigateur (évite double comptage refresh)
+const DEVICE_ID_KEY = "imftx_device_id";
+let deviceId = localStorage.getItem(DEVICE_ID_KEY);
+if(!deviceId){
+  deviceId = Math.random().toString(36).slice(2) + Date.now();
+  localStorage.setItem(DEVICE_ID_KEY, deviceId);
+}
+
+// ✅ sessionId unique à chaque page load
+const sessionId = deviceId + "_" + Date.now();
+const sessionRef = sessionsRoot.child(sessionId);
+
+function formatViewers(n){
+  n = Number(n||0);
+  if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
+  if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
+  return String(n);
+}
+
+// ✅ compteur local (ne dépend pas d’un gros snap val)
+let liveCount = 0;
+function renderCount(){
+  viewerCountEl.textContent = formatViewers(liveCount);
+}
+
+// ✅ nettoyage sessions fantômes (60s)
+function cleanup(){
+  const limit = Date.now() - 60000;
+  sessionsRoot.orderByChild("lastSeen").endAt(limit).once("value", snap=>{
+    snap.forEach(child => child.ref.remove());
+  });
+}
+
+// ✅ join session
+if(location.protocol !== "file:"){
+  sessionRef.set({
+    joinedAt: firebase.database.ServerValue.TIMESTAMP,
+    lastSeen: firebase.database.ServerValue.TIMESTAMP
+  });
+
+  // ✅ auto remove si fermeture normale
+  sessionRef.onDisconnect().remove();
+
+  // ✅ update heartbeat
+  setInterval(()=>{
+    sessionRef.update({ lastSeen: firebase.database.ServerValue.TIMESTAMP });
+    cleanup(); // nettoyage léger
+  }, 15000);
+
+  // ✅ incrément / décrément ultra stable
+  sessionsRoot.on("child_added", snap=>{
+    liveCount++;
+    renderCount();
+  });
+
+  sessionsRoot.on("child_removed", snap=>{
+    liveCount = Math.max(liveCount - 1, 0);
+    renderCount();
+  });
+
+  // ✅ init count (petit fetch une seule fois)
+  sessionsRoot.once("value", snap=>{
+    liveCount = snap.numChildren();
+    renderCount();
+  });
+
+  // ✅ leave manuel pour mobile / refresh (important)
+  function leaveNow(){
+    sessionRef.remove();
   }
 
-  // ✅ Évite les bugs quand Firebase reconnecte
-  const connectedRef = db.ref(".info/connected");
-  connectedRef.on("value", snap => {
-    if(snap.val() === true){
-      // ✅ incrémente stable
-      countRef.transaction(current => (current || 0) + 1);
+  window.addEventListener("beforeunload", leaveNow);
+  window.addEventListener("pagehide", leaveNow);
 
-      // ✅ décrémente stable au départ
-      countRef.onDisconnect().transaction(current => {
-        current = current || 0;
-        return (current > 0) ? current - 1 : 0;
-      });
+  document.addEventListener("visibilitychange", ()=>{
+    if(document.visibilityState === "hidden"){
+      leaveNow();
     }
   });
 
-  // ✅ écoute du compteur
-  countRef.on("value", snap => {
-    viewerCountEl.textContent = formatViewers(snap.val());
+} else {
+  viewerCountEl.textContent = "—";
+}
+
+/* ===============================
+   PLAYER
+================================= */
+
+const SOURCES = {
+  1: "https://bolaloca.my/player/4/20",
+  2: "https://bolaloca.my/player/2/20",
+  3: "https://bolaloca.my/player/3/20"
+};
+
+function setActive(id){
+  [1,2,3].forEach(n=>{
+    const b = document.getElementById("btn"+n);
+    b.className = (n===id)
+      ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
+      : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
   });
+}
 
-  /* =============================
-     PLAYER
-     ============================= */
+function loadVideo(id){
+  document.getElementById("overlay").style.display = "none";
+  setActive(id);
 
-  const SOURCES = {
-    1: "https://bolaloca.my/player/4/20",
-    2: "https://bolaloca.my/player/2/20",
-    3: "https://bolaloca.my/player/3/20"
-  };
+  const ext = document.getElementById("externalLink");
+  const link = document.getElementById("directLink");
+  link.href = SOURCES[id];
+  ext.classList.add("hidden");
 
-  function setActive(id){
-    [1,2,3].forEach(n=>{
-      const b = document.getElementById("btn"+n);
-      b.className = (n===id)
-        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
-        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
-    });
-  }
+  const target = document.getElementById("videoTarget");
+  target.innerHTML = `
+    <iframe
+      id="streamFrame"
+      src="${SOURCES[id]}"
+      allowfullscreen
+      scrolling="no"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+      referrerpolicy="origin"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+    </iframe>
+  `;
 
-  function loadVideo(id){
-    document.getElementById("overlay").style.display = "none";
-    setActive(id);
-
-    const ext = document.getElementById("externalLink");
-    const link = document.getElementById("directLink");
-    link.href = SOURCES[id];
-    ext.classList.add("hidden");
-
-    const target = document.getElementById("videoTarget");
-    target.innerHTML = `
-      <iframe
-        id="streamFrame"
-        src="${SOURCES[id]}"
-        allowfullscreen
-        scrolling="no"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-        referrerpolicy="origin"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-      </iframe>
-    `;
-
-    setTimeout(() => {
-      const iframe = document.getElementById("streamFrame");
-      if(!iframe) return;
-      try { iframe.contentWindow.location.href; }
-      catch(e){ ext.classList.remove("hidden"); }
-    }, 2000);
-  }
+  setTimeout(() => {
+    const iframe = document.getElementById("streamFrame");
+    if(!iframe) return;
+    try { iframe.contentWindow.location.href; }
+    catch(e){ ext.classList.remove("hidden"); }
+  }, 2000);
+}
 </script>
 
 </body>
