@@ -48,22 +48,22 @@
   <!-- HEADER CENTER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      LIVERPOOL - LEEDS
+      TOULOUSE - LENS
     </h1>
     <p class="mt-2 text-white/55 font-semibold">
-      Premier League · 18:30
+      Ligue 1 · 20:45
     </p>
 
     <div class="mt-4 flex items-center justify-center gap-4">
       <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg" alt="Liverpool">
+           src="https://upload.wikimedia.org/wikipedia/fr/6/6a/Logo_Toulouse_FC_2018.svg" alt="Toulouse">
       <span class="text-white/40 font-extrabold">VS</span>
       <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg" alt="Leeds">
+           src="https://upload.wikimedia.org/wikipedia/fr/5/54/Logo_RC_Lens.svg" alt="Lens">
     </div>
   </header>
 
-  <!-- ✅ VIEWERS (CENTERED + SIMPLE) -->
+  <!-- VIEWERS -->
   <div class="flex justify-center mb-4">
     <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
       <span class="text-white/70">👤</span>
@@ -73,8 +73,6 @@
 
   <!-- PLAYER -->
   <section class="player-box relative w-full aspect-video">
-
-    <!-- Overlay -->
     <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
       <button onclick="loadVideo(1)"
               class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
@@ -112,14 +110,11 @@
 
 </main>
 
-<!-- Firebase compat -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ---------------------------
-     VIEWERS FIREBASE
-     --------------------------- */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -135,13 +130,22 @@
 
   const MATCH_ID = (location.pathname.split("/").pop() || "default").replace(".html","");
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
-
   const viewerCountEl = document.getElementById("viewerCount");
 
   function formatViewers(n){
     if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
     if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
     return String(n);
+  }
+
+  function cleanupOldSessions(sessions){
+    const now = Date.now();
+    Object.entries(sessions).forEach(([key,val])=>{
+      if(!val || !val.lastSeen) return;
+      if(now - val.lastSeen > 60000){
+        db.ref(`streams/${MATCH_ID}/sessions/${key}`).remove();
+      }
+    });
   }
 
   if(location.protocol !== "file:"){
@@ -161,17 +165,17 @@
 
     sessionsRoot.on("value", snap => {
       const sessions = snap.val() || {};
+      cleanupOldSessions(sessions);
       viewerCountEl.textContent = formatViewers(Object.keys(sessions).length);
     });
+  } else {
+    viewerCountEl.textContent = "—";
   }
 
-  /* ---------------------------
-     PLAYER
-     --------------------------- */
   const SOURCES = {
-    1: "https://bolaloca.my/player/4/12",
-    2: "https://bolaloca.my/player/2/12",
-    3: "https://bolaloca.my/player/3/12"
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
   };
 
   function setActive(id){
@@ -189,8 +193,8 @@
 
     const ext = document.getElementById("externalLink");
     const link = document.getElementById("directLink");
-    ext.classList.add("hidden");
     link.href = SOURCES[id];
+    ext.classList.add("hidden");
 
     const target = document.getElementById("videoTarget");
     target.innerHTML = `
