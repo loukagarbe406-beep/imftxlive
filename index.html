@@ -5,774 +5,148 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IMFTX+ — Live</title>
 
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ✅ POLICES PRO -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
-    :root{
-      --max: 1400px;
-      --gap: 24px;
-      --r: 26px;
-      --line: rgba(255,255,255,.14);
-      --shadow: 0 35px 110px rgba(0,0,0,.86);
+    html,body{
+      height:100%;margin:0;
+      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      color:#fff;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:#000;color:#fff;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial}
-    a{text-decoration:none;color:inherit}
 
-    /* TOP BAR */
-    header{position:fixed;top:0;left:0;right:0;z-index:60}
-    .topbar{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:16px 18px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+    .match-card{
+      background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:14px;overflow:hidden;
+      display:flex;flex-direction:column;
+      height:220px;padding:0;
     }
-    .brand{font-weight:900;letter-spacing:.4px;font-size:20px}
-    .rightTools{display:flex;align-items:center;gap:12px}
-    .iconBtn{
-      width:38px;height:38px;border-radius:999px;
-      display:grid;place-items:center;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.14);
-      opacity:.9;
+    .match-thumb{
+      flex:1;display:flex;align-items:center;justify-content:center;
+      font-weight:700;font-size:22px;
+      text-shadow:0 0 6px rgba(0,0,0,0.7);
+    }
+
+    @media(max-width:768px){
+      .match-card{height:170px}
+    }
+
+    /* ✅ TEXTE PRO "N°1 ..." */
+    .tagline{
+      font-family:'Sora', sans-serif;
+      font-weight:600;
+      letter-spacing:0.6px;
+      text-transform:uppercase;
+      font-size:13px;
+      opacity:.75;
+    }
+
+    /* ✅ BOUTONS RÉSEAUX */
+    .social-btn{
+      width:40px;height:40px;
+      display:flex;align-items:center;justify-content:center;
+      border-radius:14px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.10);
       transition:.15s;
     }
-    .iconBtn:hover{opacity:1;background:rgba(255,255,255,.12)}
-    .clockPill{
-      font-size:12px;font-weight:800;
-      padding:8px 12px;border-radius:999px;
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.14);
-      opacity:.9;
-      white-space:nowrap;
+    .social-btn:hover{
+      background:rgba(255,255,255,0.14);
+      transform:translateY(-1px);
     }
-
-    /* HERO */
-    .hero{
-      padding-top:90px;
-      position:relative;
-      overflow:hidden;
-    }
-    .bg{
-      position:absolute; inset:0;
-      background-size:cover;
-      background-position:center;
-      transform:scale(1.14);
-      filter: blur(18px) saturate(1.15) brightness(.55);
-      opacity:.92;
-    }
-    .hero::after{
-      content:""; position:absolute; inset:0;
-      background:
-        radial-gradient(1200px 700px at 50% 20%, rgba(255,255,255,.10), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.85) 70%, rgba(0,0,0,.98) 100%);
-      pointer-events:none;
-    }
-    .wrap{
-      position:relative; z-index:2;
-      max-width:var(--max);
-      margin:0 auto;
-      padding:0 18px 20px;
-    }
-
-    /* SECTION TITLES */
-    .headRow{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      margin:0 0 12px;
-    }
-    .headRow h2{
-      margin:0;
-      font-size:22px;
-      font-weight:900;
-      letter-spacing:.2px;
-    }
-    .headRow span{
-      font-size:12px;
-      opacity:.55;
-      font-weight:700;
-    }
-
-    /* MAIN GRID (Slider + Side) */
-    .topGrid{
-      display:grid;
-      grid-template-columns: 1.9fr 1fr;
-      gap:var(--gap);
-      align-items:stretch;
-    }
-
-    /* SLIDER */
-    .sliderBox{
-      border-radius:var(--r);
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      box-shadow:var(--shadow);
-      height:460px;
-      position:relative;
-    }
-    .track{
-      height:100%;
-      display:flex;
-      transition:transform .55s ease;
-      will-change:transform;
-    }
-    .slide{
-      flex:0 0 100%;
-      position:relative;
-    }
-    .poster{
-      position:absolute; inset:0;
-      background-size:cover;
-      background-position:center;
-      animation: posterZoom 12s ease-in-out infinite alternate;
-      transform:scale(1.02);
-    }
-    @keyframes posterZoom{
-      from{transform:scale(1.02)}
-      to{transform:scale(1.08)}
-    }
-    .slide::after{
-      content:""; position:absolute; inset:0;
-      background:
-        radial-gradient(1000px 600px at 60% 15%, rgba(255,255,255,.16), transparent 55%),
-        linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.72) 72%, rgba(0,0,0,.93));
-      pointer-events:none;
-    }
-
-    /* Top badge time */
-    .timeBadge{
-      position:absolute; top:14px; left:14px;
-      z-index:5;
-      display:inline-flex;align-items:center;gap:8px;
-      padding:7px 11px;
-      border-radius:999px;
-      background:rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.14);
-      font-size:12px;font-weight:900;
-      backdrop-filter: blur(12px);
-    }
-    .dotOrange{width:9px;height:9px;border-radius:50%;background:#fb923c;display:inline-block}
-    .dotGreen{width:9px;height:9px;border-radius:50%;background:#22c55e;display:inline-block}
-
-    /* Arrows */
-    .arrow{
-      position:absolute; top:50%;
-      transform:translateY(-50%);
-      width:46px;height:46px;
-      border-radius:999px;
-      display:grid;place-items:center;
-      cursor:pointer;
-      z-index:6;
-      background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(12px);
-      transition:.15s;
-      opacity:.9;
-    }
-    .arrow:hover{opacity:1;background:rgba(0,0,0,.45)}
-    .arrow.left{left:14px}
-    .arrow.right{right:14px}
-    .arrow i{font-size:18px}
-
-    /* Bottom info */
-    .bottomInfo{
-      position:absolute; left:18px; right:18px; bottom:16px;
-      z-index:7;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:14px;
-    }
-    .leftInfo{min-width:0}
-    .miniLogos{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-bottom:10px;
-      opacity:.95;
-    }
-    .teamLogo{
-      width:34px;height:34px;border-radius:10px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.16);
-      padding:6px;
-      object-fit:contain;
-    }
-    .vsPill{
-      width:30px;height:30px;border-radius:999px;
-      display:grid;place-items:center;
-      font-weight:900;font-size:11px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-    }
-    .title{
-      font-size:20px;
-      font-weight:900;
-      line-height:1.1;
-      text-shadow:0 18px 40px rgba(0,0,0,.65);
-    }
-    .sub{
-      margin-top:6px;
-      font-size:12px;
-      opacity:.7;
-      font-style:italic;
-      font-weight:700;
-    }
-
-    .watchBtn{
-      height:56px;
-      padding:10px 18px;
-      border-radius:999px;
-      background:rgba(255,255,255,.16);
-      border:1px solid rgba(255,255,255,.18);
-      display:flex;align-items:center;gap:12px;
-      font-weight:900;
-      letter-spacing:.2px;
-      backdrop-filter: blur(12px);
-      transition:.18s;
-      white-space:nowrap;
-    }
-    .watchBtn:hover{background:rgba(255,255,255,.23);transform:translateY(-1px)}
-    .play{
-      width:44px;height:44px;border-radius:999px;
-      background:rgba(0,0,0,.40);
-      border:1px solid rgba(255,255,255,.16);
-      display:grid;place-items:center;
-    }
-
-    /* DOTS */
-    .dots{
-      display:flex;
-      justify-content:center;
-      gap:8px;
-      margin:10px 0 0;
-    }
-    .d{
-      width:10px;height:10px;border-radius:999px;
-      background:rgba(255,255,255,.22);
-      border:1px solid rgba(255,255,255,.18);
-      cursor:pointer;
-      transition:.2s;
-    }
-    .d.active{
-      width:44px;
-      background:rgba(255,255,255,.85);
-    }
-
-    /* SIDE CARD */
-    .sideCard{
-      border-radius:var(--r);
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      box-shadow:var(--shadow);
-      height:460px;
-      position:relative;
-      transition:.22s;
-    }
-    .sideCard:hover{transform:translateY(-2px)}
-    .sidePoster{
-      position:absolute; inset:0;
-      background-size:cover;
-      background-position:center;
-      animation: posterZoom 12s ease-in-out infinite alternate;
-      transform:scale(1.02);
-    }
-    .sideCard::after{
-      content:""; position:absolute; inset:0;
-      background:
-        radial-gradient(700px 500px at 60% 15%, rgba(255,255,255,.14), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.74) 74%, rgba(0,0,0,.93));
-      pointer-events:none;
-    }
-    .sideBottom{
-      position:absolute; left:16px; right:16px; bottom:14px;
-      z-index:5;
-    }
-    .sideTitle{font-size:16px;font-weight:900}
-    .sideSub{margin-top:4px;font-size:12px;opacity:.68;font-style:italic;font-weight:700}
-
-    /* UPCOMING rail */
-    .rail{
-      display:flex;
-      gap:14px;
-      overflow-x:auto;
-      padding-bottom:10px;
-      scrollbar-width:none;
-    }
-    .rail::-webkit-scrollbar{display:none}
-
-    .miniCard{
-      flex:0 0 auto;
-      width:260px;
-      border-radius:18px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.05);
-      box-shadow:0 18px 55px rgba(0,0,0,.55);
-      transition:.15s;
-    }
-    .miniCard:hover{transform:translateY(-2px)}
-    .miniImg{
-      height:155px;
-      background-size:cover;
-      background-position:center;
-      position:relative;
-    }
-    .miniImg::after{
-      content:""; position:absolute; inset:0;
-      background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.92));
-    }
-    .miniTop{
-      position:absolute; top:10px; left:10px; right:10px;
-      z-index:2;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(0,0,0,.40);
-      border:1px solid rgba(255,255,255,.14);
-      font-size:12px;
-      font-weight:900;
-      backdrop-filter: blur(10px);
-    }
-    .miniBody{padding:12px 12px 14px}
-    .miniTitle{font-size:14px;font-weight:900}
-    .miniSub{margin-top:4px;font-size:12px;opacity:.65;font-style:italic;font-weight:700}
-
-    /* EVENTS LIST */
-    .eventRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      padding:14px 16px;
-      border-radius:16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.13), rgba(255,255,255,.06));
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 18px 60px rgba(0,0,0,.45);
-      margin-bottom:10px;
-      transition:.15s;
-    }
-    .eventRow:hover{transform:translateY(-1px)}
-    .eventLeft{
-      display:flex;align-items:center;gap:12px;min-width:0;
-    }
-    .leagueIcon{
-      width:30px;height:30px;border-radius:10px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      display:grid;place-items:center;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-    .leagueIcon img{width:20px;height:20px;object-fit:contain;opacity:.95}
-    .eventTxt{min-width:0}
-    .eventTitle{font-weight:900;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .eventMeta{opacity:.75;font-size:12px;font-style:italic;font-weight:700}
-
-    .eventMid{
-      display:flex;
-      align-items:center;
-      gap:16px;
-      flex:1;
-      justify-content:center;
-      min-width:0;
-    }
-    .midTeam{display:flex;align-items:center;gap:10px;min-width:0}
-    .midTeam b{
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-      max-width:220px;font-size:14px;
-    }
-    .midLogo{
-      width:34px;height:34px;border-radius:999px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      padding:6px;object-fit:contain;
-      flex:0 0 auto;
-    }
-    .midVS{
-      font-weight:900;font-size:12px;opacity:.75;
-      padding:6px 12px;border-radius:999px;
-      background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.14);
-      white-space:nowrap;
-    }
-    .eventRight{
-      display:flex;align-items:center;gap:10px;flex:0 0 auto;
-    }
-    .timePill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      font-weight:900;font-size:12px;
-      backdrop-filter: blur(10px);
-      white-space:nowrap;
-    }
-
-    footer{
-      border-top:1px solid rgba(255,255,255,.08);
-      padding:20px 0;
-      text-align:center;
-      opacity:.55;
-      font-size:12px;
-      margin-top:30px;
-    }
-
-    /* MOBILE */
-    @media (max-width: 1020px){
-      .topGrid{grid-template-columns: 1fr}
-      .sideCard{display:none}
-      .sliderBox{height:360px}
-    }
-    @media (max-width: 720px){
-      .sliderBox{height:320px}
-      .arrow{display:none}
-      .title{font-size:16px}
-      .watchBtn{height:48px;padding:8px 14px}
-      .play{width:38px;height:38px}
-      .eventRow{flex-direction:column;align-items:stretch}
-      .eventMid{justify-content:flex-start}
-      .eventRight{justify-content:space-between}
-      .midTeam b{max-width:150px}
+    .social-btn i{
+      font-size:16px;
+      color:white;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <div class="topbar">
-    <div class="brand">IMFTX+</div>
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-40 bg-transparent backdrop-blur-sm border-b border-zinc-800/40">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
 
-    <div class="rightTools">
-      <a class="iconBtn" href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" aria-label="Telegram">
+    <div class="text-3xl font-extrabold">IMFTX+</div>
+
+    <!-- ✅ RÉSEAUX EN HAUT À DROITE -->
+    <div class="flex items-center gap-2">
+      <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="social-btn" title="Telegram">
         <i class="fa-brands fa-telegram"></i>
       </a>
-      <a class="iconBtn" href="https://discord.gg/4ZFv9sa8" target="_blank" aria-label="Discord">
+
+      <a href="https://discord.gg/4ZFv9sa8" target="_blank" class="social-btn" title="Discord">
         <i class="fa-brands fa-discord"></i>
       </a>
-      <a class="iconBtn" href="https://discord.gg/FmWwePH5ET" target="_blank" aria-label="IPTV">
-        <i class="fa-solid fa-tv"></i>
-      </a>
 
-      <div class="clockPill" id="clock">Heure locale : --:--</div>
-    </div>
-  </div>
-</header>
-
-<section class="hero">
-  <div class="bg" id="bg"></div>
-
-  <div class="wrap">
-    <div class="headRow">
-      <div>
-        <h2>À la Une</h2>
-        <span>Sélection du jour</span>
-      </div>
-      <span></span>
-    </div>
-
-    <div class="topGrid">
-      <!-- MAIN SLIDER -->
-      <div class="sliderBox">
-        <div class="track" id="track"></div>
-        <div class="arrow left" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></div>
-        <div class="arrow right" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></div>
-      </div>
-
-      <!-- SIDE CARD (NEXT) -->
-      <a class="sideCard" id="sideCard" href="#">
-        <div class="sidePoster" id="sidePoster"></div>
-        <div class="timeBadge" id="sideBadge"><span class="dotOrange"></span>À venir</div>
-        <div class="sideBottom">
-          <div class="sideTitle" id="sideTitle"></div>
-          <div class="sideSub" id="sideSub"></div>
-        </div>
+      <!-- ✅ IPTV (icône propre: antenne/signal) -->
+      <a href="https://discord.gg/FmWwePH5ET" target="_blank" class="social-btn" title="IPTV">
+        <i class="fa-solid fa-signal"></i>
       </a>
     </div>
 
-    <div class="dots" id="dots"></div>
   </div>
-</section>
+</nav>
 
-<!-- UPCOMING -->
-<section class="wrap" style="margin-top:-6px;">
-  <div class="headRow">
-    <h2>À venir</h2>
-    <span>Programme</span>
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
+
+  <header class="text-center mb-8">
+    <h1 class="text-4xl md:text-5xl font-extrabold">IMFTX+ LIVE</h1>
+
+    <!-- ✅ POLICE PRO -->
+    <p class="mt-2 text-zinc-400 max-w-xl mx-auto tagline">
+      N°1 DE LA DIFFUSION FRANÇAISE
+    </p>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- ✅ MATCH 1 -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#f6d000,#990000)">
+        (20H45) TOULOUSE - LENS
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Toulouse vs Lens</span>
+        <button onclick="openCustomStream('toulouse-lens')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- ✅ MATCH 2 -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#0047ff,#7a0000)">
+        (20H45) CAGLIARI - AC MILAN
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Cagliari vs AC Milan</span>
+        <button onclick="openCustomStream('cagliari-acmilan')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">
+          Regarder
+        </button>
+      </div>
+    </div>
+
   </div>
-  <div class="rail" id="upcoming"></div>
-</section>
 
-<!-- EVENTS -->
-<section class="wrap" style="padding-bottom:26px;">
-  <div class="headRow">
-    <h2>Événements</h2>
-    <span>Matchs du jour</span>
-  </div>
-
-  <div id="eventsList"></div>
-</section>
-
-<footer>IMFTX+ — N°1 de la diffusion FR</footer>
-
-<script>
-  // ✅ 1 match = 1 page
-  function watchUrl(m){ return `pages/${m.id}.html`; }
-
-  // ✅ MATCHS DU JOUR
-  const matches = [
-    {
-      id:"toulouse-lens",
-      time:"20:45",
-      league:"Ligue 1",
-      sport:"Football",
-      title:"Toulouse - Lens",
-      a:"Toulouse", b:"Lens",
-      aLogo:"https://fr.wikipedia.org/wiki/Special:FilePath/Logo_Toulouse_FC_2018.svg",
-      bLogo:"https://fr.wikipedia.org/wiki/Special:FilePath/RC_Lens_logo.svg",
-      banner:"https://empire-sport.site/upload/banners/lens-vs-lorient.png"
-    },
-    {
-      id:"cagliari-acmilan",
-      time:"20:45",
-      league:"Serie A",
-      sport:"Football",
-      title:"Cagliari - AC Milan",
-      a:"Cagliari", b:"AC Milan",
-      aLogo:"https://fr.wikipedia.org/wiki/Special:FilePath/Cagliari_Calcio_1920.svg",
-      bLogo:"https://fr.wikipedia.org/wiki/Special:FilePath/Logo_of_AC_Milan.svg",
-      banner:"https://empire-sport.site/upload/banners/cagliari-vs-ac-milan.png"
+  <script>
+    function openCustomStream(matchId) {
+      window.location.href = matchId + ".html";
     }
-  ];
+  </script>
 
-  const MATCH_DURATION_MIN = 135;
+  <footer class="w-full mt-20 text-center text-sm opacity-70 pb-6">
+    <h2 class="text-lg font-bold mb-2">À propos</h2>
+    <p>IMFTX+ — Plateforme de streaming.</p>
+  </footer>
 
-  function timeToMinutes(hhmm){
-    const [h,m]=hhmm.split(":").map(Number);
-    return h*60+m;
-  }
-
-  function computeStatus(hhmm){
-    const now = new Date();
-    const nowMin = now.getHours()*60 + now.getMinutes();
-    const start = timeToMinutes(hhmm);
-    const end = start + MATCH_DURATION_MIN;
-    if(nowMin < start) return "À venir";
-    if(nowMin >= start && nowMin < end) return "En cours";
-    return "Terminé";
-  }
-
-  function countdownTo(hhmm){
-    const now = new Date();
-    const target = new Date(now);
-    const [h,m]=hhmm.split(":").map(Number);
-    target.setHours(h,m,0,0);
-    const diff = target - now;
-    if(diff<=0) return "";
-    const total = Math.floor(diff/1000);
-    const hh = Math.floor(total/3600);
-    const mm = Math.floor((total%3600)/60);
-    const ss = total%60;
-    return `${hh}h ${String(mm).padStart(2,"0")}m ${String(ss).padStart(2,"0")}s`;
-  }
-
-  function formatToday(hhmm){
-    return `Aujourd’hui · ${hhmm}`;
-  }
-
-  function badgeHTML(m){
-    const st = computeStatus(m.time);
-    if(st==="En cours") return `<div class="timeBadge"><span class="dotGreen"></span>En cours</div>`;
-    if(st==="Terminé") return `<div class="timeBadge"><span class="dotOrange"></span>Terminé</div>`;
-    const cd = countdownTo(m.time);
-    return `<div class="timeBadge"><span class="dotOrange"></span>${cd || "À venir"}</div>`;
-  }
-
-  function slideHTML(m){
-    return `
-      <div class="slide">
-        <div class="poster" style="background-image:url('${m.banner}')"></div>
-        ${badgeHTML(m)}
-
-        <div class="bottomInfo">
-          <div class="leftInfo">
-            <div class="miniLogos">
-              <img class="teamLogo" src="${m.aLogo}" alt="${m.a}">
-              <div class="vsPill">VS</div>
-              <img class="teamLogo" src="${m.bLogo}" alt="${m.b}">
-            </div>
-
-            <div class="title">${m.title}</div>
-            <div class="sub">${m.league} • ${formatToday(m.time)}</div>
-          </div>
-
-          <a class="watchBtn" href="${watchUrl(m)}">
-            <div class="play">▶</div>
-            REGARDER
-          </a>
-        </div>
-      </div>
-    `;
-  }
-
-  function dotHTML(i){
-    return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`;
-  }
-
-  function miniHTML(m){
-    const st = computeStatus(m.time);
-    const dot = st==="En cours" ? "dotGreen" : "dotOrange";
-    return `
-      <a class="miniCard" href="${watchUrl(m)}">
-        <div class="miniImg" style="background-image:url('${m.banner}')">
-          <div class="miniTop">
-            <span class="pill"><span class="${dot}"></span>${st}</span>
-            <span class="pill">${m.sport}</span>
-          </div>
-        </div>
-        <div class="miniBody">
-          <div class="miniTitle">${m.title}</div>
-          <div class="miniSub">${m.league} • ${formatToday(m.time)}</div>
-        </div>
-      </a>
-    `;
-  }
-
-  function rowHTML(m){
-    const st = computeStatus(m.time);
-    const pill = st==="À venir" ? (countdownTo(m.time) || "À venir") : st;
-    const dot = st==="En cours" ? "dotGreen" : "dotOrange";
-    return `
-      <a class="eventRow" href="${watchUrl(m)}">
-        <div class="eventLeft">
-          <span class="leagueIcon">🏟️</span>
-          <div class="eventTxt">
-            <div class="eventTitle">${m.title}</div>
-            <div class="eventMeta">${m.league} • ${formatToday(m.time)}</div>
-          </div>
-        </div>
-
-        <div class="eventMid">
-          <div class="midTeam">
-            <img class="midLogo" src="${m.aLogo}" alt="${m.a}">
-            <b>${m.a}</b>
-          </div>
-          <div class="midVS">vs</div>
-          <div class="midTeam">
-            <b>${m.b}</b>
-            <img class="midLogo" src="${m.bLogo}" alt="${m.b}">
-          </div>
-        </div>
-
-        <div class="eventRight">
-          <span class="timePill">
-            <span class="${dot}"></span>
-            ${pill}
-          </span>
-          <span style="opacity:.85;font-size:12px;font-weight:900">${m.sport}</span>
-        </div>
-      </a>
-    `;
-  }
-
-  // ✅ Slider logic
-  const bg = document.getElementById("bg");
-  const track = document.getElementById("track");
-  const dots = document.getElementById("dots");
-  const upcoming = document.getElementById("upcoming");
-  const eventsList = document.getElementById("eventsList");
-
-  let idx = 0;
-  let slider = [];
-
-  function build(){
-    const vm = matches.map(m=>({...m, status: computeStatus(m.time)}));
-    const sorted = vm.slice().sort((a,b)=>timeToMinutes(a.time)-timeToMinutes(b.time));
-    const notFinished = sorted.filter(x=>x.status!=="Terminé");
-    slider = (notFinished.length?notFinished:sorted).slice(0,2); // 2 slides max ici
-
-    track.innerHTML = slider.map(slideHTML).join("");
-    dots.innerHTML = slider.map((_,i)=>dotHTML(i)).join("");
-
-    // background = current slide banner
-    bg.style.backgroundImage = `url('${slider[idx].banner}')`;
-
-    // side card = next slide (if exists)
-    if(slider.length>1){
-      const next = slider[(idx+1)%slider.length];
-      document.getElementById("sidePoster").style.backgroundImage = `url('${next.banner}')`;
-      document.getElementById("sideTitle").textContent = next.title;
-      document.getElementById("sideSub").textContent = `${next.league} • ${formatToday(next.time)}`;
-      document.getElementById("sideCard").href = watchUrl(next);
-      document.getElementById("sideBadge").innerHTML =
-        `<span class="${next.status==="En cours"?"dotGreen":"dotOrange"}"></span>${next.status==="À venir" ? (countdownTo(next.time)||"À venir") : next.status}`;
-    }
-
-    // upcoming = only à venir
-    const up = sorted.filter(x=>x.status==="À venir");
-    upcoming.innerHTML = up.map(miniHTML).join("");
-
-    // events list
-    eventsList.innerHTML = sorted.map(rowHTML).join("");
-
-    updateDots();
-  }
-
-  function updateDots(){
-    slider.forEach((_,i)=>{
-      const el=document.getElementById("d"+i);
-      if(el) el.classList.toggle("active", i===idx);
-    });
-  }
-
-  function updateTransform(){
-    track.style.transform = `translateX(-${idx*100}%)`;
-    bg.style.backgroundImage = `url('${slider[idx].banner}')`;
-    updateDots();
-  }
-
-  function nextSlide(){
-    idx = Math.min(idx+1, slider.length-1);
-    updateTransform();
-  }
-  function prevSlide(){
-    idx = Math.max(idx-1, 0);
-    updateTransform();
-  }
-  function goTo(i){
-    idx = Math.max(0, Math.min(i, slider.length-1));
-    updateTransform();
-  }
-
-  window.nextSlide=nextSlide;
-  window.prevSlide=prevSlide;
-  window.goTo=goTo;
-
-  // ✅ Clock
-  function updateClock(){
-    const d = new Date();
-    const hh = String(d.getHours()).padStart(2,"0");
-    const mm = String(d.getMinutes()).padStart(2,"0");
-    document.getElementById("clock").textContent = `Heure locale : ${hh}:${mm}`;
-  }
-
-  // ✅ init
-  build();
-  updateClock();
-  setInterval(()=>{ build(); updateClock(); }, 1000);
-</script>
-
+</main>
 </body>
 </html>
