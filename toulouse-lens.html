@@ -31,7 +31,6 @@
 
 <body>
 
-<!-- NAV -->
 <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
@@ -45,7 +44,7 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- HEADER CENTER -->
+  <!-- HEADER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
       Toulouse - RC Lens
@@ -59,11 +58,11 @@
            src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/8b/Logo_Toulouse_FC_2018.svg/1200px-Logo_Toulouse_FC_2018.svg.png">
       <span class="text-white/40 font-extrabold">VS</span>
       <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c5/Logo_RC_Lens.svg/330px-Logo_RC_Lens.svg.png?20210925112457">
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c5/Logo_RC_Lens.svg/330px-Logo_RC_Lens.svg.png">
     </div>
   </header>
 
-  <!-- VIEWERS -->
+  <!-- ✅ VIEWERS STABLE -->
   <div class="flex justify-center mb-4">
     <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
       <span class="text-white/70">👤</span>
@@ -108,6 +107,10 @@
     </a>
   </div>
 
+  <p class="mt-8 text-center text-white/40 text-sm font-semibold">
+    Si le stream bug, nous ne sommes pas responsables. Cela dépend de votre connexion. — L’équipe IMFTX+
+  </p>
+
 </main>
 
 <!-- Firebase -->
@@ -115,9 +118,9 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ===============================
-     VIEWERS COUNTER (STABLE)
-  ================================= */
+  /* =============================
+     ✅ VIEWERS COUNTER (ULTRA STABLE)
+     ============================= */
 
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
@@ -133,61 +136,39 @@
   const db = firebase.database();
 
   const MATCH_ID = (location.pathname.split("/").pop() || "default").replace(".html","");
+  const countRef = db.ref(`streams/${MATCH_ID}/viewers`);
   const viewerCountEl = document.getElementById("viewerCount");
 
   function formatViewers(n){
+    n = Number(n || 0);
     if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
     if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
     return String(n);
   }
 
-  if(location.protocol !== "file:"){
+  // ✅ Évite les bugs quand Firebase reconnecte
+  const connectedRef = db.ref(".info/connected");
+  connectedRef.on("value", snap => {
+    if(snap.val() === true){
+      // ✅ incrémente stable
+      countRef.transaction(current => (current || 0) + 1);
 
-    const sessionsRoot = db.ref(`streams/${MATCH_ID}/sessions`);
-    const sessionId = Math.random().toString(36).slice(2) + Date.now();
-    const sessionRef = sessionsRoot.child(sessionId);
-
-    // ✅ Ajoute session
-    sessionRef.set({
-      joinedAt: firebase.database.ServerValue.TIMESTAMP,
-      lastSeen: firebase.database.ServerValue.TIMESTAMP
-    });
-
-    // ✅ Supprime automatiquement quand il quitte
-    sessionRef.onDisconnect().remove();
-
-    // ✅ Update toutes les 15 sec (évite les sessions fantômes)
-    setInterval(() => {
-      sessionRef.update({
-        lastSeen: firebase.database.ServerValue.TIMESTAMP
-      });
-    }, 15000);
-
-    // ✅ Nettoyage sessions fantômes (si mobile kill)
-    function cleanupOldSessions(sessions){
-      const now = Date.now();
-      Object.entries(sessions).forEach(([key, val]) => {
-        if(!val || !val.lastSeen) return;
-        if(now - val.lastSeen > 60000){ // 60s
-          sessionsRoot.child(key).remove();
-        }
+      // ✅ décrémente stable au départ
+      countRef.onDisconnect().transaction(current => {
+        current = current || 0;
+        return (current > 0) ? current - 1 : 0;
       });
     }
+  });
 
-    // ✅ Compteur stable = nombre de sessions
-    sessionsRoot.on("value", snap => {
-      const sessions = snap.val() || {};
-      cleanupOldSessions(sessions);
-      viewerCountEl.textContent = formatViewers(Object.keys(sessions).length);
-    });
+  // ✅ écoute du compteur
+  countRef.on("value", snap => {
+    viewerCountEl.textContent = formatViewers(snap.val());
+  });
 
-  } else {
-    viewerCountEl.textContent = "—";
-  }
-
-  /* ===============================
+  /* =============================
      PLAYER
-  ================================= */
+     ============================= */
 
   const SOURCES = {
     1: "https://bolaloca.my/player/4/20",
