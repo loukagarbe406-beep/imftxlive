@@ -48,7 +48,7 @@
   <!-- HEADER CENTER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      Toulouse - Rc Lens
+      Toulouse - RC Lens
     </h1>
     <p class="mt-2 text-white/55 font-semibold">
       Ligue 1 · 20:45
@@ -115,9 +115,9 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ---------------------------
-     FIREBASE VIEWERS (STABLE)
-  --------------------------- */
+  /* ===============================
+     VIEWERS COUNTER (STABLE)
+  ================================= */
 
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
@@ -143,37 +143,51 @@
 
   if(location.protocol !== "file:"){
 
-    const countRef = db.ref(`streams/${MATCH_ID}/count`);
-    const connectedRef = db.ref(".info/connected");
+    const sessionsRoot = db.ref(`streams/${MATCH_ID}/sessions`);
+    const sessionId = Math.random().toString(36).slice(2) + Date.now();
+    const sessionRef = sessionsRoot.child(sessionId);
 
-    // ✅ quand l’utilisateur se connecte
-    connectedRef.on("value", (snap) => {
-      if (snap.val() === true) {
-
-        // ✅ +1
-        countRef.transaction((current) => {
-          return (current || 0) + 1;
-        });
-
-        // ✅ -1 quand il part (avec sécurité)
-        countRef.onDisconnect().transaction((current) => {
-          return Math.max((current || 1) - 1, 0);
-        });
-      }
+    // ✅ Ajoute session
+    sessionRef.set({
+      joinedAt: firebase.database.ServerValue.TIMESTAMP,
+      lastSeen: firebase.database.ServerValue.TIMESTAMP
     });
 
-    // ✅ écoute uniquement le compteur (stable, léger)
-    countRef.on("value", (snap) => {
-      viewerCountEl.textContent = formatViewers(snap.val() || 0);
+    // ✅ Supprime automatiquement quand il quitte
+    sessionRef.onDisconnect().remove();
+
+    // ✅ Update toutes les 15 sec (évite les sessions fantômes)
+    setInterval(() => {
+      sessionRef.update({
+        lastSeen: firebase.database.ServerValue.TIMESTAMP
+      });
+    }, 15000);
+
+    // ✅ Nettoyage sessions fantômes (si mobile kill)
+    function cleanupOldSessions(sessions){
+      const now = Date.now();
+      Object.entries(sessions).forEach(([key, val]) => {
+        if(!val || !val.lastSeen) return;
+        if(now - val.lastSeen > 60000){ // 60s
+          sessionsRoot.child(key).remove();
+        }
+      });
+    }
+
+    // ✅ Compteur stable = nombre de sessions
+    sessionsRoot.on("value", snap => {
+      const sessions = snap.val() || {};
+      cleanupOldSessions(sessions);
+      viewerCountEl.textContent = formatViewers(Object.keys(sessions).length);
     });
 
   } else {
     viewerCountEl.textContent = "—";
   }
 
-  /* ---------------------------
+  /* ===============================
      PLAYER
-  --------------------------- */
+  ================================= */
 
   const SOURCES = {
     1: "https://bolaloca.my/player/4/20",
