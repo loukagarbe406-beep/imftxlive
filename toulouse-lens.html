@@ -7,6 +7,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
     html,body{
@@ -30,38 +31,44 @@
 
 <body>
 
+<!-- NAV -->
 <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
     <a href="index.html"
        class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
-      ← Retour
+      <i class="fa-solid fa-arrow-left"></i> Retour
     </a>
   </div>
 </nav>
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- HEADER -->
+  <!-- HEADER CENTER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      Toulouse - RC Lens
+      TOULOUSE - RC LENS
     </h1>
     <p class="mt-2 text-white/55 font-semibold">
       Ligue 1 · 20:45
     </p>
-  </header>
 
-  <!-- VIEWERS -->
-  <div class="flex justify-center mb-4">
-    <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
-      👤 <span id="viewerCount">0</span>
+    <div class="mt-4 flex items-center justify-center gap-4">
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/8b/Logo_Toulouse_FC_2018.svg/1200px-Logo_Toulouse_FC_2018.svg.png"
+           alt="Toulouse">
+      <span class="text-white/40 font-extrabold">VS</span>
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c5/Logo_RC_Lens.svg/330px-Logo_RC_Lens.svg.png"
+           alt="Lens">
     </div>
-  </div>
+  </header>
 
   <!-- PLAYER -->
   <section class="player-box relative w-full aspect-video">
+
+    <!-- Overlay -->
     <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
       <button onclick="loadVideo(1)"
               class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
@@ -71,6 +78,7 @@
         Si le player 1 ne marche pas → essaye le 2 / 3
       </p>
     </div>
+
     <div id="videoTarget" class="w-full h-full"></div>
   </section>
 
@@ -98,106 +106,102 @@
     </a>
   </div>
 
+  <!-- MESSAGE PRO -->
   <p class="mt-8 text-center text-white/40 text-sm font-semibold">
     Si le stream bug, nous ne sommes pas responsables. Cela dépend de votre connexion. — L’équipe IMFTX+
   </p>
 
 </main>
 
-<!-- Firebase -->
+<!-- ==========================
+     ✅ FIREBASE (ONLINE ONLY)
+     ========================== -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-/* ===============================
-   VIEWERS (simple + stable)
-================================= */
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+    authDomain: "imftxlive.firebaseapp.com",
+    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "imftxlive",
+    storageBucket: "imftxlive.firebasestorage.app",
+    messagingSenderId: "117057055374",
+    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+  };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
-  authDomain: "imftxlive.firebaseapp.com",
-  databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "imftxlive",
-  storageBucket: "imftxlive.firebasestorage.app",
-  messagingSenderId: "117057055374",
-  appId: "1:117057055374:web:af7d7542749a6ec592b7df"
-};
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+  const MATCH_ID = "toulouse-lens";
+  const presenceRef = db.ref(`streams/${MATCH_ID}/presence`);
+  const onlineCountRef = db.ref(`streams/${MATCH_ID}/online`);
+  const connectedRef = db.ref(".info/connected");
 
-const MATCH_ID = "toulouse-lens";
-const countRef = db.ref(`streams/${MATCH_ID}/viewers`);
-const viewerCountEl = document.getElementById("viewerCount");
+  const sessionId = Math.random().toString(36).slice(2) + Date.now();
+  const myRef = presenceRef.child(sessionId);
 
-function formatViewers(n){
-  n = Number(n||0);
-  if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
-  if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
-  return String(n);
-}
+  connectedRef.on("value", (snap) => {
+    if (snap.val() === true) {
+      myRef.set(true);
+      myRef.onDisconnect().remove();
 
-const connectedRef = db.ref(".info/connected");
-connectedRef.on("value", snap => {
-  if(snap.val() === true){
-    countRef.transaction(c => (c||0) + 1);
-    countRef.onDisconnect().transaction(c => Math.max((c||1) - 1, 0));
-  }
-});
-
-countRef.on("value", snap => {
-  viewerCountEl.textContent = formatViewers(snap.val());
-});
-
-/* ===============================
-   PLAYER
-================================= */
-
-const SOURCES = {
-  1: "https://bolaloca.my/player/4/20",
-  2: "https://bolaloca.my/player/2/20",
-  3: "https://bolaloca.my/player/3/20"
-};
-
-function setActive(id){
-  [1,2,3].forEach(n=>{
-    const b = document.getElementById("btn"+n);
-    b.className = (n===id)
-      ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
-      : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
+      presenceRef.on("value", (snap) => {
+        onlineCountRef.set(snap.numChildren());
+      });
+    }
   });
-}
+</script>
 
-function loadVideo(id){
-  document.getElementById("overlay").style.display = "none";
-  setActive(id);
+<!-- ==========================
+     ✅ PLAYER
+     ========================== -->
+<script>
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/20",
+    2: "https://bolaloca.my/player/2/20",
+    3: "https://bolaloca.my/player/3/20"
+  };
 
-  const ext = document.getElementById("externalLink");
-  const link = document.getElementById("directLink");
-  link.href = SOURCES[id];
-  ext.classList.add("hidden");
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.className = (n===id)
+        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
+        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
+    });
+  }
 
-  const target = document.getElementById("videoTarget");
-  target.innerHTML = `
-    <iframe
-      id="streamFrame"
-      src="${SOURCES[id]}"
-      allowfullscreen
-      scrolling="no"
-      frameborder="0"
-      allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-      referrerpolicy="origin"
-      sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-    </iframe>
-  `;
+  function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    setActive(id);
 
-  setTimeout(() => {
-    const iframe = document.getElementById("streamFrame");
-    if(!iframe) return;
-    try { iframe.contentWindow.location.href; }
-    catch(e){ ext.classList.remove("hidden"); }
-  }, 2000);
-}
+    const ext = document.getElementById("externalLink");
+    const link = document.getElementById("directLink");
+    link.href = SOURCES[id];
+    ext.classList.add("hidden");
+
+    const target = document.getElementById("videoTarget");
+    target.innerHTML = `
+      <iframe
+        id="streamFrame"
+        src="${SOURCES[id]}"
+        allowfullscreen
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+      </iframe>
+    `;
+
+    setTimeout(() => {
+      const iframe = document.getElementById("streamFrame");
+      if(!iframe) return;
+      try { iframe.contentWindow.location.href; }
+      catch(e){ ext.classList.remove("hidden"); }
+    }, 2000);
+  }
 </script>
 
 </body>
