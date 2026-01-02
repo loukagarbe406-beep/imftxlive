@@ -3,11 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Stream</title>
+  <title>IMFTX+ — Toulouse - Lens</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
     html,body{
@@ -37,14 +36,13 @@
 
     <a href="../index.html"
        class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
-      <i class="fa-solid fa-arrow-left"></i> Retour
+      ← Retour
     </a>
   </div>
 </nav>
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- HEADER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
       Toulouse - RC Lens
@@ -52,21 +50,12 @@
     <p class="mt-2 text-white/55 font-semibold">
       Ligue 1 · 20:45
     </p>
-
-    <div class="mt-4 flex items-center justify-center gap-4">
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/8b/Logo_Toulouse_FC_2018.svg/1200px-Logo_Toulouse_FC_2018.svg.png">
-      <span class="text-white/40 font-extrabold">VS</span>
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c5/Logo_RC_Lens.svg/330px-Logo_RC_Lens.svg.png">
-    </div>
   </header>
 
   <!-- VIEWERS -->
   <div class="flex justify-center mb-4">
     <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
-      <span class="text-white/70">👤</span>
-      <span id="viewerCount">0</span>
+      👤 <span id="viewerCount">0</span>
     </div>
   </div>
 
@@ -77,7 +66,6 @@
               class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
         ▶ LANCER LE STREAM
       </button>
-      <p class="mt-4 text-white/50 font-semibold text-sm">Si le player 1 ne marche pas → essaye le 2 / 3</p>
     </div>
 
     <div id="videoTarget" class="w-full h-full"></div>
@@ -85,30 +73,19 @@
 
   <!-- PLAYERS -->
   <section class="mt-5 grid grid-cols-3 gap-3">
-    <button id="btn1" onclick="loadVideo(1)"
-            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
+    <button id="btn1" onclick="loadVideo(1)" class="h-12 rounded-xl bg-white text-black font-extrabold">
       PLAYER 1
     </button>
-    <button id="btn2" onclick="loadVideo(2)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+    <button id="btn2" onclick="loadVideo(2)" class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold">
       PLAYER 2
     </button>
-    <button id="btn3" onclick="loadVideo(3)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+    <button id="btn3" onclick="loadVideo(3)" class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold">
       PLAYER 3
     </button>
   </section>
 
-  <!-- DIRECT LINK -->
-  <div id="externalLink" class="hidden mt-4 text-center">
-    <a id="directLink" href="#" target="_blank"
-       class="text-amber-400 underline font-extrabold text-sm">
-      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-    </a>
-  </div>
-
   <p class="mt-8 text-center text-white/40 text-sm font-semibold">
-    Si le stream bug, cela dépend de votre connexion et de votre appareil. — L’équipe IMFTX+
+    Si le stream bug, nous ne sommes pas responsables. Cela dépend de votre connexion. — L’équipe IMFTX+
   </p>
 
 </main>
@@ -118,164 +95,54 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-/* ===============================
-   ✅ VIEWERS COUNTER (STABLE ++)
-   - child_added / child_removed
-   - onDisconnect remove
-   - cleanup sessions fantômes
-   - leave manuel on refresh/close/hide
-================================= */
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+    authDomain: "imftxlive.firebaseapp.com",
+    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "imftxlive",
+    storageBucket: "imftxlive.firebasestorage.app",
+    messagingSenderId: "117057055374",
+    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+  };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
-  authDomain: "imftxlive.firebaseapp.com",
-  databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "imftxlive",
-  storageBucket: "imftxlive.firebasestorage.app",
-  messagingSenderId: "117057055374",
-  appId: "1:117057055374:web:af7d7542749a6ec592b7df"
-};
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const MATCH_ID = "toulouse-lens"; // ✅ fixe pour éviter erreurs
+  const countRef = db.ref(`streams/${MATCH_ID}/viewers`);
+  const viewerCountEl = document.getElementById("viewerCount");
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-const MATCH_ID = (location.pathname.split("/").pop() || "default").replace(".html","");
-const sessionsRoot = db.ref(`streams/${MATCH_ID}/sessions`);
-const viewerCountEl = document.getElementById("viewerCount");
-
-// ✅ id stable par navigateur (évite double comptage refresh)
-const DEVICE_ID_KEY = "imftx_device_id";
-let deviceId = localStorage.getItem(DEVICE_ID_KEY);
-if(!deviceId){
-  deviceId = Math.random().toString(36).slice(2) + Date.now();
-  localStorage.setItem(DEVICE_ID_KEY, deviceId);
-}
-
-// ✅ sessionId unique à chaque page load
-const sessionId = deviceId + "_" + Date.now();
-const sessionRef = sessionsRoot.child(sessionId);
-
-function formatViewers(n){
-  n = Number(n||0);
-  if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
-  if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
-  return String(n);
-}
-
-// ✅ compteur local (ne dépend pas d’un gros snap val)
-let liveCount = 0;
-function renderCount(){
-  viewerCountEl.textContent = formatViewers(liveCount);
-}
-
-// ✅ nettoyage sessions fantômes (60s)
-function cleanup(){
-  const limit = Date.now() - 60000;
-  sessionsRoot.orderByChild("lastSeen").endAt(limit).once("value", snap=>{
-    snap.forEach(child => child.ref.remove());
-  });
-}
-
-// ✅ join session
-if(location.protocol !== "file:"){
-  sessionRef.set({
-    joinedAt: firebase.database.ServerValue.TIMESTAMP,
-    lastSeen: firebase.database.ServerValue.TIMESTAMP
-  });
-
-  // ✅ auto remove si fermeture normale
-  sessionRef.onDisconnect().remove();
-
-  // ✅ update heartbeat
-  setInterval(()=>{
-    sessionRef.update({ lastSeen: firebase.database.ServerValue.TIMESTAMP });
-    cleanup(); // nettoyage léger
-  }, 15000);
-
-  // ✅ incrément / décrément ultra stable
-  sessionsRoot.on("child_added", snap=>{
-    liveCount++;
-    renderCount();
-  });
-
-  sessionsRoot.on("child_removed", snap=>{
-    liveCount = Math.max(liveCount - 1, 0);
-    renderCount();
-  });
-
-  // ✅ init count (petit fetch une seule fois)
-  sessionsRoot.once("value", snap=>{
-    liveCount = snap.numChildren();
-    renderCount();
-  });
-
-  // ✅ leave manuel pour mobile / refresh (important)
-  function leaveNow(){
-    sessionRef.remove();
+  function formatViewers(n){
+    n = Number(n||0);
+    if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
+    if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
+    return String(n);
   }
 
-  window.addEventListener("beforeunload", leaveNow);
-  window.addEventListener("pagehide", leaveNow);
-
-  document.addEventListener("visibilitychange", ()=>{
-    if(document.visibilityState === "hidden"){
-      leaveNow();
+  const connectedRef = db.ref(".info/connected");
+  connectedRef.on("value", snap => {
+    if(snap.val() === true){
+      countRef.transaction(c => (c||0)+1);
+      countRef.onDisconnect().transaction(c => Math.max((c||1)-1,0));
     }
   });
 
-} else {
-  viewerCountEl.textContent = "—";
-}
+  countRef.on("value", snap => viewerCountEl.textContent = formatViewers(snap.val()));
 
-/* ===============================
-   PLAYER
-================================= */
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/20",
+    2: "https://bolaloca.my/player/2/20",
+    3: "https://bolaloca.my/player/3/20"
+  };
 
-const SOURCES = {
-  1: "https://bolaloca.my/player/4/20",
-  2: "https://bolaloca.my/player/2/20",
-  3: "https://bolaloca.my/player/3/20"
-};
-
-function setActive(id){
-  [1,2,3].forEach(n=>{
-    const b = document.getElementById("btn"+n);
-    b.className = (n===id)
-      ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
-      : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
-  });
-}
-
-function loadVideo(id){
-  document.getElementById("overlay").style.display = "none";
-  setActive(id);
-
-  const ext = document.getElementById("externalLink");
-  const link = document.getElementById("directLink");
-  link.href = SOURCES[id];
-  ext.classList.add("hidden");
-
-  const target = document.getElementById("videoTarget");
-  target.innerHTML = `
-    <iframe
-      id="streamFrame"
-      src="${SOURCES[id]}"
-      allowfullscreen
-      scrolling="no"
-      frameborder="0"
+  function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("videoTarget").innerHTML = `
+      <iframe src="${SOURCES[id]}" allowfullscreen scrolling="no" frameborder="0"
       allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
       referrerpolicy="origin"
-      sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-    </iframe>
-  `;
-
-  setTimeout(() => {
-    const iframe = document.getElementById("streamFrame");
-    if(!iframe) return;
-    try { iframe.contentWindow.location.href; }
-    catch(e){ ext.classList.remove("hidden"); }
-  }, 2000);
-}
+      sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe>
+    `;
+  }
 </script>
 
 </body>
