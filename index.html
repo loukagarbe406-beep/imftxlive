@@ -5,154 +5,893 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IMFTX+ — Live</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
+    :root{
+      --max: 1420px;
+      --gap: 22px;
+      --cardW: 1050px;
+      --cardH: 460px;
+      --r: 26px;
+
+      --line: rgba(255,255,255,.12);
+      --shadow: 0 28px 100px rgba(0,0,0,.78);
+    }
+
+    *{box-sizing:border-box}
     html,body{
       height:100%;margin:0;
+      background:#000;color:#fff;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
-      color:#fff;
     }
-    .match-card{
-      background:linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.03);
-      border-radius:14px;
-      overflow:hidden;
-      display:flex;
-      flex-direction:column;
-      height:220px;
-      padding:0;
-      transition: transform .18s ease, background .18s ease;
-    }
-    .match-card:hover{
-      transform: translateY(-3px);
-      background:linear-gradient(135deg,rgba(255,255,255,0.035),rgba(255,255,255,0.015));
-    }
-    .match-thumb{
-      flex:1;
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit}
+    img{display:block}
+
+    /* ---------------- HEADER ---------------- */
+    header{position:fixed;top:0;left:0;right:0;z-index:50}
+    .topbar{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:16px 18px;
       display:flex;
       align-items:center;
-      justify-content:center;
-      font-weight:800;
+      justify-content:space-between;
+    }
+    .brand{
+      font-weight:900;
+      letter-spacing:.3px;
+      font-size:20px;
+      opacity:.95
+    }
+    .icons{display:flex;gap:14px;font-size:18px;align-items:center}
+    .icons a{
+      opacity:.7;
+      width:38px;height:38px;border-radius:12px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(10px);
+    }
+    .icons a:hover{opacity:1;background:rgba(255,255,255,.10)}
+
+    /* ---------------- HERO ---------------- */
+    .hero{
+      position:relative;
+      padding-top:74px;
+      padding-bottom:10px;
+      overflow:hidden;
+    }
+    .bg{
+      position:absolute; inset:0;
+      background-size:cover;
+      background-position:center;
+      transform:scale(1.12);
+      filter: blur(18px) saturate(1.15) brightness(.55);
+      opacity:.98;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;inset:0;
+      background:
+        radial-gradient(1200px 700px at 50% 30%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.85) 70%, rgba(0,0,0,.98) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.92), rgba(0,0,0,.18), rgba(0,0,0,.92));
+      pointer-events:none;
+    }
+
+    .wrap{position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 18px}
+
+    .heroTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:22px;
+      margin-top:6px;
+    }
+
+    .heroLeft{
+      min-width:0;
+    }
+    .heroLeft h1{
+      margin:0;
+      font-size:34px;
+      font-weight:900;
+      line-height:1.05;
+      text-shadow:0 20px 40px rgba(0,0,0,.70);
+      text-transform:uppercase;
       letter-spacing:.2px;
-      color:rgba(255,255,255,0.95);
+    }
+    .heroLeft .meta1{
+      margin-top:8px;
+      font-weight:800;
+      opacity:.75;
+    }
+    .heroLeft .meta2{
+      margin-top:6px;
+      font-style:italic;
+      opacity:.60;
+    }
+
+    /* right clock */
+    .clockBox{
+      opacity:.75;
+      font-weight:800;
+      font-size:12px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      padding:10px 14px;
+      border-radius:14px;
+      backdrop-filter: blur(10px);
+      white-space:nowrap;
+    }
+
+    /* ---------------- SLIDER ---------------- */
+    .sliderArea{position:relative;margin-top:16px}
+    .viewport{overflow:hidden}
+    .track{
+      display:flex;
+      gap:var(--gap);
+      transition:transform .55s ease;
+      will-change:transform;
+      padding-bottom:2px;
+    }
+    .card{
+      flex:0 0 var(--cardW);
+      height:var(--cardH);
+      border-radius:var(--r);
+      overflow:hidden;
+      position:relative;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+      background: rgba(255,255,255,.05);
+    }
+    .poster{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.01)}
+    .card::after{
+      content:"";position:absolute;inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.50) 62%, rgba(0,0,0,.92) 100%),
+        linear-gradient(90deg, rgba(0,0,0,.65), rgba(0,0,0,.10), rgba(0,0,0,.65));
+      pointer-events:none;
+    }
+
+    /* status badge */
+    .badge{
+      position:absolute;
+      top:14px;left:14px;
+      z-index:6;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter:blur(10px);
+      -webkit-backdrop-filter:blur(10px);
+      font-weight:900;
+      font-size:12px;
+    }
+    .dotGreen,.dotOrange{
+      width:9px;height:9px;border-radius:50%;
+      display:inline-block
+    }
+    .dotGreen{background:#22c55e}
+    .dotOrange{background:#fb923c}
+
+    /* arrows */
+    .cardArrow{
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      width:54px;height:54px;
+      border-radius:50%;
+      background:rgba(0,0,0,.30);
+      border:1px solid rgba(255,255,255,.16);
+      display:grid;
+      place-items:center;
+      z-index:7;
+      cursor:pointer;
+      backdrop-filter:blur(10px);
+    }
+    .cardArrow:hover{background:rgba(0,0,0,.45)}
+    .cardArrow span{font-size:34px;line-height:1}
+    .cardArrow.left{left:14px}
+    .cardArrow.right{right:14px}
+
+    /* bottom info */
+    .bottom{
+      position:absolute;
+      left:18px;right:18px;
+      bottom:16px;
+      z-index:7;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .leftInfo{min-width:0}
+
+    .logosLine{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+      flex-wrap:wrap;
+    }
+    .teamIcon{
+      width:34px;height:34px;
+      border-radius:12px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.14);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      padding:6px;
+    }
+    .teamIcon img{width:100%;height:100%;object-fit:contain}
+    .vsPill{
+      width:32px;height:32px;border-radius:50%;
+      display:grid;place-items:center;
+      font-weight:900;font-size:12px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .cardTitle{
       font-size:22px;
+      font-weight:900;
+      line-height:1.1;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      text-transform:uppercase;
     }
-    .team-logo{
-      width:38px;height:38px;object-fit:contain;
-      filter: drop-shadow(0 8px 16px rgba(0,0,0,.35));
+    .cardSub{
+      margin-top:6px;
+      opacity:.72;
+      font-style:italic;
+      font-size:13px;
     }
-    @media(max-width:768px){
-      .match-card{height:170px}
-      .match-thumb{font-size:18px}
-      .team-logo{width:32px;height:32px}
+
+    /* watch button */
+    .watch{
+      display:inline-flex;
+      align-items:center;
+      height:58px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
+      overflow:hidden;
+      white-space:nowrap;
+    }
+    .watch:hover{background:rgba(255,255,255,.18)}
+    .play{
+      width:48px;height:48px;
+      border-radius:50%;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);
+      display:grid;
+      place-items:center;
+      margin-right:12px;
+      font-size:15px;
+    }
+    .watchTxt{
+      font-weight:900;
+      letter-spacing:.2px;
+      padding-right:10px
+    }
+
+    /* dots */
+    .dots{
+      display:flex;
+      justify-content:center;
+      gap:8px;
+      margin:12px 0 0;
+    }
+    .d{
+      width:10px;height:10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+      transition:.2s;
+    }
+    .d.active{
+      width:38px;
+      background:rgba(255,255,255,.82);
+    }
+
+    /* ---------------- SECTIONS ---------------- */
+    .section{
+      max-width:var(--max);
+      margin:0 auto;
+      padding: 14px 18px 24px;
+      margin-top:-6px;
+      position:relative;
+      z-index:5;
+    }
+    .sectionHead{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      margin:0 0 12px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .sectionHead span{
+      opacity:.55;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    /* upcoming rail */
+    .rail{
+      display:flex;
+      gap:14px;
+      overflow-x:auto;
+      padding-bottom:8px;
+      scrollbar-width:none;
+    }
+    .rail::-webkit-scrollbar{display:none}
+
+    .mini{
+      flex:0 0 auto;
+      width:290px;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      box-shadow:0 18px 55px rgba(0,0,0,.55);
+      transition:.15s;
+    }
+    .mini:hover{transform:translateY(-2px)}
+    .miniImg{
+      height:155px;
+      background-size:cover;
+      background-position:center;
+      position:relative;
+    }
+    .miniImg::after{
+      content:"";
+      position:absolute;inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.86));
+    }
+    .miniTop{
+      position:absolute;
+      top:10px;left:10px;right:10px;
+      z-index:2;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(10px);
+      font-size:12px;
+      font-weight:900;
+    }
+    .miniBody{
+      padding:12px 12px 14px;
+    }
+    .miniTitle{
+      font-size:15px;
+      font-weight:900;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      text-transform:uppercase;
+    }
+    .miniSub{
+      margin-top:4px;
+      font-size:12px;
+      opacity:.65;
+      font-style:italic;
+    }
+
+    /* ---------------- EVENTS LIST ---------------- */
+    .eventsWrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding: 12px 18px 40px;
+    }
+    .eventRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 16px;
+      border-radius:16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.07));
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,.45);
+      margin-bottom:10px;
+    }
+    .eventLeft{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .leagueIcon{
+      width:34px;height:34px;
+      border-radius:12px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      flex:0 0 auto;
+      padding:6px;
+    }
+    .leagueIcon img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      opacity:.95;
+    }
+    .eventTxt{min-width:0}
+    .eventTitle{
+      font-weight:900;
+      font-size:16px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      text-transform:uppercase;
+    }
+    .eventMeta{
+      opacity:.75;
+      font-size:12px;
+      font-style:italic;
+    }
+
+    .eventMid{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      min-width:0;
+      flex:1;
+      justify-content:center;
+    }
+    .midTeam{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .midTeam b{
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:210px;
+      font-size:14px;
+      text-transform:uppercase;
+    }
+    .midLogo{
+      width:36px;height:36px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      padding:6px;
+      object-fit:contain;
+      flex:0 0 auto;
+    }
+    .midVS{
+      font-weight:900;
+      font-size:12px;
+      opacity:.75;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.30);
+      border:1px solid rgba(255,255,255,.14);
+      text-transform:uppercase;
+    }
+
+    .eventRight{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex:0 0 auto;
+    }
+    .timePill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:900;
+      font-size:12px;
+      backdrop-filter: blur(10px);
+      white-space:nowrap;
+    }
+    .sportTag{
+      opacity:.85;
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    footer{
+      border-top:1px solid rgba(255,255,255,.08);
+      padding:18px 0;
+      text-align:center;
+      opacity:.55;
+      font-size:12px;
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+    @media (min-width: 1400px){
+      :root{ --cardW: 1120px; --cardH: 500px; }
+    }
+    @media (max-width: 980px){
+      :root{
+        --max: 1200px;
+        --cardW: calc(100vw - 36px);
+        --cardH: 340px;
+        --gap: 14px;
+        --r: 20px;
+      }
+      .cardArrow{display:none}
+      .heroTop{flex-direction:column;align-items:center;text-align:center}
+      .heroLeft h1{font-size:30px}
+      .clockBox{margin-top:10px}
+      .eventRow{flex-direction:column;align-items:stretch}
+      .eventMid{justify-content:flex-start}
+      .eventRight{justify-content:space-between}
+      .midTeam b{max-width:150px}
     }
   </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="sticky top-0 z-40 bg-transparent backdrop-blur-sm border-b border-zinc-800/40">
-  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
-    <div class="text-3xl font-extrabold">IMFTX+</div>
+<header>
+  <div class="topbar">
+    <div class="brand">IMFTX+</div>
 
-    <!-- ✅ Réseaux en haut à droite -->
-    <div class="flex items-center gap-3">
-      <a href="https://discord.gg/FmWwePH5ET" target="_blank"
-         class="hidden md:inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white text-black font-bold text-sm hover:opacity-90">
-        <i class="fa-solid fa-bolt"></i> IPTV
-      </a>
-
-      <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank"
-         class="w-10 h-10 grid place-items-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10">
-        <i class="fa-brands fa-telegram text-lg"></i>
-      </a>
-
-      <a href="https://discord.gg/4ZFv9sa8" target="_blank"
-         class="w-10 h-10 grid place-items-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10">
-        <i class="fa-brands fa-discord text-lg"></i>
-      </a>
+    <div class="icons">
+      <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+      <a href="https://discord.gg/4ZFv9sa8" target="_blank" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+      <a href="https://discord.gg/FmWwePH5ET" target="_blank" aria-label="IPTV"><i class="fa-solid fa-tv"></i></a>
     </div>
   </div>
-</nav>
+</header>
 
-<main class="max-w-screen-2xl mx-auto px-6 py-10">
+<section class="hero">
+  <div class="bg" id="bg"></div>
 
-  <header class="text-center mb-10">
-    <h1 class="text-4xl md:text-5xl font-extrabold">IMFTX+ LIVE</h1>
-    <p class="mt-2 text-zinc-400 max-w-xl mx-auto">N°1 de la diffusion française</p>
-  </header>
+  <div class="wrap">
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-    <!-- ✅ 1 LIVERPOOL - LEEDS -->
-    <div class="match-card">
-      <div class="match-thumb bg-gradient-to-tr from-red-700 to-zinc-950">
-        (18h30) LIVERPOOL - LEEDS
+    <div class="heroTop">
+      <div class="heroLeft">
+        <h1 id="heroTitle"></h1>
+        <div class="meta1" id="heroLeague"></div>
+        <div class="meta2" id="heroTime"></div>
       </div>
 
-      <div class="match-meta flex justify-between items-center p-3">
-        <div class="flex items-center gap-3 min-w-0">
-          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg" alt="Liverpool">
-          <span class="font-semibold truncate">Liverpool</span>
-          <span class="text-zinc-500 font-bold">vs</span>
-          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg" alt="Leeds">
-          <span class="font-semibold truncate">Leeds</span>
-        </div>
-
-        <button onclick="openCustomStream('liverpool-leeds')"
-          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-lg hover:opacity-90">
-          Regarder
-        </button>
+      <div class="clockBox">
+        Heure locale : <span id="clock">--:--</span>
       </div>
     </div>
 
-    <!-- ✅ 2 SUNDERLAND - MAN CITY -->
-    <div class="match-card">
-      <div class="match-thumb bg-gradient-to-tr from-red-700 to-sky-600">
-        (21h00) SUNDERLAND - MAN CITY
+    <div class="sliderArea">
+      <div class="viewport" id="viewport">
+        <div class="track" id="track"></div>
       </div>
-
-      <div class="match-meta flex justify-between items-center p-3">
-        <div class="flex items-center gap-3 min-w-0">
-          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Sunderland%20AFC%201997.svg" alt="Sunderland">
-          <span class="font-semibold truncate">Sunderland</span>
-          <span class="text-zinc-500 font-bold">vs</span>
-          <img class="team-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Manchester%20City%202016.svg" alt="Man City">
-          <span class="font-semibold truncate">Man City</span>
-        </div>
-
-        <button onclick="openCustomStream('sunderland-man-city')"
-          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-lg hover:opacity-90">
-          Regarder
-        </button>
-      </div>
+      <div class="dots" id="dots"></div>
     </div>
-
   </div>
+</section>
 
-  <script>
-    function openCustomStream(matchId) {
-      const pages = {
-        "liverpool-leeds": "pages/liverpool-leeds.html",
-        "sunderland-man-city": "pages/sunderland-man-city.html"
-      };
+<!-- UPCOMING -->
+<section class="section">
+  <div class="sectionHead">
+    <h2>À venir</h2>
+    <span>Programme</span>
+  </div>
+  <div class="rail" id="upcoming"></div>
+</section>
 
-      if (!pages[matchId]) return alert("Match introuvable");
-      // ✅ Redirection propre (pas de nouvel onglet)
-      window.location.href = pages[matchId];
+<!-- EVENTS LIST -->
+<section class="eventsWrap">
+  <div class="sectionHead">
+    <h2>Événements</h2>
+    <span>Matchs du jour</span>
+  </div>
+  <div id="eventsList"></div>
+</section>
+
+<footer>IMFTX+ — N°1 de la diffusion FR</footer>
+
+<script>
+  /* -------------------------------------------------------------------------
+     ✅ MATCHES DATA (TU AJOUTES ICI AUTANT DE MATCHS QUE TU VEUX)
+     id = nom du fichier dans /pages
+     banner = ton image full
+     ------------------------------------------------------------------------- */
+
+  const MATCHES = [
+    {
+      id: "liverpool-leeds",
+      time: "18:30",
+      comp: "Premier League",
+      sport: "Football",
+      title: "Liverpool - Leeds",
+      a: "Liverpool",
+      b: "Leeds",
+      aLogo: "https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20FC%20Liverpool.svg",
+      bLogo: "https://fr.wikipedia.org/wiki/Special:FilePath/Logo%20Leeds%20United%20FC.svg",
+      banner: "https://empire-sport.site/upload/banners/burnley-vs-arsenal_01.png"
+    },
+    {
+      id: "sunderland-man-city",
+      time: "21:00",
+      comp: "Premier League",
+      sport: "Football",
+      title: "Sunderland - Man City",
+      a: "Sunderland",
+      b: "Man City",
+      aLogo: "https://fr.wikipedia.org/wiki/Special:FilePath/Sunderland_A.F.C._logo.svg",
+      bLogo: "https://fr.wikipedia.org/wiki/Special:FilePath/Manchester_City_FC_badge.svg",
+      banner: "https://empire-sport.site/upload/events/erilvwbktz7ugfcei9tr90bnnvlauf.jpg"
     }
-  </script>
+  ];
 
-  <footer class="w-full mt-20 text-center text-sm opacity-70 pb-6">
-    <h2 class="text-lg font-bold mb-2">À propos</h2>
-    <p>IMFTX+ — Plateforme de streaming. Mise à jour automatique.</p>
-  </footer>
+  function watchUrl(m){ return `pages/${m.id}.html`; }
 
-</main>
+  const MATCH_DURATION_MIN = 135;
+
+  function timeToMinutes(hhmm){
+    const [h,m] = hhmm.split(":").map(Number);
+    return (h*60)+(m||0);
+  }
+
+  function computeStatus(hhmm){
+    const now = new Date();
+    const nowMin = now.getHours()*60 + now.getMinutes();
+    const start = timeToMinutes(hhmm);
+    const end = start + MATCH_DURATION_MIN;
+    if(nowMin < start) return "À venir";
+    if(nowMin >= start && nowMin < end) return "En cours";
+    return "Terminé";
+  }
+
+  function countdownTo(hhmm){
+    const now = new Date();
+    const target = new Date(now);
+    const [h,m] = hhmm.split(":").map(Number);
+    target.setHours(h, m, 0, 0);
+
+    const diff = target.getTime() - now.getTime();
+    if(diff <= 0) return "";
+
+    const totalSec = Math.floor(diff/1000);
+    const hh = Math.floor(totalSec/3600);
+    const mm = Math.floor((totalSec%3600)/60);
+    const ss = totalSec%60;
+    return `${hh}h ${String(mm).padStart(2,"0")}m ${String(ss).padStart(2,"0")}s`;
+  }
+
+  function formatToday(hhmm){ return `Aujourd’hui · ${hhmm}`; }
+
+  const bg = document.getElementById("bg");
+  const heroTitle = document.getElementById("heroTitle");
+  const heroLeague = document.getElementById("heroLeague");
+  const heroTime = document.getElementById("heroTime");
+
+  const track = document.getElementById("track");
+  const dots = document.getElementById("dots");
+  const viewport = document.getElementById("viewport");
+  const upcoming = document.getElementById("upcoming");
+  const eventsList = document.getElementById("eventsList");
+
+  let idx = 0;
+  let vm = [];
+  let slider = [];
+
+  function buildVM(){
+    return MATCHES.map(m => ({
+      ...m,
+      status: computeStatus(m.time),
+      timeLabel: formatToday(m.time),
+      timeRaw: m.time
+    }));
+  }
+
+  function pickForSlider(all){
+    const now = new Date();
+    const nowMin = now.getHours()*60 + now.getMinutes();
+    const sorted = all.slice().sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw));
+    const notFinished = sorted.filter(m => m.status !== "Terminé");
+    const base = notFinished.length ? notFinished : sorted;
+    const next = base.filter(m => m.status === "En cours" || timeToMinutes(m.timeRaw) >= nowMin);
+    return (next.length ? next : base).slice(0,3);
+  }
+
+  function setHero(m){
+    bg.style.backgroundImage = `url('${m.banner}')`;
+    heroTitle.textContent = m.title.toUpperCase();
+    heroLeague.textContent = m.comp;
+    heroTime.textContent = m.timeLabel;
+  }
+
+  function badgeHTML(m){
+    if(m.status === "En cours") return `<div class="badge"><span class="dotGreen"></span>En cours</div>`;
+    if(m.status === "Terminé") return `<div class="badge" style="opacity:.78"><span class="dotOrange"></span>Terminé</div>`;
+    return `<div class="badge"><span class="dotOrange"></span>${countdownTo(m.timeRaw) || "À venir"}</div>`;
+  }
+
+  function logosBlock(m){
+    return `
+      <div class="logosLine">
+        <span class="teamIcon"><img src="${m.aLogo}" alt=""></span>
+        <div class="vsPill">VS</div>
+        <span class="teamIcon"><img src="${m.bLogo}" alt=""></span>
+      </div>
+    `;
+  }
+
+  function cardHTML(m){
+    return `
+      <div class="card">
+        <div class="poster" style="background-image:url('${m.banner}')"></div>
+        ${badgeHTML(m)}
+        <div class="cardArrow left" onclick="prevSlide()"><span>‹</span></div>
+        <div class="cardArrow right" onclick="nextSlide()"><span>›</span></div>
+
+        <div class="bottom">
+          <div class="leftInfo">
+            ${logosBlock(m)}
+            <div class="cardTitle">${m.title.toUpperCase()}</div>
+            <div class="cardSub">${m.comp} • ${m.timeLabel}</div>
+          </div>
+
+          <a class="watch" href="${watchUrl(m)}">
+            <div class="play">▶</div>
+            <div class="watchTxt">REGARDER</div>
+          </a>
+        </div>
+      </div>
+    `;
+  }
+
+  function dotHTML(i){
+    return `<div class="d ${i===0?'active':''}" id="d${i}" onclick="goTo(${i})"></div>`;
+  }
+
+  function miniHTML(m){
+    const dot = m.status === "En cours" ? "dotGreen" : "dotOrange";
+    return `
+      <a class="mini" href="${watchUrl(m)}">
+        <div class="miniImg" style="background-image:url('${m.banner}')">
+          <div class="miniTop">
+            <span class="pill"><span class="${dot}"></span>${m.status}</span>
+            <span class="pill">${m.sport}</span>
+          </div>
+        </div>
+        <div class="miniBody">
+          <div class="miniTitle">${m.title.toUpperCase()}</div>
+          <div class="miniSub">${m.comp} • ${m.timeLabel}</div>
+        </div>
+      </a>
+    `;
+  }
+
+  function rowHTML(m){
+    return `
+      <a class="eventRow" href="${watchUrl(m)}">
+        <div class="eventLeft">
+          <span class="leagueIcon">
+            <img src="${m.aLogo}" alt="">
+          </span>
+          <div class="eventTxt">
+            <div class="eventTitle">${m.title.toUpperCase()}</div>
+            <div class="eventMeta">${m.comp} • ${m.timeLabel}</div>
+          </div>
+        </div>
+
+        <div class="eventMid">
+          <div class="midTeam">
+            <img class="midLogo" src="${m.aLogo}" alt="">
+            <b>${m.a}</b>
+          </div>
+          <div class="midVS">vs</div>
+          <div class="midTeam">
+            <b>${m.b}</b>
+            <img class="midLogo" src="${m.bLogo}" alt="">
+          </div>
+        </div>
+
+        <div class="eventRight">
+          <span class="timePill">
+            <span class="${m.status==='En cours'?'dotGreen':'dotOrange'}"></span>
+            ${m.status==="À venir" ? (countdownTo(m.timeRaw)||"À venir") : m.status}
+          </span>
+          <span class="sportTag">${m.sport}</span>
+        </div>
+      </a>
+    `;
+  }
+
+  function updateDots(){
+    for(let i=0;i<slider.length;i++){
+      const el = document.getElementById("d"+i);
+      if(el) el.classList.toggle("active", i===idx);
+    }
+  }
+
+  function update(){
+    const first = document.querySelector(".card");
+    if(!first || !slider.length) return;
+
+    const cardW = first.getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')) || 18;
+    const vw = viewport.getBoundingClientRect().width;
+    const centerOffset = Math.max(16, (vw - cardW) / 2);
+    const peekBias = Math.min(120, vw * 0.10);
+    const x = -(idx * (cardW + gap)) + centerOffset - peekBias;
+
+    track.style.transform = `translateX(${x}px)`;
+    setHero(slider[idx]);
+    updateDots();
+  }
+
+  function nextSlide(){ idx = Math.min(idx + 1, slider.length - 1); update(); }
+  function prevSlide(){ idx = Math.max(idx - 1, 0); update(); }
+  function goTo(i){ idx = Math.max(0, Math.min(i, slider.length - 1)); update(); }
+
+  window.nextSlide = nextSlide;
+  window.prevSlide = prevSlide;
+  window.goTo = goTo;
+
+  function rebuild(){
+    vm = buildVM();
+    slider = pickForSlider(vm);
+    idx = Math.min(idx, Math.max(0, slider.length - 1));
+
+    track.innerHTML = slider.map(cardHTML).join("");
+    dots.innerHTML = slider.map((_,i)=>dotHTML(i)).join("");
+
+    upcoming.innerHTML = vm
+      .filter(x => x.status === "À venir")
+      .sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw))
+      .map(miniHTML).join("");
+
+    eventsList.innerHTML = vm
+      .sort((a,b)=> timeToMinutes(a.timeRaw) - timeToMinutes(b.timeRaw))
+      .map(rowHTML).join("");
+
+    update();
+  }
+
+  function updateClock(){
+    const n = new Date();
+    document.getElementById("clock").textContent =
+      String(n.getHours()).padStart(2,"0")+":"+
+      String(n.getMinutes()).padStart(2,"0");
+  }
+
+  // init
+  rebuild();
+  updateClock();
+  window.addEventListener("resize", update);
+  setInterval(() => { rebuild(); updateClock(); }, 1000);
+</script>
+
 </body>
 </html>
