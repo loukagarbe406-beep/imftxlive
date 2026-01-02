@@ -115,6 +115,10 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
+  /* ---------------------------
+     FIREBASE VIEWERS (STABLE)
+  --------------------------- */
+
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -129,7 +133,6 @@
   const db = firebase.database();
 
   const MATCH_ID = (location.pathname.split("/").pop() || "default").replace(".html","");
-  const sessionId = Math.random().toString(36).slice(2) + Date.now();
   const viewerCountEl = document.getElementById("viewerCount");
 
   function formatViewers(n){
@@ -138,39 +141,39 @@
     return String(n);
   }
 
-  function cleanupOldSessions(sessions){
-    const now = Date.now();
-    Object.entries(sessions).forEach(([key,val])=>{
-      if(!val || !val.lastSeen) return;
-      if(now - val.lastSeen > 60000){
-        db.ref(`streams/${MATCH_ID}/sessions/${key}`).remove();
+  if(location.protocol !== "file:"){
+
+    const countRef = db.ref(`streams/${MATCH_ID}/count`);
+    const connectedRef = db.ref(".info/connected");
+
+    // ✅ quand l’utilisateur se connecte
+    connectedRef.on("value", (snap) => {
+      if (snap.val() === true) {
+
+        // ✅ +1
+        countRef.transaction((current) => {
+          return (current || 0) + 1;
+        });
+
+        // ✅ -1 quand il part (avec sécurité)
+        countRef.onDisconnect().transaction((current) => {
+          return Math.max((current || 1) - 1, 0);
+        });
       }
     });
-  }
 
-  if(location.protocol !== "file:"){
-    const sessionRef = db.ref(`streams/${MATCH_ID}/sessions/${sessionId}`);
-    const sessionsRoot = db.ref(`streams/${MATCH_ID}/sessions`);
-
-    sessionRef.set({
-      joinedAt: firebase.database.ServerValue.TIMESTAMP,
-      lastSeen: firebase.database.ServerValue.TIMESTAMP
+    // ✅ écoute uniquement le compteur (stable, léger)
+    countRef.on("value", (snap) => {
+      viewerCountEl.textContent = formatViewers(snap.val() || 0);
     });
 
-    sessionRef.onDisconnect().remove();
-
-    setInterval(() => {
-      sessionRef.update({ lastSeen: firebase.database.ServerValue.TIMESTAMP });
-    }, 20000);
-
-    sessionsRoot.on("value", snap => {
-      const sessions = snap.val() || {};
-      cleanupOldSessions(sessions);
-      viewerCountEl.textContent = formatViewers(Object.keys(sessions).length);
-    });
   } else {
     viewerCountEl.textContent = "—";
   }
+
+  /* ---------------------------
+     PLAYER
+  --------------------------- */
 
   const SOURCES = {
     1: "https://bolaloca.my/player/4/20",
