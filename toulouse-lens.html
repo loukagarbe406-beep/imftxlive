@@ -1,114 +1,223 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>IMFTX+ — Live</title>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMFTX+ — Stream</title>
 
-<style>
-/* Ton style reste identique */
-*{box-sizing:border-box}
-html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
-header{padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
-.brand{font-weight:900;font-size:20px;letter-spacing:.2px}
-.back{opacity:.7}
-.container{max-width:1200px;margin:0 auto;padding:0 16px 26px}
-.playerBox{border-radius:22px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 90px rgba(0,0,0,.75);position:relative}
-.cover{width:100%;aspect-ratio:16/9;display:grid;place-items:center;background:radial-gradient(900px 420px at 30% 10%, rgba(255,255,255,.10), transparent 55%), linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.82))}
-.cover button{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.10);color:#fff;padding:14px 18px;border-radius:999px;font-weight:900;cursor:pointer}
-.playerFrame{width:100%;aspect-ratio:16/9;border:0;background:#000;display:block}
-.playerSelect{display:flex;gap:10px;margin:14px 0 10px;flex-wrap:wrap}
-.playerBtn{padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-weight:900;cursor:pointer}
-.playerBtn.active{background:#fff;border-color:#fff;color:#000}
-.infoBar{margin-top:10px;padding:14px 16px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;align-items:center;gap:14px}
-.infoLeft{display:flex;gap:12px;align-items:center}
-.leagueLogo{width:38px;height:38px;border-radius:12px;padding:7px;object-fit:contain}
-.dot{width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:5px}
-</style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    html,body{
+      height:100%;margin:0;
+      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:
+        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      color:#fff;
+    }
+    .player-box{
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 25px 90px rgba(0,0,0,.72);
+    }
+    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+  </style>
 </head>
 
 <body>
 
-<header>
-  <div class="brand">IMFTX+</div>
-  <a href="#" class="back">← Retour</a>
-</header>
+<!-- NAV -->
+<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
-<div class="container">
-  <div class="playerBox" id="playerBox">
-    <div class="cover">
-      <button id="launchBtn" type="button">▶ Lancer le stream</button>
+    <a href="../index.html"
+       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
+      <i class="fa-solid fa-arrow-left"></i> Retour
+    </a>
+  </div>
+</nav>
+
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
+
+  <!-- HEADER CENTER -->
+  <header class="text-center mb-8">
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
+      TOULOUSE - LENS
+    </h1>
+    <p class="mt-2 text-white/55 font-semibold">
+      Ligue 1 · 20:45
+    </p>
+
+    <div class="mt-4 flex items-center justify-center gap-4">
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/6/6a/Logo_Toulouse_FC_2018.svg" alt="Toulouse">
+      <span class="text-white/40 font-extrabold">VS</span>
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/5/54/Logo_RC_Lens.svg" alt="Lens">
+    </div>
+  </header>
+
+  <!-- VIEWERS -->
+  <div class="flex justify-center mb-4">
+    <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
+      <span class="text-white/70">👤</span>
+      <span id="viewerCount">0</span>
     </div>
   </div>
 
-  <div class="playerSelect">
-    <button class="playerBtn active" onclick="setPlayer(1)">Player 1</button>
-    <button class="playerBtn" onclick="setPlayer(2)">Player 2</button>
-    <button class="playerBtn" onclick="setPlayer(3)">Player 3</button>
+  <!-- PLAYER -->
+  <section class="player-box relative w-full aspect-video">
+    <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
+      <button onclick="loadVideo(1)"
+              class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
+        ▶ LANCER LE STREAM
+      </button>
+      <p class="mt-4 text-white/50 font-semibold text-sm">Si le player 1 ne marche pas → essaye le 2 / 3</p>
+    </div>
+
+    <div id="videoTarget" class="w-full h-full"></div>
+  </section>
+
+  <!-- PLAYERS -->
+  <section class="mt-5 grid grid-cols-3 gap-3">
+    <button id="btn1" onclick="loadVideo(1)"
+            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
+      PLAYER 1
+    </button>
+    <button id="btn2" onclick="loadVideo(2)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+      PLAYER 2
+    </button>
+    <button id="btn3" onclick="loadVideo(3)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+      PLAYER 3
+    </button>
+  </section>
+
+  <!-- DIRECT LINK -->
+  <div id="externalLink" class="hidden mt-4 text-center">
+    <a id="directLink" href="#" target="_blank"
+       class="text-amber-400 underline font-extrabold text-sm">
+      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+    </a>
   </div>
 
-  <div class="infoBar">
-    <div class="infoLeft">
-      <img class="leagueLogo" id="leagueLogo" src="" alt="">
-      <div class="infoText">
-        <b>Vous regardez</b>
-        <div id="matchName">—</div>
-        <span id="matchTime">—</span>
-      </div>
-    </div>
-    <div class="live"><span class="dot"></span>En cours</div>
-  </div>
-</div>
+</main>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-const MATCH = {
-  name: "Real Madrid - Seville",
-  timeText: "Aujourd’hui · 21h00",
-  leagueLogo: "https://empire-sport.space/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+    authDomain: "imftxlive.firebaseapp.com",
+    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "imftxlive",
+    storageBucket: "imftxlive.firebasestorage.app",
+    messagingSenderId: "117057055374",
+    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+  };
 
-const PLAYERS = {
-  1: "https://bolaloca.my/player/4/2",
-  2: "https://bolaloca.my/player/2/2",
-  3: "https://bolaloca.my/player/3/2"
-};
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
 
-document.getElementById("matchName").textContent = MATCH.name;
-document.getElementById("matchTime").textContent = MATCH.timeText;
-document.getElementById("leagueLogo").src = MATCH.leagueLogo;
+  const MATCH_ID = (location.pathname.split("/").pop() || "default").replace(".html","");
+  const sessionId = Math.random().toString(36).slice(2) + Date.now();
+  const viewerCountEl = document.getElementById("viewerCount");
 
-let loaded = false;
-
-function iframeHTML(url){
-  // Modification ici : on retire "no-referrer" qui bloque souvent les mobiles
-  // On ajuste le sandbox pour être moins restrictif mais bloquer les popups
-  return `
-    <iframe
-      id="player"
-      class="playerFrame"
-      src="${url}"
-      allowfullscreen
-      allow="autoplay; encrypted-media; fullscreen"
-      sandbox="allow-scripts allow-same-origin allow-forms"
-    ></iframe>
-  `;
-}
-
-function setPlayer(n){
-  const btns = document.querySelectorAll(".playerBtn");
-  btns.forEach(b => b.classList.remove("active"));
-  btns[n-1].classList.add("active");
-
-  if(!loaded){
-    document.getElementById("playerBox").innerHTML = iframeHTML(PLAYERS[n]);
-    loaded = true;
-  } else {
-    document.getElementById("player").src = PLAYERS[n];
+  function formatViewers(n){
+    if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
+    if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
+    return String(n);
   }
-}
 
-document.getElementById("launchBtn").addEventListener("click", () => setPlayer(1));
+  function cleanupOldSessions(sessions){
+    const now = Date.now();
+    Object.entries(sessions).forEach(([key,val])=>{
+      if(!val || !val.lastSeen) return;
+      if(now - val.lastSeen > 60000){
+        db.ref(`streams/${MATCH_ID}/sessions/${key}`).remove();
+      }
+    });
+  }
+
+  if(location.protocol !== "file:"){
+    const sessionRef = db.ref(`streams/${MATCH_ID}/sessions/${sessionId}`);
+    const sessionsRoot = db.ref(`streams/${MATCH_ID}/sessions`);
+
+    sessionRef.set({
+      joinedAt: firebase.database.ServerValue.TIMESTAMP,
+      lastSeen: firebase.database.ServerValue.TIMESTAMP
+    });
+
+    sessionRef.onDisconnect().remove();
+
+    setInterval(() => {
+      sessionRef.update({ lastSeen: firebase.database.ServerValue.TIMESTAMP });
+    }, 20000);
+
+    sessionsRoot.on("value", snap => {
+      const sessions = snap.val() || {};
+      cleanupOldSessions(sessions);
+      viewerCountEl.textContent = formatViewers(Object.keys(sessions).length);
+    });
+  } else {
+    viewerCountEl.textContent = "—";
+  }
+
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
+  };
+
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.className = (n===id)
+        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
+        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
+    });
+  }
+
+  function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    setActive(id);
+
+    const ext = document.getElementById("externalLink");
+    const link = document.getElementById("directLink");
+    link.href = SOURCES[id];
+    ext.classList.add("hidden");
+
+    const target = document.getElementById("videoTarget");
+    target.innerHTML = `
+      <iframe
+        id="streamFrame"
+        src="${SOURCES[id]}"
+        allowfullscreen
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+      </iframe>
+    `;
+
+    setTimeout(() => {
+      const iframe = document.getElementById("streamFrame");
+      if(!iframe) return;
+      try { iframe.contentWindow.location.href; }
+      catch(e){ ext.classList.remove("hidden"); }
+    }, 2000);
+  }
 </script>
+
 </body>
 </html>
