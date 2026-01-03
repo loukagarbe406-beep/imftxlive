@@ -6,11 +6,7 @@
   <title>IMFTX+ — Live</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- ✅ POLICES PRO -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
@@ -20,7 +16,6 @@
       background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
       color:#fff;
     }
-
     .match-card{
       background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));
       border:1px solid rgba(255,255,255,0.05);
@@ -30,105 +25,144 @@
     }
     .match-thumb{
       flex:1;display:flex;align-items:center;justify-content:center;
-      font-weight:700;font-size:22px;
-      text-shadow:0 0 6px rgba(0,0,0,0.7);
+      font-weight:800;font-size:22px;
+      text-shadow:0 0 8px rgba(0,0,0,0.8);
     }
-
+    .comp-logo{
+      width:20px;height:20px;object-fit:contain;
+      filter: drop-shadow(0 0 6px rgba(0,0,0,.7));
+    }
     @media(max-width:768px){
       .match-card{height:170px}
-    }
-
-    /* ✅ TEXTE PRO "N°1 ..." */
-    .tagline{
-      font-family:'Sora', sans-serif;
-      font-weight:600;
-      letter-spacing:0.6px;
-      text-transform:uppercase;
-      font-size:13px;
-      opacity:.75;
-    }
-
-    /* ✅ BOUTONS RÉSEAUX */
-    .social-btn{
-      width:40px;height:40px;
-      display:flex;align-items:center;justify-content:center;
-      border-radius:14px;
-      background:rgba(255,255,255,0.08);
-      border:1px solid rgba(255,255,255,0.10);
-      transition:.15s;
-    }
-    .social-btn:hover{
-      background:rgba(255,255,255,0.14);
-      transform:translateY(-1px);
-    }
-    .social-btn i{
-      font-size:16px;
-      color:white;
+      .match-thumb{font-size:18px}
     }
   </style>
 </head>
-
 <body>
 
 <!-- NAVBAR -->
-<nav class="sticky top-0 z-40 bg-transparent backdrop-blur-sm border-b border-zinc-800/40">
+<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
-    <div class="text-3xl font-extrabold">IMFTX+</div>
-
-    <!-- ✅ RÉSEAUX EN HAUT À DROITE -->
-    <div class="flex items-center gap-2">
-      <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="social-btn" title="Telegram">
+    <!-- RÉSEAUX -->
+    <div class="flex items-center gap-4 text-lg font-bold">
+      <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="opacity-70 hover:opacity-100">
         <i class="fa-brands fa-telegram"></i>
       </a>
-
-      <a href="https://discord.gg/4ZFv9sa8" target="_blank" class="social-btn" title="Discord">
+      <a href="https://discord.gg/4ZFv9sa8" target="_blank" class="opacity-70 hover:opacity-100">
         <i class="fa-brands fa-discord"></i>
       </a>
-
-      <!-- ✅ IPTV (icône propre: antenne/signal) -->
-      <a href="https://discord.gg/FmWwePH5ET" target="_blank" class="social-btn" title="IPTV">
-        <i class="fa-solid fa-signal"></i>
+      <a href="https://discord.gg/FmWwePH5ET" target="_blank"
+         class="opacity-80 hover:opacity-100 text-sm px-3 py-1 rounded-full bg-white/10 border border-white/10">
+        IPTV
       </a>
     </div>
-
   </div>
 </nav>
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <header class="text-center mb-8">
+  <header class="text-center mb-10">
     <h1 class="text-4xl md:text-5xl font-extrabold">IMFTX+ LIVE</h1>
-
-    <!-- ✅ POLICE PRO -->
-    <p class="mt-2 text-zinc-400 max-w-xl mx-auto tagline">
-      N°1 DE LA DIFFUSION FRANÇAISE
+    <p class="mt-2 text-zinc-400 max-w-xl mx-auto font-semibold">
+      N°1 des meilleurs diffuseurs
     </p>
   </header>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-    <!-- ✅ MATCH 1 -->
+    <!-- Monaco - Lyon (Ligue 1) -->
     <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#f6d000,#990000)">
-        (20H45) TOULOUSE - LENS
+      <div class="match-thumb" style="background:linear-gradient(to right,#ff1e56,#1b1b1b)">
+        (17h00) MONACO - LYON
       </div>
-      <div class="p-3 flex justify-between">
-        <span>Toulouse vs Lens</span>
-        <button onclick="openCustomStream('toulouse-lens')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Ligue_1_Uber_Eats_logo.png" alt="Ligue 1">
+          <span>Aujourd’hui · 17:00</span>
+        </div>
+        <button onclick="openCustomStream('monaco-lyon')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
           Regarder
         </button>
       </div>
     </div>
 
-    <!-- ✅ MATCH 2 -->
+    <!-- Bournemouth - Arsenal (Premier League) -->
     <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#0047ff,#7a0000)">
-        (20H45) CAGLIARI - AC MILAN
+      <div class="match-thumb" style="background:linear-gradient(to right,#ffb703,#9b2226)">
+        (18h30) BOURNEMOUTH - ARSENAL
       </div>
-      <div class="p-3 flex justify-between">
-        <span>Cagliari vs AC Milan</span>
-        <button onclick="openCustomStream('cagliari-acmilan')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Premier_League_Logo.svg" alt="Premier League">
+          <span>Aujourd’hui · 18:30</span>
+        </div>
+        <button onclick="openCustomStream('bournemouth-arsenal')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Nice - Strasbourg (Ligue 1) -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#00b4d8,#003566)">
+        (19h00) NICE - STRASBOURG
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png?20240912231716" alt="Ligue 1">
+          <span>Aujourd’hui · 19:00</span>
+        </div>
+        <button onclick="openCustomStream('nice-strasbourg')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Mali - Tunisie (CAN) -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#2a9d8f,#264653)">
+        (20h00) MALI - TUNISIE
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/CAN_-_Fr_-_Full_Colour.png" alt="CAN">
+          <span>Aujourd’hui · 20:00</span>
+        </div>
+        <button onclick="openCustomStream('mali-tunisie')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Espanyol - Barcelone (La Liga) -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#4361ee,#f72585)">
+        (21h00) ESPANYOL - BARCELONE
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/LaLiga_logo_2023.svg" alt="La Liga">
+          <span>Aujourd’hui · 21:00</span>
+        </div>
+        <button onclick="openCustomStream('espanyol-barcelone')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Lille - Rennes (Ligue 1) -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#ff006e,#8338ec)">
+        (21h05) LILLE - RENNES
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png?20240912231716" alt="Ligue 1">
+          <span>Aujourd’hui · 21:05</span>
+        </div>
+        <button onclick="openCustomStream('lille-rennes')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
           Regarder
         </button>
       </div>
@@ -136,17 +170,17 @@
 
   </div>
 
-  <script>
-    function openCustomStream(matchId) {
-      window.location.href = matchId + ".html";
-    }
-  </script>
-
   <footer class="w-full mt-20 text-center text-sm opacity-70 pb-6">
-    <h2 class="text-lg font-bold mb-2">À propos</h2>
-    <p>IMFTX+ — Plateforme de streaming.</p>
+    <p class="font-semibold">IMFTX+ — Plateforme de streaming</p>
   </footer>
 
 </main>
+
+<script>
+  function openCustomStream(matchId) {
+    window.location.href = matchId + ".html";
+  }
+</script>
+
 </body>
 </html>
