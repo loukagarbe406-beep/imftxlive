@@ -54,4 +54,148 @@
       Ligue 1 · 19:00
     </p>
 
-    <div class="mt-4 flex items-center justi
+    <div class="mt-4 flex items-center justify-center gap-4">
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/0d/Logo_OGC_Nice_2013.svg/512px-Logo_OGC_Nice_2013.svg.png"
+           alt="Nice">
+      <span class="text-white/40 font-extrabold">VS</span>
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/86/Logo_Racing_Club_de_Strasbourg_Alsace.svg/512px-Logo_Racing_Club_de_Strasbourg_Alsace.svg.png"
+           alt="Strasbourg">
+    </div>
+  </header>
+
+  <!-- PLAYER -->
+  <section class="player-box relative w-full aspect-video">
+
+    <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
+      <button onclick="loadVideo(1)"
+              class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
+        ▶ LANCER LE STREAM
+      </button>
+      <p class="mt-4 text-white/50 font-semibold text-sm">Si le player 1 ne marche pas → essaye le 2 / 3</p>
+    </div>
+
+    <div id="videoTarget" class="w-full h-full"></div>
+  </section>
+
+  <!-- PLAYERS -->
+  <section class="mt-5 grid grid-cols-3 gap-3">
+    <button id="btn1" onclick="loadVideo(1)"
+            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
+      PLAYER 1
+    </button>
+    <button id="btn2" onclick="loadVideo(2)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+      PLAYER 2
+    </button>
+    <button id="btn3" onclick="loadVideo(3)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+      PLAYER 3
+    </button>
+  </section>
+
+  <!-- DIRECT LINK -->
+  <div id="externalLink" class="hidden mt-4 text-center">
+    <a id="directLink" href="#" target="_blank"
+       class="text-amber-400 underline font-extrabold text-sm">
+      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+    </a>
+  </div>
+
+</main>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  /* ---------------------------
+     ✅ FIREBASE ONLINE (NON VISIBLE SUR LE SITE)
+     Même structure que monaco-lyon
+     --------------------------- */
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+    authDomain: "imftxlive.firebaseapp.com",
+    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "imftxlive",
+    storageBucket: "imftxlive.firebasestorage.app",
+    messagingSenderId: "117057055374",
+    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const MATCH_ID = "nice-strasbourg"; // ⚠️ IMPORTANT
+  const sessionId = Math.random().toString(36).slice(2) + Date.now();
+
+  if(location.protocol !== "file:"){
+    const presenceRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
+    const onlineRef   = db.ref(`streams/${MATCH_ID}/online`);
+
+    // Marque le visiteur comme "présent"
+    presenceRef.set(true);
+    presenceRef.onDisconnect().remove();
+
+    // 🔥 Met à jour online en temps réel
+    const presenceRoot = db.ref(`streams/${MATCH_ID}/presence`);
+
+    presenceRoot.on("value", snap => {
+      const presence = snap.val() || {};
+      const count = Object.keys(presence).length;
+      onlineRef.set(count);
+    });
+  }
+
+  /* ---------------------------
+     PLAYER
+     --------------------------- */
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/20",
+    2: "https://bolaloca.my/player/2/20",
+    3: "https://bolaloca.my/player/3/20"
+  };
+
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.className = (n===id)
+        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
+        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
+    });
+  }
+
+  function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    setActive(id);
+
+    const ext = document.getElementById("externalLink");
+    const link = document.getElementById("directLink");
+    link.href = SOURCES[id];
+    ext.classList.add("hidden");
+
+    document.getElementById("videoTarget").innerHTML = `
+      <iframe
+        id="streamFrame"
+        src="${SOURCES[id]}"
+        allowfullscreen
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+      </iframe>
+    `;
+
+    setTimeout(() => {
+      const iframe = document.getElementById("streamFrame");
+      if(!iframe) return;
+      try { iframe.contentWindow.location.href; }
+      catch(e){ ext.classList.remove("hidden"); }
+    }, 2000);
+  }
+</script>
+
+</body>
+</html>
