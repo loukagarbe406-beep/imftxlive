@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Toulouse - Lens</title>
+  <title>IMFTX+ — Monaco - Lyon</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -48,20 +48,22 @@
   <!-- HEADER CENTER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      TOULOUSE - RC LENS
+      MONACO - LYON
     </h1>
     <p class="mt-2 text-white/55 font-semibold">
-      Ligue 1 · 20:45
+      Ligue 1 · 17:00
     </p>
 
     <div class="mt-4 flex items-center justify-center gap-4">
+      <!-- Monaco -->
       <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/8b/Logo_Toulouse_FC_2018.svg/1200px-Logo_Toulouse_FC_2018.svg.png"
-           alt="Toulouse">
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Logo_AS_Monaco_FC_2021.svg"
+           alt="Monaco">
       <span class="text-white/40 font-extrabold">VS</span>
+      <!-- Lyon -->
       <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c5/Logo_RC_Lens.svg/330px-Logo_RC_Lens.svg.png"
-           alt="Lens">
+           src="https://fr.wikipedia.org/wiki/Special:FilePath/Olympique_Lyonnais_logo.svg"
+           alt="Lyon">
     </div>
   </header>
 
@@ -133,7 +135,8 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "toulouse-lens";
+  const MATCH_ID = "monaco-lyon";
+
   const presenceRef = db.ref(`streams/${MATCH_ID}/presence`);
   const onlineCountRef = db.ref(`streams/${MATCH_ID}/online`);
   const connectedRef = db.ref(".info/connected");
