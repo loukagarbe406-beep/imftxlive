@@ -7,7 +7,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- ✅ Police PRO (comme ton ancienne) -->
+  <!-- ✅ Police PRO -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -70,16 +70,9 @@
     </div>
   </header>
 
-  <!-- ✅ VIEWERS (center + clean) -->
-  <div class="flex justify-center mb-4">
-    <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
-      <span class="text-white/70">👤</span>
-      <span id="viewerCount">0</span>
-    </div>
-  </div>
-
   <!-- PLAYER -->
   <section class="player-box relative w-full aspect-video">
+
     <!-- Overlay -->
     <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
       <button onclick="loadVideo(1)"
@@ -129,7 +122,9 @@
 
 <script>
   /* ---------------------------
-     ✅ FIREBASE ONLINE (STABLE)
+     ✅ FIREBASE ONLINE (INVISIBLE)
+     Tu vois les users online dans :
+     streams/nice-strasbourg/sessions
      --------------------------- */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
@@ -144,55 +139,23 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // ✅ ID unique par page (= nice-strasbourg)
   const MATCH_ID = "nice-strasbourg";
-  const viewerCountEl = document.getElementById("viewerCount");
-
-  // ✅ session unique par user
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
-  function formatViewers(n){
-    if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
-    if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
-    return String(n);
-  }
-
-  // ✅ Presence stable
   if(location.protocol !== "file:"){
     const sessionRef = db.ref(`streams/${MATCH_ID}/sessions/${sessionId}`);
-    const sessionsRoot = db.ref(`streams/${MATCH_ID}/sessions`);
 
-    // join
     sessionRef.set({
       joinedAt: firebase.database.ServerValue.TIMESTAMP,
-      lastSeen: firebase.database.ServerValue.TIMESTAMP
+      lastSeen: firebase.database.ServerValue.TIMESTAMP,
+      ua: navigator.userAgent.slice(0,120)
     });
 
-    // auto remove on disconnect
     sessionRef.onDisconnect().remove();
 
-    // heartbeat
     setInterval(() => {
       sessionRef.update({ lastSeen: firebase.database.ServerValue.TIMESTAMP });
     }, 15000);
-
-    // count
-    sessionsRoot.on("value", snap => {
-      const sessions = snap.val() || {};
-      const now = Date.now();
-
-      // cleanup old sessions (si user crash)
-      Object.entries(sessions).forEach(([key,val])=>{
-        if(!val || !val.lastSeen) return;
-        if(now - val.lastSeen > 45000){
-          db.ref(`streams/${MATCH_ID}/sessions/${key}`).remove();
-        }
-      });
-
-      viewerCountEl.textContent = formatViewers(Object.keys(sessions).length);
-    });
-  } else {
-    viewerCountEl.textContent = "—";
   }
 
   /* ---------------------------
@@ -236,7 +199,7 @@
       </iframe>
     `;
 
-    // si le lecteur refuse l'iframe, on montre lien direct
+    // si iframe bloquée, on affiche le lien direct
     setTimeout(() => {
       const iframe = document.getElementById("streamFrame");
       if(!iframe) return;
