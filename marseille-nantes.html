@@ -26,18 +26,34 @@
       box-shadow: 0 30px 120px rgba(0,0,0,.85);
     }
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
+
+    .glass{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(16px);
+    }
+
+    .badge{
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      letter-spacing:.05em;
+    }
   </style>
 </head>
 
 <body>
 
-<!-- NAV -->
+<!-- NAVBAR -->
 <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
     <a href="index.html"
-       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
+       class="inline-flex items-center gap-2 px-4 h-10 rounded-full glass hover:bg-white/10 font-bold text-sm">
       <i class="fa-solid fa-arrow-left"></i> Retour
     </a>
   </div>
@@ -45,7 +61,7 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- HEADER CENTER -->
+  <!-- HEADER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
       Marseille - Nantes
@@ -54,12 +70,13 @@
       Ligue 1 · Aujourd’hui · 15:00
     </p>
 
-    <div class="mt-4 flex items-center justify-center gap-4">
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/4/43/Logo_Olympique_de_Marseille.svg" alt="OM">
-      <span class="text-white/40 font-extrabold">VS</span>
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Logo_FC_Nantes_%28avec_fond%29_-_2019.svg/langfr-250px-Logo_FC_Nantes_%28avec_fond%29_-_2019.svg.png" alt="Nantes">
+    <!-- Logos -->
+    <div class="mt-5 flex items-center justify-center gap-5">
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/archive/4/43/20200407190016%21Logo_Olympique_de_Marseille.svg" alt="OM">
+      <span class="badge">VS</span>
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Logo_FC_Nantes_%28avec_fond%29_-_2019.svg/500px-Logo_FC_Nantes_%28avec_fond%29_-_2019.svg.png" alt="Nantes">
     </div>
   </header>
 
@@ -72,8 +89,8 @@
               class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
         ▶ LANCER LE STREAM
       </button>
-      <p class="mt-4 text-white/50 font-semibold text-sm">
-        Si le player 1 ne marche pas → essaye le 2 / 3
+      <p class="mt-4 text-white/55 font-semibold text-sm">
+        Si le player 1 bug → essaye le 2 ou le 3
       </p>
     </div>
 
@@ -87,11 +104,11 @@
       PLAYER 1
     </button>
     <button id="btn2" onclick="loadVideo(2)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+            class="h-12 rounded-xl glass font-extrabold hover:bg-white/12 text-xs md:text-base">
       PLAYER 2
     </button>
     <button id="btn3" onclick="loadVideo(3)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+            class="h-12 rounded-xl glass font-extrabold hover:bg-white/12 text-xs md:text-base">
       PLAYER 3
     </button>
   </section>
@@ -99,12 +116,12 @@
   <!-- DIRECT LINK -->
   <div id="externalLink" class="hidden mt-4 text-center">
     <a id="directLink" href="#" target="_blank"
-       class="text-amber-400 underline font-extrabold text-sm">
+       class="text-amber-400 font-extrabold text-sm underline underline-offset-4">
       Le lecteur ne s’affiche pas ? Ouvrir le lien direct
     </a>
   </div>
 
-  <!-- MESSAGE RESPONSABILITÉ -->
+  <!-- MESSAGE -->
   <div class="mt-8 text-center text-sm text-white/55 font-semibold">
     Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).  
     — L’équipe IMFTX+
@@ -117,9 +134,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ---------------------------------
-     ✅ FIREBASE PRESENCE (INVISIBLE)
-     --------------------------------- */
+  /* ✅ FIREBASE ONLINE (comme avant) */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -134,25 +149,22 @@
   const db = firebase.database();
 
   const MATCH_ID = "marseille-nantes";
-
   const sessionId =
     (crypto.randomUUID?.() || Math.random().toString(36).slice(2)) + "-" + Date.now();
 
-  if (location.protocol !== "file:") {
-    const sessionRef = db.ref(`streams/${MATCH_ID}/sessions/${sessionId}`);
+  if(location.protocol !== "file:"){
+    const sessionRef = db.ref(`online/${MATCH_ID}/${sessionId}`);
     const connectedRef = db.ref(".info/connected");
 
     connectedRef.on("value", snap => {
-      if (snap.val() === true) {
+      if(snap.val() === true){
         sessionRef.set(true);
         sessionRef.onDisconnect().remove();
       }
     });
   }
 
-  /* ---------------------------------
-     ✅ PLAYER
-     --------------------------------- */
+  /* ✅ PLAYER */
   const SOURCES = {
     1: "https://bolaloca.my/player/4/20",
     2: "https://bolaloca.my/player/2/20",
@@ -164,7 +176,7 @@
       const b = document.getElementById("btn"+n);
       b.className = (n===id)
         ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
-        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
+        : "h-12 rounded-xl glass font-extrabold hover:bg-white/12 text-xs md:text-base";
     });
   }
 
