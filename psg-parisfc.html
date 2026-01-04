@@ -98,14 +98,6 @@
     </button>
   </section>
 
-  <!-- ✅ FULLSCREEN BUTTON (WORKS 100%) -->
-  <div class="mt-4 flex justify-center">
-    <button onclick="openFullscreen()"
-      class="px-6 h-12 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-extrabold">
-      📺 PLEIN ÉCRAN
-    </button>
-  </div>
-
   <!-- DIRECT LINK (fallback) -->
   <div id="externalLink" class="hidden mt-4 text-center">
     <a id="directLink" href="#" target="_blank"
@@ -127,9 +119,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ------------------------------------
-     ✅ ONLINE TRACKING (Firebase only)
-     ------------------------------------ */
+  /* ✅ ONLINE TRACKING (Firebase only) */
 
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
@@ -144,11 +134,9 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // ✅ Match ID EXACT (tu veux garder le même)
   const MATCH_ID = "PSG-PFC";
-
-  // Session unique
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
+
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
   const onlineRef  = db.ref(`streams/${MATCH_ID}/online`);
   const presenceRoot = db.ref(`streams/${MATCH_ID}/presence`);
@@ -163,17 +151,13 @@
     });
   }
 
-  /* ------------------------------------
-     ✅ PLAYER (NE CHANGE PAS)
-     ------------------------------------ */
+  /* ✅ PLAYER */
 
   const SOURCES = {
     1: "https://bolaloca.my/player/4/20",
     2: "https://bolaloca.my/player/2/20",
     3: "https://bolaloca.my/player/3/20"
   };
-
-  let currentPlayer = 1;
 
   function setActive(id){
     [1,2,3].forEach(n=>{
@@ -185,7 +169,6 @@
   }
 
   function loadVideo(id){
-    currentPlayer = id;
     document.getElementById("overlay").style.display = "none";
     setActive(id);
 
@@ -215,11 +198,6 @@
       try { iframe.contentWindow.location.href; }
       catch(e){ ext.classList.remove("hidden"); }
     }, 2000);
-  }
-
-  // ✅ FULLSCREEN (open direct)
-  function openFullscreen(){
-    window.open(SOURCES[currentPlayer], "_blank");
   }
 </script>
 
