@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Stream</title>
+  <title>IMFTX+ — Marseille vs Nantes</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -13,30 +13,71 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg,#070708 0%,#0f0f10 100%);
       color:#fff;
+      background:#070708;
     }
+
+    /* ✅ Background Banner (blur + dark) */
+    .bg-banner{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background:url("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Stade_V%C3%A9lodrome_-_Marseille.jpg/1280px-Stade_V%C3%A9lodrome_-_Marseille.jpg") center/cover no-repeat;
+      filter: blur(20px);
+      transform: scale(1.12);
+      opacity:.55;
+    }
+
+    .bg-overlay{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background:
+        radial-gradient(900px 600px at 50% 0%, rgba(255,255,255,.10), transparent 65%),
+        linear-gradient(180deg,rgba(0,0,0,.65),rgba(0,0,0,.85));
+    }
+
     .player-box{
-      border-radius:20px;
+      border-radius:22px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      box-shadow: 0 25px 90px rgba(0,0,0,.72);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 30px 110px rgba(0,0,0,.85);
     }
+
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
+
+    .glass{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(16px);
+    }
+
+    .badge{
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:12px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      letter-spacing:.04em;
+    }
   </style>
 </head>
 
 <body>
 
+<!-- Background -->
+<div class="bg-banner"></div>
+<div class="bg-overlay"></div>
+
+<!-- NAVBAR -->
 <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
-    <a href="../index.html"
-       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
+    <a href="index.html"
+       class="inline-flex items-center gap-2 px-4 h-10 rounded-full glass hover:bg-white/10 font-bold text-sm">
       <i class="fa-solid fa-arrow-left"></i> Retour
     </a>
   </div>
@@ -44,67 +85,82 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
+  <!-- HEADER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      Lille - Rennes
+      Marseille - Nantes
     </h1>
     <p class="mt-2 text-white/55 font-semibold">
-      Ligue 1 · 21:05
+      Ligue 1 · Aujourd’hui · 15:00
     </p>
 
-    <div class="mt-4 flex items-center justify-center gap-4">
-      <!-- Lille -->
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/6/62/Logo_LOSC_Lille_2018.svg/1200px-Logo_LOSC_Lille_2018.svg.png"
-           alt="Lille">
-      <span class="text-white/40 font-extrabold">VS</span>
-      <!-- Rennes -->
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/archive/e/e9/20250106174323%21Logo_Stade_Rennais_FC.svg"
-           alt="Rennes">
+    <!-- Logos -->
+    <div class="mt-5 flex items-center justify-center gap-5">
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d8/Olympique_de_Marseille_logo.svg/200px-Olympique_de_Marseille_logo.svg.png" alt="OM">
+      <span class="badge">VS</span>
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/FC_Nantes_logo.svg/200px-FC_Nantes_logo.svg.png" alt="Nantes">
     </div>
   </header>
 
+  <!-- PLAYER -->
   <section class="player-box relative w-full aspect-video">
-    <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
+
+    <!-- Overlay -->
+    <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/75">
       <button onclick="loadVideo(1)"
               class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
         ▶ LANCER LE STREAM
       </button>
-      <p class="mt-4 text-white/50 font-semibold text-sm">Si le player 1 ne marche pas → essaye le 2 / 3</p>
+      <p class="mt-4 text-white/55 font-semibold text-sm">
+        Si le player 1 bug → essaye le 2 ou le 3
+      </p>
     </div>
 
     <div id="videoTarget" class="w-full h-full"></div>
   </section>
 
+  <!-- PLAYERS -->
   <section class="mt-5 grid grid-cols-3 gap-3">
     <button id="btn1" onclick="loadVideo(1)"
             class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
       PLAYER 1
     </button>
     <button id="btn2" onclick="loadVideo(2)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+            class="h-12 rounded-xl glass font-extrabold hover:bg-white/12 text-xs md:text-base">
       PLAYER 2
     </button>
     <button id="btn3" onclick="loadVideo(3)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+            class="h-12 rounded-xl glass font-extrabold hover:bg-white/12 text-xs md:text-base">
       PLAYER 3
     </button>
   </section>
 
+  <!-- DIRECT LINK -->
   <div id="externalLink" class="hidden mt-4 text-center">
     <a id="directLink" href="#" target="_blank"
-       class="text-amber-400 underline font-extrabold text-sm">
+       class="text-amber-400 font-extrabold text-sm underline underline-offset-4">
       Le lecteur ne s’affiche pas ? Ouvrir le lien direct
     </a>
   </div>
 
+  <!-- MESSAGE RESPONSABILITÉ -->
+  <div class="mt-8 text-center text-sm text-white/55 font-semibold">
+    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).  
+    — L’équipe IMFTX+
+  </div>
+
 </main>
 
+<!-- Firebase (présence NON visible / juste Firebase) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
+  /* ---------------------------
+     FIREBASE PRESENCE (NON VISIBLE)
+     --------------------------- */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -118,27 +174,22 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "lille-rennes";
+  const MATCH_ID = "marseille-nantes";
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
-  const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
-  const onlineRef  = db.ref(`streams/${MATCH_ID}/online`);
-  const presenceRoot = db.ref(`streams/${MATCH_ID}/presence`);
-
-  if (location.protocol !== "file:") {
+  if(location.protocol !== "file:"){
+    const sessionRef = db.ref(`streams/${MATCH_ID}/sessions/${sessionId}`);
     sessionRef.set(true);
     sessionRef.onDisconnect().remove();
-
-    presenceRoot.on("value", snap => {
-      const data = snap.val() || {};
-      onlineRef.set(Object.keys(data).length);
-    });
   }
 
+  /* ---------------------------
+     PLAYER SOURCES
+     --------------------------- */
   const SOURCES = {
-    1: "https://bolaloca.my/player/4/20",
-    2: "https://bolaloca.my/player/2/20",
-    3: "https://bolaloca.my/player/3/20"
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
   };
 
   function setActive(id){
@@ -146,7 +197,7 @@
       const b = document.getElementById("btn"+n);
       b.className = (n===id)
         ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
-        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
+        : "h-12 rounded-xl glass font-extrabold hover:bg-white/12 text-xs md:text-base";
     });
   }
 
@@ -159,7 +210,8 @@
     link.href = SOURCES[id];
     ext.classList.add("hidden");
 
-    document.getElementById("videoTarget").innerHTML = `
+    const target = document.getElementById("videoTarget");
+    target.innerHTML = `
       <iframe
         id="streamFrame"
         src="${SOURCES[id]}"
