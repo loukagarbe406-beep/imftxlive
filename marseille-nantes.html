@@ -13,18 +13,39 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.07), transparent 60%),
-        linear-gradient(180deg,#070708 0%,#0f0f10 100%);
       color:#fff;
+      background:#070708;
+      overflow-x:hidden;
     }
+
+    /* BACKGROUND GRADIENT */
+    .bg-gradient{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background: linear-gradient(135deg,#00AEEF 0%, #FFD100 50%, #0f0f10 100%);
+      filter: blur(80px) saturate(1.2);
+      transform: scale(1.3);
+      opacity: .55;
+    }
+
+    .bg-overlay{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background:
+        radial-gradient(900px 600px at 50% 0%, rgba(255,255,255,.12), transparent 65%),
+        linear-gradient(180deg,rgba(0,0,0,.72),rgba(0,0,0,.92));
+    }
+
     .player-box{
       border-radius:22px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
       box-shadow: 0 30px 120px rgba(0,0,0,.85);
     }
+
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
 
     .glass{
@@ -46,6 +67,10 @@
 </head>
 
 <body>
+
+<!-- Background -->
+<div class="bg-gradient"></div>
+<div class="bg-overlay"></div>
 
 <!-- NAVBAR -->
 <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
@@ -70,7 +95,6 @@
       Ligue 1 · Aujourd’hui · 15:00
     </p>
 
-    <!-- Logos -->
     <div class="mt-5 flex items-center justify-center gap-5">
       <img class="w-12 h-12 object-contain drop-shadow-lg"
            src="https://upload.wikimedia.org/wikipedia/fr/archive/4/43/20200407190016%21Logo_Olympique_de_Marseille.svg" alt="OM">
@@ -134,7 +158,9 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ✅ FIREBASE ONLINE (comme avant) */
+  /* ---------------------------
+     ✅ ONLINE COUNT (Firebase stable)
+     --------------------------- */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -153,18 +179,27 @@
     (crypto.randomUUID?.() || Math.random().toString(36).slice(2)) + "-" + Date.now();
 
   if(location.protocol !== "file:"){
-    const sessionRef = db.ref(`online/${MATCH_ID}/${sessionId}`);
     const connectedRef = db.ref(".info/connected");
+    const presenceRef = db.ref(`online/${MATCH_ID}/presence/${sessionId}`);
+    const presenceRoot = db.ref(`online/${MATCH_ID}/presence`);
+    const countRef = db.ref(`online/${MATCH_ID}/count`);
 
     connectedRef.on("value", snap => {
       if(snap.val() === true){
-        sessionRef.set(true);
-        sessionRef.onDisconnect().remove();
+        presenceRef.set(true);
+        presenceRef.onDisconnect().remove();
       }
+    });
+
+    presenceRoot.on("value", snap => {
+      const users = snap.val() || {};
+      countRef.set(Object.keys(users).length);
     });
   }
 
-  /* ✅ PLAYER */
+  /* ---------------------------
+     PLAYER SOURCES
+     --------------------------- */
   const SOURCES = {
     1: "https://bolaloca.my/player/4/20",
     2: "https://bolaloca.my/player/2/20",
