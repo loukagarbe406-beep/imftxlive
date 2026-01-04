@@ -24,23 +24,16 @@
       height:220px;padding:0;
     }
     .match-thumb{
-      flex:1;display:flex;
-      align-items:center;justify-content:center;
+      flex:1;display:flex;align-items:center;justify-content:center;
       font-weight:800;font-size:22px;
       text-shadow:0 0 8px rgba(0,0,0,0.8);
-      padding:12px;
-      text-align:center;
     }
     .comp-logo{
       width:20px;height:20px;object-fit:contain;
       filter: drop-shadow(0 0 6px rgba(0,0,0,.7));
     }
-    .team-logo{
-      width:28px;height:28px;object-fit:contain;
-      filter: drop-shadow(0 0 6px rgba(0,0,0,.7));
-    }
     @media(max-width:768px){
-      .match-card{height:175px}
+      .match-card{height:170px}
       .match-thumb{font-size:18px}
     }
   </style>
@@ -79,22 +72,17 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+    <!-- ✅ MATCHS ACTUELS -->
+
     <!-- Marseille - Nantes -->
     <div class="match-card">
       <div class="match-thumb" style="background:linear-gradient(to right,#00AEEF,#FFD100)">
-        MARSEILLE - NANTES
+        (15h00) MARSEILLE - NANTES
       </div>
       <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/4/43/Logo_Olympique_de_Marseille.svg">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Logo_FC_Nantes_%28avec_fond%29_-_2019.svg/langfr-250px-Logo_FC_Nantes_%28avec_fond%29_-_2019.svg.png">
-          </div>
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png?20240912231716">
-            <span>Aujourd’hui · 15:00</span>
-          </div>
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png" alt="Ligue 1">
+          <span>Aujourd’hui · 15:00</span>
         </div>
         <button onclick="openCustomStream('marseille-nantes')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
           Regarder
@@ -104,20 +92,13 @@
 
     <!-- Fulham - Liverpool -->
     <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#000000,#C8102E)">
-        FULHAM - LIVERPOOL
+      <div class="match-thumb" style="background:linear-gradient(to right,#ffffff,#c1121f)">
+        (16h00) FULHAM - LIVERPOOL
       </div>
       <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/c/ce/Logo_Fulham.svg">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/e/ef/Logo_Liverpool_FC_2012.svg/langfr-120px-Logo_Liverpool_FC_2012.svg.png">
-          </div>
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/512px-Premier_League_Logo.svg.png">
-            <span>Aujourd’hui · 16:00</span>
-          </div>
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Premier_League_Logo.svg" alt="Premier League">
+          <span>Aujourd’hui · 16:00</span>
         </div>
         <button onclick="openCustomStream('fulham-liverpool')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
           Regarder
@@ -125,47 +106,17 @@
       </div>
     </div>
 
-    <!-- Tottenham - Sunderland -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#132257,#EB172B)">
-        TOTTENHAM - SUNDERLAND
-      </div>
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Tottenham_Hotspur.svg/960px-Tottenham_Hotspur.svg.png">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/7/77/Logo_Sunderland.svg">
-          </div>
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/512px-Premier_League_Logo.svg.png">
-            <span>Aujourd’hui · 16:00</span>
-          </div>
-        </div>
-        <button onclick="openCustomStream('tottenham-sunderland')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
-      </div>
-    </div>
-
     <!-- Real Madrid - Betis -->
     <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#ffffff,#0C7C59)">
-        REAL MADRID - BETIS
+      <div class="match-thumb" style="background:linear-gradient(to right,#ffffff,#0b4d2c)">
+        (16h15) REAL MADRID - BETIS
       </div>
       <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/13/Real_betis_logo.svg/1200px-Real_betis_logo.svg.png">
-          </div>
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/LaLiga_2023_Vertical_Logo.svg/1938px-LaLiga_2023_Vertical_Logo.svg.png">
-            <span>Aujourd’hui · 16:15</span>
-          </div>
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/LaLiga_logo_2023.svg" alt="La Liga">
+          <span>Aujourd’hui · 16:15</span>
         </div>
-        <button onclick="openCustomStream('real-betis')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+        <button onclick="openCustomStream('real-madrid-betis')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
           Regarder
         </button>
       </div>
@@ -173,22 +124,129 @@
 
     <!-- Maroc - Tanzanie -->
     <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#C1272D,#006233)">
-        MAROC - TANZANIE
+      <div class="match-thumb" style="background:linear-gradient(to right,#c1121f,#006400)">
+        (17h00) MAROC - TANZANIE
       </div>
       <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/6/69/Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg.png">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/3/3b/Tanzania_FF_%28logo%29.png">
-          </div>
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png">
-            <span>Aujourd’hui · 17:00</span>
-          </div>
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/CAN_-_Fr_-_Full_Colour.png" alt="CAN">
+          <span>Aujourd’hui · 17:00</span>
         </div>
         <button onclick="openCustomStream('maroc-tanzanie')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- ✅ NOUVEAUX MATCHS AJOUTÉS -->
+
+    <!-- Lorient - Metz -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#ff7b00,#003366)">
+        (17h15) LORIENT - METZ
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png" alt="Ligue 1">
+          <span>Aujourd’hui · 17:15</span>
+        </div>
+        <button onclick="openCustomStream('lorient-metz')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Brest - Auxerre -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#d90429,#003049)">
+        (17h15) BREST - AUXERRE
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png" alt="Ligue 1">
+          <span>Aujourd’hui · 17:15</span>
+        </div>
+        <button onclick="openCustomStream('brest-auxerre')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Le Havre - Angers -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#0077b6,#f77f00)">
+        (17h15) LE HAVRE - ANGERS
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png" alt="Ligue 1">
+          <span>Aujourd’hui · 17:15</span>
+        </div>
+        <button onclick="openCustomStream('lehavre-angers')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Man City - Chelsea -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#6ec1e4,#001f54)">
+        (18h30) MAN CITY - CHELSEA
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Premier_League_Logo.svg" alt="Premier League">
+          <span>Aujourd’hui · 18:30</span>
+        </div>
+        <button onclick="openCustomStream('mancity-chelsea')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Afrique du Sud - Cameroun -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#007f5f,#fca311)">
+        (20h00) AFRIQUE DU SUD - CAMEROUN
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/CAN_-_Fr_-_Full_Colour.png" alt="CAN">
+          <span>Aujourd’hui · 20:00</span>
+        </div>
+        <button onclick="openCustomStream('afsud-cameroun')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- PSG - Paris FC -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#001f54,#e63946)">
+        (20h45) PSG - PARIS FC
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png" alt="Ligue 1">
+          <span>Aujourd’hui · 20:45</span>
+        </div>
+        <button onclick="openCustomStream('psg-parisfc')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Real Sociedad - Atlético -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#00509d,#d00000)">
+        (20h45) REAL SOCIEDAD - ATLETICO
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex items-center gap-2 font-semibold text-white/75">
+          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/LaLiga_logo_2023.svg" alt="La Liga">
+          <span>Aujourd’hui · 20:45</span>
+        </div>
+        <button onclick="openCustomStream('realsociedad-atletico')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
           Regarder
         </button>
       </div>
@@ -210,7 +268,3 @@
 
 </body>
 </html>
-
-
-
-
