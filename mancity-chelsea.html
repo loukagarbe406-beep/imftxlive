@@ -81,7 +81,7 @@
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
   <!-- HEADER -->
-  <header class="text-center mb-6">
+  <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
       Man City - Chelsea
     </h1>
@@ -100,14 +100,6 @@
            alt="Chelsea">
     </div>
   </header>
-
-  <!-- ✅ ONLINE COUNTER (REALTIME + STABLE) -->
-  <div class="flex justify-center mb-4">
-    <div class="flex items-center gap-3 text-3xl md:text-4xl font-extrabold tracking-tight">
-      <span class="text-white/70">👤</span>
-      <span id="viewerCount">0</span>
-    </div>
-  </div>
 
   <!-- PLAYER -->
   <section class="player-box relative w-full aspect-video">
@@ -189,7 +181,7 @@
   }
 </script>
 
-<!-- ✅ FIREBASE REALTIME VIEWERS (STABLE) -->
+<!-- ✅ FIREBASE ONLINE (VISIBLE UNIQUEMENT DANS FIREBASE) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
@@ -209,17 +201,12 @@
 
   const MATCH_ID = "mancity-chelsea";
   const sessionId = Math.random().toString(36).slice(2) + "-" + Date.now();
-  const viewerCountEl = document.getElementById("viewerCount");
-
-  function formatViewers(n){
-    if(n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
-    if(n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
-    return String(n);
-  }
 
   if(location.protocol !== "file:"){
+
     const sessionRef = db.ref(`online/${MATCH_ID}/sessions/${sessionId}`);
     const sessionsRoot = db.ref(`online/${MATCH_ID}/sessions`);
+    const onlineRef   = db.ref(`online/${MATCH_ID}/online`);
 
     // ✅ create session
     sessionRef.set({
@@ -227,15 +214,15 @@
       lastSeen: firebase.database.ServerValue.TIMESTAMP
     });
 
-    // ✅ remove on disconnect
+    // ✅ remove if disconnect
     sessionRef.onDisconnect().remove();
 
-    // ✅ heartbeat update (every 15s)
+    // ✅ heartbeat
     setInterval(() => {
       sessionRef.update({ lastSeen: firebase.database.ServerValue.TIMESTAMP });
     }, 15000);
 
-    // ✅ realtime viewer count
+    // ✅ realtime count stored in Firebase only
     sessionsRoot.on("value", snap => {
       const sessions = snap.val() || {};
       const now = Date.now();
@@ -246,15 +233,14 @@
 
         if(now - val.lastSeen < 35000){
           count++;
-        }else{
+        } else {
           db.ref(`online/${MATCH_ID}/sessions/${id}`).remove();
         }
       });
 
-      viewerCountEl.textContent = formatViewers(count);
+      // ✅ écrit juste dans Firebase
+      onlineRef.set(count);
     });
-  } else {
-    viewerCountEl.textContent = "—";
   }
 </script>
 
