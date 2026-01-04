@@ -55,15 +55,13 @@
     </p>
 
     <div class="mt-4 flex items-center justify-center gap-4">
-      <!-- Man City -->
       <img class="w-11 h-11 object-contain drop-shadow-lg"
            src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/86/Paris_Saint-Germain_Logo.svg/1024px-Paris_Saint-Germain_Logo.svg.png"
-           alt="Man City">
+           alt="PSG">
       <span class="text-white/40 font-extrabold">VS</span>
-      <!-- Chelsea -->
       <img class="w-11 h-11 object-contain drop-shadow-lg"
            src="https://upload.wikimedia.org/wikipedia/en/9/9f/Paris_FC_logo.svg"
-           alt="Chelsea">
+           alt="PFC">
     </div>
   </header>
 
@@ -130,10 +128,8 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // ✅ Match ID fixe
   const MATCH_ID = "PSG-PFC";
 
-  // Session unique
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
   const onlineRef  = db.ref(`streams/${MATCH_ID}/online`);
@@ -182,7 +178,9 @@
       <iframe
         id="streamFrame"
         src="${SOURCES[id]}"
-        allowfullscreen
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
         scrolling="no"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
