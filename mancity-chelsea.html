@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Man City vs Chelsea</title>
+  <title>IMFTX+ — Man city - Chealsea</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -16,10 +16,10 @@
       color:#fff;background:#070708;overflow-x:hidden;
     }
 
-    /* ✅ BACKGROUND GRADIENT (City x Chelsea) */
+    /* ✅ BACKGROUND GRADIENT (Maroc x Tanzanie) */
     .bg-gradient{
       position:fixed; inset:0; z-index:-2;
-      background: linear-gradient(135deg,#6CABDD 0%, #ffffff 35%, #034694 75%, #0f0f10 100%);
+      background: linear-gradient(135deg,#c1121f 0%, #006233 55%, #0f0f10 100%);
       filter: blur(90px) saturate(1.15);
       transform: scale(1.35);
       opacity: .55;
@@ -63,6 +63,7 @@
 
 <body>
 
+<!-- ✅ Background -->
 <div class="bg-gradient"></div>
 <div class="bg-overlay"></div>
 
@@ -83,21 +84,21 @@
   <!-- HEADER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      Man City - Chelsea
+      Man city - Chealsea
     </h1>
     <p class="mt-2 text-white/55 font-semibold">
-      Premier League · Aujourd’hui · 18:30
+      PL · Aujourd’hui · 17:00
     </p>
 
     <!-- Logos -->
     <div class="mt-5 flex items-center justify-center gap-5">
       <img class="w-12 h-12 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/9/9f/Manchester_City_FC_logo.svg/200px-Manchester_City_FC_logo.svg.png"
-           alt="Man City">
+        src="https://upload.wikimedia.org/wikipedia/fr/thumb/6/69/Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg/1507px-Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg.png"
+        alt="Maroc">
       <span class="badge">VS</span>
       <img class="w-12 h-12 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/5c/Logo_Chelsea.svg/200px-Logo_Chelsea.svg.png"
-           alt="Chelsea">
+        src="https://upload.wikimedia.org/wikipedia/en/3/3b/Tanzania_FF_%28logo%29.png"
+        alt="Tanzanie">
     </div>
   </header>
 
@@ -134,6 +135,14 @@
     </button>
   </section>
 
+  <!-- DIRECT LINK -->
+  <div id="externalLink" class="hidden mt-4 text-center">
+    <a id="directLink" href="#" target="_blank"
+       class="text-amber-400 font-extrabold text-sm underline underline-offset-4">
+      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+    </a>
+  </div>
+
   <!-- MESSAGE -->
   <div class="mt-8 text-center text-sm text-white/55 font-semibold">
     Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).  
@@ -142,12 +151,53 @@
 
 </main>
 
-<!-- ✅ PLAYER SCRIPT (EXACT - NE CHANGE PAS) -->
+
+<!-- ✅ Firebase (ONLINE stable, invisible) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
 <script>
+  /* ✅ ONLINE STABLE (monte + descend) */
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+    authDomain: "imftxlive.firebaseapp.com",
+    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "imftxlive",
+    storageBucket: "imftxlive.firebasestorage.app",
+    messagingSenderId: "117057055374",
+    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+  };
+
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const MATCH_ID = "mancity-chealsea";
+  const sessionId = Math.random().toString(36).slice(2) + "-" + Date.now();
+
+  if(location.protocol !== "file:") {
+    const presenceRef = db.ref(`online/${MATCH_ID}/presence/${sessionId}`);
+    const onlineRef = db.ref(`online/${MATCH_ID}/online`);
+
+    // ✅ présence
+    presenceRef.set(true);
+    presenceRef.onDisconnect().remove();
+
+    // ✅ +1
+    onlineRef.transaction(v => (v || 0) + 1);
+
+    // ✅ -1 si quitte
+    onlineRef.onDisconnect().transaction(v => Math.max(0, (v || 1) - 1));
+  }
+</script>
+
+<script>
+  /* ✅ PLAYER (NE CHANGE PAS) */
+
   const SOURCES = {
-    1: "https://bolaloca.my/player/4/2",
-    2: "https://bolaloca.my/player/2/2",
-    3: "https://bolaloca.my/player/3/2"
+    1: "https://bolaloca.my/player/4/11",
+    2: "https://bolaloca.my/player/2/11",
+    3: "https://bolaloca.my/player/3/11"
   };
 
   function setActive(id){
@@ -163,54 +213,26 @@
     document.getElementById("overlay").style.display = "none";
     setActive(id);
 
+    const ext = document.getElementById("externalLink");
+    const link = document.getElementById("directLink");
+    link.href = SOURCES[id];
+    ext.classList.add("hidden");
+
     const target = document.getElementById("videoTarget");
 
     target.innerHTML = `
-      <iframe 
-          src="${SOURCES[id]}" 
-          allowfullscreen="true" 
-          webkitallowfullscreen="true" 
-          mozallowfullscreen="true" 
-          scrolling="no" 
-          frameborder="0" 
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          referrerpolicy="no-referrer"
-          sandbox="allow-scripts allow-same-origin allow-forms">
+      <iframe
+        src="${SOURCES[id]}"
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
       </iframe>
     `;
-  }
-</script>
-
-<!-- ✅ FIREBASE ONLINE (INVISIBLE, STABLE) -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
-    authDomain: "imftxlive.firebaseapp.com",
-    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "imftxlive",
-    storageBucket: "imftxlive.firebasestorage.app",
-    messagingSenderId: "117057055374",
-    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
-  };
-
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  const MATCH_ID = "mancity-chelsea";
-  const sessionId = Math.random().toString(36).slice(2) + "-" + Date.now();
-
-  if(location.protocol !== "file:"){
-    const presenceRef = db.ref(`online/${MATCH_ID}/presence/${sessionId}`);
-    const onlineRef = db.ref(`online/${MATCH_ID}/online`);
-
-    presenceRef.set(true);
-    presenceRef.onDisconnect().remove();
-
-    onlineRef.transaction(v => (v || 0) + 1);
-    onlineRef.onDisconnect().transaction(v => Math.max(0, (v || 1) - 1));
   }
 </script>
 
