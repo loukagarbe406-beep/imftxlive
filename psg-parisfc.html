@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — PSG vs Paris FC</title>
+  <title>IMFTX+ — Afrique du Sud vs Cameroun</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -16,10 +16,10 @@
       color:#fff;background:#070708;overflow-x:hidden;
     }
 
-    /* ✅ BACKGROUND GRADIENT (PSG x Paris FC) */
+    /* ✅ BACKGROUND GRADIENT (Afrique du Sud x Cameroun) */
     .bg-gradient{
       position:fixed; inset:0; z-index:-2;
-      background: linear-gradient(135deg,#0b1b3f 0%, #be123c 45%, #ffffff 80%, #0f0f10 100%);
+      background: linear-gradient(135deg,#007A4D 0%, #FCD116 35%, #CE1126 75%, #0f0f10 100%);
       filter: blur(90px) saturate(1.15);
       transform: scale(1.35);
       opacity: .55;
@@ -83,23 +83,23 @@
   <!-- HEADER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      PSG - Paris FC
+      PSG - PFC
     </h1>
     <p class="mt-2 text-white/55 font-semibold">
-      Ligue 1 · Aujourd’hui · 20:45
+      L1 · Aujourd’hui · 20h45
     </p>
 
-    <!-- Logos -->
+    <!-- Flags -->
     <div class="mt-5 flex items-center justify-center gap-5">
-      <!-- PSG -->
+      <!-- Afrique du Sud -->
       <img class="w-12 h-12 object-contain drop-shadow-lg"
            src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/86/Paris_Saint-Germain_Logo.svg/200px-Paris_Saint-Germain_Logo.svg.png"
-           alt="PSG">
+           alt="Afrique du Sud">
       <span class="badge">VS</span>
-      <!-- Paris FC -->
+      <!-- Cameroun -->
       <img class="w-12 h-12 object-contain drop-shadow-lg"
            src="https://upload.wikimedia.org/wikipedia/en/9/9f/Paris_FC_logo.svg"
-           alt="Paris FC">
+           alt="Cameroun">
     </div>
   </header>
 
@@ -149,7 +149,7 @@
   const SOURCES = {
     1: "https://bolaloca.my/player/4/20",
     2: "https://bolaloca.my/player/2/20",
-    3: "https://bolaloca.my/player/3/20"
+    3: "https://bolaloca.my/player/3/20 "
   };
 
   function setActive(id){
@@ -205,14 +205,14 @@
   const sessionId = Math.random().toString(36).slice(2) + "-" + Date.now();
 
   if(location.protocol !== "file:"){
-    const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
-    const onlineRef  = db.ref(`streams/${MATCH_ID}/online`);
+    const presenceRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
+    const onlineRef = db.ref(`streams/${MATCH_ID}/online`);
     const presenceRoot = db.ref(`streams/${MATCH_ID}/presence`);
 
-    sessionRef.set(true);
-    sessionRef.onDisconnect().remove();
+    presenceRef.set(true);
+    presenceRef.onDisconnect().remove();
 
-    // ✅ met à jour online en temps réel via présence
+    // ✅ met à jour la valeur online en fonction du nombre de sessions
     presenceRoot.on("value", snap => {
       const data = snap.val() || {};
       onlineRef.set(Object.keys(data).length);
