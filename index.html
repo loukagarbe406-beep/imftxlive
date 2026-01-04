@@ -79,161 +79,116 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-    <!-- Monaco - Lyon -->
+    <!-- Marseille - Nantes -->
     <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#EF3340,#0033A0)">
-        MONACO - LYON
+      <div class="match-thumb" style="background:linear-gradient(to right,#00AEEF,#FFD100)">
+        MARSEILLE - NANTES
       </div>
       <div class="p-3 flex justify-between items-center">
         <div class="flex flex-col gap-2">
-          
-          <!-- ✅ Logos + vs -->
           <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/9/9a/AS_Monaco_FC_Logo_2021.svg/200px-AS_Monaco_FC_Logo_2021.svg.png">
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d8/Olympique_de_Marseille_logo.svg/200px-Olympique_de_Marseille_logo.svg.png">
             <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/e/e2/Olympique_lyonnais_%28logo%29.svg/200px-Olympique_lyonnais_%28logo%29.svg.png">
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/FC_Nantes_logo.svg/200px-FC_Nantes_logo.svg.png">
           </div>
-
-          <!-- ✅ Compétition + heure -->
           <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
             <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png?20240912231716">
+            <span>Aujourd’hui · 15:00</span>
+          </div>
+        </div>
+        <button onclick="openCustomStream('marseille-nantes')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Fulham - Liverpool -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#000000,#C8102E)">
+        FULHAM - LIVERPOOL
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2 font-bold">
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a8/Fulham_FC.svg/200px-Fulham_FC.svg.png">
+            <span class="text-white/50 text-sm">VS</span>
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/0c/Liverpool_FC.svg/200px-Liverpool_FC.svg.png">
+          </div>
+          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
+            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/512px-Premier_League_Logo.svg.png">
+            <span>Aujourd’hui · 16:00</span>
+          </div>
+        </div>
+        <button onclick="openCustomStream('fulham-liverpool')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Tottenham - Sunderland -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#132257,#EB172B)">
+        TOTTENHAM - SUNDERLAND
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2 font-bold">
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/b/b4/Tottenham_Hotspur.svg/200px-Tottenham_Hotspur.svg.png">
+            <span class="text-white/50 text-sm">VS</span>
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/77/Sunderland_AFC_logo.svg/200px-Sunderland_AFC_logo.svg.png">
+          </div>
+          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
+            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/512px-Premier_League_Logo.svg.png">
+            <span>Aujourd’hui · 16:00</span>
+          </div>
+        </div>
+        <button onclick="openCustomStream('tottenham-sunderland')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Real Madrid - Betis -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#ffffff,#0C7C59)">
+        REAL MADRID - BETIS
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2 font-bold">
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c7/Real_Madrid_CF.svg/200px-Real_Madrid_CF.svg.png">
+            <span class="text-white/50 text-sm">VS</span>
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/13/Real_Betis_Balompi%C3%A9_logo.svg/200px-Real_Betis_Balompi%C3%A9_logo.svg.png">
+          </div>
+          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
+            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LaLiga.svg/200px-LaLiga.svg.png">
+            <span>Aujourd’hui · 16:15</span>
+          </div>
+        </div>
+        <button onclick="openCustomStream('real-betis')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
+    </div>
+
+    <!-- Maroc - Tanzanie -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#C1272D,#006233)">
+        MAROC - TANZANIE
+      </div>
+      <div class="p-3 flex justify-between items-center">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2 font-bold">
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Morocco.svg/200px-Flag_of_Morocco.svg.png">
+            <span class="text-white/50 text-sm">VS</span>
+            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Tanzania.svg/200px-Flag_of_Tanzania.svg.png">
+          </div>
+          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
+            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/85/CAF_logo.svg/200px-CAF_logo.svg.png">
             <span>Aujourd’hui · 17:00</span>
           </div>
         </div>
-
-        <button onclick="openCustomStream('monaco-lyon')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
-      </div>
-    </div>
-
-
-    <!-- Bournemouth - Arsenal -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#7A0026,#EF0107)">
-        BOURNEMOUTH - ARSENAL
-      </div>
-
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/41/AFC_Bournemouth.svg/200px-AFC_Bournemouth.svg.png">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/53/Arsenal_FC.svg/200px-Arsenal_FC.svg.png">
-          </div>
-
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f2/Premier_League_Logo.svg/512px-Premier_League_Logo.svg.png">
-            <span>Aujourd’hui · 18:30</span>
-          </div>
-        </div>
-
-        <button onclick="openCustomStream('bournemouth-arsenal')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
-      </div>
-    </div>
-
-
-    <!-- Nice - Strasbourg -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#DA291C,#004B93)">
-        NICE - STRASBOURG
-      </div>
-
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/b/b1/Logo_OGC_Nice_2013.svg/1644px-Logo_OGC_Nice_2013.svg.png">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/70/Racing_Club_de_Strasbourg_Alsace_%28RC_Strasbourg_-_RCS_-_RCSA%29_logo_officiel.svg/2048px-Racing_Club_de_Strasbourg_Alsace_%28RC_Strasbourg_-_RCS_-_RCSA%29_logo_officiel.svg.png">
-          </div>
-
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png?20240912231716">
-            <span>Aujourd’hui · 19:00</span>
-          </div>
-        </div>
-
-        <button onclick="openCustomStream('nice-strasbourg')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
-      </div>
-    </div>
-
-    <!-- Mali - Tunisie -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#009E60,#E70013)">
-        MALI - TUNISIE
-      </div>
-
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Mali.svg/200px-Flag_of_Mali.svg.png">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Flag_of_Tunisia.svg/200px-Flag_of_Tunisia.svg.png">
-          </div>
-
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/85/CAF_logo.svg/200px-CAF_logo.svg.png">
-            <span>Aujourd’hui · 20:00</span>
-          </div>
-        </div>
-
-        <button onclick="openCustomStream('mali-tunisie')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
-      </div>
-    </div>
-
-    <!-- Espanyol - Barcelone -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#005CB9,#A50044)">
-        ESPANYOL - BARCELONE
-      </div>
-
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/9/9a/RCD_Espanyol_de_Barcelona_logo.svg/200px-RCD_Espanyol_de_Barcelona_logo.svg.png">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a1/FC_Barcelona_logo.svg/200px-FC_Barcelona_logo.svg.png">
-          </div>
-
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LaLiga.svg/200px-LaLiga.svg.png">
-            <span>Aujourd’hui · 21:00</span>
-          </div>
-        </div>
-
-        <button onclick="openCustomStream('espanyol-barcelone')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
-      </div>
-    </div>
-
-    <!-- Lille - Rennes -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#D80027,#0A2342)">
-        LILLE - RENNES
-      </div>
-
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 font-bold">
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/0f/Logo_LOSC_Lille_2018.svg/200px-Logo_LOSC_Lille_2018.svg.png">
-            <span class="text-white/50 text-sm">VS</span>
-            <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/9/9e/Stade_Rennais_FC.svg/200px-Stade_Rennais_FC.svg.png">
-          </div>
-
-          <div class="flex items-center gap-2 font-semibold text-white/65 text-sm">
-            <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png?20240912231716">
-            <span>Aujourd’hui · 21:05</span>
-          </div>
-        </div>
-
-        <button onclick="openCustomStream('lille-rennes')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+        <button onclick="openCustomStream('maroc-tanzanie')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
           Regarder
         </button>
       </div>
