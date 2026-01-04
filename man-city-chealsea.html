@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMFTX+ — Man City vs Chelsea</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    html,body{
+      height:100%;margin:0;
+      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      color:#fff;background:#070708;overflow-x:hidden;
+    }
+
+    /* ✅ BACKGROUND GRADIENT (Man City x Chelsea) */
+    .bg-gradient{
+      position:fixed; inset:0; z-index:-2;
+      background: linear-gradient(135deg,#6CABDD 0%, #003366 45%, #034694 100%);
+      filter: blur(90px) saturate(1.15);
+      transform: scale(1.35);
+      opacity: .55;
+    }
+
+    /* ✅ DARK OVERLAY */
+    .bg-overlay{
+      position:fixed; inset:0; z-index:-1;
+      background:
+        radial-gradient(900px 600px at 50% 0%, rgba(255,255,255,.12), transparent 65%),
+        linear-gradient(180deg,rgba(0,0,0,.70),rgba(0,0,0,.92));
+    }
+
+    .player-box{
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 30px 120px rgba(0,0,0,.85);
+    }
+
+    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+
+    .glass{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(16px);
+    }
+
+    .badge{
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      letter-spacing:.05em;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="bg-gradient"></div>
+<div class="bg-overlay"></div>
+
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
+
+    <a href="index.html"
+       class="inline-flex items-center gap-2 px-4 h-10 rounded-full glass hover:bg-white/10 font-bold text-sm">
+      <i class="fa-solid fa-arrow-left"></i> Retour
+    </a>
+  </div>
+</nav>
+
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
+
+  <!-- HEADER -->
+  <header class="text-center mb-8">
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
+      Man City - Chelsea
+    </h1>
+    <p class="mt-2 text-white/55 font-semibold">
+      Premier League · Aujourd’hui · 18:30
+    </p>
+
+    <!-- Logos -->
+    <div class="mt-5 flex items-center justify-center gap-5">
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/9/9f/Manchester_City_FC_logo.svg/200px-Manchester_City_FC_logo.svg.png"
+           alt="Man City">
+      <span class="badge">VS</span>
+      <img class="w-12 h-12 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/5c/Logo_Chelsea.svg/200px-Logo_Chelsea.svg.png"
+           alt="Chelsea">
+    </div>
+  </header>
+
+  <!-- PLAYER -->
+  <section class="player-box relative w-full aspect-video">
+
+    <!-- Overlay -->
+    <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/75">
+      <button onclick="loadVideo(1)"
+              class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
+        ▶ LANCER LE STREAM
+      </button>
+      <p class="mt-4 text-white/55 font-semibold text-sm">
+        Si le player 1 bug → essaye le 2 ou le 3
+      </p>
+    </div>
+
+    <div id="videoTarget" class="w-full h-full"></div>
+  </section>
+
+  <!-- PLAYERS -->
+  <section class="mt-5 grid grid-cols-3 gap-3">
+    <button id="btn1" onclick="loadVideo(1)"
+            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
+      PLAYER 1
+    </button>
+    <button id="btn2" onclick="loadVideo(2)"
+            class="h-12 rounded-xl glass font-extrabold hover:bg-white/12 text-xs md:text-base">
+      PLAYER 2
+    </button>
+    <button id="btn3" onclick="loadVideo(3)"
+            class="h-12 rounded-xl glass font-extrabold hover:bg-white/12 text-xs md:text-base">
+      PLAYER 3
+    </button>
+  </section>
+
+  <!-- MESSAGE -->
+  <div class="mt-8 text-center text-sm text-white/55 font-semibold">
+    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).  
+    — L’équipe IMFTX+
+  </div>
+
+</main>
+
+<!-- ✅ PLAYER SCRIPT (EXACT - NE CHANGE PAS) -->
+<script>
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/11",
+    2: "https://bolaloca.my/player/2/11",
+    3: "https://bolaloca.my/player/3/11"
+  };
+
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.className = (n===id)
+        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
+        : "h-12 rounded-xl glass font-extrabold hover:bg-white/12 text-xs md:text-base";
+    });
+  }
+
+  function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    setActive(id);
+
+    const target = document.getElementById("videoTarget");
+
+    target.innerHTML = `
+      <iframe 
+          src="${SOURCES[id]}" 
+          allowfullscreen="true" 
+          webkitallowfullscreen="true" 
+          mozallowfullscreen="true" 
+          scrolling="no" 
+          frameborder="0" 
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+          referrerpolicy="no-referrer"
+          sandbox="allow-scripts allow-same-origin allow-forms">
+      </iframe>
+    `;
+  }
+</script>
+
+
+<!-- ✅ FIREBASE ONLINE (INVISIBLE, STABLE) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+    authDomain: "imftxlive.firebaseapp.com",
+    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "imftxlive",
+    storageBucket: "imftxlive.firebasestorage.app",
+    messagingSenderId: "117057055374",
+    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+  };
+
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const MATCH_ID = "mancity-chelsea";
+  const sessionId = Math.random().toString(36).slice(2) + "-" + Date.now();
+
+  if(location.protocol !== "file:"){
+    const presenceRef = db.ref(`online/${MATCH_ID}/presence/${sessionId}`);
+    const onlineRef = db.ref(`online/${MATCH_ID}/online`);
+
+    presenceRef.set(true);
+    presenceRef.onDisconnect().remove();
+
+    onlineRef.transaction(v => (v || 0) + 1);
+    onlineRef.onDisconnect().transaction(v => Math.max(0, (v || 1) - 1));
+  }
+</script>
+
+</body>
+</html>
