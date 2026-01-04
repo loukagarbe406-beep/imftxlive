@@ -13,24 +13,30 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      color:#fff;background:#070708;overflow-x:hidden;
+      color:#fff;
+      background:#070708;
+      overflow-x:hidden;
     }
 
-    /* ✅ BACKGROUND GRADIENT (Man City x Chelsea) */
+    /* ✅ BACKGROUND GRADIENT */
     .bg-gradient{
-      position:fixed; inset:0; z-index:-2;
-      background: linear-gradient(135deg,#6CABDD 0%, #003366 45%, #034694 100%);
-      filter: blur(90px) saturate(1.15);
-      transform: scale(1.35);
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background: linear-gradient(135deg,#6CABDD 0%, #003366 50%, #034694 100%);
+      filter: blur(80px) saturate(1.2);
+      transform: scale(1.3);
       opacity: .55;
     }
 
     /* ✅ DARK OVERLAY */
     .bg-overlay{
-      position:fixed; inset:0; z-index:-1;
+      position:fixed;
+      inset:0;
+      z-index:-1;
       background:
         radial-gradient(900px 600px at 50% 0%, rgba(255,255,255,.12), transparent 65%),
-        linear-gradient(180deg,rgba(0,0,0,.70),rgba(0,0,0,.92));
+        linear-gradient(180deg,rgba(0,0,0,.72),rgba(0,0,0,.92));
     }
 
     .player-box{
@@ -92,12 +98,10 @@
     <!-- Logos -->
     <div class="mt-5 flex items-center justify-center gap-5">
       <img class="w-12 h-12 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Manchester_City_FC_badge.svg/250px-Manchester_City_FC_badge.svg.png"
-           alt="Man City">
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/9/9f/Manchester_City_FC_logo.svg/200px-Manchester_City_FC_logo.svg.png" alt="City">
       <span class="badge">VS</span>
       <img class="w-12 h-12 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/250px-Chelsea_FC.svg.png"
-           alt="Chelsea">
+           src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/5c/Logo_Chelsea.svg/200px-Logo_Chelsea.svg.png" alt="Chelsea">
     </div>
   </header>
 
@@ -136,18 +140,18 @@
 
   <!-- MESSAGE -->
   <div class="mt-8 text-center text-sm text-white/55 font-semibold">
-    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).  
+    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
     — L’équipe IMFTX+
   </div>
 
 </main>
 
-<!-- ✅ PLAYER SCRIPT (EXACT - NE CHANGE PAS) -->
+<!-- ✅ PLAYER SCRIPT (CELUI QUI MARCHE) -->
 <script>
   const SOURCES = {
-    1: "https://bolaloca.my/player/4/11",
-    2: "https://bolaloca.my/player/2/11",
-    3: "https://bolaloca.my/player/3/11"
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
   };
 
   function setActive(id){
@@ -165,6 +169,7 @@
 
     const target = document.getElementById("videoTarget");
 
+    /* ✅ EXACT : sandbox sans popups + no-referrer */
     target.innerHTML = `
       <iframe 
           src="${SOURCES[id]}" 
@@ -181,8 +186,7 @@
   }
 </script>
 
-
-<!-- ✅ FIREBASE ONLINE (INVISIBLE, STABLE) -->
+<!-- ✅ FIREBASE ONLINE INVISIBLE (SEULEMENT DANS FIREBASE) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
