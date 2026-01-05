@@ -13,85 +13,91 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:#0e0f12;
+      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
       color:#fff;
     }
 
-    .match-row{
+    .match-card{
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.06);
+      background:linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));
+      display:flex;
+      flex-direction:column;
+      height:230px;
+      box-shadow:0 20px 60px rgba(0,0,0,0.55);
+    }
+
+    .match-thumb{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:22px;
+      text-transform:uppercase;
+      text-shadow:0 0 10px rgba(0,0,0,0.75);
+      position:relative;
+    }
+
+    /* ✅ zone basse avec étiquettes */
+    .match-bottom{
+      padding:14px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:20px 16px;
-      border-radius:18px;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.06);
-      box-shadow:0 18px 60px rgba(0,0,0,.55);
+      background:rgba(0,0,0,0.55);
+      backdrop-filter: blur(12px);
     }
 
-    .match-left{
+    .tags{
       display:flex;
       align-items:center;
-      gap:20px;
+      gap:10px;
+      font-weight:800;
+      font-size:13px;
+      color:rgba(255,255,255,0.8);
     }
 
-    .match-time{
+    .tag-pill{
+      padding:6px 12px;
+      border-radius:999px;
       font-weight:900;
-      font-size:26px;
-      color:#ff2e2e;
-      min-width:78px;
-      text-align:left;
+      font-size:12px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
     }
 
-    .beins{
-      width:58px;
-      height:28px;
+    .logos{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .logos img{
+      width:24px;height:24px;
       object-fit:contain;
-      border-radius:6px;
-      background:#fff;
-      padding:2px;
+      filter:drop-shadow(0 0 6px rgba(0,0,0,.8));
     }
-
-    .match-title{
+    .vs{
       font-weight:900;
-      font-size:24px;
-      letter-spacing:.02em;
-      text-transform:uppercase;
-    }
-
-    .match-sub{
-      font-weight:700;
-      color:rgba(255,255,255,.55);
-      font-size:14px;
-      margin-top:2px;
-    }
-
-    .btn-arrow{
-      font-size:28px;
-      font-weight:900;
-      opacity:.8;
-      transition:.15s;
-    }
-    .btn-arrow:hover{
-      opacity:1;
-      transform:translateX(4px);
+      opacity:.6;
+      font-size:12px;
     }
 
     @media(max-width:768px){
-      .match-time{font-size:20px;min-width:60px}
-      .match-title{font-size:18px}
-      .beins{width:48px;height:24px}
+      .match-card{height:180px}
+      .match-thumb{font-size:18px}
     }
   </style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
+<!-- NAV -->
 <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
-    <!-- RÉSEAUX -->
     <div class="flex items-center gap-4 text-lg font-bold">
       <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="opacity-70 hover:opacity-100">
         <i class="fa-brands fa-telegram"></i>
@@ -111,50 +117,78 @@
 
   <header class="text-center mb-10">
     <h1 class="text-4xl md:text-5xl font-extrabold">IMFTX+ LIVE</h1>
-    <p class="mt-2 text-zinc-400 max-w-xl mx-auto font-semibold">
-      N°1 des meilleurs diffuseurs
-    </p>
+    <p class="mt-2 text-zinc-400 font-semibold">N°1 des meilleurs diffuseurs</p>
   </header>
 
-  <div class="flex flex-col gap-5">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-    <!-- ✅ MATCH 1 -->
-    <div class="match-row cursor-pointer" onclick="openCustomStream('nigeria-mozambique')">
-      <div class="match-left">
-        <div class="match-time">20:00</div>
-        <img class="beins" src="https://upload.wikimedia.org/wikipedia/commons/9/92/BeIN_Sports_logo.svg" alt="beIN">
-        <div>
-          <div class="match-title">Nigéria · Mozambique</div>
-          <div class="match-sub">Match International</div>
-        </div>
+    <!-- ✅ Nigeria - Mozambique -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#ff003c,#151515)">
+        (20:00) NIGERIA - MOZAMBIQUE
       </div>
-      <div class="btn-arrow">›</div>
+
+      <div class="match-bottom">
+        <div class="tags">
+          <div class="logos">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Nigeria.svg/320px-Flag_of_Nigeria.svg.png">
+            <span class="vs">VS</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Flag_of_Mozambique.svg/320px-Flag_of_Mozambique.svg.png">
+          </div>
+          <span class="tag-pill">Aujourd’hui · 20:00</span>
+        </div>
+
+        <button onclick="openCustomStream('nigeria-mozambique')"
+          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
     </div>
 
-    <!-- ✅ MATCH 2 -->
-    <div class="match-row cursor-pointer" onclick="openCustomStream('montpellier-dunkerque')">
-      <div class="match-left">
-        <div class="match-time">20:45</div>
-        <img class="beins" src="https://upload.wikimedia.org/wikipedia/commons/9/92/BeIN_Sports_logo.svg" alt="beIN">
-        <div>
-          <div class="match-title">Montpellier · Dunkerque</div>
-          <div class="match-sub">Ligue 2</div>
-        </div>
+    <!-- ✅ Montpellier - Dunkerque -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#7b2cff,#001845)">
+        (20:45) MONTPELLIER - DUNKERQUE
       </div>
-      <div class="btn-arrow">›</div>
+
+      <div class="match-bottom">
+        <div class="tags">
+          <div class="logos">
+            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Logo_Montpellier_HSC_2021.svg/200px-Logo_Montpellier_HSC_2021.svg.png">
+            <span class="vs">VS</span>
+            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/4c/USL_Dunkerque_logo.svg/200px-USL_Dunkerque_logo.svg.png">
+          </div>
+          <span class="tag-pill">Aujourd’hui · 20:45</span>
+        </div>
+
+        <button onclick="openCustomStream('montpellier-dunkerque')"
+          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
     </div>
 
-    <!-- ✅ MATCH 3 -->
-    <div class="match-row cursor-pointer" onclick="openCustomStream('leicester-westbrom')">
-      <div class="match-left">
-        <div class="match-time">21:00</div>
-        <img class="beins" src="https://upload.wikimedia.org/wikipedia/commons/9/92/BeIN_Sports_logo.svg" alt="beIN">
-        <div>
-          <div class="match-title">Leicester · West Brom</div>
-          <div class="match-sub">Championship</div>
-        </div>
+    <!-- ✅ Leicester - West Brom -->
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#0066ff,#151515)">
+        (21:00) LEICESTER - WEST BROM
       </div>
-      <div class="btn-arrow">›</div>
+
+      <div class="match-bottom">
+        <div class="tags">
+          <div class="logos">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/2d/Leicester_City_crest.svg/200px-Leicester_City_crest.svg.png">
+            <span class="vs">VS</span>
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/West_Bromwich_Albion.svg/200px-West_Bromwich_Albion.svg.png">
+          </div>
+          <span class="tag-pill">Aujourd’hui · 21:00</span>
+        </div>
+
+        <button onclick="openCustomStream('leicester-westbrom')"
+          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+          Regarder
+        </button>
+      </div>
     </div>
 
   </div>
