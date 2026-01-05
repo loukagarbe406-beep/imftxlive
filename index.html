@@ -6,38 +6,84 @@
   <title>IMFTX+ — Live</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      background:#0e0f12;
       color:#fff;
     }
-    .match-card{
-      background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));
-      border:1px solid rgba(255,255,255,0.05);
-      border-radius:14px;overflow:hidden;
-      display:flex;flex-direction:column;
-      height:220px;padding:0;
+
+    .match-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:20px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.06);
+      box-shadow:0 18px 60px rgba(0,0,0,.55);
     }
-    .match-thumb{
-      flex:1;display:flex;align-items:center;justify-content:center;
-      font-weight:800;font-size:22px;
-      text-shadow:0 0 8px rgba(0,0,0,0.8);
+
+    .match-left{
+      display:flex;
+      align-items:center;
+      gap:20px;
     }
-    .comp-logo{
-      width:20px;height:20px;object-fit:contain;
-      filter: drop-shadow(0 0 6px rgba(0,0,0,.7));
+
+    .match-time{
+      font-weight:900;
+      font-size:26px;
+      color:#ff2e2e;
+      min-width:78px;
+      text-align:left;
     }
+
+    .beins{
+      width:58px;
+      height:28px;
+      object-fit:contain;
+      border-radius:6px;
+      background:#fff;
+      padding:2px;
+    }
+
+    .match-title{
+      font-weight:900;
+      font-size:24px;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+    }
+
+    .match-sub{
+      font-weight:700;
+      color:rgba(255,255,255,.55);
+      font-size:14px;
+      margin-top:2px;
+    }
+
+    .btn-arrow{
+      font-size:28px;
+      font-weight:900;
+      opacity:.8;
+      transition:.15s;
+    }
+    .btn-arrow:hover{
+      opacity:1;
+      transform:translateX(4px);
+    }
+
     @media(max-width:768px){
-      .match-card{height:170px}
-      .match-thumb{font-size:18px}
+      .match-time{font-size:20px;min-width:60px}
+      .match-title{font-size:18px}
+      .beins{width:48px;height:24px}
     }
   </style>
 </head>
+
 <body>
 
 <!-- NAVBAR -->
@@ -70,72 +116,45 @@
     </p>
   </header>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="flex flex-col gap-5">
 
-    <!-- ✅ MATCHS RESTANTS (après 17h15) -->
-
-    <!-- Man City - Chelsea (Premier League) -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#5ddcff,#174b8a)">
-        (18h30) MAN CITY - CHELSEA
-      </div>
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex items-center gap-2 font-semibold text-white/75">
-          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/Premier_League_Logo.svg" alt="Premier League">
-          <span>Aujourd’hui · 18:30</span>
+    <!-- ✅ MATCH 1 -->
+    <div class="match-row cursor-pointer" onclick="openCustomStream('nigeria-mozambique')">
+      <div class="match-left">
+        <div class="match-time">20:00</div>
+        <img class="beins" src="https://upload.wikimedia.org/wikipedia/commons/9/92/BeIN_Sports_logo.svg" alt="beIN">
+        <div>
+          <div class="match-title">Nigéria · Mozambique</div>
+          <div class="match-sub">Match International</div>
         </div>
-        <button onclick="openCustomStream('man-city-chelsea')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
       </div>
+      <div class="btn-arrow">›</div>
     </div>
 
-    <!-- Afrique du Sud - Cameroun (CAN) -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#2ecc71,#145a32)">
-        (20h00) AFRIQUE DU SUD - CAMEROUN
-      </div>
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex items-center gap-2 font-semibold text-white/75">
-          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/CAN_-_Fr_-_Full_Colour.png" alt="CAN">
-          <span>Aujourd’hui · 20:00</span>
+    <!-- ✅ MATCH 2 -->
+    <div class="match-row cursor-pointer" onclick="openCustomStream('montpellier-dunkerque')">
+      <div class="match-left">
+        <div class="match-time">20:45</div>
+        <img class="beins" src="https://upload.wikimedia.org/wikipedia/commons/9/92/BeIN_Sports_logo.svg" alt="beIN">
+        <div>
+          <div class="match-title">Montpellier · Dunkerque</div>
+          <div class="match-sub">Ligue 2</div>
         </div>
-        <button onclick="openCustomStream('afrique-du-sud-cameroun')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
       </div>
+      <div class="btn-arrow">›</div>
     </div>
 
-    <!-- PSG - Paris FC (Coupe / Ligue 1) -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#0f172a,#be123c)">
-        (20h45) PSG - PARIS FC
-      </div>
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex items-center gap-2 font-semibold text-white/75">
-          <img class="comp-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/d9/Logo_Ligue_1_2024.svg/500px-Logo_Ligue_1_2024.svg.png" alt="Ligue 1">
-          <span>Aujourd’hui · 20:45</span>
+    <!-- ✅ MATCH 3 -->
+    <div class="match-row cursor-pointer" onclick="openCustomStream('leicester-westbrom')">
+      <div class="match-left">
+        <div class="match-time">21:00</div>
+        <img class="beins" src="https://upload.wikimedia.org/wikipedia/commons/9/92/BeIN_Sports_logo.svg" alt="beIN">
+        <div>
+          <div class="match-title">Leicester · West Brom</div>
+          <div class="match-sub">Championship</div>
         </div>
-        <button onclick="openCustomStream('psg-parisfc')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
       </div>
-    </div>
-
-    <!-- Real Sociedad - Atlético -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#2563eb,#111827)">
-        (20h45) REAL SOCIEDAD - ATLÉTICO
-      </div>
-      <div class="p-3 flex justify-between items-center">
-        <div class="flex items-center gap-2 font-semibold text-white/75">
-          <img class="comp-logo" src="https://fr.wikipedia.org/wiki/Special:FilePath/LaLiga_logo_2023.svg" alt="La Liga">
-          <span>Aujourd’hui · 20:45</span>
-        </div>
-        <button onclick="openCustomStream('sociedad-atletico')" class="px-3 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
-      </div>
+      <div class="btn-arrow">›</div>
     </div>
 
   </div>
