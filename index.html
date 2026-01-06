@@ -13,91 +13,70 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      background:#0b0b0c;
       color:#fff;
     }
 
     .match-card{
-      border-radius:16px;
+      border-radius:18px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,0.06);
-      background:linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02));
-      display:flex;
-      flex-direction:column;
-      height:230px;
-      box-shadow:0 20px 60px rgba(0,0,0,0.55);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 20px 80px rgba(0,0,0,.7);
+      background:rgba(255,255,255,.04);
     }
 
     .match-thumb{
-      flex:1;
+      height:150px;
       display:flex;
       align-items:center;
       justify-content:center;
       font-weight:900;
       font-size:22px;
       text-transform:uppercase;
-      text-shadow:0 0 10px rgba(0,0,0,0.75);
-      position:relative;
+      text-shadow:0 2px 10px rgba(0,0,0,.75);
+      padding:0 15px;
+      text-align:center;
     }
 
-    /* ✅ zone basse avec étiquettes */
-    .match-bottom{
-      padding:14px;
+    .match-footer{
+      height:64px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      background:rgba(0,0,0,0.55);
-      backdrop-filter: blur(12px);
+      padding:0 16px;
+      background:linear-gradient(90deg, rgba(0,0,0,.85), rgba(0,0,0,.35));
     }
 
-    .tags{
+    .meta{
       display:flex;
       align-items:center;
       gap:10px;
-      font-weight:800;
+      font-weight:700;
       font-size:13px;
-      color:rgba(255,255,255,0.8);
+      opacity:.9;
     }
 
-    .tag-pill{
-      padding:6px 12px;
-      border-radius:999px;
+    .btn-watch{
+      background:#ffca28;
+      color:#000;
       font-weight:900;
-      font-size:12px;
-      background:rgba(255,255,255,0.08);
-      border:1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px);
+      padding:8px 16px;
+      border-radius:10px;
+      font-size:13px;
+      transition:.15s;
     }
-
-    .logos{
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    .logos img{
-      width:24px;height:24px;
-      object-fit:contain;
-      filter:drop-shadow(0 0 6px rgba(0,0,0,.8));
-    }
-    .vs{
-      font-weight:900;
-      opacity:.6;
-      font-size:12px;
-    }
-
-    @media(max-width:768px){
-      .match-card{height:180px}
-      .match-thumb{font-size:18px}
-    }
+    .btn-watch:hover{opacity:.9; transform:scale(1.03)}
   </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
+    <!-- RÉSEAUX -->
     <div class="flex items-center gap-4 text-lg font-bold">
       <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="opacity-70 hover:opacity-100">
         <i class="fa-brands fa-telegram"></i>
@@ -113,79 +92,24 @@
   </div>
 </nav>
 
-<main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <header class="text-center mb-10">
-    <h1 class="text-4xl md:text-5xl font-extrabold">IMFTX+ LIVE</h1>
-    <p class="mt-2 text-zinc-400 font-semibold">N°1 des meilleurs diffuseurs</p>
-  </header>
+<main class="max-w-screen-2xl mx-auto px-6 py-12">
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-    <!-- ✅ Nigeria - Mozambique -->
+    <!-- ✅ Algérie - RD Congo -->
     <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#ff003c,#151515)">
-        (20:00) NIGERIA - MOZAMBIQUE
+      <div class="match-thumb" style="background:linear-gradient(90deg,#00c853,#1b5e20,#d32f2f)">
+        (17h00) Algérie - Rép. Dém. Congo
       </div>
 
-      <div class="match-bottom">
-        <div class="tags">
-          <div class="logos">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Flag_of_Nigeria.svg/320px-Flag_of_Nigeria.svg.png">
-            <span class="vs">VS</span>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Flag_of_Mozambique.svg/320px-Flag_of_Mozambique.svg.png">
-          </div>
-          <span class="tag-pill">Aujourd’hui · 20:00</span>
+      <div class="match-footer">
+        <div class="meta">
+          <i class="fa-solid fa-bolt"></i>
+          <span>Aujourd’hui · 17:00</span>
         </div>
 
-        <button onclick="openCustomStream('nigeria-mozambique')"
-          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
-      </div>
-    </div>
-
-    <!-- ✅ Montpellier - Dunkerque -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#7b2cff,#001845)">
-        (20:45) MONTPELLIER - DUNKERQUE
-      </div>
-
-      <div class="match-bottom">
-        <div class="tags">
-          <div class="logos">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Logo_Montpellier_HSC_2021.svg/200px-Logo_Montpellier_HSC_2021.svg.png">
-            <span class="vs">VS</span>
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/4c/USL_Dunkerque_logo.svg/200px-USL_Dunkerque_logo.svg.png">
-          </div>
-          <span class="tag-pill">Aujourd’hui · 20:45</span>
-        </div>
-
-        <button onclick="openCustomStream('montpellier-dunkerque')"
-          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
-          Regarder
-        </button>
-      </div>
-    </div>
-
-    <!-- ✅ Leicester - West Brom -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(to right,#0066ff,#151515)">
-        (21:00) LEICESTER - WEST BROM
-      </div>
-
-      <div class="match-bottom">
-        <div class="tags">
-          <div class="logos">
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/2/2d/Leicester_City_crest.svg/200px-Leicester_City_crest.svg.png">
-            <span class="vs">VS</span>
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/West_Bromwich_Albion.svg/200px-West_Bromwich_Albion.svg.png">
-          </div>
-          <span class="tag-pill">Aujourd’hui · 21:00</span>
-        </div>
-
-        <button onclick="openCustomStream('leicester-westbrom')"
-          class="px-4 py-2 bg-amber-400 text-black font-extrabold rounded-md hover:opacity-90">
+        <button onclick="openCustomStream('algerie-rdc')" class="btn-watch">
           Regarder
         </button>
       </div>
@@ -193,8 +117,8 @@
 
   </div>
 
-  <footer class="w-full mt-20 text-center text-sm opacity-70 pb-6">
-    <p class="font-semibold">IMFTX+ — Plateforme de streaming</p>
+  <footer class="w-full mt-20 text-center text-sm opacity-60 pb-6 font-semibold">
+    IMFTX+ — Plateforme de streaming
   </footer>
 
 </main>
