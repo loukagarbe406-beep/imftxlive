@@ -7,6 +7,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
     html,body{
@@ -17,13 +18,12 @@
       color:#fff;
     }
 
-    /* page full */
     main{
       min-height:100vh;
       width:100%;
     }
 
-    /* badge en direct (haut gauche) */
+    /* badge en direct */
     .live-badge{
       display:inline-flex;
       align-items:center;
@@ -48,7 +48,7 @@
     /* card */
     .match-card{
       position:relative;
-      height:360px; /* ✅ grand comme ton exemple */
+      height:320px;
       border-radius:22px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.10);
@@ -56,23 +56,20 @@
       background:#111;
     }
 
-    /* bannière en background */
     .match-bg{
       position:absolute;
       inset:0;
-      background-size:cover; /* ✅ prend tout le bloc */
+      background-size:cover;
       background-position:center;
       transform:scale(1.02);
     }
 
-    /* overlay sombre pour lisibilité */
     .match-overlay{
       position:absolute;
       inset:0;
-      background: linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.50) 45%, rgba(0,0,0,.20) 75%, rgba(0,0,0,.05) 100%);
+      background: linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.48) 50%, rgba(0,0,0,.15) 100%);
     }
 
-    /* top timer badge */
     .time-pill{
       position:absolute;
       top:14px;
@@ -80,12 +77,12 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:8px 12px;
+      padding:7px 11px;
       border-radius:999px;
       background:rgba(0,0,0,.55);
       border:1px solid rgba(255,255,255,.10);
       font-weight:900;
-      font-size:14px;
+      font-size:13px;
     }
     .time-dot{
       width:9px;
@@ -95,42 +92,37 @@
       box-shadow:0 0 12px rgba(245,158,11,.75);
     }
 
-    /* contenu bas gauche */
     .match-info{
       position:absolute;
-      bottom:22px;
-      left:22px;
-      right:22px;
+      bottom:18px;
+      left:18px;
+      right:18px;
       display:flex;
       justify-content:space-between;
       align-items:flex-end;
-      gap:20px;
-    }
-
-    .left-info{
-      max-width:72%;
+      gap:14px;
     }
 
     .teams{
-      font-size:28px;
+      font-size:22px;
       font-weight:900;
       line-height:1.05;
     }
 
     .meta{
-      margin-top:8px;
-      font-size:14px;
+      margin-top:6px;
+      font-size:13px;
       color:rgba(255,255,255,.70);
       font-weight:700;
     }
 
-    /* bouton regarder */
+    /* ✅ bouton regarder plus petit */
     .watch-btn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
-      padding:16px 28px;
+      gap:8px;
+      padding:12px 18px;
       border-radius:999px;
       background:rgba(255,255,255,.12);
       border:1px solid rgba(255,255,255,.14);
@@ -138,70 +130,76 @@
       font-weight:900;
       backdrop-filter: blur(14px);
       transition:.15s;
-      min-width:170px;
+      min-width:130px;
+      font-size:13px;
     }
     .watch-btn:hover{
       background:rgba(255,255,255,.18);
       transform:scale(1.02);
     }
 
-    /* responsive */
-    @media(max-width:900px){
-      .match-card{height:290px;}
-      .teams{font-size:22px;}
-      .watch-btn{padding:13px 20px; min-width:140px;}
-    }
-    @media(max-width:640px){
-      .match-card{height:240px;}
-      .teams{font-size:19px;}
-      .watch-btn{padding:12px 16px; min-width:120px;}
+    @media(max-width:1024px){
+      .match-card{height:280px;}
+      .teams{font-size:20px;}
     }
 
+    @media(max-width:640px){
+      .match-card{height:240px;}
+      .teams{font-size:18px;}
+      .watch-btn{padding:10px 14px; min-width:110px;}
+    }
   </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- NAVBAR -->
 <nav class="w-full px-6 py-5 flex items-center justify-between">
   <div class="text-2xl font-extrabold tracking-tight">IMFTX+</div>
 
-  <a href="https://t.me/+jdy9nGJ3rFFiOWI0"
-     target="_blank"
-     class="px-4 py-2 rounded-full bg-white/10 border border-white/10 font-bold text-sm hover:bg-white/15">
-    IPTV
-  </a>
+  <!-- ✅ réseaux revenus -->
+  <div class="flex items-center gap-4 text-lg font-bold">
+    <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="opacity-70 hover:opacity-100">
+      <i class="fa-brands fa-telegram"></i>
+    </a>
+    <a href="https://discord.gg/4ZFv9sa8" target="_blank" class="opacity-70 hover:opacity-100">
+      <i class="fa-brands fa-discord"></i>
+    </a>
+
+    <a href="https://discord.gg/FmWwePH5ET" target="_blank"
+       class="opacity-80 hover:opacity-100 text-sm px-3 py-1 rounded-full bg-white/10 border border-white/10">
+      IPTV
+    </a>
+  </div>
 </nav>
 
-<main class="max-w-[1400px] mx-auto px-6 pb-12">
+<main class="max-w-[1600px] mx-auto px-6 pb-14">
 
-  <!-- ✅ badge à gauche -->
-  <div class="mt-2 flex justify-start">
+  <!-- ✅ titre / slogan -->
+  <header class="text-center mt-10 mb-6">
+    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">IMFTX+ LIVE</h1>
+    <p class="mt-3 text-white/55 font-semibold text-lg">N°1 des meilleurs diffuseurs</p>
+  </header>
+
+  <!-- ✅ “En direct” placé comme tu veux (à gauche entre slogan et matchs) -->
+  <div class="flex justify-start mb-6">
     <div class="live-badge">
       <span class="live-dot"></span>
       En direct
     </div>
   </div>
 
-  <!-- ✅ titre / slogan -->
-  <header class="text-center mt-10 mb-10">
-    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">IMFTX+ LIVE</h1>
-    <p class="mt-3 text-white/55 font-semibold text-lg">N°1 des meilleurs diffuseurs</p>
-  </header>
-
-  <!-- ✅ matchs full width -->
-  <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <!-- ✅ grille 3 par ligne sur PC -->
+  <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
     <!-- 20:00 Barça - Bilbao -->
     <article class="match-card">
       <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/celta-vigo-vs-barcelona.png')"></div>
       <div class="match-overlay"></div>
 
-      <div class="time-pill">
-        <span class="time-dot"></span> 20:00
-      </div>
+      <div class="time-pill"><span class="time-dot"></span> 20:00</div>
 
       <div class="match-info">
-        <div class="left-info">
+        <div>
           <div class="teams">Barcelone - Bilbao</div>
           <div class="meta">LaLiga · Aujourd’hui 20:00</div>
         </div>
@@ -217,12 +215,10 @@
       <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/sunderland-vs-manchester-city.png')"></div>
       <div class="match-overlay"></div>
 
-      <div class="time-pill">
-        <span class="time-dot"></span> 20:30
-      </div>
+      <div class="time-pill"><span class="time-dot"></span> 20:30</div>
 
       <div class="match-info">
-        <div class="left-info">
+        <div>
           <div class="teams">Man City - Brighton</div>
           <div class="meta">Premier League · Aujourd’hui 20:30</div>
         </div>
@@ -238,12 +234,10 @@
       <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/chelsea-vs-wolverhampton-wanderers.png')"></div>
       <div class="match-overlay"></div>
 
-      <div class="time-pill">
-        <span class="time-dot"></span> 20:30
-      </div>
+      <div class="time-pill"><span class="time-dot"></span> 20:30</div>
 
       <div class="match-info">
-        <div class="left-info">
+        <div>
           <div class="teams">Fulham - Chelsea</div>
           <div class="meta">Premier League · Aujourd’hui 20:30</div>
         </div>
@@ -259,12 +253,10 @@
       <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/brentford-vs-tottenham-hotspur.png')"></div>
       <div class="match-overlay"></div>
 
-      <div class="time-pill">
-        <span class="time-dot"></span> 20:30
-      </div>
+      <div class="time-pill"><span class="time-dot"></span> 20:30</div>
 
       <div class="match-info">
-        <div class="left-info">
+        <div>
           <div class="teams">Brentford - Tottenham</div>
           <div class="meta">Premier League · Aujourd’hui 20:30</div>
         </div>
@@ -275,17 +267,15 @@
       </div>
     </article>
 
-    <!-- 20:45 Hellas Verona - Inter -->
+    <!-- 20:45 Verona - Inter -->
     <article class="match-card">
       <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/hellas-verona-vs-inter-milan.png')"></div>
       <div class="match-overlay"></div>
 
-      <div class="time-pill">
-        <span class="time-dot"></span> 20:45
-      </div>
+      <div class="time-pill"><span class="time-dot"></span> 20:45</div>
 
       <div class="match-info">
-        <div class="left-info">
+        <div>
           <div class="teams">Hellas Verona - Inter Milan</div>
           <div class="meta">Serie A · Aujourd’hui 20:45</div>
         </div>
@@ -296,17 +286,15 @@
       </div>
     </article>
 
-    <!-- 21:15 Man Utd - Bournemouth -->
+    <!-- 21:15 Man United - Bournemouth -->
     <article class="match-card">
       <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/manchester-united-vs-bournemouth.png')"></div>
       <div class="match-overlay"></div>
 
-      <div class="time-pill">
-        <span class="time-dot"></span> 21:15
-      </div>
+      <div class="time-pill"><span class="time-dot"></span> 21:15</div>
 
       <div class="match-info">
-        <div class="left-info">
+        <div>
           <div class="teams">Man United - Bournemouth</div>
           <div class="meta">Premier League · Aujourd’hui 21:15</div>
         </div>
@@ -322,12 +310,10 @@
       <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/west-ham-united-vs-newcastle-united.png')"></div>
       <div class="match-overlay"></div>
 
-      <div class="time-pill">
-        <span class="time-dot"></span> 21:15
-      </div>
+      <div class="time-pill"><span class="time-dot"></span> 21:15</div>
 
       <div class="match-info">
-        <div class="left-info">
+        <div>
           <div class="teams">West Ham - Newcastle</div>
           <div class="meta">Premier League · Aujourd’hui 21:15</div>
         </div>
