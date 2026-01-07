@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Algérie vs RD Congo</title>
+  <title>IMFTX+ — Man City vs Brighton</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -13,25 +13,165 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:#070708;
+      color:#fff;
+      overflow-x:hidden;
+    }
+
+    .player-box{
+      border-radius:22px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 30px 120px rgba(0,0,0,.85);
+      position:relative;
+    }
+
+    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+
+    .cover{
+      position:absolute;
+      inset:0;
+      z-index:15;
+      cursor:pointer;
       background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
+        url("https://empire-sport.shop/upload/events/xv37b1ncuvgsyxjl7x7d7ae2wpop71.jpg") center/cover no-repeat;
+    }
+
+    .cover-top{
+      position:absolute;
+      top:18px;
+      left:18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:18px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
+    }
+
+    .team-logo{
+      width:34px;height:34px;
+      object-fit:contain;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
+    }
+
+    .vs{
+      font-weight:900;
+      font-size:14px;
+      opacity:.9;
+    }
+
+    .cover-strip{
+      position:absolute;
+      left:22px;
+      right:22px;
+      bottom:22px;
+      height:86px;
+      border-radius:20px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(16px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 22px;
+    }
+
+    .strip-title{
+      font-size:18px;
+      font-weight:900;
+      line-height:1;
+    }
+    .strip-sub{
+      font-size:15px;
+      opacity:.85;
+      font-weight:600;
+      line-height:1.1;
+      font-style:italic;
+      margin-top:3px;
+    }
+
+    .strip-play{
+      width:50px;height:50px;
+      border-radius:999px;
+      border:2px solid rgba(255,255,255,.38);
+      display:grid;
+      place-items:center;
+      transition:.2s;
+      background:rgba(0,0,0,.22);
+    }
+    .strip-play i{font-size:19px}
+    .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
+
+    .source-btn{
+      height:44px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:13px;
+      transition:.2s;
+    }
+    .source-btn.active{
+      background:#fff;color:#000;
+    }
+    .source-btn.inactive{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
       color:#fff;
     }
-    .player-box{
-      border-radius:20px;
+    .source-btn:hover{opacity:.95}
+
+    .watch-bar{
+      border-radius:18px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(16px);
+      padding:16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .watch-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .watch-left img{
+      width:38px;height:38px;
+      object-fit:contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+      flex-shrink:0;
+    }
+
+    .watch-text{
+      min-width:0;
+      line-height:1.1;
+    }
+
+    .watch-text .small{
+      opacity:.8;font-weight:700;font-size:13px;
+    }
+
+    .watch-text .big{
+      font-weight:900;font-size:16px;
+      white-space:nowrap;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      box-shadow: 0 25px 90px rgba(0,0,0,.72);
+      text-overflow:ellipsis;
     }
-    iframe{
-      width:100%;
-      height:100%;
-      border:0;
-      background:#000;
-      display:block
+
+    .channel-logo{
+      width:86px;height:auto;
+      object-fit:contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
+
   </style>
 </head>
 
@@ -51,81 +191,117 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- HEADER CENTER -->
-  <header class="text-center mb-8">
-    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      Algérie - Rép. Dém. Congo
-    </h1>
-    <p class="mt-2 text-white/55 font-semibold">
-      Match International · 17:00
-    </p>
-
-    <div class="mt-4 flex items-center justify-center gap-4">
-      <!-- Algérie -->
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Algeria.svg/320px-Flag_of_Algeria.svg.png"
-           alt="Algérie">
-
-      <span class="text-white/40 font-extrabold">VS</span>
-
-      <!-- RD Congo -->
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Flag_of_the_Democratic_Republic_of_the_Congo.svg/320px-Flag_of_the_Democratic_Republic_of_the_Congo.svg.png"
-           alt="RD Congo">
-    </div>
-  </header>
-
   <!-- PLAYER -->
-  <section class="player-box relative w-full aspect-video">
+  <section class="player-box w-full aspect-video">
 
-    <!-- Overlay -->
-    <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
-      <button onclick="loadVideo(1)"
-              class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
-        ▶ LANCER LE STREAM
-      </button>
-      <p class="mt-4 text-white/50 font-semibold text-sm">
-        Si le player 1 ne marche pas → essaye le 2 / 3
-      </p>
+    <!-- COVER -->
+    <div id="cover" class="cover" onclick="loadVideo(1)">
+      <div class="cover-top">
+        <img class="team-logo"
+             src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg"
+             alt="Man City">
+        <span class="vs">VS</span>
+        <img class="team-logo"
+             src="https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg"
+             alt="Brighton">
+      </div>
+
+      <div class="cover-strip">
+        <div>
+          <div class="strip-title">Regarder Gratuitement</div>
+          <div class="strip-sub">Manchester City<br>Brighton</div>
+        </div>
+
+        <div class="strip-play">
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </div>
     </div>
 
     <div id="videoTarget" class="w-full h-full"></div>
   </section>
 
-  <!-- PLAYERS -->
-  <section class="mt-5 grid grid-cols-3 gap-3">
-    <button id="btn1" onclick="loadVideo(1)"
-            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
-      PLAYER 1
-    </button>
-    <button id="btn2" onclick="loadVideo(2)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      PLAYER 2
-    </button>
-    <button id="btn3" onclick="loadVideo(3)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      PLAYER 3
-    </button>
+  <!-- SOURCES -->
+  <section class="mt-5 flex gap-3">
+    <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+    <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+    <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- DIRECT LINK -->
-  <div id="externalLink" class="hidden mt-4 text-center">
-    <a id="directLink" href="#" target="_blank"
-       class="text-amber-400 underline font-extrabold text-sm">
-      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-    </a>
+  <!-- WATCH BAR -->
+  <section class="mt-6 watch-bar">
+
+    <div class="watch-left">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
+
+      <div class="watch-text">
+        <div class="small">Vous regardez</div>
+        <div class="big">Man City - Brighton</div>
+        <div class="small">Aujourd’hui · 20:30</div>
+      </div>
+    </div>
+
+    <div>
+      <img class="channel-logo"
+           src="https://media.discordapp.net/attachments/1458424501825048608/1458489820601913366/images__1_-removebg-preview.png?ex=695fd3fe&is=695e827e&hm=fa071d3180f526ff85c93ce5ed67a9eada8a9cae438f5cdbaee45bdf32300469&=&format=webp&quality=lossless&width=284&height=215"
+           alt="Chaîne">
+    </div>
+
+  </section>
+
+  <!-- MESSAGE -->
+  <div class="mt-8 text-center text-sm text-white/55 font-semibold">
+    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).  
+    — L’équipe IMFTX+
   </div>
 
 </main>
 
-<!-- Firebase -->
+
+<!-- ✅ PLAYER SCRIPT (STABLE) -->
+<script>
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/1",
+    2: "https://bolaloca.my/player/2/1",
+    3: "https://bolaloca.my/player/3/1"
+  };
+
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.className = (n===id)
+        ? "source-btn active px-6"
+        : "source-btn inactive px-6";
+    });
+  }
+
+  function loadVideo(id){
+    document.getElementById("cover").style.display = "none";
+    setActive(id);
+
+    const target = document.getElementById("videoTarget");
+    target.innerHTML = `
+      <iframe
+        src="${SOURCES[id]}"
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="no-referrer"
+        sandbox="allow-scripts allow-same-origin allow-forms">
+      </iframe>
+    `;
+  }
+</script>
+
+
+<!-- ✅ FIREBASE ONLINE (INVISIBLE - REALTIME) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ------------------------------------
-     ✅ ONLINE TRACKING (Firebase only)
-     ------------------------------------ */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -139,7 +315,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "algerie-rdc";
+  const MATCH_ID = "man-city-brighton";  // ✅ garde cet id
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
@@ -154,55 +330,6 @@
       const data = snap.val() || {};
       onlineRef.set(Object.keys(data).length);
     });
-  }
-
-  /* ------------------------------------
-     ✅ PLAYER (PLAYER = 1)
-     ------------------------------------ */
-  const SOURCES = {
-    1: "https://bolaloca.my/player/4/1",
-    2: "https://bolaloca.my/player/2/1",
-    3: "https://bolaloca.my/player/3/1"
-  };
-
-  function setActive(id){
-    [1,2,3].forEach(n=>{
-      const b = document.getElementById("btn"+n);
-      b.className = (n===id)
-        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
-        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
-    });
-  }
-
-  function loadVideo(id){
-    document.getElementById("overlay").style.display = "none";
-    setActive(id);
-
-    const ext = document.getElementById("externalLink");
-    const link = document.getElementById("directLink");
-    link.href = SOURCES[id];
-    ext.classList.add("hidden");
-
-    const target = document.getElementById("videoTarget");
-    target.innerHTML = `
-      <iframe
-        id="streamFrame"
-        src="${SOURCES[id]}"
-        allowfullscreen
-        scrolling="no"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-        referrerpolicy="origin"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-      </iframe>
-    `;
-
-    setTimeout(() => {
-      const iframe = document.getElementById("streamFrame");
-      if(!iframe) return;
-      try { iframe.contentWindow.location.href; }
-      catch(e){ ext.classList.remove("hidden"); }
-    }, 2000);
   }
 </script>
 
