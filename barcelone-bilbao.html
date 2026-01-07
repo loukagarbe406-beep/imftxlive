@@ -20,18 +20,59 @@
     }
 
     .player-box{
-      border-radius:20px;
+      border-radius:22px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.03);
       box-shadow: 0 25px 90px rgba(0,0,0,.72);
     }
+
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
 
-    /* ✅ "Vous regardez" propre */
+    /* ✅ Bannière cover cliquable */
+    .cover{
+      position:absolute;
+      inset:0;
+      z-index:15;
+      cursor:pointer;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      padding:22px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.65) 100%),
+        url("https://empire-sport.shop/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png") center/cover no-repeat;
+    }
+
+    .cover-badge{
+      padding:10px 14px;
+      border-radius:16px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(12px);
+      max-width:70%;
+    }
+
+    .cover-badge .t1{font-size:16px;font-weight:900}
+    .cover-badge .t2{font-size:13px;opacity:.75;font-weight:700;margin-top:2px}
+
+    .play-btn{
+      width:54px;height:54px;
+      border-radius:999px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.5);
+      transition:.2s;
+    }
+    .play-btn:hover{transform:scale(1.06)}
+    .play-btn i{font-size:22px}
+
+    /* ✅ Barre "Vous regardez" style capture */
     .watch-bar{
       margin-top:14px;
-      border-radius:16px;
+      border-radius:18px;
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
       padding:14px 18px;
@@ -74,7 +115,7 @@
       flex-shrink:0;
     }
     .canal-logo{
-      height:28px;
+      height:26px;
       object-fit:contain;
       opacity:.95;
       filter: drop-shadow(0 0 10px rgba(0,0,0,.8));
@@ -101,35 +142,26 @@
   <!-- HEADER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      Barcelone - Bilbao
+      Barcelone - Athletic Bilbao
     </h1>
     <p class="mt-2 text-white/55 font-semibold">
-      LaLiga · 20h00
+      Supercoupe · 20h00
     </p>
-
-    <div class="mt-4 flex items-center justify-center gap-4">
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg"
-           alt="Barça">
-      <span class="text-white/40 font-extrabold">VS</span>
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a7/Logo_Athletic_Club_1995.svg/langfr-250px-Logo_Athletic_Club_1995.svg.png"
-           alt="Bilbao">
-    </div>
   </header>
 
   <!-- PLAYER -->
   <section class="player-box relative w-full aspect-video">
 
-    <!-- Overlay -->
-    <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
-      <button onclick="loadVideo(1)"
-              class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
-        ▶ LANCER LE STREAM
-      </button>
-      <p class="mt-4 text-white/50 font-semibold text-sm">
-        Si le player 1 ne marche pas → essaye le 2 / 3
-      </p>
+    <!-- ✅ Cover cliquable -->
+    <div id="cover" class="cover" onclick="loadVideo(1)">
+      <div class="cover-badge">
+        <div class="t1">Regarder Gratuitement</div>
+        <div class="t2">Barcelona · Athletic Bilbao</div>
+      </div>
+
+      <div class="play-btn">
+        <i class="fa-solid fa-play"></i>
+      </div>
     </div>
 
     <div id="videoTarget" class="w-full h-full"></div>
@@ -139,15 +171,15 @@
   <section class="mt-5 grid grid-cols-3 gap-3">
     <button id="btn1" onclick="loadVideo(1)"
             class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
-      PLAYER 1
+      Source 1
     </button>
     <button id="btn2" onclick="loadVideo(2)"
             class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      PLAYER 2
+      Source 2
     </button>
     <button id="btn3" onclick="loadVideo(3)"
             class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      PLAYER 3
+      Source 3
     </button>
   </section>
 
@@ -163,20 +195,19 @@
   <div class="watch-bar">
     <div class="watch-left">
       <img class="w-9 h-9 object-contain opacity-90"
-           src="https://empire-sport.shop/upload/leagues/ezed3ugrbkgr7ozgmg1m5bpvuw5idb.png"
-           alt="LaLiga">
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Supercopa_de_Espa%C3%B1a_logo.svg/512px-Supercopa_de_Espa%C3%B1a_logo.svg.png"
+           alt="Supercoupe">
 
       <div class="watch-text">
         <div class="small">Vous regardez</div>
-        <div class="title">Barcelone - Bilbao</div>
+        <div class="title">Barcelona - Athletic Bilbao</div>
         <div class="meta">Aujourd’hui · 20:00</div>
       </div>
     </div>
 
     <div class="watch-right">
-      <!-- ✅ JUSTE LOGO CANAL+ FOOT -->
       <img class="canal-logo"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/2016_beIN_Sports_logo.svg/2560px-2016_beIN_Sports_logo.svg.png"
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Canal%2B_Logo.svg/512px-Canal%2B_Logo.svg.png"
            alt="CANAL+">
     </div>
   </div>
@@ -188,7 +219,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ✅ ONLINE TRACKING (Firebase only) */
+  /* ✅ ONLINE TRACKING */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -219,7 +250,7 @@
     });
   }
 
-  /* ✅ PLAYER (SCRIPT QUI MARCHE + fallback embed blocked) */
+  /* ✅ PLAYER (script stable + fallback embed blocked) */
   const SOURCES = {
     1: "https://bolaloca.my/player/4/2",
     2: "https://bolaloca.my/player/2/2",
@@ -236,7 +267,7 @@
   }
 
   function loadVideo(id){
-    document.getElementById("overlay").style.display = "none";
+    document.getElementById("cover").style.display = "none";
     setActive(id);
 
     const ext = document.getElementById("externalLink");
@@ -258,7 +289,6 @@
       </iframe>
     `;
 
-    // fallback si embed bloqué
     setTimeout(() => {
       const iframe = document.getElementById("streamFrame");
       if(!iframe) return;
