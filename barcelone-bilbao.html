@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Stream</title>
+  <title>IMFTX+ — Barcelone vs Bilbao</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -13,107 +13,217 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      background:#070708;
       color:#fff;
     }
-    .player-box{
-      border-radius:20px;
+
+    .player-wrap{
+      border-radius:18px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      box-shadow: 0 25px 90px rgba(0,0,0,.72);
+      background:#000;
+      box-shadow:0 25px 90px rgba(0,0,0,.75);
     }
+
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
+
+    .src-btn{
+      height:46px;
+      border-radius:10px;
+      font-weight:900;
+      font-size:14px;
+      transition:.15s;
+      border:1px solid rgba(255,255,255,.10);
+    }
+
+    .src-btn.active{
+      background:#fff;
+      color:#000;
+    }
+
+    .src-btn:not(.active){
+      background:rgba(255,255,255,.07);
+      color:#fff;
+    }
+
+    .src-btn:not(.active):hover{
+      background:rgba(255,255,255,.12);
+    }
+
+    /* ✅ "Vous regardez" bar */
+    .watch-bar{
+      margin-top:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .pill-time{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(0,0,0,.40);
+      border:1px solid rgba(255,255,255,.10);
+      font-weight:900;
+      font-size:14px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:#f59e0b;
+      box-shadow:0 0 12px rgba(245,158,11,.8);
+    }
+
+    .canal{
+      padding:6px 10px;
+      border-radius:8px;
+      font-weight:900;
+      font-size:12px;
+      background:#000;
+      border:1px solid rgba(255,255,255,.12);
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .canal span{
+      background:#22c55e;
+      color:#000;
+      padding:2px 6px;
+      border-radius:6px;
+      font-weight:900;
+      font-size:10px;
+      letter-spacing:.03em;
+    }
   </style>
 </head>
 
 <body>
 
-<!-- NAV -->
+<!-- ✅ NAV -->
 <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
-  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
-    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
+  <div class="max-w-screen-xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-2xl font-extrabold tracking-tight">IMFTX+</div>
 
-    <a href="../index.html"
+    <a href="index.html"
        class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
       <i class="fa-solid fa-arrow-left"></i> Retour
     </a>
   </div>
 </nav>
 
-<main class="max-w-screen-2xl mx-auto px-6 py-10">
+<main class="max-w-screen-xl mx-auto px-6 py-10">
 
-  <!-- HEADER -->
-  <header class="text-center mb-8">
-    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      Espanyol - Barcelone
-    </h1>
-    <p class="mt-2 text-white/55 font-semibold">
-      LaLiga · 21:00
-    </p>
+  <!-- ✅ PLAYER -->
+  <section class="player-wrap w-full aspect-video relative">
 
-    <div class="mt-4 flex items-center justify-center gap-4">
-      <!-- Espanyol -->
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/archive/a/a5/20221110213237%21Rcd_espanyol_de_barcelona.png"
-           alt="Espanyol">
-      <span class="text-white/40 font-extrabold">VS</span>
-      <!-- Barça -->
-      <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a1/Logo_FC_Barcelona.svg/2023px-Logo_FC_Barcelona.svg.png"
-           alt="Barcelone">
-    </div>
-  </header>
-
-  <!-- PLAYER -->
-  <section class="player-box relative w-full aspect-video">
-
-    <!-- Overlay -->
+    <!-- overlay launch -->
     <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
       <button onclick="loadVideo(1)"
               class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
         ▶ LANCER LE STREAM
       </button>
-      <p class="mt-4 text-white/50 font-semibold text-sm">Si le player 1 ne marche pas → essaye le 2 / 3</p>
+      <p class="mt-4 text-white/55 font-semibold text-sm">
+        Si Source 1 bug → essaye Source 2 ou Source 3
+      </p>
     </div>
 
     <div id="videoTarget" class="w-full h-full"></div>
   </section>
 
-  <!-- PLAYERS -->
-  <section class="mt-5 grid grid-cols-3 gap-3">
-    <button id="btn1" onclick="loadVideo(1)"
-            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
-      PLAYER 1
-    </button>
-    <button id="btn2" onclick="loadVideo(2)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      PLAYER 2
-    </button>
-    <button id="btn3" onclick="loadVideo(3)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      PLAYER 3
-    </button>
+  <!-- ✅ SOURCES -->
+  <section class="mt-4 grid grid-cols-3 gap-3">
+    <button id="btn1" onclick="loadVideo(1)" class="src-btn active">Source 1</button>
+    <button id="btn2" onclick="loadVideo(2)" class="src-btn">Source 2</button>
+    <button id="btn3" onclick="loadVideo(3)" class="src-btn">Source 3</button>
   </section>
 
-  <!-- DIRECT LINK -->
-  <div id="externalLink" class="hidden mt-4 text-center">
-    <a id="directLink" href="#" target="_blank"
-       class="text-amber-400 underline font-extrabold text-sm">
-      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-    </a>
+  <!-- ✅ "Vous regardez" bar -->
+  <div class="watch-bar">
+    <div class="flex items-center gap-3">
+      <img class="w-8 h-8 object-contain opacity-90"
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/LaLiga_Santander.svg/512px-LaLiga_Santander.svg.png"
+           alt="LaLiga">
+
+      <div class="leading-tight">
+        <div class="text-white/70 font-semibold text-sm">Vous regardez</div>
+        <div class="text-lg font-extrabold">Barcelone - Bilbao</div>
+        <div class="text-white/60 text-sm font-semibold">Aujourd’hui · 20:00</div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <div class="pill-time">
+        <span class="dot"></span>
+        <span id="timer">0h 00m 00s</span>
+      </div>
+
+      <div class="canal">
+        CANAL+ <span>FOOT</span>
+      </div>
+    </div>
   </div>
 
 </main>
 
-<!-- Firebase -->
+<!-- ✅ PLAYER SCRIPT (NE CHANGE PAS) -->
+<script>
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
+  };
+
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.classList.toggle("active", n===id);
+    });
+  }
+
+  function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    setActive(id);
+
+    const target = document.getElementById("videoTarget");
+    target.innerHTML = `
+      <iframe 
+          src="${SOURCES[id]}" 
+          allowfullscreen="true" 
+          webkitallowfullscreen="true" 
+          mozallowfullscreen="true" 
+          scrolling="no" 
+          frameborder="0" 
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+          referrerpolicy="no-referrer"
+          sandbox="allow-scripts allow-same-origin allow-forms">
+      </iframe>
+    `;
+  }
+
+  /* ✅ TIMER STYLE (comme ta photo) */
+  let start = Date.now();
+  setInterval(()=>{
+    const diff = Date.now() - start;
+    const s = Math.floor(diff / 1000);
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    document.getElementById("timer").textContent =
+      `${h}h ${String(m).padStart(2,"0")}m ${String(sec).padStart(2,"0")}s`;
+  }, 1000);
+</script>
+
+<!-- ✅ FIREBASE ONLINE (INVISIBLE, TEMPS RÉEL) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ✅ ONLINE TRACKING (Firebase only) */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -124,10 +234,10 @@
     appId: "1:117057055374:web:af7d7542749a6ec592b7df"
   };
 
-  firebase.initializeApp(firebaseConfig);
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "espanyol-barcelone";
+  const MATCH_ID = "barcelone-bilbao";
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
@@ -142,52 +252,6 @@
       const data = snap.val() || {};
       onlineRef.set(Object.keys(data).length);
     });
-  }
-
-  /* PLAYER */
-  const SOURCES = {
-    1: "https://bolaloca.my/player/4/4",
-    2: "https://bolaloca.my/player/2/4",
-    3: "https://bolaloca.my/player/3/4"
-  };
-
-  function setActive(id){
-    [1,2,3].forEach(n=>{
-      const b = document.getElementById("btn"+n);
-      b.className = (n===id)
-        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
-        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
-    });
-  }
-
-  function loadVideo(id){
-    document.getElementById("overlay").style.display = "none";
-    setActive(id);
-
-    const ext = document.getElementById("externalLink");
-    const link = document.getElementById("directLink");
-    link.href = SOURCES[id];
-    ext.classList.add("hidden");
-
-    document.getElementById("videoTarget").innerHTML = `
-      <iframe
-        id="streamFrame"
-        src="${SOURCES[id]}"
-        allowfullscreen
-        scrolling="no"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-        referrerpolicy="origin"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-      </iframe>
-    `;
-
-    setTimeout(() => {
-      const iframe = document.getElementById("streamFrame");
-      if(!iframe) return;
-      try { iframe.contentWindow.location.href; }
-      catch(e){ ext.classList.remove("hidden"); }
-    }, 2000);
   }
 </script>
 
