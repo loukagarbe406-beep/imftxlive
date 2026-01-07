@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — PSG vs PFC</title>
+  <title>IMFTX+ — Barcelone vs Bilbao</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -18,6 +18,7 @@
         linear-gradient(180deg,#070708 0%,#0f0f10 100%);
       color:#fff;
     }
+
     .player-box{
       border-radius:20px;
       overflow:hidden;
@@ -26,6 +27,58 @@
       box-shadow: 0 25px 90px rgba(0,0,0,.72);
     }
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
+
+    /* ✅ "Vous regardez" propre */
+    .watch-bar{
+      margin-top:14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      padding:14px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .watch-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:1;
+      min-width:260px;
+    }
+    .watch-text{
+      line-height:1.15;
+    }
+    .watch-text .small{
+      font-size:13px;
+      opacity:.70;
+      font-weight:700;
+    }
+    .watch-text .title{
+      font-size:18px;
+      font-weight:900;
+    }
+    .watch-text .meta{
+      font-size:13px;
+      opacity:.65;
+      font-weight:700;
+      margin-top:2px;
+    }
+    .watch-right{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-shrink:0;
+    }
+    .canal-logo{
+      height:28px;
+      object-fit:contain;
+      opacity:.95;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,.8));
+    }
   </style>
 </head>
 
@@ -45,23 +98,23 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- HEADER CENTER -->
+  <!-- HEADER -->
   <header class="text-center mb-8">
     <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      PSG - PFC
+      Barcelone - Bilbao
     </h1>
     <p class="mt-2 text-white/55 font-semibold">
-      LIGUE 1 · 20h45
+      LaLiga · 20h00
     </p>
 
     <div class="mt-4 flex items-center justify-center gap-4">
       <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/86/Paris_Saint-Germain_Logo.svg/1024px-Paris_Saint-Germain_Logo.svg.png"
-           alt="PSG">
+           src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg"
+           alt="Barça">
       <span class="text-white/40 font-extrabold">VS</span>
       <img class="w-11 h-11 object-contain drop-shadow-lg"
-           src="https://upload.wikimedia.org/wikipedia/en/9/9f/Paris_FC_logo.svg"
-           alt="Paris FC">
+           src="https://upload.wikimedia.org/wikipedia/en/9/98/Athletic_Club_Bilbao_logo.svg"
+           alt="Bilbao">
     </div>
   </header>
 
@@ -106,10 +159,26 @@
     </a>
   </div>
 
-  <!-- MESSAGE -->
-  <div class="mt-8 text-center text-sm text-white/55 font-semibold">
-    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).  
-    — L’équipe IMFTX+
+  <!-- ✅ "VOUS REGARDEZ" -->
+  <div class="watch-bar">
+    <div class="watch-left">
+      <img class="w-9 h-9 object-contain opacity-90"
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/LaLiga_Santander.svg/512px-LaLiga_Santander.svg.png"
+           alt="LaLiga">
+
+      <div class="watch-text">
+        <div class="small">Vous regardez</div>
+        <div class="title">Barcelone - Bilbao</div>
+        <div class="meta">Aujourd’hui · 20:00</div>
+      </div>
+    </div>
+
+    <div class="watch-right">
+      <!-- ✅ JUSTE LOGO CANAL+ FOOT -->
+      <img class="canal-logo"
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Canal%2B_Logo.svg/512px-Canal%2B_Logo.svg.png"
+           alt="CANAL+">
+    </div>
   </div>
 
 </main>
@@ -120,7 +189,6 @@
 
 <script>
   /* ✅ ONLINE TRACKING (Firebase only) */
-
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -134,7 +202,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "PSG-PFC";
+  const MATCH_ID = "barcelone-bilbao";
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
@@ -151,12 +219,11 @@
     });
   }
 
-  /* ✅ PLAYER */
-
+  /* ✅ PLAYER (SCRIPT QUI MARCHE + fallback embed blocked) */
   const SOURCES = {
-    1: "https://bolaloca.my/player/4/20",
-    2: "https://bolaloca.my/player/2/20",
-    3: "https://bolaloca.my/player/3/20"
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
   };
 
   function setActive(id){
