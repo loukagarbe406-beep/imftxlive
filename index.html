@@ -17,7 +17,6 @@
       color:#fff;
     }
 
-    /* ✅ big glow background */
     .bg-glow{
       position:fixed;
       inset:0;
@@ -36,7 +35,7 @@
       background: linear-gradient(180deg,#0b0b0c 0%, #070708 100%);
     }
 
-    /* ✅ badge en direct comme la photo */
+    /* ✅ badge vert style */
     .badge-live{
       display:inline-flex;
       align-items:center;
@@ -56,7 +55,7 @@
       box-shadow: 0 0 15px rgba(34,197,94,.75);
     }
 
-    /* ✅ CARD STYLE EXACT */
+    /* ✅ match card */
     .match-card{
       position:relative;
       border-radius:22px;
@@ -64,7 +63,7 @@
       border:1px solid rgba(255,255,255,.10);
       background:#000;
       box-shadow: 0 25px 100px rgba(0,0,0,.70);
-      height: 260px; /* ✅ même taille pour tous */
+      height: 260px;
     }
 
     .match-card .bg{
@@ -75,14 +74,12 @@
       filter: saturate(1.05);
     }
 
-    /* ✅ gros dégradé diagonal comme la photo */
     .match-card .shade{
       position:absolute; inset:0;
       background:
         linear-gradient(115deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.35) 40%, rgba(255,255,255,.06) 68%, rgba(255,255,255,.18) 100%);
     }
 
-    /* ✅ bord clair top-right comme la photo */
     .match-card::after{
       content:"";
       position:absolute;
@@ -198,16 +195,15 @@
       background:rgba(255,255,255,.07);
       border:1px solid rgba(255,255,255,.10);
     }
-    .btn-watch i{ font-size:14px; }
 
-    /* ✅ layout 2 par ligne sur PC */
+    /* ✅ GRID FULL LARGEUR */
     .grid-matches{
       display:grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap:18px;
-      max-width: 1100px;
-      margin: 0 auto;
+      width:100%;
     }
+
     @media(max-width: 900px){
       .grid-matches{ grid-template-columns: 1fr; }
       .match-card{ height: 240px; }
@@ -226,7 +222,6 @@
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
     <div class="text-2xl font-extrabold tracking-tight">IMFTX+</div>
 
-    <!-- RÉSEAUX -->
     <div class="flex items-center gap-4 text-lg font-bold">
       <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="opacity-70 hover:opacity-100">
         <i class="fa-brands fa-telegram"></i>
@@ -244,15 +239,8 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-12">
 
-  <!-- ✅ HERO -->
+  <!-- ✅ TITRE CENTRÉ -->
   <div class="text-center mb-10">
-    <div class="flex justify-center mb-5">
-      <div class="badge-live">
-        <span class="dot"></span>
-        En direct
-      </div>
-    </div>
-
     <h1 class="text-5xl md:text-6xl font-black tracking-tight">
       IMFTX+ LIVE
     </h1>
@@ -261,10 +249,19 @@
     </p>
   </div>
 
-  <!-- ✅ MATCH LIST -->
+  <!-- ✅ BADGE À GAUCHE AU-DESSUS DES MATCHS -->
+  <div class="mb-6 flex justify-start">
+    <div class="badge-live">
+      <span class="dot"></span>
+      En direct
+    </div>
+  </div>
+
+  <!-- ✅ MATCH LIST FULL WIDTH -->
   <section class="grid-matches">
 
-    <!-- 20:00 Barça - Bilbao -->
+    <!-- ✅ Mets ici tes matchs comme avant -->
+    <!-- EXEMPLE -->
     <article class="match-card">
       <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/celta-vigo-vs-barcelona.png')"></div>
       <div class="shade"></div>
@@ -276,9 +273,9 @@
 
       <div class="card-content">
         <div class="teams">
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" alt="Barça">
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg">
           <span class="vs">VS</span>
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/9/98/Athletic_Club_Bilbao_logo.svg" alt="Bilbao">
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/9/98/Athletic_Club_Bilbao_logo.svg">
         </div>
 
         <div class="title">Barcelone - Bilbao</div>
@@ -286,229 +283,13 @@
         <div class="meta">
           <div class="meta-left">
             <div class="comp">
-              <img src="https://upload.wikimedia.org/wikipedia/en/0/0f/LaLiga_logo_2023.svg" alt="LaLiga">
+              <img src="https://upload.wikimedia.org/wikipedia/en/0/0f/LaLiga_logo_2023.svg">
               LaLiga
             </div>
             <div>Aujourd’hui · 20:00</div>
           </div>
 
           <button class="btn-watch" onclick="go('barcelone-bilbao')">
-            <span class="play"><i class="fa-solid fa-play"></i></span>
-            REGARDER
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- 20:30 Man City - Brighton -->
-    <article class="match-card">
-      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/sunderland-vs-manchester-city.png')"></div>
-      <div class="shade"></div>
-
-      <div class="top-badge">
-        <span class="orange-dot"></span>
-        20:30
-      </div>
-
-      <div class="card-content">
-        <div class="teams">
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="Man City">
-          <span class="vs">VS</span>
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg" alt="Brighton">
-        </div>
-
-        <div class="title">Man City - Brighton</div>
-
-        <div class="meta">
-          <div class="meta-left">
-            <div class="comp">
-              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
-              Premier League
-            </div>
-            <div>Aujourd’hui · 20:30</div>
-          </div>
-
-          <button class="btn-watch" onclick="go('man-city-brighton')">
-            <span class="play"><i class="fa-solid fa-play"></i></span>
-            REGARDER
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- 20:30 Fulham - Chelsea -->
-    <article class="match-card">
-      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/chelsea-vs-wolverhampton-wanderers.png')"></div>
-      <div class="shade"></div>
-
-      <div class="top-badge">
-        <span class="orange-dot"></span>
-        20:30
-      </div>
-
-      <div class="card-content">
-        <div class="teams">
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/e/eb/Fulham_FC_%28shield%29.svg" alt="Fulham">
-          <span class="vs">VS</span>
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg" alt="Chelsea">
-        </div>
-
-        <div class="title">Fulham - Chelsea</div>
-
-        <div class="meta">
-          <div class="meta-left">
-            <div class="comp">
-              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
-              Premier League
-            </div>
-            <div>Aujourd’hui · 20:30</div>
-          </div>
-
-          <button class="btn-watch" onclick="go('fulham-chelsea')">
-            <span class="play"><i class="fa-solid fa-play"></i></span>
-            REGARDER
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- 20:30 Brentford - Tottenham -->
-    <article class="match-card">
-      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/brentford-vs-tottenham-hotspur.png')"></div>
-      <div class="shade"></div>
-
-      <div class="top-badge">
-        <span class="orange-dot"></span>
-        20:30
-      </div>
-
-      <div class="card-content">
-        <div class="teams">
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg" alt="Brentford">
-          <span class="vs">VS</span>
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg" alt="Tottenham">
-        </div>
-
-        <div class="title">Brentford - Tottenham</div>
-
-        <div class="meta">
-          <div class="meta-left">
-            <div class="comp">
-              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
-              Premier League
-            </div>
-            <div>Aujourd’hui · 20:30</div>
-          </div>
-
-          <button class="btn-watch" onclick="go('brentford-tottenham')">
-            <span class="play"><i class="fa-solid fa-play"></i></span>
-            REGARDER
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- 20:45 Verona - Inter -->
-    <article class="match-card">
-      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/hellas-verona-vs-inter-milan.png')"></div>
-      <div class="shade"></div>
-
-      <div class="top-badge">
-        <span class="orange-dot"></span>
-        20:45
-      </div>
-
-      <div class="card-content">
-        <div class="teams">
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/8/8c/Hellas_Verona_FC_logo.svg" alt="Verona">
-          <span class="vs">VS</span>
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg" alt="Inter">
-        </div>
-
-        <div class="title">Hellas Verona - Inter Milan</div>
-
-        <div class="meta">
-          <div class="meta-left">
-            <div class="comp">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Serie_A_logo_2022.svg" alt="Serie A">
-              Serie A
-            </div>
-            <div>Aujourd’hui · 20:45</div>
-          </div>
-
-          <button class="btn-watch" onclick="go('verona-inter')">
-            <span class="play"><i class="fa-solid fa-play"></i></span>
-            REGARDER
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- 21:15 Man United - Bournemouth -->
-    <article class="match-card">
-      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/manchester-united-vs-bournemouth.png')"></div>
-      <div class="shade"></div>
-
-      <div class="top-badge">
-        <span class="orange-dot"></span>
-        21:15
-      </div>
-
-      <div class="card-content">
-        <div class="teams">
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Man United">
-          <span class="vs">VS</span>
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg" alt="Bournemouth">
-        </div>
-
-        <div class="title">Manchester United - Bournemouth</div>
-
-        <div class="meta">
-          <div class="meta-left">
-            <div class="comp">
-              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
-              Premier League
-            </div>
-            <div>Aujourd’hui · 21:15</div>
-          </div>
-
-          <button class="btn-watch" onclick="go('man-united-bournemouth')">
-            <span class="play"><i class="fa-solid fa-play"></i></span>
-            REGARDER
-          </button>
-        </div>
-      </div>
-    </article>
-
-    <!-- 21:15 West Ham - Newcastle -->
-    <article class="match-card">
-      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/west-ham-united-vs-newcastle-united.png')"></div>
-      <div class="shade"></div>
-
-      <div class="top-badge">
-        <span class="orange-dot"></span>
-        21:15
-      </div>
-
-      <div class="card-content">
-        <div class="teams">
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg" alt="West Ham">
-          <span class="vs">VS</span>
-          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg" alt="Newcastle">
-        </div>
-
-        <div class="title">West Ham - Newcastle</div>
-
-        <div class="meta">
-          <div class="meta-left">
-            <div class="comp">
-              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
-              Premier League
-            </div>
-            <div>Aujourd’hui · 21:15</div>
-          </div>
-
-          <button class="btn-watch" onclick="go('west-ham-newcastle')">
             <span class="play"><i class="fa-solid fa-play"></i></span>
             REGARDER
           </button>
