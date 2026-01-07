@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Man City vs Brighton</title>
+  <title>IMFTX+ — Man City</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -18,6 +18,7 @@
       overflow-x:hidden;
     }
 
+    /* player box */
     .player-box{
       border-radius:22px;
       overflow:hidden;
@@ -29,16 +30,18 @@
 
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
 
+    /* ✅ COVER (banniere) */
     .cover{
       position:absolute;
       inset:0;
       z-index:15;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.60) 100%),
         url("https://empire-sport.shop/upload/events/xv37b1ncuvgsyxjl7x7d7ae2wpop71.jpg") center/cover no-repeat;
     }
 
+    /* ✅ LOGOS TOP */
     .cover-top{
       position:absolute;
       top:18px;
@@ -65,6 +68,7 @@
       opacity:.9;
     }
 
+    /* ✅ STRIP BOTTOM */
     .cover-strip{
       position:absolute;
       left:22px;
@@ -107,6 +111,7 @@
     .strip-play i{font-size:19px}
     .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
 
+    /* ✅ sources buttons */
     .source-btn{
       height:44px;
       border-radius:14px;
@@ -124,6 +129,7 @@
     }
     .source-btn:hover{opacity:.95}
 
+    /* ✅ bottom bar (Vous regardez) */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
@@ -166,12 +172,18 @@
       text-overflow:ellipsis;
     }
 
+    .watch-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
+    }
+
     .channel-logo{
-      width:86px;height:auto;
+      width:75px;height:auto;
       object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
-
   </style>
 </head>
 
@@ -194,7 +206,7 @@
   <!-- PLAYER -->
   <section class="player-box w-full aspect-video">
 
-    <!-- COVER -->
+    <!-- ✅ COVER CLICK = LAUNCH STREAM -->
     <div id="cover" class="cover" onclick="loadVideo(1)">
       <div class="cover-top">
         <img class="team-logo"
@@ -202,7 +214,7 @@
              alt="Man City">
         <span class="vs">VS</span>
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg"
+             src="https://upload.wikimedia.org/wikipedia/en/c/cc/Brighton_%26_Hove_Albion_logo.svg"
              alt="Brighton">
       </div>
 
@@ -228,9 +240,8 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- WATCH BAR -->
+  <!-- ✅ WATCH BAR -->
   <section class="mt-6 watch-bar">
-
     <div class="watch-left">
       <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
 
@@ -241,12 +252,11 @@
       </div>
     </div>
 
-    <div>
+    <div class="watch-right">
       <img class="channel-logo"
            src="https://media.discordapp.net/attachments/1458424501825048608/1458489820601913366/images__1_-removebg-preview.png?ex=695fd3fe&is=695e827e&hm=fa071d3180f526ff85c93ce5ed67a9eada8a9cae438f5cdbaee45bdf32300469&=&format=webp&quality=lossless&width=284&height=215"
            alt="Chaîne">
     </div>
-
   </section>
 
   <!-- MESSAGE -->
@@ -258,7 +268,7 @@
 </main>
 
 
-<!-- ✅ PLAYER SCRIPT (STABLE) -->
+<!-- ✅ PLAYER SCRIPT (STABLE - NO DOMAIN BLOCK) -->
 <script>
   const SOURCES = {
     1: "https://bolaloca.my/player/4/1",
@@ -281,16 +291,16 @@
 
     const target = document.getElementById("videoTarget");
     target.innerHTML = `
-      <iframe
-        src="${SOURCES[id]}"
-        allowfullscreen="true"
-        webkitallowfullscreen="true"
-        mozallowfullscreen="true"
-        scrolling="no"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-        referrerpolicy="no-referrer"
-        sandbox="allow-scripts allow-same-origin allow-forms">
+      <iframe 
+          src="${SOURCES[id]}" 
+          allowfullscreen="true" 
+          webkitallowfullscreen="true" 
+          mozallowfullscreen="true" 
+          scrolling="no" 
+          frameborder="0" 
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+          referrerpolicy="no-referrer"
+          sandbox="allow-scripts allow-same-origin allow-forms">
       </iframe>
     `;
   }
@@ -315,7 +325,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "man-city-brighton";  // ✅ garde cet id
+  const MATCH_ID = "man-city-brighton";
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
