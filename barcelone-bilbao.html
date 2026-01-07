@@ -13,41 +13,22 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:#070708;
+      background:
+        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
+        linear-gradient(180deg,#070708 0%,#0f0f10 100%);
       color:#fff;
     }
 
-    .player-wrap{
-      border-radius:18px;
+    .player-box{
+      border-radius:20px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.10);
-      background:#000;
-      box-shadow:0 25px 90px rgba(0,0,0,.75);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 25px 90px rgba(0,0,0,.72);
     }
-
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
 
-    .src-btn{
-      height:46px;
-      border-radius:10px;
-      font-weight:900;
-      font-size:14px;
-      transition:.15s;
-      border:1px solid rgba(255,255,255,.10);
-    }
-    .src-btn.active{
-      background:#fff;
-      color:#000;
-    }
-    .src-btn:not(.active){
-      background:rgba(255,255,255,.07);
-      color:#fff;
-    }
-    .src-btn:not(.active):hover{
-      background:rgba(255,255,255,.12);
-    }
-
-    /* ✅ "Vous regardez" bar (responsive) */
+    /* ✅ "Vous regardez" propre */
     .watch-bar{
       margin-top:14px;
       border-radius:16px;
@@ -64,8 +45,8 @@
       display:flex;
       align-items:center;
       gap:12px;
-      min-width:240px;
       flex:1;
+      min-width:260px;
     }
     .watch-text{
       line-height:1.15;
@@ -92,9 +73,8 @@
       gap:10px;
       flex-shrink:0;
     }
-
     .canal-logo{
-      height:32px;
+      height:28px;
       object-fit:contain;
       opacity:.95;
       filter: drop-shadow(0 0 10px rgba(0,0,0,.8));
@@ -104,10 +84,10 @@
 
 <body>
 
-<!-- ✅ NAV -->
+<!-- NAV -->
 <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
-  <div class="max-w-screen-xl mx-auto px-6 py-3 flex items-center justify-between">
-    <div class="text-2xl font-extrabold tracking-tight">IMFTX+</div>
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
     <a href="index.html"
        class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
@@ -116,33 +96,70 @@
   </div>
 </nav>
 
-<main class="max-w-screen-xl mx-auto px-6 py-10">
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- ✅ PLAYER -->
-  <section class="player-wrap w-full aspect-video relative">
+  <!-- HEADER -->
+  <header class="text-center mb-8">
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
+      Barcelone - Bilbao
+    </h1>
+    <p class="mt-2 text-white/55 font-semibold">
+      LaLiga · 20h00
+    </p>
 
-    <!-- overlay launch -->
+    <div class="mt-4 flex items-center justify-center gap-4">
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg"
+           alt="Barça">
+      <span class="text-white/40 font-extrabold">VS</span>
+      <img class="w-11 h-11 object-contain drop-shadow-lg"
+           src="https://upload.wikimedia.org/wikipedia/en/9/98/Athletic_Club_Bilbao_logo.svg"
+           alt="Bilbao">
+    </div>
+  </header>
+
+  <!-- PLAYER -->
+  <section class="player-box relative w-full aspect-video">
+
+    <!-- Overlay -->
     <div id="overlay" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80">
       <button onclick="loadVideo(1)"
               class="px-10 py-4 rounded-full bg-amber-400 text-black font-extrabold text-lg hover:opacity-90">
         ▶ LANCER LE STREAM
       </button>
-      <p class="mt-4 text-white/55 font-semibold text-sm">
-        Si Source 1 bug → essaye Source 2 ou Source 3
+      <p class="mt-4 text-white/50 font-semibold text-sm">
+        Si le player 1 ne marche pas → essaye le 2 / 3
       </p>
     </div>
 
     <div id="videoTarget" class="w-full h-full"></div>
   </section>
 
-  <!-- ✅ SOURCES -->
-  <section class="mt-4 grid grid-cols-3 gap-3">
-    <button id="btn1" onclick="loadVideo(1)" class="src-btn active">Source 1</button>
-    <button id="btn2" onclick="loadVideo(2)" class="src-btn">Source 2</button>
-    <button id="btn3" onclick="loadVideo(3)" class="src-btn">Source 3</button>
+  <!-- PLAYERS -->
+  <section class="mt-5 grid grid-cols-3 gap-3">
+    <button id="btn1" onclick="loadVideo(1)"
+            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
+      PLAYER 1
+    </button>
+    <button id="btn2" onclick="loadVideo(2)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+      PLAYER 2
+    </button>
+    <button id="btn3" onclick="loadVideo(3)"
+            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
+      PLAYER 3
+    </button>
   </section>
 
-  <!-- ✅ "Vous regardez" bar -->
+  <!-- DIRECT LINK (fallback) -->
+  <div id="externalLink" class="hidden mt-4 text-center">
+    <a id="directLink" href="#" target="_blank"
+       class="text-amber-400 underline font-extrabold text-sm">
+      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+    </a>
+  </div>
+
+  <!-- ✅ "VOUS REGARDEZ" -->
   <div class="watch-bar">
     <div class="watch-left">
       <img class="w-9 h-9 object-contain opacity-90"
@@ -157,7 +174,7 @@
     </div>
 
     <div class="watch-right">
-      <!-- ✅ CANAL+ FOOT LOGO -->
+      <!-- ✅ JUSTE LOGO CANAL+ FOOT -->
       <img class="canal-logo"
            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Canal%2B_Logo.svg/512px-Canal%2B_Logo.svg.png"
            alt="CANAL+">
@@ -166,53 +183,12 @@
 
 </main>
 
-<!-- ✅ PLAYER SCRIPT (VERSION QUI MARCHE CHEZ TOI) -->
-<script>
-  const SOURCES = {
-    1: "https://bolaloca.my/player/4/2",
-    2: "https://bolaloca.my/player/2/2",
-    3: "https://bolaloca.my/player/3/2"
-  };
-
-  function setActive(id){
-    [1,2,3].forEach(n=>{
-      const b = document.getElementById("btn"+n);
-      if(n===id){
-        b.className = "src-btn active";
-      }else{
-        b.className = "src-btn";
-      }
-    });
-  }
-
-  function loadVideo(id){
-    document.getElementById("overlay").style.display = "none";
-    setActive(id);
-
-    const target = document.getElementById("videoTarget");
-
-    /* ✅ iframe EXACTEMENT comme ton script qui marchait (anti embed block au max) */
-    target.innerHTML = `
-      <iframe 
-          src="${SOURCES[id]}" 
-          allowfullscreen="true"
-          webkitallowfullscreen="true"
-          mozallowfullscreen="true"
-          scrolling="no"
-          frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          referrerpolicy="no-referrer"
-          sandbox="allow-scripts allow-same-origin allow-forms">
-      </iframe>
-    `;
-  }
-</script>
-
-<!-- ✅ FIREBASE ONLINE (INVISIBLE, TEMPS RÉEL) -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
+  /* ✅ ONLINE TRACKING (Firebase only) */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -241,6 +217,54 @@
       const data = snap.val() || {};
       onlineRef.set(Object.keys(data).length);
     });
+  }
+
+  /* ✅ PLAYER (SCRIPT QUI MARCHE + fallback embed blocked) */
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
+  };
+
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.className = (n===id)
+        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
+        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
+    });
+  }
+
+  function loadVideo(id){
+    document.getElementById("overlay").style.display = "none";
+    setActive(id);
+
+    const ext = document.getElementById("externalLink");
+    const link = document.getElementById("directLink");
+    link.href = SOURCES[id];
+    ext.classList.add("hidden");
+
+    const target = document.getElementById("videoTarget");
+    target.innerHTML = `
+      <iframe
+        id="streamFrame"
+        src="${SOURCES[id]}"
+        allowfullscreen
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+      </iframe>
+    `;
+
+    // fallback si embed bloqué
+    setTimeout(() => {
+      const iframe = document.getElementById("streamFrame");
+      if(!iframe) return;
+      try { iframe.contentWindow.location.href; }
+      catch(e){ ext.classList.remove("hidden"); }
+    }, 2000);
   }
 </script>
 
