@@ -13,113 +13,178 @@
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:
-        radial-gradient(1200px 700px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      background:#070708;
       color:#fff;
+      overflow-x:hidden;
     }
 
+    /* player box */
     .player-box{
       border-radius:22px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      box-shadow: 0 25px 90px rgba(0,0,0,.72);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 30px 120px rgba(0,0,0,.85);
+      position:relative;
     }
 
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
 
-    /* ✅ Bannière cover cliquable */
+    /* ✅ COVER (banniere) */
     .cover{
       position:absolute;
       inset:0;
       z-index:15;
       cursor:pointer;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      padding:22px;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.65) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
         url("https://empire-sport.shop/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png") center/cover no-repeat;
     }
 
-    .cover-badge{
-      padding:10px 14px;
-      border-radius:16px;
-      background:rgba(0,0,0,.45);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(12px);
-      max-width:70%;
-    }
-
-    .cover-badge .t1{font-size:16px;font-weight:900}
-    .cover-badge .t2{font-size:13px;opacity:.75;font-weight:700;margin-top:2px}
-
-    .play-btn{
-      width:54px;height:54px;
-      border-radius:999px;
-      display:grid;place-items:center;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.5);
-      transition:.2s;
-    }
-    .play-btn:hover{transform:scale(1.06)}
-    .play-btn i{font-size:22px}
-
-    /* ✅ Barre "Vous regardez" style capture */
-    .watch-bar{
-      margin-top:14px;
+    /* ✅ LOGOS TOP */
+    .cover-top{
+      position:absolute;
+      top:18px;
+      left:18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
       border-radius:18px;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      padding:14px 18px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
+    }
+
+    .team-logo{
+      width:34px;height:34px;
+      object-fit:contain;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
+    }
+
+    .vs{
+      font-weight:900;
+      font-size:14px;
+      opacity:.9;
+    }
+
+    /* ✅ STRIP BOTTOM */
+    .cover-strip{
+      position:absolute;
+      left:22px;
+      right:22px;
+      bottom:22px;
+      height:86px;
+      border-radius:20px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(16px);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
+      padding:0 22px;
     }
+
+    .strip-title{
+      font-size:18px;
+      font-weight:900;
+      line-height:1;
+    }
+    .strip-sub{
+      font-size:15px;
+      opacity:.85;
+      font-weight:600;
+      line-height:1.1;
+      font-style:italic;
+      margin-top:3px;
+    }
+
+    .strip-play{
+      width:50px;height:50px;
+      border-radius:999px;
+      border:2px solid rgba(255,255,255,.38);
+      display:grid;
+      place-items:center;
+      transition:.2s;
+      background:rgba(0,0,0,.22);
+    }
+    .strip-play i{font-size:19px}
+    .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
+
+    /* ✅ sources buttons */
+    .source-btn{
+      height:44px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:13px;
+      transition:.2s;
+    }
+    .source-btn.active{
+      background:#fff;color:#000;
+    }
+    .source-btn.inactive{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      color:#fff;
+    }
+    .source-btn:hover{opacity:.95}
+
+    /* ✅ bottom bar (Vous regardez) */
+    .watch-bar{
+      border-radius:18px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(16px);
+      padding:16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
     .watch-left{
       display:flex;
       align-items:center;
-      gap:12px;
-      flex:1;
-      min-width:260px;
+      gap:14px;
+      min-width:0;
     }
+
+    .watch-left img{
+      width:38px;height:38px;
+      object-fit:contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+      flex-shrink:0;
+    }
+
     .watch-text{
-      line-height:1.15;
+      min-width:0;
+      line-height:1.1;
     }
+
     .watch-text .small{
-      font-size:13px;
-      opacity:.70;
-      font-weight:700;
+      opacity:.8;font-weight:700;font-size:13px;
     }
-    .watch-text .title{
-      font-size:18px;
-      font-weight:900;
+
+    .watch-text .big{
+      font-weight:900;font-size:16px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
-    .watch-text .meta{
-      font-size:13px;
-      opacity:.65;
-      font-weight:700;
-      margin-top:2px;
-    }
+
     .watch-right{
       display:flex;
       align-items:center;
-      justify-content:flex-end;
       gap:10px;
       flex-shrink:0;
     }
-    .canal-logo{
-      height:26px;
+
+    .channel-logo{
+      width:72px;height:auto;
       object-fit:contain;
-      opacity:.95;
-      filter: drop-shadow(0 0 10px rgba(0,0,0,.8));
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
+
   </style>
 </head>
 
@@ -139,87 +204,113 @@
 
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- HEADER -->
-  <header class="text-center mb-8">
-    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight uppercase">
-      Barcelone - Athletic Bilbao
-    </h1>
-    <p class="mt-2 text-white/55 font-semibold">
-      Supercoupe · 20h00
-    </p>
-  </header>
-
   <!-- PLAYER -->
-  <section class="player-box relative w-full aspect-video">
+  <section class="player-box w-full aspect-video">
 
-    <!-- ✅ Cover cliquable -->
+    <!-- ✅ COVER CLICK = LAUNCH STREAM -->
     <div id="cover" class="cover" onclick="loadVideo(1)">
-      <div class="cover-badge">
-        <div class="t1">Regarder Gratuitement</div>
-        <div class="t2">Barcelona · Athletic Bilbao</div>
+      <div class="cover-top">
+        <img class="team-logo"
+             src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg"
+             alt="Barça">
+        <span class="vs">VS</span>
+        <img class="team-logo"
+             src="https://upload.wikimedia.org/wikipedia/en/9/98/Athletic_Bilbao_logo.svg"
+             alt="Bilbao">
       </div>
 
-      <div class="play-btn">
-        <i class="fa-solid fa-play"></i>
+      <div class="cover-strip">
+        <div>
+          <div class="strip-title">Regarder Gratuitement</div>
+          <div class="strip-sub">Barcelona<br>Athletic Bilbao</div>
+        </div>
+
+        <div class="strip-play">
+          <i class="fa-solid fa-play"></i>
+        </div>
       </div>
     </div>
 
     <div id="videoTarget" class="w-full h-full"></div>
   </section>
 
-  <!-- PLAYERS -->
-  <section class="mt-5 grid grid-cols-3 gap-3">
-    <button id="btn1" onclick="loadVideo(1)"
-            class="h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base">
-      Source 1
-    </button>
-    <button id="btn2" onclick="loadVideo(2)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      Source 2
-    </button>
-    <button id="btn3" onclick="loadVideo(3)"
-            class="h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base">
-      Source 3
-    </button>
+  <!-- SOURCES -->
+  <section class="mt-5 flex gap-3">
+    <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+    <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+    <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- DIRECT LINK (fallback) -->
-  <div id="externalLink" class="hidden mt-4 text-center">
-    <a id="directLink" href="#" target="_blank"
-       class="text-amber-400 underline font-extrabold text-sm">
-      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-    </a>
-  </div>
+  <!-- ✅ WATCH BAR -->
+  <section class="mt-6 watch-bar">
 
-  <!-- ✅ "VOUS REGARDEZ" -->
-  <div class="watch-bar">
     <div class="watch-left">
-      <img class="w-9 h-9 object-contain opacity-90"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Supercopa_de_Espa%C3%B1a_logo.svg/512px-Supercopa_de_Espa%C3%B1a_logo.svg.png"
-           alt="Supercoupe">
+      <!-- ⚽ logo compétition -->
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Copa_del_Rey_logo.svg/200px-Copa_del_Rey_logo.svg.png" alt="Cup">
 
       <div class="watch-text">
         <div class="small">Vous regardez</div>
-        <div class="title">Barcelona - Athletic Bilbao</div>
-        <div class="meta">Aujourd’hui · 20:00</div>
+        <div class="big">Barcelone - Athletic Bilbao</div>
+        <div class="small">Aujourd’hui · 20:00</div>
       </div>
     </div>
 
     <div class="watch-right">
-      <img class="canal-logo"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Canal%2B_Logo.svg/512px-Canal%2B_Logo.svg.png"
+      <!-- ✅ Logo chaîne -->
+      <img class="channel-logo"
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Canal%2B_logo.svg/2560px-Canal%2B_logo.svg.png"
            alt="CANAL+">
     </div>
-  </div>
+
+  </section>
 
 </main>
 
-<!-- Firebase -->
+
+<!-- ✅ PLAYER SCRIPT (STABLE) -->
+<script>
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
+  };
+
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.className = (n===id)
+        ? "source-btn active px-6"
+        : "source-btn inactive px-6";
+    });
+  }
+
+  function loadVideo(id){
+    document.getElementById("cover").style.display = "none";
+    setActive(id);
+
+    const target = document.getElementById("videoTarget");
+    target.innerHTML = `
+      <iframe
+        src="${SOURCES[id]}"
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="no-referrer"
+        sandbox="allow-scripts allow-same-origin allow-forms">
+      </iframe>
+    `;
+  }
+</script>
+
+
+<!-- ✅ FIREBASE ONLINE (INVISIBLE - REALTIME) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
-  /* ✅ ONLINE TRACKING */
   const firebaseConfig = {
     apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
     authDomain: "imftxlive.firebaseapp.com",
@@ -233,7 +324,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "barcelone-bilbao";
+  const MATCH_ID = "barcelone-bilbao"; // ✅ garde ce match id
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
@@ -248,53 +339,6 @@
       const data = snap.val() || {};
       onlineRef.set(Object.keys(data).length);
     });
-  }
-
-  /* ✅ PLAYER (script stable + fallback embed blocked) */
-  const SOURCES = {
-    1: "https://bolaloca.my/player/4/2",
-    2: "https://bolaloca.my/player/2/2",
-    3: "https://bolaloca.my/player/3/2"
-  };
-
-  function setActive(id){
-    [1,2,3].forEach(n=>{
-      const b = document.getElementById("btn"+n);
-      b.className = (n===id)
-        ? "h-12 rounded-xl bg-white text-black font-extrabold hover:opacity-95 text-xs md:text-base"
-        : "h-12 rounded-xl bg-white/10 border border-white/10 font-extrabold hover:bg-white/15 text-xs md:text-base";
-    });
-  }
-
-  function loadVideo(id){
-    document.getElementById("cover").style.display = "none";
-    setActive(id);
-
-    const ext = document.getElementById("externalLink");
-    const link = document.getElementById("directLink");
-    link.href = SOURCES[id];
-    ext.classList.add("hidden");
-
-    const target = document.getElementById("videoTarget");
-    target.innerHTML = `
-      <iframe
-        id="streamFrame"
-        src="${SOURCES[id]}"
-        allowfullscreen
-        scrolling="no"
-        frameborder="0"
-        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-        referrerpolicy="origin"
-        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-      </iframe>
-    `;
-
-    setTimeout(() => {
-      const iframe = document.getElementById("streamFrame");
-      if(!iframe) return;
-      try { iframe.contentWindow.location.href; }
-      catch(e){ ext.classList.remove("hidden"); }
-    }, 2000);
   }
 </script>
 
