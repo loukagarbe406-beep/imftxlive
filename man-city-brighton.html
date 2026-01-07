@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Man City</title>
+  <title>IMFTX+ — Man City vs Brighton</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
 
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
 
-    /* ✅ COVER (banniere) */
+    /* ✅ COVER */
     .cover{
       position:absolute;
       inset:0;
@@ -41,7 +41,7 @@
         url("https://empire-sport.shop/upload/events/xv37b1ncuvgsyxjl7x7d7ae2wpop71.jpg") center/cover no-repeat;
     }
 
-    /* ✅ LOGOS TOP */
+    /* ✅ TOP LOGOS */
     .cover-top{
       position:absolute;
       top:18px;
@@ -68,7 +68,7 @@
       opacity:.9;
     }
 
-    /* ✅ STRIP BOTTOM */
+    /* ✅ STRIP */
     .cover-strip{
       position:absolute;
       left:22px;
@@ -129,7 +129,7 @@
     }
     .source-btn:hover{opacity:.95}
 
-    /* ✅ bottom bar (Vous regardez) */
+    /* ✅ watch bar */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
@@ -172,15 +172,8 @@
       text-overflow:ellipsis;
     }
 
-    .watch-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-shrink:0;
-    }
-
     .channel-logo{
-      width:75px;height:auto;
+      width:78px;height:auto;
       object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
@@ -206,7 +199,7 @@
   <!-- PLAYER -->
   <section class="player-box w-full aspect-video">
 
-    <!-- ✅ COVER CLICK = LAUNCH STREAM -->
+    <!-- ✅ COVER CLICK -->
     <div id="cover" class="cover" onclick="loadVideo(1)">
       <div class="cover-top">
         <img class="team-logo"
@@ -240,10 +233,10 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- ✅ WATCH BAR -->
+  <!-- WATCH BAR -->
   <section class="mt-6 watch-bar">
     <div class="watch-left">
-      <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg">
 
       <div class="watch-text">
         <div class="small">Vous regardez</div>
@@ -252,11 +245,9 @@
       </div>
     </div>
 
-    <div class="watch-right">
-      <img class="channel-logo"
-           src="https://media.discordapp.net/attachments/1458424501825048608/1458489820601913366/images__1_-removebg-preview.png?ex=695fd3fe&is=695e827e&hm=fa071d3180f526ff85c93ce5ed67a9eada8a9cae438f5cdbaee45bdf32300469&=&format=webp&quality=lossless&width=284&height=215"
-           alt="Chaîne">
-    </div>
+    <img class="channel-logo"
+         src="https://media.discordapp.net/attachments/1458424501825048608/1458489820601913366/images__1_-removebg-preview.png?ex=695fd3fe&is=695e827e&hm=fa071d3180f526ff85c93ce5ed67a9eada8a9cae438f5cdbaee45bdf32300469&=&format=webp&quality=lossless&width=284&height=215"
+         alt="Chaîne">
   </section>
 
   <!-- MESSAGE -->
@@ -267,8 +258,7 @@
 
 </main>
 
-
-<!-- ✅ PLAYER SCRIPT (STABLE - NO DOMAIN BLOCK) -->
+<!-- ✅ PLAYER SCRIPT (IDENTIQUE QUI MARCHE) -->
 <script>
   const SOURCES = {
     1: "https://bolaloca.my/player/4/1",
@@ -291,21 +281,29 @@
 
     const target = document.getElementById("videoTarget");
     target.innerHTML = `
-      <iframe 
-          src="${SOURCES[id]}" 
-          allowfullscreen="true" 
-          webkitallowfullscreen="true" 
-          mozallowfullscreen="true" 
-          scrolling="no" 
-          frameborder="0" 
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          referrerpolicy="no-referrer"
-          sandbox="allow-scripts allow-same-origin allow-forms">
+      <iframe
+        id="streamFrame"
+        src="${SOURCES[id]}"
+        allowfullscreen
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
       </iframe>
     `;
+
+    /* ✅ fallback embed blocked */
+    setTimeout(() => {
+      const iframe = document.getElementById("streamFrame");
+      if(!iframe) return;
+      try { iframe.contentWindow.location.href; }
+      catch(e){
+        window.open(SOURCES[id], "_blank");
+      }
+    }, 2000);
   }
 </script>
-
 
 <!-- ✅ FIREBASE ONLINE (INVISIBLE - REALTIME) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -325,7 +323,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "man-city-brighton";
+  const MATCH_ID = "man-city-brighton"; // ✅ ton match id
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
