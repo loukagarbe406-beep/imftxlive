@@ -17,64 +17,214 @@
       color:#fff;
     }
 
+    /* ✅ big glow background */
+    .bg-glow{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(800px 500px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(1000px 700px at 50% 100%, rgba(255,255,255,.05), transparent 60%);
+      opacity:.55;
+      filter: blur(60px);
+    }
+    .bg-dark{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      background: linear-gradient(180deg,#0b0b0c 0%, #070708 100%);
+    }
+
+    /* ✅ badge en direct comme la photo */
+    .badge-live{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 18px;
+      border-radius:999px;
+      background: rgba(20,20,20,.75);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 15px 50px rgba(0,0,0,.55);
+      backdrop-filter: blur(14px);
+      font-weight:800;
+      color:#fff;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:#22c55e;
+      box-shadow: 0 0 15px rgba(34,197,94,.75);
+    }
+
+    /* ✅ CARD STYLE EXACT */
     .match-card{
-      border-radius:18px;
+      position:relative;
+      border-radius:22px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.08);
-      box-shadow:0 20px 80px rgba(0,0,0,.7);
-      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10);
+      background:#000;
+      box-shadow: 0 25px 100px rgba(0,0,0,.70);
+      height: 260px; /* ✅ même taille pour tous */
     }
 
-    .match-thumb{
-      height:150px;
-      display:flex;
+    .match-card .bg{
+      position:absolute; inset:0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.02);
+      filter: saturate(1.05);
+    }
+
+    /* ✅ gros dégradé diagonal comme la photo */
+    .match-card .shade{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(115deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.35) 40%, rgba(255,255,255,.06) 68%, rgba(255,255,255,.18) 100%);
+    }
+
+    /* ✅ bord clair top-right comme la photo */
+    .match-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      border-radius:22px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+    }
+
+    .top-badge{
+      position:absolute;
+      top:12px; left:12px;
+      display:inline-flex;
       align-items:center;
-      justify-content:center;
+      gap:8px;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.60);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
       font-weight:900;
-      font-size:22px;
-      text-transform:uppercase;
-      text-shadow:0 2px 10px rgba(0,0,0,.75);
-      padding:0 15px;
-      text-align:center;
+      font-size:13px;
     }
 
-    .match-footer{
-      height:64px;
+    .top-badge .orange-dot{
+      width:10px;height:10px;border-radius:50%;
+      background:#f59e0b;
+      box-shadow: 0 0 15px rgba(245,158,11,.75);
+    }
+
+    .card-content{
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding:18px;
+    }
+
+    .teams{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      padding:0 16px;
-      background:linear-gradient(90deg, rgba(0,0,0,.85), rgba(0,0,0,.35));
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .team-logo{
+      width:42px;height:42px;
+      object-fit:contain;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.65));
+    }
+
+    .vs{
+      color:rgba(255,255,255,.70);
+      font-weight:900;
+      font-size:14px;
+      letter-spacing:.08em;
+    }
+
+    .title{
+      font-size:22px;
+      font-weight:900;
+      line-height:1.15;
+      text-shadow: 0 10px 30px rgba(0,0,0,.8);
     }
 
     .meta{
+      margin-top:6px;
       display:flex;
-      align-items:center;
-      gap:10px;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+    }
+
+    .meta-left{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      color:rgba(255,255,255,.75);
       font-weight:700;
       font-size:13px;
-      opacity:.9;
+    }
+
+    .comp{
+      display:flex; align-items:center; gap:8px;
+      font-weight:900;
+      color:rgba(255,255,255,.85);
+    }
+    .comp img{
+      width:22px;height:22px;object-fit:contain;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,.7));
     }
 
     .btn-watch{
-      background:#ffca28;
-      color:#000;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:999px;
+      background:rgba(25,25,25,.70);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(14px);
       font-weight:900;
-      padding:8px 16px;
-      border-radius:10px;
-      font-size:13px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.55);
       transition:.15s;
+      white-space:nowrap;
     }
-    .btn-watch:hover{opacity:.9; transform:scale(1.03)}
+    .btn-watch:hover{ transform: translateY(-1px); background:rgba(30,30,30,.85); }
+    .btn-watch .play{
+      width:38px;height:38px;
+      border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .btn-watch i{ font-size:14px; }
+
+    /* ✅ layout 2 par ligne sur PC */
+    .grid-matches{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:18px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media(max-width: 900px){
+      .grid-matches{ grid-template-columns: 1fr; }
+      .match-card{ height: 240px; }
+      .title{ font-size:20px; }
+    }
   </style>
 </head>
 
 <body>
 
+<div class="bg-glow"></div>
+<div class="bg-dark"></div>
+
 <!-- NAVBAR -->
 <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/5">
   <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
-    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
+    <div class="text-2xl font-extrabold tracking-tight">IMFTX+</div>
 
     <!-- RÉSEAUX -->
     <div class="flex items-center gap-4 text-lg font-bold">
@@ -85,47 +235,294 @@
         <i class="fa-brands fa-discord"></i>
       </a>
       <a href="https://discord.gg/FmWwePH5ET" target="_blank"
-         class="opacity-80 hover:opacity-100 text-sm px-3 py-1 rounded-full bg-white/10 border border-white/10">
+         class="opacity-80 hover:opacity-100 text-xs px-3 py-1 rounded-full bg-white/10 border border-white/10">
         IPTV
       </a>
     </div>
   </div>
 </nav>
 
-
 <main class="max-w-screen-2xl mx-auto px-6 py-12">
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-    <!-- ✅ Algérie - RD Congo -->
-    <div class="match-card">
-      <div class="match-thumb" style="background:linear-gradient(90deg,#00c853,#1b5e20,#d32f2f)">
-        (17h00) Algérie - Rép. Dém. Congo
-      </div>
-
-      <div class="match-footer">
-        <div class="meta">
-          <i class="fa-solid fa-bolt"></i>
-          <span>Aujourd’hui · 17:00</span>
-        </div>
-
-        <button onclick="openCustomStream('algerie-rdc')" class="btn-watch">
-          Regarder
-        </button>
+  <!-- ✅ HERO -->
+  <div class="text-center mb-10">
+    <div class="flex justify-center mb-5">
+      <div class="badge-live">
+        <span class="dot"></span>
+        En direct
       </div>
     </div>
 
+    <h1 class="text-5xl md:text-6xl font-black tracking-tight">
+      IMFTX+ LIVE
+    </h1>
+    <p class="mt-3 text-white/65 font-bold">
+      N°1 des meilleurs diffuseurs
+    </p>
   </div>
 
-  <footer class="w-full mt-20 text-center text-sm opacity-60 pb-6 font-semibold">
-    IMFTX+ — Plateforme de streaming
-  </footer>
+  <!-- ✅ MATCH LIST -->
+  <section class="grid-matches">
+
+    <!-- 20:00 Barça - Bilbao -->
+    <article class="match-card">
+      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/celta-vigo-vs-barcelona.png')"></div>
+      <div class="shade"></div>
+
+      <div class="top-badge">
+        <span class="orange-dot"></span>
+        20:00
+      </div>
+
+      <div class="card-content">
+        <div class="teams">
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg" alt="Barça">
+          <span class="vs">VS</span>
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/9/98/Athletic_Club_Bilbao_logo.svg" alt="Bilbao">
+        </div>
+
+        <div class="title">Barcelone - Bilbao</div>
+
+        <div class="meta">
+          <div class="meta-left">
+            <div class="comp">
+              <img src="https://upload.wikimedia.org/wikipedia/en/0/0f/LaLiga_logo_2023.svg" alt="LaLiga">
+              LaLiga
+            </div>
+            <div>Aujourd’hui · 20:00</div>
+          </div>
+
+          <button class="btn-watch" onclick="go('barcelone-bilbao')">
+            <span class="play"><i class="fa-solid fa-play"></i></span>
+            REGARDER
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 20:30 Man City - Brighton -->
+    <article class="match-card">
+      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/sunderland-vs-manchester-city.png')"></div>
+      <div class="shade"></div>
+
+      <div class="top-badge">
+        <span class="orange-dot"></span>
+        20:30
+      </div>
+
+      <div class="card-content">
+        <div class="teams">
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="Man City">
+          <span class="vs">VS</span>
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg" alt="Brighton">
+        </div>
+
+        <div class="title">Man City - Brighton</div>
+
+        <div class="meta">
+          <div class="meta-left">
+            <div class="comp">
+              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
+              Premier League
+            </div>
+            <div>Aujourd’hui · 20:30</div>
+          </div>
+
+          <button class="btn-watch" onclick="go('man-city-brighton')">
+            <span class="play"><i class="fa-solid fa-play"></i></span>
+            REGARDER
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 20:30 Fulham - Chelsea -->
+    <article class="match-card">
+      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/chelsea-vs-wolverhampton-wanderers.png')"></div>
+      <div class="shade"></div>
+
+      <div class="top-badge">
+        <span class="orange-dot"></span>
+        20:30
+      </div>
+
+      <div class="card-content">
+        <div class="teams">
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/e/eb/Fulham_FC_%28shield%29.svg" alt="Fulham">
+          <span class="vs">VS</span>
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg" alt="Chelsea">
+        </div>
+
+        <div class="title">Fulham - Chelsea</div>
+
+        <div class="meta">
+          <div class="meta-left">
+            <div class="comp">
+              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
+              Premier League
+            </div>
+            <div>Aujourd’hui · 20:30</div>
+          </div>
+
+          <button class="btn-watch" onclick="go('fulham-chelsea')">
+            <span class="play"><i class="fa-solid fa-play"></i></span>
+            REGARDER
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 20:30 Brentford - Tottenham -->
+    <article class="match-card">
+      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/brentford-vs-tottenham-hotspur.png')"></div>
+      <div class="shade"></div>
+
+      <div class="top-badge">
+        <span class="orange-dot"></span>
+        20:30
+      </div>
+
+      <div class="card-content">
+        <div class="teams">
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg" alt="Brentford">
+          <span class="vs">VS</span>
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg" alt="Tottenham">
+        </div>
+
+        <div class="title">Brentford - Tottenham</div>
+
+        <div class="meta">
+          <div class="meta-left">
+            <div class="comp">
+              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
+              Premier League
+            </div>
+            <div>Aujourd’hui · 20:30</div>
+          </div>
+
+          <button class="btn-watch" onclick="go('brentford-tottenham')">
+            <span class="play"><i class="fa-solid fa-play"></i></span>
+            REGARDER
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 20:45 Verona - Inter -->
+    <article class="match-card">
+      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/hellas-verona-vs-inter-milan.png')"></div>
+      <div class="shade"></div>
+
+      <div class="top-badge">
+        <span class="orange-dot"></span>
+        20:45
+      </div>
+
+      <div class="card-content">
+        <div class="teams">
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/8/8c/Hellas_Verona_FC_logo.svg" alt="Verona">
+          <span class="vs">VS</span>
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg" alt="Inter">
+        </div>
+
+        <div class="title">Hellas Verona - Inter Milan</div>
+
+        <div class="meta">
+          <div class="meta-left">
+            <div class="comp">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Serie_A_logo_2022.svg" alt="Serie A">
+              Serie A
+            </div>
+            <div>Aujourd’hui · 20:45</div>
+          </div>
+
+          <button class="btn-watch" onclick="go('verona-inter')">
+            <span class="play"><i class="fa-solid fa-play"></i></span>
+            REGARDER
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 21:15 Man United - Bournemouth -->
+    <article class="match-card">
+      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/manchester-united-vs-bournemouth.png')"></div>
+      <div class="shade"></div>
+
+      <div class="top-badge">
+        <span class="orange-dot"></span>
+        21:15
+      </div>
+
+      <div class="card-content">
+        <div class="teams">
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg" alt="Man United">
+          <span class="vs">VS</span>
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/e/e5/AFC_Bournemouth_%282013%29.svg" alt="Bournemouth">
+        </div>
+
+        <div class="title">Manchester United - Bournemouth</div>
+
+        <div class="meta">
+          <div class="meta-left">
+            <div class="comp">
+              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
+              Premier League
+            </div>
+            <div>Aujourd’hui · 21:15</div>
+          </div>
+
+          <button class="btn-watch" onclick="go('man-united-bournemouth')">
+            <span class="play"><i class="fa-solid fa-play"></i></span>
+            REGARDER
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 21:15 West Ham - Newcastle -->
+    <article class="match-card">
+      <div class="bg" style="background-image:url('https://empire-sport.shop/upload/banners/west-ham-united-vs-newcastle-united.png')"></div>
+      <div class="shade"></div>
+
+      <div class="top-badge">
+        <span class="orange-dot"></span>
+        21:15
+      </div>
+
+      <div class="card-content">
+        <div class="teams">
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg" alt="West Ham">
+          <span class="vs">VS</span>
+          <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg" alt="Newcastle">
+        </div>
+
+        <div class="title">West Ham - Newcastle</div>
+
+        <div class="meta">
+          <div class="meta-left">
+            <div class="comp">
+              <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Premier League">
+              Premier League
+            </div>
+            <div>Aujourd’hui · 21:15</div>
+          </div>
+
+          <button class="btn-watch" onclick="go('west-ham-newcastle')">
+            <span class="play"><i class="fa-solid fa-play"></i></span>
+            REGARDER
+          </button>
+        </div>
+      </div>
+    </article>
+
+  </section>
 
 </main>
 
 <script>
-  function openCustomStream(matchId) {
-    window.location.href = matchId + ".html";
+  function go(id){
+    window.location.href = id + ".html";
   }
 </script>
 
