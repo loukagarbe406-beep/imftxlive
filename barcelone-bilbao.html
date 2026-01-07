@@ -35,22 +35,19 @@
       transition:.15s;
       border:1px solid rgba(255,255,255,.10);
     }
-
     .src-btn.active{
       background:#fff;
       color:#000;
     }
-
     .src-btn:not(.active){
       background:rgba(255,255,255,.07);
       color:#fff;
     }
-
     .src-btn:not(.active):hover{
       background:rgba(255,255,255,.12);
     }
 
-    /* ✅ "Vous regardez" bar */
+    /* ✅ "Vous regardez" bar (responsive) */
     .watch-bar{
       margin-top:14px;
       border-radius:16px;
@@ -61,44 +58,46 @@
       align-items:center;
       justify-content:space-between;
       gap:14px;
+      flex-wrap:wrap;
     }
-
-    .pill-time{
+    .watch-left{
       display:flex;
       align-items:center;
+      gap:12px;
+      min-width:240px;
+      flex:1;
+    }
+    .watch-text{
+      line-height:1.15;
+    }
+    .watch-text .small{
+      font-size:13px;
+      opacity:.70;
+      font-weight:700;
+    }
+    .watch-text .title{
+      font-size:18px;
+      font-weight:900;
+    }
+    .watch-text .meta{
+      font-size:13px;
+      opacity:.65;
+      font-weight:700;
+      margin-top:2px;
+    }
+    .watch-right{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
       gap:10px;
-      padding:8px 14px;
-      border-radius:999px;
-      background:rgba(0,0,0,.40);
-      border:1px solid rgba(255,255,255,.10);
-      font-weight:900;
-      font-size:14px;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:#f59e0b;
-      box-shadow:0 0 12px rgba(245,158,11,.8);
+      flex-shrink:0;
     }
 
-    .canal{
-      padding:6px 10px;
-      border-radius:8px;
-      font-weight:900;
-      font-size:12px;
-      background:#000;
-      border:1px solid rgba(255,255,255,.12);
-      display:flex;
-      align-items:center;
-      gap:6px;
-    }
-    .canal span{
-      background:#22c55e;
-      color:#000;
-      padding:2px 6px;
-      border-radius:6px;
-      font-weight:900;
-      font-size:10px;
-      letter-spacing:.03em;
+    .canal-logo{
+      height:32px;
+      object-fit:contain;
+      opacity:.95;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,.8));
     }
   </style>
 </head>
@@ -145,33 +144,29 @@
 
   <!-- ✅ "Vous regardez" bar -->
   <div class="watch-bar">
-    <div class="flex items-center gap-3">
-      <img class="w-8 h-8 object-contain opacity-90"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/LaLiga_logo_2023.svg/1024px-LaLiga_logo_2023.svg.png"
+    <div class="watch-left">
+      <img class="w-9 h-9 object-contain opacity-90"
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/LaLiga_Santander.svg/512px-LaLiga_Santander.svg.png"
            alt="LaLiga">
 
-      <div class="leading-tight">
-        <div class="text-white/70 font-semibold text-sm">Vous regardez</div>
-        <div class="text-lg font-extrabold">Barcelone - Bilbao</div>
-        <div class="text-white/60 text-sm font-semibold">Aujourd’hui · 20:00</div>
+      <div class="watch-text">
+        <div class="small">Vous regardez</div>
+        <div class="title">Barcelone - Bilbao</div>
+        <div class="meta">Aujourd’hui · 20:00</div>
       </div>
     </div>
 
-    <div class="flex items-center gap-3">
-      <div class="pill-time">
-        <span class="dot"></span>
-        <span id="timer">0h 00m 00s</span>
-      </div>
-
-      <div class="canal">
-        CANAL+ <span>FOOT</span>
-      </div>
+    <div class="watch-right">
+      <!-- ✅ CANAL+ FOOT LOGO -->
+      <img class="canal-logo"
+           src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Canal%2B_Logo.svg/512px-Canal%2B_Logo.svg.png"
+           alt="CANAL+">
     </div>
   </div>
 
 </main>
 
-<!-- ✅ PLAYER SCRIPT (NE CHANGE PAS) -->
+<!-- ✅ PLAYER SCRIPT (VERSION QUI MARCHE CHEZ TOI) -->
 <script>
   const SOURCES = {
     1: "https://bolaloca.my/player/4/2",
@@ -182,7 +177,11 @@
   function setActive(id){
     [1,2,3].forEach(n=>{
       const b = document.getElementById("btn"+n);
-      b.classList.toggle("active", n===id);
+      if(n===id){
+        b.className = "src-btn active";
+      }else{
+        b.className = "src-btn";
+      }
     });
   }
 
@@ -191,32 +190,22 @@
     setActive(id);
 
     const target = document.getElementById("videoTarget");
+
+    /* ✅ iframe EXACTEMENT comme ton script qui marchait (anti embed block au max) */
     target.innerHTML = `
       <iframe 
           src="${SOURCES[id]}" 
-          allowfullscreen="true" 
-          webkitallowfullscreen="true" 
-          mozallowfullscreen="true" 
-          scrolling="no" 
-          frameborder="0" 
+          allowfullscreen="true"
+          webkitallowfullscreen="true"
+          mozallowfullscreen="true"
+          scrolling="no"
+          frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
           referrerpolicy="no-referrer"
           sandbox="allow-scripts allow-same-origin allow-forms">
       </iframe>
     `;
   }
-
-  /* ✅ TIMER STYLE (comme ta photo) */
-  let start = Date.now();
-  setInterval(()=>{
-    const diff = Date.now() - start;
-    const s = Math.floor(diff / 1000);
-    const h = Math.floor(s / 3600);
-    const m = Math.floor((s % 3600) / 60);
-    const sec = s % 60;
-    document.getElementById("timer").textContent =
-      `${h}h ${String(m).padStart(2,"0")}m ${String(sec).padStart(2,"0")}s`;
-  }, 1000);
 </script>
 
 <!-- ✅ FIREBASE ONLINE (INVISIBLE, TEMPS RÉEL) -->
