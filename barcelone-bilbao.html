@@ -18,7 +18,6 @@
       overflow-x:hidden;
     }
 
-    /* player box */
     .player-box{
       border-radius:22px;
       overflow:hidden;
@@ -184,7 +183,6 @@
       object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
-
   </style>
 </head>
 
@@ -241,13 +239,18 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
+  <!-- DIRECT LINK (fallback) -->
+  <div id="externalLink" class="hidden mt-4 text-center">
+    <a id="directLink" href="#" target="_blank"
+       class="text-amber-400 underline font-extrabold text-sm">
+      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+    </a>
+  </div>
+
   <!-- ✅ WATCH BAR -->
   <section class="mt-6 watch-bar">
-
     <div class="watch-left">
-      <!-- ⚽ logo compétition -->
-      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Supercopa_de_Espa%C3%B1a_Logo.png">
-
+      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Supercopa_de_Espa%C3%B1a_Logo.png" alt="Compétition">
       <div class="watch-text">
         <div class="small">Vous regardez</div>
         <div class="big">Barcelone - Athletic Bilbao</div>
@@ -256,18 +259,21 @@
     </div>
 
     <div class="watch-right">
-      <!-- ✅ Logo chaîne -->
       <img class="channel-logo"
            src="https://thumb.canalplus.pro/bran/unsafe/384x/filters:quality(%7BimageQualityPercentage%7D)/image/66d97795695f2/uploads/media/CHN43FB_381.png"
            alt="CANAL+">
     </div>
-
   </section>
+
+  <!-- ✅ MESSAGE (comme avant) -->
+  <div class="mt-8 text-center text-sm text-white/55 font-semibold">
+    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
+    — L’équipe IMFTX+
+  </div>
 
 </main>
 
-
-<!-- ✅ PLAYER SCRIPT (STABLE) -->
+<!-- ✅ PLAYER SCRIPT -->
 <script>
   const SOURCES = {
     1: "https://bolaloca.my/player/4/1",
@@ -288,23 +294,35 @@
     document.getElementById("cover").style.display = "none";
     setActive(id);
 
+    // fallback link
+    const ext = document.getElementById("externalLink");
+    const link = document.getElementById("directLink");
+    link.href = SOURCES[id];
+    ext.classList.add("hidden");
+
     const target = document.getElementById("videoTarget");
     target.innerHTML = `
       <iframe
+        id="streamFrame"
         src="${SOURCES[id]}"
-        allowfullscreen="true"
-        webkitallowfullscreen="true"
-        mozallowfullscreen="true"
+        allowfullscreen
         scrolling="no"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-        referrerpolicy="no-referrer"
-        sandbox="allow-scripts allow-same-origin allow-forms">
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
       </iframe>
     `;
+
+    // si embed bloqué => montre "lien direct"
+    setTimeout(() => {
+      const iframe = document.getElementById("streamFrame");
+      if(!iframe) return;
+      try { iframe.contentWindow.location.href; }
+      catch(e){ ext.classList.remove("hidden"); }
+    }, 2000);
   }
 </script>
-
 
 <!-- ✅ FIREBASE ONLINE (INVISIBLE - REALTIME) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
