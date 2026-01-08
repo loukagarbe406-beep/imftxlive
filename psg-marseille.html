@@ -37,7 +37,7 @@
       z-index:15;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.30) 55%, rgba(0,0,0,.65) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
         url("https://www.lequipe.fr/_medias/img-photo-jpg/la-finale-du-trophee-des-champions-se-deroulera-au-koweit/1500000002353996/0:0,1500:1000-828-552-75/4cff4.jpg") center/cover no-repeat;
     }
 
@@ -180,7 +180,7 @@
     }
 
     .channel-logo{
-      width:78px;height:auto;
+      width:76px;height:auto;
       object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
@@ -240,27 +240,32 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
+  <!-- ✅ DIRECT LINK (fallback) -->
+  <div id="externalLink" class="hidden mt-4 text-center">
+    <a id="directLink" href="#" target="_blank"
+       class="text-amber-400 underline font-extrabold text-sm">
+      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+    </a>
+  </div>
+
   <!-- ✅ WATCH BAR -->
   <section class="mt-6 watch-bar">
-
     <div class="watch-left">
-      <!-- ✅ logo compétition -->
-      <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/08/Logo_Troph%C3%A9e_des_Champions_-_2024.svg/langfr-250px-Logo_Troph%C3%A9e_des_Champions_-_2024.svg.png" alt="Trophée des Champions">
-
+      <!-- Logo compétition -->
+      <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/08/Logo_Troph%C3%A9e_des_Champions_-_2024.svg/langfr-250px-Logo_Troph%C3%A9e_des_Champions_-_2024.svg.png">
       <div class="watch-text">
         <div class="small">Vous regardez</div>
         <div class="big">PSG - Marseille</div>
-        <div class="small">Aujourd’hui · 19:00</div>
+        <div class="small">Trophée des Champions · 19:00</div>
       </div>
     </div>
 
     <div class="watch-right">
-      <!-- ✅ Logo chaîne -->
+      <!-- Logo chaîne -->
       <img class="channel-logo"
            src="https://empire-sport.shop/upload/chaines/dw3nqnkbiqo3k02dksv9dmt7sxawk8.png"
            alt="Chaîne">
     </div>
-
   </section>
 
   <!-- MESSAGE -->
@@ -271,8 +276,7 @@
 
 </main>
 
-
-<!-- ✅ PLAYER SCRIPT (STABLE + FULLSCREEN OK + FALLBACK) -->
+<!-- ✅ PLAYER SCRIPT (EMBED ONLY + fallback) -->
 <script>
   const SOURCES = {
     1: "https://bolaloca.my/player/4/1",
@@ -293,14 +297,17 @@
     document.getElementById("cover").style.display = "none";
     setActive(id);
 
+    const ext = document.getElementById("externalLink");
+    const link = document.getElementById("directLink");
+    link.href = SOURCES[id];
+    ext.classList.add("hidden");
+
     const target = document.getElementById("videoTarget");
     target.innerHTML = `
       <iframe
         id="streamFrame"
         src="${SOURCES[id]}"
-        allowfullscreen="true"
-        webkitallowfullscreen="true"
-        mozallowfullscreen="true"
+        allowfullscreen
         scrolling="no"
         frameborder="0"
         allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
@@ -309,21 +316,16 @@
       </iframe>
     `;
 
-    /* ✅ fallback embed blocked */
     setTimeout(() => {
       const iframe = document.getElementById("streamFrame");
       if(!iframe) return;
       try { iframe.contentWindow.location.href; }
-      catch(e){
-        // si embed bloqué → ouvre dans un nouvel onglet
-        window.open(SOURCES[id], "_blank");
-      }
+      catch(e){ ext.classList.remove("hidden"); }
     }, 2000);
   }
 </script>
 
-
-<!-- ✅ FIREBASE ONLINE (INVISIBLE - REALTIME) -->
+<!-- ✅ FIREBASE ONLINE (REALTIME + INVISIBLE) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
@@ -341,7 +343,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "psg-marseille"; // ✅ ID MATCH
+  const MATCH_ID = "psg-marseille";  // ✅ ID FIXE
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
