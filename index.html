@@ -156,7 +156,7 @@
 <nav class="w-full px-6 py-5 flex items-center justify-between">
   <div class="text-2xl font-extrabold tracking-tight">IMFTX+</div>
 
-  <!-- ✅ réseaux revenus -->
+  <!-- ✅ réseaux -->
   <div class="flex items-center gap-4 text-lg font-bold">
     <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="opacity-70 hover:opacity-100">
       <i class="fa-brands fa-telegram"></i>
@@ -180,7 +180,7 @@
     <p class="mt-3 text-white/55 font-semibold text-lg">N°1 des meilleurs diffuseurs</p>
   </header>
 
-  <!-- ✅ “En direct” placé comme tu veux (à gauche entre slogan et matchs) -->
+  <!-- ✅ En direct -->
   <div class="flex justify-start mb-6">
     <div class="live-badge">
       <span class="live-dot"></span>
@@ -188,137 +188,61 @@
     </div>
   </div>
 
-  <!-- ✅ grille 3 par ligne sur PC -->
+  <!-- ✅ matchs -->
   <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-    <!-- 20:00 Barça - Bilbao -->
+    <!-- PSG - Marseille -->
     <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/celta-vigo-vs-barcelona.png')"></div>
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/paris-sg-marseille.png')"></div>
+      <div class="match-overlay"></div>
+
+      <div class="time-pill"><span class="time-dot"></span> 19:00</div>
+
+      <div class="match-info">
+        <div>
+          <div class="teams">PSG - Marseille</div>
+          <div class="meta">Trophée des Champions · Aujourd’hui 19:00</div>
+        </div>
+
+        <button onclick="goMatch('psg-marseille')" class="watch-btn">
+          ▶ REGARDER
+        </button>
+      </div>
+    </article>
+
+    <!-- Real Madrid - Atletico -->
+    <article class="match-card">
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/atletico-madrid-vs-real-madrid.png')"></div>
       <div class="match-overlay"></div>
 
       <div class="time-pill"><span class="time-dot"></span> 20:00</div>
 
       <div class="match-info">
         <div>
-          <div class="teams">Barcelone - Bilbao</div>
-          <div class="meta">LaLiga · Aujourd’hui 20:00</div>
+          <div class="teams">Real Madrid - Atlético</div>
+          <div class="meta">Supercoupe d’Espagne · Aujourd’hui 20:00</div>
         </div>
 
-        <button onclick="goMatch('barcelone-bilbao')" class="watch-btn">
+        <button onclick="goMatch('real-atletico')" class="watch-btn">
           ▶ REGARDER
         </button>
       </div>
     </article>
 
-    <!-- 20:30 Man City - Brighton -->
+    <!-- Arsenal - Liverpool -->
     <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png')"></div>
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/arsenal-vs-liverpool.png')"></div>
       <div class="match-overlay"></div>
 
-      <div class="time-pill"><span class="time-dot"></span> 20:30</div>
+      <div class="time-pill"><span class="time-dot"></span> 21:00</div>
 
       <div class="match-info">
         <div>
-          <div class="teams">Man City - Brighton</div>
-          <div class="meta">Premier League · Aujourd’hui 20:30</div>
+          <div class="teams">Arsenal - Liverpool</div>
+          <div class="meta">Premier League · Aujourd’hui 21:00</div>
         </div>
 
-        <button onclick="goMatch('man-city-brighton')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
-
-    <!-- 20:30 Fulham - Chelsea -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/5yl7dl2h27lzgwseu8f5fm3pppav0o.png')"></div>
-      <div class="match-overlay"></div>
-
-      <div class="time-pill"><span class="time-dot"></span> 20:30</div>
-
-      <div class="match-info">
-        <div>
-          <div class="teams">Fulham - Chelsea</div>
-          <div class="meta">Premier League · Aujourd’hui 20:30</div>
-        </div>
-
-        <button onclick="goMatch('fulham-chelsea')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
-
-    <!-- 20:30 Brentford - Tottenham -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/qefmysjbg5qcfovxcgmob6ptpe56wg.png')"></div>
-      <div class="match-overlay"></div>
-
-      <div class="time-pill"><span class="time-dot"></span> 20:30</div>
-
-      <div class="match-info">
-        <div>
-          <div class="teams">bournemouth - Tottenham</div>
-          <div class="meta">Premier League · Aujourd’hui 20:30</div>
-        </div>
-
-        <button onclick="goMatch('brentford-tottenham')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
-
-    <!-- 20:45 Verona - Inter -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/hellas-verona-vs-inter-milan.png')"></div>
-      <div class="match-overlay"></div>
-
-      <div class="time-pill"><span class="time-dot"></span> 20:45</div>
-
-      <div class="match-info">
-        <div>
-          <div class="teams">Hellas Verona - Inter Milan</div>
-          <div class="meta">Serie A · Aujourd’hui 20:45</div>
-        </div>
-
-        <button onclick="goMatch('hellas-verona-inter-milan')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
-
-    <!-- 21:15 Man United - Bournemouth -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/o6hv8yxkvwbm7knkj0mwxedp3fcttu.png')"></div>
-      <div class="match-overlay"></div>
-
-      <div class="time-pill"><span class="time-dot"></span> 21:15</div>
-
-      <div class="match-info">
-        <div>
-          <div class="teams">Man United - Bournemouth</div>
-          <div class="meta">Premier League · Aujourd’hui 21:15</div>
-        </div>
-
-        <button onclick="goMatch('manchester-united-bournemouth')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
-
-    <!-- 21:15 West Ham - Newcastle -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/tghql7uwg3twug0nalwvpkk0gyjzhg.png')"></div>
-      <div class="match-overlay"></div>
-
-      <div class="time-pill"><span class="time-dot"></span> 21:15</div>
-
-      <div class="match-info">
-        <div>
-          <div class="teams">West Ham - Newcastle</div>
-          <div class="meta">Premier League · Aujourd’hui 21:15</div>
-        </div>
-
-        <button onclick="goMatch('west-ham-newcastle')" class="watch-btn">
+        <button onclick="goMatch('arsenal-liverpool')" class="watch-btn">
           ▶ REGARDER
         </button>
       </div>
@@ -335,6 +259,3 @@
 
 </body>
 </html>
-
-
-
