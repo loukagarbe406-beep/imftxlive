@@ -1,38 +1,21 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  </head>
-  <body style="background:#000;margin:0;display:flex;justify-content:center;align-items:center;height:100vh;">
-    <video id="v" controls autoplay style="width:90%;max-width:900px;"></video>
+<meta charset="utf-8" />
+<video id="v" controls autoplay playsinline style="width:100vw;height:100vh;"></video>
 
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script>
-      const video = document.getElementById("v");
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+  const video = document.getElementById("v");
+  const src = "http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8";
 
-      const proxied =
-        "https://ffff.loukagarbe406.workers.dev/?url=" +
-        encodeURIComponent("http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8");
-
-      if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(proxied);
-        hls.attachMedia(video);
-
-        hls.on(Hls.Events.ERROR, function (e, data) {
-          document.body.insertAdjacentHTML(
-            "beforeend",
-            "<pre style='color:white;position:fixed;bottom:0;left:0;max-width:100%;overflow:auto;background:#111;padding:10px;'>" +
-              JSON.stringify(data, null, 2) +
-            "</pre>"
-          );
-        });
-      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        video.src = proxied; // Safari
-      } else {
-        alert("HLS non supporté");
-      }
-    </script>
-  </body>
-</html>
+  if (window.Hls && Hls.isSupported()) {
+    const hls = new Hls();
+    hls.loadSource(src);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.ERROR, (e, data) => console.log("HLS error:", data));
+  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+    // Safari/iPhone
+    video.src = src;
+  } else {
+    alert("HLS non supporté sur ce navigateur");
+  }
+</script>
