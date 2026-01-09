@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Barcelone vs Bilbao</title>
+  <title>IMFTX+ — Mali vs Sénégal</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -36,8 +36,8 @@
       z-index:15;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
-        url("https://empire-sport.shop/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png") center/cover no-repeat;
+        linear-gradient(180deg, rgba(0,0,0,.06) 0%, rgba(0,0,0,.20) 55%, rgba(0,0,0,.70) 100%),
+        url("https://thumb.canalplus.pro/http/unsafe/1440x810/filters:quality(80)/canalplus-cdn.canal-plus.io/p1/unit/30632824/canal-ouah_50009/STD169/1313724_46_S16_CAFAfricaCupofNations2025-2026-Quarter-finals-Cameroon-Morocco-09-01-26-QjyN") center/cover no-repeat;
     }
 
     /* ✅ LOGOS TOP */
@@ -126,7 +126,6 @@
       border:1px solid rgba(255,255,255,.10);
       color:#fff;
     }
-    .source-btn:hover{opacity:.95}
 
     /* ✅ bottom bar (Vous regardez) */
     .watch-bar{
@@ -171,15 +170,8 @@
       text-overflow:ellipsis;
     }
 
-    .watch-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-shrink:0;
-    }
-
     .channel-logo{
-      width:72px;height:auto;
+      width:76px;height:auto;
       object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
@@ -209,18 +201,18 @@
     <div id="cover" class="cover" onclick="loadVideo(1)">
       <div class="cover-top">
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg"
-             alt="Barça">
+             src="https://toppng.com/uploads/preview/mali-football-logo-png-11536013218kxm2ifpsit.png"
+             alt="Mali">
         <span class="vs">VS</span>
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/fr/thumb/3/34/Logo_Athletic_Club_Bilbao.svg/1792px-Logo_Athletic_Club_Bilbao.svg.png"
-             alt="Bilbao">
+             src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_F%C3%A9d%C3%A9ration_S%C3%A9n%C3%A9galaise_Football_2016.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_S%C3%A9n%C3%A9galaise_Football_2016.svg.png"
+             alt="Sénégal">
       </div>
 
       <div class="cover-strip">
         <div>
           <div class="strip-title">Regarder Gratuitement</div>
-          <div class="strip-sub">Barcelona<br>Athletic Bilbao</div>
+          <div class="strip-sub">Mali<br>Sénégal</div>
         </div>
 
         <div class="strip-play">
@@ -239,7 +231,25 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- DIRECT LINK (fallback) -->
+  <!-- ✅ WATCH BAR -->
+  <section class="mt-6 watch-bar">
+    <div class="watch-left">
+      <!-- compétition -->
+      <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png">
+
+      <div class="watch-text">
+        <div class="small">Vous regardez</div>
+        <div class="big">Mali - Sénégal</div>
+        <div class="small">Aujourd’hui · 17:00</div>
+      </div>
+    </div>
+
+    <img class="channel-logo"
+         src="https://thumb.canalplus.pro/bran/unsafe/384x/filters:quality(%7BimageQualityPercentage%7D)/image/66d97795695f2/uploads/media/CHN43FB_381.png"
+         alt="CANAL+ FOOT">
+  </section>
+
+  <!-- fallback direct link -->
   <div id="externalLink" class="hidden mt-4 text-center">
     <a id="directLink" href="#" target="_blank"
        class="text-amber-400 underline font-extrabold text-sm">
@@ -247,38 +257,13 @@
     </a>
   </div>
 
-  <!-- ✅ WATCH BAR -->
-  <section class="mt-6 watch-bar">
-    <div class="watch-left">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/e/e8/Supercopa_de_Espa%C3%B1a_Logo.png" alt="Compétition">
-      <div class="watch-text">
-        <div class="small">Vous regardez</div>
-        <div class="big">Barcelone - Athletic Bilbao</div>
-        <div class="small">Aujourd’hui · 20:00</div>
-      </div>
-    </div>
-
-    <div class="watch-right">
-      <img class="channel-logo"
-           src="https://upload.wikimedia.org/wikipedia/commons/0/06/DAZN_Logo_Master.svg"
-           alt="CANAL+">
-    </div>
-  </section>
-
-  <!-- ✅ MESSAGE (comme avant) -->
-  <div class="mt-8 text-center text-sm text-white/55 font-semibold">
-    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
-    — L’équipe IMFTX+
-  </div>
-
 </main>
 
-<!-- ✅ PLAYER SCRIPT -->
 <script>
   const SOURCES = {
-    1: "https://bolaloca.my/player/4/46",
-    2: "https://bolaloca.my/player/2/46",
-    3: "https://bolaloca.my/player/3/46"
+    1: "https://bolaloca.my/player/4/1",
+    2: "https://bolaloca.my/player/2/1",
+    3: "https://bolaloca.my/player/3/1"
   };
 
   function setActive(id){
@@ -294,7 +279,6 @@
     document.getElementById("cover").style.display = "none";
     setActive(id);
 
-    // fallback link
     const ext = document.getElementById("externalLink");
     const link = document.getElementById("directLink");
     link.href = SOURCES[id];
@@ -314,49 +298,13 @@
       </iframe>
     `;
 
-    // si embed bloqué => montre "lien direct"
+    // ✅ fallback embed blocked
     setTimeout(() => {
       const iframe = document.getElementById("streamFrame");
       if(!iframe) return;
       try { iframe.contentWindow.location.href; }
       catch(e){ ext.classList.remove("hidden"); }
     }, 2000);
-  }
-</script>
-
-<!-- ✅ FIREBASE ONLINE (INVISIBLE - REALTIME) -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
-    authDomain: "imftxlive.firebaseapp.com",
-    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "imftxlive",
-    storageBucket: "imftxlive.firebasestorage.app",
-    messagingSenderId: "117057055374",
-    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
-  };
-
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  const MATCH_ID = "barcelone-bilbao"; // ✅ garde ce match id
-  const sessionId = Math.random().toString(36).slice(2) + Date.now();
-
-  const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
-  const onlineRef  = db.ref(`streams/${MATCH_ID}/online`);
-  const presenceRoot = db.ref(`streams/${MATCH_ID}/presence`);
-
-  if (location.protocol !== "file:") {
-    sessionRef.set(true);
-    sessionRef.onDisconnect().remove();
-
-    presenceRoot.on("value", snap => {
-      const data = snap.val() || {};
-      onlineRef.set(Object.keys(data).length);
-    });
   }
 </script>
 
