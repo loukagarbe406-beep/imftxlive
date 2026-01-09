@@ -132,78 +132,29 @@
 </main>
 
 <script>
-  // ✅ TON LIEN M3U8 (les 3 = pareil)
   const M3U8 = "http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8";
-  const SOURCES = { 1: M3U8, 2: M3U8, 3: M3U8 };
 
-  let hls = null;
-
-  function setActive(id){
-    [1,2,3].forEach(n=>{
-      const b = document.getElementById("btn"+n);
-      b.className = (n===id) ? "source-btn active px-6" : "source-btn inactive px-6";
-    });
-  }
-
-  function destroyHls(){
-    if(hls){
-      try{ hls.destroy(); }catch(e){}
-      hls = null;
-    }
-  }
-
-  async function safePlay(video){
-    try { await video.play(); }
-    catch(e){
-      // Sur mobile, parfois autoplay bloque -> l'utilisateur clique sur play (controls visibles)
-      console.log("Autoplay bloqué:", e);
-    }
-  }
-
-  function loadVideo(id){
-    document.getElementById("cover").style.display = "none";
-    setActive(id);
-
-    const url = SOURCES[id];
+  // ⚠️ si page HTTPS et flux HTTP => bloqué sur mobile
+  if (location.protocol === "https:" && M3U8.startsWith("http://")) {
     const target = document.getElementById("videoTarget");
-
-    // ✅ Video tag
     target.innerHTML = `
-      <video id="player" controls playsinline muted></video>
+      <div class="w-full h-full flex items-center justify-center p-6 text-center">
+        <div class="max-w-md">
+          <div class="text-xl font-extrabold mb-2">Lecture bloquée</div>
+          <div class="text-white/70 font-semibold">
+            Ton site est en <b>HTTPS</b> mais le flux est en <b>HTTP</b>.<br>
+            Sur téléphone, le navigateur bloque ça (Mixed Content).
+          </div>
+          <a href="${M3U8}" target="_blank"
+             class="inline-flex mt-4 items-center justify-center px-5 h-11 rounded-full bg-amber-400 text-black font-extrabold">
+            Ouvrir le flux
+          </a>
+        </div>
+      </div>
     `;
-    const video = document.getElementById("player");
-
-    destroyHls();
-
-    // ✅ Safari/iOS: HLS natif
-    if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = url;
-      safePlay(video);
-      return;
-    }
-
-    // ✅ Autres navigateurs: Hls.js
-    if (window.Hls && Hls.isSupported()) {
-      hls = new Hls({
-        lowLatencyMode: true,
-        backBufferLength: 30
-      });
-
-      hls.loadSource(url);
-      hls.attachMedia(video);
-
-      hls.on(Hls.Events.MANIFEST_PARSED, () => safePlay(video));
-
-      hls.on(Hls.Events.ERROR, (evt, data) => {
-        console.log("HLS error:", data);
-        // Si HTTPS + HTTP => souvent tu verras une erreur réseau / mixed content bloqué.
-      });
-
-      return;
-    }
-
-    alert("Ton navigateur ne supporte pas le M3U8.");
   }
+</script>
+
 </script>
 
 </body>
