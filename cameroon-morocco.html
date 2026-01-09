@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IMFTX+ — Live</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMFTX+ — Cameroun vs Maroc</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -11,304 +11,350 @@
 
   <style>
     html,body{
-      height:100%;
-      margin:0;
+      height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
       background:#070708;
       color:#fff;
+      overflow-x:hidden;
     }
 
-    /* badge en direct */
-    .live-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 18px;
-      border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(12px);
-      font-weight:800;
-      font-size:14px;
-      color:#eaffea;
-    }
-    .live-dot{
-      width:10px;
-      height:10px;
-      background:#22c55e;
-      border-radius:999px;
-      box-shadow:0 0 18px rgba(34,197,94,.9);
-    }
-
-    /* card */
-    .match-card{
-      position:relative;
-      height:320px;
+    /* player box */
+    .player-box{
       border-radius:22px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow:0 30px 120px rgba(0,0,0,.80);
-      background:#111;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 30px 120px rgba(0,0,0,.85);
+      position:relative;
     }
 
-    .match-bg{
+    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+
+    /* ✅ COVER (banniere) */
+    .cover{
       position:absolute;
       inset:0;
-      background-size:cover;
-      background-position:center;
-      transform:scale(1.02);
+      z-index:15;
+      cursor:pointer;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
+        url("https://thumb.canalplus.pro/http/unsafe/1440x810/filters:quality(80)/canalplus-cdn.canal-plus.io/p1/unit/30632824/canal-ouah_50009/STD169/1313724_46_S16_CAFAfricaCupofNations2025-2026-Quarter-finals-Cameroon-Morocco-09-01-26-QjyN") center/cover no-repeat;
     }
 
-    .match-overlay{
+    /* ✅ LOGOS TOP */
+    .cover-top{
       position:absolute;
-      inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.78) 100%);
-    }
-
-    .time-pill{
-      position:absolute;
-      top:14px;
-      left:14px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 11px;
-      border-radius:999px;
-      background:rgba(0,0,0,.55);
-      border:1px solid rgba(255,255,255,.10);
-      font-weight:900;
-      font-size:13px;
-    }
-    .time-dot{
-      width:9px;
-      height:9px;
-      background:#f59e0b;
-      border-radius:999px;
-      box-shadow:0 0 12px rgba(245,158,11,.75);
-    }
-
-    /* ✅ ZONE BAS GAUCHE */
-    .match-info{
-      position:absolute;
+      top:18px;
       left:18px;
-      right:18px;
-      bottom:18px;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:14px;
-    }
-
-    /* ✅ LOGO VS LOGO */
-    .logos-vs{
       display:flex;
       align-items:center;
       gap:10px;
-      margin-bottom:10px;
-    }
-    .logos-vs img{
-      width:42px;
-      height:42px;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 18px rgba(0,0,0,.75));
-    }
-    .logos-vs span{
-      font-weight:900;
-      opacity:.9;
-      font-size:14px;
-    }
-
-    /* ✅ COMPETITION + HEURE */
-    .meta-row{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-size:13px;
-      font-weight:800;
-      color:rgba(255,255,255,.75);
-    }
-    .meta-row img{
-      width:26px;
-      height:26px;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.75));
-    }
-    .meta-row em{
-      font-style:italic;
-      font-weight:800;
-      opacity:.95;
-    }
-
-    /* bouton regarder */
-    .watch-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:11px 18px;
-      border-radius:999px;
-      background:rgba(255,255,255,.12);
+      padding:10px 12px;
+      border-radius:18px;
+      background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.14);
-      color:#fff;
-      font-weight:900;
       backdrop-filter: blur(14px);
-      transition:.15s;
-      min-width:120px;
+    }
+
+    .team-logo{
+      width:34px;height:34px;
+      object-fit:contain;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
+    }
+
+    .vs{
+      font-weight:900;
+      font-size:14px;
+      opacity:.9;
+    }
+
+    /* ✅ STRIP BOTTOM */
+    .cover-strip{
+      position:absolute;
+      left:22px;
+      right:22px;
+      bottom:22px;
+      height:86px;
+      border-radius:20px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(16px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 22px;
+    }
+
+    .strip-title{
+      font-size:18px;
+      font-weight:900;
+      line-height:1;
+    }
+    .strip-sub{
+      font-size:15px;
+      opacity:.85;
+      font-weight:600;
+      line-height:1.1;
+      font-style:italic;
+      margin-top:3px;
+    }
+
+    .strip-play{
+      width:50px;height:50px;
+      border-radius:999px;
+      border:2px solid rgba(255,255,255,.38);
+      display:grid;
+      place-items:center;
+      transition:.2s;
+      background:rgba(0,0,0,.22);
+    }
+    .strip-play i{font-size:19px}
+    .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
+
+    /* ✅ sources buttons */
+    .source-btn{
+      height:44px;
+      border-radius:14px;
+      font-weight:900;
       font-size:13px;
+      transition:.2s;
+    }
+    .source-btn.active{
+      background:#fff;color:#000;
+    }
+    .source-btn.inactive{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      color:#fff;
+    }
+    .source-btn:hover{opacity:.95}
+
+    /* ✅ bottom bar (Vous regardez) */
+    .watch-bar{
+      border-radius:18px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(16px);
+      padding:16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .watch-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .watch-left img{
+      width:38px;height:38px;
+      object-fit:contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
       flex-shrink:0;
     }
-    .watch-btn:hover{
-      background:rgba(255,255,255,.18);
-      transform:scale(1.02);
+
+    .watch-text{
+      min-width:0;
+      line-height:1.1;
     }
 
-    /* responsive */
-    @media(max-width:1024px){
-      .match-card{height:280px;}
-      .logos-vs img{width:38px;height:38px;}
+    .watch-text .small{
+      opacity:.8;font-weight:700;font-size:13px;
     }
-    @media(max-width:640px){
-      .match-card{height:250px;}
-      .logos-vs img{width:36px;height:36px;}
-      .watch-btn{padding:10px 14px; min-width:110px; font-size:12px;}
-      .meta-row{font-size:12px;}
+
+    .watch-text .big{
+      font-weight:900;font-size:16px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .watch-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
+    }
+
+    .channel-logo{
+      width:78px;height:auto;
+      object-fit:contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+    }
+
+    /* ✅ message en bas */
+    .legal-msg{
+      margin-top:26px;
+      text-align:center;
+      font-size:13px;
+      font-weight:700;
+      color:rgba(255,255,255,.55);
+      line-height:1.5;
     }
   </style>
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<nav class="w-full px-6 py-5 flex items-center justify-between">
-  <div class="text-2xl font-extrabold tracking-tight">IMFTX+</div>
+<!-- NAV -->
+<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
-  <!-- réseaux -->
-  <div class="flex items-center gap-4 text-lg font-bold">
-    <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="opacity-70 hover:opacity-100">
-      <i class="fa-brands fa-telegram"></i>
-    </a>
-    <a href="https://discord.gg/4ZFv9sa8" target="_blank" class="opacity-70 hover:opacity-100">
-      <i class="fa-brands fa-discord"></i>
-    </a>
-
-    <a href="https://discord.gg/FmWwePH5ET" target="_blank"
-       class="opacity-80 hover:opacity-100 text-sm px-3 py-1 rounded-full bg-white/10 border border-white/10">
-      IPTV
+    <a href="index.html"
+       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
+      <i class="fa-solid fa-arrow-left"></i> Retour
     </a>
   </div>
 </nav>
 
-<main class="max-w-[1600px] mx-auto px-6 pb-14">
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-  <!-- titre -->
-  <header class="text-center mt-10 mb-6">
-    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">IMFTX+ LIVE</h1>
-    <p class="mt-3 text-white/55 font-semibold text-lg">N°1 des meilleurs diffuseurs</p>
-  </header>
+  <!-- PLAYER -->
+  <section class="player-box w-full aspect-video">
 
-  <!-- ✅ En direct au dessus des matchs (à gauche) -->
-  <div class="flex justify-start mb-6">
-    <div class="live-badge">
-      <span class="live-dot"></span>
-      En direct
+    <!-- ✅ COVER CLICK = LAUNCH STREAM -->
+    <div id="cover" class="cover" onclick="loadVideo(1)">
+      <div class="cover-top">
+        <img class="team-logo"
+             src="https://upload.wikimedia.org/wikipedia/fr/thumb/e/e4/Logo_F%C3%A9d%C3%A9ration_Camerounaise_Football_%28FECAFOOT%29_2010.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_Camerounaise_Football_%28FECAFOOT%29_2010.svg.png"
+             alt="Cameroun">
+        <span class="vs">VS</span>
+        <img class="team-logo"
+             src="https://upload.wikimedia.org/wikipedia/fr/thumb/6/69/Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg.png"
+             alt="Maroc">
+      </div>
+
+      <div class="cover-strip">
+        <div>
+          <div class="strip-title">Regarder Gratuitement</div>
+          <div class="strip-sub">Cameroun<br>Maroc</div>
+        </div>
+
+        <div class="strip-play">
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- ✅ MATCHS -->
-  <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+    <div id="videoTarget" class="w-full h-full"></div>
+  </section>
 
-    <!-- ✅ Mali - Sénégal -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/senegal-vs-botswana.png')"></div>
-      <div class="match-overlay"></div>
-      <div class="time-pill"><span class="time-dot"></span> 17:00</div>
+  <!-- SOURCES -->
+  <section class="mt-5 flex gap-3">
+    <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+    <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+    <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
+  </section>
 
-      <div class="match-info">
-        <div>
-          <div class="logos-vs">
-            <img src="https://toppng.com/uploads/preview/mali-football-logo-png-11536013218kxm2ifpsit.png" alt="Mali">
-            <span>VS</span>
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_F%C3%A9d%C3%A9ration_S%C3%A9n%C3%A9galaise_Football_2016.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_S%C3%A9n%C3%A9galaise_Football_2016.svg.png" alt="Sénégal">
-          </div>
+  <!-- ✅ WATCH BAR -->
+  <section class="mt-6 watch-bar">
 
-          <div class="meta-row">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png" alt="CAN">
-            <div>
-              <em>Coupe d’Afrique</em><br>
-              Aujourd’hui · 17:00
-            </div>
-          </div>
-        </div>
+    <div class="watch-left">
+      <!-- 🏆 logo compétition (CAN) -->
+      <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png" alt="CAN">
 
-        <button onclick="goMatch('mali-senegal')" class="watch-btn">
-          ▶ REGARDER
-        </button>
+      <div class="watch-text">
+        <div class="small">Vous regardez</div>
+        <div class="big">Cameroun - Maroc</div>
+        <div class="small">Aujourd’hui · 20:00</div>
       </div>
-    </article>
+    </div>
 
-    <!-- ✅ Cameroun - Maroc -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/9knwto2d3vjnqfat9nha34gmwgmbew.png')"></div>
-      <div class="match-overlay"></div>
-      <div class="time-pill"><span class="time-dot"></span> 20:00</div>
-
-      <div class="match-info">
-        <div>
-          <div class="logos-vs">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/e/e4/Logo_F%C3%A9d%C3%A9ration_Camerounaise_Football_%28FECAFOOT%29_2010.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_Camerounaise_Football_%28FECAFOOT%29_2010.svg.png" alt="Cameroun">
-            <span>VS</span>
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/6/69/Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg.png" alt="Maroc">
-          </div>
-
-          <div class="meta-row">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png" alt="CAN">
-            <div>
-              <em>Coupe d’Afrique</em><br>
-              Aujourd’hui · 20:00
-            </div>
-          </div>
-        </div>
-
-        <button onclick="goMatch('cameroon-morocco')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
-
-    <!-- ✅ Francfort - Dortmund -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/djj2j8cg1nwamyc44nye0olnube1mx.png')"></div>
-      <div class="match-overlay"></div>
-      <div class="time-pill"><span class="time-dot"></span> 20:30</div>
-
-      <div class="match-info">
-        <div>
-          <div class="logos-vs">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/cb/Logo_Eintracht_Francfort.svg/langfr-250px-Logo_Eintracht_Francfort.svg.png" alt="Francfort">
-            <span>VS</span>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/langfr-250px-Borussia_Dortmund_logo.svg.png" alt="Dortmund">
-          </div>
-
-          <div class="meta-row">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/0a/Bundesliga-logo.svg/1200px-Bundesliga-logo.svg.png" alt="Bundesliga">
-            <div>
-              <em>Bundesliga</em><br>
-              Aujourd’hui · 20:30
-            </div>
-          </div>
-        </div>
-
-        <button onclick="goMatch('francfort-dortmund')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
+    <div class="watch-right">
+      <!-- ✅ Logo chaîne -->
+      <img class="channel-logo"
+           src="https://thumb.canalplus.pro/bran/unsafe/384x/filters:quality(%7BimageQualityPercentage%7D)/image/66d97795695f2/uploads/media/CHN43FB_381.png"
+           alt="Canal+">
+    </div>
 
   </section>
+
+  <!-- ✅ MESSAGE PRO -->
+  <div class="legal-msg">
+    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).<br>
+    — L’équipe IMFTX+
+  </div>
+
 </main>
 
+
+<!-- ✅ PLAYER SCRIPT (SAFE EMBED) -->
 <script>
-  function goMatch(id){
-    window.location.href = id + ".html";
+  const SOURCES = {
+    1: "https://bolaloca.my/player/4/1",
+    2: "https://bolaloca.my/player/2/1",
+    3: "https://bolaloca.my/player/3/1"
+  };
+
+  function setActive(id){
+    [1,2,3].forEach(n=>{
+      const b = document.getElementById("btn"+n);
+      b.className = (n===id)
+        ? "source-btn active px-6"
+        : "source-btn inactive px-6";
+    });
+  }
+
+  function loadVideo(id){
+    document.getElementById("cover").style.display = "none";
+    setActive(id);
+
+    const target = document.getElementById("videoTarget");
+    target.innerHTML = `
+      <iframe
+        id="streamFrame"
+        src="${SOURCES[id]}"
+        allowfullscreen="true"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+      </iframe>
+    `;
+  }
+</script>
+
+
+<!-- ✅ FIREBASE ONLINE (INVISIBLE - REALTIME COUNT) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+    authDomain: "imftxlive.firebaseapp.com",
+    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "imftxlive",
+    storageBucket: "imftxlive.firebasestorage.app",
+    messagingSenderId: "117057055374",
+    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+  };
+
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const MATCH_ID = "cameroun-maroc";  // ✅ ID MATCH FIXE
+  const sessionId = Math.random().toString(36).slice(2) + Date.now();
+
+  const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
+  const onlineRef  = db.ref(`streams/${MATCH_ID}/online`);
+  const presenceRoot = db.ref(`streams/${MATCH_ID}/presence`);
+
+  if (location.protocol !== "file:") {
+    sessionRef.set(true);
+    sessionRef.onDisconnect().remove();
+
+    presenceRoot.on("value", snap => {
+      const data = snap.val() || {};
+      onlineRef.set(Object.keys(data).length);
+    });
   }
 </script>
 
