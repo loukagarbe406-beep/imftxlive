@@ -1,161 +1,38 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Stream Test (M3U8)</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-  <!-- HLS.JS -->
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-  <style>
-    html,body{
-      height:100%;margin:0;
-      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:#070708;color:#fff;overflow-x:hidden;
-    }
-
-    .player-box{
-      border-radius:22px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      box-shadow: 0 30px 120px rgba(0,0,0,.85);
-      position:relative;
-    }
-
-    /* ✅ COVER (banniere) */
-    .cover{
-      position:absolute; inset:0; z-index:15;
-      cursor:pointer;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.62) 100%),
-        url("https://empire-sport.shop/upload/events/7zeorilqtmev0k6jyptnex9p7kgh8k.jpg") center/cover no-repeat;
-    }
-
-    .cover-strip{
-      position:absolute; left:22px; right:22px; bottom:22px;
-      height:86px; border-radius:20px;
-      background:rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.16);
-      backdrop-filter: blur(16px);
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0 22px;
-    }
-
-    .strip-title{font-size:18px;font-weight:900;line-height:1;}
-    .strip-sub{font-size:15px;opacity:.85;font-weight:600;line-height:1.1;font-style:italic;margin-top:3px;}
-
-    .strip-play{
-      width:50px;height:50px;border-radius:999px;
-      border:2px solid rgba(255,255,255,.38);
-      display:grid;place-items:center;
-      transition:.2s;background:rgba(0,0,0,.22);
-    }
-    .strip-play i{font-size:19px}
-    .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
-
-    /* sources buttons */
-    .source-btn{
-      height:44px;border-radius:14px;font-weight:900;font-size:13px;
-      transition:.2s;
-    }
-    .source-btn.active{background:#fff;color:#000;}
-    .source-btn.inactive{
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.10);
-      color:#fff;
-    }
-    .source-btn:hover{opacity:.95}
-
-    /* video */
-    video{
-      width:100%;
-      height:100%;
-      background:#000;
-      display:block;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test HLS</title>
 </head>
+<body style="margin:0;background:#000;">
+  <video id="v" controls autoplay playsinline style="width:100vw;height:100vh;"></video>
 
-<body>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const url = "http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8";
+    const video = document.getElementById("v");
 
-<!-- NAV -->
-<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
-  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
-    <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
+    // iOS Safari lit souvent le HLS nativement
+    if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = url;
+      video.play().catch(()=>{});
+    } else if (window.Hls && Hls.isSupported()) {
+      const hls = new Hls({
+        // petits réglages tolérants
+        enableWorker: true,
+        lowLatencyMode: false,
+      });
+      hls.loadSource(url);
+      hls.attachMedia(video);
 
-    <a href="index.html"
-       class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm">
-      <i class="fa-solid fa-arrow-left"></i> Retour
-    </a>
-  </div>
-</nav>
-
-<main class="max-w-screen-2xl mx-auto px-6 py-10">
-
-  <!-- PLAYER -->
-  <section class="player-box w-full aspect-video">
-
-    <!-- ✅ COVER CLICK = LAUNCH STREAM -->
-    <div id="cover" class="cover" onclick="loadVideo(1)">
-      <div class="cover-strip">
-        <div>
-          <div class="strip-title">Regarder Gratuitement</div>
-          <div class="strip-sub">Stream test<br>M3U8</div>
-        </div>
-        <div class="strip-play">
-          <i class="fa-solid fa-play"></i>
-        </div>
-      </div>
-    </div>
-
-    <div id="videoTarget" class="w-full h-full"></div>
-  </section>
-
-  <!-- SOURCES -->
-  <section class="mt-5 flex gap-3">
-    <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
-    <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
-    <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
-  </section>
-
-  <!-- petit message debug (pas obligatoire) -->
-  <p class="mt-4 text-white/50 text-sm font-semibold">
-    Si ça ne démarre pas dans la page mais que le lien marche seul → ton site est sûrement en HTTPS et le flux en HTTP (bloqué).
-  </p>
-
-</main>
-
-<script>
-  const M3U8 = "http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8";
-
-  // ⚠️ si page HTTPS et flux HTTP => bloqué sur mobile
-  if (location.protocol === "https:" && M3U8.startsWith("http://")) {
-    const target = document.getElementById("videoTarget");
-    target.innerHTML = `
-      <div class="w-full h-full flex items-center justify-center p-6 text-center">
-        <div class="max-w-md">
-          <div class="text-xl font-extrabold mb-2">Lecture bloquée</div>
-          <div class="text-white/70 font-semibold">
-            Ton site est en <b>HTTPS</b> mais le flux est en <b>HTTP</b>.<br>
-            Sur téléphone, le navigateur bloque ça (Mixed Content).
-          </div>
-          <a href="${M3U8}" target="_blank"
-             class="inline-flex mt-4 items-center justify-center px-5 h-11 rounded-full bg-amber-400 text-black font-extrabold">
-            Ouvrir le flux
-          </a>
-        </div>
-      </div>
-    `;
-  }
-</script>
-
-</script>
-
+      hls.on(Hls.Events.ERROR, (evt, data) => {
+        console.log("HLS ERROR:", data);
+        // Si tu vois ici "CORS" / "403" / "mixed content" -> c'est la cause
+      });
+    } else {
+      document.body.innerHTML = "<p style='color:white;padding:20px'>HLS non supporté sur ce navigateur.</p>";
+    }
+  </script>
 </body>
 </html>
