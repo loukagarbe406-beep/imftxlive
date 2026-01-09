@@ -3,21 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Stream (Test M3U8)</title>
+  <title>IMFTX+ — Stream Test (M3U8)</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- HLS.JS -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
   <style>
     html,body{
       height:100%;margin:0;
       font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:#070708;
-      color:#fff;
-      overflow-x:hidden;
+      background:#070708;color:#fff;overflow-x:hidden;
     }
 
     .player-box{
@@ -31,62 +30,38 @@
 
     /* ✅ COVER (banniere) */
     .cover{
-      position:absolute;
-      inset:0;
-      z-index:15;
+      position:absolute; inset:0; z-index:15;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
+        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.62) 100%),
         url("https://empire-sport.shop/upload/events/7zeorilqtmev0k6jyptnex9p7kgh8k.jpg") center/cover no-repeat;
     }
 
     .cover-strip{
-      position:absolute;
-      left:22px;
-      right:22px;
-      bottom:22px;
-      height:86px;
-      border-radius:20px;
+      position:absolute; left:22px; right:22px; bottom:22px;
+      height:86px; border-radius:20px;
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.16);
       backdrop-filter: blur(16px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       padding:0 22px;
     }
 
-    .strip-title{
-      font-size:18px;
-      font-weight:900;
-      line-height:1;
-    }
-    .strip-sub{
-      font-size:15px;
-      opacity:.85;
-      font-weight:600;
-      line-height:1.1;
-      font-style:italic;
-      margin-top:3px;
-    }
+    .strip-title{font-size:18px;font-weight:900;line-height:1;}
+    .strip-sub{font-size:15px;opacity:.85;font-weight:600;line-height:1.1;font-style:italic;margin-top:3px;}
 
     .strip-play{
-      width:50px;height:50px;
-      border-radius:999px;
+      width:50px;height:50px;border-radius:999px;
       border:2px solid rgba(255,255,255,.38);
-      display:grid;
-      place-items:center;
-      transition:.2s;
-      background:rgba(0,0,0,.22);
+      display:grid;place-items:center;
+      transition:.2s;background:rgba(0,0,0,.22);
     }
     .strip-play i{font-size:19px}
     .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
 
+    /* sources buttons */
     .source-btn{
-      height:44px;
-      border-radius:14px;
-      font-weight:900;
-      font-size:13px;
+      height:44px;border-radius:14px;font-weight:900;font-size:13px;
       transition:.2s;
     }
     .source-btn.active{background:#fff;color:#000;}
@@ -96,36 +71,6 @@
       color:#fff;
     }
     .source-btn:hover{opacity:.95}
-
-    .watch-bar{
-      border-radius:18px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(16px);
-      padding:16px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-    }
-
-    .watch-left{display:flex;align-items:center;gap:14px;min-width:0;}
-    .watch-left img{
-      width:38px;height:38px;object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
-      flex-shrink:0;
-    }
-    .watch-text{min-width:0;line-height:1.1;}
-    .watch-text .small{opacity:.8;font-weight:700;font-size:13px;}
-    .watch-text .big{
-      font-weight:900;font-size:16px;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    }
-
-    .channel-logo{
-      width:72px;height:auto;object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
-    }
 
     /* video */
     video{
@@ -161,9 +106,8 @@
       <div class="cover-strip">
         <div>
           <div class="strip-title">Regarder Gratuitement</div>
-          <div class="strip-sub">Test M3U8<br>Source Embed</div>
+          <div class="strip-sub">Stream test<br>M3U8</div>
         </div>
-
         <div class="strip-play">
           <i class="fa-solid fa-play"></i>
         </div>
@@ -180,49 +124,39 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- ✅ WATCH BAR -->
-  <section class="mt-6 watch-bar">
-    <div class="watch-left">
-      <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png" alt="Compétition">
-      <div class="watch-text">
-        <div class="small">Vous regardez</div>
-        <div class="big">Test Stream (M3U8)</div>
-        <div class="small">Aujourd’hui · Live</div>
-      </div>
-    </div>
-
-    <img class="channel-logo"
-         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBglTOvrb91rnOCnBfdokQYo1CLPyEGIovdg&s"
-         alt="Chaîne">
-  </section>
+  <!-- petit message debug (pas obligatoire) -->
+  <p class="mt-4 text-white/50 text-sm font-semibold">
+    Si ça ne démarre pas dans la page mais que le lien marche seul → ton site est sûrement en HTTPS et le flux en HTTP (bloqué).
+  </p>
 
 </main>
 
 <script>
-  // ✅ Mets ton lien autorisé ici (les 3 identiques comme tu veux)
-  const SAME_M3U8 = "http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8";
+  // ✅ TON LIEN M3U8 (les 3 = pareil)
+  const M3U8 = "http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8";
+  const SOURCES = { 1: M3U8, 2: M3U8, 3: M3U8 };
 
-  const SOURCES = {
-    1: http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8,
-    2: http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8,
-    3: http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8
-  };
-
-  let hlsInstance = null;
+  let hls = null;
 
   function setActive(id){
     [1,2,3].forEach(n=>{
       const b = document.getElementById("btn"+n);
-      b.className = (n===id)
-        ? "source-btn active px-6"
-        : "source-btn inactive px-6";
+      b.className = (n===id) ? "source-btn active px-6" : "source-btn inactive px-6";
     });
   }
 
   function destroyHls(){
-    if(hlsInstance){
-      try { hlsInstance.destroy(); } catch(e){}
-      hlsInstance = null;
+    if(hls){
+      try{ hls.destroy(); }catch(e){}
+      hls = null;
+    }
+  }
+
+  async function safePlay(video){
+    try { await video.play(); }
+    catch(e){
+      // Sur mobile, parfois autoplay bloque -> l'utilisateur clique sur play (controls visibles)
+      console.log("Autoplay bloqué:", e);
     }
   }
 
@@ -231,75 +165,44 @@
     setActive(id);
 
     const url = SOURCES[id];
-
     const target = document.getElementById("videoTarget");
-    target.innerHTML = `<video id="player" controls autoplay playsinline></video>`;
+
+    // ✅ Video tag
+    target.innerHTML = `
+      <video id="player" controls playsinline muted></video>
+    `;
     const video = document.getElementById("player");
 
     destroyHls();
 
-    // ✅ Safari / iPhone lit nativement
+    // ✅ Safari/iOS: HLS natif
     if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = url;
-      video.play().catch(()=>{});
+      safePlay(video);
       return;
     }
 
-    // ✅ Chrome/Android/PC via Hls.js
+    // ✅ Autres navigateurs: Hls.js
     if (window.Hls && Hls.isSupported()) {
-      hlsInstance = new Hls({
-        maxBufferLength: 30,
-        liveSyncDurationCount: 3
+      hls = new Hls({
+        lowLatencyMode: true,
+        backBufferLength: 30
       });
-      hlsInstance.loadSource(url);
-      hlsInstance.attachMedia(video);
-      hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play().catch(()=>{});
-      });
-      hlsInstance.on(Hls.Events.ERROR, (event, data) => {
-        // message simple, sans casser ta page
+
+      hls.loadSource(url);
+      hls.attachMedia(video);
+
+      hls.on(Hls.Events.MANIFEST_PARSED, () => safePlay(video));
+
+      hls.on(Hls.Events.ERROR, (evt, data) => {
         console.log("HLS error:", data);
+        // Si HTTPS + HTTP => souvent tu verras une erreur réseau / mixed content bloqué.
       });
+
       return;
     }
 
     alert("Ton navigateur ne supporte pas le M3U8.");
-  }
-</script>
-
-<!-- ✅ FIREBASE ONLINE (INVISIBLE - REALTIME) -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
-    authDomain: "imftxlive.firebaseapp.com",
-    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "imftxlive",
-    storageBucket: "imftxlive.firebasestorage.app",
-    messagingSenderId: "117057055374",
-    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
-  };
-
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  const MATCH_ID = "test-m3u8";
-  const sessionId = Math.random().toString(36).slice(2) + Date.now();
-
-  const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
-  const onlineRef  = db.ref(`streams/${MATCH_ID}/online`);
-  const presenceRoot = db.ref(`streams/${MATCH_ID}/presence`);
-
-  if (location.protocol !== "file:") {
-    sessionRef.set(true);
-    sessionRef.onDisconnect().remove();
-
-    presenceRoot.on("value", snap => {
-      const data = snap.val() || {};
-      onlineRef.set(Object.keys(data).length);
-    });
   }
 </script>
 
