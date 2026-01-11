@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Mali vs Sénégal</title>
+  <title>IMFTX+ — Lille vs Lyon</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -29,18 +29,18 @@
 
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
 
-    /* ✅ COVER (banniere) */
+    /* COVER (banniere) */
     .cover{
       position:absolute;
       inset:0;
       z-index:15;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.06) 0%, rgba(0,0,0,.20) 55%, rgba(0,0,0,.70) 100%),
-        url("https://thumb.canalplus.pro/http/unsafe/1440x810/filters:quality(80)/canalplus-cdn.canal-plus.io/p1/unit/30632824/canal-ouah_50009/STD169/1313724_46_S16_CAFAfricaCupofNations2025-2026-Quarter-finals-Cameroon-Morocco-09-01-26-QjyN") center/cover no-repeat;
+        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
+        url("https://empire-sport.shop/upload/banners/lille-vs-angers.png") center/cover no-repeat;
     }
 
-    /* ✅ LOGOS TOP */
+    /* LOGOS TOP */
     .cover-top{
       position:absolute;
       top:18px;
@@ -67,7 +67,7 @@
       opacity:.9;
     }
 
-    /* ✅ STRIP BOTTOM */
+    /* STRIP BOTTOM */
     .cover-strip{
       position:absolute;
       left:22px;
@@ -110,7 +110,7 @@
     .strip-play i{font-size:19px}
     .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
 
-    /* ✅ sources buttons */
+    /* sources buttons */
     .source-btn{
       height:44px;
       border-radius:14px;
@@ -118,16 +118,15 @@
       font-size:13px;
       transition:.2s;
     }
-    .source-btn.active{
-      background:#fff;color:#000;
-    }
+    .source-btn.active{background:#fff;color:#000;}
     .source-btn.inactive{
       background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.10);
       color:#fff;
     }
+    .source-btn:hover{opacity:.95}
 
-    /* ✅ bottom bar (Vous regardez) */
+    /* bottom bar (Vous regardez) */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
@@ -170,11 +169,15 @@
       text-overflow:ellipsis;
     }
 
-    .channel-logo{
-      width:76px;height:auto;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+    .watch-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
     }
+
+    .ext-wrap{display:none;margin-top:12px;text-align:center;}
+    .ext-wrap a{color:#fbbf24;font-weight:900;text-decoration:underline;font-size:13px;}
   </style>
 </head>
 
@@ -195,24 +198,24 @@
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
   <!-- PLAYER -->
-  <section class="player-box w-full aspect-video">
+  <section class="player-box relative w-full aspect-video">
 
-    <!-- ✅ COVER CLICK = LAUNCH STREAM -->
+    <!-- COVER click = launch embed -->
     <div id="cover" class="cover" onclick="loadVideo(1)">
       <div class="cover-top">
         <img class="team-logo"
-             src="https://toppng.com/uploads/preview/mali-football-logo-png-11536013218kxm2ifpsit.png"
-             alt="Mali">
+             src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/8a/Logo_LOSC_Lille_2018.svg/512px-Logo_LOSC_Lille_2018.svg.png"
+             alt="Lille">
         <span class="vs">VS</span>
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_F%C3%A9d%C3%A9ration_S%C3%A9n%C3%A9galaise_Football_2016.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_S%C3%A9n%C3%A9galaise_Football_2016.svg.png"
-             alt="Sénégal">
+             src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a5/Logo_Olympique_Lyonnais_-_2022.svg/512px-Logo_Olympique_Lyonnais_-_2022.svg.png"
+             alt="Lyon">
       </div>
 
       <div class="cover-strip">
         <div>
           <div class="strip-title">Regarder Gratuitement</div>
-          <div class="strip-sub">Mali<br>Sénégal</div>
+          <div class="strip-sub">Lille<br>Lyon</div>
         </div>
 
         <div class="strip-play">
@@ -231,47 +234,47 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- ✅ WATCH BAR -->
+  <!-- fallback embed blocked -->
+  <div id="externalLink" class="ext-wrap">
+    <a id="directLink" href="#" target="_blank">Embed bloqué ? Ouvrir le lien direct</a>
+  </div>
+
+  <!-- WATCH BAR -->
   <section class="mt-6 watch-bar">
+
     <div class="watch-left">
-      <!-- compétition -->
-      <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png">
+      <!-- logo compétition -->
+      <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Logo_Coupe_de_France_2022.svg/512px-Logo_Coupe_de_France_2022.svg.png" alt="Coupe de France">
 
       <div class="watch-text">
         <div class="small">Vous regardez</div>
-        <div class="big">Mali - Sénégal</div>
-        <div class="small">Aujourd’hui · 17:00</div>
+        <div class="big">Lille - Lyon</div>
+        <div class="small">Aujourd’hui · 21:00</div>
       </div>
     </div>
 
-    <img class="channel-logo"
-         src="https://thumb.canalplus.pro/bran/unsafe/384x/filters:quality(%7BimageQualityPercentage%7D)/image/66d97795695f2/uploads/media/CHN43FB_381.png"
-         alt="CANAL+ FOOT">
-  </section>
+    <!-- pas de logo chaîne (tu n’en as pas donné) -->
+    <div class="watch-right"></div>
 
-  <!-- fallback direct link -->
-  <div id="externalLink" class="hidden mt-4 text-center">
-    <a id="directLink" href="#" target="_blank"
-       class="text-amber-400 underline font-extrabold text-sm">
-      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-    </a>
-  </div>
+  </section>
 
 </main>
 
+<!-- PLAYER SCRIPT (stable + fallback) -->
 <script>
+  // ✅ change juste PLAYER_ID si besoin (1/2/3/4/...)
+  const PLAYER_ID = 3;
+
   const SOURCES = {
-    1: "https://d.empire-cdn-stream.org/playlist/fr-bein-sports-1-hd-fr-bein-sports-1-hd-zc742vb6dw?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpcCI6Ijo6ZmZmZjo4MS4yMjAuMTA5LjUwIiwiZXhwaXJlc0luIjoxNzY3OTc5MTU0NDE4LCJpYXQiOjE3Njc5Nzc5NTR9.0Jtfie0Amyehx9hIcUC9Tw_vMM2jwHM7DUYKAzyUZeg&id=5",
-    2: "https://bolaloca.my/player/2/1",
-    3: "https://bolaloca.my/player/3/1"
+    1: `https://bolaloca.my/player/4/${PLAYER_ID}`,
+    2: `https://bolaloca.my/player/2/${PLAYER_ID}`,
+    3: `https://bolaloca.my/player/3/${PLAYER_ID}`
   };
 
   function setActive(id){
     [1,2,3].forEach(n=>{
       const b = document.getElementById("btn"+n);
-      b.className = (n===id)
-        ? "source-btn active px-6"
-        : "source-btn inactive px-6";
+      b.className = (n===id) ? "source-btn active px-6" : "source-btn inactive px-6";
     });
   }
 
@@ -282,7 +285,7 @@
     const ext = document.getElementById("externalLink");
     const link = document.getElementById("directLink");
     link.href = SOURCES[id];
-    ext.classList.add("hidden");
+    ext.style.display = "none";
 
     const target = document.getElementById("videoTarget");
     target.innerHTML = `
@@ -303,8 +306,44 @@
       const iframe = document.getElementById("streamFrame");
       if(!iframe) return;
       try { iframe.contentWindow.location.href; }
-      catch(e){ ext.classList.remove("hidden"); }
+      catch(e){ ext.style.display = "block"; }
     }, 2000);
+  }
+</script>
+
+<!-- FIREBASE ONLINE (invisible) -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+    authDomain: "imftxlive.firebaseapp.com",
+    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "imftxlive",
+    storageBucket: "imftxlive.firebasestorage.app",
+    messagingSenderId: "117057055374",
+    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
+  };
+
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const MATCH_ID = "lille-lyon";
+  const sessionId = Math.random().toString(36).slice(2) + Date.now();
+
+  const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
+  const onlineRef  = db.ref(`streams/${MATCH_ID}/online`);
+  const presenceRoot = db.ref(`streams/${MATCH_ID}/presence`);
+
+  if (location.protocol !== "file:") {
+    sessionRef.set(true);
+    sessionRef.onDisconnect().remove();
+
+    presenceRoot.on("value", snap => {
+      const data = snap.val() || {};
+      onlineRef.set(Object.keys(data).length);
+    });
   }
 </script>
 
