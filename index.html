@@ -18,6 +18,8 @@
       color:#fff;
     }
 
+    main{ min-height:100vh; width:100%; }
+
     /* badge en direct */
     .live-badge{
       display:inline-flex;
@@ -33,8 +35,7 @@
       color:#eaffea;
     }
     .live-dot{
-      width:10px;
-      height:10px;
+      width:10px;height:10px;
       background:#22c55e;
       border-radius:999px;
       box-shadow:0 0 18px rgba(34,197,94,.9);
@@ -43,7 +44,7 @@
     /* card */
     .match-card{
       position:relative;
-      height:320px;
+      height:300px;
       border-radius:22px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.10);
@@ -62,7 +63,7 @@
     .match-overlay{
       position:absolute;
       inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.12) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.78) 100%);
+      background: linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.20) 100%);
     }
 
     .time-pill{
@@ -80,63 +81,35 @@
       font-size:13px;
     }
     .time-dot{
-      width:9px;
-      height:9px;
+      width:9px;height:9px;
       background:#f59e0b;
       border-radius:999px;
       box-shadow:0 0 12px rgba(245,158,11,.75);
     }
 
-    /* ✅ ZONE BAS GAUCHE */
     .match-info{
       position:absolute;
+      bottom:18px;
       left:18px;
       right:18px;
-      bottom:18px;
       display:flex;
-      align-items:flex-end;
       justify-content:space-between;
+      align-items:flex-end;
       gap:14px;
     }
 
-    /* ✅ LOGO VS LOGO */
-    .logos-vs{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .logos-vs img{
-      width:42px;
-      height:42px;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 18px rgba(0,0,0,.75));
-    }
-    .logos-vs span{
+    .teams{
+      font-size:22px;
       font-weight:900;
-      opacity:.9;
-      font-size:14px;
+      line-height:1.05;
     }
 
-    /* ✅ COMPETITION + HEURE */
-    .meta-row{
-      display:flex;
-      align-items:center;
-      gap:10px;
+    .meta{
+      margin-top:6px;
       font-size:13px;
-      font-weight:800;
-      color:rgba(255,255,255,.75);
-    }
-    .meta-row img{
-      width:26px;
-      height:26px;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.75));
-    }
-    .meta-row em{
-      font-style:italic;
-      font-weight:800;
-      opacity:.95;
+      color:rgba(255,255,255,.72);
+      font-weight:700;
+      line-height:1.25;
     }
 
     /* bouton regarder */
@@ -145,7 +118,7 @@
       align-items:center;
       justify-content:center;
       gap:8px;
-      padding:11px 18px;
+      padding:12px 18px;
       border-radius:999px;
       background:rgba(255,255,255,.12);
       border:1px solid rgba(255,255,255,.14);
@@ -153,28 +126,27 @@
       font-weight:900;
       backdrop-filter: blur(14px);
       transition:.15s;
-      min-width:120px;
+      min-width:130px;
       font-size:13px;
-      flex-shrink:0;
+      white-space:nowrap;
     }
     .watch-btn:hover{
       background:rgba(255,255,255,.18);
       transform:scale(1.02);
     }
 
-    /* responsive */
     @media(max-width:1024px){
-      .match-card{height:280px;}
-      .logos-vs img{width:38px;height:38px;}
+      .match-card{height:270px;}
+      .teams{font-size:20px;}
     }
     @media(max-width:640px){
-      .match-card{height:250px;}
-      .logos-vs img{width:36px;height:36px;}
-      .watch-btn{padding:10px 14px; min-width:110px; font-size:12px;}
-      .meta-row{font-size:12px;}
+      .match-card{height:240px;}
+      .teams{font-size:18px;}
+      .watch-btn{padding:10px 14px; min-width:110px;}
     }
   </style>
 </head>
+
 <body>
 
 <!-- NAVBAR -->
@@ -199,13 +171,13 @@
 
 <main class="max-w-[1600px] mx-auto px-6 pb-14">
 
-  <!-- titre -->
+  <!-- titre / slogan -->
   <header class="text-center mt-10 mb-6">
     <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">IMFTX+ LIVE</h1>
     <p class="mt-3 text-white/55 font-semibold text-lg">N°1 des meilleurs diffuseurs</p>
   </header>
 
-  <!-- ✅ En direct au dessus des matchs (à gauche) -->
+  <!-- En direct (à gauche) -->
   <div class="flex justify-start mb-6">
     <div class="live-badge">
       <span class="live-dot"></span>
@@ -213,91 +185,61 @@
     </div>
   </div>
 
-  <!-- ✅ MATCHS -->
+  <!-- ✅ 3 matchs -->
   <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-    <!-- ✅ Mali - Sénégal -->
+    <!-- 20:00 Barça - Real -->
     <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/senegal-vs-botswana.png')"></div>
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/barcelona-vs-real-madrid.png')"></div>
       <div class="match-overlay"></div>
-      <div class="time-pill"><span class="time-dot"></span> 17:00</div>
 
-      <div class="match-info">
-        <div>
-          <div class="logos-vs">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_F%C3%A9d%C3%A9ration_Malienne_de_Football_%28FEMAFOOT%29_2023.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_Malienne_de_Football_%28FEMAFOOT%29_2023.svg.png" alt="Mali">
-            <span>VS</span>
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_F%C3%A9d%C3%A9ration_S%C3%A9n%C3%A9galaise_Football_2016.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_S%C3%A9n%C3%A9galaise_Football_2016.svg.png" alt="Sénégal">
-          </div>
-
-          <div class="meta-row">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png" alt="CAN">
-            <div>
-              <em>Coupe d’Afrique</em><br>
-              Aujourd’hui · 17:00
-            </div>
-          </div>
-        </div>
-
-        <button onclick="goMatch('mali-senegal')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
-
-    <!-- ✅ Cameroun - Maroc -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/9knwto2d3vjnqfat9nha34gmwgmbew.png')"></div>
-      <div class="match-overlay"></div>
       <div class="time-pill"><span class="time-dot"></span> 20:00</div>
 
       <div class="match-info">
         <div>
-          <div class="logos-vs">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/e/e4/Logo_F%C3%A9d%C3%A9ration_Camerounaise_Football_%28FECAFOOT%29_2010.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_Camerounaise_Football_%28FECAFOOT%29_2010.svg.png" alt="Cameroun">
-            <span>VS</span>
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/6/69/Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg/langfr-250px-Logo_F%C3%A9d%C3%A9ration_Royale_Marocaine_Football.svg.png" alt="Maroc">
-          </div>
-
-          <div class="meta-row">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png" alt="CAN">
-            <div>
-              <em>Coupe d’Afrique</em><br>
-              Aujourd’hui · 20:00
-            </div>
-          </div>
+          <div class="teams">Barcelone · Real Madrid</div>
+          <div class="meta">Supercoupe Espagne · Finale<br>Aujourd’hui · 20:00</div>
         </div>
 
-        <button onclick="goMatch('cameroon-morocco')" class="watch-btn">
+        <button onclick="goMatch('barcelone-real-madrid')" class="watch-btn">
           ▶ REGARDER
         </button>
       </div>
     </article>
 
-    <!-- ✅ Francfort - Dortmund -->
+    <!-- 20:45 Inter - Napoli -->
     <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/djj2j8cg1nwamyc44nye0olnube1mx.png')"></div>
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/napoli-vs-inter-milan.png')"></div>
       <div class="match-overlay"></div>
-      <div class="time-pill"><span class="time-dot"></span> 20:30</div>
+
+      <div class="time-pill"><span class="time-dot"></span> 20:45</div>
 
       <div class="match-info">
         <div>
-          <div class="logos-vs">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/cb/Logo_Eintracht_Francfort.svg/langfr-250px-Logo_Eintracht_Francfort.svg.png" alt="Francfort">
-            <span>VS</span>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/langfr-250px-Borussia_Dortmund_logo.svg.png" alt="Dortmund">
-          </div>
-
-          <div class="meta-row">
-            <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/0/0a/Bundesliga-logo.svg/1200px-Bundesliga-logo.svg.png" alt="Bundesliga">
-            <div>
-              <em>Bundesliga</em><br>
-              Aujourd’hui · 20:30
-            </div>
-          </div>
+          <div class="teams">Inter · Naples</div>
+          <div class="meta">Serie A<br>Aujourd’hui · 20:45</div>
         </div>
 
-        <button onclick="goMatch('francfort-dortmund')" class="watch-btn">
+        <button onclick="goMatch('inter-naples')" class="watch-btn">
+          ▶ REGARDER
+        </button>
+      </div>
+    </article>
+
+    <!-- 21:00 Lille - OL (bannière donnée: lille vs angers) -->
+    <article class="match-card">
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/lille-vs-angers.png')"></div>
+      <div class="match-overlay"></div>
+
+      <div class="time-pill"><span class="time-dot"></span> 21:00</div>
+
+      <div class="match-info">
+        <div>
+          <div class="teams">Lille · Lyon OL</div>
+          <div class="meta">Coupe de France<br>Aujourd’hui · 21:00</div>
+        </div>
+
+        <button onclick="goMatch('lille-lyon')" class="watch-btn">
           ▶ REGARDER
         </button>
       </div>
