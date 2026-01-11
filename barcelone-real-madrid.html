@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Arsenal vs Liverpool</title>
+  <title>IMFTX+ — Barcelone vs Real Madrid</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -18,7 +18,6 @@
       overflow-x:hidden;
     }
 
-    /* player box */
     .player-box{
       border-radius:22px;
       overflow:hidden;
@@ -28,29 +27,21 @@
       position:relative;
     }
 
-    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+    iframe{width:100%;height:100%;border:0;background:#000;display:block;}
 
-    /* ✅ COVER (banniere) */
+    /* COVER */
     .cover{
-      position:absolute;
-      inset:0;
-      z-index:15;
+      position:absolute; inset:0; z-index:15;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.shop/upload/banners/arsenal-vs-liverpool.png") center/cover no-repeat;
+        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
+        url("https://empire-sport.shop/upload/events/1vjf7sjpizcy4cf7ixzufosz140iyh.jpg") center/cover no-repeat;
     }
 
-    /* ✅ LOGOS TOP */
     .cover-top{
-      position:absolute;
-      top:18px;
-      left:18px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:18px;
+      position:absolute; top:18px; left:18px;
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:18px;
       background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(14px);
@@ -61,67 +52,34 @@
       object-fit:contain;
       filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
     }
+    .vs{font-weight:900;font-size:14px;opacity:.9;}
 
-    .vs{
-      font-weight:900;
-      font-size:14px;
-      opacity:.9;
-    }
-
-    /* ✅ STRIP BOTTOM */
     .cover-strip{
-      position:absolute;
-      left:22px;
-      right:22px;
-      bottom:22px;
-      height:86px;
-      border-radius:20px;
+      position:absolute; left:22px; right:22px; bottom:22px;
+      height:86px;border-radius:20px;
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.16);
       backdrop-filter: blur(16px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       padding:0 22px;
     }
 
-    .strip-title{
-      font-size:18px;
-      font-weight:900;
-      line-height:1;
-    }
-    .strip-sub{
-      font-size:15px;
-      opacity:.85;
-      font-weight:600;
-      line-height:1.1;
-      font-style:italic;
-      margin-top:3px;
-    }
+    .strip-title{font-size:18px;font-weight:900;line-height:1;}
+    .strip-sub{font-size:15px;opacity:.85;font-weight:600;line-height:1.1;font-style:italic;margin-top:3px;}
 
     .strip-play{
-      width:50px;height:50px;
-      border-radius:999px;
+      width:50px;height:50px;border-radius:999px;
       border:2px solid rgba(255,255,255,.38);
-      display:grid;
-      place-items:center;
-      transition:.2s;
-      background:rgba(0,0,0,.22);
+      display:grid;place-items:center;
+      transition:.2s;background:rgba(0,0,0,.22);
     }
     .strip-play i{font-size:19px}
     .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
 
-    /* ✅ sources buttons */
     .source-btn{
-      height:44px;
-      border-radius:14px;
-      font-weight:900;
-      font-size:13px;
-      transition:.2s;
+      height:44px;border-radius:14px;font-weight:900;font-size:13px;transition:.2s;
     }
-    .source-btn.active{
-      background:#fff;color:#000;
-    }
+    .source-btn.active{background:#fff;color:#000;}
     .source-btn.inactive{
       background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.10);
@@ -129,61 +87,29 @@
     }
     .source-btn:hover{opacity:.95}
 
-    /* ✅ bottom bar (Vous regardez) */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(16px);
       padding:16px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
     }
-
-    .watch-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-    }
-
+    .watch-left{display:flex;align-items:center;gap:14px;min-width:0;}
     .watch-left img{
-      width:38px;height:38px;
-      object-fit:contain;
+      width:38px;height:38px;object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
       flex-shrink:0;
     }
-
-    .watch-text{
-      min-width:0;
-      line-height:1.1;
-    }
-
-    .watch-text .small{
-      opacity:.8;font-weight:700;font-size:13px;
-    }
-
+    .watch-text .small{opacity:.8;font-weight:700;font-size:13px;}
     .watch-text .big{
       font-weight:900;font-size:16px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
-
-    .watch-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-shrink:0;
-    }
-
-    .channel-logo{
-      width:90px;height:auto;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
-    }
+    .channel-logo{width:86px;height:auto;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.7));}
+    
+    .ext-wrap{display:none;margin-top:12px;text-align:center;}
+    .ext-wrap a{color:#fbbf24;font-weight:900;text-decoration:underline;font-size:13px;}
   </style>
 </head>
 
@@ -204,24 +130,25 @@
 <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
   <!-- PLAYER -->
-  <section class="player-box w-full aspect-video">
+  <section class="player-box relative w-full aspect-video">
 
-    <!-- ✅ COVER CLICK = LAUNCH STREAM -->
+    <!-- COVER click -->
     <div id="cover" class="cover" onclick="loadVideo(1)">
       <div class="cover-top">
+        <!-- logos équipes -->
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg"
-             alt="Arsenal">
+             src="https://upload.wikimedia.org/wikipedia/fr/archive/8/86/20181006144340%21Paris_Saint-Germain_Logo.svg"
+             alt="Barcelone">
         <span class="vs">VS</span>
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg"
-             alt="Liverpool">
+             src="https://upload.wikimedia.org/wikipedia/fr/archive/c/c7/20181006143652%21Logo_Real_Madrid.svg"
+             alt="Real Madrid">
       </div>
 
       <div class="cover-strip">
         <div>
           <div class="strip-title">Regarder Gratuitement</div>
-          <div class="strip-sub">Arsenal<br>Liverpool</div>
+          <div class="strip-sub">Barcelone<br>Real Madrid</div>
         </div>
 
         <div class="strip-play">
@@ -240,56 +167,42 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- ✅ DIRECT LINK (fallback) -->
-  <div id="externalLink" class="hidden mt-4 text-center">
-    <a id="directLink" href="#" target="_blank"
-       class="text-amber-400 underline font-extrabold text-sm">
-      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-    </a>
+  <!-- fallback embed blocked -->
+  <div id="externalLink" class="ext-wrap">
+    <a id="directLink" href="#" target="_blank">Embed bloqué ? Ouvrir le lien direct</a>
   </div>
 
-  <!-- ✅ WATCH BAR -->
+  <!-- WATCH BAR -->
   <section class="mt-6 watch-bar">
     <div class="watch-left">
-      <!-- Logo compétition -->
-      <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg">
+      <img src="https://empire-sport.shop/upload/leagues/ezed3ugrbkgr7ozgmg1m5bpvuw5idb.png" alt="Supercoupe Espagne">
       <div class="watch-text">
         <div class="small">Vous regardez</div>
-        <div class="big">Arsenal - Liverpool</div>
-        <div class="small">Premier League · 21:00</div>
+        <div class="big">Barcelone - Real Madrid</div>
+        <div class="small">Aujourd’hui · 20:00</div>
       </div>
     </div>
 
     <div class="watch-right">
-      <!-- Logo chaîne -->
       <img class="channel-logo"
-           src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Sky_Sports_Premier_League_Logo_2017.png"
-           alt="TV">
+           src="https://empire-sport.shop/upload/chaines/pdk4fijt9ylmkauhws7ump2zx6zcx2.png"
+           alt="Chaîne">
     </div>
   </section>
 
-  <!-- MESSAGE -->
-  <div class="mt-8 text-center text-sm text-white/55 font-semibold">
-    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).  
-    — L’équipe IMFTX+
-  </div>
-
 </main>
 
-<!-- ✅ PLAYER SCRIPT (STABLE + fallback embed blocked) -->
 <script>
   const SOURCES = {
-    1: "https://bolaloca.my/player/4/12",
-    2: "https://bolaloca.my/player/2/12",
-    3: "https://bolaloca.my/player/3/12"
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
   };
 
   function setActive(id){
     [1,2,3].forEach(n=>{
       const b = document.getElementById("btn"+n);
-      b.className = (n===id)
-        ? "source-btn active px-6"
-        : "source-btn inactive px-6";
+      b.className = (n===id) ? "source-btn active px-6" : "source-btn inactive px-6";
     });
   }
 
@@ -300,7 +213,7 @@
     const ext = document.getElementById("externalLink");
     const link = document.getElementById("directLink");
     link.href = SOURCES[id];
-    ext.classList.add("hidden");
+    ext.style.display = "none";
 
     const target = document.getElementById("videoTarget");
     target.innerHTML = `
@@ -316,17 +229,16 @@
       </iframe>
     `;
 
-    // fallback si embed bloqué
     setTimeout(() => {
       const iframe = document.getElementById("streamFrame");
       if(!iframe) return;
       try { iframe.contentWindow.location.href; }
-      catch(e){ ext.classList.remove("hidden"); }
+      catch(e){ ext.style.display = "block"; }
     }, 2000);
   }
 </script>
 
-<!-- ✅ FIREBASE ONLINE (REALTIME + INVISIBLE) -->
+<!-- FIREBASE ONLINE -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
@@ -344,7 +256,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "arsenal-liverpool"; // ✅ garde ce match id
+  const MATCH_ID = "barcelone-real-madrid";
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
