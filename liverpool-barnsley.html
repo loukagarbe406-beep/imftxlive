@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Liverpool-Barnsley </title>
+  <title>IMFTX+ — Liverpool-Barnsley</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -107,9 +107,25 @@
       white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
     .channel-logo{width:86px;height:auto;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.7));}
-    
+
+    /* ✅ message jaune sous les players */
     .ext-wrap{display:none;margin-top:12px;text-align:center;}
-    .ext-wrap a{color:#fbbf24;font-weight:900;text-decoration:underline;font-size:13px;}
+    .ext-wrap a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(245,158,11,.18);
+      border:1px solid rgba(245,158,11,.55);
+      color:#ffe7b5;
+      font-weight:1000;
+      font-size:13px;
+      text-decoration:none;
+      box-shadow:0 18px 60px rgba(0,0,0,.35);
+    }
+    .ext-wrap a:hover{opacity:.95;transform:translateY(-1px)}
   </style>
 </head>
 
@@ -135,14 +151,13 @@
     <!-- COVER click -->
     <div id="cover" class="cover" onclick="loadVideo(1)">
       <div class="cover-top">
-        <!-- logos équipes -->
         <img class="team-logo"
              src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/54/Logo_FC_Liverpool.svg/1513px-Logo_FC_Liverpool.svg.png"
-             alt="Barcelone">
+             alt="Liverpool">
         <span class="vs">VS</span>
         <img class="team-logo"
              src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c9/Barnsley_FC.svg/langfr-250px-Barnsley_FC.svg.png"
-             alt="Real Madrid">
+             alt="Barnsley">
       </div>
 
       <div class="cover-strip">
@@ -167,24 +182,20 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- fallback embed blocked -->
-<div id="externalLink" class="ext-wrap">
-  <a id="directLink"
-     href="http://line.lion-4k.xyz/live/2cfcec03/c4ea1e89/832062.m3u8"
-     target="_blank"
-     rel="noopener">
-    Live de meilleure qualité — cliquer ici <span style="opacity:.9">(1440p · 60fps)</span>
-  </a>
-</div>
-
+  <!-- ✅ TON MESSAGE JAUNE (affiché seulement si embed bloqué) -->
+  <div id="externalLink" class="ext-wrap">
+    <a id="directLink" href="http://line.lion-4k.xyz/live/2cfcec03/c4ea1e89/832062.m3u8" target="_blank" rel="noopener">
+      Live de meilleure qualité — cliquer ici <span style="opacity:.9">(1440p · 60fps)</span>
+    </a>
+  </div>
 
   <!-- WATCH BAR -->
   <section class="mt-6 watch-bar">
     <div class="watch-left">
-      <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/75/FA-CUP-2020-logo.png/250px-FA-CUP-2020-logo.png" alt="Supercoupe Espagne">
+      <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/75/FA-CUP-2020-logo.png/250px-FA-CUP-2020-logo.png" alt="FA Cup">
       <div class="watch-text">
         <div class="small">Vous regardez</div>
-        <div class="big">Liverpool-Barnsley</div>
+        <div class="big">Liverpool - Barnsley</div>
         <div class="small">Aujourd’hui · 20h45</div>
       </div>
     </div>
@@ -205,6 +216,9 @@
     3: "https://bolaloca.my/player/3/2"
   };
 
+  // ✅ ton lien qualité (celui du message jaune)
+  const HQ_LINK = "http://line.lion-4k.xyz/live/2cfcec03/c4ea1e89/832062.m3u8";
+
   function setActive(id){
     [1,2,3].forEach(n=>{
       const b = document.getElementById("btn"+n);
@@ -218,7 +232,7 @@
 
     const ext = document.getElementById("externalLink");
     const link = document.getElementById("directLink");
-    link.href = SOURCES[id];
+    link.href = HQ_LINK;       // ✅ toujours ton lien
     ext.style.display = "none";
 
     const target = document.getElementById("videoTarget");
@@ -235,6 +249,7 @@
       </iframe>
     `;
 
+    // ✅ fallback embed blocked
     setTimeout(() => {
       const iframe = document.getElementById("streamFrame");
       if(!iframe) return;
