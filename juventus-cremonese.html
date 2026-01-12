@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live</title>
+</head>
+<body>
+  <video id="v" controls autoplay playsinline style="width:100%;max-width:900px"></video>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const video = document.getElementById('v');
+    const src = "http://line.lion-4k.xyz/live/2cfcec03/c4ea1e89/832105.m3u8";
+
+    if (Hls.isSupported()) {
+      const hls = new Hls();
+      hls.loadSource(src);
+      hls.attachMedia(video);
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // Safari/iPhone
+      video.src = src;
+    } else {
+      document.body.insertAdjacentHTML('beforeend', '<p>HLS non supporté</p>');
+    }
+  </script>
+</body>
+</html>
