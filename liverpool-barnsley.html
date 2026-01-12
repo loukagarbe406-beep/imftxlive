@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Barcelone vs Real Madrid</title>
+  <title>IMFTX+ — Liverpool-Barnsley </title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -137,18 +137,18 @@
       <div class="cover-top">
         <!-- logos équipes -->
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a1/Logo_FC_Barcelona.svg/960px-Logo_FC_Barcelona.svg.png?20090724124925"
+             src="https://upload.wikimedia.org/wikipedia/fr/thumb/5/54/Logo_FC_Liverpool.svg/1513px-Logo_FC_Liverpool.svg.png"
              alt="Barcelone">
         <span class="vs">VS</span>
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/fr/archive/c/c7/20181006143652%21Logo_Real_Madrid.svg"
+             src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c9/Barnsley_FC.svg/langfr-250px-Barnsley_FC.svg.png"
              alt="Real Madrid">
       </div>
 
       <div class="cover-strip">
         <div>
           <div class="strip-title">Regarder Gratuitement</div>
-          <div class="strip-sub">Barcelone<br>Real Madrid</div>
+          <div class="strip-sub">Liverpool<br>Barnsley</div>
         </div>
 
         <div class="strip-play">
@@ -175,17 +175,17 @@
   <!-- WATCH BAR -->
   <section class="mt-6 watch-bar">
     <div class="watch-left">
-      <img src="https://empire-sport.shop/upload/leagues/ezed3ugrbkgr7ozgmg1m5bpvuw5idb.png" alt="Supercoupe Espagne">
+      <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/75/FA-CUP-2020-logo.png/250px-FA-CUP-2020-logo.png" alt="Supercoupe Espagne">
       <div class="watch-text">
         <div class="small">Vous regardez</div>
-        <div class="big">Barcelone - Real Madrid</div>
-        <div class="small">Aujourd’hui · 20:00</div>
+        <div class="big">Liverpool-Barnsley</div>
+        <div class="small">Aujourd’hui · 20h45</div>
       </div>
     </div>
 
     <div class="watch-right">
       <img class="channel-logo"
-           src="https://empire-sport.shop/upload/chaines/pdk4fijt9ylmkauhws7ump2zx6zcx2.png"
+           src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Logo_bein_sports_2.png"
            alt="Chaîne">
     </div>
   </section>
@@ -194,9 +194,9 @@
 
 <script>
   const SOURCES = {
-    1: "https://bolaloca.my/player/4/19",
-    2: "https://bolaloca.my/player/2/19",
-    3: "https://bolaloca.my/player/3/19"
+    1: "https://bolaloca.my/player/4/2",
+    2: "https://bolaloca.my/player/2/2",
+    3: "https://bolaloca.my/player/3/2"
   };
 
   function setActive(id){
@@ -256,7 +256,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "barcelone-real-madrid";
+  const MATCH_ID = "liverpool-barnsley";
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
