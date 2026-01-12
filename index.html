@@ -44,7 +44,7 @@
     /* card */
     .match-card{
       position:relative;
-      height:300px;
+      height:320px;
       border-radius:22px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,.10);
@@ -63,7 +63,7 @@
     .match-overlay{
       position:absolute;
       inset:0;
-      background: linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.20) 100%);
+      background: linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.48) 50%, rgba(0,0,0,.15) 100%);
     }
 
     .time-pill{
@@ -107,12 +107,10 @@
     .meta{
       margin-top:6px;
       font-size:13px;
-      color:rgba(255,255,255,.72);
+      color:rgba(255,255,255,.70);
       font-weight:700;
-      line-height:1.25;
     }
 
-    /* bouton regarder */
     .watch-btn{
       display:inline-flex;
       align-items:center;
@@ -128,7 +126,6 @@
       transition:.15s;
       min-width:130px;
       font-size:13px;
-      white-space:nowrap;
     }
     .watch-btn:hover{
       background:rgba(255,255,255,.18);
@@ -136,7 +133,7 @@
     }
 
     @media(max-width:1024px){
-      .match-card{height:270px;}
+      .match-card{height:280px;}
       .teams{font-size:20px;}
     }
     @media(max-width:640px){
@@ -146,7 +143,6 @@
     }
   </style>
 </head>
-
 <body>
 
 <!-- NAVBAR -->
@@ -177,7 +173,7 @@
     <p class="mt-3 text-white/55 font-semibold text-lg">N°1 des meilleurs diffuseurs</p>
   </header>
 
-  <!-- En direct (à gauche) -->
+  <!-- En direct à gauche -->
   <div class="flex justify-start mb-6">
     <div class="live-badge">
       <span class="live-dot"></span>
@@ -185,61 +181,80 @@
     </div>
   </div>
 
-  <!-- ✅ 3 matchs -->
+  <!-- grille -->
   <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-    <!-- 20:00 Barça - Real -->
+    <!-- 20:45 Liverpool vs Barnsley -->
     <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/barcelona-vs-real-madrid.png')"></div>
-      <div class="match-overlay"></div>
-
-      <div class="time-pill"><span class="time-dot"></span> 20:00</div>
-
-      <div class="match-info">
-        <div>
-          <div class="teams">Barcelone · Real Madrid</div>
-          <div class="meta">Supercoupe Espagne · Finale<br>Aujourd’hui · 20:00</div>
-        </div>
-
-        <button onclick="goMatch('barcelone-real-madrid')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
-
-    <!-- 20:45 Inter - Napoli -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/napoli-vs-inter-milan.png')"></div>
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/liverpool-vs-nottingham-forest.png')"></div>
       <div class="match-overlay"></div>
 
       <div class="time-pill"><span class="time-dot"></span> 20:45</div>
 
       <div class="match-info">
         <div>
-          <div class="teams">Inter · Naples</div>
-          <div class="meta">Serie A<br>Aujourd’hui · 20:45</div>
+          <div class="teams">Liverpool - Barnsley</div>
+          <div class="meta">FA Cup · Aujourd’hui 20:45</div>
         </div>
 
-        <button onclick="goMatch('inter-naples')" class="watch-btn">
+        <button onclick="goMatch('liverpool-barnsley')" class="watch-btn">
           ▶ REGARDER
         </button>
       </div>
     </article>
 
-    <!-- 21:00 Lille - OL (bannière donnée: lille vs angers) -->
+    <!-- 20:45 Juventus vs Cremonese -->
     <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/lille-vs-angers.png')"></div>
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png')"></div>
+      <div class="match-overlay"></div>
+
+      <div class="time-pill"><span class="time-dot"></span> 20:45</div>
+
+      <div class="match-info">
+        <div>
+          <div class="teams">Juventus - Cremonese</div>
+          <div class="meta">Serie A · Aujourd’hui 20:45</div>
+        </div>
+
+        <button onclick="goMatch('juventus-cremonese')" class="watch-btn">
+          ▶ REGARDER
+        </button>
+      </div>
+    </article>
+
+    <!-- 21:00 Sevilla vs Celta Vigo -->
+    <article class="match-card">
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/uuyp4ikx1nugg28q8a5pwxm6t57gdf.png')"></div>
       <div class="match-overlay"></div>
 
       <div class="time-pill"><span class="time-dot"></span> 21:00</div>
 
       <div class="match-info">
         <div>
-          <div class="teams">Lille · Lyon OL</div>
-          <div class="meta">Coupe de France<br>Aujourd’hui · 21:00</div>
+          <div class="teams">Sevilla - Celta Vigo</div>
+          <div class="meta">LaLiga · Aujourd’hui 21:00</div>
         </div>
 
-        <button onclick="goMatch('lille-lyon')" class="watch-btn">
+        <button onclick="goMatch('sevilla-celta-vigo')" class="watch-btn">
+          ▶ REGARDER
+        </button>
+      </div>
+    </article>
+
+    <!-- 21:10 PSG vs Paris FC -->
+    <article class="match-card">
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/lorient-vs-paris-sg.png')"></div>
+      <div class="match-overlay"></div>
+
+      <div class="time-pill"><span class="time-dot"></span> 21:10</div>
+
+      <div class="match-info">
+        <div>
+          <div class="teams">PSG - Paris FC</div>
+          <div class="meta">Coupe de France · Aujourd’hui 21:10</div>
+        </div>
+
+        <button onclick="goMatch('psg-paris-fc')" class="watch-btn">
           ▶ REGARDER
         </button>
       </div>
