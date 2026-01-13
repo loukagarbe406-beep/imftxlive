@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Lille vs Lyon</title>
+  <title>IMFTX+ — Bayeux - Marseille</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -27,29 +27,21 @@
       position:relative;
     }
 
-    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+    iframe{width:100%;height:100%;border:0;background:#000;display:block;}
 
-    /* COVER (banniere) */
+    /* COVER */
     .cover{
-      position:absolute;
-      inset:0;
-      z-index:15;
+      position:absolute; inset:0; z-index:15;
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
-        url("https://empire-sport.shop/upload/banners/lille-vs-angers.png") center/cover no-repeat;
+        url("https://empire-sport.shop/upload/events/pmx0untdayz8fk5cjki6ba0uqtlm30.jpg") center/cover no-repeat;
     }
 
-    /* LOGOS TOP */
     .cover-top{
-      position:absolute;
-      top:18px;
-      left:18px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:18px;
+      position:absolute; top:18px; left:18px;
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:18px;
       background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(14px);
@@ -60,63 +52,32 @@
       object-fit:contain;
       filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
     }
+    .vs{font-weight:900;font-size:14px;opacity:.9;}
 
-    .vs{
-      font-weight:900;
-      font-size:14px;
-      opacity:.9;
-    }
-
-    /* STRIP BOTTOM */
     .cover-strip{
-      position:absolute;
-      left:22px;
-      right:22px;
-      bottom:22px;
-      height:86px;
-      border-radius:20px;
+      position:absolute; left:22px; right:22px; bottom:22px;
+      height:86px;border-radius:20px;
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.16);
       backdrop-filter: blur(16px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       padding:0 22px;
     }
 
-    .strip-title{
-      font-size:18px;
-      font-weight:900;
-      line-height:1;
-    }
-    .strip-sub{
-      font-size:15px;
-      opacity:.85;
-      font-weight:600;
-      line-height:1.1;
-      font-style:italic;
-      margin-top:3px;
-    }
+    .strip-title{font-size:18px;font-weight:900;line-height:1;}
+    .strip-sub{font-size:15px;opacity:.85;font-weight:600;line-height:1.1;font-style:italic;margin-top:3px;}
 
     .strip-play{
-      width:50px;height:50px;
-      border-radius:999px;
+      width:50px;height:50px;border-radius:999px;
       border:2px solid rgba(255,255,255,.38);
-      display:grid;
-      place-items:center;
-      transition:.2s;
-      background:rgba(0,0,0,.22);
+      display:grid;place-items:center;
+      transition:.2s;background:rgba(0,0,0,.22);
     }
     .strip-play i{font-size:19px}
     .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
 
-    /* sources buttons */
     .source-btn{
-      height:44px;
-      border-radius:14px;
-      font-weight:900;
-      font-size:13px;
-      transition:.2s;
+      height:44px;border-radius:14px;font-weight:900;font-size:13px;transition:.2s;
     }
     .source-btn.active{background:#fff;color:#000;}
     .source-btn.inactive{
@@ -126,58 +87,70 @@
     }
     .source-btn:hover{opacity:.95}
 
-    /* bottom bar (Vous regardez) */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(16px);
       padding:16px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
     }
-
-    .watch-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-    }
-
+    .watch-left{display:flex;align-items:center;gap:14px;min-width:0;}
     .watch-left img{
-      width:38px;height:38px;
-      object-fit:contain;
+      width:38px;height:38px;object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
       flex-shrink:0;
     }
-
-    .watch-text{
-      min-width:0;
-      line-height:1.1;
-    }
-
-    .watch-text .small{
-      opacity:.8;font-weight:700;font-size:13px;
-    }
-
+    .watch-text{min-width:0;line-height:1.1;}
+    .watch-text .small{opacity:.8;font-weight:700;font-size:13px;}
     .watch-text .big{
       font-weight:900;font-size:16px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
+    .channel-logo{width:86px;height:auto;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.7));}
 
-    .watch-right{
+    /* ✅ lien jaune (HQ) sous les players */
+    .hq-wrap{
+      margin-top:12px;
+      border-radius:14px;
+      background:rgba(245,158,11,.16);
+      border:1px solid rgba(245,158,11,.30);
+      padding:12px 14px;
       display:flex;
       align-items:center;
+      justify-content:space-between;
       gap:10px;
+    }
+    .hq-left{display:flex;align-items:center;gap:10px;min-width:0;}
+    .hq-pill{
+      width:34px;height:34px;border-radius:999px;
+      background:#fbbf24;color:#111;
+      display:grid;place-items:center;
+      font-weight:900;
+      box-shadow:0 10px 30px rgba(245,158,11,.25);
       flex-shrink:0;
     }
-
-    .ext-wrap{display:none;margin-top:12px;text-align:center;}
-    .ext-wrap a{color:#fbbf24;font-weight:900;text-decoration:underline;font-size:13px;}
+    .hq-text{min-width:0;}
+    .hq-text .t1{font-weight:900;color:#ffd27a;font-size:13px;line-height:1.1;}
+    .hq-text .t2{
+      color:#ffe9b5;opacity:.9;font-weight:800;font-size:12px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .hq-open{
+      flex-shrink:0;
+      height:38px;
+      padding:0 14px;
+      border-radius:999px;
+      background:#fbbf24;
+      color:#111;
+      font-weight:900;
+      font-size:12px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:.15s;
+    }
+    .hq-open:hover{opacity:.95;transform:scale(1.02);}
   </style>
 </head>
 
@@ -200,22 +173,23 @@
   <!-- PLAYER -->
   <section class="player-box relative w-full aspect-video">
 
-    <!-- COVER click = launch embed -->
+    <!-- COVER click -->
     <div id="cover" class="cover" onclick="loadVideo(1)">
       <div class="cover-top">
+        <!-- logos équipes : (tu peux remplacer si tu veux les vrais logos de Bayeux/OM) -->
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/8a/Logo_LOSC_Lille_2018.svg/512px-Logo_LOSC_Lille_2018.svg.png"
-             alt="Lille">
+             src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/512px-Logo_Olympique_de_Marseille.svg.png"
+             alt="OM">
         <span class="vs">VS</span>
         <img class="team-logo"
-             src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a5/Logo_Olympique_Lyonnais_-_2022.svg/512px-Logo_Olympique_Lyonnais_-_2022.svg.png"
-             alt="Lyon">
+             src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg"
+             alt="Bayeux">
       </div>
 
       <div class="cover-strip">
         <div>
           <div class="strip-title">Regarder Gratuitement</div>
-          <div class="strip-sub">Lille<br>Lyon</div>
+          <div class="strip-sub">Bayeux<br>Marseille</div>
         </div>
 
         <div class="strip-play">
@@ -234,41 +208,49 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
-  <!-- fallback embed blocked -->
-  <div id="externalLink" class="ext-wrap">
-    <a id="directLink" href="#" target="_blank">Embed bloqué ? Ouvrir le lien direct</a>
-  </div>
+  <!-- ✅ LIEN JAUNE HQ (toujours visible) -->
+  <section class="hq-wrap">
+    <div class="hq-left">
+      <div class="hq-pill">4K</div>
+      <div class="hq-text">
+        <div class="t1">Live meilleure qualité — cliquer ici</div>
+        <div class="t2">1440p · 60 FPS · 81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/553684.m3u8</div>
+      </div>
+    </div>
+
+    <a class="hq-open"
+       href="http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/553684.m3u8"
+       target="_blank" rel="noopener">
+      Ouvrir <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    </a>
+  </section>
 
   <!-- WATCH BAR -->
   <section class="mt-6 watch-bar">
-
     <div class="watch-left">
-      <!-- logo compétition -->
-      <img src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/7c/Logo_Coupe_de_France_2022.svg/512px-Logo_Coupe_de_France_2022.svg.png" alt="Coupe de France">
-
+      <img src="https://empire-sport.shop/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png" alt="Coupe de France">
       <div class="watch-text">
         <div class="small">Vous regardez</div>
-        <div class="big">Lille - Lyon</div>
+        <div class="big">Bayeux - Marseille</div>
         <div class="small">Aujourd’hui · 21:00</div>
       </div>
     </div>
 
-    <!-- pas de logo chaîne (tu n’en as pas donné) -->
-    <div class="watch-right"></div>
-
+    <div class="watch-right">
+      <img class="channel-logo"
+           src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Bein_sport_ana_logo.png"
+           alt="beIN SPORTS 1">
+    </div>
   </section>
 
 </main>
 
-<!-- PLAYER SCRIPT (stable + fallback) -->
 <script>
-  // ✅ change juste PLAYER_ID si besoin (1/2/3/4/...)
-  const PLAYER_ID = 1;
-
+  // ✅ Player numéro = 1 (tes players classiques)
   const SOURCES = {
-    1: `https://bolaloca.my/player/4/${PLAYER_ID}`,
-    2: `https://bolaloca.my/player/2/${PLAYER_ID}`,
-    3: `https://bolaloca.my/player/3/${PLAYER_ID}`
+    1: "https://bolaloca.my/player/4/1",
+    2: "https://bolaloca.my/player/2/1",
+    3: "https://bolaloca.my/player/3/1"
   };
 
   function setActive(id){
@@ -281,11 +263,6 @@
   function loadVideo(id){
     document.getElementById("cover").style.display = "none";
     setActive(id);
-
-    const ext = document.getElementById("externalLink");
-    const link = document.getElementById("directLink");
-    link.href = SOURCES[id];
-    ext.style.display = "none";
 
     const target = document.getElementById("videoTarget");
     target.innerHTML = `
@@ -300,50 +277,6 @@
         sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
       </iframe>
     `;
-
-    // ✅ fallback embed blocked
-    setTimeout(() => {
-      const iframe = document.getElementById("streamFrame");
-      if(!iframe) return;
-      try { iframe.contentWindow.location.href; }
-      catch(e){ ext.style.display = "block"; }
-    }, 2000);
-  }
-</script>
-
-<!-- FIREBASE ONLINE (invisible) -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
-    authDomain: "imftxlive.firebaseapp.com",
-    databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "imftxlive",
-    storageBucket: "imftxlive.firebasestorage.app",
-    messagingSenderId: "117057055374",
-    appId: "1:117057055374:web:af7d7542749a6ec592b7df"
-  };
-
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
-  const MATCH_ID = "lille-lyon";
-  const sessionId = Math.random().toString(36).slice(2) + Date.now();
-
-  const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
-  const onlineRef  = db.ref(`streams/${MATCH_ID}/online`);
-  const presenceRoot = db.ref(`streams/${MATCH_ID}/presence`);
-
-  if (location.protocol !== "file:") {
-    sessionRef.set(true);
-    sessionRef.onDisconnect().remove();
-
-    presenceRoot.on("value", snap => {
-      const data = snap.val() || {};
-      onlineRef.set(Object.keys(data).length);
-    });
   }
 </script>
 
