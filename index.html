@@ -10,146 +10,84 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
-    html,body{
-      height:100%;
-      margin:0;
-      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:#070708;
-      color:#fff;
-    }
+    html,body{height:100%;margin:0;font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:#070708;color:#fff;}
+    main{min-height:100vh;width:100%}
 
-    main{ min-height:100vh; width:100%; }
-
-    /* badge en direct */
     .live-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 18px;
-      border-radius:999px;
+      display:inline-flex;align-items:center;gap:10px;
+      padding:10px 18px;border-radius:999px;
       background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(12px);
-      font-weight:800;
-      font-size:14px;
-      color:#eaffea;
+      backdrop-filter:blur(12px);
+      font-weight:800;font-size:14px;color:#eaffea;
     }
-    .live-dot{
-      width:10px;height:10px;
-      background:#22c55e;
-      border-radius:999px;
-      box-shadow:0 0 18px rgba(34,197,94,.9);
-    }
+    .live-dot{width:10px;height:10px;background:#22c55e;border-radius:999px;box-shadow:0 0 18px rgba(34,197,94,.9);}
 
-    /* card */
     .match-card{
-      position:relative;
-      height:320px;
-      border-radius:22px;
-      overflow:hidden;
+      position:relative;height:300px;border-radius:22px;overflow:hidden;
       border:1px solid rgba(255,255,255,.10);
       box-shadow:0 30px 120px rgba(0,0,0,.80);
       background:#111;
     }
-
-    .match-bg{
-      position:absolute;
-      inset:0;
-      background-size:cover;
-      background-position:center;
-      transform:scale(1.02);
-    }
-
-    .match-overlay{
-      position:absolute;
-      inset:0;
-      background: linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.48) 50%, rgba(0,0,0,.15) 100%);
-    }
+    .match-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.02);}
+    .match-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.78) 100%);}
 
     .time-pill{
-      position:absolute;
-      top:14px;
-      left:14px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 11px;
-      border-radius:999px;
+      position:absolute;top:14px;left:14px;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 11px;border-radius:999px;
       background:rgba(0,0,0,.55);
       border:1px solid rgba(255,255,255,.10);
-      font-weight:900;
-      font-size:13px;
+      font-weight:900;font-size:13px;
     }
-    .time-dot{
-      width:9px;height:9px;
-      background:#f59e0b;
-      border-radius:999px;
-      box-shadow:0 0 12px rgba(245,158,11,.75);
+    .time-dot{width:9px;height:9px;background:#f59e0b;border-radius:999px;box-shadow:0 0 12px rgba(245,158,11,.75);}
+
+    .bottom-strip{
+      position:absolute;left:18px;right:18px;bottom:18px;
+      padding:14px 16px;border-radius:18px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(16px);
+      display:flex;align-items:flex-end;justify-content:space-between;gap:14px;
     }
 
-    .match-info{
-      position:absolute;
-      bottom:18px;
-      left:18px;
-      right:18px;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      gap:14px;
-    }
-
-    .teams{
-      font-size:22px;
+    /* ✅ ordre comme tu veux : match d’abord, compèt ensuite */
+    .strip-match{
       font-weight:900;
+      font-size:15px;
       line-height:1.05;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
-
-    .meta{
-      margin-top:6px;
-      font-size:13px;
-      color:rgba(255,255,255,.70);
+    .strip-compet{
+      margin-top:4px;
       font-weight:700;
+      font-size:13px;
+      opacity:.78;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
 
     .watch-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:12px 18px;
-      border-radius:999px;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.14);
-      color:#fff;
-      font-weight:900;
-      backdrop-filter: blur(14px);
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 14px;border-radius:999px;
+      background:rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.16);
+      color:#fff;font-weight:900;
       transition:.15s;
-      min-width:130px;
-      font-size:13px;
+      font-size:12px;
+      flex-shrink:0;
+      min-width:110px;
     }
-    .watch-btn:hover{
-      background:rgba(255,255,255,.18);
-      transform:scale(1.02);
-    }
+    .watch-btn:hover{background:rgba(0,0,0,.38);transform:scale(1.02);}
 
-    @media(max-width:1024px){
-      .match-card{height:280px;}
-      .teams{font-size:20px;}
-    }
-    @media(max-width:640px){
-      .match-card{height:240px;}
-      .teams{font-size:18px;}
-      .watch-btn{padding:10px 14px; min-width:110px;}
-    }
+    @media(max-width:1024px){.match-card{height:270px}}
+    @media(max-width:640px){.match-card{height:235px}.watch-btn{min-width:100px}}
   </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="w-full px-6 py-5 flex items-center justify-between">
   <div class="text-2xl font-extrabold tracking-tight">IMFTX+</div>
 
-  <!-- réseaux -->
   <div class="flex items-center gap-4 text-lg font-bold">
     <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="opacity-70 hover:opacity-100">
       <i class="fa-brands fa-telegram"></i>
@@ -166,97 +104,74 @@
 </nav>
 
 <main class="max-w-[1600px] mx-auto px-6 pb-14">
-
-  <!-- titre / slogan -->
   <header class="text-center mt-10 mb-6">
     <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">IMFTX+ LIVE</h1>
     <p class="mt-3 text-white/55 font-semibold text-lg">N°1 des meilleurs diffuseurs</p>
   </header>
 
-  <!-- En direct à gauche -->
   <div class="flex justify-start mb-6">
-    <div class="live-badge">
-      <span class="live-dot"></span>
-      En direct
-    </div>
+    <div class="live-badge"><span class="live-dot"></span> En direct</div>
   </div>
 
-  <!-- grille -->
   <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-    <!-- 20:45 Liverpool vs Barnsley -->
+    <!-- 20:30 Dortmund - Brême -->
     <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/liverpool-vs-nottingham-forest.png')"></div>
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/djj2j8cg1nwamyc44nye0olnube1mx.png')"></div>
       <div class="match-overlay"></div>
+      <div class="time-pill"><span class="time-dot"></span> 20:30</div>
 
-      <div class="time-pill"><span class="time-dot"></span> 20:45</div>
-
-      <div class="match-info">
-        <div>
-          <div class="teams">Liverpool - Barnsley</div>
-          <div class="meta">FA Cup · Aujourd’hui 20:45</div>
+      <div class="bottom-strip">
+        <div class="min-w-0">
+          <div class="strip-match">Dortmund · Brême</div>
+          <div class="strip-compet">Bundesliga</div>
         </div>
-
-        <button onclick="goMatch('liverpool-barnsley')" class="watch-btn">
-          ▶ REGARDER
-        </button>
+        <button onclick="goMatch('dortmund-breme')" class="watch-btn">▶ REGARDER</button>
       </div>
     </article>
 
-    <!-- 20:45 Juventus vs Cremonese -->
+    <!-- 21:00 Bayeux - Marseille -->
     <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png')"></div>
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/marseille-vs-angers.png')"></div>
       <div class="match-overlay"></div>
-
-      <div class="time-pill"><span class="time-dot"></span> 20:45</div>
-
-      <div class="match-info">
-        <div>
-          <div class="teams">Juventus - Cremonese</div>
-          <div class="meta">Serie A · Aujourd’hui 20:45</div>
-        </div>
-
-        <button onclick="goMatch('juventus-cremonese')" class="watch-btn">
-          ▶ REGARDER
-        </button>
-      </div>
-    </article>
-
-    <!-- 21:00 Sevilla vs Celta Vigo -->
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/uuyp4ikx1nugg28q8a5pwxm6t57gdf.png')"></div>
-      <div class="match-overlay"></div>
-
       <div class="time-pill"><span class="time-dot"></span> 21:00</div>
 
-      <div class="match-info">
-        <div>
-          <div class="teams">Sevilla - Celta Vigo</div>
-          <div class="meta">LaLiga · Aujourd’hui 21:00</div>
+      <div class="bottom-strip">
+        <div class="min-w-0">
+          <div class="strip-match">Bayeux · Marseille</div>
+          <div class="strip-compet">Coupe de France</div>
         </div>
-
-        <button onclick="goMatch('sevilla-celta-vigo')" class="watch-btn">
-          ▶ REGARDER
-        </button>
+        <button onclick="goMatch('bayeux-marseille')" class="watch-btn">▶ REGARDER</button>
       </div>
     </article>
 
-    <!-- 21:10 PSG vs Paris FC -->
+    <!-- 21:00 Newcastle - Man City -->
     <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/banners/lorient-vs-paris-sg.png')"></div>
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png')"></div>
       <div class="match-overlay"></div>
+      <div class="time-pill"><span class="time-dot"></span> 21:00</div>
 
-      <div class="time-pill"><span class="time-dot"></span> 21:10</div>
-
-      <div class="match-info">
-        <div>
-          <div class="teams">PSG - Paris FC</div>
-          <div class="meta">Coupe de France · Aujourd’hui 21:10</div>
+      <div class="bottom-strip">
+        <div class="min-w-0">
+          <div class="strip-match">Newcastle · Man City</div>
+          <div class="strip-compet">EFL CUP</div>
         </div>
+        <button onclick="goMatch('newcastle-man-city')" class="watch-btn">▶ REGARDER</button>
+      </div>
+    </article>
 
-        <button onclick="goMatch('psg-paris-fc')" class="watch-btn">
-          ▶ REGARDER
-        </button>
+    <!-- 21:00 Deportivo - Atlético -->
+    <article class="match-card">
+      <div class="match-bg" style="background-image:url('https://empire-sport.shop/upload/teambanks/nyo5kfaliih9bnm67oco0hzayzqgcm.png')"></div>
+      <div class="match-overlay"></div>
+      <div class="time-pill"><span class="time-dot"></span> 21:00</div>
+
+      <div class="bottom-strip">
+        <div class="min-w-0">
+          <div class="strip-match">Deportivo · Atlético</div>
+          <div class="strip-compet">Copa del Rey</div>
+        </div>
+        <button onclick="goMatch('deportivo-atletico')" class="watch-btn">▶ REGARDER</button>
       </div>
     </article>
 
