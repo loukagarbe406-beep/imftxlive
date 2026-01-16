@@ -5,24 +5,34 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IMFTX+ — Live</title>
 
+  <!-- Typos pro -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
     :root{
+      --bg1:#1b1c21;
+      --bg2:#101116;
+      --bg3:#070708;
+
       --left:#0f1115;
       --right:#0f1115;
+
       --line:rgba(255,255,255,.08);
-      --muted:rgba(255,255,255,.58);
-      --muted2:rgba(255,255,255,.42);
+      --glass:rgba(255,255,255,.06);
+
+      --muted:rgba(255,255,255,.62);
+      --muted2:rgba(255,255,255,.45);
 
       --blue:rgba(59,130,246,.22);
       --blueB:rgba(59,130,246,.35);
 
       --discord:rgba(99,102,241,.22);
       --discordB:rgba(99,102,241,.35);
+
       --tg:rgba(34,211,238,.18);
       --tgB:rgba(34,211,238,.28);
+
       --iptv:rgba(34,197,94,.20);
       --iptvB:rgba(34,197,94,.32);
     }
@@ -35,20 +45,58 @@
       background:
         radial-gradient(1200px 700px at 15% 0%, rgba(255,255,255,.08), transparent 60%),
         radial-gradient(900px 600px at 85% 10%, rgba(255,255,255,.06), transparent 55%),
-        linear-gradient(180deg, #1b1c21 0%, #101116 35%, #070708 100%);
+        linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 35%, var(--bg3) 100%);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: geometricPrecision;
       overflow:hidden;
     }
 
+    /* ===== Layout desktop ===== */
     .app{
       height:100vh;
       display:grid;
       grid-template-columns: 280px 1fr 360px;
     }
 
-    /* Left */
+    /* ===== Buttons ===== */
+    .iconBtn{
+      width:36px;height:36px;border-radius:12px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      color:rgba(255,255,255,.9);
+      cursor:pointer;
+      transition:.15s;
+    }
+    .iconBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.08)}
+
+    .pillBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+      font-size:12px;
+      cursor:pointer;
+      transition:.15s;
+      min-width:118px;
+      text-decoration:none;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .pillBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.09)}
+    .pillBtn.discord{background:var(--discord); border-color:var(--discordB)}
+    .pillBtn.telegram{background:var(--tg); border-color:var(--tgB)}
+    .pillBtn.iptv{background:var(--iptv); border-color:var(--iptvB)}
+    .pillBtn.dark{background:rgba(255,255,255,.05)}
+
+    /* ===== LEFT ===== */
     .left{
       background:var(--left);
       border-right:1px solid var(--line);
@@ -70,23 +118,21 @@
       text-transform:uppercase;
       color:rgba(255,255,255,.82);
     }
-    .iconBtn{
-      width:36px;height:36px;border-radius:12px;
-      display:grid;place-items:center;
-      background:rgba(255,255,255,.05);
-      border:1px solid var(--line);
-      color:rgba(255,255,255,.88);
-      cursor:pointer;
-      transition:.15s;
-    }
-    .iconBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.08)}
 
-    .channels{padding:8px 10px 14px;overflow:auto;min-height:0;}
+    .channels{
+      padding:8px 10px 14px;
+      overflow:auto;
+      min-height:0;
+    }
     .ch{
-      display:flex;align-items:center;
-      padding:12px 12px;border-radius:14px;
-      cursor:pointer;border:1px solid transparent;
-      transition:.15s;gap:12px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      border:1px solid transparent;
+      transition:.15s;
     }
     .ch:hover{background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.06)}
     .ch.active{background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.10)}
@@ -96,19 +142,54 @@
       display:grid;place-items:center;
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
-      overflow:hidden;flex:0 0 auto;
+      overflow:hidden;
+      flex:0 0 auto;
     }
-    .compIcon img{width:100%;height:100%;object-fit:contain;padding:6px;filter: drop-shadow(0 0 10px rgba(255,255,255,.10));}
+    .compIcon img{
+      width:100%;height:100%;
+      object-fit:contain;
+      padding:6px;
+      filter: drop-shadow(0 0 10px rgba(255,255,255,.10));
+    }
 
     .chTxt{min-width:0}
-    .chName{font-weight:800;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.1px;}
-    .chMeta{margin-top:3px;font-weight:700;font-size:12px;color:var(--muted2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .chName{
+      font-weight:800;
+      font-size:13px;
+      letter-spacing:.1px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .chMeta{
+      margin-top:3px;
+      font-weight:700;
+      font-size:12px;
+      color:var(--muted2);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
 
-    /* Center */
-    .center{display:flex;flex-direction:column;min-width:0;min-height:0;background:#000;}
-    .videoWrap{position:relative;flex:1;min-height:0;background:#000;}
-    .playerFrame{width:100%;height:100%;border:0;display:block;background:#000;}
+    /* ===== CENTER (player) ===== */
+    .center{
+      display:flex;
+      flex-direction:column;
+      min-width:0;
+      min-height:0;
+      background:#000;
+    }
+    .videoWrap{
+      position:relative;
+      flex:1;
+      min-height:0;
+      background:#000;
+    }
+    .playerFrame{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+      background:#000;
+    }
 
+    /* ===== Bottom bar ===== */
     .bottomBar{
       height:92px;
       background:rgba(8,9,11,.94);
@@ -120,27 +201,36 @@
       gap:12px;
     }
     .titleWrap{min-width:0}
-    .matchTitle{font-weight:800;font-size:16px;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .subTitle{margin-top:4px;font-weight:700;font-size:12px;color:rgba(255,255,255,.55);display:flex;gap:8px;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .subDot{width:6px;height:6px;border-radius:999px;background:rgba(255,255,255,.25);flex:0 0 auto;}
-
-    .btnRow{display:flex;gap:10px;justify-content:flex-end;align-items:center;flex-wrap:wrap;}
-    .pillBtn{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      padding:10px 14px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      color:#fff;font-weight:800;font-size:12px;
-      cursor:pointer;transition:.15s;min-width:118px;
-      text-decoration:none;
+    .matchTitle{
+      font-weight:800;
+      font-size:16px;
+      letter-spacing:.2px;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
     }
-    .pillBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.09)}
-    .pillBtn.discord{background:var(--discord); border-color:var(--discordB)}
-    .pillBtn.telegram{background:var(--tg); border-color:var(--tgB)}
-    .pillBtn.iptv{background:var(--iptv); border-color:var(--iptvB)}
-    .pillBtn.dark{background:rgba(255,255,255,.05)}
+    .subTitle{
+      margin-top:4px;
+      font-weight:700;
+      font-size:12px;
+      color:rgba(255,255,255,.55);
+      display:flex;
+      gap:8px;
+      align-items:center;
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    }
+    .subDot{
+      width:6px;height:6px;border-radius:999px;
+      background:rgba(255,255,255,.25);
+      flex:0 0 auto;
+    }
+    .btnRow{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      align-items:center;
+      flex-wrap:wrap;
+    }
 
-    /* Right */
+    /* ===== RIGHT (chat) ===== */
     .right{
       background:var(--right);
       border-left:1px solid var(--line);
@@ -150,83 +240,152 @@
     }
     .chatHeader{
       padding:14px 14px 12px;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
       border-bottom:1px solid var(--line);
+      background:var(--right);
     }
     .chatHeader .title{
-      font-weight:800;font-size:12px;letter-spacing:.7px;
-      text-transform:uppercase;color:rgba(255,255,255,.82);
+      font-weight:800;
+      font-size:12px;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.82);
     }
-
-    .ad{
-      margin:10px 12px;border-radius:14px;overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background:linear-gradient(135deg, rgba(245,158,11,.45), rgba(0,0,0,.35));
-      height:74px;position:relative;
-    }
-    .ad .txt{position:absolute;left:12px;top:12px;right:12px;font-weight:800;line-height:1.05;}
-    .ad small{display:block;font-weight:800;opacity:.9;letter-spacing:.3px}
 
     .chatBody{
-      flex:1;overflow:auto;padding:10px 12px;
-      display:flex;flex-direction:column;gap:10px;min-height:0;
+      flex:1;
+      overflow:auto;
+      padding:12px 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      min-height:0;
     }
-    .pinned{
-      border-radius:14px;overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,0,0,.10);
-    }
-    .pinnedTop{
-      padding:10px 10px;font-weight:800;font-size:12px;color:rgba(255,255,255,.85);
-      border-bottom:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.06);
-    }
-    .pinnedMsg{padding:10px 10px;font-weight:700;color:rgba(255,255,255,.85);font-size:13px;line-height:1.35;}
 
-    .msg{font-size:13px;line-height:1.25;color:rgba(255,255,255,.88);}
+    .welcome{
+      opacity:.55;
+      text-align:center;
+      padding:18px 0;
+      font-weight:700;
+      font-size:13px;
+    }
+
+    .msg{
+      font-size:13px;
+      line-height:1.25;
+      color:rgba(255,255,255,.88);
+      word-break:break-word;
+    }
     .name{font-weight:800;margin-right:6px;}
     .mod{
-      display:inline-block;font-size:11px;font-weight:800;
-      padding:2px 6px;border-radius:7px;
-      background:var(--blue);border:1px solid var(--blueB);
+      display:inline-block;
+      font-size:11px;
+      font-weight:800;
+      padding:2px 6px;
+      border-radius:7px;
+      background:var(--blue);
+      border:1px solid var(--blueB);
       margin-right:6px;
     }
 
     .chatFoot{
       border-top:1px solid var(--line);
       padding:10px 12px;
-      display:flex;gap:10px;
+      display:flex;
+      gap:10px;
       background:rgba(0,0,0,.20);
     }
     .chatFoot input{
-      flex:1;padding:12px 12px;border-radius:12px;
+      flex:1;
+      padding:12px 12px;
+      border-radius:12px;
       border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.05);
-      color:#fff;outline:none;font-weight:700;
+      color:#fff;
+      outline:none;
+      font-weight:700;
     }
     .chatFoot input:focus{border-color:rgba(255,255,255,.20)}
     .send{
-      padding:12px 16px;border-radius:12px;
+      padding:12px 16px;
+      border-radius:12px;
       border:1px solid var(--blueB);
       background:var(--blue);
-      font-weight:800;color:#fff;cursor:pointer;
+      font-weight:800;
+      color:#fff;
+      cursor:pointer;
     }
 
-    @media(max-width:1100px){
+    /* ===== TABLET: hide right ===== */
+    @media (max-width: 1100px){
       .app{grid-template-columns: 280px 1fr;}
       .right{display:none;}
       .bottomBar{grid-template-columns: 1fr;}
       .btnRow{justify-content:flex-start}
     }
-    @media(max-width:820px){
-      .app{grid-template-columns: 1fr;}
-      .left{display:none;}
+
+    /* ===== MOBILE (TEL) like your screenshot ===== */
+    @media (max-width: 820px){
+      body{ overflow:auto; }
+      .app{
+        grid-template-columns: 1fr !important;
+        height:auto;
+        min-height:100vh;
+      }
+
+      .left{ display:none !important; }
+
+      .videoWrap{
+        height:42vh;           /* player top */
+        min-height:280px;
+      }
+
+      .bottomBar{
+        height:auto;
+        padding:12px 12px;
+        grid-template-columns: 1fr;
+        gap:10px;
+      }
+
+      .btnRow{
+        justify-content:flex-start;
+        overflow-x:auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom:2px;
+      }
+      .pillBtn{min-width:120px; flex:0 0 auto;}
+
+      .right{
+        display:flex !important;
+        border-left:none;
+        border-top:1px solid var(--line);
+        height: calc(100vh - 42vh - 120px);
+        min-height: 360px;
+      }
+
+      .chatHeader{
+        position:sticky;
+        top:0;
+        z-index:5;
+      }
+      .chatFoot{
+        position:sticky;
+        bottom:0;
+        z-index:6;
+        background:rgba(15,17,21,.95);
+        backdrop-filter: blur(10px);
+      }
     }
   </style>
 </head>
 
 <body>
   <div class="app">
+
+    <!-- LEFT (desktop only) -->
     <aside class="left">
       <div class="leftHeader">
         <div class="title">Chaînes live</div>
@@ -237,12 +396,13 @@
       <div class="channels" id="channels"></div>
     </aside>
 
+    <!-- CENTER -->
     <main class="center">
       <div class="videoWrap">
         <!-- ✅ Remplace PLAYER_URL par ton embed autorisé -->
         <iframe
           class="playerFrame"
-          src="https://bolaloca.my/player/3/20"
+          src="PLAYER_URL"
           allow="autoplay; encrypted-media; fullscreen"
           allowfullscreen
           referrerpolicy="no-referrer">
@@ -258,45 +418,43 @@
         </div>
 
         <div class="btnRow">
-          <a class="pillBtn discord" href="https://discord.gg/4ZFv9sa8" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
-          <a class="pillBtn telegram" href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
-          <a class="pillBtn iptv" href="https://discord.gg/FmWwePH5ET" target="_blank"><i class="fa-solid fa-tv"></i> IPTV</a>
+          <a class="pillBtn discord" href="https://discord.gg/4ZFv9sa8" target="_blank" rel="noreferrer">
+            <i class="fa-brands fa-discord"></i> Discord
+          </a>
           <a class="pillBtn dark" href="#" onclick="return false;">X</a>
+          <a class="pillBtn telegram" href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" rel="noreferrer">
+            <i class="fa-brands fa-telegram"></i> Telegram
+          </a>
+          <a class="pillBtn iptv" href="https://discord.gg/FmWwePH5ET" target="_blank" rel="noreferrer">
+            <i class="fa-solid fa-tv"></i> IPTV
+          </a>
         </div>
       </div>
     </main>
 
+    <!-- RIGHT (chat) -->
     <aside class="right">
       <div class="chatHeader">
         <div class="title">Chat du stream</div>
-        <button class="iconBtn" title="Réglages" onclick="renameUser()">
+        <button class="iconBtn" title="Pseudo" onclick="renameUser()">
           <i class="fa-solid fa-user-pen"></i>
         </button>
       </div>
 
-      <div class="ad">
-        <div class="txt">
-          <small>INFO</small>
-          Chat en direct
-        </div>
-      </div>
-
       <div class="chatBody" id="chatBody">
-        <div class="pinned">
-          <div class="pinnedTop">+ Message épinglé</div>
-          <div class="pinnedMsg"><span class="name" style="color:#ff6b6b">Admin:</span> Respectez le chat, pas de spam.</div>
-        </div>
+        <div class="welcome">Bienvenue dans le chat !</div>
       </div>
 
       <div class="chatFoot">
         <input id="chatInput" placeholder="Envoyer un message" maxlength="200" />
-        <button class="send" id="sendBtn">Envoyer</button>
+        <button class="send" id="sendBtn">Chat</button>
       </div>
     </aside>
+
   </div>
 
   <script>
-    // Sidebar (1 match)
+    // ===== Sidebar: 1 match =====
     const COPA_LOGO =
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Copa_Del_Rey_Official_Logo.png/250px-Copa_Del_Rey_Official_Logo.png";
 
@@ -308,6 +466,7 @@
     const matchTitleEl = document.getElementById("matchTitle");
 
     function renderChannels(activeId){
+      if(!channelsEl) return;
       channelsEl.innerHTML = "";
       CHANNELS.forEach(c=>{
         const row = document.createElement("div");
@@ -328,7 +487,7 @@
     }
     renderChannels(CHANNELS[0].id);
 
-    // Rename pseudo
+    // ===== Pseudo =====
     function renameUser(){
       const cur = localStorage.getItem("imftx_name") || "";
       const n = prompt("Ton pseudo :", cur);
@@ -342,7 +501,6 @@
   <script type="module">
     import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-    // ✅ TON PROJET
     const SUPABASE_URL = "https://nipfaqeshezvoxravdqx.supabase.co";
     const SUPABASE_ANON_KEY = "nipfaqeshezvoxravdqx"; // <- colle ta clé anon (eyJ...)
 
@@ -354,7 +512,6 @@
     const chatInput = document.getElementById("chatInput");
     const sendBtn = document.getElementById("sendBtn");
 
-    // pseudo simple
     const username =
       localStorage.getItem("imftx_name") ||
       ("User" + Math.floor(Math.random() * 9000 + 1000));
@@ -363,14 +520,12 @@
     function escapeHtml(s){
       return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
     }
-
     function colorFor(name){
       const colors = ["#a78bfa","#60a5fa","#34d399","#f472b6","#22d3ee","#fbbf24","#93c5fd","#fb7185"];
       let h = 0;
       for (let i=0;i<name.length;i++) h = (h*31 + name.charCodeAt(i)) >>> 0;
       return colors[h % colors.length];
     }
-
     function addMessage({ username, message }){
       const div = document.createElement("div");
       div.className = "msg";
@@ -386,18 +541,16 @@
         .select("username,message,created_at")
         .eq("room", room)
         .order("created_at", { ascending: true })
-        .limit(80);
+        .limit(120);
 
       if (error) console.error(error);
       data?.forEach(addMessage);
     }
 
-    // anti spam (cooldown 1.5s)
     let lastSend = 0;
-
     async function send(){
       const now = Date.now();
-      if (now - lastSend < 1500) return;
+      if (now - lastSend < 1200) return; // anti-spam
       lastSend = now;
 
       const v = chatInput.value.trim();
@@ -417,13 +570,12 @@
     sendBtn.addEventListener("click", send);
     chatInput.addEventListener("keydown", (e)=>{ if(e.key === "Enter") send(); });
 
-    // realtime
     supabase
       .channel("chat:" + room)
       .on(
         "postgres_changes",
         { event:"INSERT", schema:"public", table:"chat_messages", filter:`room=eq.${room}` },
-        payload => addMessage(payload.new)
+        (payload) => addMessage(payload.new)
       )
       .subscribe();
 
