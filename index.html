@@ -5,197 +5,429 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IMFTX+ — Live</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
-    html,body{
-      height:100%;
-      margin:0;
-      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:#070708;
+    :root{
+      --left:#0f1115;
+      --right:#0f1115;
+      --line:rgba(255,255,255,.08);
+      --muted:rgba(255,255,255,.58);
+      --muted2:rgba(255,255,255,.42);
+
+      --blue:rgba(59,130,246,.22);
+      --blueB:rgba(59,130,246,.35);
+
+      --discord:rgba(99,102,241,.22);
+      --discordB:rgba(99,102,241,.35);
+      --tg:rgba(34,211,238,.18);
+      --tgB:rgba(34,211,238,.28);
+      --iptv:rgba(34,197,94,.20);
+      --iptvB:rgba(34,197,94,.32);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      font-family:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color:#fff;
-    }
-
-    main{min-height:100vh;width:100%;}
-
-    /* badge en direct */
-    .live-badge{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:9px 16px;border-radius:999px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(12px);
-      font-weight:800;font-size:13px;color:#eaffea;
-    }
-    .live-dot{
-      width:9px;height:9px;background:#22c55e;border-radius:999px;
-      box-shadow:0 0 16px rgba(34,197,94,.9);
-    }
-
-    /* ✅ card plus petite + style "bande en bas" comme ton exemple */
-    .match-card{
-      position:relative;
-      height:220px;              /* plus petit */
-      border-radius:22px;
+      background:
+        radial-gradient(1200px 700px at 15% 0%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 600px at 85% 10%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(180deg, #1b1c21 0%, #101116 35%, #070708 100%);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow:0 26px 90px rgba(0,0,0,.78);
-      background:#0f0f10;
     }
 
-    .match-bg{
-      position:absolute; inset:0;
-      background:url("https://empire-sport.work/upload/banners/celta-vigo-vs-barcelona.png") center/cover no-repeat;
-      transform:scale(1.02);
-      filter:saturate(1.05) contrast(1.05);
+    .app{
+      height:100vh;
+      display:grid;
+      grid-template-columns: 280px 1fr 360px;
     }
 
-    /* voile sombre global */
-    .shade{
-      position:absolute; inset:0;
-      background:linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.55) 60%, rgba(0,0,0,.70) 100%);
+    /* Left */
+    .left{
+      background:var(--left);
+      border-right:1px solid var(--line);
+      display:flex;
+      flex-direction:column;
+      min-height:0;
     }
-
-    /* pastille heure */
-    .time-pill{
-      position:absolute; top:14px; left:14px;
-      display:inline-flex; align-items:center; gap:8px;
-      padding:7px 11px; border-radius:999px;
-      background:rgba(0,0,0,.55);
-      border:1px solid rgba(255,255,255,.10);
-      font-weight:900; font-size:13px;
-    }
-    .time-dot{
-      width:9px;height:9px;border-radius:999px;
-      background:#f59e0b; box-shadow:0 0 12px rgba(245,158,11,.75);
-    }
-
-    /* ✅ bande en bas (comme ton screen) */
-    .bottom-strip{
-      position:absolute;
-      left:14px; right:14px; bottom:14px;
-      height:74px;
-      border-radius:18px;
-      background:rgba(20,20,22,.78);
-      border:1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(14px);
+    .leftHeader{
+      padding:14px 14px 12px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
-      padding:0 16px;
+      gap:10px;
     }
-
-    .left{
-      min-width:0;
-    }
-    .teams{
-      font-size:16px;
-      font-weight:900;
-      line-height:1.1;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .comp{
-      margin-top:4px;
-      font-size:12px;
+    .leftHeader .title{
       font-weight:800;
-      color:rgba(255,255,255,.70);
-    }
-
-    /* bouton regarder compact */
-    .watch-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.14);
-      color:#fff;
-      font-weight:900;
       font-size:12px;
-      transition:.15s;
-      flex-shrink:0;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.82);
     }
-    .watch-btn:hover{background:rgba(255,255,255,.16); transform:scale(1.02);}
+    .iconBtn{
+      width:36px;height:36px;border-radius:12px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      color:rgba(255,255,255,.88);
+      cursor:pointer;
+      transition:.15s;
+    }
+    .iconBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.08)}
 
-    @media(max-width:640px){
-      .match-card{height:200px;}
-      .bottom-strip{height:70px;}
-      .teams{font-size:15px;}
-      .watch-btn{padding:9px 12px;}
+    .channels{padding:8px 10px 14px;overflow:auto;min-height:0;}
+    .ch{
+      display:flex;align-items:center;
+      padding:12px 12px;border-radius:14px;
+      cursor:pointer;border:1px solid transparent;
+      transition:.15s;gap:12px;
+    }
+    .ch:hover{background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.06)}
+    .ch.active{background:rgba(255,255,255,.07); border-color:rgba(255,255,255,.10)}
+
+    .compIcon{
+      width:36px;height:36px;border-radius:12px;
+      display:grid;place-items:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;flex:0 0 auto;
+    }
+    .compIcon img{width:100%;height:100%;object-fit:contain;padding:6px;filter: drop-shadow(0 0 10px rgba(255,255,255,.10));}
+
+    .chTxt{min-width:0}
+    .chName{font-weight:800;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.1px;}
+    .chMeta{margin-top:3px;font-weight:700;font-size:12px;color:var(--muted2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+    /* Center */
+    .center{display:flex;flex-direction:column;min-width:0;min-height:0;background:#000;}
+    .videoWrap{position:relative;flex:1;min-height:0;background:#000;}
+    .playerFrame{width:100%;height:100%;border:0;display:block;background:#000;}
+
+    .bottomBar{
+      height:92px;
+      background:rgba(8,9,11,.94);
+      border-top:1px solid var(--line);
+      display:grid;
+      grid-template-columns: 1fr auto;
+      align-items:center;
+      padding:0 14px;
+      gap:12px;
+    }
+    .titleWrap{min-width:0}
+    .matchTitle{font-weight:800;font-size:16px;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .subTitle{margin-top:4px;font-weight:700;font-size:12px;color:rgba(255,255,255,.55);display:flex;gap:8px;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .subDot{width:6px;height:6px;border-radius:999px;background:rgba(255,255,255,.25);flex:0 0 auto;}
+
+    .btnRow{display:flex;gap:10px;justify-content:flex-end;align-items:center;flex-wrap:wrap;}
+    .pillBtn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:10px 14px;border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      color:#fff;font-weight:800;font-size:12px;
+      cursor:pointer;transition:.15s;min-width:118px;
+      text-decoration:none;
+    }
+    .pillBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.09)}
+    .pillBtn.discord{background:var(--discord); border-color:var(--discordB)}
+    .pillBtn.telegram{background:var(--tg); border-color:var(--tgB)}
+    .pillBtn.iptv{background:var(--iptv); border-color:var(--iptvB)}
+    .pillBtn.dark{background:rgba(255,255,255,.05)}
+
+    /* Right */
+    .right{
+      background:var(--right);
+      border-left:1px solid var(--line);
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+    .chatHeader{
+      padding:14px 14px 12px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      border-bottom:1px solid var(--line);
+    }
+    .chatHeader .title{
+      font-weight:800;font-size:12px;letter-spacing:.7px;
+      text-transform:uppercase;color:rgba(255,255,255,.82);
+    }
+
+    .ad{
+      margin:10px 12px;border-radius:14px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(135deg, rgba(245,158,11,.45), rgba(0,0,0,.35));
+      height:74px;position:relative;
+    }
+    .ad .txt{position:absolute;left:12px;top:12px;right:12px;font-weight:800;line-height:1.05;}
+    .ad small{display:block;font-weight:800;opacity:.9;letter-spacing:.3px}
+
+    .chatBody{
+      flex:1;overflow:auto;padding:10px 12px;
+      display:flex;flex-direction:column;gap:10px;min-height:0;
+    }
+    .pinned{
+      border-radius:14px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,0,0,.10);
+    }
+    .pinnedTop{
+      padding:10px 10px;font-weight:800;font-size:12px;color:rgba(255,255,255,.85);
+      border-bottom:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.06);
+    }
+    .pinnedMsg{padding:10px 10px;font-weight:700;color:rgba(255,255,255,.85);font-size:13px;line-height:1.35;}
+
+    .msg{font-size:13px;line-height:1.25;color:rgba(255,255,255,.88);}
+    .name{font-weight:800;margin-right:6px;}
+    .mod{
+      display:inline-block;font-size:11px;font-weight:800;
+      padding:2px 6px;border-radius:7px;
+      background:var(--blue);border:1px solid var(--blueB);
+      margin-right:6px;
+    }
+
+    .chatFoot{
+      border-top:1px solid var(--line);
+      padding:10px 12px;
+      display:flex;gap:10px;
+      background:rgba(0,0,0,.20);
+    }
+    .chatFoot input{
+      flex:1;padding:12px 12px;border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:#fff;outline:none;font-weight:700;
+    }
+    .chatFoot input:focus{border-color:rgba(255,255,255,.20)}
+    .send{
+      padding:12px 16px;border-radius:12px;
+      border:1px solid var(--blueB);
+      background:var(--blue);
+      font-weight:800;color:#fff;cursor:pointer;
+    }
+
+    @media(max-width:1100px){
+      .app{grid-template-columns: 280px 1fr;}
+      .right{display:none;}
+      .bottomBar{grid-template-columns: 1fr;}
+      .btnRow{justify-content:flex-start}
+    }
+    @media(max-width:820px){
+      .app{grid-template-columns: 1fr;}
+      .left{display:none;}
     }
   </style>
 </head>
 
 <body>
-
-<!-- NAVBAR -->
-<nav class="w-full px-6 py-5 flex items-center justify-between">
-  <div class="text-2xl font-extrabold tracking-tight">IMFTX+</div>
-
-  <div class="flex items-center gap-4 text-lg font-bold">
-    <a href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" class="opacity-70 hover:opacity-100">
-      <i class="fa-brands fa-telegram"></i>
-    </a>
-    <a href="https://discord.gg/4ZFv9sa8" target="_blank" class="opacity-70 hover:opacity-100">
-      <i class="fa-brands fa-discord"></i>
-    </a>
-
-    <a href="https://discord.gg/FmWwePH5ET" target="_blank"
-       class="opacity-80 hover:opacity-100 text-sm px-3 py-1 rounded-full bg-white/10 border border-white/10">
-      IPTV
-    </a>
-  </div>
-</nav>
-
-<main class="max-w-[1200px] mx-auto px-6 pb-14">
-
-  <header class="text-center mt-10 mb-6">
-    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">IMFTX+ LIVE</h1>
-    <p class="mt-3 text-white/55 font-semibold text-lg">N°1 des meilleurs diffuseurs</p>
-  </header>
-
-  <div class="flex justify-start mb-5">
-    <div class="live-badge">
-      <span class="live-dot"></span>
-      En direct
-    </div>
-  </div>
-
-  <!-- ✅ 1 match, style comme ton exemple -->
-  <section class="grid grid-cols-1 gap-6">
-    <article class="match-card">
-      <div class="match-bg"></div>
-      <div class="shade"></div>
-
-      <div class="time-pill"><span class="time-dot"></span> 21:00</div>
-
-      <div class="bottom-strip">
-        <div class="left">
-          <div class="teams">Santander • Barcelone</div>
-          <div class="comp">Coupe du Roi</div>
-        </div>
-
-        <button onclick="goMatch('santander-barcelone')" class="watch-btn">
-          <i class="fa-solid fa-play"></i> REGARDER
+  <div class="app">
+    <aside class="left">
+      <div class="leftHeader">
+        <div class="title">Chaînes live</div>
+        <button class="iconBtn" title="Retour" onclick="window.location.href='index.html'">
+          <i class="fa-solid fa-arrow-left"></i>
         </button>
       </div>
-    </article>
-  </section>
+      <div class="channels" id="channels"></div>
+    </aside>
 
-</main>
+    <main class="center">
+      <div class="videoWrap">
+        <!-- ✅ Remplace PLAYER_URL par ton embed autorisé -->
+        <iframe
+          class="playerFrame"
+          src="https://bolaloca.my/player/3/20"
+          allow="autoplay; encrypted-media; fullscreen"
+          allowfullscreen
+          referrerpolicy="no-referrer">
+        </iframe>
+      </div>
 
-<script>
-  function goMatch(id){
-    window.location.href = id + ".html";
-  }
-</script>
+      <div class="bottomBar">
+        <div class="titleWrap">
+          <div class="matchTitle" id="matchTitle">Santander - Barcelone</div>
+          <div class="subTitle">
+            <span>Copa del Rey</span><span class="subDot"></span><span>21:00</span>
+          </div>
+        </div>
 
+        <div class="btnRow">
+          <a class="pillBtn discord" href="https://discord.gg/4ZFv9sa8" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
+          <a class="pillBtn telegram" href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram</a>
+          <a class="pillBtn iptv" href="https://discord.gg/FmWwePH5ET" target="_blank"><i class="fa-solid fa-tv"></i> IPTV</a>
+          <a class="pillBtn dark" href="#" onclick="return false;">X</a>
+        </div>
+      </div>
+    </main>
+
+    <aside class="right">
+      <div class="chatHeader">
+        <div class="title">Chat du stream</div>
+        <button class="iconBtn" title="Réglages" onclick="renameUser()">
+          <i class="fa-solid fa-user-pen"></i>
+        </button>
+      </div>
+
+      <div class="ad">
+        <div class="txt">
+          <small>INFO</small>
+          Chat en direct
+        </div>
+      </div>
+
+      <div class="chatBody" id="chatBody">
+        <div class="pinned">
+          <div class="pinnedTop">+ Message épinglé</div>
+          <div class="pinnedMsg"><span class="name" style="color:#ff6b6b">Admin:</span> Respectez le chat, pas de spam.</div>
+        </div>
+      </div>
+
+      <div class="chatFoot">
+        <input id="chatInput" placeholder="Envoyer un message" maxlength="200" />
+        <button class="send" id="sendBtn">Envoyer</button>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // Sidebar (1 match)
+    const COPA_LOGO =
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Copa_Del_Rey_Official_Logo.png/250px-Copa_Del_Rey_Official_Logo.png";
+
+    const CHANNELS = [
+      { id:"santander-barcelone", name:"Santander - Barcelone", meta:"Copa del Rey • 21:00", active:true }
+    ];
+
+    const channelsEl = document.getElementById("channels");
+    const matchTitleEl = document.getElementById("matchTitle");
+
+    function renderChannels(activeId){
+      channelsEl.innerHTML = "";
+      CHANNELS.forEach(c=>{
+        const row = document.createElement("div");
+        row.className = "ch" + (c.id===activeId ? " active" : "");
+        row.innerHTML = `
+          <div class="compIcon"><img alt="Copa del Rey" src="${COPA_LOGO}"></div>
+          <div class="chTxt">
+            <div class="chName">${c.name}</div>
+            <div class="chMeta">${c.meta}</div>
+          </div>
+        `;
+        row.addEventListener("click", ()=>{
+          renderChannels(c.id);
+          matchTitleEl.textContent = c.name;
+        });
+        channelsEl.appendChild(row);
+      });
+    }
+    renderChannels(CHANNELS[0].id);
+
+    // Rename pseudo
+    function renameUser(){
+      const cur = localStorage.getItem("imftx_name") || "";
+      const n = prompt("Ton pseudo :", cur);
+      if(!n) return;
+      localStorage.setItem("imftx_name", n.slice(0, 18));
+      alert("Pseudo mis à jour ✅");
+    }
+  </script>
+
+  <!-- ✅ CHAT ACTIF SUPABASE (Realtime) -->
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    // ✅ TON PROJET
+    const SUPABASE_URL = "https://nipfaqeshezvoxravdqx.supabase.co";
+    const SUPABASE_ANON_KEY = "nipfaqeshezvoxravdqx"; // <- colle ta clé anon (eyJ...)
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const room = "santander-barcelone";
+
+    const chatBody = document.getElementById("chatBody");
+    const chatInput = document.getElementById("chatInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    // pseudo simple
+    const username =
+      localStorage.getItem("imftx_name") ||
+      ("User" + Math.floor(Math.random() * 9000 + 1000));
+    localStorage.setItem("imftx_name", username);
+
+    function escapeHtml(s){
+      return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+    }
+
+    function colorFor(name){
+      const colors = ["#a78bfa","#60a5fa","#34d399","#f472b6","#22d3ee","#fbbf24","#93c5fd","#fb7185"];
+      let h = 0;
+      for (let i=0;i<name.length;i++) h = (h*31 + name.charCodeAt(i)) >>> 0;
+      return colors[h % colors.length];
+    }
+
+    function addMessage({ username, message }){
+      const div = document.createElement("div");
+      div.className = "msg";
+      div.innerHTML =
+        `<span class="name" style="color:${colorFor(username)}">${escapeHtml(username)}:</span> ${escapeHtml(message)}`;
+      chatBody.appendChild(div);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    async function loadHistory(){
+      const { data, error } = await supabase
+        .from("chat_messages")
+        .select("username,message,created_at")
+        .eq("room", room)
+        .order("created_at", { ascending: true })
+        .limit(80);
+
+      if (error) console.error(error);
+      data?.forEach(addMessage);
+    }
+
+    // anti spam (cooldown 1.5s)
+    let lastSend = 0;
+
+    async function send(){
+      const now = Date.now();
+      if (now - lastSend < 1500) return;
+      lastSend = now;
+
+      const v = chatInput.value.trim();
+      if(!v) return;
+      chatInput.value = "";
+
+      const { error } = await supabase
+        .from("chat_messages")
+        .insert([{ room, username, message: v.slice(0,200) }]);
+
+      if (error){
+        console.error(error);
+        alert("Erreur envoi message");
+      }
+    }
+
+    sendBtn.addEventListener("click", send);
+    chatInput.addEventListener("keydown", (e)=>{ if(e.key === "Enter") send(); });
+
+    // realtime
+    supabase
+      .channel("chat:" + room)
+      .on(
+        "postgres_changes",
+        { event:"INSERT", schema:"public", table:"chat_messages", filter:`room=eq.${room}` },
+        payload => addMessage(payload.new)
+      )
+      .subscribe();
+
+    await loadHistory();
+  </script>
 </body>
 </html>
