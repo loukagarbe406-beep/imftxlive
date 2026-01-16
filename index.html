@@ -70,9 +70,9 @@
     .videoWrap{position:relative;flex:1;min-height:0;background:#000;}
     iframe{width:100%;height:100%;border:0;background:#000;display:block;}
 
-    /* fallback overlay */
+    /* Fallback ALWAYS visible until user clicks "Réessayer" */
     .fallback{
-      position:absolute;inset:0;display:none;
+      position:absolute;inset:0;display:flex;
       align-items:center;justify-content:center;
       padding:22px;text-align:center;
       background:radial-gradient(900px 500px at 50% 40%, rgba(255,255,255,.08), rgba(0,0,0,.78));
@@ -111,12 +111,10 @@
     .right{background:var(--right);border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0;}
     .chatHeader{padding:14px 14px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);background:var(--right);}
     .chatHeader .title{font-weight:900;font-size:12px;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.82);}
-
     .chatBody{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:0;}
     .welcome{opacity:.55;text-align:center;padding:18px 0;font-weight:800;font-size:13px;}
     .msg{font-size:13px;line-height:1.25;color:rgba(255,255,255,.88);word-break:break-word;}
     .name{font-weight:1000;margin-right:6px;}
-
     .chatFoot{border-top:1px solid var(--line);padding:10px 12px;display:flex;gap:10px;background:rgba(0,0,0,.20);}
     .chatFoot input{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;outline:none;font-weight:800;}
     .send{padding:12px 16px;border-radius:12px;border:1px solid var(--blueB);background:var(--blue);font-weight:1000;color:#fff;cursor:pointer;}
@@ -127,8 +125,6 @@
       .bottomBar{grid-template-columns:1fr;}
       .btnRow{justify-content:flex-start}
     }
-
-    /* MOBILE */
     @media (max-width:820px){
       body{overflow:auto;}
       .app{grid-template-columns:1fr;height:auto;min-height:100vh;}
@@ -175,7 +171,7 @@
           <div class="fallbackCard">
             <div class="fallbackTitle">Lecteur indisponible</div>
             <div class="fallbackTxt">
-              Le site du live bloque l’intégration (embed). Ouvre le live dans ton navigateur.
+              Si l’embed est bloqué, utilise “Ouvrir le live”. Sinon, clique “Réessayer”.
             </div>
             <div class="fallbackRow">
               <a class="smallBtn" id="openLive" target="_blank" rel="noreferrer">
@@ -233,24 +229,121 @@
       alert("Pseudo mis à jour ✅");
     }
 
-    // ===== STREAM URLS =====
-    const STREAM_URL = "https://bolaloca.my/player/3/20";
+    // ⚠️ Mets ici un lien AUTORISÉ (YouTube/Twitch/ton player)
+    const EMBED_URL = "EMBED_URL_AUTORISE";
+    const OPEN_URL  = "OPEN_URL_AUTORISE";
 
     const fallback = document.getElementById("fallback");
     const openLive = document.getElementById("openLive");
     const retryBtn = document.getElementById("retryBtn");
-    const copyBtn = document.getElementById("copyBtn");
-    const player = document.getElementById("player");
+    const copyBtn  = document.getElementById("copyBtn");
+    const player   = document.getElementById("player");
 
-    // Try iframe
-    player.src = https://bolaloca.my/player/3/20;
-
-    // Fallback actions
-    openLive.href = https://bolaloca.my/player/3/20;
+    player.src = EMBED_URL;
+    openLive.href = OPEN_URL;
 
     copyBtn.addEventListener("click", async ()=>{
       try{
-        await navigator.clipboard.writeText(https://bolaloca.my/player/3/20);
+        await navigator.clipboard.writeText(OPEN_URL);
         copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copié';
-        setTime
+        setTimeout(()=> copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copier le lien', 1200);
+      }catch(e){
+        prompt("Copie le lien :", OPEN_URL);
+      }
+    });
 
+    retryBtn.addEventListener("click", ()=>{
+      // tente d'afficher l'embed (si autorisé)
+      fallback.style.display = "none";
+      player.src = EMBED_URL + (EMBED_URL.includes("?") ? "&" : "?") + "r=" + Date.now();
+      // si c'est toujours bloqué, l'utilisateur pourra ouvrir via bouton (refresh page si besoin)
+    });
+  </script>
+
+  <!-- ✅ CHAT SUPABASE -->
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+    const SUPABASE_URL = "https://nipfaqeshezvoxravdqx.supabase.co";
+    const SUPABASE_ANON_KEY = "COLLE_TA_ANON_KEY_ICI"; // anon public (eyJ...)
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const room = "santander-barcelone";
+    const chatBody = document.getElementById("chatBody");
+    const chatInput = document.getElementById("chatInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    const username =
+      localStorage.getItem("imftx_name") ||
+      ("User" + Math.floor(Math.random() * 9000 + 1000));
+    localStorage.setItem("imftx_name", username);
+
+    function esc(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");}
+    function colorFor(name){
+      const colors=["#a78bfa","#60a5fa","#34d399","#f472b6","#22d3ee","#fbbf24","#93c5fd","#fb7185"];
+      let h=0; for(let i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0;
+      return colors[h%colors.length];
+    }
+    function addMessage(m){
+      const div=document.createElement("div");
+      div.className="msg";
+      div.innerHTML=`<span class="name" style="color:${colorFor(m.username)}">${esc(m.username)}:</span> ${esc(m.message)}`;
+      chatBody.appendChild(div);
+      chatBody.scrollTop=chatBody.scrollHeight;
+    }
+
+    async function loadHistory(){
+      const { data, error } = await supabase
+        .from("chat_messages")
+        .select("username,message,created_at")
+        .eq("room", room)
+        .order("created_at", { ascending:true })
+        .limit(120);
+
+      if(error){ console.error(error); return; }
+
+      const w = document.createElement("div");
+      w.className="welcome";
+      w.textContent="Bienvenue dans le chat !";
+      chatBody.innerHTML="";
+      chatBody.appendChild(w);
+
+      (data||[]).forEach(addMessage);
+    }
+
+    let last=0;
+    async function send(){
+      const now=Date.now();
+      if(now-last<1200) return;
+      last=now;
+
+      const v=chatInput.value.trim();
+      if(!v) return;
+      chatInput.value="";
+
+      const { error } = await supabase
+        .from("chat_messages")
+        .insert([{ room, username, message:v.slice(0,200) }]);
+
+      if(error){
+        console.error("INSERT ERROR:", error);
+        alert(error.message || "Erreur envoi message");
+      }
+    }
+
+    sendBtn.addEventListener("click", send);
+    chatInput.addEventListener("keydown",(e)=>{ if(e.key==="Enter") send(); });
+
+    supabase
+      .channel("chat:"+room)
+      .on("postgres_changes",
+        { event:"INSERT", schema:"public", table:"chat_messages", filter:`room=eq.${room}` },
+        (payload)=>addMessage(payload.new)
+      )
+      .subscribe();
+
+    await loadHistory();
+  </script>
+</body>
+</html>
