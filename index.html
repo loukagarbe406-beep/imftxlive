@@ -3,333 +3,403 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IMFTX+ — Live</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
+  <title>HIBOUX-like Layout</title>
   <style>
     :root{
-      --left:#0f1115; --right:#0f1115;
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#0c121a;
+      --text:#e8eef7;
+      --muted:#9fb0c3;
       --line:rgba(255,255,255,.08);
-      --muted:rgba(255,255,255,.62);
-      --muted2:rgba(255,255,255,.45);
-      --blue:rgba(59,130,246,.22); --blueB:rgba(59,130,246,.35);
-      --discord:rgba(99,102,241,.22); --discordB:rgba(99,102,241,.35);
-      --tg:rgba(34,211,238,.18); --tgB:rgba(34,211,238,.28);
-      --iptv:rgba(34,197,94,.20); --iptvB:rgba(34,197,94,.32);
+      --accent:#3aa1ff;
+      --danger:#ff4d4d;
+      --radius:14px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0}
+    html,body{height:100%}
     body{
-      font-family:"Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-      color:#fff;
-      background:
-        radial-gradient(1200px 700px at 15% 0%, rgba(255,255,255,.08), transparent 60%),
-        radial-gradient(900px 600px at 85% 10%, rgba(255,255,255,.06), transparent 55%),
-        linear-gradient(180deg, #1b1c21 0%, #101116 35%, #070708 100%);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    /* Top bar */
+    .topbar{
+      height:56px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 16px;
+      border-bottom:1px solid var(--line);
+      background:rgba(10,14,19,.9);
+      position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+    }
+    .brand{display:flex; gap:14px; align-items:center}
+    .logo{font-weight:800; letter-spacing:.5px}
+    .nav a{
+      color:var(--muted);
+      text-decoration:none;
+      margin-right:12px;
+      font-weight:600;
+    }
+    .nav a:hover{color:var(--text)}
+    .actions{display:flex; gap:10px; align-items:center; color:var(--muted)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border:1px solid var(--line);
+      border-radius:999px; background:rgba(255,255,255,.03);
+      font-weight:700;
+    }
+    .dot{width:10px;height:10px;border-radius:50%; background:var(--danger); display:inline-block}
+
+    /* Main layout */
+    .app{
+      height:calc(100% - 56px);
+      display:grid;
+      grid-template-columns: 290px 1fr 360px;
+      gap:12px;
+      padding:12px;
+    }
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+      min-height:0; /* important for scroll areas */
+    }
+
+    /* Left sidebar */
+    .sidebar header{
+      padding:12px 12px 10px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .sidebar header h3{margin:0; font-size:14px; color:var(--muted); font-weight:800}
+    .channels{
+      overflow:auto;
+      height:100%;
+      padding:8px;
+    }
+    .channel{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      border:1px solid transparent;
+    }
+    .channel:hover{background:rgba(255,255,255,.04)}
+    .channel.active{
+      background:rgba(58,161,255,.12);
+      border-color:rgba(58,161,255,.25);
+    }
+    .ch-left{display:flex; gap:10px; align-items:center}
+    .badge{
+      width:28px; height:28px; border-radius:8px;
+      display:grid; place-items:center;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      font-weight:800;
+    }
+    .meta{display:flex; flex-direction:column; line-height:1.1}
+    .meta .title{font-weight:800; font-size:13px}
+    .meta .sub{font-size:12px; color:var(--muted)}
+    .viewers{
+      color:var(--muted);
+      font-weight:800;
+      display:flex;
+      gap:6px;
+      align-items:center;
+    }
+    .tinyDot{width:8px;height:8px;border-radius:50%; background:var(--danger); display:inline-block}
+
+    /* Center player */
+    .player{
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+    .videoWrap{
+      position:relative;
+      flex:1;
+      min-height:0;
+      background:#000;
       overflow:hidden;
     }
-
-    .app{height:100vh;display:grid;grid-template-columns:280px 1fr 360px;}
-
-    .iconBtn{
-      width:36px;height:36px;border-radius:12px;display:grid;place-items:center;
-      background:rgba(255,255,255,.05);border:1px solid var(--line);
-      color:rgba(255,255,255,.9);cursor:pointer;transition:.15s;
+    video{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      background:#000;
     }
-    .iconBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.08)}
-
-    .pillBtn{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      padding:10px 14px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      color:#fff;font-weight:800;font-size:12px;
-      cursor:pointer;transition:.15s;min-width:118px;
-      text-decoration:none;white-space:nowrap;
+    .overlayTop{
+      position:absolute;
+      top:12px; left:12px; right:12px;
+      display:flex; justify-content:space-between; align-items:center;
+      pointer-events:none;
     }
-    .pillBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.09)}
-    .pillBtn.discord{background:var(--discord); border-color:var(--discordB)}
-    .pillBtn.telegram{background:var(--tg); border-color:var(--tgB)}
-    .pillBtn.iptv{background:var(--iptv); border-color:var(--iptvB)}
-    .pillBtn.dark{background:rgba(255,255,255,.05)}
-
-    /* LEFT */
-    .left{background:var(--left);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;}
-    .leftHeader{padding:14px 14px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-    .leftHeader .title{font-weight:800;font-size:12px;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.82);}
-    .channels{padding:8px 10px 14px;overflow:auto;min-height:0;}
-    .ch{display:flex;align-items:center;gap:12px;padding:12px 12px;border-radius:14px;cursor:pointer;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.06);}
-    .compIcon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);overflow:hidden;flex:0 0 auto;}
-    .compIcon img{width:100%;height:100%;object-fit:contain;padding:6px;filter: drop-shadow(0 0 10px rgba(255,255,255,.10));}
-    .chName{font-weight:800;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .chMeta{margin-top:3px;font-weight:700;font-size:12px;color:var(--muted2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-
-    /* CENTER */
-    .center{display:flex;flex-direction:column;min-width:0;min-height:0;background:#000;}
-    .videoWrap{position:relative;flex:1;min-height:0;background:#000;}
-    .playerFrame{width:100%;height:100%;border:0;display:block;background:#000;}
-
-    /* Fallback overlay */
-    .fallback{
-      position:absolute;inset:0;
-      display:none;
-      align-items:center;justify-content:center;
-      padding:24px;text-align:center;
-      background:radial-gradient(900px 500px at 50% 40%, rgba(255,255,255,.08), rgba(0,0,0,.78));
-    }
-    .fallbackCard{
-      max-width:520px;width:100%;
-      padding:18px 18px 16px;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
+    .score{
+      pointer-events:none;
+      padding:8px 10px;
+      border-radius:12px;
       background:rgba(0,0,0,.45);
-      backdrop-filter: blur(14px);
-    }
-    .fallbackTitle{font-weight:900;font-size:16px;letter-spacing:.2px;}
-    .fallbackTxt{margin-top:8px;color:rgba(255,255,255,.72);font-weight:700;font-size:13px;line-height:1.35;}
-    .fallbackRow{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    .smallBtn{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 14px;border-radius:14px;
       border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      color:#fff;font-weight:900;font-size:12px;
-      cursor:pointer;text-decoration:none;
+      font-weight:900;
+      letter-spacing:.3px;
     }
-
-    .bottomBar{
-      height:92px;background:rgba(8,9,11,.94);
+    .watermark{
+      pointer-events:none;
+      font-size:28px;
+      font-weight:1000;
+      opacity:.85;
+      letter-spacing:1px;
+      text-shadow:0 10px 30px rgba(0,0,0,.5);
+    }
+    .playerFooter{
+      padding:12px;
       border-top:1px solid var(--line);
-      display:grid;grid-template-columns:1fr auto;
-      align-items:center;padding:0 14px;gap:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      background:rgba(255,255,255,.02);
     }
-    .matchTitle{font-weight:900;font-size:16px;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .subTitle{margin-top:4px;font-weight:700;font-size:12px;color:rgba(255,255,255,.55);display:flex;gap:8px;align-items:center;}
-    .subDot{width:6px;height:6px;border-radius:999px;background:rgba(255,255,255,.25);}
-    .btnRow{display:flex;gap:10px;justify-content:flex-end;align-items:center;flex-wrap:wrap;}
+    .now{
+      display:flex; flex-direction:column;
+      gap:2px;
+    }
+    .now .big{font-weight:900}
+    .now .small{color:var(--muted); font-size:12px}
+    .btnRow{display:flex; gap:10px; flex-wrap:wrap}
+    .btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:900;
+      cursor:pointer;
+    }
+    .btn:hover{border-color:rgba(255,255,255,.18)}
+    .btn.primary{border-color:rgba(58,161,255,.35); background:rgba(58,161,255,.15)}
+    .btn.green{border-color:rgba(64, 214, 140,.35); background:rgba(64, 214, 140,.12)}
 
-    /* RIGHT */
-    .right{background:var(--right);border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0;}
-    .chatHeader{padding:14px 14px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);background:var(--right);}
-    .chatHeader .title{font-weight:800;font-size:12px;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.82);}
-
-    .chatBody{flex:1;overflow:auto;padding:12px 12px;display:flex;flex-direction:column;gap:10px;min-height:0;}
-    .welcome{opacity:.55;text-align:center;padding:18px 0;font-weight:700;font-size:13px;}
-    .msg{font-size:13px;line-height:1.25;color:rgba(255,255,255,.88);word-break:break-word;}
-    .name{font-weight:900;margin-right:6px;}
-
-    .chatFoot{border-top:1px solid var(--line);padding:10px 12px;display:flex;gap:10px;background:rgba(0,0,0,.20);}
-    .chatFoot input{flex:1;padding:12px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;outline:none;font-weight:700;}
-    .send{padding:12px 16px;border-radius:12px;border:1px solid var(--blueB);background:var(--blue);font-weight:900;color:#fff;cursor:pointer;}
-
-    @media (max-width:1100px){
-      .app{grid-template-columns:280px 1fr;}
-      .right{display:none;}
-      .bottomBar{grid-template-columns:1fr;}
-      .btnRow{justify-content:flex-start}
+    /* Right chat */
+    .chat{
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+    }
+    .chat header{
+      padding:12px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .chat header h3{margin:0; font-size:14px; font-weight:900}
+    .chat header .muted{color:var(--muted); font-weight:800; font-size:12px}
+    .messages{
+      padding:10px;
+      overflow:auto;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .msg{
+      padding:10px 10px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:rgba(0,0,0,.18);
+    }
+    .msg .name{font-weight:1000; font-size:12px; color:var(--accent)}
+    .msg .text{margin-top:6px; color:var(--text); font-size:13px}
+    .chatFooter{
+      border-top:1px solid var(--line);
+      padding:10px;
+      display:flex;
+      gap:10px;
+      background:rgba(255,255,255,.02);
+    }
+    .chatFooter input{
+      flex:1;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+      outline:none;
+    }
+    .chatFooter input:focus{border-color:rgba(58,161,255,.4)}
+    .send{
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid rgba(58,161,255,.35);
+      background:rgba(58,161,255,.18);
+      color:var(--text);
+      font-weight:1000;
+      cursor:pointer;
     }
 
-    /* MOBILE like hiboux screenshot */
-    @media (max-width:820px){
-      body{overflow:auto;}
-      .app{grid-template-columns:1fr;height:auto;min-height:100vh;}
-      .left{display:none;}
-      .videoWrap{height:42vh;min-height:280px;}
-      .bottomBar{height:auto;padding:12px 12px;grid-template-columns:1fr;gap:10px;}
-      .btnRow{justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
-      .pillBtn{min-width:120px;flex:0 0 auto;}
-      .right{display:flex;border-left:none;border-top:1px solid var(--line);height:calc(100vh - 42vh - 120px);min-height:360px;}
-      .chatHeader{position:sticky;top:0;z-index:5;}
-      .chatFoot{position:sticky;bottom:0;z-index:6;background:rgba(15,17,21,.95);backdrop-filter: blur(10px);}
+    /* Responsive */
+    @media (max-width: 1100px){
+      .app{grid-template-columns: 260px 1fr}
+      .chat{display:none}
+    }
+    @media (max-width: 820px){
+      .app{grid-template-columns: 1fr}
+      .sidebar{display:none}
     }
   </style>
 </head>
-
 <body>
-  <div class="app">
-    <aside class="left">
-      <div class="leftHeader">
-        <div class="title">Chaînes live</div>
-        <button class="iconBtn" title="Retour" onclick="window.location.href='index.html'">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">HIBOUX</div>
+      <div class="nav">
+        <a href="#">Accueil</a>
+        <a href="#">Live</a>
+        <a href="#">Calendrier</a>
       </div>
-      <div class="channels">
-        <div class="ch">
-          <div class="compIcon">
-            <img alt="Copa del Rey" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Copa_Del_Rey_Official_Logo.png/250px-Copa_Del_Rey_Official_Logo.png">
-          </div>
-          <div style="min-width:0">
-            <div class="chName">Santander - Barcelone</div>
-            <div class="chMeta">Copa del Rey • 21:00</div>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <main class="center">
-      <div class="videoWrap">
-        <iframe
-          id="player"
-          class="playerFrame"
-          src="PLAYER_URL"
-          allow="autoplay; encrypted-media; fullscreen"
-          allowfullscreen
-          referrerpolicy="no-referrer"></iframe>
-
-        <div class="fallback" id="fallback">
-          <div class="fallbackCard">
-            <div class="fallbackTitle">Lecteur indisponible</div>
-            <div class="fallbackTxt">
-              Ce site bloque l’intégration dans une page (embed). Ouvre le live directement dans ton navigateur.
-            </div>
-            <div class="fallbackRow">
-              <a class="smallBtn" id="openLive" href="PLAYER_URL" target="_blank" rel="noreferrer">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Ouvrir le live
-              </a>
-              <button class="smallBtn" id="retryBtn">
-                <i class="fa-solid fa-rotate-right"></i> Réessayer
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bottomBar">
-        <div>
-          <div class="matchTitle">Santander - Barcelone</div>
-          <div class="subTitle"><span>Copa del Rey</span><span class="subDot"></span><span>21:00</span></div>
-        </div>
-        <div class="btnRow">
-          <a class="pillBtn discord" href="https://discord.gg/4ZFv9sa8" target="_blank" rel="noreferrer">
-            <i class="fa-brands fa-discord"></i> Discord
-          </a>
-          <a class="pillBtn dark" href="#" onclick="return false;">X</a>
-          <a class="pillBtn telegram" href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" rel="noreferrer">
-            <i class="fa-brands fa-telegram"></i> Telegram
-          </a>
-          <a class="pillBtn iptv" href="https://discord.gg/FmWwePH5ET" target="_blank" rel="noreferrer">
-            <i class="fa-solid fa-tv"></i> IPTV
-          </a>
-        </div>
-      </div>
-    </main>
-
-    <aside class="right">
-      <div class="chatHeader">
-        <div class="title">Chat du stream</div>
-        <button class="iconBtn" title="Pseudo" onclick="renameUser()">
-          <i class="fa-solid fa-user-pen"></i>
-        </button>
-      </div>
-
-      <div class="chatBody" id="chatBody">
-        <div class="welcome">Bienvenue dans le chat !</div>
-      </div>
-
-      <div class="chatFoot">
-        <input id="chatInput" placeholder="Envoyer un message" maxlength="200" />
-        <button class="send" id="sendBtn">Chat</button>
-      </div>
-    </aside>
+    </div>
+    <div class="actions">
+      <span class="pill"><span class="dot"></span> 5151</span>
+    </div>
   </div>
 
+  <main class="app">
+    <!-- LEFT: channels -->
+    <section class="panel sidebar">
+      <header>
+        <h3>Chaînes live</h3>
+        <span class="pill" style="padding:6px 10px"><span class="tinyDot"></span> 3</span>
+      </header>
+      <div class="channels" id="channels"></div>
+    </section>
+
+    <!-- CENTER: player -->
+    <section class="panel player">
+      <div class="videoWrap">
+        <!-- Remplace src par une vidéo à toi / flux que tu as le droit d’utiliser -->
+        <video id="video" controls autoplay muted playsinline
+          src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
+
+        <div class="overlayTop">
+          <div class="score" id="score">RAC 0–0 FCB · 15:56</div>
+          <div class="watermark">HIBOUX+</div>
+        </div>
+      </div>
+
+      <div class="playerFooter">
+        <div class="now">
+          <div class="big" id="nowTitle">R. Racing Club - Barcelone</div>
+          <div class="small" id="nowMeta">1080p · 4 545 spectateurs</div>
+        </div>
+        <div class="btnRow">
+          <button class="btn">Discord</button>
+          <button class="btn">Telegram</button>
+          <button class="btn green">IPTV</button>
+          <button class="btn primary" id="toggleMute">Mute</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: chat -->
+    <section class="panel chat">
+      <header>
+        <div>
+          <h3>Chat du stream</h3>
+          <div class="muted">Reste cool 😄</div>
+        </div>
+        <div class="pill" style="padding:6px 10px">✎</div>
+      </header>
+
+      <div class="messages" id="messages">
+        <div class="msg">
+          <div class="name">Ankazz</div>
+          <div class="text">Si vous avez un bug avec le live, actualisez</div>
+        </div>
+      </div>
+
+      <div class="chatFooter">
+        <input id="chatInput" placeholder="Envoyer un message" />
+        <button class="send" id="sendBtn">Chat</button>
+      </div>
+    </section>
+  </main>
+
   <script>
-    // Pseudo
-    function renameUser(){
-      const cur = localStorage.getItem("imftx_name") || "";
-      const n = prompt("Ton pseudo :", cur);
-      if(!n) return;
-      localStorage.setItem("imftx_name", n.slice(0, 18));
-      alert("Pseudo mis à jour ✅");
-    }
+    // Data fake pour la sidebar
+    const channels = [
+      { id: 1, title: "Como - Milan", sub: "Serie A", viewers: 154 },
+      { id: 2, title: "Burgos - Valence", sub: "Copa del Rey", viewers: 9 },
+      { id: 3, title: "Augsburg - Union", sub: "Bundesliga", viewers: 5 },
+    ];
 
-    // Embed fallback (si bloque)
-    const PLAYER_URL = "PLAYER_URL";
-    const fallback = document.getElementById("fallback");
-    const openLive = document.getElementById("openLive");
-    const retryBtn = document.getElementById("retryBtn");
-    const player = document.getElementById("player");
+    const channelsEl = document.getElementById("channels");
+    const nowTitle = document.getElementById("nowTitle");
 
-    openLive.href = PLAYER_URL;
-
-    // On montre le fallback après 2.5s (si l'iframe est bloquée / reste noire)
-    const t = setTimeout(()=>{ fallback.style.display = "flex"; }, 2500);
-
-    retryBtn.addEventListener("click", ()=>{
-      fallback.style.display = "none";
-      player.src = player.src; // reload iframe
-      clearTimeout(t);
-      setTimeout(()=>{ fallback.style.display = "flex"; }, 2500);
-    });
-  </script>
-
-  <!-- CHAT: API Vercel -->
-  <script>
-    const room = "santander-barcelone";
-    const chatBody = document.getElementById("chatBody");
-    const chatInput = document.getElementById("chatInput");
-    const sendBtn = document.getElementById("sendBtn");
-
-    const username =
-      localStorage.getItem("imftx_name") ||
-      ("User" + Math.floor(Math.random() * 9000 + 1000));
-    localStorage.setItem("imftx_name", username);
-
-    function esc(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");}
-    function colorFor(name){
-      const colors = ["#a78bfa","#60a5fa","#34d399","#f472b6","#22d3ee","#fbbf24","#93c5fd","#fb7185"];
-      let h=0; for(let i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0;
-      return colors[h % colors.length];
-    }
-    function addMessage(m){
-      const div = document.createElement("div");
-      div.className="msg";
-      div.innerHTML = `<span class="name" style="color:${colorFor(m.username)}">${esc(m.username)}:</span> ${esc(m.message)}`;
-      chatBody.appendChild(div);
-      chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    async function load(){
-      const r = await fetch(`/api/messages?room=${encodeURIComponent(room)}`);
-      const j = await r.json();
-      chatBody.innerHTML = `<div class="welcome">Bienvenue dans le chat !</div>`;
-      (j.messages || []).forEach(addMessage);
-    }
-
-    let last = 0;
-    async function send(){
-      const now = Date.now();
-      if(now-last < 1200) return;
-      last = now;
-
-      const v = chatInput.value.trim();
-      if(!v) return;
-      chatInput.value = "";
-
-      const r = await fetch(`/api/messages`,{
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({ room, username, message: v.slice(0,200) })
+    function renderChannels(activeId = 1){
+      channelsEl.innerHTML = "";
+      channels.forEach(c => {
+        const row = document.createElement("div");
+        row.className = "channel" + (c.id === activeId ? " active" : "");
+        row.innerHTML = `
+          <div class="ch-left">
+            <div class="badge">${c.title.split(" ")[0][0] ?? "C"}</div>
+            <div class="meta">
+              <div class="title">${c.title}</div>
+              <div class="sub">${c.sub}</div>
+            </div>
+          </div>
+          <div class="viewers"><span class="tinyDot"></span>${c.viewers}</div>
+        `;
+        row.addEventListener("click", () => {
+          renderChannels(c.id);
+          nowTitle.textContent = c.title;
+          // Ici tu pourrais changer la source vidéo (légale) associée à la chaîne
+          // video.src = "mon_flux_autorise.m3u8" ou "video.mp4"
+        });
+        channelsEl.appendChild(row);
       });
-      const j = await r.json();
-      if(!r.ok){
-        alert(j.error || "Erreur envoi message");
-        return;
-      }
-      // refresh simple
-      await load();
+    }
+    renderChannels();
+
+    // Chat fake (front only)
+    const messagesEl = document.getElementById("messages");
+    const input = document.getElementById("chatInput");
+    document.getElementById("sendBtn").addEventListener("click", send);
+    input.addEventListener("keydown", (e) => { if(e.key === "Enter") send(); });
+
+    function send(){
+      const v = input.value.trim();
+      if(!v) return;
+      const node = document.createElement("div");
+      node.className = "msg";
+      node.innerHTML = `<div class="name">Toi</div><div class="text"></div>`;
+      node.querySelector(".text").textContent = v;
+      messagesEl.appendChild(node);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      input.value = "";
     }
 
-    sendBtn.addEventListener("click", send);
-    chatInput.addEventListener("keydown",(e)=>{ if(e.key==="Enter") send(); });
-
-    load();
-    setInterval(load, 3000); // refresh toutes les 3s (simple et fiable)
+    // Mute toggle
+    const video = document.getElementById("video");
+    const btn = document.getElementById("toggleMute");
+    btn.addEventListener("click", () => {
+      video.muted = !video.muted;
+      btn.textContent = video.muted ? "Unmute" : "Mute";
+    });
   </script>
 </body>
 </html>
