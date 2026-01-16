@@ -70,6 +70,7 @@
     .videoWrap{position:relative;flex:1;min-height:0;background:#000;}
     iframe{width:100%;height:100%;border:0;background:#000;display:block;}
 
+    /* fallback overlay */
     .fallback{
       position:absolute;inset:0;display:none;
       align-items:center;justify-content:center;
@@ -77,7 +78,7 @@
       background:radial-gradient(900px 500px at 50% 40%, rgba(255,255,255,.08), rgba(0,0,0,.78));
     }
     .fallbackCard{
-      max-width:520px;width:100%;
+      max-width:560px;width:100%;
       padding:18px;border-radius:18px;
       border:1px solid rgba(255,255,255,.12);
       background:rgba(0,0,0,.45);
@@ -152,6 +153,7 @@
           <i class="fa-solid fa-arrow-left"></i>
         </button>
       </div>
+
       <div class="channels">
         <div class="ch">
           <div class="compIcon">
@@ -167,16 +169,21 @@
 
     <main class="center">
       <div class="videoWrap">
-        <iframe id="player" src="PLAYER_URL" allow="autoplay; encrypted-media; fullscreen" allowfullscreen referrerpolicy="no-referrer"></iframe>
+        <iframe id="player" allow="autoplay; encrypted-media; fullscreen" allowfullscreen referrerpolicy="no-referrer"></iframe>
 
         <div class="fallback" id="fallback">
           <div class="fallbackCard">
             <div class="fallbackTitle">Lecteur indisponible</div>
-            <div class="fallbackTxt">Le site du live bloque l’intégration (embed). Ouvre le live directement dans ton navigateur.</div>
+            <div class="fallbackTxt">
+              Le site du live bloque l’intégration (embed). Ouvre le live dans ton navigateur.
+            </div>
             <div class="fallbackRow">
-              <a class="smallBtn" id="openLive" href="OPEN_LIVE_URL" target="_blank" rel="noreferrer">
+              <a class="smallBtn" id="openLive" target="_blank" rel="noreferrer">
                 <i class="fa-solid fa-arrow-up-right-from-square"></i> Ouvrir le live
               </a>
+              <button class="smallBtn" id="copyBtn">
+                <i class="fa-regular fa-copy"></i> Copier le lien
+              </button>
               <button class="smallBtn" id="retryBtn">
                 <i class="fa-solid fa-rotate-right"></i> Réessayer
               </button>
@@ -226,111 +233,23 @@
       alert("Pseudo mis à jour ✅");
     }
 
-    // fallback embed
-    const PLAYER_URL = "https://bolaloca.my/player/3/20";
-    const OPEN_LIVE_URL = "https://bolaloca.my/player/3/20";
+    // ===== STREAM URLS =====
+    const STREAM_URL = "https://bolaloca.my/player/3/20";
+
     const fallback = document.getElementById("fallback");
     const openLive = document.getElementById("openLive");
     const retryBtn = document.getElementById("retryBtn");
+    const copyBtn = document.getElementById("copyBtn");
     const player = document.getElementById("player");
 
-    openLive.href = https://bolaloca.my/player/3/20;
+    // Try iframe
+    player.src = STREAM_URL;
 
-    let t = setTimeout(()=>{ fallback.style.display = "flex"; }, 2500);
-    retryBtn.addEventListener("click", ()=>{
-      fallback.style.display = "none";
-      player.src = player.src;
-      clearTimeout(t);
-      t = setTimeout(()=>{ fallback.style.display = "flex"; }, 2500);
-    });
-  </script>
+    // Fallback actions
+    openLive.href = STREAM_URL;
 
-  <!-- Chat Supabase direct -->
-  <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-    const SUPABASE_URL = "https://nipfaqeshezvoxravdqx.supabase.co";
-    const SUPABASE_ANON_KEY = "nipfaqeshezvoxravdqx"; // <- anon public (eyJ...)
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const room = "santander-barcelone";
-    const chatBody = document.getElementById("chatBody");
-    const chatInput = document.getElementById("chatInput");
-    const sendBtn = document.getElementById("sendBtn");
-
-    const username =
-      localStorage.getItem("imftx_name") ||
-      ("User" + Math.floor(Math.random() * 9000 + 1000));
-    localStorage.setItem("imftx_name", username);
-
-    function esc(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");}
-    function colorFor(name){
-      const colors=["#a78bfa","#60a5fa","#34d399","#f472b6","#22d3ee","#fbbf24","#93c5fd","#fb7185"];
-      let h=0; for(let i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0;
-      return colors[h%colors.length];
-    }
-    function addMessage(m){
-      const div=document.createElement("div");
-      div.className="msg";
-      div.innerHTML=`<span class="name" style="color:${colorFor(m.username)}">${esc(m.username)}:</span> ${esc(m.message)}`;
-      chatBody.appendChild(div);
-      chatBody.scrollTop=chatBody.scrollHeight;
-    }
-
-    async function loadHistory(){
-      const { data, error } = await supabase
-        .from("chat_messages")
-        .select("username,message,created_at")
-        .eq("room", room)
-        .order("created_at", { ascending:true })
-        .limit(120);
-
-      if(error){ console.error(error); return; }
-
-      const w = document.createElement("div");
-      w.className="welcome";
-      w.textContent="Bienvenue dans le chat !";
-      chatBody.innerHTML="";
-      chatBody.appendChild(w);
-
-      (data||[]).forEach(addMessage);
-    }
-
-    let last=0;
-    async function send(){
-      const now=Date.now();
-      if(now-last<1200) return;
-      last=now;
-
-      const v=chatInput.value.trim();
-      if(!v) return;
-      chatInput.value="";
-
-      const { error } = await supabase
-        .from("chat_messages")
-        .insert([{ room, username, message:v.slice(0,200) }]);
-
-      if(error){
-        console.error("INSERT ERROR:", error);
-        alert(error.message || "Erreur envoi message");
-      }
-    }
-
-    sendBtn.addEventListener("click", send);
-    chatInput.addEventListener("keydown",(e)=>{ if(e.key==="Enter") send(); });
-
-    supabase
-      .channel("chat:"+room)
-      .on("postgres_changes",
-        { event:"INSERT", schema:"public", table:"chat_messages", filter:`room=eq.${room}` },
-        (payload)=>addMessage(payload.new)
-      )
-      .subscribe();
-
-    await loadHistory();
-  </script>
-</body>
-</html>
-
-
+    copyBtn.addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText(STREAM_URL);
+        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copié';
+        setTime
