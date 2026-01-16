@@ -243,13 +243,14 @@
     const player = document.getElementById("player");
 
     // Try iframe
-    player.src = STREAM_URL;
+    player.src = https://bolaloca.my/player/3/20;
 
     // Fallback actions
-    openLive.href = STREAM_URL;
+    openLive.href = https://bolaloca.my/player/3/20;
 
     copyBtn.addEventListener("click", async ()=>{
       try{
-        await navigator.clipboard.writeText(STREAM_URL);
+        await navigator.clipboard.writeText(https://bolaloca.my/player/3/20);
         copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copié';
         setTime
+
