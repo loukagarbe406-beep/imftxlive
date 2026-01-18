@@ -1,69 +1,39 @@
 <!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Chat Test</title>
-</head>
-<body style="background:#111;color:#fff;font-family:sans-serif">
+<body>
+<h3>CHAT PROOF</h3>
 
-<h2>Chat Supabase (test)</h2>
+<div id="log"></div>
 
-<div id="chat" style="height:300px;overflow:auto;border:1px solid #444;padding:10px"></div>
-
-<input id="msg" placeholder="Message" style="width:70%">
-<button id="send">Envoyer</button>
+<input id="m">
+<button onclick="send()">SEND</button>
 
 <script type="module">
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-  const supabase = createClient(
-    "https://nipfaqeshezvoxravdqx.supabase.co",
-    "nipfaqeshezvoxravdqx"
-  );
+const supabase = createClient(
+  "https://nipfaqeshezvoxravdqx.supabase.co",
+  "nipfaqeshezvoxravdqx"
+);
 
-  const room = "test";
-  const chat = document.getElementById("chat");
-  const input = document.getElementById("msg");
+const log = document.getElementById("log");
 
-  function add(m){
-    const d = document.createElement("div");
-    d.textContent = m.username + ": " + m.message;
-    chat.appendChild(d);
-    chat.scrollTop = chat.scrollHeight;
-  }
+const { error: testErr } = await supabase
+  .from("chat_messages")
+  .select("id")
+  .limit(1);
 
-  // charger historique
-  const { data } = await supabase
+log.innerHTML += testErr ? "SELECT ERROR ❌<br>" + testErr.message : "SELECT OK ✅<br>";
+
+async function send(){
+  const v = document.getElementById("m").value;
+
+  const { error } = await supabase
     .from("chat_messages")
-    .select("*")
-    .eq("room", room)
-    .order("created_at", { ascending: true });
+    .insert([{ room:"proof", username:"test", message:v }]);
 
-  data.forEach(add);
-
-  // realtime
-  supabase
-    .channel("room-test")
-    .on(
-      "postgres_changes",
-      { event: "INSERT", schema: "public", table: "chat_messages" },
-      payload => add(payload.new)
-    )
-    .subscribe();
-
-  // envoyer
-  document.getElementById("send").onclick = async () => {
-    const v = input.value.trim();
-    if (!v) return;
-    input.value = "";
-
-    const { error } = await supabase
-      .from("chat_messages")
-      .insert([{ room, username: "User", message: v }]);
-
-    if (error) alert(error.message);
-  };
+  log.innerHTML += error ? "INSERT ERROR ❌<br>" + error.message : "INSERT OK ✅<br>";
+}
 </script>
-
 </body>
 </html>
