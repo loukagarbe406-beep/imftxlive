@@ -1,350 +1,69 @@
 <!doctype html>
-<html lang="fr">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IMFTX+ — Santander - Barcelone</title>
-
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
-  <style>
-    :root{
-      --left:#0f1115; --right:#0f1115;
-      --line:rgba(255,255,255,.08);
-      --muted2:rgba(255,255,255,.45);
-      --blue:rgba(59,130,246,.22); --blueB:rgba(59,130,246,.35);
-      --discord:rgba(99,102,241,.22); --discordB:rgba(99,102,241,.35);
-      --tg:rgba(34,211,238,.18); --tgB:rgba(34,211,238,.28);
-      --iptv:rgba(34,197,94,.20); --iptvB:rgba(34,197,94,.32);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0}
-    body{
-      font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-      color:#fff;
-      background:
-        radial-gradient(1200px 700px at 15% 0%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg,#1b1c21 0%,#101116 35%,#070708 100%);
-      -webkit-font-smoothing:antialiased;
-      overflow:hidden;
-    }
-
-    .app{height:100vh;display:grid;grid-template-columns:280px 1fr 360px;}
-
-    .iconBtn{
-      width:36px;height:36px;border-radius:12px;display:grid;place-items:center;
-      background:rgba(255,255,255,.05);border:1px solid var(--line);
-      color:rgba(255,255,255,.9);cursor:pointer;transition:.15s;
-    }
-    .iconBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.08)}
-
-    .pillBtn{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      padding:10px 14px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      color:#fff;font-weight:900;font-size:12px;
-      cursor:pointer;transition:.15s;min-width:118px;
-      text-decoration:none;white-space:nowrap;
-    }
-    .pillBtn:hover{transform:scale(1.03); background:rgba(255,255,255,.09)}
-    .pillBtn.discord{background:var(--discord); border-color:var(--discordB)}
-    .pillBtn.telegram{background:var(--tg); border-color:var(--tgB)}
-    .pillBtn.iptv{background:var(--iptv); border-color:var(--iptvB)}
-    .pillBtn.dark{background:rgba(255,255,255,.05)}
-
-    /* LEFT */
-    .left{background:var(--left);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;}
-    .leftHeader{padding:14px 14px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
-    .leftHeader .title{font-weight:900;font-size:12px;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.82);}
-    .channels{padding:8px 10px 14px;}
-    .ch{display:flex;align-items:center;gap:12px;padding:12px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.06);}
-    .compIcon{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);overflow:hidden;}
-    .compIcon img{width:100%;height:100%;object-fit:contain;padding:6px;}
-    .chName{font-weight:900;font-size:13px}
-    .chMeta{margin-top:3px;font-weight:800;font-size:12px;color:var(--muted2)}
-
-    /* CENTER */
-    .center{display:flex;flex-direction:column;min-width:0;min-height:0;background:#000;}
-    .videoWrap{position:relative;flex:1;min-height:0;background:#000;}
-    iframe{width:100%;height:100%;border:0;background:#000;display:block;}
-
-    /* Fallback ALWAYS visible until user clicks "Réessayer" */
-    .fallback{
-      position:absolute;inset:0;display:flex;
-      align-items:center;justify-content:center;
-      padding:22px;text-align:center;
-      background:radial-gradient(900px 500px at 50% 40%, rgba(255,255,255,.08), rgba(0,0,0,.78));
-    }
-    .fallbackCard{
-      max-width:560px;width:100%;
-      padding:18px;border-radius:18px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.45);
-      backdrop-filter: blur(14px);
-    }
-    .fallbackTitle{font-weight:1000;font-size:16px}
-    .fallbackTxt{margin-top:8px;color:rgba(255,255,255,.72);font-weight:700;font-size:13px;line-height:1.35}
-    .fallbackRow{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    .smallBtn{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 14px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06);
-      color:#fff;font-weight:900;font-size:12px;
-      cursor:pointer;text-decoration:none;
-    }
-
-    .bottomBar{
-      height:92px;background:rgba(8,9,11,.94);
-      border-top:1px solid var(--line);
-      display:grid;grid-template-columns:1fr auto;
-      align-items:center;padding:0 14px;gap:12px;
-    }
-    .matchTitle{font-weight:1000;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .subTitle{margin-top:4px;font-weight:800;font-size:12px;color:rgba(255,255,255,.55);display:flex;gap:8px;align-items:center}
-    .subDot{width:6px;height:6px;border-radius:999px;background:rgba(255,255,255,.25)}
-    .btnRow{display:flex;gap:10px;justify-content:flex-end;align-items:center;flex-wrap:wrap}
-
-    /* RIGHT */
-    .right{background:var(--right);border-left:1px solid var(--line);display:flex;flex-direction:column;min-height:0;}
-    .chatHeader{padding:14px 14px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line);background:var(--right);}
-    .chatHeader .title{font-weight:900;font-size:12px;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.82);}
-    .chatBody{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:0;}
-    .welcome{opacity:.55;text-align:center;padding:18px 0;font-weight:800;font-size:13px;}
-    .msg{font-size:13px;line-height:1.25;color:rgba(255,255,255,.88);word-break:break-word;}
-    .name{font-weight:1000;margin-right:6px;}
-    .chatFoot{border-top:1px solid var(--line);padding:10px 12px;display:flex;gap:10px;background:rgba(0,0,0,.20);}
-    .chatFoot input{flex:1;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;outline:none;font-weight:800;}
-    .send{padding:12px 16px;border-radius:12px;border:1px solid var(--blueB);background:var(--blue);font-weight:1000;color:#fff;cursor:pointer;}
-
-    @media (max-width:1100px){
-      .app{grid-template-columns:280px 1fr;}
-      .right{display:none;}
-      .bottomBar{grid-template-columns:1fr;}
-      .btnRow{justify-content:flex-start}
-    }
-    @media (max-width:820px){
-      body{overflow:auto;}
-      .app{grid-template-columns:1fr;height:auto;min-height:100vh;}
-      .left{display:none;}
-      .videoWrap{height:42vh;min-height:280px;}
-      .bottomBar{height:auto;padding:12px;grid-template-columns:1fr;gap:10px;}
-      .btnRow{justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;}
-      .pillBtn{min-width:120px;flex:0 0 auto;}
-      .right{display:flex;border-left:none;border-top:1px solid var(--line);height:calc(100vh - 42vh - 120px);min-height:360px;}
-      .chatHeader{position:sticky;top:0;z-index:5;}
-      .chatFoot{position:sticky;bottom:0;z-index:6;background:rgba(15,17,21,.95);backdrop-filter: blur(10px);}
-    }
-  </style>
+  <meta charset="utf-8">
+  <title>Chat Test</title>
 </head>
+<body style="background:#111;color:#fff;font-family:sans-serif">
 
-<body>
-  <div class="app">
-    <aside class="left">
-      <div class="leftHeader">
-        <div class="title">Chaînes live</div>
-        <button class="iconBtn" title="Retour" onclick="window.location.href='index.html'">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-      </div>
+<h2>Chat Supabase (test)</h2>
 
-      <div class="channels">
-        <div class="ch">
-          <div class="compIcon">
-            <img alt="Copa del Rey" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Copa_Del_Rey_Official_Logo.png/250px-Copa_Del_Rey_Official_Logo.png">
-          </div>
-          <div>
-            <div class="chName">Santander - Barcelone</div>
-            <div class="chMeta">Copa del Rey • 21:00</div>
-          </div>
-        </div>
-      </div>
-    </aside>
+<div id="chat" style="height:300px;overflow:auto;border:1px solid #444;padding:10px"></div>
 
-    <main class="center">
-      <div class="videoWrap">
-        <iframe id="player" allow="autoplay; encrypted-media; fullscreen" allowfullscreen referrerpolicy="no-referrer"></iframe>
+<input id="msg" placeholder="Message" style="width:70%">
+<button id="send">Envoyer</button>
 
-        <div class="fallback" id="fallback">
-          <div class="fallbackCard">
-            <div class="fallbackTitle">Lecteur indisponible</div>
-            <div class="fallbackTxt">
-              Si l’embed est bloqué, utilise “Ouvrir le live”. Sinon, clique “Réessayer”.
-            </div>
-            <div class="fallbackRow">
-              <a class="smallBtn" id="openLive" target="_blank" rel="noreferrer">
-                <i class="fa-solid fa-arrow-up-right-from-square"></i> Ouvrir le live
-              </a>
-              <button class="smallBtn" id="copyBtn">
-                <i class="fa-regular fa-copy"></i> Copier le lien
-              </button>
-              <button class="smallBtn" id="retryBtn">
-                <i class="fa-solid fa-rotate-right"></i> Réessayer
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-      <div class="bottomBar">
-        <div>
-          <div class="matchTitle">Santander - Barcelone</div>
-          <div class="subTitle"><span>Copa del Rey</span><span class="subDot"></span><span>21:00</span></div>
-        </div>
+  const supabase = createClient(
+    "https://nipfaqeshezvoxravdqx.supabase.co",
+    "nipfaqeshezvoxravdqx"
+  );
 
-        <div class="btnRow">
-          <a class="pillBtn discord" href="https://discord.gg/4ZFv9sa8" target="_blank" rel="noreferrer"><i class="fa-brands fa-discord"></i> Discord</a>
-          <a class="pillBtn dark" href="#" onclick="return false;">X</a>
-          <a class="pillBtn telegram" href="https://t.me/+jdy9nGJ3rFFiOWI0" target="_blank" rel="noreferrer"><i class="fa-brands fa-telegram"></i> Telegram</a>
-          <a class="pillBtn iptv" href="https://discord.gg/FmWwePH5ET" target="_blank" rel="noreferrer"><i class="fa-solid fa-tv"></i> IPTV</a>
-        </div>
-      </div>
-    </main>
+  const room = "test";
+  const chat = document.getElementById("chat");
+  const input = document.getElementById("msg");
 
-    <aside class="right">
-      <div class="chatHeader">
-        <div class="title">Chat du stream</div>
-        <button class="iconBtn" title="Pseudo" onclick="renameUser()"><i class="fa-solid fa-user-pen"></i></button>
-      </div>
+  function add(m){
+    const d = document.createElement("div");
+    d.textContent = m.username + ": " + m.message;
+    chat.appendChild(d);
+    chat.scrollTop = chat.scrollHeight;
+  }
 
-      <div class="chatBody" id="chatBody">
-        <div class="welcome">Bienvenue dans le chat !</div>
-      </div>
+  // charger historique
+  const { data } = await supabase
+    .from("chat_messages")
+    .select("*")
+    .eq("room", room)
+    .order("created_at", { ascending: true });
 
-      <div class="chatFoot">
-        <input id="chatInput" placeholder="Envoyer un message" maxlength="200" />
-        <button class="send" id="sendBtn">Chat</button>
-      </div>
-    </aside>
-  </div>
+  data.forEach(add);
 
-  <script>
-    function renameUser(){
-      const cur = localStorage.getItem("imftx_name") || "";
-      const n = prompt("Ton pseudo :", cur);
-      if(!n) return;
-      localStorage.setItem("imftx_name", n.slice(0, 18));
-      alert("Pseudo mis à jour ✅");
-    }
+  // realtime
+  supabase
+    .channel("room-test")
+    .on(
+      "postgres_changes",
+      { event: "INSERT", schema: "public", table: "chat_messages" },
+      payload => add(payload.new)
+    )
+    .subscribe();
 
-    // ⚠️ Mets ici un lien AUTORISÉ (YouTube/Twitch/ton player)
-    const EMBED_URL = "https://bolaloca.my/player/4/12";
-    const OPEN_URL  = "https://bolaloca.my/player/4/12";
+  // envoyer
+  document.getElementById("send").onclick = async () => {
+    const v = input.value.trim();
+    if (!v) return;
+    input.value = "";
 
-    const fallback = document.getElementById("fallback");
-    const openLive = document.getElementById("openLive");
-    const retryBtn = document.getElementById("retryBtn");
-    const copyBtn  = document.getElementById("copyBtn");
-    const player   = document.getElementById("player");
+    const { error } = await supabase
+      .from("chat_messages")
+      .insert([{ room, username: "User", message: v }]);
 
-    player.src = EMBED_URL;
-    openLive.href = OPEN_URL;
+    if (error) alert(error.message);
+  };
+</script>
 
-    copyBtn.addEventListener("click", async ()=>{
-      try{
-        await navigator.clipboard.writeText(OPEN_URL);
-        copyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copié';
-        setTimeout(()=> copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> Copier le lien', 1200);
-      }catch(e){
-        prompt("Copie le lien :", OPEN_URL);
-      }
-    });
-
-    retryBtn.addEventListener("click", ()=>{
-      // tente d'afficher l'embed (si autorisé)
-      fallback.style.display = "none";
-      player.src = EMBED_URL + (EMBED_URL.includes("?") ? "&" : "?") + "r=" + Date.now();
-      // si c'est toujours bloqué, l'utilisateur pourra ouvrir via bouton (refresh page si besoin)
-    });
-  </script>
-
-  <!-- ✅ CHAT SUPABASE -->
-  <script type="module">
-    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-    const SUPABASE_URL = "https://nipfaqeshezvoxravdqx.supabase.co";
-    const SUPABASE_ANON_KEY = "nipfaqeshezvoxravdqx"; // anon public (eyJ...)
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const room = "santander-barcelone";
-    const chatBody = document.getElementById("chatBody");
-    const chatInput = document.getElementById("chatInput");
-    const sendBtn = document.getElementById("sendBtn");
-
-    const username =
-      localStorage.getItem("imftx_name") ||
-      ("User" + Math.floor(Math.random() * 9000 + 1000));
-    localStorage.setItem("imftx_name", username);
-
-    function esc(s){return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");}
-    function colorFor(name){
-      const colors=["#a78bfa","#60a5fa","#34d399","#f472b6","#22d3ee","#fbbf24","#93c5fd","#fb7185"];
-      let h=0; for(let i=0;i<name.length;i++) h=(h*31+name.charCodeAt(i))>>>0;
-      return colors[h%colors.length];
-    }
-    function addMessage(m){
-      const div=document.createElement("div");
-      div.className="msg";
-      div.innerHTML=`<span class="name" style="color:${colorFor(m.username)}">${esc(m.username)}:</span> ${esc(m.message)}`;
-      chatBody.appendChild(div);
-      chatBody.scrollTop=chatBody.scrollHeight;
-    }
-
-    async function loadHistory(){
-      const { data, error } = await supabase
-        .from("chat_messages")
-        .select("username,message,created_at")
-        .eq("room", room)
-        .order("created_at", { ascending:true })
-        .limit(120);
-
-      if(error){ console.error(error); return; }
-
-      const w = document.createElement("div");
-      w.className="welcome";
-      w.textContent="Bienvenue dans le chat !";
-      chatBody.innerHTML="";
-      chatBody.appendChild(w);
-
-      (data||[]).forEach(addMessage);
-    }
-
-    let last=0;
-    async function send(){
-      const now=Date.now();
-      if(now-last<1200) return;
-      last=now;
-
-      const v=chatInput.value.trim();
-      if(!v) return;
-      chatInput.value="";
-
-      const { error } = await supabase
-        .from("chat_messages")
-        .insert([{ room, username, message:v.slice(0,200) }]);
-
-      if(error){
-        console.error("INSERT ERROR:", error);
-        alert(error.message || "Erreur envoi message");
-      }
-    }
-
-    sendBtn.addEventListener("click", send);
-    chatInput.addEventListener("keydown",(e)=>{ if(e.key==="Enter") send(); });
-
-    supabase
-      .channel("chat:"+room)
-      .on("postgres_changes",
-        { event:"INSERT", schema:"public", table:"chat_messages", filter:`room=eq.${room}` },
-        (payload)=>addMessage(payload.new)
-      )
-      .subscribe();
-
-    await loadHistory();
-  </script>
 </body>
 </html>
-
