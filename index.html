@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Santander vs Barcelone</title>
+  <title>IMFTX+ — SK Slavia Prague vs Barcelone</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -226,7 +226,7 @@
       <div class="cover-strip">
         <div>
           <div class="strip-title">Regarder Gratuitement</div>
-          <div class="strip-sub">Santander<br>Barcelona</div>
+          <div class="strip-sub">SK Slavia Prague<br>Barcelona</div>
         </div>
 
         <div class="strip-play">
@@ -259,7 +259,7 @@
 
       <div class="watch-text">
         <div class="small">Vous regardez</div>
-        <div class="big">Santander - Barcelone</div>
+        <div class="big">SK Slavia Prague - Barcelone</div>
         <div class="small">Aujourd’hui · 21:15</div>
       </div>
     </div>
@@ -341,7 +341,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "santander-barcelone"; // ✅ garde cet id
+  const MATCH_ID = "NO-barcelonDDDDDDDDe"; // ✅ garde cet id
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
@@ -361,5 +361,6 @@
 
 </body>
 </html>
+
 
 
