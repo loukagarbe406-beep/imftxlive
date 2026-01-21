@@ -221,5 +221,66 @@ function loadVideo(id){
 }
 </script>
 
+  </script>
+<!-- 🔒 ANTI PUB / ANTI POPUP -->
+/* ===============================
+   ANTI POPUP / ANTI PUB CLEAN
+   =============================== */
+
+(function () {
+
+  const originalOpen = window.open;
+  window.open = function () {
+    return null;
+  };
+
+  document.addEventListener("click", function (e) {
+    const a = e.target.closest("a");
+    if (!a) return;
+
+    const href = a.getAttribute("href") || "";
+    if (
+      href.startsWith("javascript:") ||
+      href.includes("ads") ||
+      href.includes("pop") ||
+      href.includes("redirect")
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  let lastUrl = location.href;
+  setInterval(() => {
+    if (location.href !== lastUrl) {
+      history.pushState(null, "", lastUrl);
+    }
+  }, 300);
+
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(m => {
+      m.addedNodes.forEach(node => {
+        if (node.tagName === "IFRAME") {
+          const src = node.src || "";
+          if (
+            src.includes("ads") ||
+            src.includes("pop") ||
+            src.includes("click")
+          ) {
+            node.remove();
+          }
+        }
+      });
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+})();
+</script>
+  
 </body>
 </html>
