@@ -3,11 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — Stream (Test M3U8)</title>
+  <title>IMFTX+ — Real Madrid vs Atlético Madrid</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
@@ -20,6 +18,7 @@
       overflow-x:hidden;
     }
 
+    /* player box */
     .player-box{
       border-radius:22px;
       overflow:hidden;
@@ -29,6 +28,8 @@
       position:relative;
     }
 
+    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+
     /* ✅ COVER (banniere) */
     .cover{
       position:absolute;
@@ -36,10 +37,38 @@
       z-index:15;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.28) 55%, rgba(0,0,0,.55) 100%),
-        url("https://empire-sport.shop/upload/events/7zeorilqtmev0k6jyptnex9p7kgh8k.jpg") center/cover no-repeat;
+        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
+        url("https://empire-sport.shop/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png") center/cover no-repeat;
     }
 
+    /* ✅ LOGOS TOP */
+    .cover-top{
+      position:absolute;
+      top:18px;
+      left:18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:18px;
+      background:rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
+    }
+
+    .team-logo{
+      width:34px;height:34px;
+      object-fit:contain;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
+    }
+
+    .vs{
+      font-weight:900;
+      font-size:14px;
+      opacity:.9;
+    }
+
+    /* ✅ STRIP BOTTOM */
     .cover-strip{
       position:absolute;
       left:22px;
@@ -82,6 +111,7 @@
     .strip-play i{font-size:19px}
     .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
 
+    /* ✅ sources buttons */
     .source-btn{
       height:44px;
       border-radius:14px;
@@ -89,7 +119,9 @@
       font-size:13px;
       transition:.2s;
     }
-    .source-btn.active{background:#fff;color:#000;}
+    .source-btn.active{
+      background:#fff;color:#000;
+    }
     .source-btn.inactive{
       background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.10);
@@ -97,6 +129,7 @@
     }
     .source-btn:hover{opacity:.95}
 
+    /* ✅ bottom bar (Vous regardez) */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
@@ -109,30 +142,47 @@
       gap:16px;
     }
 
-    .watch-left{display:flex;align-items:center;gap:14px;min-width:0;}
+    .watch-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
     .watch-left img{
-      width:38px;height:38px;object-fit:contain;
+      width:38px;height:38px;
+      object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
       flex-shrink:0;
     }
-    .watch-text{min-width:0;line-height:1.1;}
-    .watch-text .small{opacity:.8;font-weight:700;font-size:13px;}
+
+    .watch-text{
+      min-width:0;
+      line-height:1.1;
+    }
+
+    .watch-text .small{
+      opacity:.8;font-weight:700;font-size:13px;
+    }
+
     .watch-text .big{
       font-weight:900;font-size:16px;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .watch-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
     }
 
     .channel-logo{
-      width:72px;height:auto;object-fit:contain;
+      width:86px;height:auto;
+      object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
-    }
-
-    /* video */
-    video{
-      width:100%;
-      height:100%;
-      background:#000;
-      display:block;
     }
   </style>
 </head>
@@ -158,10 +208,20 @@
 
     <!-- ✅ COVER CLICK = LAUNCH STREAM -->
     <div id="cover" class="cover" onclick="loadVideo(1)">
+      <div class="cover-top">
+        <img class="team-logo"
+             src="https://upload.wikimedia.org/wikipedia/fr/archive/c/c7/20181006143652%21Logo_Real_Madrid.svg"
+             alt="Real Madrid">
+        <span class="vs">VS</span>
+        <img class="team-logo"
+             src="https://upload.wikimedia.org/wikipedia/fr/thumb/f/fc/Logo_ATM_2024.svg/langfr-250px-Logo_ATM_2024.svg.png"
+             alt="Atlético Madrid">
+      </div>
+
       <div class="cover-strip">
         <div>
           <div class="strip-title">Regarder Gratuitement</div>
-          <div class="strip-sub">Test M3U8<br>Source Embed</div>
+          <div class="strip-sub">Real Madrid<br>Atlético Madrid</div>
         </div>
 
         <div class="strip-play">
@@ -180,35 +240,49 @@
     <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
   </section>
 
+  <!-- ✅ DIRECT LINK (fallback) -->
+  <div id="externalLink" class="hidden mt-4 text-center">
+    <a id="directLink" href="#" target="_blank"
+       class="text-amber-400 underline font-extrabold text-sm">
+      Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+    </a>
+  </div>
+
   <!-- ✅ WATCH BAR -->
   <section class="mt-6 watch-bar">
     <div class="watch-left">
-      <img src="https://upload.wikimedia.org/wikipedia/fr/f/f7/CAN_-_Fr_-_Full_Colour.png" alt="Compétition">
+      <!-- Logo compétition -->
+      <img src="https://empire-sport.shop/upload/leagues/ezed3ugrbkgr7ozgmg1m5bpvuw5idb.png">
       <div class="watch-text">
         <div class="small">Vous regardez</div>
-        <div class="big">Test Stream (M3U8)</div>
-        <div class="small">Aujourd’hui · Live</div>
+        <div class="big">Real Madrid - Atlético Madrid</div>
+        <div class="small">Supercoupe d'Espagne · 20:00</div>
       </div>
     </div>
 
-    <img class="channel-logo"
-         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBglTOvrb91rnOCnBfdokQYo1CLPyEGIovdg&s"
-         alt="Chaîne">
+    <div class="watch-right">
+      <!-- Logo chaîne -->
+      <img class="channel-logo"
+           src="https://cdn.freebiesupply.com/logos/thumbs/2x/bein-sports-logo.png"
+           alt="beIN SPORTS">
+    </div>
   </section>
+
+  <!-- MESSAGE -->
+  <div class="mt-8 text-center text-sm text-white/55 font-semibold">
+    Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).  
+    — L’équipe IMFTX+
+  </div>
 
 </main>
 
+<!-- ✅ PLAYER SCRIPT (STABLE + fallback embed blocked) -->
 <script>
-  // ✅ Mets ton lien autorisé ici (les 3 identiques comme tu veux)
-  const SAME_M3U8 = "http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8";
-
   const SOURCES = {
-    1: http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8,
-    2: http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8,
-    3: http://81340-movie.ott-di.com/live/7c91697cda/addf2b013f50/770798.m3u8
+    1: "https://bolaloca.my/player/4/46",
+    2: "https://bolaloca.my/player/2/46",
+    3: "https://bolaloca.my/player/3/46"
   };
-
-  let hlsInstance = null;
 
   function setActive(id){
     [1,2,3].forEach(n=>{
@@ -219,55 +293,40 @@
     });
   }
 
-  function destroyHls(){
-    if(hlsInstance){
-      try { hlsInstance.destroy(); } catch(e){}
-      hlsInstance = null;
-    }
-  }
-
   function loadVideo(id){
     document.getElementById("cover").style.display = "none";
     setActive(id);
 
-    const url = SOURCES[id];
+    const ext = document.getElementById("externalLink");
+    const link = document.getElementById("directLink");
+    link.href = SOURCES[id];
+    ext.classList.add("hidden");
 
     const target = document.getElementById("videoTarget");
-    target.innerHTML = `<video id="player" controls autoplay playsinline></video>`;
-    const video = document.getElementById("player");
+    target.innerHTML = `
+      <iframe
+        id="streamFrame"
+        src="${SOURCES[id]}"
+        allowfullscreen
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerpolicy="origin"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+      </iframe>
+    `;
 
-    destroyHls();
-
-    // ✅ Safari / iPhone lit nativement
-    if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = url;
-      video.play().catch(()=>{});
-      return;
-    }
-
-    // ✅ Chrome/Android/PC via Hls.js
-    if (window.Hls && Hls.isSupported()) {
-      hlsInstance = new Hls({
-        maxBufferLength: 30,
-        liveSyncDurationCount: 3
-      });
-      hlsInstance.loadSource(url);
-      hlsInstance.attachMedia(video);
-      hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
-        video.play().catch(()=>{});
-      });
-      hlsInstance.on(Hls.Events.ERROR, (event, data) => {
-        // message simple, sans casser ta page
-        console.log("HLS error:", data);
-      });
-      return;
-    }
-
-    alert("Ton navigateur ne supporte pas le M3U8.");
+    // fallback si embed bloqué
+    setTimeout(() => {
+      const iframe = document.getElementById("streamFrame");
+      if(!iframe) return;
+      try { iframe.contentWindow.location.href; }
+      catch(e){ ext.classList.remove("hidden"); }
+    }, 2000);
   }
 </script>
 
-<!-- ✅ FIREBASE ONLINE (INVISIBLE - REALTIME) -->
+<!-- ✅ FIREBASE ONLINE (REALTIME + INVISIBLE) -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
@@ -285,7 +344,7 @@
   if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  const MATCH_ID = "test-m3u8";
+  const MATCH_ID = "real-atletico"; // ✅ garde ce match id
   const sessionId = Math.random().toString(36).slice(2) + Date.now();
 
   const sessionRef = db.ref(`streams/${MATCH_ID}/presence/${sessionId}`);
