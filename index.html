@@ -1,39 +1,252 @@
 <!doctype html>
-<html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IMFTX+ — Live</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    html,body{
+      height:100%;margin:0;
+      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:linear-gradient(180deg,#070708 0%,#0f0f10 100%);
+      color:#fff;
+    }
+    .match-card{
+      background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:14px;overflow:hidden;
+      display:flex;flex-direction:column;
+      height:220px;padding:0;
+    }
+    .match-thumb{
+      flex:1;display:flex;align-items:center;justify-content:center;
+      font-weight:700;font-size:22px;
+      text-shadow:0 0 6px rgba(0,0,0,0.7);
+    }
+    @media(max-width:768px){
+      .match-card{height:170px}
+    }
+  </style>
+</head>
 <body>
-<h3>CHAT PROOF</h3>
 
-<div id="log"></div>
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-40 bg-transparent backdrop-blur-sm border-b border-zinc-800/40">
+  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+    <div class="text-3xl font-extrabold">IMFTX+</div>
+  </div>
+</nav>
 
-<input id="m">
-<button onclick="send()">SEND</button>
+<main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-<script type="module">
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+  <header class="text-center mb-8">
+    <h1 class="text-4xl md:text-5xl font-extrabold">IMFTX+ LIVE</h1>
+    <p class="mt-2 text-zinc-400 max-w-xl mx-auto">N°1 de la diffusion française</p>
+  </header>
 
-const supabase = createClient(
-  "https://nipfaqeshezvoxravdqx.supabase.co",
-  "nipfaqeshezvoxravdqx"
-);
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-const log = document.getElementById("log");
+    <!-- 18H45 MATCHES -->
 
-const { error: testErr } = await supabase
-  .from("chat_messages")
-  .select("id")
-  .limit(1);
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#f6d000,#990000)">
+        (18h45) Young Boys - LOSC
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Young Boys vs LOSC</span>
+        <button onclick="openCustomStream('youngboys-losc')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
 
-log.innerHTML += testErr ? "SELECT ERROR ❌<br>" + testErr.message : "SELECT OK ✅<br>";
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#d40000,#7a001f)">
+        (18h45) Nice - Braga
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Nice vs Braga</span>
+        <button onclick="openCustomStream('nice-braga')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
 
-async function send(){
-  const v = document.getElementById("m").value;
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#0d8f3d,#003399)">
+        (18h45) Ferencváros - Rangers
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Ferencváros vs Rangers</span>
+        <button onclick="openCustomStream('ferencvaros-rangers')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
 
-  const { error } = await supabase
-    .from("chat_messages")
-    .insert([{ room:"proof", username:"test", message:v }]);
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#003399,#009900)">
+        (18h45) Dinamo Zagreb - Real Betis
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Dinamo Zagreb vs Real Betis</span>
+        <button onclick="openCustomStream('zagreb-betis')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
 
-  log.innerHTML += error ? "INSERT ERROR ❌<br>" + error.message : "INSERT OK ✅<br>";
-}
-</script>
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#2b2b2b,#cc0000)">
+        (18h45) Sturm Graz - Crvena zvezda
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Sturm Graz vs Crvena zvezda</span>
+        <button onclick="openCustomStream('graz-zvezda')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#006000,#000000)">
+        (18h45) Ludogorets - PAOK
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Ludogorets vs PAOK</span>
+        <button onclick="openCustomStream('ludogorets-paok')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#d10000,#0046b8)">
+        (18h45) Utrecht - Nottingham Forest
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Utrecht vs Nottingham</span>
+        <button onclick="openCustomStream('utrecht-nottingham')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#cc0000,#003399)">
+        (18h45) Midtjylland - Genk
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Midtjylland vs Genk</span>
+        <button onclick="openCustomStream('midtjylland-genk')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#ff0000,#000000)">
+        (18h45) Stuttgart - M. Tel-Aviv
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Stuttgart vs M. Tel-Aviv</span>
+        <button onclick="openCustomStream('stuttgart-telaviv')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <!-- 21h00 MATCHES -->
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#0090ff,#aa0000)">
+        (21h00) Celta Vigo - Bologna
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Celta Vigo vs Bologna</span>
+        <button onclick="openCustomStream('celta-bologna')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#ba0202,#4a00a0)">
+        (21h00) Basel - Aston Villa
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Basel vs Aston Villa</span>
+        <button onclick="openCustomStream('basel-astonvilla')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#008000,#660000)">
+        (21h00) Celtic - Roma
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Celtic vs Roma</span>
+        <button onclick="openCustomStream('celtic-roma')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#0000cc,#0099cc)">
+        (21h00) Porto - Malmö
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Porto vs Malmö</span>
+        <button onclick="openCustomStream('porto-malmo')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#002395,#ffcc00)">
+        (21h00) Lyon - Go Ahead Eagles
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Lyon vs Go Ahead Eagles</span>
+        <button onclick="openCustomStream('lyon-eagles')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#0040ff,#ff0000)">
+        (21h00) FCSB - Feyenoord
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>FCSB vs Feyenoord</span>
+        <button onclick="openCustomStream('fcsb-feyenoord')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#cc0000,#00b35c)">
+        (21h00) Freiburg - RB Salzburg
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Freiburg vs RB Salzburg</span>
+        <button onclick="openCustomStream('freiburg-salzburg')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#0c8e47,#003399)">
+        (21h00) Panathinaïkos - Viktoria Plzeň
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Panathinaïkos vs Viktoria Plzeň</span>
+        <button onclick="openCustomStream('panathinaikos-plzen')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+    <div class="match-card">
+      <div class="match-thumb" style="background:linear-gradient(to right,#cc0000,#f2d000)">
+        (21h00) Brann - Fenerbahçe
+      </div>
+      <div class="p-3 flex justify-between">
+        <span>Brann vs Fenerbahçe</span>
+        <button onclick="openCustomStream('brann-fenerbahce')" class="px-3 py-2 bg-amber-400 text-black font-semibold rounded-md">Regarder</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function openCustomStream(matchId) {
+      window.location.href = matchId + ".html";
+    }
+  </script>
+
+  <footer class="w-full mt-20 text-center text-sm opacity-70 pb-6">
+    <h2 class="text-lg font-bold mb-2">À propos</h2>
+    <p>IMFTX+ — Plateforme de streaming. Mise à jour : 11/12/2025</p>
+  </footer>
+
+</main>
 </body>
 </html>
