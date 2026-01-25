@@ -1,130 +1,167 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IMFTX+</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={darkMode:'class'};</script>
-  <script>document.documentElement.classList.add('dark');</script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
 
-  <style>
-    html,body{height:100%}
-    body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
+<style>
+html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
 
-    /* NAV */
-    nav{
-      position:sticky;top:0;z-index:20;height:64px;background:#000;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      display:flex;align-items:center;justify-content:space-between;padding:0 18px;
-    }
-    .brand{font-size:30px;font-weight:900;letter-spacing:-.02em}
-    .nav-icons{display:flex;gap:10px;align-items:center}
-    .btn-iptv{
-      background:#fff;color:#000;text-decoration:none;
-      padding:8px 14px;border-radius:999px;font-weight:900;font-size:13px;
-    }
-    .icon{
-      width:42px;height:42px;display:grid;place-items:center;
-      border:1px solid rgba(255,255,255,.12);
-      border-radius:12px;transition:.15s;
-    }
-    .icon:hover{background:rgba(255,255,255,.06)}
+/* NAV */
+nav{
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  background:#000;
+}
+.brand{font-size:30px;font-weight:900;letter-spacing:-.02em}
+.nav-right{display:flex;gap:10px;align-items:center}
+.btn-iptv{
+  background:#fff;color:#000;text-decoration:none;
+  padding:8px 14px;border-radius:999px;
+  font-weight:900;font-size:13px;
+}
+.icon{
+  width:42px;height:42px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;
+  display:grid;place-items:center;
+  text-decoration:none;color:#fff;
+}
+.icon:hover{background:rgba(255,255,255,.06)}
 
-    /* HEADER */
-    header{text-align:center;padding:52px 18px 10px}
-    header h1{margin:0;font-size:68px;font-weight:900;letter-spacing:-.03em}
-    header p{
-      margin:8px 0 0;font-size:13px;font-weight:600;
-      color:rgba(255,255,255,.55);letter-spacing:.06em;text-transform:uppercase
-    }
+/* HEADER */
+header{text-align:center;padding:46px 16px 10px}
+header h1{margin:0;font-size:68px;font-weight:900;letter-spacing:-.03em}
+header p{
+  margin:8px 0 0;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.55);
+}
 
-    /* “En direct” above grid */
-    .live-wrap{padding:0 18px;margin:12px 0 12px}
-    .wrap{max-width:1400px;margin:0 auto}
+/* GRID */
+main{padding:0 16px 38px}
+.grid{
+  max-width:1400px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+}
+@media(min-width:900px){
+  .grid{grid-template-columns:repeat(3, 1fr);}
+}
 
-    /* ✅ pill EXACT style */
-    .pill-green{
-      display:inline-flex;align-items:center;
-      padding:6px 14px;border-radius:999px;
-      background:rgba(34,197,94,.18);
-      border:1px solid rgba(34,197,94,.35);
-      color:#b9f6c8;
-      font-weight:900;font-size:12px;
-    }
+/* CARD */
+.card{
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:#0a0a0a;
+}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.overlay{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(600px 240px at 25% 70%, rgba(0,0,0,.35), transparent 60%),
+    linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.40) 46%, rgba(0,0,0,.12) 100%);
+}
 
-    /* GRID: 1 mobile / 3 PC */
-    main{padding:0 18px 36px}
-    .grid{display:grid;grid-template-columns:1fr;gap:14px}
-    @media(min-width:900px){.grid{grid-template-columns:repeat(3,1fr)}}
+/* ✅ EN COURS style “timer” (transparent) */
+.status{
+  position:absolute;
+  top:10px; left:10px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
 
-    /* CARD */
-    .match{
-      position:relative;
-      aspect-ratio:16/9;
-      border-radius:18px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .bg{position:absolute;inset:0;background-size:cover;background-position:center}
-    .overlay{
-      position:absolute;inset:0;
-      background:linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.12) 100%);
-    }
+  padding:6px 12px;
+  border-radius:999px;
 
-    /* ✅ “En cours” on card */
-    .status{
-      position:absolute;top:10px;left:10px;
-      display:inline-flex;align-items:center;
-      padding:6px 14px;border-radius:999px;
-      background:rgba(34,197,94,.18);
-      border:1px solid rgba(34,197,94,.35);
-      color:#b9f6c8;
-      font-weight:900;font-size:12px;
-    }
+  background: rgba(0,0,0,.55);
+  border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(6px);
 
-    /* ✅ compact tag (3 lines) */
-    .tag{
-      position:absolute;left:12px;bottom:12px;
-      max-width:34%;
-      display:flex;flex-direction:column;
-      gap:6px;
-    }
+  color:#fff;
+  font-weight:800;
+  font-size:12px;
+  line-height:1;
+}
+.status::before{
+  content:"";
+  width:8px;height:8px;border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 10px rgba(34,197,94,.95);
+}
 
-    .teams{display:flex;align-items:center;gap:8px}
-    .team{width:34px;height:34px} /* logos not reduced */
-    .team img{width:100%;height:100%;object-fit:contain}
-    .vs{font-size:11px;font-weight:900;opacity:.75}
+/* ✅ Tag match plus petit (PAS GROS) */
+.tag{
+  position:absolute;
+  left:12px;
+  bottom:12px;
+  max-width:30%;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
 
-    .info{display:flex;gap:8px;align-items:flex-end}
-    .league{width:22px;height:36px;object-fit:contain}
+/* logos équipes */
+.teams{display:flex;align-items:center;gap:8px}
+.team{width:36px;height:36px}
+.team img{width:100%;height:100%;object-fit:contain}
+.vs{font-size:11px;font-weight:900;color:rgba(255,255,255,.70)}
 
-    .title{font-size:12px;font-weight:900;line-height:1.05}
-    .sub{font-size:10px;font-weight:700;line-height:1.05;color:rgba(255,255,255,.72)}
+/* compétition + texte */
+.info{display:flex;gap:8px;align-items:flex-end}
+.league{width:22px;height:36px;object-fit:contain}
 
-    /* WATCH */
-    .watch{
-      position:absolute;right:12px;bottom:12px;
-      display:flex;align-items:center;gap:8px;
-      padding:8px 13px;border-radius:999px;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.18);
-      color:#fff;text-decoration:none;
-      font-weight:900;font-size:13px;
-    }
-    .play{
-      width:28px;height:28px;border-radius:999px;
-      background:rgba(0,0,0,.45);
-      display:grid;place-items:center;
-    }
+.title{font-size:12px;font-weight:900;line-height:1.05}
+.sub{font-size:10px;font-weight:700;color:rgba(255,255,255,.72);line-height:1.05}
 
-    @media(max-width:640px){
-      header h1{font-size:56px}
-      .tag{max-width:70%}
-    }
-  </style>
+/* bouton regarder */
+.watch{
+  position:absolute;
+  right:12px;
+  bottom:12px;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+
+  padding:8px 13px;
+  border-radius:999px;
+
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.18);
+
+  color:#fff;
+  text-decoration:none;
+  font-weight:900;
+  font-size:13px;
+}
+.watch:hover{background:rgba(255,255,255,.15)}
+.play{
+  width:28px;height:28px;border-radius:50%;
+  background:rgba(0,0,0,.45);
+  display:grid;place-items:center;
+}
+
+@media(max-width:640px){
+  header h1{font-size:56px}
+  .tag{max-width:70%}
+}
+</style>
 </head>
 
 <body>
@@ -132,31 +169,12 @@
 <nav>
   <div class="brand">IMFTX+</div>
 
-  <div class="nav-icons">
-    <a href="#" class="btn-iptv">⚡ ACHÈTE TON IPTV</a>
+  <div class="nav-right">
+    <a class="btn-iptv" href="#" target="_blank">⚡ ACHÈTE TON IPTV</a>
 
-    <!-- X -->
-    <a href="#" target="_blank" class="icon" aria-label="X">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-        <path d="M18.2 3H21l-6.4 7.3L22 21h-6.2l-4.8-6.3L5.4 21H2.6l6.9-7.8L2 3h6.3l4.3 5.7L18.2 3Z" fill="white"/>
-      </svg>
-    </a>
-
-    <!-- Telegram -->
-    <a href="#" target="_blank" class="icon" aria-label="Telegram">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-        <path d="M21.8 3.2L2.9 10.6c-1 .4-1 1.8 0 2.2l4.7 1.6 1.8 5.4c.3 1 1.6 1.2 2.2.4l2.8-3.5 5.2 3.8c.9.7 2.2.2 2.4-.9L23 4.5c.2-1-.5-1.6-1.2-1.3Z" stroke="white" stroke-width="1.6"/>
-        <path d="M7.6 14.2l12.3-8.2" stroke="white" stroke-width="1.6"/>
-      </svg>
-    </a>
-
-    <!-- Discord -->
-    <a href="#" target="_blank" class="icon" aria-label="Discord">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M8 18c-1.6 0-3-1.3-3-3.1 0-5.5 3.3-9.9 7-9.9s7 4.4 7 9.9C19 16.7 17.6 18 16 18l-1.5-1.6H9.5L8 18Z" stroke="white" stroke-width="1.6"/>
-        <path d="M9.3 12.7h.01M14.7 12.7h.01" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
-      </svg>
-    </a>
+    <a class="icon" href="#" target="_blank" aria-label="X" title="X">X</a>
+    <a class="icon" href="#" target="_blank" aria-label="Telegram" title="Telegram">TG</a>
+    <a class="icon" href="#" target="_blank" aria-label="Discord" title="Discord">DS</a>
   </div>
 </nav>
 
@@ -165,132 +183,127 @@
   <p>N°1 DES MEILLEURS DIFFUSEURS FR</p>
 </header>
 
-<div class="live-wrap">
-  <div class="wrap">
-    <span class="pill-green">En direct</span>
-  </div>
-</div>
-
 <main>
-  <div class="wrap">
-    <div class="grid">
+  <div class="grid">
 
-      <!-- 1) Paris FC - Angers -->
-      <article class="match">
-        <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png')"></div>
-        <div class="overlay"></div>
+    <!-- 1) Paris FC - Angers -->
+    <article class="card">
+      <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png')"></div>
+      <div class="overlay"></div>
 
-        <div class="status">En cours</div>
+      <div class="status">En cours</div>
 
-        <div class="tag">
-          <div class="teams">
-            <div class="team"><img alt="Paris FC" src="https://empire-sport.world/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png"></div>
-            <span class="vs">VS</span>
-            <div class="team"><img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png"></div>
-          </div>
-          <div class="info">
-            <img alt="Ligue 1" class="league" src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png">
-            <div>
-              <div class="title">Paris FC - Angers</div>
-              <div class="sub">Ligue 1</div>
-              <div class="sub">Aujourd’hui 17:15</div>
-            </div>
-          </div>
+      <div class="tag">
+        <div class="teams">
+          <div class="team"><img alt="Paris FC" src="https://empire-sport.world/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png"></div>
+          <span class="vs">VS</span>
+          <div class="team"><img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png"></div>
         </div>
 
-        <a href="/angers-parisfc.html" target="_blank" class="watch">
-          <span class="play">▶</span>REGARDER
-        </a>
-      </article>
-
-      <!-- 2) Metz - Lyon -->
-      <article class="match">
-        <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/real-betis-vs-lyon.png')"></div>
-        <div class="overlay"></div>
-
-        <div class="status">En cours</div>
-
-        <div class="tag">
-          <div class="teams">
-            <div class="team"><img alt="Metz" src="https://empire-sport.world/upload/teams/qcuklxuxncckyihua7oh73wsacvqla.png"></div>
-            <span class="vs">VS</span>
-            <div class="team"><img alt="Lyon" src="https://empire-sport.world/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png"></div>
-          </div>
-          <div class="info">
-            <img alt="Ligue 1" class="league" src="https://empire-sport.world/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png">
-            <div>
-              <div class="title">Metz - Lyon</div>
-              <div class="sub">Ligue 1</div>
-              <div class="sub">Aujourd’hui 17:15</div>
-            </div>
+        <div class="info">
+          <img class="league" alt="Ligue 1" src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png">
+          <div>
+            <div class="title">Paris FC - Angers</div>
+            <div class="sub">Ligue 1</div>
+            <div class="sub">Aujourd’hui 17:15</div>
           </div>
         </div>
+      </div>
 
-        <a href="/metz-lyon.html" target="_blank" class="watch">
-          <span class="play">▶</span>REGARDER
-        </a>
-      </article>
+      <a class="watch" href="/angers-parisfc.html" target="_blank">
+        <span class="play">▶</span>REGARDER
+      </a>
+    </article>
 
-      <!-- 3) Arsenal - Manchester United -->
-      <article class="match">
-        <div class="bg" style="background-image:url('https://empire-sport.world/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png')"></div>
-        <div class="overlay"></div>
+    <!-- 2) Metz - Lyon -->
+    <article class="card">
+      <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/real-betis-vs-lyon.png')"></div>
+      <div class="overlay"></div>
 
-        <div class="status">En cours</div>
+      <div class="status">En cours</div>
 
-        <div class="tag">
-          <div class="teams">
-            <div class="team"><img alt="Arsenal" src="https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png"></div>
-            <span class="vs">VS</span>
-            <div class="team"><img alt="Manchester United" src="https://empire-sport.world/upload/teams/mosfyquovho2tfyvalgqtbzjnhmcv5.png"></div>
-          </div>
-          <div class="info">
-            <img alt="Premier League" class="league" src="https://empire-sport.world/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png">
-            <div>
-              <div class="title">Arsenal - Manchester United</div>
-              <div class="sub">Premier League</div>
-              <div class="sub">Aujourd’hui 17:30</div>
-            </div>
-          </div>
+      <div class="tag">
+        <div class="teams">
+          <div class="team"><img alt="Metz" src="https://empire-sport.world/upload/teams/qcuklxuxncckyihua7oh73wsacvqla.png"></div>
+          <span class="vs">VS</span>
+          <div class="team"><img alt="Lyon" src="https://empire-sport.world/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png"></div>
         </div>
 
-        <a href="/arsenal-manutd.html" target="_blank" class="watch">
-          <span class="play">▶</span>REGARDER
-        </a>
-      </article>
-
-      <!-- 4) Juventus - Napoli -->
-      <article class="match">
-        <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/juventus-vs-napoli.png')"></div>
-        <div class="overlay"></div>
-
-        <div class="status">En cours</div>
-
-        <div class="tag">
-          <div class="teams">
-            <div class="team"><img alt="Juventus" src="https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png"></div>
-            <span class="vs">VS</span>
-            <div class="team"><img alt="Napoli" src="https://empire-sport.world/upload/teams/e9ibu14ynhyggw7cjydjpwfial6xha.png"></div>
-          </div>
-          <div class="info">
-            <img alt="Serie A" class="league" src="https://empire-sport.world/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png">
-            <div>
-              <div class="title">Juventus - Napoli</div>
-              <div class="sub">Serie A</div>
-              <div class="sub">Aujourd’hui 18:00</div>
-            </div>
+        <div class="info">
+          <img class="league" alt="Ligue 1" src="https://empire-sport.world/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png">
+          <div>
+            <div class="title">Metz - Lyon</div>
+            <div class="sub">Ligue 1</div>
+            <div class="sub">Aujourd’hui 17:15</div>
           </div>
         </div>
+      </div>
 
-        <a href="/juventus-napoli.html" target="_blank" class="watch">
-          <span class="play">▶</span>REGARDER
-        </a>
-      </article>
+      <a class="watch" href="/metz-lyon.html" target="_blank">
+        <span class="play">▶</span>REGARDER
+      </a>
+    </article>
 
-    </div>
+    <!-- 3) Arsenal - Manchester United -->
+    <article class="card">
+      <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/arsenal-vs-manchester-united.png')"></div>
+      <div class="overlay"></div>
+
+      <div class="status">En cours</div>
+
+      <div class="tag">
+        <div class="teams">
+          <div class="team"><img alt="Arsenal" src="https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png"></div>
+          <span class="vs">VS</span>
+          <div class="team"><img alt="Man United" src="https://empire-sport.world/upload/teams/mosfyquovho2tfyvalgqtbzjnhmcv5.png"></div>
+        </div>
+
+        <div class="info">
+          <img class="league" alt="Premier League" src="https://empire-sport.world/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png">
+          <div>
+            <div class="title">Arsenal - Man United</div>
+            <div class="sub">Premier League</div>
+            <div class="sub">Aujourd’hui 17:30</div>
+          </div>
+        </div>
+      </div>
+
+      <a class="watch" href="/arsenal-manutd.html" target="_blank">
+        <span class="play">▶</span>REGARDER
+      </a>
+    </article>
+
+    <!-- 4) Juventus - Napoli -->
+    <article class="card">
+      <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/juventus-vs-napoli.png')"></div>
+      <div class="overlay"></div>
+
+      <div class="status">En cours</div>
+
+      <div class="tag">
+        <div class="teams">
+          <div class="team"><img alt="Juventus" src="https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png"></div>
+          <span class="vs">VS</span>
+          <div class="team"><img alt="Napoli" src="https://empire-sport.world/upload/teams/e9ibu14ynhyggw7cjydjpwfial6xha.png"></div>
+        </div>
+
+        <div class="info">
+          <img class="league" alt="Serie A" src="https://empire-sport.world/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png">
+          <div>
+            <div class="title">Juventus - Napoli</div>
+            <div class="sub">Serie A</div>
+            <div class="sub">Aujourd’hui 18:00</div>
+          </div>
+        </div>
+      </div>
+
+      <a class="watch" href="/juventus-napoli.html" target="_blank">
+        <span class="play">▶</span>REGARDER
+      </a>
+    </article>
+
   </div>
 </main>
 
 </body>
 </html>
-
