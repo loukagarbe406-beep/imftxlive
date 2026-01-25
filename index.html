@@ -13,11 +13,106 @@
     html,body{height:100%}
     body{font-family:'Outfit',sans-serif;background:#000}
 
-    /* fond doux comme ta capture */
+    /* fond doux */
     .soft-bg{
       background:
         radial-gradient(1200px 520px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
         radial-gradient(900px 420px at 50% 25%, rgba(255,255,255,.035), transparent 62%);
+    }
+
+    /* carte match */
+    .match-card{
+      position:relative;
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background:#0b0b0b;
+      box-shadow: 0 20px 80px rgba(0,0,0,.55);
+    }
+    .match-bg{
+      position:absolute; inset:0;
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.02);
+      transform: scale(1.02);
+    }
+    .match-overlay{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.20) 100%),
+        radial-gradient(800px 300px at 30% 40%, rgba(0,0,0,.30), transparent 60%);
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      padding:.35rem .6rem;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.9);
+      font-weight: 700;
+      font-size: .85rem;
+      line-height: 1;
+    }
+    .dot{
+      width:.55rem;height:.55rem;border-radius:999px;
+      background:#f59e0b;
+      box-shadow: 0 0 0 4px rgba(245,158,11,.18);
+    }
+    .watch-btn{
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      color:#fff;
+      font-weight: 800;
+      padding: .8rem 1.2rem;
+      display:inline-flex;
+      align-items:center;
+      gap:.6rem;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .watch-btn:hover{ background: rgba(255,255,255,.14); }
+    .watch-btn:active{ transform: scale(.98); }
+
+    .play{
+      width: 36px; height: 36px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.14);
+      display:grid; place-items:center;
+      background: rgba(0,0,0,.25);
+    }
+
+    /* petit logo équipe */
+    .team-logo{
+      width:42px;height:42px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      display:grid; place-items:center;
+      overflow:hidden;
+    }
+    .team-logo img{ width: 82%; height: 82%; object-fit: contain; }
+
+    /* badge vert “En direct” (section) */
+    .live-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      padding:.55rem .95rem;
+      border-radius:999px;
+      background: rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.30);
+      color: rgba(167,243,208,.95);
+      font-weight: 800;
+      font-size: .9rem;
+    }
+    .live-badge .live-dot{
+      width:.55rem;height:.55rem;border-radius:999px;
+      background:#22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,.18);
     }
   </style>
 </head>
@@ -28,23 +123,21 @@
 <nav class="sticky top-0 z-20 bg-black/70 backdrop-blur border-b border-white/10">
   <div class="max-w-screen-2xl mx-auto h-16 px-6 md:px-24 flex items-center justify-between">
 
-    <!-- Left -->
+    <!-- IMFTX+ (gros, collé) -->
     <div class="font-extrabold tracking-tight text-3xl select-none">IMFTX+</div>
 
-    <!-- Right -->
+    <!-- Right: bouton + icons -->
     <div class="flex items-center gap-2">
-      <!-- Button (UI only) -->
-      <a id="iptv-btn" href="#"
+      <!-- UI button -->
+      <a href="#"
          class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-extrabold text-sm hover:bg-white/90 active:scale-95 transition">
-        <span>⚡</span>
-        ACHÈTE TON IPTV
+        <span>⚡</span> ACHÈTE TON IPTV
       </a>
 
       <!-- X -->
-      <a id="nav-btn-x" href="#" target="_blank"
+      <a href="#" target="_blank"
          class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
          aria-label="X">
-        <!-- X icon -->
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
           <path d="M18.2 3H21l-6.4 7.3L22 21h-6.2l-4.8-6.3L5.4 21H2.6l6.9-7.8L2 3h6.3l4.3 5.7L18.2 3Z"
                 fill="currentColor"/>
@@ -52,7 +145,7 @@
       </a>
 
       <!-- Telegram -->
-      <a id="nav-btn-telegram" href="#" target="_blank"
+      <a href="#" target="_blank"
          class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
          aria-label="Telegram">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
@@ -63,7 +156,7 @@
       </a>
 
       <!-- Discord -->
-      <a id="nav-btn-discord" href="#" target="_blank"
+      <a href="#" target="_blank"
          class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
          aria-label="Discord">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
@@ -78,45 +171,95 @@
 
 <!-- HERO -->
 <header class="soft-bg">
-  <div class="max-w-screen-2xl mx-auto px-6 md:px-24 pt-16 pb-10 text-center">
-    <!-- ✅ centre visible -->
-    <h1 class="text-6xl md:text-7xl font-extrabold tracking-tight select-none">
-      IMFTX+
-    </h1>
+  <div class="max-w-screen-2xl mx-auto px-6 md:px-24 pt-14 pb-10 text-center">
+    <h1 class="text-6xl md:text-7xl font-extrabold tracking-tight select-none">IMFTX+</h1>
     <p class="mt-4 uppercase tracking-widest text-white/70 font-semibold">
       N°1 DES MEILLEURS DIFFUSEURS FR
     </p>
   </div>
 </header>
 
-<!-- MAIN CONTENT -->
+<!-- CONTENT -->
 <main class="soft-bg flex-1">
   <div class="max-w-screen-2xl mx-auto px-6 md:px-24 pb-16">
 
-    <section class="w-full mt-6 border border-white/10 rounded-2xl p-6 bg-white/5 backdrop-blur-sm shadow-[0_20px_80px_rgba(0,0,0,.55)]">
+    <!-- BOX -->
+    <section class="w-full mt-2 border border-white/10 rounded-2xl p-6 bg-white/5 backdrop-blur-sm shadow-[0_20px_80px_rgba(0,0,0,.55)]">
       <div class="flex items-center justify-between mb-6">
-        <!-- En direct badge -->
-        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full
-                     bg-green-500/10 border border-green-500/30
-                     text-green-300 font-semibold text-sm">
-          <span class="w-2 h-2 rounded-full bg-green-400"></span>
-          En direct
-        </span>
+        <span class="live-badge"><span class="live-dot"></span> En direct</span>
 
-        <!-- Refresh -->
-        <button type="button"
+        <button id="refreshBtn"
           class="w-10 h-10 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black flex items-center justify-center transition active:scale-95 shadow-md"
-          aria-label="Rafraîchir">
-          ⟳
-        </button>
+          aria-label="Rafraîchir">⟳</button>
       </div>
 
-      <!-- Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <div class="aspect-[16/9] w-full rounded-xl bg-white/10"></div>
-        <div class="aspect-[16/9] w-full rounded-xl bg-white/10"></div>
-        <div class="aspect-[16/9] w-full rounded-xl bg-white/10"></div>
-        <div class="aspect-[16/9] w-full rounded-xl bg-white/10"></div>
+      <!-- ✅ MATCH CARD (tes liens) -->
+      <article class="match-card w-full">
+        <div class="match-bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png');"></div>
+        <div class="match-overlay"></div>
+
+        <div class="relative p-5 md:p-6 flex flex-col md:flex-row md:items-end md:justify-between gap-6 min-h-[240px] md:min-h-[290px]">
+          <!-- top-left timer -->
+          <div class="absolute left-5 top-5 md:left-6 md:top-6">
+            <span class="pill"><span class="dot"></span> 3h 13m 58s</span>
+          </div>
+
+          <!-- LEFT INFO -->
+          <div class="mt-10 md:mt-0 max-w-[620px]">
+            <!-- teams row -->
+            <div class="flex items-center gap-3">
+              <div class="team-logo">
+                <img alt="Paris FC" src="https://empire-sport.world/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png">
+              </div>
+
+              <span class="text-white/70 font-extrabold">VS</span>
+
+              <div class="team-logo">
+                <img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png">
+              </div>
+            </div>
+
+            <!-- bottom left block like screenshot -->
+            <div class="mt-4 flex items-start gap-4">
+              <!-- competition logo + label -->
+              <div class="flex flex-col items-center gap-2">
+                <img
+                  alt="Ligue 1"
+                  src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png"
+                  class="w-9 h-9 object-contain"
+                />
+                <div class="text-[11px] font-black tracking-widest text-white/70">LIGUE 1</div>
+              </div>
+
+              <div>
+                <div class="text-xl md:text-2xl font-extrabold leading-tight">
+                  Paris FC - Angers
+                </div>
+                <div class="text-sm text-white/70 font-semibold">Ligue 1</div>
+                <div class="text-sm text-white/70 font-semibold">Aujourd’hui 17:15</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT CTA -->
+          <div class="flex md:justify-end">
+            <a href="#" class="watch-btn">
+              <span class="play">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                  <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
+                </svg>
+              </span>
+              REGARDER
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- (Option) place pour d’autres cartes -->
+      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div class="aspect-[21/9] rounded-xl bg-white/10 border border-white/10"></div>
+        <div class="aspect-[21/9] rounded-xl bg-white/10 border border-white/10"></div>
+        <div class="aspect-[21/9] rounded-xl bg-white/10 border border-white/10"></div>
       </div>
     </section>
 
@@ -129,12 +272,10 @@
   </div>
 </footer>
 
-<!-- Put your links later -->
 <script>
-  // document.getElementById('nav-btn-telegram').href = 'https://t.me/...';
-  // document.getElementById('nav-btn-discord').href  = 'https://discord.gg/...';
-  // document.getElementById('nav-btn-x').href        = 'https://x.com/...';
-  // document.getElementById('iptv-btn').href         = 'https://...';
+  document.getElementById('refreshBtn')?.addEventListener('click', () => {
+    // UI refresh placeholder
+  });
 </script>
 
 </body>
