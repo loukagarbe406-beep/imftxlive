@@ -10,106 +10,100 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    html,body{height:100%}
-    body{font-family:'Outfit',sans-serif;background:#000}
+    html, body { height: 100%; }
+    body { font-family: 'Outfit', sans-serif; background:#000; }
 
-    /* fond doux */
     .soft-bg{
       background:
         radial-gradient(1200px 520px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
         radial-gradient(900px 420px at 50% 25%, rgba(255,255,255,.035), transparent 62%);
     }
 
-    /* carte match */
+    /* ---- Match card ---- */
     .match-card{
-      position:relative;
+      position: relative;
+      overflow: hidden;
       border-radius: 18px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,.10);
-      background:#0b0b0b;
-      box-shadow: 0 20px 80px rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 18px 70px rgba(0,0,0,.55);
     }
     .match-bg{
       position:absolute; inset:0;
       background-size: cover;
       background-position: center;
-      filter: saturate(1.02);
-      transform: scale(1.02);
+      transform: scale(1.03);
+      filter: saturate(1.05);
+      opacity:.95;
     }
     .match-overlay{
       position:absolute; inset:0;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.20) 100%),
-        radial-gradient(800px 300px at 30% 40%, rgba(0,0,0,.30), transparent 60%);
+      background: linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.46) 45%, rgba(0,0,0,.18) 100%);
     }
+
     .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:.5rem;
-      padding:.35rem .6rem;
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.38rem .7rem;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.35);
+      background: rgba(0,0,0,.30);
       backdrop-filter: blur(10px);
-      color: rgba(255,255,255,.9);
-      font-weight: 700;
+      font-weight: 800;
       font-size: .85rem;
       line-height: 1;
+      color: rgba(255,255,255,.92);
     }
-    .dot{
+    .pill-dot{
       width:.55rem;height:.55rem;border-radius:999px;
       background:#f59e0b;
       box-shadow: 0 0 0 4px rgba(245,158,11,.18);
     }
-    .watch-btn{
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.10);
-      backdrop-filter: blur(10px);
-      color:#fff;
-      font-weight: 800;
-      padding: .8rem 1.2rem;
-      display:inline-flex;
-      align-items:center;
-      gap:.6rem;
-      transition: transform .15s ease, background .15s ease;
-    }
-    .watch-btn:hover{ background: rgba(255,255,255,.14); }
-    .watch-btn:active{ transform: scale(.98); }
 
-    .play{
-      width: 36px; height: 36px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.14);
-      display:grid; place-items:center;
-      background: rgba(0,0,0,.25);
-    }
-
-    /* petit logo équipe */
     .team-logo{
-      width:42px;height:42px;
+      width:40px;height:40px;
       border-radius: 12px;
       background: rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.10);
       display:grid; place-items:center;
       overflow:hidden;
     }
-    .team-logo img{ width: 82%; height: 82%; object-fit: contain; }
+    .team-logo img{ width: 85%; height: 85%; object-fit: contain; }
 
-    /* badge vert “En direct” (section) */
-    .live-badge{
+    .watch-btn{
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      color:#fff;
+      font-weight: 900;
+      padding:.75rem 1.1rem;
       display:inline-flex;
       align-items:center;
-      gap:.55rem;
+      gap:.6rem;
+      transition: transform .15s ease, background .15s ease;
+      white-space: nowrap;
+    }
+    .watch-btn:hover{ background: rgba(255,255,255,.14); }
+    .watch-btn:active{ transform: scale(.98); }
+
+    .play{
+      width:36px;height:36px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      display:grid; place-items:center;
+      background: rgba(0,0,0,.22);
+    }
+
+    .live-badge{
+      display:inline-flex; align-items:center; gap:.55rem;
       padding:.55rem .95rem;
       border-radius:999px;
       background: rgba(34,197,94,.12);
       border:1px solid rgba(34,197,94,.30);
       color: rgba(167,243,208,.95);
-      font-weight: 800;
+      font-weight: 900;
       font-size: .9rem;
     }
-    .live-badge .live-dot{
+    .live-dot{
       width:.55rem;height:.55rem;border-radius:999px;
       background:#22c55e;
       box-shadow: 0 0 0 4px rgba(34,197,94,.18);
@@ -122,13 +116,10 @@
 <!-- NAVBAR -->
 <nav class="sticky top-0 z-20 bg-black/70 backdrop-blur border-b border-white/10">
   <div class="max-w-screen-2xl mx-auto h-16 px-6 md:px-24 flex items-center justify-between">
-
-    <!-- IMFTX+ (gros, collé) -->
     <div class="font-extrabold tracking-tight text-3xl select-none">IMFTX+</div>
 
-    <!-- Right: bouton + icons -->
     <div class="flex items-center gap-2">
-      <!-- UI button -->
+      <!-- UI Button -->
       <a href="#"
          class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-extrabold text-sm hover:bg-white/90 active:scale-95 transition">
         <span>⚡</span> ACHÈTE TON IPTV
@@ -171,7 +162,7 @@
 
 <!-- HERO -->
 <header class="soft-bg">
-  <div class="max-w-screen-2xl mx-auto px-6 md:px-24 pt-14 pb-10 text-center">
+  <div class="max-w-screen-2xl mx-auto px-6 md:px-24 pt-14 pb-8 text-center">
     <h1 class="text-6xl md:text-7xl font-extrabold tracking-tight select-none">IMFTX+</h1>
     <p class="mt-4 uppercase tracking-widest text-white/70 font-semibold">
       N°1 DES MEILLEURS DIFFUSEURS FR
@@ -184,82 +175,78 @@
   <div class="max-w-screen-2xl mx-auto px-6 md:px-24 pb-16">
 
     <!-- BOX -->
-    <section class="w-full mt-2 border border-white/10 rounded-2xl p-6 bg-white/5 backdrop-blur-sm shadow-[0_20px_80px_rgba(0,0,0,.55)]">
+    <section class="w-full mt-4 border border-white/10 rounded-2xl p-6 bg-white/5 backdrop-blur-sm shadow-[0_20px_80px_rgba(0,0,0,.55)]">
       <div class="flex items-center justify-between mb-6">
         <span class="live-badge"><span class="live-dot"></span> En direct</span>
-
-        <button id="refreshBtn"
-          class="w-10 h-10 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black flex items-center justify-center transition active:scale-95 shadow-md"
-          aria-label="Rafraîchir">⟳</button>
+        <button class="w-10 h-10 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black flex items-center justify-center transition active:scale-95 shadow-md"
+                aria-label="Rafraîchir">⟳</button>
       </div>
 
-      <!-- ✅ MATCH CARD (tes liens) -->
-      <article class="match-card w-full">
-        <div class="match-bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png');"></div>
-        <div class="match-overlay"></div>
+      <!-- ✅ GRID: 2 par ligne (sur desktop) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <div class="relative p-5 md:p-6 flex flex-col md:flex-row md:items-end md:justify-between gap-6 min-h-[240px] md:min-h-[290px]">
-          <!-- top-left timer -->
-          <div class="absolute left-5 top-5 md:left-6 md:top-6">
-            <span class="pill"><span class="dot"></span> 3h 13m 58s</span>
+        <!-- CARD 1: Paris FC vs Angers (tes liens) -->
+        <article class="match-card aspect-[16/9]">
+          <div class="match-bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png');"></div>
+          <div class="match-overlay"></div>
+
+          <!-- timer -->
+          <div class="absolute left-4 top-4">
+            <span class="pill"><span class="pill-dot"></span> 3h 13m 58s</span>
           </div>
 
-          <!-- LEFT INFO -->
-          <div class="mt-10 md:mt-0 max-w-[620px]">
-            <!-- teams row -->
-            <div class="flex items-center gap-3">
-              <div class="team-logo">
-                <img alt="Paris FC" src="https://empire-sport.world/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png">
-              </div>
-
-              <span class="text-white/70 font-extrabold">VS</span>
-
-              <div class="team-logo">
-                <img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png">
-              </div>
-            </div>
-
-            <!-- bottom left block like screenshot -->
-            <div class="mt-4 flex items-start gap-4">
-              <!-- competition logo + label -->
-              <div class="flex flex-col items-center gap-2">
-                <img
-                  alt="Ligue 1"
-                  src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png"
-                  class="w-9 h-9 object-contain"
-                />
-                <div class="text-[11px] font-black tracking-widest text-white/70">LIGUE 1</div>
-              </div>
-
-              <div>
-                <div class="text-xl md:text-2xl font-extrabold leading-tight">
-                  Paris FC - Angers
+          <!-- content -->
+          <div class="absolute inset-x-0 bottom-0 p-4 md:p-5">
+            <div class="flex items-end justify-between gap-4">
+              <div class="min-w-0">
+                <!-- team logos -->
+                <div class="flex items-center gap-3">
+                  <div class="team-logo">
+                    <img alt="Paris FC" src="https://empire-sport.world/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png">
+                  </div>
+                  <span class="text-white/70 font-extrabold text-sm">VS</span>
+                  <div class="team-logo">
+                    <img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png">
+                  </div>
                 </div>
-                <div class="text-sm text-white/70 font-semibold">Ligue 1</div>
-                <div class="text-sm text-white/70 font-semibold">Aujourd’hui 17:15</div>
+
+                <!-- league + title -->
+                <div class="mt-3 flex items-end gap-3">
+                  <div class="flex flex-col items-center gap-1">
+                    <img
+                      alt="Ligue 1"
+                      src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png"
+                      class="w-9 h-9 object-contain"
+                    />
+                    <div class="text-[11px] font-black tracking-widest text-white/70">LIGUE 1</div>
+                  </div>
+
+                  <div class="min-w-0">
+                    <div class="text-lg md:text-xl font-extrabold truncate">Paris FC - Angers</div>
+                    <div class="text-sm text-white/70 font-semibold">Ligue 1</div>
+                    <div class="text-sm text-white/70 font-semibold">Aujourd’hui 17:15</div>
+                  </div>
+                </div>
               </div>
+
+              <!-- watch -->
+              <a href="#" class="watch-btn">
+                <span class="play">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
+                  </svg>
+                </span>
+                REGARDER
+              </a>
             </div>
           </div>
+        </article>
 
-          <!-- RIGHT CTA -->
-          <div class="flex md:justify-end">
-            <a href="#" class="watch-btn">
-              <span class="play">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                  <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
-                </svg>
-              </span>
-              REGARDER
-            </a>
-          </div>
-        </div>
-      </article>
+        <!-- CARD 2 (placeholder, même taille) -->
+        <article class="match-card aspect-[16/9] flex items-center justify-center text-white/40 font-extrabold">
+          MATCH À AJOUTER
+        </article>
 
-      <!-- (Option) place pour d’autres cartes -->
-      <div class="mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-        <div class="aspect-[21/9] rounded-xl bg-white/10 border border-white/10"></div>
-        <div class="aspect-[21/9] rounded-xl bg-white/10 border border-white/10"></div>
-        <div class="aspect-[21/9] rounded-xl bg-white/10 border border-white/10"></div>
       </div>
     </section>
 
@@ -271,12 +258,6 @@
     Made with ❤️
   </div>
 </footer>
-
-<script>
-  document.getElementById('refreshBtn')?.addEventListener('click', () => {
-    // UI refresh placeholder
-  });
-</script>
 
 </body>
 </html>
