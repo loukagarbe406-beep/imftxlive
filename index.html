@@ -78,7 +78,7 @@ main{padding:0 16px 38px}
     linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.40) 46%, rgba(0,0,0,.12) 100%);
 }
 
-/* ✅ EN COURS style “timer” (transparent) */
+/* ✅ PILL STATUS (transparent like timer) */
 .status{
   position:absolute;
   top:10px; left:10px;
@@ -105,7 +105,16 @@ main{padding:0 16px 38px}
   box-shadow:0 0 10px rgba(34,197,94,.95);
 }
 
-/* ✅ Tag match plus petit (PAS GROS) */
+/* ✅ finished variant */
+.status.finished::before{
+  background:#cbd5e1;              /* gris clair */
+  box-shadow:0 0 0 rgba(0,0,0,0);   /* pas de glow */
+}
+.status.finished{
+  color:rgba(255,255,255,.92);
+}
+
+/* ✅ Tag match (small) */
 .tag{
   position:absolute;
   left:12px;
@@ -116,13 +125,11 @@ main{padding:0 16px 38px}
   gap:6px;
 }
 
-/* logos équipes */
 .teams{display:flex;align-items:center;gap:8px}
 .team{width:36px;height:36px}
 .team img{width:100%;height:100%;object-fit:contain}
 .vs{font-size:11px;font-weight:900;color:rgba(255,255,255,.70)}
 
-/* compétition + texte */
 .info{display:flex;gap:8px;align-items:flex-end}
 .league{width:22px;height:36px;object-fit:contain}
 
@@ -168,10 +175,8 @@ main{padding:0 16px 38px}
 
 <nav>
   <div class="brand">IMFTX+</div>
-
   <div class="nav-right">
     <a class="btn-iptv" href="#" target="_blank">⚡ ACHÈTE TON IPTV</a>
-
     <a class="icon" href="#" target="_blank" aria-label="X" title="X">X</a>
     <a class="icon" href="#" target="_blank" aria-label="Telegram" title="Telegram">TG</a>
     <a class="icon" href="#" target="_blank" aria-label="Discord" title="Discord">DS</a>
@@ -186,12 +191,11 @@ main{padding:0 16px 38px}
 <main>
   <div class="grid">
 
-    <!-- 1) Paris FC - Angers -->
+    <!-- 1) Paris FC - Angers (Terminé) -->
     <article class="card">
       <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png')"></div>
       <div class="overlay"></div>
-
-      <div class="status">En cours</div>
+      <div class="status finished">Terminé</div>
 
       <div class="tag">
         <div class="teams">
@@ -199,7 +203,6 @@ main{padding:0 16px 38px}
           <span class="vs">VS</span>
           <div class="team"><img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png"></div>
         </div>
-
         <div class="info">
           <img class="league" alt="Ligue 1" src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png">
           <div>
@@ -210,17 +213,14 @@ main{padding:0 16px 38px}
         </div>
       </div>
 
-      <a class="watch" href="/angers-parisfc.html" target="_blank">
-        <span class="play">▶</span>REGARDER
-      </a>
+      <a class="watch" href="/angers-parisfc.html" target="_blank"><span class="play">▶</span>REGARDER</a>
     </article>
 
-    <!-- 2) Metz - Lyon -->
+    <!-- 2) Metz - Lyon (Terminé) -->
     <article class="card">
       <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/real-betis-vs-lyon.png')"></div>
       <div class="overlay"></div>
-
-      <div class="status">En cours</div>
+      <div class="status finished">Terminé</div>
 
       <div class="tag">
         <div class="teams">
@@ -228,7 +228,6 @@ main{padding:0 16px 38px}
           <span class="vs">VS</span>
           <div class="team"><img alt="Lyon" src="https://empire-sport.world/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png"></div>
         </div>
-
         <div class="info">
           <img class="league" alt="Ligue 1" src="https://empire-sport.world/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png">
           <div>
@@ -239,17 +238,14 @@ main{padding:0 16px 38px}
         </div>
       </div>
 
-      <a class="watch" href="/metz-lyon.html" target="_blank">
-        <span class="play">▶</span>REGARDER
-      </a>
+      <a class="watch" href="/metz-lyon.html" target="_blank"><span class="play">▶</span>REGARDER</a>
     </article>
 
-    <!-- 3) Arsenal - Manchester United -->
+    <!-- 3) Arsenal - Manchester United (Terminé) -->
     <article class="card">
       <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/arsenal-vs-manchester-united.png')"></div>
       <div class="overlay"></div>
-
-      <div class="status">En cours</div>
+      <div class="status finished">Terminé</div>
 
       <div class="tag">
         <div class="teams">
@@ -257,7 +253,6 @@ main{padding:0 16px 38px}
           <span class="vs">VS</span>
           <div class="team"><img alt="Man United" src="https://empire-sport.world/upload/teams/mosfyquovho2tfyvalgqtbzjnhmcv5.png"></div>
         </div>
-
         <div class="info">
           <img class="league" alt="Premier League" src="https://empire-sport.world/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png">
           <div>
@@ -268,17 +263,14 @@ main{padding:0 16px 38px}
         </div>
       </div>
 
-      <a class="watch" href="/arsenal-manutd.html" target="_blank">
-        <span class="play">▶</span>REGARDER
-      </a>
+      <a class="watch" href="/arsenal-manutd.html" target="_blank"><span class="play">▶</span>REGARDER</a>
     </article>
 
-    <!-- 4) Juventus - Napoli -->
+    <!-- 4) Juventus - Napoli (Terminé) -->
     <article class="card">
       <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/juventus-vs-napoli.png')"></div>
       <div class="overlay"></div>
-
-      <div class="status">En cours</div>
+      <div class="status finished">Terminé</div>
 
       <div class="tag">
         <div class="teams">
@@ -286,7 +278,6 @@ main{padding:0 16px 38px}
           <span class="vs">VS</span>
           <div class="team"><img alt="Napoli" src="https://empire-sport.world/upload/teams/e9ibu14ynhyggw7cjydjpwfial6xha.png"></div>
         </div>
-
         <div class="info">
           <img class="league" alt="Serie A" src="https://empire-sport.world/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png">
           <div>
@@ -297,9 +288,32 @@ main{padding:0 16px 38px}
         </div>
       </div>
 
-      <a class="watch" href="/juventus-napoli.html" target="_blank">
-        <span class="play">▶</span>REGARDER
-      </a>
+      <a class="watch" href="/juventus-napoli.html" target="_blank"><span class="play">▶</span>REGARDER</a>
+    </article>
+
+    <!-- 5) Lille - Strasbourg (NOUVEAU, Terminé) -->
+    <article class="card">
+      <div class="bg" style="background-image:url('https://empire-sport.world/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png')"></div>
+      <div class="overlay"></div>
+      <div class="status finished">Terminé</div>
+
+      <div class="tag">
+        <div class="teams">
+          <div class="team"><img alt="Lille" src="https://empire-sport.world/upload/teams/8cjgq2dnsdbrdb1bfdfor9qrqp3o1f.png"></div>
+          <span class="vs">VS</span>
+          <div class="team"><img alt="Strasbourg" src="https://empire-sport.world/upload/teams/y5tcqer82p79xnuij4aw6hqjiovisl.png"></div>
+        </div>
+        <div class="info">
+          <img class="league" alt="Ligue 1" src="https://empire-sport.world/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png">
+          <div>
+            <div class="title">Lille - Strasbourg</div>
+            <div class="sub">Ligue 1</div>
+            <div class="sub">Aujourd’hui 20:45</div>
+          </div>
+        </div>
+      </div>
+
+      <a class="watch" href="/lille-strasbourg.html" target="_blank"><span class="play">▶</span>REGARDER</a>
     </article>
 
   </div>
