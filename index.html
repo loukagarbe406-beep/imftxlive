@@ -1,216 +1,125 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>IMFTX+</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config = { darkMode:'class' };</script>
+<script>tailwind.config={darkMode:'class'};</script>
 <script>document.documentElement.classList.add('dark');</script>
 
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <style>
-html,body{height:100%}
-body{
-  margin:0;
-  background:#000;
-  color:#fff;
-  font-family:'Outfit',sans-serif;
-}
+  html,body{height:100%}
+  body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
 
-/* ===== NAV ===== */
-nav{
-  position:sticky;top:0;z-index:20;
-  height:64px;
-  background:#000;
-  border-bottom:1px solid rgba(255,255,255,.1);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 24px;
-}
-.brand{
-  font-size:30px;
-  font-weight:900;
-  letter-spacing:-.02em;
-}
-.nav-icons{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-.btn-iptv{
-  background:#fff;
-  color:#000;
-  padding:8px 14px;
-  border-radius:999px;
-  font-weight:900;
-  font-size:13px;
-}
-.icon{
-  width:42px;height:42px;
-  display:grid;place-items:center;
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:12px;
-  transition:.15s;
-}
-.icon:hover{background:rgba(255,255,255,.06)}
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:20;height:64px;background:#000;
+    border-bottom:1px solid rgba(255,255,255,.10);
+    display:flex;align-items:center;justify-content:space-between;padding:0 18px;
+  }
+  .brand{font-size:30px;font-weight:900;letter-spacing:-.02em}
+  .nav-icons{display:flex;gap:10px;align-items:center}
+  .btn-iptv{
+    background:#fff;color:#000;text-decoration:none;
+    padding:8px 14px;border-radius:999px;font-weight:900;font-size:13px;
+  }
+  .icon{
+    width:42px;height:42px;display:grid;place-items:center;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:12px;transition:.15s;
+  }
+  .icon:hover{background:rgba(255,255,255,.06)}
+  .icon svg{display:block}
 
-/* ===== HEADER ===== */
-header{
-  text-align:center;
-  padding:64px 24px 26px;
-}
-header h1{
-  font-size:72px;
-  font-weight:900;
-  letter-spacing:-.03em;
-  margin:0;
-}
-header p{
-  margin:10px 0 0;
-  font-size:14px;
-  font-weight:500;
-  color:rgba(255,255,255,.55);
-}
+  /* HEADER */
+  header{text-align:center;padding:52px 18px 14px}
+  header h1{margin:0;font-size:68px;font-weight:900;letter-spacing:-.03em}
+  header p{margin:8px 0 0;font-size:13px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.06em;text-transform:uppercase}
 
-/* ===== LIVE BADGE (EN DIRECT) ===== */
-.live-wrap{
-  width:100%;
-  padding:0 24px;
-  margin-top:10px;
-}
-.live-pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:7px 14px;
-  border-radius:999px;
-  background:rgba(22,163,74,.14);
-  border:1px solid rgba(22,163,74,.35);
-  color:#22c55e;
-  font-size:13px;
-  font-weight:900;
-  width:fit-content;
-}
-.live-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:#22c55e;
-  box-shadow:0 0 10px rgba(34,197,94,.85);
-}
+  /* LIVE badge above grid */
+  .live-wrap{padding:0 18px;margin:10px 0 10px}
+  .live-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:6px 12px;border-radius:999px;
+    background:rgba(22,163,74,.14);
+    border:1px solid rgba(34,197,94,.35);
+    color:#22c55e;font-weight:900;font-size:12px;
+  }
+  .live-dot{width:7px;height:7px;border-radius:999px;background:#22c55e;box-shadow:0 0 10px rgba(34,197,94,.75)}
 
-/* ===== GRID ===== */
-main{padding:18px 24px 28px}
-.grid{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
-}
-@media(min-width:900px){
-  .grid{grid-template-columns:1fr 1fr}
-}
+  /* PAGE WIDTH + GRID */
+  main{padding:0 18px 34px}
+  .wrap{max-width:1100px;margin:0 auto}            /* ✅ “petit” sur PC */
+  .grid{display:grid;grid-template-columns:1fr;gap:14px}
+  @media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
 
-/* ===== MATCH CARD ===== */
-.match-card{
-  position:relative;
-  aspect-ratio:16/9;
-  overflow:hidden;
-  border-radius:20px;
-  border:1px solid rgba(255,255,255,.12);
-}
-.match-bg{
-  position:absolute;inset:0;
-  background-size:cover;
-  background-position:center;
-}
-.match-overlay{
-  position:absolute;inset:0;
-  background:
-    linear-gradient(90deg,
-      rgba(0,0,0,.75) 0%,
-      rgba(0,0,0,.45) 45%,
-      rgba(0,0,0,.15) 100%);
-}
+  /* CARD (16:9 but visually smaller) */
+  .match{
+    position:relative;
+    aspect-ratio:16/9;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.12);
+  }
+  .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+  .overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.12) 100%);
+  }
 
-/* timer */
-.timer{
-  position:absolute;
-  top:12px;left:12px;
-  padding:6px 12px;
-  border-radius:999px;
-  background:rgba(0,0,0,.7);
-  border:1px solid rgba(255,255,255,.15);
-  font-size:13px;
-  font-weight:800;
-  display:flex;align-items:center;gap:8px;
-}
-.dot{
-  width:8px;height:8px;
-  border-radius:50%;
-  background:#f59e0b;
-}
+  /* ✅ “En cours” EXACT style (small green pill) */
+  .status{
+    position:absolute;top:10px;left:10px;
+    display:inline-flex;align-items:center;gap:8px;
+    padding:5px 11px;border-radius:999px;
+    background:rgba(22,163,74,.12);
+    border:1px solid rgba(34,197,94,.32);
+    color:#22c55e;font-weight:900;font-size:12px;
+  }
 
-/* match tag (compact) */
-.match-tag{
-  position:absolute;
-  left:16px;bottom:16px;
-  max-width:44%;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
-.teams{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.team-logo{width:34px;height:34px}
-.team-logo img{
-  width:100%;height:100%;
-  object-fit:contain;
-}
-.vs{
-  font-size:12px;
-  font-weight:900;
-  opacity:.7;
-}
-.info{
-  display:flex;
-  gap:10px;
-  align-items:flex-end;
-}
-.ligue{width:26px;height:44px;object-fit:contain}
-.title{font-size:14px;font-weight:900;line-height:1.1}
-.sub{font-size:11px;color:rgba(255,255,255,.75)}
+  /* ✅ ULTRA SMALL MATCH TAG (WITHOUT shrinking logos) */
+  .tag{
+    position:absolute;left:12px;bottom:12px;
+    max-width:26%;                 /* ✅ smaller block */
+    display:flex;flex-direction:column;
+    gap:2px;                       /* ✅ tighter */
+  }
 
-/* watch */
-.watch{
-  position:absolute;
-  right:16px;bottom:16px;
-  padding:10px 16px;
-  border-radius:999px;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.18);
-  font-weight:900;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:#fff;
-  text-decoration:none;
-}
-.play{
-  width:30px;height:30px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:rgba(0,0,0,.4);
-}
+  .teams{display:flex;align-items:center;gap:6px}
+  .team{width:30px;height:30px}    /* ✅ logos unchanged */
+  .team img{width:100%;height:100%;object-fit:contain}
+  .vs{font-size:10px;font-weight:900;opacity:.7}
 
-@media(max-width:640px){
-  .match-tag{max-width:70%}
-}
+  .info{display:flex;gap:6px;align-items:flex-end}
+  .league{width:20px;height:32px;object-fit:contain}
+
+  .title{font-size:11px;font-weight:900;line-height:1.05}
+  .sub{font-size:9.5px;font-weight:700;line-height:1.05;color:rgba(255,255,255,.70)}
+
+  /* WATCH */
+  .watch{
+    position:absolute;right:12px;bottom:12px;
+    display:flex;align-items:center;gap:8px;
+    padding:8px 13px;border-radius:999px;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.18);
+    color:#fff;text-decoration:none;
+    font-weight:900;font-size:13px;
+  }
+  .play{
+    width:28px;height:28px;border-radius:999px;
+    background:rgba(0,0,0,.45);
+    display:grid;place-items:center;
+  }
+
+  /* Mobile: tag can be wider */
+  @media(max-width:640px){
+    header h1{font-size:56px}
+    .tag{max-width:66%}
+  }
 </style>
 </head>
 
@@ -252,46 +161,133 @@ main{padding:18px 24px 28px}
   <p>N°1 DES MEILLEURS DIFFUSEURS FR</p>
 </header>
 
-<!-- ✅ EN DIRECT AU-DESSUS DES MATCHS -->
 <div class="live-wrap">
-  <span class="live-pill"><span class="live-dot"></span>En direct</span>
+  <div class="wrap">
+    <span class="live-pill"><span class="live-dot"></span>En direct</span>
+  </div>
 </div>
 
 <main>
-  <div class="grid">
+  <div class="wrap">
+    <div class="grid">
 
-    <article class="match-card">
-      <div class="match-bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png')"></div>
-      <div class="match-overlay"></div>
+      <!-- 1) Paris FC - Angers -->
+      <article class="match">
+        <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png')"></div>
+        <div class="overlay"></div>
 
-      <div class="timer"><span class="dot"></span>2h 54m 46s</div>
+        <div class="status"><span class="live-dot"></span>En cours</div>
 
-      <div class="match-tag">
-        <div class="teams">
-          <div class="team-logo">
-            <img alt="Paris FC" src="https://empire-sport.world/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png">
+        <div class="tag">
+          <div class="teams">
+            <div class="team"><img alt="Paris FC" src="https://empire-sport.world/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png"></div>
+            <span class="vs">VS</span>
+            <div class="team"><img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png"></div>
           </div>
-          <span class="vs">VS</span>
-          <div class="team-logo">
-            <img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png">
+
+          <div class="info">
+            <img alt="Ligue 1" class="league" src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png">
+            <div>
+              <div class="title">Paris FC - Angers</div>
+              <div class="sub">Ligue 1</div>
+              <div class="sub">Aujourd’hui 17:15</div>
+            </div>
           </div>
         </div>
 
-        <div class="info">
-          <img alt="Ligue 1" class="ligue" src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png">
-          <div>
-            <div class="title">Paris FC - Angers</div>
-            <div class="sub">Ligue 1</div>
-            <div class="sub">Aujourd’hui 17:15</div>
+        <a href="/angers-parisfc.html" target="_blank" class="watch">
+          <span class="play">▶</span>REGARDER
+        </a>
+      </article>
+
+      <!-- 2) Metz - Lyon -->
+      <article class="match">
+        <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/real-betis-vs-lyon.png')"></div>
+        <div class="overlay"></div>
+
+        <div class="status"><span class="live-dot"></span>En cours</div>
+
+        <div class="tag">
+          <div class="teams">
+            <div class="team"><img alt="Metz" src="https://empire-sport.world/upload/teams/qcuklxuxncckyihua7oh73wsacvqla.png"></div>
+            <span class="vs">VS</span>
+            <div class="team"><img alt="Lyon" src="https://empire-sport.world/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png"></div>
+          </div>
+
+          <div class="info">
+            <img alt="Ligue 1" class="league" src="https://empire-sport.world/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png">
+            <div>
+              <div class="title">Metz - Lyon</div>
+              <div class="sub">Ligue 1</div>
+              <div class="sub">Aujourd’hui 17:15</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <a href="/angers-parisfc.html" target="_blank" class="watch">
-        <span class="play">▶</span>REGARDER
-      </a>
-    </article>
+        <a href="/metz-lyon.html" target="_blank" class="watch">
+          <span class="play">▶</span>REGARDER
+        </a>
+      </article>
 
+      <!-- 3) Arsenal - Manchester United -->
+      <article class="match">
+        <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/arsenal-vs-manchester-united.png')"></div>
+        <div class="overlay"></div>
+
+        <div class="status"><span class="live-dot"></span>En cours</div>
+
+        <div class="tag">
+          <div class="teams">
+            <div class="team"><img alt="Arsenal" src="https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png"></div>
+            <span class="vs">VS</span>
+            <div class="team"><img alt="Manchester United" src="https://empire-sport.world/upload/teams/mosfyquovho2tfyvalgqtbzjnhmcv5.png"></div>
+          </div>
+
+          <div class="info">
+            <img alt="Premier League" class="league" src="https://empire-sport.world/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png">
+            <div>
+              <div class="title">Arsenal - Manchester United</div>
+              <div class="sub">Premier League</div>
+              <div class="sub">Aujourd’hui 17:30</div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/arsenal-manutd.html" target="_blank" class="watch">
+          <span class="play">▶</span>REGARDER
+        </a>
+      </article>
+
+      <!-- 4) Juventus - Napoli -->
+      <article class="match">
+        <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/juventus-vs-napoli.png')"></div>
+        <div class="overlay"></div>
+
+        <div class="status"><span class="live-dot"></span>En cours</div>
+
+        <div class="tag">
+          <div class="teams">
+            <div class="team"><img alt="Juventus" src="https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png"></div>
+            <span class="vs">VS</span>
+            <div class="team"><img alt="Napoli" src="https://empire-sport.world/upload/teams/e9ibu14ynhyggw7cjydjpwfial6xha.png"></div>
+          </div>
+
+          <div class="info">
+            <img alt="Serie A" class="league" src="https://empire-sport.world/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png">
+            <div>
+              <div class="title">Juventus - Napoli</div>
+              <div class="sub">Serie A</div>
+              <div class="sub">Aujourd’hui 18:00</div>
+            </div>
+          </div>
+        </div>
+
+        <a href="/juventus-napoli.html" target="_blank" class="watch">
+          <span class="play">▶</span>REGARDER
+        </a>
+      </article>
+
+    </div>
   </div>
 </main>
 
