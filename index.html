@@ -13,14 +13,12 @@
     html, body { height:100%; }
     body { font-family:'Outfit', sans-serif; background:#000; }
 
-    /* fond léger */
     .soft-bg{
       background:
         radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
         radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%);
     }
 
-    /* card 16/9 */
     .match-card{
       position: relative;
       overflow: hidden;
@@ -41,35 +39,35 @@
       position:absolute; inset:0;
       background:
         radial-gradient(700px 320px at 28% 55%, rgba(0,0,0,.35), transparent 60%),
-        linear-gradient(90deg, rgba(0,0,0,.65) 0%, rgba(0,0,0,.40) 45%, rgba(0,0,0,.14) 100%);
+        linear-gradient(90deg, rgba(0,0,0,.68) 0%, rgba(0,0,0,.42) 45%, rgba(0,0,0,.14) 100%);
     }
 
-    /* ✅ timer ULTRA petit (ref) */
+    /* ✅ TIMER PLUS GRAND (PRO) */
     .timer-pill{
       display:inline-flex;
       align-items:center;
-      gap:6px;
-      padding: 4px 8px;
+      gap:8px;
+      padding: 6px 12px;
       border-radius:999px;
-      background: rgba(20,20,20,.75);
-      border: 1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(6px);
-      font-weight: 700;
-      font-size: 11px;
+      background: rgba(18,18,18,.82);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(8px);
+      font-weight: 800;
+      font-size: 13px;
       line-height: 1;
-      color: rgba(255,255,255,.92);
+      color: #fff;
     }
     .timer-dot{
-      width:6px;
-      height:6px;
+      width:8px;
+      height:8px;
       border-radius:999px;
       background:#f59e0b;
     }
 
-    /* ✅ logos équipes SANS rond */
+    /* ✅ logos équipes */
     .team-logo{
-      width:34px;
-      height:34px;
+      width:26px;
+      height:26px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -78,6 +76,46 @@
       width:100%;
       height:100%;
       object-fit:contain;
+      image-rendering:auto;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+    }
+
+    /* ✅ ÉTIQUETTE MATCH LÉGÈREMENT RÉDUITE */
+    .match-tag{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      max-width: 58%;
+    }
+
+    .teams-row{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .vs{
+      font-weight:900;
+      font-size:12px;
+      color: rgba(255,255,255,.70);
+    }
+
+    .comp-logo{
+      width:28px;
+      height:46px;
+      object-fit:contain;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+    }
+
+    .match-title{
+      font-size:14.5px;
+      font-weight:900;
+      line-height:1.1;
+    }
+    .match-sub{
+      font-size:11px;
+      font-weight:700;
+      color: rgba(255,255,255,.72);
+      line-height:1.25;
     }
 
     /* bouton regarder */
@@ -88,10 +126,10 @@
       backdrop-filter: blur(10px);
       color:#fff;
       font-weight: 900;
-      padding:.72rem 1.05rem;
+      padding:.65rem .95rem;
       display:inline-flex;
       align-items:center;
-      gap:.6rem;
+      gap:.55rem;
       transition: transform .15s ease, background .15s ease;
       white-space: nowrap;
     }
@@ -99,17 +137,23 @@
     .watch-pill:active{ transform: scale(.98); }
 
     .play{
-      width:34px;height:34px;border-radius:999px;
+      width:32px;height:32px;border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
       display:grid; place-items:center;
       background: rgba(0,0,0,.22);
+    }
+
+    /* responsive */
+    @media (max-width: 640px){
+      .match-tag{ max-width: 76%; }
+      .match-title{ font-size:14px; }
+      .match-sub{ font-size:10.8px; }
     }
   </style>
 </head>
 
 <body class="min-h-screen text-white flex flex-col">
 
-<!-- NAVBAR -->
 <nav class="sticky top-0 z-20 bg-black/70 backdrop-blur border-b border-white/10">
   <div class="w-full h-16 px-6 flex items-center justify-between">
     <div class="font-extrabold tracking-tight text-3xl select-none">IMFTX+</div>
@@ -120,34 +164,22 @@
         <span>⚡</span> ACHÈTE TON IPTV
       </a>
 
-      <!-- X -->
-      <a href="#" target="_blank"
-         class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
-         aria-label="X">
+      <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="X">
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-          <path d="M18.2 3H21l-6.4 7.3L22 21h-6.2l-4.8-6.3L5.4 21H2.6l6.9-7.8L2 3h6.3l4.3 5.7L18.2 3Z"
-                fill="currentColor"/>
+          <path d="M18.2 3H21l-6.4 7.3L22 21h-6.2l-4.8-6.3L5.4 21H2.6l6.9-7.8L2 3h6.3l4.3 5.7L18.2 3Z" fill="currentColor"/>
         </svg>
       </a>
 
-      <!-- Telegram -->
-      <a href="#" target="_blank"
-         class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
-         aria-label="Telegram">
+      <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Telegram">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-          <path d="M21.8 3.2L2.9 10.6c-1 .4-1 1.8 0 2.2l4.7 1.6 1.8 5.4c.3 1 1.6 1.2 2.2.4l2.8-3.5 5.2 3.8c.9.7 2.2.2 2.4-.9L23 4.5c.2-1-.5-1.6-1.2-1.3Z"
-                stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M21.8 3.2L2.9 10.6c-1 .4-1 1.8 0 2.2l4.7 1.6 1.8 5.4c.3 1 1.6 1.2 2.2.4l2.8-3.5 5.2 3.8c.9.7 2.2.2 2.4-.9L23 4.5c.2-1-.5-1.6-1.2-1.3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
           <path d="M7.6 14.2l12.3-8.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
         </svg>
       </a>
 
-      <!-- Discord -->
-      <a href="#" target="_blank"
-         class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
-         aria-label="Discord">
+      <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Discord">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-          <path d="M8 18c-1.6 0-3-1.3-3-3.1 0-5.5 3.3-9.9 7-9.9s7 4.4 7 9.9C19 16.7 17.6 18 16 18l-1.5-1.6H9.5L8 18Z"
-                stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M8 18c-1.6 0-3-1.3-3-3.1 0-5.5 3.3-9.9 7-9.9s7 4.4 7 9.9C19 16.7 17.6 18 16 18l-1.5-1.6H9.5L8 18Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
           <path d="M9.3 12.7h.01M14.7 12.7h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
         </svg>
       </a>
@@ -155,7 +187,6 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <header class="soft-bg">
   <div class="w-full px-6 pt-14 pb-8 text-center">
     <h1 class="text-6xl md:text-7xl font-extrabold tracking-tight select-none">IMFTX+</h1>
@@ -165,54 +196,53 @@
   </div>
 </header>
 
-<!-- GRID -->
 <main class="soft-bg flex-1">
   <div class="w-full px-6 pb-16">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
 
-      <!-- CARD 1 -->
+      <!-- CARD -->
       <article class="match-card aspect-[16/9]">
         <div class="match-bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png');"></div>
         <div class="match-overlay"></div>
 
-        <!-- ✅ timer mini -->
+        <!-- timer -->
         <div class="absolute left-3 top-3">
           <span class="timer-pill"><span class="timer-dot"></span> 2h 54m 46s</span>
         </div>
 
-        <!-- bottom content -->
+        <!-- bottom -->
         <div class="absolute inset-x-0 bottom-0 p-4 md:p-5">
           <div class="flex items-end justify-between gap-4">
-            <div class="min-w-0">
-              <div class="flex items-center gap-3">
+
+            <!-- étiquette match -->
+            <div class="match-tag">
+              <div class="teams-row">
                 <div class="team-logo">
                   <img alt="Paris FC" src="https://empire-sport.world/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png">
                 </div>
-                <span class="text-white/70 font-extrabold text-sm">VS</span>
+                <span class="vs">VS</span>
                 <div class="team-logo">
                   <img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png">
                 </div>
               </div>
 
-              <div class="mt-3 flex items-end gap-3">
-                <div class="flex flex-col items-center gap-1">
-                  <img
-                    alt="Ligue 1"
-                    src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png"
-                    class="w-9 h-9 object-contain"
-                  />
-                  <!-- ✅ texte supprimé -->
-                </div>
+              <div class="flex items-end gap-3">
+                <img
+                  alt="Ligue 1"
+                  src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png"
+                  class="comp-logo"
+                />
 
                 <div class="min-w-0">
-                  <div class="text-lg md:text-xl font-extrabold truncate">Paris FC - Angers</div>
-                  <div class="text-sm text-white/70 font-semibold">Ligue 1</div>
-                  <div class="text-sm text-white/70 font-semibold">Aujourd’hui 17:15</div>
+                  <div class="match-title truncate">Paris FC - Angers</div>
+                  <div class="match-sub">Ligue 1</div>
+                  <div class="match-sub">Aujourd’hui 17:15</div>
                 </div>
               </div>
             </div>
 
-            <a href="#" class="watch-pill">
+            <!-- ✅ lien en nouvel onglet -->
+            <a href="/angers-parisfc.html" target="_blank" rel="noopener noreferrer" class="watch-pill">
               <span class="play">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
                   <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
@@ -220,11 +250,12 @@
               </span>
               REGARDER
             </a>
+
           </div>
         </div>
       </article>
 
-      <!-- CARD 2 -->
+      <!-- placeholder -->
       <article class="match-card aspect-[16/9] flex items-center justify-center text-white/35 font-extrabold">
         MATCH À AJOUTER
       </article>
