@@ -12,7 +12,7 @@
   <style>
     :root{ --bg:#000; }
     html,body{ height:100%; }
-    body{ font-family:Outfit,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:#fff; }
+    body{ margin:0; font-family:Outfit,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:#fff; }
 
     .page-glow{
       background:
@@ -28,18 +28,21 @@
       border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.04);
       box-shadow: 0 18px 70px rgba(0,0,0,.55);
+      isolation:isolate; /* ✅ évite effets chelous */
     }
     .match-bg{
       position:absolute; inset:0;
       background-size:cover;
       background-position:center;
       transform:scale(1.03);
+      z-index:0;
     }
     .match-overlay{
       position:absolute; inset:0;
       background:
         radial-gradient(700px 320px at 30% 55%, rgba(0,0,0,.45), transparent 62%),
         linear-gradient(90deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.35) 52%, rgba(0,0,0,.08) 100%);
+      z-index:1;
     }
 
     /* badges top */
@@ -58,62 +61,87 @@
       line-height:1;
       color:rgba(255,255,255,.92);
       user-select:none;
+      z-index:3;
+      position:relative;
+      max-width: 100%;
+      white-space:nowrap;
     }
     .dot{
       width:8px;height:8px;border-radius:999px;
       background:#f59e0b;
       box-shadow:0 0 0 3px rgba(245,158,11,.18);
+      flex:0 0 auto;
     }
 
     /* bottom info */
     .info{
       position:absolute;
       left:14px;
-      bottom:12px;
       right:14px;
+      bottom:12px;
       display:flex;
       align-items:flex-end;
       justify-content:space-between;
       gap:12px;
+      z-index:3;
     }
-    .left-stack{ max-width:72%; }
+    .left-stack{ max-width:72%; min-width:0; }
 
-    /* teams row */
+    /* ✅ ROW logos toujours identiques + alignement fixe */
     .teams-row{
       display:flex;
       align-items:center;
       gap:10px;
       margin-bottom:8px;
+      min-height:34px; /* ✅ même hauteur partout */
     }
+
+    /* ✅ LOGOS: taille FIXE (plus aucun “logo géant”) */
     .team-logo{
-      width:34px; height:34px;
-      display:grid; place-items:center;
+      width:34px;
+      height:34px;
+      display:grid;
+      place-items:center;
+      flex: 0 0 34px; /* ✅ bloque le resize par flex */
     }
     .team-logo img{
-      width:100%; height:100%;
+      width:100%;
+      height:100%;
       object-fit:contain;
+      object-position:center;
       filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
       image-rendering:auto;
+      display:block;
+      max-width:100%;
+      max-height:100%;
     }
+
     .vs{
       font-weight:900;
       font-size:13px;
       color:rgba(255,255,255,.72);
       letter-spacing:.06em;
+      flex:0 0 auto;
     }
 
-    /* ✅ étiquette match plus petite */
+    /* ✅ étiquette match petite + clean */
     .meta{
       display:flex;
       align-items:flex-end;
       gap:10px;
+      min-width:0;
     }
     .comp-logo{
       width:30px;
       height:30px;
       object-fit:contain;
+      object-position:center;
       filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
-      flex:0 0 auto;
+      flex:0 0 30px; /* ✅ bloque le resize */
+      display:block;
+    }
+    .text{
+      min-width:0;
     }
     .title{
       font-weight:900;
@@ -123,24 +151,28 @@
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
+      max-width: 100%;
     }
     .sub{
       font-weight:800;
       font-size:11px;
       line-height:1.2;
       color:rgba(255,255,255,.78);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:100%;
     }
 
-    /* ✅ 21:00 un peu plus petit */
     .time{
       font-weight:900;
       font-size:16px;
       line-height:1;
       margin-bottom:8px;
       text-align:right;
+      white-space:nowrap;
     }
 
-    /* bouton */
     .watch{
       border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
@@ -165,9 +197,10 @@
       display:grid; place-items:center;
       background:rgba(0,0,0,.20);
       border:1px solid rgba(255,255,255,.16);
+      flex:0 0 30px;
     }
 
-    /* ✅ GRID: 3 par ligne (PC), 2 tablette, 1 mobile */
+    /* GRID: 3 PC, 2 tablette, 1 mobile */
     .grid-3{
       display:grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -180,8 +213,9 @@
       .grid-3{ grid-template-columns: 1fr; gap:14px; }
       .info{ left:12px; right:12px; bottom:12px; }
       .left-stack{ max-width:74%; }
-      .team-logo{ width:32px; height:32px; }
-      .comp-logo{ width:28px; height:28px; }
+      .team-logo{ width:32px; height:32px; flex-basis:32px; }
+      .teams-row{ min-height:32px; }
+      .comp-logo{ width:28px; height:28px; flex-basis:28px; }
       .title{ font-size:13.5px; }
       .sub{ font-size:11px; }
       .time{ font-size:15px; margin-bottom:7px; }
@@ -410,39 +444,41 @@
 
     const el = document.getElementById("matches");
 
+    const esc = (s) => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+
     const card = (m) => `
       <article class="match-card aspect-[16/9]">
-        <div class="match-bg" style="background-image:url('${m.banner}')"></div>
+        <div class="match-bg" style="background-image:url('${esc(m.banner)}')"></div>
         <div class="match-overlay"></div>
 
-        <div class="absolute left-3 top-3">
+        <div class="absolute left-3 top-3 z-[3]">
           <span class="pill"><span class="dot"></span> 1j 1h 24m 5s</span>
         </div>
 
-        <div class="absolute right-3 top-3">
+        <div class="absolute right-3 top-3 z-[3]">
           <span class="pill">${SPORT}</span>
         </div>
 
         <div class="info">
           <div class="left-stack">
             <div class="teams-row">
-              <div class="team-logo"><img alt="${m.home}" src="${m.homeLogo}"></div>
+              <div class="team-logo"><img loading="lazy" decoding="async" alt="${esc(m.home)}" src="${esc(m.homeLogo)}"></div>
               <div class="vs">VS</div>
-              <div class="team-logo"><img alt="${m.away}" src="${m.awayLogo}"></div>
+              <div class="team-logo"><img loading="lazy" decoding="async" alt="${esc(m.away)}" src="${esc(m.awayLogo)}"></div>
             </div>
 
             <div class="meta">
-              <img class="comp-logo" alt="Compétition" src="${COMP}">
-              <div class="min-w-0">
-                <div class="title">${m.home} - ${m.away}</div>
-                <div class="sub">${m.when}</div>
+              <img loading="lazy" decoding="async" class="comp-logo" alt="Compétition" src="${COMP}">
+              <div class="text">
+                <div class="title">${esc(m.home)} - ${esc(m.away)}</div>
+                <div class="sub">${esc(m.when)}</div>
               </div>
             </div>
           </div>
 
           <div class="text-right">
             <div class="time">${TIME}</div>
-            <a class="watch" href="${m.link}" target="_blank" rel="noopener">
+            <a class="watch" href="${esc(m.link)}" target="_blank" rel="noopener">
               <span class="play">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
                   <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
