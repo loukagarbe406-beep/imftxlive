@@ -14,7 +14,6 @@
     html,body{ height:100%; }
     body{ font-family:Outfit,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:#fff; }
 
-    /* page glow très léger (pas de gros carré gris) */
     .page-glow{
       background:
         radial-gradient(1200px 520px at 50% -10%, rgba(255,255,255,.06), transparent 62%),
@@ -48,7 +47,7 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:6px 10px;
+      padding:5px 9px;
       border-radius:999px;
       background:rgba(18,18,18,.72);
       border:1px solid rgba(255,255,255,.10);
@@ -66,30 +65,28 @@
       box-shadow:0 0 0 3px rgba(245,158,11,.18);
     }
 
-    /* zone infos bas */
+    /* bottom info */
     .info{
       position:absolute;
-      left:18px;
-      bottom:16px;
-      right:18px;
+      left:14px;
+      bottom:12px;
+      right:14px;
       display:flex;
       align-items:flex-end;
       justify-content:space-between;
-      gap:16px;
+      gap:12px;
     }
+    .left-stack{ max-width:72%; }
 
-    /* mini zone gauche (logos + textes) */
-    .left-stack{ max-width:70%; }
-
+    /* teams row */
     .teams-row{
       display:flex;
       align-items:center;
       gap:10px;
-      margin-bottom:10px;
+      margin-bottom:8px;
     }
-
     .team-logo{
-      width:38px; height:38px;
+      width:34px; height:34px;
       display:grid; place-items:center;
     }
     .team-logo img{
@@ -98,43 +95,49 @@
       filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
       image-rendering:auto;
     }
-
     .vs{
       font-weight:900;
-      font-size:14px;
+      font-size:13px;
       color:rgba(255,255,255,.72);
       letter-spacing:.06em;
     }
 
+    /* ✅ étiquette match plus petite */
     .meta{
       display:flex;
       align-items:flex-end;
       gap:10px;
     }
-
     .comp-logo{
-      width:34px;
-      height:34px;
+      width:30px;
+      height:30px;
       object-fit:contain;
       filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
       flex:0 0 auto;
     }
-
-    /* ✅ “étiquette match” plus petite */
     .title{
       font-weight:900;
-      font-size:16px;
-      line-height:1.1;
-      margin-bottom:4px;
+      font-size:14px;
+      line-height:1.12;
+      margin-bottom:3px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
     .sub{
       font-weight:800;
-      font-size:12px;
+      font-size:11px;
       line-height:1.2;
       color:rgba(255,255,255,.78);
+    }
+
+    /* ✅ 21:00 un peu plus petit */
+    .time{
+      font-weight:900;
+      font-size:16px;
+      line-height:1;
+      margin-bottom:8px;
+      text-align:right;
     }
 
     /* bouton */
@@ -144,7 +147,7 @@
       background:rgba(255,255,255,.10);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      padding:10px 14px;
+      padding:9px 12px;
       display:inline-flex;
       align-items:center;
       gap:10px;
@@ -153,25 +156,36 @@
       transition:transform .15s ease, background .15s ease;
       white-space:nowrap;
       color:#fff;
+      font-size:12.5px;
     }
     .watch:hover{ background:rgba(255,255,255,.14); }
     .watch:active{ transform:scale(.98); }
     .play{
-      width:32px; height:32px; border-radius:999px;
+      width:30px; height:30px; border-radius:999px;
       display:grid; place-items:center;
       background:rgba(0,0,0,.20);
       border:1px solid rgba(255,255,255,.16);
     }
 
-    /* layout: 2 par ligne (PC), 1 par ligne (mobile) */
-    .grid-2{
+    /* ✅ GRID: 3 par ligne (PC), 2 tablette, 1 mobile */
+    .grid-3{
       display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:16px;
     }
-    @media (max-width: 900px){
-      .grid-2{ grid-template-columns: 1fr; }
-      .left-stack{ max-width:78%; }
+    @media (max-width: 1100px){
+      .grid-3{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px){
+      .grid-3{ grid-template-columns: 1fr; gap:14px; }
+      .info{ left:12px; right:12px; bottom:12px; }
+      .left-stack{ max-width:74%; }
+      .team-logo{ width:32px; height:32px; }
+      .comp-logo{ width:28px; height:28px; }
+      .title{ font-size:13.5px; }
+      .sub{ font-size:11px; }
+      .time{ font-size:15px; margin-bottom:7px; }
+      .watch{ padding:9px 12px; }
     }
   </style>
 </head>
@@ -186,14 +200,12 @@
           <span>⚡</span> ACHÈTE TON IPTV
         </a>
 
-        <!-- X -->
         <a href="#" target="_blank" class="w-11 h-11 grid place-items-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="X">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
             <path d="M18.2 3H21l-6.4 7.3L22 21h-6.2l-4.8-6.3L5.4 21H2.6l6.9-7.8L2 3h6.3l4.3 5.7L18.2 3Z" fill="currentColor"/>
           </svg>
         </a>
 
-        <!-- Telegram -->
         <a href="#" target="_blank" class="w-11 h-11 grid place-items-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Telegram">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
             <path d="M21.8 3.2L2.9 10.6c-1 .4-1 1.8 0 2.2l4.7 1.6 1.8 5.4c.3 1 1.6 1.2 2.2.4l2.8-3.5 5.2 3.8c.9.7 2.2.2 2.4-.9L23 4.5c.2-1-.5-1.6-1.2-1.3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
@@ -201,7 +213,6 @@
           </svg>
         </a>
 
-        <!-- Discord -->
         <a href="#" target="_blank" class="w-11 h-11 grid place-items-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Discord">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
             <path d="M8 18c-1.6 0-3-1.3-3-3.1 0-5.5 3.3-9.9 7-9.9s7 4.4 7 9.9C19 16.7 17.6 18 16 18l-1.5-1.6H9.5L8 18Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
@@ -222,8 +233,8 @@
   </header>
 
   <main class="page-glow">
-    <div class="w-full px-6 pb-16 max-w-[1400px] mx-auto">
-      <div id="matches" class="grid-2"></div>
+    <div class="w-full px-6 pb-16 max-w-[1500px] mx-auto">
+      <div id="matches" class="grid-3"></div>
     </div>
   </main>
 
@@ -239,7 +250,6 @@
         banner: "https://empire-sport.world/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_Club_Brugge_KV_2024.svg/langfr-250px-Logo_Club_Brugge_KV_2024.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/960px-Logo_Olympique_de_Marseille.svg.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/club-brugge-marseille.html"
       },
@@ -249,7 +259,6 @@
         banner: "https://empire-sport.world/upload/banners/lorient-vs-paris-sg.png",
         homeLogo: "https://empire-sport.world/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
         awayLogo: "https://empire-sport.world/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/paris-sg-newcastle.html"
       },
@@ -259,7 +268,6 @@
         banner: "https://empire-sport.world/upload/banners/monaco-vs-paris-fc.png",
         homeLogo: "https://empire-sport.world/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
         awayLogo: "https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/monaco-juventus.html"
       },
@@ -269,7 +277,6 @@
         banner: "https://empire-sport.world/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png",
         homeLogo: "https://empire-sport.world/upload/teams/1gmfrazydu7o6vh1z8rlnrduarisq5.png",
         awayLogo: "https://empire-sport.world/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/benfica-real-madrid.html"
       },
@@ -279,7 +286,6 @@
         banner: "https://empire-sport.world/upload/teambanks/bqiawsrwkodj2at1xdt19o8jgx0b8x.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/98/Club_Athletic_Bilbao_logo.svg/250px-Club_Athletic_Bilbao_logo.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/1/12/Logo_Sporting_Clube_Portugal.svg/500px-Logo_Sporting_Clube_Portugal.svg.png?20210916232816",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/athletic-bilbao-sporting.html"
       },
@@ -289,7 +295,6 @@
         banner: "https://empire-sport.world/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/langfr-250px-FC_Internazionale_Milano_2021.svg.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/dortmund-inter.html"
       },
@@ -299,7 +304,6 @@
         banner: "https://empire-sport.world/upload/teambanks/5viledxfbigfantrouxxhk0bebau4i.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/4a/Bayer_04_Leverkusen_%28logo%29.svg/langfr-250px-Bayer_04_Leverkusen_%28logo%29.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/Logo_Villarreal_CF_2009.svg/langfr-250px-Logo_Villarreal_CF_2009.svg.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/leverkusen-villarreal.html"
       },
@@ -309,7 +313,6 @@
         banner: "https://empire-sport.world/upload/teambanks/qefmysjbg5qcfovxcgmob6ptpe56wg.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cb/Logo_Eintracht_Francfort.svg/langfr-250px-Logo_Eintracht_Francfort.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/Logo_Tottenham_Hotspur_Football_Club_2024.svg/langfr-60px-Logo_Tottenham_Hotspur_Football_Club_2024.svg.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/francfort-tottenham.html"
       },
@@ -319,7 +322,6 @@
         banner: "https://empire-sport.world/upload/teambanks/kwqmnxehcgxts5l9n3eelynsgnglaa.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Logo_P%C3%A1fos_FC_2018.svg/langfr-250px-Logo_P%C3%A1fos_FC_2018.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Logo_Slavia_2024.svg/langfr-250px-Logo_Slavia_2024.svg.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/pafos-slavia-prague.html"
       },
@@ -329,7 +331,6 @@
         banner: "https://empire-sport.world/upload/teambanks/nyo5kfaliih9bnm67oco0hzayzqgcm.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fc/Logo_ATM_2024.svg/langfr-250px-Logo_ATM_2024.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/e/e6/Logo_FK_Bod%C3%B8_Glimt.svg/langfr-250px-Logo_FK_Bod%C3%B8_Glimt.svg.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/atletico-bodo.html"
       },
@@ -339,7 +340,6 @@
         banner: "https://empire-sport.world/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
         homeLogo: "https://empire-sport.world/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
         awayLogo: "https://empire-sport.world/upload/teams/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/man-city-galatasaray.html"
       },
@@ -349,7 +349,6 @@
         banner: "https://empire-sport.world/upload/teambanks/ccvylofwnfqi9yuzpipaj1s7gvnyzq.png",
         homeLogo: "https://empire-sport.world/upload/teams/xck3mu7b4kutfsieubw4zg0wbalzcl.png",
         awayLogo: "https://empire-sport.world/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/psv-bayern.html"
       },
@@ -359,7 +358,6 @@
         banner: "https://empire-sport.world/upload/teambanks/9v0heygcgnew89c0bxihs3duytz8cj.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cf/Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg/langfr-250px-Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/75/Logo_Olympiakos_2024.svg/langfr-250px-Logo_Olympiakos_2024.svg.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/ajax-olympiacos.html"
       },
@@ -369,7 +367,6 @@
         banner: "https://empire-sport.world/upload/teambanks/lkxixr8kvcur12zqjrxb4prhrb5cvv.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/8/87/Logo_Royale_Union_Saint-Gilloise_2025.svg/langfr-250px-Logo_Royale_Union_Saint-Gilloise_2025.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fd/Logo_Atalanta_Bergame_2024.svg/langfr-250px-Logo_Atalanta_Bergame_2024.svg.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/union-sg-atalanta.html"
       },
@@ -379,7 +376,6 @@
         banner: "https://empire-sport.world/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
         homeLogo: "https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
         awayLogo: "https://empire-sport.world/upload/teams/vosxjrkaty3gwuljpayzko5e8o5ce4.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/arsenal-kairat.html"
       },
@@ -389,7 +385,6 @@
         banner: "https://empire-sport.world/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png",
         homeLogo: "https://empire-sport.world/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png",
         awayLogo: "https://empire-sport.world/upload/teams/lltvrfxptcgfdmsa74tbivlygbsh2x.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/liverpool-qarabag.html"
       },
@@ -399,7 +394,6 @@
         banner: "https://empire-sport.world/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
         homeLogo: "https://empire-sport.world/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
         awayLogo: "https://empire-sport.world/upload/teams/03rfn7h0mge0ymgvalgre79zfaxie2.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/barcelona-copenhage.html"
       },
@@ -409,10 +403,9 @@
         banner: "https://empire-sport.world/upload/teambanks/5yl7dl2h27lzgwseu8f5fm3pppav0o.png",
         homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/SSC_Napoli_2025_%28white_and_azure%29.svg/250px-SSC_Napoli_2025_%28white_and_azure%29.svg.png",
         awayLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/250px-Chelsea_FC.svg.png",
-        compLogo: COMP,
         when: "Demain",
         link: "/match/napoli-chelsea.html"
-      },
+      }
     ];
 
     const el = document.getElementById("matches");
@@ -422,12 +415,10 @@
         <div class="match-bg" style="background-image:url('${m.banner}')"></div>
         <div class="match-overlay"></div>
 
-        <!-- top left -->
         <div class="absolute left-3 top-3">
           <span class="pill"><span class="dot"></span> 1j 1h 24m 5s</span>
         </div>
 
-        <!-- top right -->
         <div class="absolute right-3 top-3">
           <span class="pill">${SPORT}</span>
         </div>
@@ -441,7 +432,7 @@
             </div>
 
             <div class="meta">
-              <img class="comp-logo" alt="Compétition" src="${m.compLogo}">
+              <img class="comp-logo" alt="Compétition" src="${COMP}">
               <div class="min-w-0">
                 <div class="title">${m.home} - ${m.away}</div>
                 <div class="sub">${m.when}</div>
@@ -450,7 +441,7 @@
           </div>
 
           <div class="text-right">
-            <div class="font-extrabold text-xl mb-2">${TIME}</div>
+            <div class="time">${TIME}</div>
             <a class="watch" href="${m.link}" target="_blank" rel="noopener">
               <span class="play">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
