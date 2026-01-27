@@ -1,22 +1,31 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IMFTX+ — bayern-unionsg</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IMFTX+ — OM - BRUGES</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
-    html,body{
-      height:100%;margin:0;
-      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-      background:#070708;
+    html, body { height: 100%; margin: 0; }
+    body{
+      font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:#fff;
       overflow-x:hidden;
     }
+
+    /* ✅ FOND IDENTIQUE À TON INDEX */
+    .soft-bg{
+      background:
+        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
+        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%),
+        #000;
+    }
+
+    /* player box */
     .player-box{
       border-radius:22px;
       overflow:hidden;
@@ -25,8 +34,9 @@
       box-shadow: 0 30px 120px rgba(0,0,0,.85);
       position:relative;
     }
-    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+    iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
+    /* ✅ COVER (banniere) */
     .cover{
       position:absolute;
       inset:0;
@@ -34,9 +44,10 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.work/upload/events/dppvmrcbq0ewebtrnyrlqna7bvnfqr.jpg") center/cover no-repeat;
+        url("https://empire-sport.world/upload/events/xxwg7hgcydgq6dkm13iqjvrases0y3.jpg") center/cover no-repeat;
     }
 
+    /* ✅ LOGOS TOP (teams + VS) */
     .cover-top{
       position:absolute;
       top:18px;
@@ -50,15 +61,18 @@
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(14px);
     }
-
     .team-logo{
       width:34px;height:34px;
       object-fit:contain;
       filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
     }
+    .vs{
+      font-weight:900;
+      font-size:14px;
+      opacity:.9;
+    }
 
-    .vs{font-weight:900;font-size:14px;opacity:.9}
-
+    /* ✅ STRIP BOTTOM (Regarder Gratuitement) */
     .cover-strip{
       position:absolute;
       left:22px;
@@ -74,28 +88,33 @@
       justify-content:space-between;
       padding:0 22px;
     }
-
-    .strip-title{font-size:18px;font-weight:900}
+    .strip-title{
+      font-size:18px;
+      font-weight:900;
+      line-height:1;
+    }
     .strip-sub{
       font-size:15px;
       opacity:.85;
       font-weight:600;
+      line-height:1.1;
       font-style:italic;
       margin-top:3px;
-      line-height:1.1;
+      text-transform: none;
     }
-
     .strip-play{
       width:50px;height:50px;
       border-radius:999px;
       border:2px solid rgba(255,255,255,.38);
       display:grid;
       place-items:center;
-      background:rgba(0,0,0,.22);
       transition:.2s;
+      background:rgba(0,0,0,.22);
     }
-    .strip-play:hover{transform:scale(1.08)}
+    .strip-play i{ font-size:19px; }
+    .strip-play:hover{ transform:scale(1.08); background:rgba(0,0,0,.35); }
 
+    /* sources buttons */
     .source-btn{
       height:44px;
       border-radius:14px;
@@ -103,13 +122,15 @@
       font-size:13px;
       transition:.2s;
     }
-    .source-btn.active{background:#fff;color:#000}
+    .source-btn.active{ background:#fff; color:#000; }
     .source-btn.inactive{
       background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.10);
       color:#fff;
     }
+    .source-btn:hover{ opacity:.95; }
 
+    /* ✅ bottom bar (Vous regardez) */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
@@ -117,170 +138,208 @@
       backdrop-filter: blur(16px);
       padding:16px 18px;
       display:flex;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
       gap:16px;
     }
-
     .watch-left{
       display:flex;
       align-items:center;
       gap:14px;
       min-width:0;
     }
-
     .watch-left img{
-      width:38px;height:38px;
+      width:40px;height:40px;
+      object-fit:contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+      flex-shrink:0;
+    }
+    .watch-text{ min-width:0; line-height:1.1; }
+    .watch-text .small{ opacity:.8; font-weight:700; font-size:13px; }
+    .watch-text .big{
+      font-weight:900;
+      font-size:16px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .watch-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
+    }
+    .channel-logo{
+      width:90px;
+      height:auto;
       object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
 
-    .watch-text .small{opacity:.8;font-weight:700;font-size:13px}
-    .watch-text .big{font-weight:900;font-size:16px}
-
-    .channel-logo{
-      width:86px;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+    /* ✅ petit pill timer (placeholder ici, tu changeras plus tard) */
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
+      font-weight:900;
+      font-size:12px;
+    }
+    .dot{
+      width:7px;height:7px;border-radius:999px;background:#f59e0b;
+      box-shadow:0 0 0 4px rgba(245,158,11,.14);
     }
   </style>
 </head>
 
-<body>
+<body class="soft-bg">
 
-<nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
-  <div class="max-w-screen-2xl mx-auto px-6 py-3 flex justify-between items-center">
-    <div class="text-3xl font-extrabold">IMFTX+</div>
-    <a href="index.html" class="px-4 h-10 flex items-center gap-2 rounded-full bg-white/10 border border-white/10 font-bold text-sm">
-      <i class="fa-solid fa-arrow-left"></i> Retour
-    </a>
-  </div>
-</nav>
+  <!-- NAV -->
+  <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+      <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
-<main class="max-w-screen-2xl mx-auto px-6 py-10">
-
-<section class="player-box w-full aspect-video">
-
-  <div id="cover" class="cover" onclick="loadVideo(1)">
-    <div class="cover-top">
-      <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg/960px-Logo_FC_Bayern_M%C3%BCnchen_%282002%E2%80%932017%29.svg.png">
-      <span class="vs">VS</span>
-      <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/87/Logo_Royale_Union_Saint-Gilloise_2025.svg/langfr-250px-Logo_Royale_Union_Saint-Gilloise_2025.svg.png">
+      <a href="index.html"
+         class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
+        <i class="fa-solid fa-arrow-left"></i> Retour
+      </a>
     </div>
+  </nav>
 
-    <div class="cover-strip">
-      <div>
-        <div class="strip-title">Regarder Gratuitement</div>
-        <div class="strip-sub">Bayern Munich<br>Union Saint-Gilloise</div>
+  <main class="max-w-screen-2xl mx-auto px-6 py-10">
+
+    <!-- PLAYER -->
+    <section class="player-box w-full aspect-video">
+
+      <!-- ✅ COVER CLICK = LAUNCH STREAM -->
+      <div id="cover" class="cover" onclick="loadVideo(1)">
+
+        <!-- (optionnel) petit pill en haut à droite -->
+        <div style="position:absolute;top:18px;right:18px;">
+          <span class="pill"><span class="dot"></span> Demain — 21:00</span>
+        </div>
+
+        <div class="cover-top">
+          <img class="team-logo"
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_Club_Brugge_KV_2024.svg/langfr-250px-Logo_Club_Brugge_KV_2024.svg.png"
+               alt="Club Brugge">
+          <span class="vs">VS</span>
+          <img class="team-logo"
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/960px-Logo_Olympique_de_Marseille.svg.png"
+               alt="Marseille">
+        </div>
+
+        <div class="cover-strip">
+          <div>
+            <div class="strip-title">Regarder Gratuitement</div>
+            <div class="strip-sub">Club Brugge<br>Marseille</div>
+          </div>
+
+          <div class="strip-play">
+            <i class="fa-solid fa-play"></i>
+          </div>
+        </div>
       </div>
-      <div class="strip-play">
-        <i class="fa-solid fa-play"></i>
+
+      <div id="videoTarget" class="w-full h-full"></div>
+    </section>
+
+    <!-- SOURCES -->
+    <section class="mt-5 flex flex-wrap gap-3">
+      <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+      <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+      <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
+    </section>
+
+    <!-- ✅ DIRECT LINK (fallback) -->
+    <div id="externalLink" class="hidden mt-4 text-center">
+      <a id="directLink" href="#" target="_blank"
+         class="text-amber-400 underline font-extrabold text-sm">
+        Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+      </a>
+    </div>
+
+    <!-- ✅ WATCH BAR -->
+    <section class="mt-6 watch-bar">
+      <div class="watch-left">
+        <!-- Logo compétition (LDC) -->
+        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Ligue des Champions">
+        <div class="watch-text">
+          <div class="small">Vous regardez</div>
+          <div class="big">Club Brugge — Marseille</div>
+          <div class="small">Ligue des Champions · Demain — 21:00</div>
+        </div>
       </div>
+
+      <div class="watch-right">
+        <!-- Logo chaîne (CANAL+) -->
+        <img class="channel-logo"
+             src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg"
+             alt="CANAL+">
+      </div>
+    </section>
+
+    <!-- MESSAGE -->
+    <div class="mt-8 text-center text-sm text-white/55 font-semibold">
+      Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
+      — L’équipe IMFTX+
     </div>
-  </div>
 
-  <div id="videoTarget" class="w-full h-full"></div>
-</section>
+  </main>
 
-<section class="mt-5 flex gap-3">
-  <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
-  <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
-  <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
-</section>
+  <!-- ✅ PLAYER SCRIPT -->
+  <script>
+    const SOURCES = {
+      1: "https://bolaloca.my/player/4/11",
+      2: "https://bolaloca.my/player/2/11",
+      3: "https://bolaloca.my/player/3/11"
+    };
 
-<section class="mt-6 watch-bar">
-  <div class="watch-left">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2SEOeAXKHYlD2DoyK5OzQM44Du_1u3W2bTQ&s">
-    <div class="watch-text">
-      <div class="small">Vous regardez</div>
-      <div class="big">Bayern Munich - Union Saint-Gilloise</div>
-      <div class="small">21h00</div>
-    </div>
-  </div>
-  <img class="channel-logo" src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg">
-</section>
-
-</main>
-
-<script>
-const SOURCES={
-  1:"https://bolaloca.my/player/4/34",
-  2:"https://bolaloca.my/player/2/34",
-  3:"https://bolaloca.my/player/3/34"
-};
-function setActive(id){
-  [1,2,3].forEach(n=>{
-    document.getElementById("btn"+n).className=
-      n===id?"source-btn active px-6":"source-btn inactive px-6";
-  });
-}
-function loadVideo(id){
-  document.getElementById("cover").style.display="none";
-  setActive(id);
-  document.getElementById("videoTarget").innerHTML=
-    `<iframe src="${SOURCES[id]}" allowfullscreen allow="autoplay; fullscreen"></iframe>`;
-}
-</script>
-
-  </script>
-<!-- 🔒 ANTI PUB / ANTI POPUP -->
-/* ===============================
-   ANTI POPUP / ANTI PUB CLEAN
-   =============================== */
-
-(function () {
-
-  const originalOpen = window.open;
-  window.open = function () {
-    return null;
-  };
-
-  document.addEventListener("click", function (e) {
-    const a = e.target.closest("a");
-    if (!a) return;
-
-    const href = a.getAttribute("href") || "";
-    if (
-      href.startsWith("javascript:") ||
-      href.includes("ads") ||
-      href.includes("pop") ||
-      href.includes("redirect")
-    ) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  }, true);
-
-  let lastUrl = location.href;
-  setInterval(() => {
-    if (location.href !== lastUrl) {
-      history.pushState(null, "", lastUrl);
-    }
-  }, 300);
-
-  const observer = new MutationObserver(mutations => {
-    mutations.forEach(m => {
-      m.addedNodes.forEach(node => {
-        if (node.tagName === "IFRAME") {
-          const src = node.src || "";
-          if (
-            src.includes("ads") ||
-            src.includes("pop") ||
-            src.includes("click")
-          ) {
-            node.remove();
-          }
-        }
+    function setActive(id){
+      [1,2,3].forEach(n=>{
+        const b = document.getElementById("btn"+n);
+        b.className = (n===id)
+          ? "source-btn active px-6"
+          : "source-btn inactive px-6";
       });
-    });
-  });
+    }
 
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
-  });
+    function loadVideo(id){
+      document.getElementById("cover").style.display = "none";
+      setActive(id);
 
-})();
-</script>
-  
+      const ext = document.getElementById("externalLink");
+      const link = document.getElementById("directLink");
+      link.href = SOURCES[id];
+      ext.classList.add("hidden");
+
+      const target = document.getElementById("videoTarget");
+      target.innerHTML = `
+        <iframe
+          id="streamFrame"
+          src="${SOURCES[id]}"
+          allowfullscreen
+          scrolling="no"
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+          referrerpolicy="origin"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+        </iframe>
+      `;
+
+      // fallback si embed bloqué
+      setTimeout(() => {
+        const iframe = document.getElementById("streamFrame");
+        if(!iframe) return;
+        try { iframe.contentWindow.location.href; }
+        catch(e){ ext.classList.remove("hidden"); }
+      }, 2000);
+    }
+  </script>
+
 </body>
 </html>
