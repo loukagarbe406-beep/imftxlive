@@ -1,325 +1,470 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>IMFTX+</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script>document.documentElement.classList.add("dark");</script>
 
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-<style>
-html,body{margin:0;background:#000;color:#fff;font-family:'Outfit',sans-serif}
+  <style>
+    :root{ --bg:#000; }
+    html,body{ height:100%; }
+    body{ font-family:Outfit,system-ui,-apple-system,Segoe UI,Roboto,Arial; background:var(--bg); color:#fff; }
 
-/* NAV */
-nav{
-  height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 18px;
-  border-bottom:1px solid rgba(255,255,255,.10);
-  background:#000;
-}
-.brand{font-size:30px;font-weight:900;letter-spacing:-.02em}
-.nav-right{display:flex;gap:10px;align-items:center}
-.btn-iptv{
-  background:#fff;color:#000;text-decoration:none;
-  padding:8px 14px;border-radius:999px;
-  font-weight:900;font-size:13px;
-}
-.icon{
-  width:42px;height:42px;
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:12px;
-  display:grid;place-items:center;
-  text-decoration:none;color:#fff;
-}
-.icon:hover{background:rgba(255,255,255,.06)}
+    /* page glow très léger (pas de gros carré gris) */
+    .page-glow{
+      background:
+        radial-gradient(1200px 520px at 50% -10%, rgba(255,255,255,.06), transparent 62%),
+        radial-gradient(900px 420px at 50% 20%, rgba(255,255,255,.04), transparent 60%);
+    }
 
-/* HEADER */
-header{text-align:center;padding:46px 16px 10px}
-header h1{margin:0;font-size:68px;font-weight:900;letter-spacing:-.03em}
-header p{
-  margin:8px 0 0;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:rgba(255,255,255,.55);
-}
+    /* card 16:9 */
+    .match-card{
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      box-shadow: 0 18px 70px rgba(0,0,0,.55);
+    }
+    .match-bg{
+      position:absolute; inset:0;
+      background-size:cover;
+      background-position:center;
+      transform:scale(1.03);
+    }
+    .match-overlay{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(700px 320px at 30% 55%, rgba(0,0,0,.45), transparent 62%),
+        linear-gradient(90deg, rgba(0,0,0,.75) 0%, rgba(0,0,0,.35) 52%, rgba(0,0,0,.08) 100%);
+    }
 
-/* GRID */
-main{padding:0 16px 38px}
-.grid{
-  max-width:1400px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:1fr;
-  gap:14px;
-}
-@media(min-width:900px){
-  .grid{grid-template-columns:repeat(3, 1fr);}
-}
+    /* badges top */
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background:rgba(18,18,18,.72);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-weight:800;
+      font-size:12px;
+      line-height:1;
+      color:rgba(255,255,255,.92);
+      user-select:none;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:#f59e0b;
+      box-shadow:0 0 0 3px rgba(245,158,11,.18);
+    }
 
-/* CARD */
-.card{
-  position:relative;
-  aspect-ratio:16/9;
-  border-radius:18px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.12);
-  background:#0a0a0a;
-}
-.bg{position:absolute;inset:0;background-size:cover;background-position:center}
-.overlay{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(600px 240px at 25% 70%, rgba(0,0,0,.35), transparent 60%),
-    linear-gradient(90deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.40) 46%, rgba(0,0,0,.12) 100%);
-}
+    /* zone infos bas */
+    .info{
+      position:absolute;
+      left:18px;
+      bottom:16px;
+      right:18px;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+    }
 
-/* ✅ PILL STATUS (transparent like timer) */
-.status{
-  position:absolute;
-  top:10px; left:10px;
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
+    /* mini zone gauche (logos + textes) */
+    .left-stack{ max-width:70%; }
 
-  padding:6px 12px;
-  border-radius:999px;
+    .teams-row{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:10px;
+    }
 
-  background: rgba(0,0,0,.55);
-  border: 1px solid rgba(255,255,255,.12);
-  backdrop-filter: blur(6px);
+    .team-logo{
+      width:38px; height:38px;
+      display:grid; place-items:center;
+    }
+    .team-logo img{
+      width:100%; height:100%;
+      object-fit:contain;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+      image-rendering:auto;
+    }
 
-  color:#fff;
-  font-weight:800;
-  font-size:12px;
-  line-height:1;
-}
-.status::before{
-  content:"";
-  width:8px;height:8px;border-radius:50%;
-  background:#22c55e;
-  box-shadow:0 0 10px rgba(34,197,94,.95);
-}
+    .vs{
+      font-weight:900;
+      font-size:14px;
+      color:rgba(255,255,255,.72);
+      letter-spacing:.06em;
+    }
 
-/* ✅ finished variant */
-.status.finished::before{
-  background:#cbd5e1;              /* gris clair */
-  box-shadow:0 0 0 rgba(0,0,0,0);   /* pas de glow */
-}
-.status.finished{
-  color:rgba(255,255,255,.92);
-}
+    .meta{
+      display:flex;
+      align-items:flex-end;
+      gap:10px;
+    }
 
-/* ✅ Tag match (small) */
-.tag{
-  position:absolute;
-  left:12px;
-  bottom:12px;
-  max-width:30%;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-}
+    .comp-logo{
+      width:34px;
+      height:34px;
+      object-fit:contain;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+      flex:0 0 auto;
+    }
 
-.teams{display:flex;align-items:center;gap:8px}
-.team{width:36px;height:36px}
-.team img{width:100%;height:100%;object-fit:contain}
-.vs{font-size:11px;font-weight:900;color:rgba(255,255,255,.70)}
+    /* ✅ “étiquette match” plus petite */
+    .title{
+      font-weight:900;
+      font-size:16px;
+      line-height:1.1;
+      margin-bottom:4px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .sub{
+      font-weight:800;
+      font-size:12px;
+      line-height:1.2;
+      color:rgba(255,255,255,.78);
+    }
 
-.info{display:flex;gap:8px;align-items:flex-end}
-.league{width:22px;height:36px;object-fit:contain}
+    /* bouton */
+    .watch{
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding:10px 14px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:.02em;
+      transition:transform .15s ease, background .15s ease;
+      white-space:nowrap;
+      color:#fff;
+    }
+    .watch:hover{ background:rgba(255,255,255,.14); }
+    .watch:active{ transform:scale(.98); }
+    .play{
+      width:32px; height:32px; border-radius:999px;
+      display:grid; place-items:center;
+      background:rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.16);
+    }
 
-.title{font-size:12px;font-weight:900;line-height:1.05}
-.sub{font-size:10px;font-weight:700;color:rgba(255,255,255,.72);line-height:1.05}
-
-/* bouton regarder */
-.watch{
-  position:absolute;
-  right:12px;
-  bottom:12px;
-
-  display:flex;
-  align-items:center;
-  gap:8px;
-
-  padding:8px 13px;
-  border-radius:999px;
-
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.18);
-
-  color:#fff;
-  text-decoration:none;
-  font-weight:900;
-  font-size:13px;
-}
-.watch:hover{background:rgba(255,255,255,.15)}
-.play{
-  width:28px;height:28px;border-radius:50%;
-  background:rgba(0,0,0,.45);
-  display:grid;place-items:center;
-}
-
-@media(max-width:640px){
-  header h1{font-size:56px}
-  .tag{max-width:70%}
-}
-</style>
+    /* layout: 2 par ligne (PC), 1 par ligne (mobile) */
+    .grid-2{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:18px;
+    }
+    @media (max-width: 900px){
+      .grid-2{ grid-template-columns: 1fr; }
+      .left-stack{ max-width:78%; }
+    }
+  </style>
 </head>
 
 <body>
+  <nav class="sticky top-0 z-20 bg-black/70 backdrop-blur border-b border-white/10">
+    <div class="w-full h-16 px-6 flex items-center justify-between">
+      <div class="font-extrabold tracking-tight text-3xl select-none">IMFTX+</div>
 
-<nav>
-  <div class="brand">IMFTX+</div>
-  <div class="nav-right">
-    <a class="btn-iptv" href="#" target="_blank">⚡ ACHÈTE TON IPTV</a>
-    <a class="icon" href="#" target="_blank" aria-label="X" title="X">X</a>
-    <a class="icon" href="#" target="_blank" aria-label="Telegram" title="Telegram">TG</a>
-    <a class="icon" href="#" target="_blank" aria-label="Discord" title="Discord">DS</a>
-  </div>
-</nav>
+      <div class="flex items-center gap-2">
+        <a href="#" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-extrabold text-sm hover:bg-white/90 active:scale-95 transition">
+          <span>⚡</span> ACHÈTE TON IPTV
+        </a>
 
-<header>
-  <h1>IMFTX+</h1>
-  <p>N°1 DES MEILLEURS DIFFUSEURS FR</p>
-</header>
+        <!-- X -->
+        <a href="#" target="_blank" class="w-11 h-11 grid place-items-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="X">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+            <path d="M18.2 3H21l-6.4 7.3L22 21h-6.2l-4.8-6.3L5.4 21H2.6l6.9-7.8L2 3h6.3l4.3 5.7L18.2 3Z" fill="currentColor"/>
+          </svg>
+        </a>
 
-<main>
-  <div class="grid">
+        <!-- Telegram -->
+        <a href="#" target="_blank" class="w-11 h-11 grid place-items-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Telegram">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <path d="M21.8 3.2L2.9 10.6c-1 .4-1 1.8 0 2.2l4.7 1.6 1.8 5.4c.3 1 1.6 1.2 2.2.4l2.8-3.5 5.2 3.8c.9.7 2.2.2 2.4-.9L23 4.5c.2-1-.5-1.6-1.2-1.3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M7.6 14.2l12.3-8.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </a>
 
-    <!-- 1) Paris FC - Angers (Terminé) -->
-    <article class="card">
-      <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/paris-fc-vs-auxerre.png')"></div>
-      <div class="overlay"></div>
-      <div class="status finished">Terminé</div>
+        <!-- Discord -->
+        <a href="#" target="_blank" class="w-11 h-11 grid place-items-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Discord">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+            <path d="M8 18c-1.6 0-3-1.3-3-3.1 0-5.5 3.3-9.9 7-9.9s7 4.4 7 9.9C19 16.7 17.6 18 16 18l-1.5-1.6H9.5L8 18Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9.3 12.7h.01M14.7 12.7h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </nav>
 
-      <div class="tag">
-        <div class="teams">
-          <div class="team"><img alt="Paris FC" src="https://empire-sport.world/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png"></div>
-          <span class="vs">VS</span>
-          <div class="team"><img alt="Angers" src="https://empire-sport.world/upload/teams/bhdsn0frfe5qlieltcjjhwb8h3rzab.png"></div>
+  <header class="page-glow">
+    <div class="w-full px-6 pt-10 pb-6 text-center">
+      <div class="text-6xl md:text-7xl font-extrabold tracking-tight select-none">IMFTX+</div>
+      <div class="mt-3 uppercase tracking-[.18em] text-white/70 font-extrabold text-sm">
+        N°1 DES MEILLEURS DIFFUSEURS FR
+      </div>
+    </div>
+  </header>
+
+  <main class="page-glow">
+    <div class="w-full px-6 pb-16 max-w-[1400px] mx-auto">
+      <div id="matches" class="grid-2"></div>
+    </div>
+  </main>
+
+  <script>
+    const COMP = "https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png";
+    const TIME = "21:00";
+    const SPORT = "Football";
+
+    const matches = [
+      {
+        home: "Club Brugge",
+        away: "Marseille",
+        banner: "https://empire-sport.world/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_Club_Brugge_KV_2024.svg/langfr-250px-Logo_Club_Brugge_KV_2024.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/960px-Logo_Olympique_de_Marseille.svg.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/club-brugge-marseille.html"
+      },
+      {
+        home: "Paris SG",
+        away: "Newcastle United",
+        banner: "https://empire-sport.world/upload/banners/lorient-vs-paris-sg.png",
+        homeLogo: "https://empire-sport.world/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
+        awayLogo: "https://empire-sport.world/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/paris-sg-newcastle.html"
+      },
+      {
+        home: "Monaco",
+        away: "Juventus",
+        banner: "https://empire-sport.world/upload/banners/monaco-vs-paris-fc.png",
+        homeLogo: "https://empire-sport.world/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
+        awayLogo: "https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/monaco-juventus.html"
+      },
+      {
+        home: "Benfica",
+        away: "Real Madrid",
+        banner: "https://empire-sport.world/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png",
+        homeLogo: "https://empire-sport.world/upload/teams/1gmfrazydu7o6vh1z8rlnrduarisq5.png",
+        awayLogo: "https://empire-sport.world/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/benfica-real-madrid.html"
+      },
+      {
+        home: "Athletic Bilbao",
+        away: "Sporting CP",
+        banner: "https://empire-sport.world/upload/teambanks/bqiawsrwkodj2at1xdt19o8jgx0b8x.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/98/Club_Athletic_Bilbao_logo.svg/250px-Club_Athletic_Bilbao_logo.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/1/12/Logo_Sporting_Clube_Portugal.svg/500px-Logo_Sporting_Clube_Portugal.svg.png?20210916232816",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/athletic-bilbao-sporting.html"
+      },
+      {
+        home: "Borussia Dortmund",
+        away: "Inter Milan",
+        banner: "https://empire-sport.world/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/langfr-250px-FC_Internazionale_Milano_2021.svg.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/dortmund-inter.html"
+      },
+      {
+        home: "Bayer Leverkusen",
+        away: "Villarreal",
+        banner: "https://empire-sport.world/upload/teambanks/5viledxfbigfantrouxxhk0bebau4i.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/4a/Bayer_04_Leverkusen_%28logo%29.svg/langfr-250px-Bayer_04_Leverkusen_%28logo%29.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/Logo_Villarreal_CF_2009.svg/langfr-250px-Logo_Villarreal_CF_2009.svg.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/leverkusen-villarreal.html"
+      },
+      {
+        home: "Eintracht Frankfurt",
+        away: "Tottenham Hotspur",
+        banner: "https://empire-sport.world/upload/teambanks/qefmysjbg5qcfovxcgmob6ptpe56wg.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cb/Logo_Eintracht_Francfort.svg/langfr-250px-Logo_Eintracht_Francfort.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/Logo_Tottenham_Hotspur_Football_Club_2024.svg/langfr-60px-Logo_Tottenham_Hotspur_Football_Club_2024.svg.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/francfort-tottenham.html"
+      },
+      {
+        home: "Pafos",
+        away: "Slavia Prague",
+        banner: "https://empire-sport.world/upload/teambanks/kwqmnxehcgxts5l9n3eelynsgnglaa.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Logo_P%C3%A1fos_FC_2018.svg/langfr-250px-Logo_P%C3%A1fos_FC_2018.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Logo_Slavia_2024.svg/langfr-250px-Logo_Slavia_2024.svg.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/pafos-slavia-prague.html"
+      },
+      {
+        home: "Atlético Madrid",
+        away: "Bodø/Glimt",
+        banner: "https://empire-sport.world/upload/teambanks/nyo5kfaliih9bnm67oco0hzayzqgcm.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fc/Logo_ATM_2024.svg/langfr-250px-Logo_ATM_2024.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/e/e6/Logo_FK_Bod%C3%B8_Glimt.svg/langfr-250px-Logo_FK_Bod%C3%B8_Glimt.svg.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/atletico-bodo.html"
+      },
+      {
+        home: "Manchester City",
+        away: "Galatasaray",
+        banner: "https://empire-sport.world/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
+        homeLogo: "https://empire-sport.world/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
+        awayLogo: "https://empire-sport.world/upload/teams/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/man-city-galatasaray.html"
+      },
+      {
+        home: "PSV Eindhoven",
+        away: "Bayern Munich",
+        banner: "https://empire-sport.world/upload/teambanks/ccvylofwnfqi9yuzpipaj1s7gvnyzq.png",
+        homeLogo: "https://empire-sport.world/upload/teams/xck3mu7b4kutfsieubw4zg0wbalzcl.png",
+        awayLogo: "https://empire-sport.world/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/psv-bayern.html"
+      },
+      {
+        home: "Ajax",
+        away: "Olympiacos",
+        banner: "https://empire-sport.world/upload/teambanks/9v0heygcgnew89c0bxihs3duytz8cj.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cf/Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg/langfr-250px-Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/75/Logo_Olympiakos_2024.svg/langfr-250px-Logo_Olympiakos_2024.svg.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/ajax-olympiacos.html"
+      },
+      {
+        home: "Union Saint-Gilloise",
+        away: "Atalanta",
+        banner: "https://empire-sport.world/upload/teambanks/lkxixr8kvcur12zqjrxb4prhrb5cvv.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/8/87/Logo_Royale_Union_Saint-Gilloise_2025.svg/langfr-250px-Logo_Royale_Union_Saint-Gilloise_2025.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fd/Logo_Atalanta_Bergame_2024.svg/langfr-250px-Logo_Atalanta_Bergame_2024.svg.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/union-sg-atalanta.html"
+      },
+      {
+        home: "Arsenal",
+        away: "Kairat Almaty",
+        banner: "https://empire-sport.world/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
+        homeLogo: "https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
+        awayLogo: "https://empire-sport.world/upload/teams/vosxjrkaty3gwuljpayzko5e8o5ce4.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/arsenal-kairat.html"
+      },
+      {
+        home: "Liverpool",
+        away: "Qarabağ",
+        banner: "https://empire-sport.world/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png",
+        homeLogo: "https://empire-sport.world/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png",
+        awayLogo: "https://empire-sport.world/upload/teams/lltvrfxptcgfdmsa74tbivlygbsh2x.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/liverpool-qarabag.html"
+      },
+      {
+        home: "Barcelona",
+        away: "FC Copenhage",
+        banner: "https://empire-sport.world/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
+        homeLogo: "https://empire-sport.world/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
+        awayLogo: "https://empire-sport.world/upload/teams/03rfn7h0mge0ymgvalgre79zfaxie2.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/barcelona-copenhage.html"
+      },
+      {
+        home: "Napoli",
+        away: "Chelsea",
+        banner: "https://empire-sport.world/upload/teambanks/5yl7dl2h27lzgwseu8f5fm3pppav0o.png",
+        homeLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/SSC_Napoli_2025_%28white_and_azure%29.svg/250px-SSC_Napoli_2025_%28white_and_azure%29.svg.png",
+        awayLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/250px-Chelsea_FC.svg.png",
+        compLogo: COMP,
+        when: "Demain",
+        link: "/match/napoli-chelsea.html"
+      },
+    ];
+
+    const el = document.getElementById("matches");
+
+    const card = (m) => `
+      <article class="match-card aspect-[16/9]">
+        <div class="match-bg" style="background-image:url('${m.banner}')"></div>
+        <div class="match-overlay"></div>
+
+        <!-- top left -->
+        <div class="absolute left-3 top-3">
+          <span class="pill"><span class="dot"></span> 1j 1h 24m 5s</span>
         </div>
+
+        <!-- top right -->
+        <div class="absolute right-3 top-3">
+          <span class="pill">${SPORT}</span>
+        </div>
+
         <div class="info">
-          <img class="league" alt="Ligue 1" src="https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png">
-          <div>
-            <div class="title">Paris FC - Angers</div>
-            <div class="sub">Ligue 1</div>
-            <div class="sub">Aujourd’hui 17:15</div>
+          <div class="left-stack">
+            <div class="teams-row">
+              <div class="team-logo"><img alt="${m.home}" src="${m.homeLogo}"></div>
+              <div class="vs">VS</div>
+              <div class="team-logo"><img alt="${m.away}" src="${m.awayLogo}"></div>
+            </div>
+
+            <div class="meta">
+              <img class="comp-logo" alt="Compétition" src="${m.compLogo}">
+              <div class="min-w-0">
+                <div class="title">${m.home} - ${m.away}</div>
+                <div class="sub">${m.when}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-right">
+            <div class="font-extrabold text-xl mb-2">${TIME}</div>
+            <a class="watch" href="${m.link}" target="_blank" rel="noopener">
+              <span class="play">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                  <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
+                </svg>
+              </span>
+              REGARDER
+            </a>
           </div>
         </div>
-      </div>
+      </article>
+    `;
 
-      <a class="watch" href="/angers-parisfc.html" target="_blank"><span class="play">▶</span>REGARDER</a>
-    </article>
-
-    <!-- 2) Metz - Lyon (Terminé) -->
-    <article class="card">
-      <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/real-betis-vs-lyon.png')"></div>
-      <div class="overlay"></div>
-      <div class="status finished">Terminé</div>
-
-      <div class="tag">
-        <div class="teams">
-          <div class="team"><img alt="Metz" src="https://empire-sport.world/upload/teams/qcuklxuxncckyihua7oh73wsacvqla.png"></div>
-          <span class="vs">VS</span>
-          <div class="team"><img alt="Lyon" src="https://empire-sport.world/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png"></div>
-        </div>
-        <div class="info">
-          <img class="league" alt="Ligue 1" src="https://empire-sport.world/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png">
-          <div>
-            <div class="title">Metz - Lyon</div>
-            <div class="sub">Ligue 1</div>
-            <div class="sub">Aujourd’hui 17:15</div>
-          </div>
-        </div>
-      </div>
-
-      <a class="watch" href="/metz-lyon.html" target="_blank"><span class="play">▶</span>REGARDER</a>
-    </article>
-
-    <!-- 3) Arsenal - Manchester United (Terminé) -->
-    <article class="card">
-      <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/arsenal-vs-manchester-united.png')"></div>
-      <div class="overlay"></div>
-      <div class="status finished">Terminé</div>
-
-      <div class="tag">
-        <div class="teams">
-          <div class="team"><img alt="Arsenal" src="https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png"></div>
-          <span class="vs">VS</span>
-          <div class="team"><img alt="Man United" src="https://empire-sport.world/upload/teams/mosfyquovho2tfyvalgqtbzjnhmcv5.png"></div>
-        </div>
-        <div class="info">
-          <img class="league" alt="Premier League" src="https://empire-sport.world/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png">
-          <div>
-            <div class="title">Arsenal - Man United</div>
-            <div class="sub">Premier League</div>
-            <div class="sub">Aujourd’hui 17:30</div>
-          </div>
-        </div>
-      </div>
-
-      <a class="watch" href="/arsenal-manutd.html" target="_blank"><span class="play">▶</span>REGARDER</a>
-    </article>
-
-    <!-- 4) Juventus - Napoli (Terminé) -->
-    <article class="card">
-      <div class="bg" style="background-image:url('https://empire-sport.world/upload/banners/juventus-vs-napoli.png')"></div>
-      <div class="overlay"></div>
-      <div class="status finished">Terminé</div>
-
-      <div class="tag">
-        <div class="teams">
-          <div class="team"><img alt="Juventus" src="https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png"></div>
-          <span class="vs">VS</span>
-          <div class="team"><img alt="Napoli" src="https://empire-sport.world/upload/teams/e9ibu14ynhyggw7cjydjpwfial6xha.png"></div>
-        </div>
-        <div class="info">
-          <img class="league" alt="Serie A" src="https://empire-sport.world/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png">
-          <div>
-            <div class="title">Juventus - Napoli</div>
-            <div class="sub">Serie A</div>
-            <div class="sub">Aujourd’hui 18:00</div>
-          </div>
-        </div>
-      </div>
-
-      <a class="watch" href="/juventus-napoli.html" target="_blank"><span class="play">▶</span>REGARDER</a>
-    </article>
-
-    <!-- 5) Lille - Strasbourg (NOUVEAU, Terminé) -->
-    <article class="card">
-      <div class="bg" style="background-image:url('https://empire-sport.world/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png')"></div>
-      <div class="overlay"></div>
-      <div class="status">En cours</div>
-
-      <div class="tag">
-        <div class="teams">
-          <div class="team"><img alt="Lille" src="https://empire-sport.world/upload/teams/8cjgq2dnsdbrdb1bfdfor9qrqp3o1f.png"></div>
-          <span class="vs">VS</span>
-          <div class="team"><img alt="Strasbourg" src="https://empire-sport.world/upload/teams/y5tcqer82p79xnuij4aw6hqjiovisl.png"></div>
-        </div>
-        <div class="info">
-          <img class="league" alt="Ligue 1" src="https://empire-sport.world/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png">
-          <div>
-            <div class="title">Lille - Strasbourg</div>
-            <div class="sub">Ligue 1</div>
-            <div class="sub">Aujourd’hui 20:45</div>
-          </div>
-        </div>
-      </div>
-
-      <a class="watch" href="/lille-strasbourg.html" target="_blank"><span class="play">▶</span>REGARDER</a>
-    </article>
-
-  </div>
-</main>
-
+    el.innerHTML = matches.map(card).join("");
+  </script>
 </body>
 </html>
-
-
