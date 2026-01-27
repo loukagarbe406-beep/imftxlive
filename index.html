@@ -17,17 +17,50 @@
       --border:rgba(255,255,255,.10);
     }
     html,body{height:100%;}
-    body{
-      font-family:'Outfit',sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-    }
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--fg);}
 
-    /* fond soft (pas de gros carré gris) */
+    /* fond soft */
     .soft-bg{
       background:
         radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
         radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%);
+    }
+
+    /* ---------- Animations PRO ---------- */
+    @media (prefers-reduced-motion: no-preference){
+      .reveal{
+        opacity:0;
+        transform: translateY(14px) scale(.985);
+        animation: reveal .55s cubic-bezier(.22,1,.36,1) forwards;
+      }
+      @keyframes reveal{
+        to{ opacity:1; transform: translateY(0) scale(1); }
+      }
+      .hover-lift{
+        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      }
+      .hover-lift:hover{
+        transform: translateY(-4px);
+        box-shadow: 0 26px 90px rgba(0,0,0,.62);
+        border-color: rgba(255,255,255,.16);
+      }
+      .shine::after{
+        content:"";
+        position:absolute;
+        inset:-40%;
+        background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.08) 45%, transparent 60%);
+        transform: translateX(-60%) rotate(10deg);
+        pointer-events:none;
+        opacity:0;
+      }
+      .hover-lift:hover.shine::after{
+        opacity:1;
+        animation: shineMove .9s ease;
+      }
+      @keyframes shineMove{
+        from{ transform: translateX(-65%) rotate(10deg); }
+        to{ transform: translateX(65%) rotate(10deg); }
+      }
     }
 
     /* CARD */
@@ -54,8 +87,8 @@
         linear-gradient(90deg, rgba(0,0,0,.70) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.10) 100%);
     }
 
-    /* pill "En cours" (transparent comme le timer) */
-    .status-pill{
+    /* pill TIMER (transparent comme avant) */
+    .timer-pill{
       display:inline-flex;
       align-items:center;
       gap:8px;
@@ -64,88 +97,36 @@
       background: rgba(18,18,18,.62);
       border:1px solid rgba(255,255,255,.10);
       backdrop-filter: blur(8px);
-      font-weight:700;
+      font-weight:800;
       font-size:12px;
       line-height:1;
       color: rgba(255,255,255,.92);
     }
-    .status-dot{
-      width:8px;height:8px;border-radius:999px;background:#22c55e;
-      box-shadow:0 0 0 3px rgba(34,197,94,.12);
+    .timer-dot{
+      width:8px;height:8px;border-radius:999px;background:#f59e0b;
+      box-shadow:0 0 0 3px rgba(245,158,11,.12);
     }
+    .timer-text{ font-variant-numeric: tabular-nums; }
 
-    /* logos équipes : taille fixée => jamais “bizarre” */
-    .team-logo{
-      width:30px;
-      height:30px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex:0 0 auto;
-    }
-    .team-logo img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      image-rendering:auto;
-      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
-    }
+    /* logos fix (jamais “bizarre”) */
+    .team-logo{width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+    .team-logo img{width:100%;height:100%;object-fit:contain;image-rendering:auto;filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));}
+    .vs{font-weight:800;font-size:12px;color: rgba(255,255,255,.68);letter-spacing:.02em;}
 
-    /* VS */
-    .vs{
-      font-weight:800;
-      font-size:12px;
-      color: rgba(255,255,255,.68);
-      letter-spacing:.02em;
-    }
+    .comp-wrap{width:34px;height:34px;display:flex;align-items:flex-end;justify-content:center;flex:0 0 auto;}
+    .comp-wrap img{width:100%;height:100%;object-fit:contain;filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));}
 
-    /* logo compétition (fix) */
-    .comp-wrap{
-      width:34px;
-      height:34px;
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      flex:0 0 auto;
-    }
-    .comp-wrap img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
-    }
+    /* étiquette match */
+    .match-tag{max-width:72%;display:flex;flex-direction:column;gap:8px;}
+    .match-title{font-size:15px;font-weight:500;line-height:1.15;color: rgba(255,255,255,.92);}
+    .match-sub{font-size:12px;font-weight:600;color: rgba(255,255,255,.70);line-height:1.25;}
 
-    /* étiquette match : PLUS PETITE + clean */
-    .match-tag{
-      max-width:72%;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    .match-title{
-      font-size:15px;
-      font-weight:500;      /* pas gras comme tu veux */
-      line-height:1.15;
-      color: rgba(255,255,255,.92);
-    }
-    .match-sub{
-      font-size:12px;
-      font-weight:600;
-      color: rgba(255,255,255,.70);
-      line-height:1.25;
-    }
-
-    /* heure */
+    /* heure (fixe 21:00 affichée) */
     .time-badge{
-      position:absolute;
-      right:14px;
-      bottom:14px;
-      font-weight:800;
-      font-size:12px;
-      color: rgba(255,255,255,.86);
+      position:absolute; right:14px; bottom:14px;
+      font-weight:800; font-size:12px; color: rgba(255,255,255,.86);
       letter-spacing:.02em;
-      padding:6px 10px;
-      border-radius:12px;
+      padding:6px 10px; border-radius:12px;
       background: rgba(0,0,0,.25);
       border: 1px solid rgba(255,255,255,.10);
       backdrop-filter: blur(8px);
@@ -186,7 +167,7 @@
       .time-badge{ font-size:11px; padding:5px 9px; }
     }
 
-    /* theme */
+    /* theme light */
     .light body{
       --bg:#fff;
       --fg:rgba(0,0,0,.92);
@@ -238,14 +219,12 @@
           </svg>
         </a>
 
-        <!-- Theme (icônes comme tu veux : 1) “soleil” 2) lune toute blanche -->
+        <!-- Theme -->
         <button id="themeToggle" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Thème">
-          <!-- Soleil (style “rayons”) -->
           <svg id="iconSun" class="w-6 h-6" viewBox="0 0 24 24" fill="none">
             <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="1.8"/>
             <path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M19.8 4.2l-1.6 1.6M5.8 18.2l-1.6 1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
           </svg>
-          <!-- Lune (tout blanc / plein) -->
           <svg id="iconMoon" class="w-6 h-6 hidden" viewBox="0 0 24 24" fill="currentColor">
             <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
           </svg>
@@ -267,7 +246,6 @@
   <!-- GRID -->
   <main class="soft-bg flex-1">
     <div class="w-full px-6 pb-14">
-      <!-- 3 par ligne sur PC -->
       <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6"></div>
     </div>
   </main>
@@ -279,10 +257,27 @@
   </footer>
 
   <script>
+    // ✅ Timer réel vers DEMAIN 28/01 à 21:00 (heure locale du navigateur)
+    // Si tu veux une autre timezone plus tard, dis-moi.
+    const TARGET = new Date(2026, 0, 28, 21, 0, 0); // 28 Jan 2026 21:00 (mois 0 = janvier)
+
+    // ⚠️ Si on est déjà après la date (ex: test), on pousse au lendemain 21:00
+    function getTarget(){
+      const now = new Date();
+      const t = new Date(TARGET);
+      if(now.getTime() > t.getTime()){
+        // demain 21:00
+        const dn = new Date(now);
+        dn.setDate(dn.getDate() + 1);
+        dn.setHours(21,0,0,0);
+        return dn;
+      }
+      return t;
+    }
+
     const COMP = "https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png";
     const HOUR = "21:00";
 
-    // 18 matchs
     const matches = [
       {
         title: "Club Brugge - Marseille",
@@ -450,14 +445,20 @@
 
     const grid = document.getElementById("grid");
 
-    function cardHTML(m){
+    function cardHTML(m, i){
+      // animation delay clean
+      const delay = Math.min(i * 70, 700);
       return `
-        <article class="match-card">
+        <article class="match-card hover-lift shine reveal" style="animation-delay:${delay}ms">
           <div class="match-bg" style="background-image:url('${m.banner}');"></div>
           <div class="match-overlay"></div>
 
+          <!-- TIMER -->
           <div class="absolute left-3 top-3">
-            <span class="status-pill"><span class="status-dot"></span> En cours</span>
+            <span class="timer-pill" data-timer>
+              <span class="timer-dot"></span>
+              <span class="timer-text">--</span>
+            </span>
           </div>
 
           <div class="time-badge">${HOUR}</div>
@@ -496,7 +497,30 @@
 
     grid.innerHTML = matches.map(cardHTML).join("");
 
-    // Theme toggle
+    // ---------- TIMER REAL ----------
+    function formatRemaining(ms){
+      if(ms <= 0) return "00h 00m 00s";
+      const total = Math.floor(ms / 1000);
+      const h = Math.floor(total / 3600);
+      const m = Math.floor((total % 3600) / 60);
+      const s = total % 60;
+      const pad = (n) => String(n).padStart(2,"0");
+      return `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
+    }
+
+    const timerEls = Array.from(document.querySelectorAll("[data-timer] .timer-text"));
+
+    function tick(){
+      const target = getTarget();
+      const now = new Date();
+      const diff = target.getTime() - now.getTime();
+      const txt = formatRemaining(diff);
+      timerEls.forEach(el => el.textContent = txt);
+    }
+    tick();
+    setInterval(tick, 1000);
+
+    // ---------- Theme toggle ----------
     const btn = document.getElementById("themeToggle");
     const sun = document.getElementById("iconSun");
     const moon = document.getElementById("iconMoon");
@@ -516,10 +540,8 @@
         localStorage.setItem("theme","dark");
       }
     }
-
     const saved = localStorage.getItem("theme") || "dark";
     setTheme(saved);
-
     btn.addEventListener("click", ()=>{
       const isDark = document.documentElement.classList.contains("dark");
       setTheme(isDark ? "light" : "dark");
