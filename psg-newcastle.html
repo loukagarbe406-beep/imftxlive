@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — PSG -NEWCASTLE</title>
+  <title>IMFTX+ — PSG - Newcastle</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   <style>
     html, body { height: 100%; margin: 0; }
     body{
-      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:#fff;
       overflow-x:hidden;
     }
@@ -34,21 +34,27 @@
       box-shadow: 0 30px 120px rgba(0,0,0,.85);
       position:relative;
     }
-    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+    iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
-    /* COVER */
+    /* ✅ COVER (banniere) */
     .cover{
-      position:absolute; inset:0; z-index:15; cursor:pointer;
+      position:absolute;
+      inset:0;
+      z-index:15;
+      cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        var(--cover) center/cover no-repeat;
-      transition: transform .35s ease;
+        url("https://empire-sport.world/upload/events/kuz9dlbck3p3g4gu5xzbe9z9uffbls.jpg") center/cover no-repeat;
     }
-    .cover:hover{ transform: scale(1.01); }
 
+    /* ✅ LOGOS TOP (teams + VS) */
     .cover-top{
-      position:absolute; top:18px; left:18px;
-      display:flex; align-items:center; gap:10px;
+      position:absolute;
+      top:18px;
+      left:18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
       padding:10px 12px;
       border-radius:18px;
       background:rgba(0,0,0,.35);
@@ -56,44 +62,65 @@
       backdrop-filter: blur(14px);
     }
     .team-logo{
-      width:34px;height:34px; object-fit:contain;
+      width:34px;height:34px;
+      object-fit:contain;
       filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
     }
-    .vs{ font-weight:900; font-size:14px; opacity:.9; }
+    .vs{
+      font-weight:900;
+      font-size:14px;
+      opacity:.9;
+    }
 
+    /* ✅ STRIP BOTTOM (Regarder Gratuitement) */
     .cover-strip{
-      position:absolute; left:22px; right:22px; bottom:22px;
+      position:absolute;
+      left:22px;
+      right:22px;
+      bottom:22px;
       height:86px;
       border-radius:20px;
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.16);
       backdrop-filter: blur(16px);
-      display:flex; align-items:center; justify-content:space-between;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       padding:0 22px;
     }
-    .strip-title{ font-size:18px; font-weight:900; line-height:1; }
-    .strip-sub{
-      font-size:15px; opacity:.85; font-weight:600; line-height:1.1;
-      font-style:italic; margin-top:3px;
+    .strip-title{
+      font-size:18px;
+      font-weight:900;
+      line-height:1;
     }
-
+    .strip-sub{
+      font-size:15px;
+      opacity:.85;
+      font-weight:600;
+      line-height:1.1;
+      font-style:italic;
+      margin-top:3px;
+      text-transform: none;
+    }
     .strip-play{
-      width:50px;height:50px;border-radius:999px;
+      width:50px;height:50px;
+      border-radius:999px;
       border:2px solid rgba(255,255,255,.38);
-      display:grid; place-items:center;
+      display:grid;
+      place-items:center;
       transition:.2s;
       background:rgba(0,0,0,.22);
     }
-    .strip-play i{font-size:19px}
-    .strip-play:hover{transform:scale(1.08);background:rgba(0,0,0,.35)}
+    .strip-play i{ font-size:19px; }
+    .strip-play:hover{ transform:scale(1.08); background:rgba(0,0,0,.35); }
 
+    /* sources buttons */
     .source-btn{
       height:44px;
       border-radius:14px;
       font-weight:900;
       font-size:13px;
       transition:.2s;
-      user-select:none;
     }
     .source-btn.active{ background:#fff; color:#000; }
     .source-btn.inactive{
@@ -101,84 +128,75 @@
       border:1px solid rgba(255,255,255,.10);
       color:#fff;
     }
-    .source-btn:hover{opacity:.95}
+    .source-btn:hover{ opacity:.95; }
 
+    /* ✅ bottom bar (Vous regardez) */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(16px);
       padding:16px 18px;
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
     }
-    .watch-left{ display:flex; align-items:center; gap:14px; min-width:0; }
+    .watch-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
     .watch-left img{
-      width:40px;height:40px; object-fit:contain;
+      width:40px;height:40px;
+      object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
       flex-shrink:0;
     }
     .watch-text{ min-width:0; line-height:1.1; }
     .watch-text .small{ opacity:.8; font-weight:700; font-size:13px; }
     .watch-text .big{
-      font-weight:900; font-size:16px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      font-weight:900;
+      font-size:16px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .watch-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
     }
     .channel-logo{
-      width:90px;height:auto;object-fit:contain;
+      width:90px;
+      height:auto;
+      object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
 
-    /* pill timer réel */
+    /* ✅ petit pill timer (placeholder ici, tu changeras plus tard) */
     .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:7px 12px; border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
       background: rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(14px);
-      font-weight:900; font-size:12px;
-      font-variant-numeric: tabular-nums;
+      font-weight:900;
+      font-size:12px;
     }
     .dot{
       width:7px;height:7px;border-radius:999px;background:#f59e0b;
       box-shadow:0 0 0 4px rgba(245,158,11,.14);
     }
-
-    /* animations pro */
-    @media (prefers-reduced-motion: no-preference){
-      .fadeUp{ opacity:0; transform: translateY(10px); animation: fadeUp .45s cubic-bezier(.22,1,.36,1) forwards; }
-      @keyframes fadeUp { to { opacity:1; transform:none; } }
-      .tap:active{ transform: scale(.985); }
-    }
   </style>
 </head>
 
 <body class="soft-bg">
-
-  <!-- =========================
-       ✅ CONFIG À MODIFIER
-  ========================== -->
-  <script>
-    const CONFIG = {
-      pageTitle: "IMFTX+ — PSG - NEWCASTLE",
-      coverUrl: "https://empire-sport.world/upload/banners/lorient-vs-paris-sg.png",
-      teamAName: "Paris SG",
-      teamBName: "Newcastle United",
-      teamALogo: "https://empire-sport.world/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
-      teamBLogo: "https://empire-sport.world/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
-      compName: "Ligue des Champions",
-      compLogo: "https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
-      channelLogo: "https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg",
-      // ✅ heure cible (aujourd’hui 21:00 si pas passé, sinon demain 21:00)
-      kickoffHour: 21,
-      kickoffMinute: 0,
-      // ⚠️ Mets ici TES sources légitimes (ou laisse vide)
-      SOURCES: {
-        1: "", // ex: "https://ton-site-officiel/embed1"
-        2: "",
-        3: ""
-      }
-    };
-  </script>
 
   <!-- NAV -->
   <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
@@ -186,7 +204,7 @@
       <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
 
       <a href="index.html"
-         class="tap inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm transition">
+         class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
         <i class="fa-solid fa-arrow-left"></i> Retour
       </a>
     </div>
@@ -195,25 +213,30 @@
   <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
     <!-- PLAYER -->
-    <section class="player-box w-full aspect-video fadeUp" style="animation-delay:80ms">
+    <section class="player-box w-full aspect-video">
 
-      <!-- COVER CLICK = LAUNCH STREAM -->
+      <!-- ✅ COVER CLICK = LAUNCH STREAM -->
       <div id="cover" class="cover" onclick="loadVideo(1)">
-        <!-- pill timer en haut droite -->
+
+        <!-- (optionnel) petit pill en haut à droite -->
         <div style="position:absolute;top:18px;right:18px;">
-          <span class="pill"><span class="dot"></span> <span id="timerTxt">--</span></span>
+          <span class="pill"><span class="dot"></span>21:00</span>
         </div>
 
         <div class="cover-top">
-          <img id="logoA" class="team-logo" alt="A">
+          <img class="team-logo"
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/86/Paris_Saint-Germain_Logo.svg/512px-Paris_Saint-Germain_Logo.svg.png"
+               alt="PSG">
           <span class="vs">VS</span>
-          <img id="logoB" class="team-logo" alt="B">
+          <img class="team-logo"
+               src="https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Newcastle_United_Logo.svg/512px-Newcastle_United_Logo.svg.png"
+               alt="Newcastle">
         </div>
 
         <div class="cover-strip">
           <div>
             <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub"><span id="teamA"></span><br><span id="teamB"></span></div>
+            <div class="strip-sub">PSG<br>Newcastle</div>
           </div>
 
           <div class="strip-play">
@@ -226,116 +249,79 @@
     </section>
 
     <!-- SOURCES -->
-    <section class="mt-5 flex flex-wrap gap-3 fadeUp" style="animation-delay:140ms">
-      <button id="btn1" onclick="loadVideo(1)" class="tap source-btn active px-6">Source 1</button>
-      <button id="btn2" onclick="loadVideo(2)" class="tap source-btn inactive px-6">Source 2</button>
-      <button id="btn3" onclick="loadVideo(3)" class="tap source-btn inactive px-6">Source 3</button>
+    <section class="mt-5 flex flex-wrap gap-3">
+      <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+      <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+      <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
     </section>
 
-    <!-- DIRECT LINK (fallback) -->
-    <div id="externalLink" class="hidden mt-4 text-center fadeUp" style="animation-delay:180ms">
+    <!-- ✅ DIRECT LINK (fallback) -->
+    <div id="externalLink" class="hidden mt-4 text-center">
       <a id="directLink" href="#" target="_blank"
          class="text-amber-400 underline font-extrabold text-sm">
         Le lecteur ne s’affiche pas ? Ouvrir le lien direct
       </a>
     </div>
 
-    <!-- WATCH BAR -->
-    <section class="mt-6 watch-bar fadeUp" style="animation-delay:220ms">
+    <!-- ✅ WATCH BAR -->
+    <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img id="compLogo" alt="Comp">
+        <!-- Logo compétition (LDC) -->
+        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Ligue des Champions">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
-          <div class="big" id="watchTitle">—</div>
-          <div class="small" id="watchSub">—</div>
+          <div class="big">PSG — Newcastle</div>
+          <div class="small">Ligue des Champions · 21:00</div>
         </div>
       </div>
 
       <div class="watch-right">
-        <img id="channelLogo" class="channel-logo" alt="Chaîne">
+        <!-- Logo chaîne (CANAL+) -->
+        <img class="channel-logo"
+             src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg"
+             alt="CANAL+">
       </div>
     </section>
 
-    <div class="mt-8 text-center text-sm text-white/55 font-semibold fadeUp" style="animation-delay:260ms">
+    <!-- MESSAGE -->
+    <div class="mt-8 text-center text-sm text-white/55 font-semibold">
       Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
       — L’équipe IMFTX+
     </div>
 
   </main>
 
+  <!-- ✅ PLAYER SCRIPT -->
   <script>
-    // init config -> DOM
-    document.title = CONFIG.pageTitle;
-    document.documentElement.style.setProperty("--cover", `url("${CONFIG.coverUrl}")`);
-    document.getElementById("logoA").src = CONFIG.teamALogo;
-    document.getElementById("logoB").src = CONFIG.teamBLogo;
-    document.getElementById("teamA").textContent = CONFIG.teamAName;
-    document.getElementById("teamB").textContent = CONFIG.teamBName;
+    const SOURCES = {
+      1: "#",
+      2: "#",
+      3: "#"
+    };
 
-    document.getElementById("compLogo").src = CONFIG.compLogo;
-    document.getElementById("channelLogo").src = CONFIG.channelLogo;
-
-    document.getElementById("watchTitle").textContent = `${CONFIG.teamAName} — ${CONFIG.teamBName}`;
-    document.getElementById("watchSub").textContent = `${CONFIG.compName} · 21:00`;
-
-    // timer vers 21:00 (aujourd’hui si pas passé sinon demain)
-    function getTarget(){
-      const now = new Date();
-      const t = new Date(now);
-      t.setHours(CONFIG.kickoffHour, CONFIG.kickoffMinute, 0, 0);
-      if(now.getTime() > t.getTime()){
-        t.setDate(t.getDate() + 1);
-        t.setHours(CONFIG.kickoffHour, CONFIG.kickoffMinute, 0, 0);
-      }
-      return t;
-    }
-    function formatRemaining(ms){
-      if(ms <= 0) return "00h 00m 00s";
-      const total = Math.floor(ms / 1000);
-      const h = Math.floor(total / 3600);
-      const m = Math.floor((total % 3600) / 60);
-      const s = total % 60;
-      const pad = (n)=>String(n).padStart(2,"0");
-      return `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
-    }
-    function tick(){
-      const diff = getTarget().getTime() - Date.now();
-      document.getElementById("timerTxt").textContent = formatRemaining(diff);
-    }
-    tick();
-    setInterval(tick, 1000);
-
-    // sources
     function setActive(id){
       [1,2,3].forEach(n=>{
         const b = document.getElementById("btn"+n);
         b.className = (n===id)
-          ? "tap source-btn active px-6"
-          : "tap source-btn inactive px-6";
+          ? "source-btn active px-6"
+          : "source-btn inactive px-6";
       });
     }
 
     function loadVideo(id){
-      // si pas de source, on ne charge pas
-      const src = (CONFIG.SOURCES && CONFIG.SOURCES[id]) ? CONFIG.SOURCES[id].trim() : "";
-      if(!src){
-        alert("Aucune source configurée pour cette page.");
-        return;
-      }
-
       document.getElementById("cover").style.display = "none";
       setActive(id);
 
       const ext = document.getElementById("externalLink");
       const link = document.getElementById("directLink");
-      link.href = src;
+      link.href = SOURCES[id];
       ext.classList.add("hidden");
 
       const target = document.getElementById("videoTarget");
       target.innerHTML = `
         <iframe
           id="streamFrame"
-          src="${src}"
+          src="${SOURCES[id]}"
           allowfullscreen
           scrolling="no"
           frameborder="0"
@@ -354,5 +340,6 @@
       }, 2000);
     }
   </script>
+
 </body>
 </html>
