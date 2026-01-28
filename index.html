@@ -19,12 +19,15 @@
     html,body{height:100%;}
     body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--fg);}
 
+    /* fond soft */
     .soft-bg{
       background:
         radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%);
+        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%),
+        #000;
     }
 
+    /* ---------- Animations PRO ---------- */
     @media (prefers-reduced-motion: no-preference){
       .reveal{
         opacity:0;
@@ -61,6 +64,7 @@
       }
     }
 
+    /* CARD */
     .match-card{
       position:relative;
       overflow:hidden;
@@ -84,6 +88,7 @@
         linear-gradient(90deg, rgba(0,0,0,.70) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.10) 100%);
     }
 
+    /* pill TIMER */
     .timer-pill{
       display:inline-flex;
       align-items:center;
@@ -104,6 +109,7 @@
     }
     .timer-text{ font-variant-numeric: tabular-nums; }
 
+    /* logos fix */
     .team-logo{width:30px;height:30px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
     .team-logo img{width:100%;height:100%;object-fit:contain;image-rendering:auto;filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));}
     .vs{font-weight:800;font-size:12px;color: rgba(255,255,255,.68);letter-spacing:.02em;}
@@ -111,10 +117,12 @@
     .comp-wrap{width:34px;height:34px;display:flex;align-items:flex-end;justify-content:center;flex:0 0 auto;}
     .comp-wrap img{width:100%;height:100%;object-fit:contain;filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));}
 
+    /* étiquette match */
     .match-tag{max-width:72%;display:flex;flex-direction:column;gap:8px;}
     .match-title{font-size:15px;font-weight:500;line-height:1.15;color: rgba(255,255,255,.92);}
     .match-sub{font-size:12px;font-weight:600;color: rgba(255,255,255,.70);line-height:1.25;}
 
+    /* heure (fixe 21:00 affichée) */
     .time-badge{
       position:absolute; right:14px; bottom:14px;
       font-weight:800; font-size:12px; color: rgba(255,255,255,.86);
@@ -125,6 +133,7 @@
       backdrop-filter: blur(8px);
     }
 
+    /* bouton regarder */
     .watch-pill{
       border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
@@ -149,6 +158,12 @@
       background: rgba(0,0,0,.20);
     }
 
+    /* ✅ Layout “plein écran” (comme ta 2e image) */
+    .page-pad{ padding-left:14px; padding-right:14px; }
+    @media (min-width: 640px){ .page-pad{ padding-left:22px; padding-right:22px; } }
+    @media (min-width: 1024px){ .page-pad{ padding-left:28px; padding-right:28px; } }
+
+    /* responsive */
     @media (max-width: 640px){
       .match-tag{ max-width:78%; }
       .match-title{ font-size:14px; }
@@ -158,6 +173,7 @@
       .time-badge{ font-size:11px; padding:5px 9px; }
     }
 
+    /* theme light */
     .light body{
       --bg:#fff;
       --fg:rgba(0,0,0,.92);
@@ -170,42 +186,57 @@
     .light .soft-bg{
       background:
         radial-gradient(1400px 620px at 50% -10%, rgba(0,0,0,.05), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(0,0,0,.035), transparent 62%);
+        radial-gradient(1000px 520px at 50% 30%, rgba(0,0,0,.035), transparent 62%),
+        #fff;
     }
   </style>
 </head>
 
 <body class="min-h-screen flex flex-col">
+  <!-- NAV -->
   <nav class="sticky top-0 z-20 bg-black/70 backdrop-blur border-b border-white/10">
-    <div class="w-full h-16 px-6 flex items-center justify-between">
+    <div class="w-full h-16 page-pad flex items-center justify-between">
       <div class="font-extrabold tracking-tight text-3xl select-none">IMFTX+</div>
 
       <div class="flex items-center gap-2">
-        <a href="#" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-extrabold text-sm hover:bg-white/90 active:scale-95 transition">
+        <a href="#"
+           class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-extrabold text-sm hover:bg-white/90 active:scale-95 transition">
           <span>⚡</span> ACHÈTE TON IPTV
         </a>
 
-        <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="X">
+        <!-- X -->
+        <a href="#" target="_blank"
+           class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
+           aria-label="X">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
             <path d="M18.2 3H21l-6.4 7.3L22 21h-6.2l-4.8-6.3L5.4 21H2.6l6.9-7.8L2 3h6.3l4.3 5.7L18.2 3Z" fill="currentColor"/>
           </svg>
         </a>
 
-        <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Telegram">
+        <!-- Telegram -->
+        <a href="#" target="_blank"
+           class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
+           aria-label="Telegram">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
             <path d="M21.8 3.2L2.9 10.6c-1 .4-1 1.8 0 2.2l4.7 1.6 1.8 5.4c.3 1 1.6 1.2 2.2.4l2.8-3.5 5.2 3.8c.9.7 2.2.2 2.4-.9L23 4.5c.2-1-.5-1.6-1.2-1.3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
             <path d="M7.6 14.2l12.3-8.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
         </a>
 
-        <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Discord">
+        <!-- Discord -->
+        <a href="#" target="_blank"
+           class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
+           aria-label="Discord">
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
             <path d="M8 18c-1.6 0-3-1.3-3-3.1 0-5.5 3.3-9.9 7-9.9s7 4.4 7 9.9C19 16.7 17.6 18 16 18l-1.5-1.6H9.5L8 18Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
             <path d="M9.3 12.7h.01M14.7 12.7h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
           </svg>
         </a>
 
-        <button id="themeToggle" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Thème">
+        <!-- Theme -->
+        <button id="themeToggle"
+                class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition"
+                aria-label="Thème">
           <svg id="iconSun" class="w-6 h-6" viewBox="0 0 24 24" fill="none">
             <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="1.8"/>
             <path d="M12 2v2.2M12 19.8V22M2 12h2.2M19.8 12H22M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M19.8 4.2l-1.6 1.6M5.8 18.2l-1.6 1.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -218,40 +249,38 @@
     </div>
   </nav>
 
+  <!-- HERO -->
   <header class="soft-bg">
-    <div class="w-full px-6 pt-12 pb-6 text-center">
+    <div class="w-full page-pad pt-10 pb-3 text-center">
       <h1 class="text-6xl md:text-7xl font-extrabold tracking-tight select-none">IMFTX+</h1>
-      <p class="mt-4 uppercase tracking-[.22em] text-white/70 font-semibold">
+      <p class="mt-3 uppercase tracking-[.22em] text-white/70 font-semibold">
         N°1 DES MEILLEURS DIFFUSEURS FR
       </p>
     </div>
   </header>
 
+  <!-- GRID (plein écran + “superposé” un peu sous le hero) -->
   <main class="soft-bg flex-1">
-    <div class="w-full px-6 pb-14">
-      <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6"></div>
+    <div class="w-full page-pad pb-14">
+      <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 -mt-2"></div>
     </div>
   </main>
 
   <footer class="border-t border-white/10 bg-black/70">
-    <div class="w-full px-6 py-6 text-center text-xs text-white/40">
+    <div class="w-full page-pad py-6 text-center text-xs text-white/40">
       Made with ❤️
     </div>
   </footer>
 
   <script>
-    // ✅ Timer réel vers DEMAIN 28/01 à 21:00 (heure locale)
-    // NOTE: tu avais mis 2026, je laisse pareil (sinon dis-moi l'année exacte)
-    const TARGET = new Date(2026, 0, 28, 21, 0, 0);
-
+    // ✅ Timer “vrai” : prochaine occurrence de 21:00 (aujourd’hui si pas encore 21h, sinon demain)
     function getTarget(){
       const now = new Date();
-      const t = new Date(TARGET);
+      const t = new Date(now);
+      t.setHours(21,0,0,0);
       if(now.getTime() > t.getTime()){
-        const dn = new Date(now);
-        dn.setDate(dn.getDate() + 1);
-        dn.setHours(21,0,0,0);
-        return dn;
+        t.setDate(t.getDate() + 1);
+        t.setHours(21,0,0,0);
       }
       return t;
     }
@@ -259,176 +288,164 @@
     const COMP = "https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png";
     const HOUR = "21:00";
 
-    // ✅ VRAIS LIENS HTML PAR MATCH
     const matches = [
       {
         title: "Club Brugge - Marseille",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_Club_Brugge_KV_2024.svg/langfr-250px-Logo_Club_Brugge_KV_2024.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/960px-Logo_Olympique_de_Marseille.svg.png",
         compLogo: COMP,
-        href: "/om-bruges.html"
+        href: "om-bruges.html"
       },
       {
         title: "Paris SG - Newcastle United",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/banners/lorient-vs-paris-sg.png",
         aLogo: "https://empire-sport.world/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
         bLogo: "https://empire-sport.world/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
         compLogo: COMP,
-        href: "/psg-newcastle.html"
+        href: "psg-newcastle.html"
       },
       {
         title: "Monaco - Juventus",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/banners/monaco-vs-paris-fc.png",
         aLogo: "https://empire-sport.world/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
         bLogo: "https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
         compLogo: COMP,
-        href: "/monaco-juventus.html"
+        href: "monaco-juventus.html"
       },
       {
         title: "Benfica - Real Madrid",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png",
         aLogo: "https://empire-sport.world/upload/teams/1gmfrazydu7o6vh1z8rlnrduarisq5.png",
         bLogo: "https://empire-sport.world/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
         compLogo: COMP,
-        href: "/benfica-real.html"
+        href: "benfica-real.html"
       },
       {
         title: "Athletic Bilbao - Sporting CP",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/bqiawsrwkodj2at1xdt19o8jgx0b8x.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/98/Club_Athletic_Bilbao_logo.svg/250px-Club_Athletic_Bilbao_logo.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/1/12/Logo_Sporting_Clube_Portugal.svg/500px-Logo_Sporting_Clube_Portugal.svg.png?20210916232816",
         compLogo: COMP,
-        href: "/bilbao-sporting.html"
+        href: "bilbao-sporting.html"
       },
       {
         title: "Borussia Dortmund - Inter Milan",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/langfr-250px-FC_Internazionale_Milano_2021.svg.png",
         compLogo: COMP,
-        href: "/dortmund-inter.html"
+        href: "dortmund-inter.html"
       },
       {
         title: "Bayer Leverkusen - Villarreal",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/5viledxfbigfantrouxxhk0bebau4i.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/4a/Bayer_04_Leverkusen_%28logo%29.svg/langfr-250px-Bayer_04_Leverkusen_%28logo%29.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/Logo_Villarreal_CF_2009.svg/langfr-250px-Logo_Villarreal_CF_2009.svg.png",
         compLogo: COMP,
-        href: "/leverkusen-villarreal.html"
+        href: "leverkusen-villarreal.html"
       },
       {
         title: "Eintracht Frankfurt - Tottenham Hotspur",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/qefmysjbg5qcfovxcgmob6ptpe56wg.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cb/Logo_Eintracht_Francfort.svg/langfr-250px-Logo_Eintracht_Francfort.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/Logo_Tottenham_Hotspur_Football_Club_2024.svg/langfr-60px-Logo_Tottenham_Hotspur_Football_Club_2024.svg.png",
         compLogo: COMP,
-        href: "/frankfurt-tottenham.html"
+        href: "frankfurt-tottenham.html"
       },
       {
         title: "Pafos - Slavia Prague",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/kwqmnxehcgxts5l9n3eelynsgnglaa.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Logo_P%C3%A1fos_FC_2018.svg/langfr-250px-Logo_P%C3%A1fos_FC_2018.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Logo_Slavia_2024.svg/langfr-250px-Logo_Slavia_2024.svg.png",
         compLogo: COMP,
-        href: "/pafos-slavia.html"
+        href: "pafos-slavia.html"
       },
       {
         title: "Atlético Madrid - Bodø/Glimt",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/nyo5kfaliih9bnm67oco0hzayzqgcm.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fc/Logo_ATM_2024.svg/langfr-250px-Logo_ATM_2024.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/e/e6/Logo_FK_Bod%C3%B8_Glimt.svg/langfr-250px-Logo_FK_Bod%C3%B8_Glimt.svg.png",
         compLogo: COMP,
-        href: "/atletico-bodo.html"
+        href: "atletico-bodo.html"
       },
       {
         title: "Manchester City - Galatasaray",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
         aLogo: "https://empire-sport.world/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
         bLogo: "https://empire-sport.world/upload/teams/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png",
         compLogo: COMP,
-        href: "/city-galatasaray.html"
+        href: "mancity-galatasaray.html"
       },
       {
         title: "PSV Eindhoven - Bayern Munich",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/ccvylofwnfqi9yuzpipaj1s7gvnyzq.png",
         aLogo: "https://empire-sport.world/upload/teams/xck3mu7b4kutfsieubw4zg0wbalzcl.png",
         bLogo: "https://empire-sport.world/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png",
         compLogo: COMP,
-        href: "/psv-bayern.html"
+        href: "psv-bayern.html"
       },
       {
         title: "Ajax - Olympiacos",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/9v0heygcgnew89c0bxihs3duytz8cj.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cf/Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg/langfr-250px-Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/75/Logo_Olympiakos_2024.svg/langfr-250px-Logo_Olympiakos_2024.svg.png",
         compLogo: COMP,
-        href: "/ajax-olympiacos.html"
+        href: "ajax-olympiacos.html"
       },
       {
         title: "Union Saint-Gilloise - Atalanta",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/lkxixr8kvcur12zqjrxb4prhrb5cvv.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/8/87/Logo_Royale_Union_Saint-Gilloise_2025.svg/langfr-250px-Logo_Royale_Union_Saint-Gilloise_2025.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fd/Logo_Atalanta_Bergame_2024.svg/langfr-250px-Logo_Atalanta_Bergame_2024.svg.png",
         compLogo: COMP,
-        href: "/union-atalanta.html"
+        href: "unionsg-atalanta.html"
       },
       {
         title: "Arsenal - Kairat Almaty",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
         aLogo: "https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
         bLogo: "https://empire-sport.world/upload/teams/vosxjrkaty3gwuljpayzko5e8o5ce4.png",
         compLogo: COMP,
-        href: "/arsenal-kairat.html"
+        href: "arsenal-kairat.html"
       },
       {
         title: "Liverpool - Qarabağ",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png",
         aLogo: "https://empire-sport.world/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png",
         bLogo: "https://empire-sport.world/upload/teams/lltvrfxptcgfdmsa74tbivlygbsh2x.png",
         compLogo: COMP,
-        href: "/liverpool-qarabag.html"
+        href: "liverpool-qarabag.html"
       },
       {
         title: "Barcelona - FC Copenhage",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
         aLogo: "https://empire-sport.world/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
         bLogo: "https://empire-sport.world/upload/teams/03rfn7h0mge0ymgvalgre79zfaxie2.png",
         compLogo: COMP,
-        href: "/barcelona-copenhage.html"
+        href: "barcelona-copenhage.html"
       },
       {
         title: "Napoli - Chelsea",
-        day: "Demain",
         banner: "https://empire-sport.world/upload/teambanks/5yl7dl2h27lzgwseu8f5fm3pppav0o.png",
         aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/SSC_Napoli_2025_%28white_and_azure%29.svg/250px-SSC_Napoli_2025_%28white_and_azure%29.svg.png",
         bLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/250px-Chelsea_FC.svg.png",
         compLogo: COMP,
-        href: "/napoli-chelsea.html"
-      }
+        href: "napoli-chelsea.html"
+      },
     ];
 
     const grid = document.getElementById("grid");
 
+    function dayLabel(){
+      const now = new Date();
+      const t = getTarget(); // prochaine 21:00
+      const sameDay = now.toDateString() === t.toDateString();
+      return sameDay ? "Aujourd’hui" : "Demain";
+    }
+
     function cardHTML(m, i){
-      const delay = Math.min(i * 70, 700);
+      const delay = Math.min(i * 60, 650);
       return `
         <article class="match-card hover-lift shine reveal" style="animation-delay:${delay}ms">
           <div class="match-bg" style="background-image:url('${m.banner}');"></div>
@@ -456,7 +473,7 @@
                   <div class="comp-wrap"><img alt="Comp" src="${m.compLogo}"></div>
                   <div class="min-w-0">
                     <div class="match-title truncate">${m.title}</div>
-                    <div class="match-sub">${m.day} · ${HOUR}</div>
+                    <div class="match-sub"><span data-day>${dayLabel()}</span> — ${HOUR}</div>
                   </div>
                 </div>
               </div>
@@ -477,6 +494,7 @@
 
     grid.innerHTML = matches.map(cardHTML).join("");
 
+    // ---------- TIMER REAL ----------
     function formatRemaining(ms){
       if(ms <= 0) return "00h 00m 00s";
       const total = Math.floor(ms / 1000);
@@ -488,6 +506,7 @@
     }
 
     const timerEls = Array.from(document.querySelectorAll("[data-timer] .timer-text"));
+    const dayEls = Array.from(document.querySelectorAll("[data-day]"));
 
     function tick(){
       const target = getTarget();
@@ -495,10 +514,13 @@
       const diff = target.getTime() - now.getTime();
       const txt = formatRemaining(diff);
       timerEls.forEach(el => el.textContent = txt);
+      const lbl = dayLabel();
+      dayEls.forEach(el => el.textContent = lbl);
     }
     tick();
     setInterval(tick, 1000);
 
+    // ---------- Theme toggle ----------
     const btn = document.getElementById("themeToggle");
     const sun = document.getElementById("iconSun");
     const moon = document.getElementById("iconMoon");
