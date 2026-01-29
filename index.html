@@ -26,7 +26,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- ✅ AJOUT ICONES (seule modif HEAD) -->
+  <!-- ✅ ICONES -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
@@ -132,7 +132,7 @@
 
     .match-title{
       font-size:15px;
-      font-weight:500; /* pas gras comme tu voulais */
+      font-weight:500;
       line-height:1.15;
       color: rgba(255,255,255,.92);
     }
@@ -202,21 +202,18 @@
         </a>
       </div>
 
-      <!-- ✅ ICONE TELEGRAM (seule modif ici) -->
       <div class="relative hidden md:flex group">
         <a id="nav-btn-telegram" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
           <i class="fa-brands fa-telegram text-lg"></i>
         </a>
       </div>
 
-      <!-- ✅ ICONE DISCORD -->
       <div class="relative hidden md:flex group">
         <a id="nav-btn-discord" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
           <i class="fa-brands fa-discord text-lg"></i>
         </a>
       </div>
 
-      <!-- ✅ ICONE X -->
       <div class="relative hidden md:flex group">
         <a id="nav-btn-twitter" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
           <i class="fa-brands fa-x-twitter text-lg"></i>
@@ -242,28 +239,14 @@
     </div>
 
     <div class="w-full mt-8">
-      <!-- ✅ ICONE TELEGRAM (classes inchangées) -->
       <a id="side-btn-telegram" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-        <span class="inline-flex items-center gap-2">
-          <i class="fa-brands fa-telegram"></i>
-          Telegram
-        </span>
+        <span class="inline-flex items-center gap-2"><i class="fa-brands fa-telegram"></i> Telegram</span>
       </a>
-
-      <!-- ✅ ICONE DISCORD -->
       <a id="side-btn-discord" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-        <span class="inline-flex items-center gap-2">
-          <i class="fa-brands fa-discord"></i>
-          Discord
-        </span>
+        <span class="inline-flex items-center gap-2"><i class="fa-brands fa-discord"></i> Discord</span>
       </a>
-
-      <!-- ✅ ICONE X -->
       <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-        <span class="inline-flex items-center gap-2">
-          <i class="fa-brands fa-x-twitter"></i>
-          X
-        </span>
+        <span class="inline-flex items-center gap-2"><i class="fa-brands fa-x-twitter"></i> X</span>
       </a>
     </div>
   </div>
@@ -273,7 +256,6 @@
 
 <!-- CONTENT -->
 <div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col items-center justify-center md:px-24 p-5 transition-all duration-300 ease-out">
-
   <div class="w-full flex flex-col gap-12 mt-10">
 
     <!-- STREAMS PRINCIPAUX -->
@@ -375,146 +357,42 @@
     return `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
   }
 
-  // -------- Matches (mets les 19 ici) --------
-  const COMP = "https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png";
+  // ✅ MATCHES (4)
+  const EUROPA = "https://empire-sport.world/upload/leagues/qmw6zvla8du0v5a6jvrerzlqbbv5xh.png";
 
   const MATCHES = [
     {
-      title: "Club Brugge - Marseille",
-      banner: "https://empire-sport.world/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_Club_Brugge_KV_2024.svg/langfr-250px-Logo_Club_Brugge_KV_2024.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/960px-Logo_Olympique_de_Marseille.svg.png",
-      compLogo: COMP,
-      href: "om-bruges.html"
+      title: "Lille - Freiburg",
+      banner: "https://empire-sport.world/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png",
+      aLogo: "https://empire-sport.world/upload/teams/8cjgq2dnsdbrdb1bfdfor9qrqp3o1f.png",
+      bLogo: "https://empire-sport.world/upload/teams/8tdxf5trebovcp2k36sdwrczpu5yxv.png",
+      compLogo: EUROPA,
+      href: "lille-freiburg.html"
     },
     {
-      title: "Paris SG - Newcastle United",
-      banner: "https://empire-sport.world/upload/banners/lorient-vs-paris-sg.png",
-      aLogo: "https://empire-sport.world/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
-      bLogo: "https://empire-sport.world/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
-      compLogo: COMP,
-      href: "psg-newcastle.html"
+      title: "Lyon - PAOK",
+      banner: "https://empire-sport.world/upload/teambanks/ylteydywkmrc0skuw5qggtgqaoywpu.png",
+      aLogo: "https://empire-sport.world/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png",
+      bLogo: "https://empire-sport.world/upload/teams/igthdfuwzh8ka5po5fsg12obu7iqt0.png",
+      compLogo: EUROPA,
+      href: "lyon-paok.html"
     },
     {
-      title: "Monaco - Juventus",
-      banner: "https://empire-sport.world/upload/banners/monaco-vs-paris-fc.png",
-      aLogo: "https://empire-sport.world/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
-      bLogo: "https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
-      compLogo: COMP,
-      href: "monaco-juventus.html"
+      title: "Ludogorets Razgrad - Nice",
+      banner: "https://empire-sport.world/upload/teambanks/xdw129cqkykdkilusvwbye88zf4j2d.png",
+      aLogo: "https://empire-sport.world/upload/teams/tv5wbmyggfiq7kmb7ttaufy6jjbvm3.png",
+      bLogo: "https://empire-sport.world/upload/teams/jhe4floxvwpovm1mexcuq4jnzrhwnp.png",
+      compLogo: EUROPA,
+      href: "razgrad-nice.html"
     },
     {
-      title: "Benfica - Real Madrid",
-      banner: "https://empire-sport.world/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png",
-      aLogo: "https://empire-sport.world/upload/teams/1gmfrazydu7o6vh1z8rlnrduarisq5.png",
-      bLogo: "https://empire-sport.world/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
-      compLogo: COMP,
-      href: "benfica-real.html"
-    },
-    {
-      title: "Athletic Bilbao - Sporting CP",
-      banner: "https://empire-sport.world/upload/teambanks/bqiawsrwkodj2at1xdt19o8jgx0b8x.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/98/Club_Athletic_Bilbao_logo.svg/250px-Club_Athletic_Bilbao_logo.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/1/12/Logo_Sporting_Clube_Portugal.svg/500px-Logo_Sporting_Clube_Portugal.svg.png?20210916232816",
-      compLogo: COMP,
-      href: "bilbao-sporting.html"
-    },
-    {
-      title: "Borussia Dortmund - Inter Milan",
-      banner: "https://empire-sport.world/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/langfr-250px-FC_Internazionale_Milano_2021.svg.png",
-      compLogo: COMP,
-      href: "dortmund-inter.html"
-    },
-    {
-      title: "Bayer Leverkusen - Villarreal",
-      banner: "https://empire-sport.world/upload/teambanks/5viledxfbigfantrouxxhk0bebau4i.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/4a/Bayer_04_Leverkusen_%28logo%29.svg/langfr-250px-Bayer_04_Leverkusen_%28logo%29.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/Logo_Villarreal_CF_2009.svg/langfr-250px-Logo_Villarreal_CF_2009.svg.png",
-      compLogo: COMP,
-      href: "leverkusen-villarreal.html"
-    },
-    {
-      title: "Eintracht Frankfurt - Tottenham Hotspur",
-      banner: "https://empire-sport.world/upload/teambanks/qefmysjbg5qcfovxcgmob6ptpe56wg.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cb/Logo_Eintracht_Francfort.svg/langfr-250px-Logo_Eintracht_Francfort.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/Logo_Tottenham_Hotspur_Football_Club_2024.svg/langfr-60px-Logo_Tottenham_Hotspur_Football_Club_2024.svg.png",
-      compLogo: COMP,
-      href: "francfort-tottenham.html"
-    },
-    {
-      title: "Pafos - Slavia Prague",
-      banner: "https://empire-sport.world/upload/teambanks/kwqmnxehcgxts5l9n3eelynsgnglaa.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Logo_P%C3%A1fos_FC_2018.svg/langfr-250px-Logo_P%C3%A1fos_FC_2018.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Logo_Slavia_2024.svg/langfr-250px-Logo_Slavia_2024.svg.png",
-      compLogo: COMP,
-      href: "pafos-slavia.html"
-    },
-    {
-      title: "Atlético Madrid - Bodø/Glimt",
-      banner: "https://empire-sport.world/upload/teambanks/nyo5kfaliih9bnm67oco0hzayzqgcm.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fc/Logo_ATM_2024.svg/langfr-250px-Logo_ATM_2024.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/e/e6/Logo_FK_Bod%C3%B8_Glimt.svg/langfr-250px-Logo_FK_Bod%C3%B8_Glimt.svg.png",
-      compLogo: COMP,
-      href: "atletico-bodo.html"
-    },
-    {
-      title: "Manchester City - Galatasaray",
-      banner: "https://empire-sport.world/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
-      aLogo: "https://empire-sport.world/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
-      bLogo: "https://empire-sport.world/upload/teams/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png",
-      compLogo: COMP,
-      href: "city-galatasaray.html"
-    },
-    {
-      title: "PSV Eindhoven - Bayern Munich",
-      banner: "https://empire-sport.world/upload/teambanks/ccvylofwnfqi9yuzpipaj1s7gvnyzq.png",
-      aLogo: "https://empire-sport.world/upload/teams/xck3mu7b4kutfsieubw4zg0wbalzcl.png",
-      bLogo: "https://empire-sport.world/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png",
-      compLogo: COMP,
-      href: "psv-bayern.html"
-    },
-    {
-      title: "Ajax - Olympiacos",
-      banner: "https://empire-sport.world/upload/teambanks/9v0heygcgnew89c0bxihs3duytz8cj.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cf/Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg/langfr-250px-Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/75/Logo_Olympiakos_2024.svg/langfr-250px-Logo_Olympiakos_2024.svg.png",
-      compLogo: COMP,
-      href: "ajax-olympiacos.html"
-    },
-    {
-      title: "Union Saint-Gilloise - Atalanta",
-      banner: "https://empire-sport.world/upload/teambanks/lkxixr8kvcur12zqjrxb4prhrb5cvv.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/8/87/Logo_Royale_Union_Saint-Gilloise_2025.svg/langfr-250px-Logo_Royale_Union_Saint-Gilloise_2025.svg.png",
-      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fd/Logo_Atalanta_Bergame_2024.svg/langfr-250px-Logo_Atalanta_Bergame_2024.svg.png",
-      compLogo: COMP,
-      href: "union-atalanta.html"
-    },
-    {
-      title: "Arsenal - Kairat Almaty",
-      banner: "https://empire-sport.world/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
-      aLogo: "https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
-      bLogo: "https://empire-sport.world/upload/teams/vosxjrkaty3gwuljpayzko5e8o5ce4.png",
-      compLogo: COMP,
-      href: "arsenal-kairat.html"
-    },
-    {
-      title: "Liverpool - Qarabağ",
-      banner: "https://empire-sport.world/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png",
-      aLogo: "https://empire-sport.world/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png",
-      bLogo: "https://empire-sport.world/upload/teams/lltvrfxptcgfdmsa74tbivlygbsh2x.png",
-      compLogo: COMP,
-      href: "liverpool-qarabag.html"
-    },
-    {
-      title: "Barcelona - FC Copenhage",
-      banner: "https://empire-sport.world/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
-      aLogo: "https://empire-sport.world/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
-      bLogo: "https://empire-sport.world/upload/teams/03rfn7h0mge0ymgvalgre79zfaxie2.png",
-      compLogo: COMP,
-      href: "barca-copenhage.html"
-    },
+      title: "Multiplex Europa League",
+      banner: "https://empire-sport.world/upload/cards/multiplex_58.png",
+      aLogo: EUROPA,   // pas de logo -> on met le logo compétition des 2 côtés
+      bLogo: EUROPA,
+      compLogo: EUROPA,
+      href: "multiplex-europa.html"
+    }
   ];
 
   function cardHTML(m){
@@ -590,5 +468,3 @@
 
 </body>
 </html>
-
-
