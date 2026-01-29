@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Eintracht Frankfurt - Tottenham Hotspur</title>
+  <title>IMFTX+ — Lyon - PAOK</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
       overflow-x:hidden;
     }
 
-    /* ✅ FOND IDENTIQUE À TON INDEX */
+    /* ✅ MÊME FOND QUE TON INDEX (IMFTX) */
     .soft-bg{
       background:
         radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
@@ -44,7 +44,7 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.world/upload/events/kuz9dlbck3p3g4gu5xzbe9z9uffbls.jpg") center/cover no-repeat;
+        url("https://empire-sport.world/upload/events/9or6kdxyffazz9uspce5t33ntrmgct.jpg") center/cover no-repeat;
     }
 
     /* ✅ LOGOS TOP (teams + VS) */
@@ -218,25 +218,24 @@
       <!-- ✅ COVER CLICK = LAUNCH STREAM -->
       <div id="cover" class="cover" onclick="loadVideo(1)">
 
-        <!-- petit pill en haut à droite -->
         <div style="position:absolute;top:18px;right:18px;">
           <span class="pill"><span class="dot"></span>21:00</span>
         </div>
 
         <div class="cover-top">
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/commons/0/04/Eintracht_Frankfurt_Logo.svg"
-               alt="Eintracht Frankfurt">
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a5/Logo_Olympique_Lyonnais_-_2022.svg/512px-Logo_Olympique_Lyonnais_-_2022.svg.png"
+               alt="Lyon">
           <span class="vs">VS</span>
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg"
-               alt="Tottenham Hotspur">
+               src="https://upload.wikimedia.org/wikipedia/en/3/3f/PAOK_FC_logo.svg"
+               alt="PAOK">
         </div>
 
         <div class="cover-strip">
           <div>
             <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub">Eintracht Frankfurt<br>Tottenham Hotspur</div>
+            <div class="strip-sub">Lyon<br>PAOK</div>
           </div>
 
           <div class="strip-play">
@@ -255,7 +254,7 @@
       <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
     </section>
 
-    <!-- DIRECT LINK (fallback) -->
+    <!-- ✅ DIRECT LINK (fallback) -->
     <div id="externalLink" class="hidden mt-4 text-center">
       <a id="directLink" href="#" target="_blank"
          class="text-amber-400 underline font-extrabold text-sm">
@@ -263,21 +262,21 @@
       </a>
     </div>
 
-    <!-- WATCH BAR -->
+    <!-- ✅ WATCH BAR -->
     <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Ligue des Champions">
+        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Compétition">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
-          <div class="big">Eintracht Frankfurt — Tottenham Hotspur</div>
-          <div class="small">Ligue des Champions · 21:00</div>
+          <div class="big">Lyon — PAOK</div>
+          <div class="small">Coupe d’Europe · 21:00</div>
         </div>
       </div>
 
       <div class="watch-right">
         <img class="channel-logo"
-             src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg"
-             alt="CANAL+">
+             src="https://empire-sport.world/upload/chaines/poqxsy7vbdgxxb1r2x1koldqf8tgko.png"
+             alt="Chaîne">
       </div>
     </section>
 
@@ -289,12 +288,13 @@
 
   </main>
 
-  <!-- PLAYER SCRIPT -->
+  <!-- ✅ PLAYER SCRIPT -->
   <script>
+    // ✅ Mets tes liens ici (légaux)
     const SOURCES = {
-      1: "#",
-      2: "#",
-      3: "#"
+      1: "https://bolaloca.my/player/4/12",
+      2: "https://bolaloca.my/player/2/12",
+      3: "https://bolaloca.my/player/3/12"
     };
 
     function setActive(id){
