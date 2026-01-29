@@ -1,63 +1,75 @@
 <!DOCTYPE html>
-<html lang="fr" class="dark">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = { darkMode: 'class' };</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer-when-downgrade"/>
 
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- (optionnel) -->
+  <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@latest" url="https://google.com"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    window.tailwind = window.tailwind || {};
+    tailwind.config = { darkMode: 'class' };
+  </script>
+
+  <script>
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/nprogress/nprogress.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/nprogress/nprogress.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#000;
-      --fg:rgba(255,255,255,.92);
-      --card:rgba(255,255,255,.04);
-      --border:rgba(255,255,255,.10);
-    }
-    html,body{height:100%;}
-    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--fg);}
+    #nprogress .bar { top: 64px !important; }
+    #nprogress .spinner { top: 75px !important; }
 
-    .soft-bg{
-      background:
-        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%);
+    html, body { font-family: 'Outfit', sans-serif; }
+
+    .dark body{
+      background-image: url('https://cdn.jsdelivr.net/gh/Nyx0xFF/turbo-palm-tree/noise.png');
+      background-repeat: repeat;
+      background-size: 96px 96px;
     }
 
-    @media (prefers-reduced-motion: no-preference){
-      .reveal{
-        opacity:0;
-        transform: translateY(14px) scale(.985);
-        animation: reveal .55s cubic-bezier(.22,1,.36,1) forwards;
-      }
-      @keyframes reveal{
-        to{ opacity:1; transform: translateY(0) scale(1); }
-      }
-      .hover-lift{
-        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-      }
-      .hover-lift:hover{
-        transform: translateY(-4px);
-        box-shadow: 0 26px 90px rgba(0,0,0,.62);
-        border-color: rgba(255,255,255,.16);
-      }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(100, 100, 100, 0.4);
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background-clip: content-box;
     }
+    ::-webkit-scrollbar-thumb:hover { background-color: rgba(100, 100, 100, 0.6); }
+    * { scrollbar-width: thin; scrollbar-color: rgba(100, 100, 100, 0.4) transparent; }
 
+    ::selection { background-color: #444; color: white; }
+
+    body { display:flex; flex-direction:column; }
+    button * { pointer-events:none; }
+
+    /* --------- Match Cards (clean + uniform logos) --------- */
     .match-card{
       position:relative;
       overflow:hidden;
-      border-radius:18px;
-      border:1px solid var(--border);
-      background: var(--card);
-      box-shadow:0 18px 70px rgba(0,0,0,.55);
-      aspect-ratio:16/9;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 18px 70px rgba(0,0,0,.45);
+      aspect-ratio: 16 / 9;
     }
     .match-bg{
       position:absolute; inset:0;
       background-size:cover;
       background-position:center;
       transform:scale(1.02);
-      opacity:.98;
+      opacity:.96;
     }
     .match-overlay{
       position:absolute; inset:0;
@@ -66,7 +78,6 @@
         linear-gradient(90deg, rgba(0,0,0,.70) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.10) 100%);
     }
 
-    /* TIMER */
     .timer-pill{
       display:inline-flex;
       align-items:center;
@@ -87,7 +98,48 @@
     }
     .timer-text{ font-variant-numeric: tabular-nums; }
 
-    /* bouton regarder */
+    .team-logo{
+      width:30px;height:30px;
+      display:flex;align-items:center;justify-content:center;
+      flex:0 0 auto;
+    }
+    .team-logo img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+    }
+    .vs{
+      font-weight:800;
+      font-size:12px;
+      color: rgba(255,255,255,.68);
+      letter-spacing:.02em;
+    }
+    .comp-wrap{
+      width:26px;height:26px;
+      display:flex;align-items:center;justify-content:center;
+      flex:0 0 auto;
+    }
+    .comp-wrap img{
+      width:100%;height:100%;
+      object-fit:contain;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+    }
+
+    .match-title{
+      font-size:15px;
+      font-weight:500; /* pas gras comme tu voulais */
+      line-height:1.15;
+      color: rgba(255,255,255,.92);
+    }
+    .match-sub{
+      font-size:12px;
+      font-weight:600;
+      color: rgba(255,255,255,.70);
+      line-height:1.25;
+    }
+
     .watch-pill{
       border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
@@ -113,260 +165,419 @@
     }
 
     @media (max-width: 640px){
+      .team-logo{ width:28px; height:28px; }
+      .match-title{ font-size:14px; }
       .watch-pill{ font-size:12px; padding:.55rem .80rem; }
     }
   </style>
 </head>
 
-<body class="min-h-screen flex flex-col">
-  <!-- NAV -->
-  <nav class="sticky top-0 z-20 bg-black/70 backdrop-blur border-b border-white/10">
-    <div class="w-full h-16 px-6 flex items-center justify-between">
-      <div class="font-extrabold tracking-tight text-3xl select-none">IMFTX+</div>
+<body data-page="index" class="min-h-screen bg-white text-black dark:bg-zinc-900 dark:text-white flex flex-col font-[Outfit] transition-colors duration-200">
+<noscript>You need to enable JavaScript to run this website.</noscript>
 
-      <div class="flex items-center gap-2">
-        <a href="#" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-black font-extrabold text-sm hover:bg-white/90 active:scale-95 transition">
-          <span>⚡</span> ACHÈTE TON IPTV
-        </a>
+<!-- NAV -->
+<nav class="sticky top-0 z-10 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-700 shadow-sm">
+  <div class="max-w-screen-2xl mx-auto py-2 px-5 md:px-24 h-16 flex items-center justify-between">
 
-        <!-- X -->
-        <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="X">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-            <path d="M18.2 3H21l-6.4 7.3L22 21h-6.2l-4.8-6.3L5.4 21H2.6l6.9-7.8L2 3h6.3l4.3 5.7L18.2 3Z" fill="currentColor"/>
-          </svg>
-        </a>
+    <button id="burgerBtn" class="flex md:hidden w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
 
-        <!-- Telegram -->
-        <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Telegram">
-          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-            <path d="M21.8 3.2L2.9 10.6c-1 .4-1 1.8 0 2.2l4.7 1.6 1.8 5.4c.3 1 1.6 1.2 2.2.4l2.8-3.5 5.2 3.8c.9.7 2.2.2 2.4-.9L23 4.5c.2-1-.5-1.6-1.2-1.3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-            <path d="M7.6 14.2l12.3-8.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </a>
+    <button id="nav-pfp" type="button" class="h-11 hidden md:flex items-center gap-1">
+      <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
+    </button>
 
-        <!-- Discord -->
-        <a href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-lg ring-1 ring-white/10 hover:bg-white/5 active:scale-95 transition" aria-label="Discord">
-          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-            <path d="M8 18c-1.6 0-3-1.3-3-3.1 0-5.5 3.3-9.9 7-9.9s7 4.4 7 9.9C19 16.7 17.6 18 16 18l-1.5-1.6H9.5L8 18Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-            <path d="M9.3 12.7h.01M14.7 12.7h.01" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-          </svg>
+    <div class="h-11 flex items-center gap-2 md:gap-5 text-xl">
+
+      <div class="relative flex group">
+        <a href="/shop" class="w-auto h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold">NOTRE IPTV 1 AN À 50€ ICI</span>
+          </div>
         </a>
       </div>
-    </div>
-  </nav>
 
-  <!-- HERO -->
-  <header class="soft-bg">
-    <div class="w-full px-6 pt-12 pb-6 text-center">
-      <h1 class="text-6xl md:text-7xl font-extrabold tracking-tight select-none">IMFTX+</h1>
-      <p class="mt-4 uppercase tracking-[.22em] text-white/70 font-semibold">
-        N°1 DES MEILLEURS DIFFUSEURS FR
-      </p>
-    </div>
-  </header>
+      <div class="relative hidden md:flex group">
+        <a id="nav-btn-telegram" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
+          <span class="text-sm font-bold">TG</span>
+        </a>
+      </div>
 
-  <!-- GRID -->
-  <main class="soft-bg flex-1">
-    <div class="w-full px-6 pb-14">
-      <div id="grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6"></div>
-    </div>
-  </main>
+      <div class="relative hidden md:flex group">
+        <a id="nav-btn-discord" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
+          <span class="text-sm font-bold">DC</span>
+        </a>
+      </div>
 
-  <footer class="border-t border-white/10 bg-black/70">
-    <div class="w-full px-6 py-6 text-center text-xs text-white/40">
-      Made with ❤️
-    </div>
-  </footer>
+      <div class="relative hidden md:flex group">
+        <a id="nav-btn-twitter" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
+          <span class="text-sm font-bold">X</span>
+        </a>
+      </div>
 
-  <script>
-    // ✅ Target = aujourd'hui à 21:00 (heure locale)
-    function getTargetToday21(){
-      const now = new Date();
-      const t = new Date(now);
-      t.setHours(21,0,0,0);
-      // si on est déjà après 21:00 → demain 21:00
-      if(now.getTime() > t.getTime()){
-        t.setDate(t.getDate() + 1);
-        t.setHours(21,0,0,0);
-      }
-      return t;
+      <div class="relative flex group">
+        <button id="theme-toggle" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200 group overflow-hidden">
+          <span id="icon-sun" class="text-sm font-bold absolute opacity-0 scale-50 -rotate-90 transition-all duration-300 ease-out dark:opacity-100 dark:scale-100 dark:rotate-0">☀</span>
+          <span id="icon-moon" class="text-sm font-bold absolute opacity-100 scale-100 rotate-0 transition-all duration-300 ease-out dark:opacity-0 dark:scale-50 dark:rotate-90">🌙</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- SIDEBAR -->
+<aside id="sidebar" class="fixed top-0 left-0 h-screen w-60 bg-white dark:bg-zinc-950 p-6 flex flex-col justify-between border-r border-zinc-800 z-20 transform -translate-x-full transition-transform duration-300 ease-in-out">
+  <div>
+    <div class="h-11 flex justify-center gap-1">
+      <div class="text-2xl font-extrabold">IMFTX+</div>
+    </div>
+
+    <div class="w-full mt-8">
+      <a id="side-btn-telegram" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Telegram</a>
+      <a id="side-btn-discord" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Discord</a>
+      <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">X</a>
+    </div>
+  </div>
+
+  <div class="text-center text-sm text-zinc-500">Made with ❤️</div>
+</aside>
+
+<!-- CONTENT -->
+<div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col items-center justify-center md:px-24 p-5 transition-all duration-300 ease-out">
+
+  <div class="w-full flex flex-col gap-12 mt-10">
+
+    <!-- STREAMS PRINCIPAUX -->
+    <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(255,193,7,0.7)]"></div>
+          <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Streams principaux</h2>
+        </div>
+
+        <button type="button" id="refreshBtn" class="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black transition-all duration-200 active:scale-95 shadow-md">
+          ↻
+        </button>
+      </div>
+
+      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <!-- rempli en JS -->
+      </div>
+    </section>
+
+    <!-- STREAMS BACKUPS -->
+    <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-3 h-3 rounded-full bg-zinc-500"></div>
+        <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Streams backups</h2>
+      </div>
+
+      <div id="stream-list-bk" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div class="aspect-[16/9] w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
+        <div class="aspect-[16/9] hidden md:block w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
+        <div class="aspect-[16/9] hidden lg:block w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
+        <div class="aspect-[16/9] hidden xl:block w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer flex flex-col items-center justify-center w-full transition-all duration-300 ease-out bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-700 p-5">
+  <div class="flex flex-wrap justify-center gap-4 text-gray-600 dark:text-zinc-400 text-xs">
+    <a href="/legal/mentions" target="_blank" class="hover:underline hover:text-zinc-900 dark:hover:text-white transition">Mentions légales</a>
+    <a href="/legal/cgu" target="_blank" class="hover:underline hover:text-zinc-900 dark:hover:text-white transition">CGU</a>
+    <a href="/legal/confidentialite" target="_blank" class="hover:underline hover:text-zinc-900 dark:hover:text-white transition">Confidentialité</a>
+    <a href="/legal/dmca" target="_blank" class="hover:underline hover:text-zinc-900 dark:hover:text-white transition">DMCA</a>
+  </div>
+  <a class="hidden md:block text-gray-600 dark:text-zinc-400 text-xs mt-3">Made with ❤️</a>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+  // -------- Sidebar toggle --------
+  const burgerBtn = document.getElementById('burgerBtn');
+  const sidebar = document.getElementById('sidebar');
+  function openSidebar(){ sidebar.classList.remove('-translate-x-full'); }
+  function closeSidebar(){ sidebar.classList.add('-translate-x-full'); }
+  burgerBtn?.addEventListener('click', () => {
+    const isClosed = sidebar.classList.contains('-translate-x-full');
+    isClosed ? openSidebar() : closeSidebar();
+  });
+  sidebar?.addEventListener('click', (e) => {
+    if(e.target === sidebar) closeSidebar();
+  });
+
+  // -------- Theme toggle --------
+  const toggle = document.getElementById('theme-toggle');
+  function setTheme(mode){
+    if(mode === 'dark'){
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme','dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme','light');
     }
+  }
+  toggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(isDark ? 'light' : 'dark');
+  });
 
-    const COMP = "https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png";
+  // -------- Timer vers 21:00 (aujourd’hui; si passé -> demain) --------
+  function getTarget21(){
+    const now = new Date();
+    const t = new Date(now);
+    t.setHours(21,0,0,0);
+    if(now.getTime() > t.getTime()){
+      t.setDate(t.getDate() + 1);
+      t.setHours(21,0,0,0);
+    }
+    return t;
+  }
+  function formatRemaining(ms){
+    if(ms <= 0) return "00h 00m 00s";
+    const total = Math.floor(ms / 1000);
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    const pad = (n) => String(n).padStart(2,"0");
+    return `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
+  }
 
-    const matches = [
-      { title:"Club Brugge - Marseille", banner:"https://empire-sport.world/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_Club_Brugge_KV_2024.svg/langfr-250px-Logo_Club_Brugge_KV_2024.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/960px-Logo_Olympique_de_Marseille.svg.png",
-        compLogo:COMP, href:"om-bruges.html"
-      },
-      { title:"Paris SG - Newcastle United", banner:"https://empire-sport.world/upload/banners/lorient-vs-paris-sg.png",
-        aLogo:"https://empire-sport.world/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
-        bLogo:"https://empire-sport.world/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
-        compLogo:COMP, href:"psg-newcastle.html"
-      },
-      { title:"Monaco - Juventus", banner:"https://empire-sport.world/upload/banners/monaco-vs-paris-fc.png",
-        aLogo:"https://empire-sport.world/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
-        bLogo:"https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
-        compLogo:COMP, href:"monaco-juventus.html"
-      },
-      { title:"Benfica - Real Madrid", banner:"https://empire-sport.world/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png",
-        aLogo:"https://empire-sport.world/upload/teams/1gmfrazydu7o6vh1z8rlnrduarisq5.png",
-        bLogo:"https://empire-sport.world/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
-        compLogo:COMP, href:"benfica-real.html"
-      },
-      { title:"Athletic Bilbao - Sporting CP", banner:"https://empire-sport.world/upload/teambanks/bqiawsrwkodj2at1xdt19o8jgx0b8x.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/en/thumb/9/98/Club_Athletic_Bilbao_logo.svg/250px-Club_Athletic_Bilbao_logo.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/1/12/Logo_Sporting_Clube_Portugal.svg/500px-Logo_Sporting_Clube_Portugal.svg.png?20210916232816",
-        compLogo:COMP, href:"bilbao-sporting.html"
-      },
-      { title:"Borussia Dortmund - Inter Milan", banner:"https://empire-sport.world/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/langfr-250px-FC_Internazionale_Milano_2021.svg.png",
-        compLogo:COMP, href:"dortmund-inter.html"
-      },
-      { title:"Bayer Leverkusen - Villarreal", banner:"https://empire-sport.world/upload/teambanks/5viledxfbigfantrouxxhk0bebau4i.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/4/4a/Bayer_04_Leverkusen_%28logo%29.svg/langfr-250px-Bayer_04_Leverkusen_%28logo%29.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/Logo_Villarreal_CF_2009.svg/langfr-250px-Logo_Villarreal_CF_2009.svg.png",
-        compLogo:COMP, href:"leverkusen-villarreal.html"
-      },
-      { title:"Eintracht Frankfurt - Tottenham", banner:"https://empire-sport.world/upload/teambanks/qefmysjbg5qcfovxcgmob6ptpe56wg.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/c/cb/Logo_Eintracht_Francfort.svg/langfr-250px-Logo_Eintracht_Francfort.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/Logo_Tottenham_Hotspur_Football_Club_2024.svg/langfr-60px-Logo_Tottenham_Hotspur_Football_Club_2024.svg.png",
-        compLogo:COMP, href:"francfort-tottenham.html"
-      },
-      { title:"Pafos - Slavia Prague", banner:"https://empire-sport.world/upload/teambanks/kwqmnxehcgxts5l9n3eelynsgnglaa.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Logo_P%C3%A1fos_FC_2018.svg/langfr-250px-Logo_P%C3%A1fos_FC_2018.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Logo_Slavia_2024.svg/langfr-250px-Logo_Slavia_2024.svg.png",
-        compLogo:COMP, href:"pafos-slavia.html"
-      },
-      { title:"Atlético Madrid - Bodø/Glimt", banner:"https://empire-sport.world/upload/teambanks/nyo5kfaliih9bnm67oco0hzayzqgcm.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/f/fc/Logo_ATM_2024.svg/langfr-250px-Logo_ATM_2024.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/e/e6/Logo_FK_Bod%C3%B8_Glimt.svg/langfr-250px-Logo_FK_Bod%C3%B8_Glimt.svg.png",
-        compLogo:COMP, href:"atletico-bodo.html"
-      },
-      { title:"Manchester City - Galatasaray", banner:"https://empire-sport.world/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
-        aLogo:"https://empire-sport.world/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
-        bLogo:"https://empire-sport.world/upload/teams/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png",
-        compLogo:COMP, href:"city-galatasaray.html"
-      },
-      { title:"PSV - Bayern Munich", banner:"https://empire-sport.world/upload/teambanks/ccvylofwnfqi9yuzpipaj1s7gvnyzq.png",
-        aLogo:"https://empire-sport.world/upload/teams/xck3mu7b4kutfsieubw4zg0wbalzcl.png",
-        bLogo:"https://empire-sport.world/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png",
-        compLogo:COMP, href:"psv-bayern.html"
-      },
-      { title:"Ajax - Olympiacos", banner:"https://empire-sport.world/upload/teambanks/9v0heygcgnew89c0bxihs3duytz8cj.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/c/cf/Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg/langfr-250px-Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/7/75/Logo_Olympiakos_2024.svg/langfr-250px-Logo_Olympiakos_2024.svg.png",
-        compLogo:COMP, href:"ajax-olympiacos.html"
-      },
-      { title:"Union SG - Atalanta", banner:"https://empire-sport.world/upload/teambanks/lkxixr8kvcur12zqjrxb4prhrb5cvv.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/8/87/Logo_Royale_Union_Saint-Gilloise_2025.svg/langfr-250px-Logo_Royale_Union_Saint-Gilloise_2025.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/fr/thumb/f/fd/Logo_Atalanta_Bergame_2024.svg/langfr-250px-Logo_Atalanta_Bergame_2024.svg.png",
-        compLogo:COMP, href:"union-atalanta.html"
-      },
-      { title:"Arsenal - Kairat Almaty", banner:"https://empire-sport.world/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
-        aLogo:"https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
-        bLogo:"https://empire-sport.world/upload/teams/vosxjrkaty3gwuljpayzko5e8o5ce4.png",
-        compLogo:COMP, href:"arsenal-kairat.html"
-      },
-      { title:"Liverpool - Qarabağ", banner:"https://empire-sport.world/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png",
-        aLogo:"https://empire-sport.world/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png",
-        bLogo:"https://empire-sport.world/upload/teams/lltvrfxptcgfdmsa74tbivlygbsh2x.png",
-        compLogo:COMP, href:"liverpool-qarabag.html"
-      },
-      { title:"Barcelona - FC Copenhage", banner:"https://empire-sport.world/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
-        aLogo:"https://empire-sport.world/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
-        bLogo:"https://empire-sport.world/upload/teams/03rfn7h0mge0ymgvalgre79zfaxie2.png",
-        compLogo:COMP, href:"barca-copenhage.html"
-      },
-      { title:"Napoli - Chelsea", banner:"https://empire-sport.world/upload/teambanks/5yl7dl2h27lzgwseu8f5fm3pppav0o.png",
-        aLogo:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/SSC_Napoli_2025_%28white_and_azure%29.svg/250px-SSC_Napoli_2025_%28white_and_azure%29.svg.png",
-        bLogo:"https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/250px-Chelsea_FC.svg.png",
-        compLogo:COMP, href:"napoli-chelsea.html"
-      },
+  // -------- Matches (mets les 19 ici) --------
+  const COMP = "https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png";
 
-      // ✅ MULTIPLEX (19ème)
-      { title:"Multiplex Ligue des Champions", banner:"https://empire-sport.world/upload/cards/multiplex_57.png",
-        aLogo:COMP, bLogo:COMP, compLogo:COMP, href:"multiplex-ldc.html"
-      }
-    ];
+  const MATCHES = [
+    {
+      title: "Club Brugge - Marseille",
+      banner: "https://empire-sport.world/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/d/dc/Logo_Club_Brugge_KV_2024.svg/langfr-250px-Logo_Club_Brugge_KV_2024.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/43/Logo_Olympique_de_Marseille.svg/960px-Logo_Olympique_de_Marseille.svg.png",
+      compLogo: COMP,
+      href: "om-bruges.html"
+    },
+    {
+      title: "Paris SG - Newcastle United",
+      banner: "https://empire-sport.world/upload/banners/lorient-vs-paris-sg.png",
+      aLogo: "https://empire-sport.world/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
+      bLogo: "https://empire-sport.world/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
+      compLogo: COMP,
+      href: "psg-newcastle.html"
+    },
+    {
+      title: "Monaco - Juventus",
+      banner: "https://empire-sport.world/upload/banners/monaco-vs-paris-fc.png",
+      aLogo: "https://empire-sport.world/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
+      bLogo: "https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
+      compLogo: COMP,
+      href: "monaco-juventus.html"
+    },
+    {
+      title: "Benfica - Real Madrid",
+      banner: "https://empire-sport.world/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png",
+      aLogo: "https://empire-sport.world/upload/teams/1gmfrazydu7o6vh1z8rlnrduarisq5.png",
+      bLogo: "https://empire-sport.world/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
+      compLogo: COMP,
+      href: "benfica-real.html"
+    },
+    {
+      title: "Athletic Bilbao - Sporting CP",
+      banner: "https://empire-sport.world/upload/teambanks/bqiawsrwkodj2at1xdt19o8jgx0b8x.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/98/Club_Athletic_Bilbao_logo.svg/250px-Club_Athletic_Bilbao_logo.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/1/12/Logo_Sporting_Clube_Portugal.svg/500px-Logo_Sporting_Clube_Portugal.svg.png?20210916232816",
+      compLogo: COMP,
+      href: "bilbao-sporting.html"
+    },
+    {
+      title: "Borussia Dortmund - Inter Milan",
+      banner: "https://empire-sport.world/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Borussia_Dortmund_logo.svg/960px-Borussia_Dortmund_logo.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/langfr-250px-FC_Internazionale_Milano_2021.svg.png",
+      compLogo: COMP,
+      href: "dortmund-inter.html"
+    },
+    {
+      title: "Bayer Leverkusen - Villarreal",
+      banner: "https://empire-sport.world/upload/teambanks/5viledxfbigfantrouxxhk0bebau4i.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/4/4a/Bayer_04_Leverkusen_%28logo%29.svg/langfr-250px-Bayer_04_Leverkusen_%28logo%29.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/5/5d/Logo_Villarreal_CF_2009.svg/langfr-250px-Logo_Villarreal_CF_2009.svg.png",
+      compLogo: COMP,
+      href: "leverkusen-villarreal.html"
+    },
+    {
+      title: "Eintracht Frankfurt - Tottenham Hotspur",
+      banner: "https://empire-sport.world/upload/teambanks/qefmysjbg5qcfovxcgmob6ptpe56wg.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cb/Logo_Eintracht_Francfort.svg/langfr-250px-Logo_Eintracht_Francfort.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/7b/Logo_Tottenham_Hotspur_Football_Club_2024.svg/langfr-60px-Logo_Tottenham_Hotspur_Football_Club_2024.svg.png",
+      compLogo: COMP,
+      href: "francfort-tottenham.html"
+    },
+    {
+      title: "Pafos - Slavia Prague",
+      banner: "https://empire-sport.world/upload/teambanks/kwqmnxehcgxts5l9n3eelynsgnglaa.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Logo_P%C3%A1fos_FC_2018.svg/langfr-250px-Logo_P%C3%A1fos_FC_2018.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/0/00/Logo_Slavia_2024.svg/langfr-250px-Logo_Slavia_2024.svg.png",
+      compLogo: COMP,
+      href: "pafos-slavia.html"
+    },
+    {
+      title: "Atlético Madrid - Bodø/Glimt",
+      banner: "https://empire-sport.world/upload/teambanks/nyo5kfaliih9bnm67oco0hzayzqgcm.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fc/Logo_ATM_2024.svg/langfr-250px-Logo_ATM_2024.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/e/e6/Logo_FK_Bod%C3%B8_Glimt.svg/langfr-250px-Logo_FK_Bod%C3%B8_Glimt.svg.png",
+      compLogo: COMP,
+      href: "atletico-bodo.html"
+    },
+    {
+      title: "Manchester City - Galatasaray",
+      banner: "https://empire-sport.world/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
+      aLogo: "https://empire-sport.world/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
+      bLogo: "https://empire-sport.world/upload/teams/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png",
+      compLogo: COMP,
+      href: "city-galatasaray.html"
+    },
+    {
+      title: "PSV Eindhoven - Bayern Munich",
+      banner: "https://empire-sport.world/upload/teambanks/ccvylofwnfqi9yuzpipaj1s7gvnyzq.png",
+      aLogo: "https://empire-sport.world/upload/teams/xck3mu7b4kutfsieubw4zg0wbalzcl.png",
+      bLogo: "https://empire-sport.world/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png",
+      compLogo: COMP,
+      href: "psv-bayern.html"
+    },
+    {
+      title: "Ajax - Olympiacos",
+      banner: "https://empire-sport.world/upload/teambanks/9v0heygcgnew89c0bxihs3duytz8cj.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/c/cf/Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg/langfr-250px-Ajax_Amsterdam_1928-1991%E2%80%942025_Logo.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/7/75/Logo_Olympiakos_2024.svg/langfr-250px-Logo_Olympiakos_2024.svg.png",
+      compLogo: COMP,
+      href: "ajax-olympiacos.html"
+    },
+    {
+      title: "Union Saint-Gilloise - Atalanta",
+      banner: "https://empire-sport.world/upload/teambanks/lkxixr8kvcur12zqjrxb4prhrb5cvv.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/8/87/Logo_Royale_Union_Saint-Gilloise_2025.svg/langfr-250px-Logo_Royale_Union_Saint-Gilloise_2025.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/f/fd/Logo_Atalanta_Bergame_2024.svg/langfr-250px-Logo_Atalanta_Bergame_2024.svg.png",
+      compLogo: COMP,
+      href: "union-atalanta.html"
+    },
+    {
+      title: "Arsenal - Kairat Almaty",
+      banner: "https://empire-sport.world/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
+      aLogo: "https://empire-sport.world/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
+      bLogo: "https://empire-sport.world/upload/teams/vosxjrkaty3gwuljpayzko5e8o5ce4.png",
+      compLogo: COMP,
+      href: "arsenal-kairat.html"
+    },
+    {
+      title: "Liverpool - Qarabağ",
+      banner: "https://empire-sport.world/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png",
+      aLogo: "https://empire-sport.world/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png",
+      bLogo: "https://empire-sport.world/upload/teams/lltvrfxptcgfdmsa74tbivlygbsh2x.png",
+      compLogo: COMP,
+      href: "liverpool-qarabag.html"
+    },
+    {
+      title: "Barcelona - FC Copenhage",
+      banner: "https://empire-sport.world/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
+      aLogo: "https://empire-sport.world/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
+      bLogo: "https://empire-sport.world/upload/teams/03rfn7h0mge0ymgvalgre79zfaxie2.png",
+      compLogo: COMP,
+      href: "barca-copenhage.html"
+    },
+    {
+      title: "Napoli - Chelsea",
+      banner: "https://empire-sport.world/upload/teambanks/5yl7dl2h27lzgwseu8f5fm3pppav0o.png",
+      aLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/SSC_Napoli_2025_%28white_and_azure%29.svg/250px-SSC_Napoli_2025_%28white_and_azure%29.svg.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/cc/Chelsea_FC.svg/250px-Chelsea_FC.svg.png",
+      compLogo: COMP,
+      href: "napoli-chelsea.html"
+    },
+    {
+      title: "Multiplex Ligue des Champions",
+      banner: "https://empire-sport.world/upload/cards/multiplex_57.png",
+      aLogo: COMP,
+      bLogo: COMP,
+      compLogo: COMP,
+      href: "multiplex-ldc.html"
+    }
+  ];
 
-    const grid = document.getElementById("grid");
-
-    function cardHTML(m, i){
-      const delay = Math.min(i * 55, 800);
-      return `
-        <article class="match-card hover-lift reveal" style="animation-delay:${delay}ms">
-          <div class="match-bg" style="background-image:url('${m.banner}');"></div>
+  function cardHTML(m){
+    return `
+      <a href="${m.href}" class="block">
+        <article class="match-card">
+          <div class="match-bg" style="background-image:url('${m.banner}')"></div>
           <div class="match-overlay"></div>
 
-          <!-- TIMER -->
           <div class="absolute left-3 top-3">
-            <span class="timer-pill" data-timer>
+            <span class="timer-pill">
               <span class="timer-dot"></span>
-              <span class="timer-text">--</span>
+              <span class="timer-text" data-timer>--</span>
             </span>
           </div>
 
-          <!-- ✅ SUPERPOSITION CLEAN (pas de grosse étiquette) -->
-          <div class="absolute left-5 bottom-5 right-5 flex items-end justify-between gap-4">
+          <div class="absolute inset-x-0 bottom-0 p-4">
+            <div class="flex items-end justify-between gap-4">
+              <div class="min-w-0 max-w-[72%]">
+                <div class="flex items-center gap-2">
+                  <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
+                  <span class="vs">VS</span>
+                  <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
+                </div>
 
-            <div class="flex flex-col gap-2 max-w-[70%]">
-              <div class="flex items-center gap-2">
-                <img src="${m.aLogo}" class="w-7 h-7 object-contain" alt="">
-                <span class="text-white/70 text-xs font-bold">VS</span>
-                <img src="${m.bLogo}" class="w-7 h-7 object-contain" alt="">
+                <div class="mt-2 flex items-center gap-2">
+                  <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
+                  <div class="min-w-0">
+                    <div class="match-title truncate">${m.title}</div>
+                    <div class="match-sub">Aujourd’hui · 21:00</div>
+                  </div>
+                </div>
               </div>
 
-              <div class="text-[15px] font-medium leading-tight text-white/90 truncate">
-                ${m.title}
-              </div>
-
-              <div class="flex items-center gap-2 text-xs text-white/60 font-semibold">
-                <img src="${m.compLogo}" class="w-5 h-5 object-contain" alt="">
-                Aujourd’hui
-              </div>
-            </div>
-
-            <a href="${m.href}" class="watch-pill" target="_blank" rel="noopener">
-              <span class="play">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                  <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
-                </svg>
+              <span class="watch-pill">
+                <span class="play">
+                  <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
+                  </svg>
+                </span>
+                REGARDER
               </span>
-              REGARDER
-            </a>
+            </div>
           </div>
-
         </article>
-      `;
-    }
+      </a>
+    `;
+  }
 
-    grid.innerHTML = matches.map(cardHTML).join("");
+  function render(){
+    const el = document.getElementById('stream-list-principal');
+    if(!el) return;
+    el.innerHTML = MATCHES.map(cardHTML).join('');
+  }
 
-    // TIMER
-    function formatRemaining(ms){
-      if(ms <= 0) return "00h 00m 00s";
-      const total = Math.floor(ms / 1000);
-      const h = Math.floor(total / 3600);
-      const m = Math.floor((total % 3600) / 60);
-      const s = total % 60;
-      const pad = (n) => String(n).padStart(2,"0");
-      return `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
-    }
+  function tick(){
+    const diff = getTarget21().getTime() - Date.now();
+    const txt = formatRemaining(diff);
+    document.querySelectorAll('[data-timer]').forEach(n => n.textContent = txt);
+  }
 
-    const timerEls = Array.from(document.querySelectorAll("[data-timer] .timer-text"));
+  // refresh button
+  document.getElementById('refreshBtn')?.addEventListener('click', () => {
+    NProgress.start();
+    render();
+    setTimeout(() => NProgress.done(), 350);
+  });
 
-    function tick(){
-      const target = getTargetToday21();
-      const now = new Date();
-      const diff = target.getTime() - now.getTime();
-      const txt = formatRemaining(diff);
-      timerEls.forEach(el => el.textContent = txt);
-    }
-    tick();
-    setInterval(tick, 1000);
-  </script>
+  render();
+  tick();
+  setInterval(tick, 1000);
+</script>
+
 </body>
 </html>
+
