@@ -26,6 +26,9 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+  <!-- ✅ AJOUT ICONES (seule modif HEAD) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
   <style>
     #nprogress .bar { top: 64px !important; }
     #nprogress .spinner { top: 75px !important; }
@@ -199,21 +202,24 @@
         </a>
       </div>
 
+      <!-- ✅ ICONE TELEGRAM (seule modif ici) -->
       <div class="relative hidden md:flex group">
         <a id="nav-btn-telegram" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <span class="text-sm font-bold">TG</span>
+          <i class="fa-brands fa-telegram text-lg"></i>
         </a>
       </div>
 
+      <!-- ✅ ICONE DISCORD -->
       <div class="relative hidden md:flex group">
         <a id="nav-btn-discord" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <span class="text-sm font-bold">DC</span>
+          <i class="fa-brands fa-discord text-lg"></i>
         </a>
       </div>
 
+      <!-- ✅ ICONE X -->
       <div class="relative hidden md:flex group">
         <a id="nav-btn-twitter" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <span class="text-sm font-bold">X</span>
+          <i class="fa-brands fa-x-twitter text-lg"></i>
         </a>
       </div>
 
@@ -236,9 +242,29 @@
     </div>
 
     <div class="w-full mt-8">
-      <a id="side-btn-telegram" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Telegram</a>
-      <a id="side-btn-discord" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Discord</a>
-      <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">X</a>
+      <!-- ✅ ICONE TELEGRAM (classes inchangées) -->
+      <a id="side-btn-telegram" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
+        <span class="inline-flex items-center gap-2">
+          <i class="fa-brands fa-telegram"></i>
+          Telegram
+        </span>
+      </a>
+
+      <!-- ✅ ICONE DISCORD -->
+      <a id="side-btn-discord" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
+        <span class="inline-flex items-center gap-2">
+          <i class="fa-brands fa-discord"></i>
+          Discord
+        </span>
+      </a>
+
+      <!-- ✅ ICONE X -->
+      <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
+        <span class="inline-flex items-center gap-2">
+          <i class="fa-brands fa-x-twitter"></i>
+          X
+        </span>
+      </a>
     </div>
   </div>
 
