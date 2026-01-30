@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="referrer" content="no-referrer-when-downgrade"/>
 
   <!-- (optionnel) -->
@@ -25,9 +25,6 @@
   <link href="https://cdn.jsdelivr.net/npm/nprogress/nprogress.css" rel="stylesheet">
 
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <!-- ✅ ICONES -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
     #nprogress .bar { top: 64px !important; }
@@ -98,6 +95,10 @@
     .timer-dot{
       width:8px;height:8px;border-radius:999px;background:#f59e0b;
       box-shadow:0 0 0 3px rgba(245,158,11,.12);
+    }
+    .timer-dot.live{
+      background:#22c55e;
+      box-shadow:0 0 0 3px rgba(34,197,94,.14);
     }
     .timer-text{ font-variant-numeric: tabular-nums; }
 
@@ -193,7 +194,6 @@
     </button>
 
     <div class="h-11 flex items-center gap-2 md:gap-5 text-xl">
-
       <div class="relative flex group">
         <a href="/shop" class="w-auto h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
           <div class="flex items-center gap-2">
@@ -202,31 +202,40 @@
         </a>
       </div>
 
+      <!-- Telegram -->
       <div class="relative hidden md:flex group">
         <a id="nav-btn-telegram" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <i class="fa-brands fa-telegram text-lg"></i>
+          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor" aria-label="Telegram">
+            <path d="M9.04 15.55l-.38 5.33c.54 0 .78-.23 1.07-.51l2.57-2.46 5.32 3.89c.97.54 1.66.26 1.9-.9l3.45-16.18c.31-1.43-.52-1.99-1.45-1.64L1.2 10.26c-1.38.54-1.36 1.31-.25 1.65l5.66 1.77L19.7 5.9c.62-.37 1.18-.17.72.2"/>
+          </svg>
         </a>
       </div>
 
+      <!-- Discord -->
       <div class="relative hidden md:flex group">
         <a id="nav-btn-discord" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <i class="fa-brands fa-discord text-lg"></i>
+          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor" aria-label="Discord">
+            <path d="M20.3 4.6A16.6 16.6 0 0 0 16.2 3c-.2.4-.4.9-.6 1.3a15.1 15.1 0 0 0-7.2 0c-.2-.5-.4-1-.6-1.3A16.6 16.6 0 0 0 3.7 4.6C1.2 8.2.5 11.7.8 15.2a16.8 16.8 0 0 0 5.1 2.6c.4-.6.8-1.2 1.1-1.9-.6-.2-1.2-.5-1.7-.9l.4-.3c3.3 1.5 6.9 1.5 10.2 0l.4.3c-.6.4-1.1.7-1.7.9.3.7.7 1.3 1.1 1.9a16.8 16.8 0 0 0 5.1-2.6c.4-4.1-.7-7.6-2.7-10.6ZM8.6 13.7c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.8 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/>
+          </svg>
         </a>
       </div>
 
+      <!-- X -->
       <div class="relative hidden md:flex group">
         <a id="nav-btn-twitter" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <i class="fa-brands fa-x-twitter text-lg"></i>
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" aria-label="X">
+            <path d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.9-6.4L6.3 22H2l7.3-8.4L1 2h6.4l4.4 5.7L18.9 2Zm-1.1 18h1.7L6.4 3.9H4.6"/>
+          </svg>
         </a>
       </div>
 
+      <!-- Theme -->
       <div class="relative flex group">
         <button id="theme-toggle" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200 group overflow-hidden">
           <span id="icon-sun" class="text-sm font-bold absolute opacity-0 scale-50 -rotate-90 transition-all duration-300 ease-out dark:opacity-100 dark:scale-100 dark:rotate-0">☀</span>
           <span id="icon-moon" class="text-sm font-bold absolute opacity-100 scale-100 rotate-0 transition-all duration-300 ease-out dark:opacity-0 dark:scale-50 dark:rotate-90">🌙</span>
         </button>
       </div>
-
     </div>
   </div>
 </nav>
@@ -239,18 +248,11 @@
     </div>
 
     <div class="w-full mt-8">
-      <a id="side-btn-telegram" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-        <span class="inline-flex items-center gap-2"><i class="fa-brands fa-telegram"></i> Telegram</span>
-      </a>
-      <a id="side-btn-discord" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-        <span class="inline-flex items-center gap-2"><i class="fa-brands fa-discord"></i> Discord</span>
-      </a>
-      <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-        <span class="inline-flex items-center gap-2"><i class="fa-brands fa-x-twitter"></i> X</span>
-      </a>
+      <a id="side-btn-telegram" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Telegram</a>
+      <a id="side-btn-discord" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Discord</a>
+      <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">X</a>
     </div>
   </div>
-
   <div class="text-center text-sm text-zinc-500">Made with ❤️</div>
 </aside>
 
@@ -266,14 +268,10 @@
           <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Streams principaux</h2>
         </div>
 
-        <button type="button" id="refreshBtn" class="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black transition-all duration-200 active:scale-95 shadow-md">
-          ↻
-        </button>
+        <button type="button" id="refreshBtn" class="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black transition-all duration-200 active:scale-95 shadow-md">↻</button>
       </div>
 
-      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <!-- rempli en JS -->
-      </div>
+      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
     </section>
 
     <!-- STREAMS BACKUPS -->
@@ -305,7 +303,6 @@
   <a class="hidden md:block text-gray-600 dark:text-zinc-400 text-xs mt-3">Made with ❤️</a>
 </footer>
 
-<!-- SCRIPT -->
 <script>
   // -------- Sidebar toggle --------
   const burgerBtn = document.getElementById('burgerBtn');
@@ -315,9 +312,6 @@
   burgerBtn?.addEventListener('click', () => {
     const isClosed = sidebar.classList.contains('-translate-x-full');
     isClosed ? openSidebar() : closeSidebar();
-  });
-  sidebar?.addEventListener('click', (e) => {
-    if(e.target === sidebar) closeSidebar();
   });
 
   // -------- Theme toggle --------
@@ -336,17 +330,36 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // -------- Timer vers 21:00 (aujourd’hui; si passé -> demain) --------
-  function getTarget21(){
-    const now = new Date();
-    const t = new Date(now);
-    t.setHours(21,0,0,0);
-    if(now.getTime() > t.getTime()){
-      t.setDate(t.getDate() + 1);
-      t.setHours(21,0,0,0);
-    }
-    return t;
+  // ✅ Timer: compte à rebours vers 21:00
+  // - Quand c'est fini -> "EN COURS" (vert)
+  // - Après 2h30 de live -> on repart sur le prochain 21:00 (donc le timer "recommence à zéro")
+  const LIVE_WINDOW_MS = 2.5 * 60 * 60 * 1000; // 2h30
+
+  function getStart21(baseDate){
+    const d = new Date(baseDate);
+    d.setHours(21,0,0,0);
+    return d;
   }
+
+  function getState(now){
+    // start = aujourd'hui 21:00
+    let start = getStart21(now);
+
+    // si on est après (start + 2h30), on vise demain 21:00 (reset)
+    if (now.getTime() >= start.getTime() + LIVE_WINDOW_MS) {
+      start.setDate(start.getDate() + 1);
+      start.setHours(21,0,0,0);
+    }
+
+    // si on est avant le start: countdown
+    if (now.getTime() < start.getTime()) {
+      return { mode: "countdown", start };
+    }
+
+    // sinon on est dans la fenêtre live (start -> start+2h30)
+    return { mode: "live", start };
+  }
+
   function formatRemaining(ms){
     if(ms <= 0) return "00h 00m 00s";
     const total = Math.floor(ms / 1000);
@@ -357,43 +370,28 @@
     return `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
   }
 
-  // ✅ MATCHES (4)
-  const EUROPA = "https://empire-sport.world/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png";
-
+  // -------- Matches (juste 2) --------
   const MATCHES = [
     {
       title: "Lens - Le Havre",
       banner: "https://empire-sport.world/upload/banners/lens-vs-lorient.png",
       aLogo: "https://empire-sport.world/upload/teams/qgwro2iyxo1vba0bcib2q1yddk3fxr.png",
       bLogo: "https://empire-sport.world/upload/teams/poyamdm2uaxrxrbgqmfpm1dr1meyon.png",
-      compLogo: EUROPA,
+      compLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png",
       href: "lens-lehavre.html"
     },
     {
-      title: "Multiplex",
-      banner: "https://empire-sport.world/upload/teambanks/ylteydywkmrc0skuw5qggtgqaoywpu.png",
-      aLogo: "https://empire-sport.world/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png",
-      bLogo: "https://empire-sport.world/upload/teams/igthdfuwzh8ka5po5fsg12obu7iqt0.png",
-      compLogo: EUROPA,
-      href: "lyon-paok.html"
-    },
-    {
-      title: "Ludogorets Razgrad - Nice",
-      banner: "https://empire-sport.world/upload/teambanks/xdw129cqkykdkilusvwbye88zf4j2d.png",
-      aLogo: "https://empire-sport.world/upload/teams/tv5wbmyggfiq7kmb7ttaufy6jjbvm3.png",
-      bLogo: "https://empire-sport.world/upload/teams/jhe4floxvwpovm1mexcuq4jnzrhwnp.png",
-      compLogo: EUROPA,
-      href: "razgrad-nice.html"
-    },
-    {
-      title: "Multiplex Ligue 2 ",
-      banner: "https://empire-sport.world/upload/cards/multiplex_58.png",
+      title: "Multiplex Ligue 2",
+      banner: "https://empire-sport.world/upload/cards/multiplex_59.png",
+      // ✅ pas de logos équipe ici
       compLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/3/38/Logo_Ligue_2_BKT_2024.svg/500px-Logo_Ligue_2_BKT_2024.svg.png?20240530043909",
       href: "multiplex-L2.html"
     }
   ];
 
   function cardHTML(m){
+    const hasTeams = !!(m.aLogo && m.bLogo);
+
     return `
       <a href="${m.href}" class="block">
         <article class="match-card">
@@ -401,8 +399,8 @@
           <div class="match-overlay"></div>
 
           <div class="absolute left-3 top-3">
-            <span class="timer-pill">
-              <span class="timer-dot"></span>
+            <span class="timer-pill" data-pill>
+              <span class="timer-dot" data-dot></span>
               <span class="timer-text" data-timer>--</span>
             </span>
           </div>
@@ -410,11 +408,17 @@
           <div class="absolute inset-x-0 bottom-0 p-4">
             <div class="flex items-end justify-between gap-4">
               <div class="min-w-0 max-w-[72%]">
-                <div class="flex items-center gap-2">
-                  <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
-                  <span class="vs">VS</span>
-                  <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
-                </div>
+                ${
+                  hasTeams
+                    ? `
+                      <div class="flex items-center gap-2">
+                        <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
+                        <span class="vs">VS</span>
+                        <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
+                      </div>
+                    `
+                    : ``
+                }
 
                 <div class="mt-2 flex items-center gap-2">
                   <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
@@ -447,9 +451,19 @@
   }
 
   function tick(){
-    const diff = getTarget21().getTime() - Date.now();
-    const txt = formatRemaining(diff);
-    document.querySelectorAll('[data-timer]').forEach(n => n.textContent = txt);
+    const now = new Date();
+    const state = getState(now);
+
+    if(state.mode === "countdown"){
+      const diff = state.start.getTime() - now.getTime();
+      const txt = formatRemaining(diff);
+      document.querySelectorAll('[data-timer]').forEach(n => n.textContent = txt);
+      document.querySelectorAll('[data-dot]').forEach(d => d.classList.remove('live'));
+    } else {
+      // LIVE
+      document.querySelectorAll('[data-timer]').forEach(n => n.textContent = "EN COURS");
+      document.querySelectorAll('[data-dot]').forEach(d => d.classList.add('live'));
+    }
   }
 
   // refresh button
@@ -466,4 +480,3 @@
 
 </body>
 </html>
-
