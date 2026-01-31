@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer-when-downgrade"/>
 
   <!-- (optionnel) -->
@@ -96,10 +96,6 @@
       width:8px;height:8px;border-radius:999px;background:#f59e0b;
       box-shadow:0 0 0 3px rgba(245,158,11,.12);
     }
-    .timer-dot.live{
-      background:#22c55e;
-      box-shadow:0 0 0 3px rgba(34,197,94,.14);
-    }
     .timer-text{ font-variant-numeric: tabular-nums; }
 
     .team-logo{
@@ -139,11 +135,12 @@
     }
     .match-sub{
       font-size:12px;
-      font-weight:600;
+      font-weight:700;
       color: rgba(255,255,255,.70);
       line-height:1.25;
     }
 
+    /* bouton regarder plus petit */
     .watch-pill{
       border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
@@ -151,18 +148,18 @@
       backdrop-filter: blur(10px);
       color:#fff;
       font-weight:800;
-      font-size:13px;
-      padding:.60rem .90rem;
+      font-size:12px;
+      padding:.48rem .70rem; /* + petit */
       display:inline-flex;
       align-items:center;
-      gap:.55rem;
+      gap:.45rem;
       transition: transform .15s ease, background .15s ease;
       white-space: nowrap;
     }
     .watch-pill:hover{ background: rgba(255,255,255,.14); }
     .watch-pill:active{ transform: scale(.98); }
     .play{
-      width:32px;height:32px;border-radius:999px;
+      width:28px;height:28px;border-radius:999px; /* + petit */
       border:1px solid rgba(255,255,255,.16);
       display:grid; place-items:center;
       background: rgba(0,0,0,.20);
@@ -171,7 +168,8 @@
     @media (max-width: 640px){
       .team-logo{ width:28px; height:28px; }
       .match-title{ font-size:14px; }
-      .watch-pill{ font-size:12px; padding:.55rem .80rem; }
+      .watch-pill{ font-size:12px; padding:.50rem .72rem; }
+      .play{ width:28px; height:28px; }
     }
   </style>
 </head>
@@ -194,6 +192,7 @@
     </button>
 
     <div class="h-11 flex items-center gap-2 md:gap-5 text-xl">
+
       <div class="relative flex group">
         <a href="/shop" class="w-auto h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
           <div class="flex items-center gap-2">
@@ -202,40 +201,48 @@
         </a>
       </div>
 
-      <!-- Telegram -->
       <div class="relative hidden md:flex group">
-        <a id="nav-btn-telegram" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor" aria-label="Telegram">
-            <path d="M9.04 15.55l-.38 5.33c.54 0 .78-.23 1.07-.51l2.57-2.46 5.32 3.89c.97.54 1.66.26 1.9-.9l3.45-16.18c.31-1.43-.52-1.99-1.45-1.64L1.2 10.26c-1.38.54-1.36 1.31-.25 1.65l5.66 1.77L19.7 5.9c.62-.37 1.18-.17.72.2"/>
+        <a id="nav-btn-telegram" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200" aria-label="Telegram">
+          <!-- Telegram icon -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M21.9 4.6c.3-1.2-1-2.2-2.1-1.7L2.9 10.2c-1.3.6-1.2 2.4.2 2.8l4.6 1.4 1.7 5.2c.4 1.2 1.9 1.6 2.8.8l2.6-2.3 4.8 3.5c1 .7 2.4.2 2.7-1l3.6-16.5zM8.4 13.7l10.6-6.6-8.3 7.9-.3 3.6-1.7-5.2-.3-.1z"/>
           </svg>
         </a>
       </div>
 
-      <!-- Discord -->
       <div class="relative hidden md:flex group">
-        <a id="nav-btn-discord" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor" aria-label="Discord">
-            <path d="M20.3 4.6A16.6 16.6 0 0 0 16.2 3c-.2.4-.4.9-.6 1.3a15.1 15.1 0 0 0-7.2 0c-.2-.5-.4-1-.6-1.3A16.6 16.6 0 0 0 3.7 4.6C1.2 8.2.5 11.7.8 15.2a16.8 16.8 0 0 0 5.1 2.6c.4-.6.8-1.2 1.1-1.9-.6-.2-1.2-.5-1.7-.9l.4-.3c3.3 1.5 6.9 1.5 10.2 0l.4.3c-.6.4-1.1.7-1.7.9.3.7.7 1.3 1.1 1.9a16.8 16.8 0 0 0 5.1-2.6c.4-4.1-.7-7.6-2.7-10.6ZM8.6 13.7c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.8 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/>
+        <a id="nav-btn-discord" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200" aria-label="Discord">
+          <!-- Discord icon -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M19.5 5.2A16.6 16.6 0 0 0 15.6 4l-.2.4a13.7 13.7 0 0 1 3.1 1.2c-2.6-1.2-5.3-1.2-7.9 0A13.7 13.7 0 0 1 13.7 4l-.2-.4a16.6 16.6 0 0 0-3.9 1.2C7.2 7.6 6.3 10.3 6.5 13c1.5 1.1 3 1.8 4.6 2.3l.6-2a5.6 5.6 0 0 1-1.5-.7l.3-.3c1.8.8 3.7 1 5.5 0l.3.3c-.5.3-1 .5-1.5.7l.6 2c1.6-.5 3.1-1.2 4.6-2.3.3-2.7-.6-5.4-2.7-7.8ZM10 12.3c-.6 0-1.1-.6-1.1-1.3S9.4 9.7 10 9.7s1.1.6 1.1 1.3S10.6 12.3 10 12.3Zm4 0c-.6 0-1.1-.6-1.1-1.3S13.4 9.7 14 9.7s1.1.6 1.1 1.3S14.6 12.3 14 12.3Z"/>
           </svg>
         </a>
       </div>
 
-      <!-- X -->
       <div class="relative hidden md:flex group">
-        <a id="nav-btn-twitter" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" aria-label="X">
-            <path d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.9-6.4L6.3 22H2l7.3-8.4L1 2h6.4l4.4 5.7L18.9 2Zm-1.1 18h1.7L6.4 3.9H4.6"/>
+        <a id="nav-btn-twitter" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200" aria-label="X">
+          <!-- X icon -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.9 2H22l-6.8 7.8L23.2 22H16l-5.6-7.3L4 22H1l7.3-8.4L.8 2H8l5 6.6L18.9 2Zm-1.2 18h1.7L7.1 4H5.3l12.4 16Z"/>
           </svg>
         </a>
       </div>
 
-      <!-- Theme -->
       <div class="relative flex group">
-        <button id="theme-toggle" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200 group overflow-hidden">
-          <span id="icon-sun" class="text-sm font-bold absolute opacity-0 scale-50 -rotate-90 transition-all duration-300 ease-out dark:opacity-100 dark:scale-100 dark:rotate-0">☀</span>
-          <span id="icon-moon" class="text-sm font-bold absolute opacity-100 scale-100 rotate-0 transition-all duration-300 ease-out dark:opacity-0 dark:scale-50 dark:rotate-90">🌙</span>
+        <button id="theme-toggle" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200 group overflow-hidden" aria-label="Thème">
+          <!-- sun -->
+          <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               class="w-6 h-6 absolute opacity-0 scale-50 -rotate-90 transition-all duration-300 ease-out dark:opacity-100 dark:scale-100 dark:rotate-0" fill="currentColor">
+            <path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-14a1 1 0 0 1 1-1h0a1 1 0 0 1 0 2h0a1 1 0 0 1-1-1Zm0 18a1 1 0 0 1 1-1h0a1 1 0 0 1 0 2h0a1 1 0 0 1-1-1ZM4 13a1 1 0 0 1-1-1h0a1 1 0 0 1 2 0h0a1 1 0 0 1-1 1Zm18 0a1 1 0 0 1-1-1h0a1 1 0 0 1 2 0h0a1 1 0 0 1-1 1ZM6.3 7.7a1 1 0 0 1-1.4 0h0a1 1 0 1 1 1.4-1.4h0a1 1 0 0 1 0 1.4Zm12.2 12.2a1 1 0 0 1-1.4 0h0a1 1 0 1 1 1.4-1.4h0a1 1 0 0 1 0 1.4ZM17.7 7.7a1 1 0 0 1 0-1.4h0a1 1 0 1 1 1.4 1.4h0a1 1 0 0 1-1.4 0ZM5.1 19.9a1 1 0 0 1 0-1.4h0a1 1 0 1 1 1.4 1.4h0a1 1 0 0 1-1.4 0Z"/>
+          </svg>
+          <!-- moon -->
+          <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               class="w-6 h-6 absolute opacity-100 scale-100 rotate-0 transition-all duration-300 ease-out dark:opacity-0 dark:scale-50 dark:rotate-90" fill="currentColor">
+            <path d="M21 12.8A8.5 8.5 0 0 1 11.2 3 7 7 0 1 0 21 12.8Z"/>
+          </svg>
         </button>
       </div>
+
     </div>
   </div>
 </nav>
@@ -253,6 +260,7 @@
       <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">X</a>
     </div>
   </div>
+
   <div class="text-center text-sm text-zinc-500">Made with ❤️</div>
 </aside>
 
@@ -268,13 +276,17 @@
           <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Streams principaux</h2>
         </div>
 
-        <button type="button" id="refreshBtn" class="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black transition-all duration-200 active:scale-95 shadow-md">↻</button>
+        <button type="button" id="refreshBtn" class="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black transition-all duration-200 active:scale-95 shadow-md" aria-label="Rafraîchir">
+          ↻
+        </button>
       </div>
 
-      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <!-- rempli en JS -->
+      </div>
     </section>
 
-    <!-- STREAMS BACKUPS -->
+    <!-- STREAMS BACKUPS (vide / placeholder) -->
     <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-3 h-3 rounded-full bg-zinc-500"></div>
@@ -292,17 +304,9 @@
   </div>
 </div>
 
-<!-- FOOTER -->
-<footer class="footer flex flex-col items-center justify-center w-full transition-all duration-300 ease-out bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-700 p-5">
-  <div class="flex flex-wrap justify-center gap-4 text-gray-600 dark:text-zinc-400 text-xs">
-    <a href="/legal/mentions" target="_blank" class="hover:underline hover:text-zinc-900 dark:hover:text-white transition">Mentions légales</a>
-    <a href="/legal/cgu" target="_blank" class="hover:underline hover:text-zinc-900 dark:hover:text-white transition">CGU</a>
-    <a href="/legal/confidentialite" target="_blank" class="hover:underline hover:text-zinc-900 dark:hover:text-white transition">Confidentialité</a>
-    <a href="/legal/dmca" target="_blank" class="hover:underline hover:text-zinc-900 dark:hover:text-white transition">DMCA</a>
-  </div>
-  <a class="hidden md:block text-gray-600 dark:text-zinc-400 text-xs mt-3">Made with ❤️</a>
-</footer>
+<!-- FOOTER SUPPRIMÉ (comme tu as demandé) -->
 
+<!-- SCRIPT -->
 <script>
   // -------- Sidebar toggle --------
   const burgerBtn = document.getElementById('burgerBtn');
@@ -312,6 +316,9 @@
   burgerBtn?.addEventListener('click', () => {
     const isClosed = sidebar.classList.contains('-translate-x-full');
     isClosed ? openSidebar() : closeSidebar();
+  });
+  sidebar?.addEventListener('click', (e) => {
+    if(e.target === sidebar) closeSidebar();
   });
 
   // -------- Theme toggle --------
@@ -330,68 +337,105 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // ✅ Timer: compte à rebours vers 21:00
-  // - Quand c'est fini -> "EN COURS" (vert)
-  // - Après 2h30 de live -> on repart sur le prochain 21:00 (donc le timer "recommence à zéro")
-  const LIVE_WINDOW_MS = 2.5 * 60 * 60 * 1000; // 2h30
-
-  function getStart21(baseDate){
-    const d = new Date(baseDate);
-    d.setHours(21,0,0,0);
-    return d;
+  // -------- Helpers time --------
+  function parseHHMM(str){
+    // accepte "14h", "15h00", "17:15", "20h45", "17h30"
+    let s = String(str).trim().toLowerCase();
+    s = s.replace(' ', '');
+    if(s.includes('h')){
+      const [h, m] = s.split('h');
+      return { h: parseInt(h,10), m: parseInt(m || "0",10) || 0 };
+    }
+    if(s.includes(':')){
+      const [h, m] = s.split(':');
+      return { h: parseInt(h,10), m: parseInt(m,10) || 0 };
+    }
+    // fallback
+    return { h: 21, m: 0 };
   }
 
-  function getState(now){
-    // start = aujourd'hui 21:00
-    let start = getStart21(now);
-
-    // si on est après (start + 2h30), on vise demain 21:00 (reset)
-    if (now.getTime() >= start.getTime() + LIVE_WINDOW_MS) {
-      start.setDate(start.getDate() + 1);
-      start.setHours(21,0,0,0);
+  function getTargetTodayOrTomorrow(h, m){
+    const now = new Date();
+    const t = new Date(now);
+    t.setHours(h, m, 0, 0);
+    if(now.getTime() > t.getTime()){
+      t.setDate(t.getDate() + 1);
+      t.setHours(h, m, 0, 0);
     }
-
-    // si on est avant le start: countdown
-    if (now.getTime() < start.getTime()) {
-      return { mode: "countdown", start };
-    }
-
-    // sinon on est dans la fenêtre live (start -> start+2h30)
-    return { mode: "live", start };
+    return t;
   }
+
+  function pad2(n){ return String(n).padStart(2,"0"); }
 
   function formatRemaining(ms){
     if(ms <= 0) return "00h 00m 00s";
     const total = Math.floor(ms / 1000);
-    const h = Math.floor(total / 3600);
-    const m = Math.floor((total % 3600) / 60);
-    const s = total % 60;
-    const pad = (n) => String(n).padStart(2,"0");
-    return `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
+    const hh = Math.floor(total / 3600);
+    const mm = Math.floor((total % 3600) / 60);
+    const ss = total % 60;
+    return `${pad2(hh)}h ${pad2(mm)}m ${pad2(ss)}s`;
   }
 
-  // -------- Matches (juste 2) --------
+  // -------- Matches --------
   const MATCHES = [
     {
-      title: "Lens - Le Havre",
-      banner: "https://empire-sport.world/upload/banners/lens-vs-lorient.png",
-      aLogo: "https://empire-sport.world/upload/teams/qgwro2iyxo1vba0bcib2q1yddk3fxr.png",
-      bLogo: "https://empire-sport.world/upload/teams/poyamdm2uaxrxrbgqmfpm1dr1meyon.png",
-      compLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/archive/d/d9/20240912231715%21Logo_Ligue_1_2024.svg/120px-Logo_Ligue_1_2024.svg.png",
-      href: "lens-lehavre.html"
+      title: "Real Madrid - Rayo Vallecano",
+      time: "14h",
+      banner: "https://empire-sport.online/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png",
+      aLogo: "https://empire-sport.online/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
+      bLogo: "https://empire-sport.online/upload/teams/hi85r5xby90rwanywjwcxijxzq7svh.png",
+      compLogo: "https://empire-sport.online/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
+      href: "real-rayo.html"
     },
     {
-      title: "Multiplex Ligue 2",
-      banner: "https://empire-sport.world/upload/cards/multiplex_59.png",
-      // ✅ pas de logos équipe ici
-      compLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/3/38/Logo_Ligue_2_BKT_2024.svg/500px-Logo_Ligue_2_BKT_2024.svg.png?20240530043909",
-      href: "multiplex-L2.html"
+      title: "OL - LOSC",
+      time: "15h00",
+      banner: "https://empire-sport.online/upload/teambanks/ylteydywkmrc0skuw5qggtgqaoywpu.png",
+      aLogo: "https://empire-sport.online/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png",
+      bLogo: "https://empire-sport.online/upload/teams/8cjgq2dnsdbrdb1bfdfor9qrqp3o1f.png",
+      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "ol-losc.html"
+    },
+    {
+      title: "Manchester United - Fulham",
+      time: "15h00",
+      banner: "https://empire-sport.online/upload/teambanks/o6hv8yxkvwbm7knkj0mwxedp3fcttu.png",
+      aLogo: "https://empire-sport.online/upload/teams/mosfyquovho2tfyvalgqtbzjnhmcv5.png",
+      bLogo: "https://empire-sport.online/upload/teams/kovyrtfgaf3qzkb5zluj5r9g107yil.png",
+      compLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
+      href: "mu-fulham.html"
+    },
+    {
+      title: "Nice - Brest",
+      time: "17:15",
+      banner: "https://empire-sport.online/upload/teambanks/xdw129cqkykdkilusvwbye88zf4j2d.png",
+      aLogo: "https://empire-sport.online/upload/teams/jhe4floxvwpovm1mexcuq4jnzrhwnp.png",
+      bLogo: "https://empire-sport.online/upload/teams/os8aignwizzyij0fofayii3qpxdvjh.png",
+      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "nice-brest.html"
+    },
+    {
+      title: "Tottenham Hotspur - Manchester City",
+      time: "17h30",
+      banner: "https://empire-sport.online/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
+      aLogo: "https://empire-sport.online/upload/teams/nq6xsqf5odoqosdvpfgeyr1b2z1gtb.png",
+      bLogo: "https://empire-sport.online/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
+      compLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
+      href: "tottenham-city.html"
+    },
+    {
+      title: "Strasbourg - Paris SG",
+      time: "20h45",
+      banner: "https://empire-sport.online/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png",
+      aLogo: "https://empire-sport.online/upload/teams/y5tcqer82p79xnuij4aw6hqjiovisl.png",
+      bLogo: "https://empire-sport.online/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
+      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "strasbourg-psg.html"
     }
   ];
 
   function cardHTML(m){
-    const hasTeams = !!(m.aLogo && m.bLogo);
-
+    const t = parseHHMM(m.time);
     return `
       <a href="${m.href}" class="block">
         <article class="match-card">
@@ -399,32 +443,26 @@
           <div class="match-overlay"></div>
 
           <div class="absolute left-3 top-3">
-            <span class="timer-pill" data-pill>
-              <span class="timer-dot" data-dot></span>
-              <span class="timer-text" data-timer>--</span>
+            <span class="timer-pill">
+              <span class="timer-dot"></span>
+              <span class="timer-text" data-timer="${t.h}:${t.m}">--</span>
             </span>
           </div>
 
           <div class="absolute inset-x-0 bottom-0 p-4">
             <div class="flex items-end justify-between gap-4">
               <div class="min-w-0 max-w-[72%]">
-                ${
-                  hasTeams
-                    ? `
-                      <div class="flex items-center gap-2">
-                        <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
-                        <span class="vs">VS</span>
-                        <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
-                      </div>
-                    `
-                    : ``
-                }
+                <div class="flex items-center gap-2">
+                  <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
+                  <span class="vs">VS</span>
+                  <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
+                </div>
 
                 <div class="mt-2 flex items-center gap-2">
                   <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
                   <div class="min-w-0">
                     <div class="match-title truncate">${m.title}</div>
-                    <div class="match-sub">Aujourd’hui · 21:00</div>
+                    <div class="match-sub">Aujourd’hui · ${m.time}</div>
                   </div>
                 </div>
               </div>
@@ -451,25 +489,22 @@
   }
 
   function tick(){
-    const now = new Date();
-    const state = getState(now);
-
-    if(state.mode === "countdown"){
-      const diff = state.start.getTime() - now.getTime();
-      const txt = formatRemaining(diff);
-      document.querySelectorAll('[data-timer]').forEach(n => n.textContent = txt);
-      document.querySelectorAll('[data-dot]').forEach(d => d.classList.remove('live'));
-    } else {
-      // LIVE
-      document.querySelectorAll('[data-timer]').forEach(n => n.textContent = "EN COURS");
-      document.querySelectorAll('[data-dot]').forEach(d => d.classList.add('live'));
-    }
+    // met à jour chaque timer selon l'heure du match
+    document.querySelectorAll('[data-timer]').forEach(node => {
+      const [hStr, mStr] = node.getAttribute('data-timer').split(':');
+      const h = parseInt(hStr,10);
+      const m = parseInt(mStr,10);
+      const target = getTargetTodayOrTomorrow(h, m);
+      const diff = target.getTime() - Date.now();
+      node.textContent = formatRemaining(diff);
+    });
   }
 
   // refresh button
   document.getElementById('refreshBtn')?.addEventListener('click', () => {
     NProgress.start();
     render();
+    tick();
     setTimeout(() => NProgress.done(), 350);
   });
 
