@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — lens - le havre</title>
+  <title>IMFTX+ — Real Madrid - Rayo</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -17,11 +17,13 @@
       overflow-x:hidden;
     }
 
+    /* ✅ FOND GRIS PRO (à la place du fond noir) */
     .soft-bg{
       background:
-        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%),
-        #000;
+        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.08), transparent 62%),
+        radial-gradient(900px 520px at 20% 90%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(135deg, #16181c 0%, #111317 45%, #0c0e12 100%);
     }
 
     .player-box{
@@ -41,7 +43,7 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.world/upload/events/oevl0k8rzjcymxsn1fumjflrtzbnf5.jpg") center/cover no-repeat;
+        url("https://empire-sport.online/upload/events/qkvxyzy74th2lob1cciik0ymbzm1tl.jpg") center/cover no-repeat;
     }
 
     .cover-top{
@@ -193,6 +195,7 @@
   <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
+
       <a href="index.html"
          class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
         <i class="fa-solid fa-arrow-left"></i> Retour
@@ -203,6 +206,7 @@
   <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
     <section class="player-box w-full aspect-video">
+
       <div id="cover" class="cover" onclick="loadVideo(1)">
         <div style="position:absolute;top:18px;right:18px;">
           <span class="pill"><span class="dot"></span>21:00</span>
@@ -210,20 +214,23 @@
 
         <div class="cover-top">
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg"
-               alt="Borussia Dortmund">
+               src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg"
+               alt="Benfica">
           <span class="vs">VS</span>
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/500px-FC_Internazionale_Milano_2021.svg.png"
-               alt="Inter Milan">
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/41/Logo_Rayo_Vallecano_de_Madrid_2016.svg/langfr-250px-Logo_Rayo_Vallecano_de_Madrid_2016.svg.png"
+               alt="Real Madrid">
         </div>
 
         <div class="cover-strip">
           <div>
             <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub">RC LENS <br>LE HAVRE</div>
+            <div class="strip-sub">Réal Madrid <br>Rayo</div>
           </div>
-          <div class="strip-play"><i class="fa-solid fa-play"></i></div>
+
+          <div class="strip-play">
+            <i class="fa-solid fa-play"></i>
+          </div>
         </div>
       </div>
 
@@ -245,17 +252,17 @@
 
     <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Ligue des Champions">
+        <img src="https://empire-sport.online/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png" alt="Ligue des Champions">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
-          <div class="big">lens - lehavre</div>
-          <div class="small">Ligue 1 · 20h45</div>
+          <div class="big">Rayo — Real Madrid</div>
+          <div class="small">La Liga · 14h00</div>
         </div>
       </div>
 
       <div class="watch-right">
         <img class="channel-logo"
-             src="https://upload.wikimedia.org/wikipedia/fr/thumb/f/fa/Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg/langfr-250px-Logo_Ligue_1%2B_%28Ic%C3%B4ne%29.svg.png"
+             src="https://empire-sport.online/upload/chaines/8rdidmr7uk3rpug7ffdtpw3htqadqr.png"
              alt="CANAL+">
       </div>
     </section>
@@ -268,10 +275,11 @@
   </main>
 
   <script>
+    // ✅ Mets tes liens ICI (officiels/légaux)
     const SOURCES = {
-      1: "https://cachehsi1b.netplus.ch/tok_eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOiIxNzY5OTM5Mjk5Iiwic2lwIjoiIiwicGF0aCI6Ii9saXZlL2Vkcy9jYW5hbHBsdXNjbGFpci9icm93c2VyLUhMUzgvIiwic2Vzc2lvbl9jZG5faWQiOiI4NTAyYzEyMTk4YTQ1YzUwIiwic2Vzc2lvbl9pZCI6IiIsImNsaWVudF9pZCI6IiIsImRldmljZV9pZCI6IiIsIm1heF9zZXNzaW9ucyI6MCwic2Vzc2lvbl9kdXJhdGlvbiI6MCwidXJsIjoiaHR0cHM6Ly8xMC4wLjIyOS4xOCIsInNlc3Npb25fdGltZW91dCI6MCwiYXVkIjoiMTEiLCJzb3VyY2VzIjpbMTAwXX0=.z7CmXhS_kXpWroU8BTeei4MPGGFQmQ2qDlwLmlu-KmmJD9GRctvb-wkIqZY8ykHrTeaAN9ctAmUidJmLHx5rpQ==/live/eds/canalplusclair/browser-HLS8/canalplusclair-avc1_4000000=10000.m3u8",
-      2: "https://bolaloca.my/player/3/20",
-      3: "https://bolaloca.my/player/2/20"
+      1: "https://cdn-live-tv.ru/api/v1/channels/gb-tnt-sports-1/tracks-v1a1/mono.ts.m3u8?token=270642a8b1980367614486cf04a6da8d9048c11c07947af2e4f262d4dbb2fd6a.1769945759.df76a7d609bed4d68e026e58ce1d46c7.9774df9e3eab100e835ebb54cd6bbe0c.e2275af54e1b2720721fc6f6fde3f25f.c9fccd9124ff221b",
+      2: "#",
+      3: "#"
     };
 
     function setActive(id){
