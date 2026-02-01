@@ -17,7 +17,7 @@
       overflow-x:hidden;
     }
 
-    /* ✅ fond gris pro */
+    /* ✅ FOND GRIS PRO */
     .soft-bg{
       background:
         radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
@@ -34,62 +34,89 @@
       box-shadow: 0 30px 120px rgba(0,0,0,.85);
       position:relative;
     }
-
-    iframe{
-      width:100%;
-      height:100%;
-      border:0;
-      background:#000;
-      display:block;
-      opacity:0;
-      transform: scale(1.01);
-      transition: .25s ease;
-    }
-    iframe.ready{
-      opacity:1;
-      transform: scale(1);
-    }
+    iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
     .cover{
-      position:absolute; inset:0; z-index:15; cursor:pointer;
+      position:absolute;
+      inset:0;
+      z-index:15;
+      cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
         url("https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=1600&auto=format&fit=crop") center/cover no-repeat;
     }
 
     .cover-top{
-      position:absolute; top:18px; left:18px;
-      display:flex; align-items:center; gap:10px;
-      padding:10px 12px; border-radius:18px;
+      position:absolute;
+      top:18px;
+      left:18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:18px;
       background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(14px);
     }
-    .team-logo{ width:34px;height:34px; object-fit:contain; filter: drop-shadow(0 8px 20px rgba(0,0,0,.75)); }
-    .vs{ font-weight:900; font-size:14px; opacity:.9; }
+    .team-logo{
+      width:34px;height:34px;
+      object-fit:contain;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
+    }
+    .vs{
+      font-weight:900;
+      font-size:14px;
+      opacity:.9;
+    }
 
     .cover-strip{
-      position:absolute; left:22px; right:22px; bottom:22px;
-      height:86px; border-radius:20px;
+      position:absolute;
+      left:22px;
+      right:22px;
+      bottom:22px;
+      height:86px;
+      border-radius:20px;
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.16);
       backdrop-filter: blur(16px);
-      display:flex; align-items:center; justify-content:space-between;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       padding:0 22px;
     }
-    .strip-title{ font-size:18px; font-weight:900; line-height:1; }
-    .strip-sub{ font-size:15px; opacity:.85; font-weight:600; line-height:1.1; font-style:italic; margin-top:3px; }
-    .strip-play{
-      width:50px;height:50px;border-radius:999px;
-      border:2px solid rgba(255,255,255,.38);
-      display:grid; place-items:center;
-      transition:.2s; background:rgba(0,0,0,.22);
+    .strip-title{
+      font-size:18px;
+      font-weight:900;
+      line-height:1;
     }
+    .strip-sub{
+      font-size:15px;
+      opacity:.85;
+      font-weight:600;
+      line-height:1.1;
+      font-style:italic;
+      margin-top:3px;
+      text-transform: none;
+    }
+    .strip-play{
+      width:50px;height:50px;
+      border-radius:999px;
+      border:2px solid rgba(255,255,255,.38);
+      display:grid;
+      place-items:center;
+      transition:.2s;
+      background:rgba(0,0,0,.22);
+    }
+    .strip-play i{ font-size:19px; }
     .strip-play:hover{ transform:scale(1.08); background:rgba(0,0,0,.35); }
 
     .source-btn{
-      height:44px; border-radius:14px;
-      font-weight:900; font-size:13px; transition:.2s;
+      height:44px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:13px;
+      transition:.2s;
     }
     .source-btn.active{ background:#fff; color:#000; }
     .source-btn.inactive{
@@ -97,59 +124,69 @@
       border:1px solid rgba(255,255,255,.10);
       color:#fff;
     }
+    .source-btn:hover{ opacity:.95; }
+
+    .watch-bar{
+      border-radius:18px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(16px);
+      padding:16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .watch-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+    .watch-left img{
+      width:40px;height:40px;
+      object-fit:contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+      flex-shrink:0;
+    }
+    .watch-text{ min-width:0; line-height:1.1; }
+    .watch-text .small{ opacity:.8; font-weight:700; font-size:13px; }
+    .watch-text .big{
+      font-weight:900;
+      font-size:16px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .watch-right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
+    }
+    .channel-logo{
+      width:90px;
+      height:auto;
+      object-fit:contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+    }
 
     .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:7px 12px; border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
       background: rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(14px);
-      font-weight:900; font-size:12px;
-    }
-    .dot{ width:7px;height:7px;border-radius:999px;background:#f59e0b; box-shadow:0 0 0 4px rgba(245,158,11,.14); }
-
-    /* loader overlay */
-    .loader{
-      position:absolute; inset:0;
-      display:none;
-      place-items:center;
-      background: rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-      z-index:5;
-    }
-    .spinner{
-      width:46px;height:46px;border-radius:999px;
-      border:3px solid rgba(255,255,255,.25);
-      border-top-color: rgba(255,255,255,.95);
-      animation: spin .9s linear infinite;
-    }
-    @keyframes spin{ to{ transform:rotate(360deg);} }
-
-    /* fallback card */
-    .notice{
-      margin-top:14px;
-      border-radius:16px;
-      background:rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.12);
-      padding:14px 16px;
-      display:none;
-    }
-    .notice-title{ font-weight:900; font-size:14px; }
-    .notice-sub{ opacity:.8; font-weight:700; font-size:13px; margin-top:4px; line-height:1.35; }
-    .notice a{
-      display:inline-flex;
-      margin-top:10px;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:12px;
-      background:rgba(0,0,0,.30);
-      border:1px solid rgba(255,255,255,.14);
       font-weight:900;
-      color:#fbbf24;
-      text-decoration:none;
+      font-size:12px;
     }
-    .notice a:hover{ opacity:.95; }
+    .dot{
+      width:7px;height:7px;border-radius:999px;background:#f59e0b;
+      box-shadow:0 0 0 4px rgba(245,158,11,.14);
+    }
   </style>
 </head>
 
@@ -187,7 +224,7 @@
 
         <div class="cover-strip">
           <div>
-            <div class="strip-title">Regarder</div>
+            <div class="strip-title">Regarder Gratuitement</div>
             <div class="strip-sub">PSG<br>Strasbourg</div>
           </div>
 
@@ -195,11 +232,6 @@
             <i class="fa-solid fa-play"></i>
           </div>
         </div>
-      </div>
-
-      <!-- loader -->
-      <div id="loader" class="loader">
-        <div class="spinner"></div>
       </div>
 
       <div id="videoTarget" class="w-full h-full"></div>
@@ -211,18 +243,29 @@
       <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
     </section>
 
-    <!-- notice / fallback -->
-    <div id="notice" class="notice">
-      <div class="notice-title">Le lecteur ne s’affiche pas ?</div>
-      <div class="notice-sub">
-        Certains sites bloquent l’intégration en iframe (sécurité navigateur).
-        Dans ce cas, ouvre directement le lien dans un nouvel onglet.
-      </div>
-      <a id="directLink" href="#" target="_blank" rel="noreferrer">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        Ouvrir le lien direct
+    <div id="externalLink" class="hidden mt-4 text-center">
+      <a id="directLink" href="#" target="_blank"
+         class="text-amber-400 underline font-extrabold text-sm">
+        Le lecteur ne s’affiche pas ? Ouvrir le lien direct
       </a>
     </div>
+
+    <section class="mt-6 watch-bar">
+      <div class="watch-left">
+        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Compétition">
+        <div class="watch-text">
+          <div class="small">Vous regardez</div>
+          <div class="big">PSG — Strasbourg</div>
+          <div class="small">Match · 21:00</div>
+        </div>
+      </div>
+
+      <div class="watch-right">
+        <img class="channel-logo"
+             src="https://empire-sport.world/upload/chaines/poqxsy7vbdgxxb1r2x1koldqf8tgko.png"
+             alt="Chaîne">
+      </div>
+    </section>
 
     <div class="mt-8 text-center text-sm text-white/55 font-semibold">
       Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
@@ -232,14 +275,12 @@
   </main>
 
   <script>
-    // ✅ Mets ICI tes liens https (pages web) autorisées/OK iframe
+    // ✅ Mets tes liens officiels/légaux ici
     const SOURCES = {
-      1: "https://bolaloca.my/player/2/20",
-      2: "https://bolaloca.my/player/2/20",
-      3: "https://bolaloca.my/player/2/20"
+      1: "https://cdn-live-tv.ru/api/v1/channels/il-sport-5-plus/tracks-v1a1/mono.ts.m3u8?token=3ec75411900109f73c2b0ac4bb25f765c1ca803454c1369365af30a82cc0cbcd.1769975036.7caf7332f13b95070d1b18bc707d772b.e6916858d449acc714aa20b347dd4ca0.482b280e05c3ba4b64a3a9132ff62f7e.0468a72c59ef9ca0",
+      2: "#",
+      3: "#"
     };
-
-    let loadTimer = null;
 
     function setActive(id){
       [1,2,3].forEach(n=>{
@@ -250,65 +291,35 @@
       });
     }
 
-    function showLoader(on){
-      document.getElementById("loader").style.display = on ? "grid" : "none";
-    }
-    function showNotice(on){
-      document.getElementById("notice").style.display = on ? "block" : "none";
-    }
-
     function loadVideo(id){
-      const url = SOURCES[id];
-
       document.getElementById("cover").style.display = "none";
       setActive(id);
-      showNotice(false);
 
-      const direct = document.getElementById("directLink");
-      direct.href = url || "#";
+      const ext = document.getElementById("externalLink");
+      const link = document.getElementById("directLink");
+      link.href = SOURCES[id];
+      ext.classList.add("hidden");
 
       const target = document.getElementById("videoTarget");
-      target.innerHTML = "";
-
-      if(!url || url === "#"){
-        showNotice(true);
-        return;
-      }
-
-      showLoader(true);
-
-      // inject iframe
       target.innerHTML = `
         <iframe
           id="streamFrame"
-          src="${url}"
+          src="${SOURCES[id]}"
           allowfullscreen
           scrolling="no"
           frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          referrerpolicy="no-referrer"
+          referrerpolicy="origin"
           sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
         </iframe>
       `;
 
-      const iframe = document.getElementById("streamFrame");
-
-      // if load event fires -> show
-      iframe.addEventListener("load", () => {
-        showLoader(false);
-        iframe.classList.add("ready");
-        // on laisse notice cachée
-      });
-
-      // fallback: if blocked, browser won't allow access, load may not help.
-      clearTimeout(loadTimer);
-      loadTimer = setTimeout(() => {
-        showLoader(false);
-
-        // on ne peut pas “détecter” à 100% un CSP/X-Frame block,
-        // donc on propose toujours le lien direct après un délai.
-        showNotice(true);
-      }, 2200);
+      setTimeout(() => {
+        const iframe = document.getElementById("streamFrame");
+        if(!iframe) return;
+        try { iframe.contentWindow.location.href; }
+        catch(e){ ext.classList.remove("hidden"); }
+      }, 2000);
     }
   </script>
 
