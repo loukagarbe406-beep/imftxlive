@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Monaco - Juventus</title>
+  <title>IMFTX+ — PSG - Strasbourg</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -17,11 +17,13 @@
       overflow-x:hidden;
     }
 
+    /* ✅ FOND GRIS PRO */
     .soft-bg{
       background:
-        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%),
-        #000;
+        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.08), transparent 62%),
+        radial-gradient(900px 520px at 20% 90%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(135deg, #16181c 0%, #111317 45%, #0c0e12 100%);
     }
 
     .player-box{
@@ -41,7 +43,7 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.world/upload/events/ookoeo2fvhmdxwdwkoytvhugrtsfod.jpg") center/cover no-repeat;
+        url("https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=1600&auto=format&fit=crop") center/cover no-repeat;
     }
 
     .cover-top{
@@ -206,25 +208,24 @@
     <section class="player-box w-full aspect-video">
 
       <div id="cover" class="cover" onclick="loadVideo(1)">
-
         <div style="position:absolute;top:18px;right:18px;">
-          <span class="pill"><span class="dot"></span>21:00</span>
+          <span class="pill"><span class="dot"></span>20h45</span>
         </div>
 
         <div class="cover-top">
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/LogoASMonacoFC2021.svg/960px-LogoASMonacoFC2021.svg.png"
-               alt="Monaco">
+               src="https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg"
+               alt="PSG">
           <span class="vs">VS</span>
           <img class="team-logo"
-               src="https://empire-sport.world/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png"
-               alt="Juventus">
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/7/70/Racing_Club_de_Strasbourg_Alsace_logo_2020.svg/512px-Racing_Club_de_Strasbourg_Alsace_logo_2020.svg.png"
+               alt="Strasbourg">
         </div>
 
         <div class="cover-strip">
           <div>
             <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub">Monaco<br>Juventus</div>
+            <div class="strip-sub">PSG<br>Strasbourg</div>
           </div>
 
           <div class="strip-play">
@@ -237,9 +238,9 @@
     </section>
 
     <section class="mt-5 flex flex-wrap gap-3">
-      <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
-      <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
-      <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
+      <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">🇫🇷 ( 720p )</button>
+      <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">🇩🇪 ( 1440p )</button>
+      <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">🇪🇸 ( 1440p )</button>
     </section>
 
     <div id="externalLink" class="hidden mt-4 text-center">
@@ -251,18 +252,18 @@
 
     <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Ligue des Champions">
+        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Compétition">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
-          <div class="big">Monaco — Juventus</div>
-          <div class="small">Ligue des Champions · 21:00</div>
+          <div class="big">PSG — Strasbourg</div>
+          <div class="small">Match · 21:00</div>
         </div>
       </div>
 
       <div class="watch-right">
         <img class="channel-logo"
-             src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg"
-             alt="CANAL+">
+             src="https://empire-sport.world/upload/chaines/poqxsy7vbdgxxb1r2x1koldqf8tgko.png"
+             alt="Chaîne">
       </div>
     </section>
 
@@ -274,10 +275,11 @@
   </main>
 
   <script>
+    // ✅ Mets tes liens officiels/légaux ici
     const SOURCES = {
-      1: "https://bolaloca.my/player/4/14",
-      2: "https://bolaloca.my/player/3/14",
-      3: "https://bolaloca.my/player/2/14"
+      1: "https://bolaloca.my/player/3/1",
+      2: "https://cdn-live-tv.ru/api/v1/channels/de-dazn-1/index.m3u8?token=c2aa41e339e98cbe005d360e41c90db5da18898d30862d898c1d73f72fa98382.1769970818.fbbf8cc8b64c3a4c231f27b2ccc8e4a1.4869c8ca57793fcc60ed8ffaed24685c.92937fbda6e844e1d33de16008bb35b7.2f15d33287c7d9af",
+      3: "https://cdn-live-tv.ru/api/v1/channels/es-bein-sports-n/index.m3u8?token=8bf3fd8d23aeef04ecdf4865f8689bffce6cced5c901a4ece94461ce96cca7b7.1769972074.4e01d0d7e2bfc55af5ce35034dc2decf.8f268404f09fb2fcae0ae0248b0ba6d6.a51532d3de8c141e40283120b282f0d7.e795f5bc6e5c49b1"
     };
 
     function setActive(id){
