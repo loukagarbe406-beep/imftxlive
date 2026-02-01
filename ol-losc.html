@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Olympique Lyonnaisess - Lille</title>
+  <title>IMFTX+ — Olympique Lyonnais - Lille</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
   <style>
     html, body { height: 100%; margin: 0; }
@@ -34,7 +35,9 @@
       box-shadow: 0 30px 120px rgba(0,0,0,.85);
       position:relative;
     }
-    iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
+
+    /* ✅ lecteur vidéo */
+    video{ width:100%; height:100%; display:block; background:#000; }
 
     .cover{
       position:absolute;
@@ -43,88 +46,68 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.online/upload/events/2z3nb9ma93vszs6zni6chgto4vh2s8.jpg") center/cover no-repeat;
+        url("https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=1600&auto=format&fit=crop") center/cover no-repeat;
     }
 
     .cover-top{
-      position:absolute;
-      top:18px;
-      left:18px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:18px;
+      position:absolute; top:18px; left:18px;
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:18px;
       background:rgba(0,0,0,.35);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(14px);
     }
-    .team-logo{
-      width:34px;height:34px;
-      object-fit:contain;
-      filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
-    }
-    .vs{
-      font-weight:900;
-      font-size:14px;
-      opacity:.9;
-    }
+    .team-logo{ width:34px;height:34px; object-fit:contain; filter: drop-shadow(0 8px 20px rgba(0,0,0,.75)); }
+    .vs{ font-weight:900; font-size:14px; opacity:.9; }
 
     .cover-strip{
-      position:absolute;
-      left:22px;
-      right:22px;
-      bottom:22px;
-      height:86px;
-      border-radius:20px;
+      position:absolute; left:22px; right:22px; bottom:22px;
+      height:86px; border-radius:20px;
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.16);
       backdrop-filter: blur(16px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       padding:0 22px;
     }
-    .strip-title{
-      font-size:18px;
-      font-weight:900;
-      line-height:1;
-    }
-    .strip-sub{
-      font-size:15px;
-      opacity:.85;
-      font-weight:600;
-      line-height:1.1;
-      font-style:italic;
-      margin-top:3px;
-      text-transform: none;
-    }
+    .strip-title{ font-size:18px; font-weight:900; line-height:1; }
+    .strip-sub{ font-size:15px; opacity:.85; font-weight:600; line-height:1.1; font-style:italic; margin-top:3px; }
     .strip-play{
-      width:50px;height:50px;
-      border-radius:999px;
+      width:50px;height:50px;border-radius:999px;
       border:2px solid rgba(255,255,255,.38);
-      display:grid;
-      place-items:center;
-      transition:.2s;
-      background:rgba(0,0,0,.22);
+      display:grid; place-items:center;
+      transition:.2s; background:rgba(0,0,0,.22);
     }
-    .strip-play i{ font-size:19px; }
     .strip-play:hover{ transform:scale(1.08); background:rgba(0,0,0,.35); }
 
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 12px; border-radius:999px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
+      font-weight:900; font-size:12px;
+    }
+    .dot{ width:7px;height:7px;border-radius:999px;background:#f59e0b; box-shadow:0 0 0 4px rgba(245,158,11,.14); }
+
     .source-btn{
-      height:44px;
-      border-radius:14px;
-      font-weight:900;
-      font-size:13px;
-      transition:.2s;
+      height:44px; border-radius:14px;
+      font-weight:900; font-size:13px; transition:.2s;
     }
     .source-btn.active{ background:#fff; color:#000; }
-    .source-btn.inactive{
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.10);
-      color:#fff;
+    .source-btn.inactive{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.10); color:#fff; }
+
+    /* ✅ message erreur propre */
+    .notice{
+      margin-top:12px;
+      border-radius:14px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 12px 14px;
+      color: rgba(255,255,255,.86);
+      font-weight: 700;
+      display:none;
     }
-    .source-btn:hover{ opacity:.95; }
+    .notice b{ color:#fff; }
 
     .watch-bar{
       border-radius:18px;
@@ -132,61 +115,14 @@
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(16px);
       padding:16px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
+      display:flex; align-items:center; justify-content:space-between; gap:16px;
     }
-    .watch-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width:0;
-    }
-    .watch-left img{
-      width:40px;height:40px;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
-      flex-shrink:0;
-    }
+    .watch-left{ display:flex; align-items:center; gap:14px; min-width:0; }
+    .watch-left img{ width:40px;height:40px; object-fit:contain; filter: drop-shadow(0 6px 14px rgba(0,0,0,.7)); flex-shrink:0; }
     .watch-text{ min-width:0; line-height:1.1; }
     .watch-text .small{ opacity:.8; font-weight:700; font-size:13px; }
-    .watch-text .big{
-      font-weight:900;
-      font-size:16px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .watch-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-shrink:0;
-    }
-    .channel-logo{
-      width:90px;
-      height:auto;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 12px;
-      border-radius:999px;
-      background: rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(14px);
-      font-weight:900;
-      font-size:12px;
-    }
-    .dot{
-      width:7px;height:7px;border-radius:999px;background:#f59e0b;
-      box-shadow:0 0 0 4px rgba(245,158,11,.14);
-    }
+    .watch-text .big{ font-weight:900; font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .channel-logo{ width:90px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 14px rgba(0,0,0,.7)); }
   </style>
 </head>
 
@@ -195,7 +131,6 @@
   <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
-
       <a href="index.html"
          class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
         <i class="fa-solid fa-arrow-left"></i> Retour
@@ -209,7 +144,7 @@
 
       <div id="cover" class="cover" onclick="loadVideo(1)">
         <div style="position:absolute;top:18px;right:18px;">
-          <span class="pill"><span class="dot"></span>15h00</span>
+          <span class="pill"><span class="dot"></span>21:00</span>
         </div>
 
         <div class="cover-top">
@@ -224,7 +159,7 @@
 
         <div class="cover-strip">
           <div>
-            <div class="strip-title">Regarder Gratuitement</div>
+            <div class="strip-title">Regarder</div>
             <div class="strip-sub">Olympique Lyonnais<br>Lille</div>
           </div>
 
@@ -234,7 +169,8 @@
         </div>
       </div>
 
-      <div id="videoTarget" class="w-full h-full"></div>
+      <!-- ✅ vrai lecteur -->
+      <video id="video" class="w-full h-full" controls playsinline></video>
     </section>
 
     <section class="mt-5 flex flex-wrap gap-3">
@@ -243,26 +179,25 @@
       <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
     </section>
 
-    <div id="externalLink" class="hidden mt-4 text-center">
-      <a id="directLink" href="#" target="_blank"
-         class="text-amber-400 underline font-extrabold text-sm">
-        Le lecteur ne s’affiche pas ? Ouvrir le lien direct ouii
-      </a>
+    <div id="notice" class="notice">
+      <b>Lecture impossible.</b> Le lien peut être expiré / indisponible / bloqué.
+      Essaie une autre source ou ouvre le lien direct :
+      <a id="directLink" href="#" target="_blank" class="text-amber-300 underline font-extrabold">Ouvrir</a>
     </div>
 
     <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img src="https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="Compétition">
+        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Compétition">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
           <div class="big">Olympique Lyonnais — Lille</div>
-          <div class="small">Ligue 1 · 15h00</div>
+          <div class="small">Match · 21:00</div>
         </div>
       </div>
 
       <div class="watch-right">
         <img class="channel-logo"
-             src="https://empire-sport.online/upload/chaines/dw3nqnkbiqo3k02dksv9dmt7sxawk8.png"
+             src="https://empire-sport.world/upload/chaines/poqxsy7vbdgxxb1r2x1koldqf8tgko.png"
              alt="Chaîne">
       </div>
     </section>
@@ -275,12 +210,14 @@
   </main>
 
   <script>
-    // ✅ Mets tes liens officiels/légaux ici
+    // ✅ Mets tes liens officiels / légaux ici
     const SOURCES = {
-      1: "https://cdn-live-tv.ru/api/v1/channels/es-bein-sports-n/tracks-v1a1/mono.ts.m3u8?token=43746b51adbf9f871d7b2b1680911f0e56be1d7d0a716f7a91dbc3c70064b6b3.1769959779.b34cd7126eeb46897ec7aa9424d5729f.6c1332087466b0c995d57f5b0dfd1872.a6857467ba1b1c9ea035d165e49ca3b8.c7b1132f9571105b",
-      2: "https://cdn-live-tv.ru/api/v1/channels/es-bein-sports-n/tracks-v1a1/mono.ts.m3u8?token=43746b51adbf9f871d7b2b1680911f0e56be1d7d0a716f7a91dbc3c70064b6b3.1769959779.b34cd7126eeb46897ec7aa9424d5729f.6c1332087466b0c995d57f5b0dfd1872.a6857467ba1b1c9ea035d165e49ca3b8.c7b1132f9571105b",
-      3: "https://bolaloca.my/player/3/20"
+      1: "#",
+      2: "#",
+      3: "#"
     };
+
+    let hls = null;
 
     function setActive(id){
       [1,2,3].forEach(n=>{
@@ -291,35 +228,74 @@
       });
     }
 
+    function cleanup(){
+      if(hls){
+        try { hls.destroy(); } catch(e){}
+        hls = null;
+      }
+    }
+
+    function showNotice(url){
+      const notice = document.getElementById("notice");
+      const direct = document.getElementById("directLink");
+      direct.href = url || "#";
+      notice.style.display = "block";
+    }
+
+    function hideNotice(){
+      document.getElementById("notice").style.display = "none";
+    }
+
     function loadVideo(id){
+      const url = SOURCES[id];
+
       document.getElementById("cover").style.display = "none";
       setActive(id);
+      hideNotice();
 
-      const ext = document.getElementById("externalLink");
-      const link = document.getElementById("directLink");
-      link.href = SOURCES[id];
-      ext.classList.add("hidden");
+      const video = document.getElementById("video");
+      cleanup();
 
-      const target = document.getElementById("videoTarget");
-      target.innerHTML = `
-        <iframe
-          id="streamFrame"
-          src="${SOURCES[id]}"
-          allowfullscreen
-          scrolling="no"
-          frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          referrerpolicy="origin"
-          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-        </iframe>
-      `;
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+
+      if(!url || url === "#"){
+        showNotice(url);
+        return;
+      }
+
+      // ✅ HLS.js (Chrome/Firefox/Edge)
+      if(window.Hls && Hls.isSupported()){
+        hls = new Hls({ lowLatencyMode: true });
+        hls.loadSource(url);
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play().catch(()=>{});
+        });
+
+        hls.on(Hls.Events.ERROR, () => {
+          showNotice(url);
+        });
+
+        return;
+      }
+
+      // ✅ Safari/iOS (HLS natif)
+      if(video.canPlayType("application/vnd.apple.mpegurl")){
+        video.src = url;
+        video.play().catch(()=> showNotice(url));
+        return;
+      }
+
+      // fallback
+      video.src = url;
+      video.play().catch(()=> showNotice(url));
 
       setTimeout(() => {
-        const iframe = document.getElementById("streamFrame");
-        if(!iframe) return;
-        try { iframe.contentWindow.location.href; }
-        catch(e){ ext.classList.remove("hidden"); }
-      }, 2000);
+        if(video.readyState < 2) showNotice(url);
+      }, 2500);
     }
   </script>
 
