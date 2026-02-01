@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Lille - Freiburg</title>
+  <title>IMFTX+ — Olympique Lyonnais - Lille</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -17,15 +17,15 @@
       overflow-x:hidden;
     }
 
-    /* ✅ MÊME FOND QUE TON INDEX (IMFTX) */
+    /* ✅ FOND GRIS PRO */
     .soft-bg{
       background:
-        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%),
-        #000;
+        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.08), transparent 62%),
+        radial-gradient(900px 520px at 20% 90%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(135deg, #16181c 0%, #111317 45%, #0c0e12 100%);
     }
 
-    /* player box */
     .player-box{
       border-radius:22px;
       overflow:hidden;
@@ -36,7 +36,6 @@
     }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
-    /* ✅ COVER (banniere) */
     .cover{
       position:absolute;
       inset:0;
@@ -44,10 +43,9 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.world/upload/events/dtmhvaw0getc63fuothgapavev5bid.jpg") center/cover no-repeat;
+        url("https://empire-sport.online/upload/events/2z3nb9ma93vszs6zni6chgto4vh2s8.jpg") center/cover no-repeat;
     }
 
-    /* ✅ LOGOS TOP (teams + VS) */
     .cover-top{
       position:absolute;
       top:18px;
@@ -72,7 +70,6 @@
       opacity:.9;
     }
 
-    /* ✅ STRIP BOTTOM (Regarder Gratuitement) */
     .cover-strip{
       position:absolute;
       left:22px;
@@ -114,7 +111,6 @@
     .strip-play i{ font-size:19px; }
     .strip-play:hover{ transform:scale(1.08); background:rgba(0,0,0,.35); }
 
-    /* sources buttons */
     .source-btn{
       height:44px;
       border-radius:14px;
@@ -130,7 +126,6 @@
     }
     .source-btn:hover{ opacity:.95; }
 
-    /* ✅ bottom bar (Vous regardez) */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
@@ -176,7 +171,6 @@
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
 
-    /* ✅ petit pill timer */
     .pill{
       display:inline-flex;
       align-items:center;
@@ -198,7 +192,6 @@
 
 <body class="soft-bg">
 
-  <!-- NAV -->
   <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
@@ -212,30 +205,27 @@
 
   <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
-    <!-- PLAYER -->
     <section class="player-box w-full aspect-video">
 
-      <!-- ✅ COVER CLICK = LAUNCH STREAM -->
       <div id="cover" class="cover" onclick="loadVideo(1)">
-
         <div style="position:absolute;top:18px;right:18px;">
-          <span class="pill"><span class="dot"></span>21:00</span>
+          <span class="pill"><span class="dot"></span>15h00</span>
         </div>
 
         <div class="cover-top">
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/fr/thumb/6/6e/Logo_LOSC_Lille_2018.svg/512px-Logo_LOSC_Lille_2018.svg.png"
-               alt="Lille">
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a5/Logo_Olympique_Lyonnais_-_2022.svg/512px-Logo_Olympique_Lyonnais_-_2022.svg.png"
+               alt="Olympique Lyonnais">
           <span class="vs">VS</span>
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/en/f/f1/SC_Freiburg_logo.svg"
-               alt="Freiburg">
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/1/1e/LOSC_Lille_logo.svg/512px-LOSC_Lille_logo.svg.png"
+               alt="Lille">
         </div>
 
         <div class="cover-strip">
           <div>
             <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub">Lille<br>Freiburg</div>
+            <div class="strip-sub">Olympique Lyonnais<br>Lille</div>
           </div>
 
           <div class="strip-play">
@@ -247,14 +237,12 @@
       <div id="videoTarget" class="w-full h-full"></div>
     </section>
 
-    <!-- SOURCES -->
     <section class="mt-5 flex flex-wrap gap-3">
       <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
       <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
       <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
     </section>
 
-    <!-- ✅ DIRECT LINK (fallback) -->
     <div id="externalLink" class="hidden mt-4 text-center">
       <a id="directLink" href="#" target="_blank"
          class="text-amber-400 underline font-extrabold text-sm">
@@ -262,25 +250,23 @@
       </a>
     </div>
 
-    <!-- ✅ WATCH BAR -->
     <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Compétition">
+        <img src="https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="Compétition">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
-          <div class="big">Lille — Freiburg</div>
-          <div class="small">Coupe d’Europe · 21:00</div>
+          <div class="big">Olympique Lyonnais — Lille</div>
+          <div class="small">Ligue 1 · 15h00</div>
         </div>
       </div>
 
       <div class="watch-right">
         <img class="channel-logo"
-             src="https://empire-sport.world/upload/chaines/poqxsy7vbdgxxb1r2x1koldqf8tgko.png"
+             src="https://empire-sport.online/upload/chaines/dw3nqnkbiqo3k02dksv9dmt7sxawk8.png"
              alt="Chaîne">
       </div>
     </section>
 
-    <!-- MESSAGE -->
     <div class="mt-8 text-center text-sm text-white/55 font-semibold">
       Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
       — L’équipe IMFTX+
@@ -288,13 +274,12 @@
 
   </main>
 
-  <!-- ✅ PLAYER SCRIPT -->
   <script>
-    // ✅ Mets tes liens ici (légaux)
+    // ✅ Mets tes liens officiels/légaux ici
     const SOURCES = {
-      1: "https://bolaloca.my/player/4/11",
-      2: "https://bolaloca.my/player/3/11",
-      3: "https://bolaloca.my/player/2/11"
+      1: "https://cdn-live-tv.ru/api/v1/channels/il-sport-5-plus/tracks-v1a1/mono.ts.m3u8?token=98d452c5556e32f7bc8dd7f5ccd82f0662059b3641331326e98de4d339b76539.1769952409.2d2b747ffecc3ae3be3b269481955b3f.de1d7e9779b557ff995072fb4220a1da.9dc05a95ac86067eedd12c6f05f36e4d.d1f40402363905b0",
+      2: "https://cdn-live-tv.ru/api/v1/channels/il-sport-5-plus/tracks-v1a1/mono.ts.m3u8?token=98d452c5556e32f7bc8dd7f5ccd82f0662059b3641331326e98de4d339b76539.1769952409.2d2b747ffecc3ae3be3b269481955b3f.de1d7e9779b557ff995072fb4220a1da.9dc05a95ac86067eedd12c6f05f36e4d.d1f40402363905b0",
+      3: "https://cdn-live-tv.ru/api/v1/channels/il-sport-5-plus/tracks-v1a1/mono.ts.m3u8?token=98d452c5556e32f7bc8dd7f5ccd82f0662059b3641331326e98de4d339b76539.1769952409.2d2b747ffecc3ae3be3b269481955b3f.de1d7e9779b557ff995072fb4220a1da.9dc05a95ac86067eedd12c6f05f36e4d.d1f40402363905b0"
     };
 
     function setActive(id){
@@ -329,7 +314,6 @@
         </iframe>
       `;
 
-      // fallback si embed bloqué
       setTimeout(() => {
         const iframe = document.getElementById("streamFrame");
         if(!iframe) return;
