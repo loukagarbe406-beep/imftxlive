@@ -173,145 +173,11 @@
       .play{ width:26px; height:26px; }
     }
 
-    /* --------- Popup (comme ta photo) --------- */
-    .gate-backdrop{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.70);
-      backdrop-filter: blur(10px);
-      z-index:50;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-    }
-    .gate{
-      width:min(980px, 100%);
-      border-radius: 22px;
-      overflow:hidden;
-      border: 1px solid rgba(239,68,68,.65);
-      background: rgba(0,0,0,.86);
-      box-shadow: 0 30px 120px rgba(0,0,0,.70);
-      position:relative;
-    }
-    .gate-inner{
-      padding: 28px 26px 26px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      text-align:center;
-      gap: 14px;
-    }
-
-    /* carré comme la photo (PAS rond) */
-    .gate-avatar{
-      width: 120px;
-      height: 120px;
-      border-radius: 14px; /* carré arrondi léger */
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 14px 60px rgba(0,0,0,.55);
-    }
-    .gate-avatar img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
-
-    .gate-title{
-      font-weight: 900;
-      font-size: 44px;
-      letter-spacing: .06em;
-      font-style: italic;
-      line-height: 1;
-      color: rgba(255,255,255,.95);
-      margin-top: 6px;
-    }
-    .gate-text{
-      max-width: 720px;
-      font-weight: 800;
-      font-size: 18px;
-      line-height: 1.35;
-      color: rgba(255,255,255,.88);
-    }
-    .gate-actions{
-      width: 100%;
-      display:flex;
-      justify-content:center;
-      margin-top: 10px;
-    }
-    .gate-btn{
-      width: min(720px, 100%);
-      border-radius:999px;
-      padding: 18px 18px;
-      font-weight: 1000;
-      font-size: 20px;
-      letter-spacing: .08em;
-      color:#fff;
-      background: rgb(255,0,0);
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 18px 80px rgba(255,0,0,.22);
-      transition: transform .15s ease, filter .15s ease;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      text-transform: uppercase;
-    }
-    .gate-btn:hover{ filter: brightness(1.06); }
-    .gate-btn:active{ transform: scale(.985); }
-
-    .gate-skip{
-      margin-top: 10px;
-      font-weight: 800;
-      font-size: 13px;
-      color: rgba(255,255,255,.65);
-      background: transparent;
-      border: none;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-    .gate-skip:hover{ color: rgba(255,255,255,.82); }
-
-    @media (max-width: 640px){
-      .gate-title{ font-size: 34px; }
-      .gate-text{ font-size: 16px; }
-      .gate-avatar{ width: 104px; height: 104px; }
-      .gate-btn{ font-size: 18px; padding: 16px 16px; }
-    }
   </style>
 </head>
 
 <body data-page="index" class="min-h-screen bg-white text-black dark:bg-zinc-900 dark:text-white flex flex-col font-[Outfit] transition-colors duration-200">
 <noscript>You need to enable JavaScript to run this website.</noscript>
-
-<!-- POPUP X -->
-<div id="gateBackdrop" class="gate-backdrop">
-  <div class="gate">
-    <div class="gate-inner">
-      <!-- carré + lien image EXACT -->
-      <div class="gate-avatar">
-        <img src="https://pbs.twimg.com/profile_images/1610301960493703168/rDZ9v5xZ_400x400.jpg" alt="IMFTX" />
-      </div>
-
-      <div class="gate-title">IMFTX</div>
-
-      <div class="gate-text">
-        Rejoins mon post sur <b>X</b> pour soutenir le site :
-        <br>
-        <b>RT</b> + <b>abonne-toi</b> au compte, puis reviens ici ✅
-      </div>
-
-      <div class="gate-actions">
-        <button id="gateJoin" class="gate-btn" type="button" aria-label="Ouvrir le post X">
-          OUVRIR LE POST
-        </button>
-      </div>
-
-      <button id="gateSkip" class="gate-skip" type="button">J’ai déjà fait</button>
-    </div>
-  </div>
-</div>
 
 <!-- NAV -->
 <nav class="sticky top-0 z-10 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-700 shadow-sm">
@@ -334,64 +200,9 @@
           </div>
         </a>
       </div>
-
-      <div class="relative hidden md:flex group">
-        <a id="nav-btn-telegram" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200" aria-label="Telegram">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-            <path d="M22 3L2 11.5L9 13.8L19.5 6.7L12 14.3V20L16 16.6L20.5 20L22 3Z" fill="currentColor" opacity="0.9"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="relative hidden md:flex group">
-        <a id="nav-btn-discord" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200" aria-label="Discord">
-          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
-            <path d="M18.5 6.2A14.6 14.6 0 0 0 15 5l-.3.6a13.4 13.4 0 0 0-5.4 0L9 5a14.6 14.6 0 0 0-3.5 1.2C3.7 9 3 11.8 3.2 14.5c2.1 1.6 4.1 2.5 6 3l.7-1.2c-.7-.3-1.4-.7-2-1.2l.5-.4c1.9.9 4 .9 6 0l.5.4c-.6.5-1.3.9-2 1.2l.7 1.2c1.9-.5 3.9-1.4 6-3 .3-2.7-.4-5.5-2.2-8.3Z" fill="currentColor" opacity="0.9"/>
-            <path d="M9.2 13.6c.6 0 1.1-.6 1.1-1.3S9.8 11 9.2 11c-.6 0-1.1.6-1.1 1.3s.5 1.3 1.1 1.3Zm5.6 0c.6 0 1.1-.6 1.1-1.3S15.4 11 14.8 11c-.6 0-1.1.6-1.1 1.3s.5 1.3 1.1 1.3Z" fill="currentColor"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="relative hidden md:flex group">
-        <a id="nav-btn-twitter" href="#" target="_blank" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200" aria-label="X">
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
-            <path d="M18 2H21L14.5 9.5L22 22H16L11.5 15.8L6 22H3L10.2 13.9L3 2H9L13.1 7.4L18 2Z" fill="currentColor" opacity="0.9"/>
-          </svg>
-        </a>
-      </div>
-
-      <div class="relative flex group">
-        <button id="theme-toggle" class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200 group overflow-hidden" aria-label="Thème">
-          <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-               class="w-6 h-6 absolute opacity-0 scale-50 -rotate-90 transition-all duration-300 ease-out dark:opacity-100 dark:scale-100 dark:rotate-0">
-            <path fill="currentColor" d="M12 18a6 6 0 1 1 0-12a6 6 0 0 1 0 12Zm0-14a1 1 0 0 1 1-1h0a1 1 0 1 1-2 0h0a1 1 0 0 1 1 1Zm0 20a1 1 0 0 1 1-1h0a1 1 0 1 1-2 0h0a1 1 0 0 1 1 1ZM4 13a1 1 0 1 1 0-2h0a1 1 0 1 1 0 2Zm20 0a1 1 0 1 1 0-2h0a1 1 0 1 1 0 2ZM6.2 6.2a1 1 0 0 1 1.4 0h0a1 1 0 1 1-1.4 1.4h0a1 1 0 0 1 0-1.4Zm12 12a1 1 0 0 1 1.4 0h0a1 1 0 1 1-1.4 1.4h0a1 1 0 0 1 0-1.4ZM17.8 6.2a1 1 0 0 1 0 1.4h0a1 1 0 1 1-1.4-1.4h0a1 1 0 0 1 1.4 0ZM7.6 16.4a1 1 0 0 1 0 1.4h0a1 1 0 1 1-1.4-1.4h0a1 1 0 0 1 1.4 0Z"/>
-          </svg>
-          <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-               class="w-6 h-6 absolute opacity-100 scale-100 rotate-0 transition-all duration-300 ease-out dark:opacity-0 dark:scale-50 dark:rotate-90">
-            <path fill="currentColor" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
-          </svg>
-        </button>
-      </div>
     </div>
   </div>
 </nav>
-
-<!-- SIDEBAR -->
-<aside id="sidebar" class="fixed top-0 left-0 h-screen w-60 bg-white dark:bg-zinc-950 p-6 flex flex-col justify-between border-r border-zinc-800 z-20 transform -translate-x-full transition-transform duration-300 ease-in-out">
-  <div>
-    <div class="h-11 flex justify-center gap-1">
-      <div class="text-2xl font-extrabold">IMFTX+</div>
-    </div>
-
-    <div class="w-full mt-8">
-      <a id="side-btn-telegram" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Telegram</a>
-      <a id="side-btn-discord" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Discord</a>
-      <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">X</a>
-    </div>
-  </div>
-
-  <div class="text-center text-sm text-zinc-500">Made with ❤️</div>
-</aside>
 
 <!-- CONTENT -->
 <div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col items-center justify-center md:px-24 p-5 transition-all duration-300 ease-out">
@@ -406,251 +217,61 @@
         <button type="button" id="refreshBtn" class="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black transition-all duration-200 active:scale-95 shadow-md" aria-label="Rafraîchir">↻</button>
       </div>
 
-      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <!-- Match Udinese vs Roma -->
+        <a href="udinese-roma.html" class="block">
+          <article class="match-card">
+            <div class="match-bg" style="background-image:url('https://empire-sport.online/upload/banners/roma-vs-genoa.png')"></div>
+            <div class="match-overlay"></div>
+
+            <div class="absolute left-3 top-3">
+              <span class="timer-pill">
+                <span class="timer-dot"></span>
+                <span class="timer-text">--</span>
+              </span>
+            </div>
+
+            <div class="absolute inset-x-0 bottom-0 p-4">
+              <div class="flex items-end justify-between gap-4">
+                <div class="min-w-0 max-w-[72%]">
+                  <div class="flex items-center gap-2">
+                    <div class="team-logo"><img src="https://empire-sport.online/upload/teams/4nbx93aqgzfapkel3fotjhbbfxwty3.png" alt="Udinese"></div>
+                    <span class="vs">VS</span>
+                    <div class="team-logo"><img src="https://empire-sport.online/upload/teams/zpnuspg97icikleby6tuqnsjwoqbap.png" alt="Roma"></div>
+                  </div>
+
+                  <div class="mt-2 flex items-center gap-2">
+                    <div class="comp-wrap"><img src="https://empire-sport.online/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png" alt="Compétition"></div>
+                    <div class="min-w-0">
+                      <div class="match-title truncate">Udinese - Roma</div>
+                      <div class="match-sub">Aujourd'hui · 20h45</div>
+                    </div>
+                  </div>
+                </div>
+
+                <span class="watch-pill">
+                  <span class="play">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
+                      <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                  REGARDER
+                </span>
+              </div>
+            </div>
+          </article>
+        </a>
+      </div>
     </section>
   </div>
 </div>
 
-<!-- pas de footer -->
-
 <script>
-  // -------- Sidebar toggle --------
-  const burgerBtn = document.getElementById('burgerBtn');
-  const sidebar = document.getElementById('sidebar');
-  function openSidebar(){ sidebar.classList.remove('-translate-x-full'); }
-  function closeSidebar(){ sidebar.classList.add('-translate-x-full'); }
-  burgerBtn?.addEventListener('click', () => {
-    const isClosed = sidebar.classList.contains('-translate-x-full');
-    isClosed ? openSidebar() : closeSidebar();
-  });
-
-  // -------- Theme toggle --------
-  const toggle = document.getElementById('theme-toggle');
-  function setTheme(mode){
-    if(mode === 'dark'){
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme','dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme','light');
-    }
-  }
-  toggle?.addEventListener('click', () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'light' : 'dark');
-  });
-
-  // -------- Popup X gate --------
-  const TW_URL = "https://x.com/imftxvw/status/2018021008729375186";
-  const gateBackdrop = document.getElementById('gateBackdrop');
-  const gateJoin = document.getElementById('gateJoin');
-  const gateSkip = document.getElementById('gateSkip');
-
-  function shouldShowGate(){
-    return localStorage.getItem('imftx_gate_done') !== '1';
-  }
-  function showGate(){ gateBackdrop.style.display = 'flex'; }
-  function hideGate(){ gateBackdrop.style.display = 'none'; }
-
-  if(shouldShowGate()) showGate();
-
-  gateJoin?.addEventListener('click', () => {
-    try { window.open(TW_URL, "_blank", "noopener,noreferrer"); }
-    catch(e){ window.location.href = TW_URL; }
-    localStorage.setItem('imftx_gate_done','1');
-    hideGate();
-  });
-
-  gateSkip?.addEventListener('click', () => {
-    localStorage.setItem('imftx_gate_done','1');
-    hideGate();
-  });
-
-  gateBackdrop?.addEventListener('click', (e) => {
-    if(e.target === gateBackdrop) hideGate();
-  });
-
-  // -------- Helpers time --------
-  function pad(n){ return String(n).padStart(2,"0"); }
-  function parseHHMM(str){
-    const s = String(str).trim().toLowerCase().replace("h", ":");
-    let [hh, mm] = s.split(":");
-    hh = parseInt(hh || "0", 10);
-    mm = parseInt((mm ?? "0").replace(/\D/g,'' ) || "0", 10);
-    return { hh, mm };
-  }
-  function fmtCountdown(ms){
-    if(ms <= 0) return "00h 00m 00s";
-    const total = Math.floor(ms / 1000);
-    const h = Math.floor(total / 3600);
-    const m = Math.floor((total % 3600) / 60);
-    const s = total % 60;
-    return `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
-  }
-  function buildStartDate(timeStr){
-    const now = new Date();
-    const {hh, mm} = parseHHMM(timeStr);
-    const d = new Date(now);
-    d.setHours(hh, mm, 0, 0);
-    return d;
-  }
-  function getStatusFor(timeStr){
-    const now = new Date();
-    let start = buildStartDate(timeStr);
-
-    const end = new Date(start.getTime() + 150 * 60 * 1000); // 2h30
-    if(now.getTime() > end.getTime()){
-      start = new Date(start.getTime() + 24 * 60 * 60 * 1000);
-    }
-
-    const end2 = new Date(start.getTime() + 150 * 60 * 1000);
-    if(now.getTime() < start.getTime()){
-      return { state: "countdown", ms: start.getTime() - now.getTime() };
-    }
-    if(now.getTime() >= start.getTime() && now.getTime() <= end2.getTime()){
-      return { state: "live", ms: 0 };
-    }
-    return { state: "countdown", ms: 0 };
-  }
-
-  // -------- Matches --------
-  const MATCHES = [
-    {
-      title: "Real Madrid - Rayo Vallecano",
-      time: "14:00",
-      banner: "https://empire-sport.online/upload/teambanks/3gwmaipdy06pqttqlt2o8rs4rryzo3.png",
-      aLogo: "https://empire-sport.online/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
-      bLogo: "https://empire-sport.online/upload/teams/hi85r5xby90rwanywjwcxijxzq7svh.png",
-      compLogo: "https://empire-sport.online/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-      href: "real-rayo.html"
-    },
-    {
-      title: "OL - LOSC",
-      time: "15:00",
-      banner: "https://empire-sport.online/upload/teambanks/ylteydywkmrc0skuw5qggtgqaoywpu.png",
-      aLogo: "https://empire-sport.online/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png",
-      bLogo: "https://empire-sport.online/upload/teams/8cjgq2dnsdbrdb1bfdfor9qrqp3o1f.png",
-      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "ol-losc.html"
-    },
-    {
-      title: "Manchester United - Fulham",
-      time: "15:00",
-      banner: "https://empire-sport.online/upload/teambanks/o6hv8yxkvwbm7knkj0mwxedp3fcttu.png",
-      aLogo: "https://empire-sport.online/upload/teams/mosfyquovho2tfyvalgqtbzjnhmcv5.png",
-      bLogo: "https://empire-sport.online/upload/teams/kovyrtfgaf3qzkb5zluj5r9g107yil.png",
-      compLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
-      href: "mu-fulham.html"
-    },
-    {
-      title: "Nice - Brest",
-      time: "17:15",
-      banner: "https://empire-sport.online/upload/teambanks/xdw129cqkykdkilusvwbye88zf4j2d.png",
-      aLogo: "https://empire-sport.online/upload/teams/jhe4floxvwpovm1mexcuq4jnzrhwnp.png",
-      bLogo: "https://empire-sport.online/upload/teams/os8aignwizzyij0fofayii3qpxdvjh.png",
-      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "nice-brest.html"
-    },
-    {
-      title: "Tottenham Hotspur - Manchester City",
-      time: "17:30",
-      banner: "https://empire-sport.online/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
-      aLogo: "https://empire-sport.online/upload/teams/nq6xsqf5odoqosdvpfgeyr1b2z1gtb.png",
-      bLogo: "https://empire-sport.online/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
-      compLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
-      href: "tot-city.html"
-    },
-    {
-      title: "Strasbourg - Paris SG",
-      time: "20:45",
-      banner: "https://empire-sport.online/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png",
-      aLogo: "https://empire-sport.online/upload/teams/y5tcqer82p79xnuij4aw6hqjiovisl.png",
-      bLogo: "https://empire-sport.online/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
-      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "stras-psg.html"
-    }
-  ];
-
-  function cardHTML(m, idx){
-    return `
-      <a href="${m.href}" class="block">
-        <article class="match-card">
-          <div class="match-bg" style="background-image:url('${m.banner}')"></div>
-          <div class="match-overlay"></div>
-
-          <div class="absolute left-3 top-3">
-            <span class="timer-pill">
-              <span class="timer-dot" data-dot="${idx}"></span>
-              <span class="timer-text" data-timer="${idx}">--</span>
-            </span>
-          </div>
-
-          <div class="absolute inset-x-0 bottom-0 p-4">
-            <div class="flex items-end justify-between gap-4">
-              <div class="min-w-0 max-w-[72%]">
-                <div class="flex items-center gap-2">
-                  <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
-                  <span class="vs">VS</span>
-                  <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
-                </div>
-
-                <div class="mt-2 flex items-center gap-2">
-                  <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
-                  <div class="min-w-0">
-                    <div class="match-title truncate">${m.title}</div>
-                    <div class="match-sub">Aujourd’hui · ${m.time}</div>
-                  </div>
-                </div>
-              </div>
-
-              <span class="watch-pill">
-                <span class="play">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
-                    <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
-                  </svg>
-                </span>
-                REGARDER
-              </span>
-            </div>
-          </div>
-        </article>
-      </a>
-    `;
-  }
-
-  function render(){
-    const el = document.getElementById('stream-list-principal');
-    if(!el) return;
-    el.innerHTML = MATCHES.map(cardHTML).join('');
-  }
-
-  function tickAll(){
-    MATCHES.forEach((m, idx) => {
-      const st = getStatusFor(m.time);
-      const timerEl = document.querySelector(`[data-timer="${idx}"]`);
-      const dotEl = document.querySelector(`[data-dot="${idx}"]`);
-      if(!timerEl || !dotEl) return;
-
-      if(st.state === "live"){
-        timerEl.textContent = "EN COURS";
-        dotEl.classList.add('live');
-      } else {
-        timerEl.textContent = fmtCountdown(st.ms);
-        dotEl.classList.remove('live');
-      }
-    });
-  }
-
-  document.getElementById('refreshBtn')?.addEventListener('click', () => {
+  // -------- Refresh Button --------
+  document.getElementById('refreshBtn').addEventListener('click', () => {
     NProgress.start();
-    render();
-    tickAll();
     setTimeout(() => NProgress.done(), 350);
   });
-
-  render();
-  tickAll();
-  setInterval(tickAll, 1000);
 </script>
 </body>
 </html>
