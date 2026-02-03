@@ -3,25 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Benfica - Real Madrid</title>
+  <title>IMFTX+ — Arsenal - Chelsea</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
-    html, body { height: 100%; margin: 0; }
+    html, body { height:100%; margin:0; }
     body{
-      font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
       color:#fff;
       overflow-x:hidden;
     }
 
+    /* Fond gris pro */
     .soft-bg{
-      background:
-        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%),
-        #000;
+      background: #2e2e2e;
     }
 
     .player-box{
@@ -41,7 +39,7 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.world/upload/events/kuz9dlbck3p3g4gu5xzbe9z9uffbls.jpg") center/cover no-repeat;
+        url("https://empire-sport.online/upload/events/qpfpxorqkgrzrxrcilmsyobiv4gy4x.jpg") center/cover no-repeat;
     }
 
     .cover-top{
@@ -95,7 +93,6 @@
       line-height:1.1;
       font-style:italic;
       margin-top:3px;
-      text-transform: none;
     }
     .strip-play{
       width:50px;height:50px;
@@ -106,7 +103,6 @@
       transition:.2s;
       background:rgba(0,0,0,.22);
     }
-    .strip-play i{ font-size:19px; }
     .strip-play:hover{ transform:scale(1.08); background:rgba(0,0,0,.35); }
 
     .source-btn{
@@ -122,7 +118,6 @@
       border:1px solid rgba(255,255,255,.10);
       color:#fff;
     }
-    .source-btn:hover{ opacity:.95; }
 
     .watch-bar{
       border-radius:18px;
@@ -156,12 +151,6 @@
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .watch-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-shrink:0;
-    }
     .channel-logo{
       width:90px;
       height:auto;
@@ -193,7 +182,6 @@
   <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
-
       <a href="index.html"
          class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
         <i class="fa-solid fa-arrow-left"></i> Retour
@@ -212,18 +200,18 @@
 
         <div class="cover-top">
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/en/a/a2/SL_Benfica_logo.svg"
-               alt="Benfica">
+               src="https://empire-sport.online/upload/teams/8ut7uxa2csqdcpq7dpdez1f9dmfoj6.png"
+               alt="Chelsea">
           <span class="vs">VS</span>
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg"
-               alt="Real Madrid">
+               src="https://empire-sport.online/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png"
+               alt="Arsenal">
         </div>
 
         <div class="cover-strip">
           <div>
             <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub">Benfica<br>Real Madrid</div>
+            <div class="strip-sub">Chelsea<br>Arsenal</div>
           </div>
 
           <div class="strip-play">
@@ -238,7 +226,7 @@
     <section class="mt-5 flex flex-wrap gap-3">
       <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
       <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
-      <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
+      <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">🇧🇬 ( 1440p )</button>
     </section>
 
     <div id="externalLink" class="hidden mt-4 text-center">
@@ -250,18 +238,18 @@
 
     <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Ligue des Champions">
+        <img src="https://empire-sport.online/upload/leagues/ovb56nsw5ij45mdzrtng2vjekoiy73.png" alt="Compétition">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
-          <div class="big">Benfica — Real Madrid</div>
-          <div class="small">Ligue des Champions · 21:00</div>
+          <div class="big">Chelsea — Arsenal</div>
+          <div class="small">EFL cup · 21:00</div>
         </div>
       </div>
 
       <div class="watch-right">
         <img class="channel-logo"
-             src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg"
-             alt="CANAL+">
+             src="https://empire-sport.online/upload/chaines/7xpt7ggvhhnf9ix4y88ovccr8xagls.png"
+             alt="Chaîne">
       </div>
     </section>
 
@@ -274,9 +262,9 @@
 
   <script>
     const SOURCES = {
-      1: "https://bolaloca.my/player/4/34",
-      2: "https://bolaloca.my/player/2/34",
-      3: "https://bolaloca.my/player/3/34"
+      1: "https://cdn-live.tv/api/v1/channels/player/?name=diema+sport+2&code=bg&user=cdnlivetv&plan=free",
+      2: "https://cdn-live.tv/api/v1/channels/player/?name=digi+sport+2&code=ro&user=cdnlivetv&plan=free",
+      3: "https://cdn-live.tv/api/v1/channels/player/?name=diema+sport+2&code=bg&user=cdnlivetv&plan=free"
     };
 
     function setActive(id){
@@ -299,7 +287,7 @@
 
       const target = document.getElementById("videoTarget");
       target.innerHTML = `
-        <iframe
+        <iframe 
           id="streamFrame"
           src="${SOURCES[id]}"
           allowfullscreen
@@ -308,14 +296,13 @@
           allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
           referrerpolicy="origin"
           sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-        </iframe>
-      `;
+        </iframe>`;
 
       setTimeout(() => {
         const iframe = document.getElementById("streamFrame");
-        if(!iframe) return;
+        if (!iframe) return;
         try { iframe.contentWindow.location.href; }
-        catch(e){ ext.classList.remove("hidden"); }
+        catch (e) { ext.classList.remove("hidden"); }
       }, 2000);
     }
   </script>
