@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer-when-downgrade"/>
 
   <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@latest" url="https://google.com"></script>
@@ -21,13 +21,12 @@
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/nprogress/nprogress.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/nprogress/nprogress.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/nprogress/nprogress.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     #nprogress .bar { top: 64px !important; }
     #nprogress .spinner { top: 75px !important; }
-
     html, body { font-family: 'Outfit', sans-serif; }
 
     .dark body{
@@ -38,19 +37,17 @@
 
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb {
+    ::-webkit-scrollbar-thumb{
       background-color: rgba(100, 100, 100, 0.4);
       border-radius: 10px;
       border: 2px solid transparent;
       background-clip: content-box;
     }
     ::-webkit-scrollbar-thumb:hover { background-color: rgba(100, 100, 100, 0.6); }
-    * { scrollbar-width: thin; scrollbar-color: rgba(100, 100, 100, 0.4) transparent; }
-
+    *{ scrollbar-width: thin; scrollbar-color: rgba(100, 100, 100, 0.4) transparent; }
     ::selection { background-color: #444; color: white; }
-
-    body { display:flex; flex-direction:column; }
-    button * { pointer-events:none; }
+    body{ display:flex; flex-direction:column; }
+    button *{ pointer-events:none; }
 
     /* --------- Match Cards --------- */
     .match-card{
@@ -89,59 +86,32 @@
       font-size:12px;
       line-height:1;
       color: rgba(255,255,255,.92);
+      white-space: nowrap;
     }
+    /* DOT ORANGE (comme tu veux) */
     .timer-dot{
       width:8px;height:8px;border-radius:999px;background:#f59e0b;
       box-shadow:0 0 0 3px rgba(245,158,11,.12);
     }
-    .timer-dot.live{
-      background:#22c55e;
-      box-shadow:0 0 0 3px rgba(34,197,94,.14);
-    }
     .timer-text{ font-variant-numeric: tabular-nums; }
-
-    .team-logo{
-      width:30px;height:30px;
-      display:flex;align-items:center;justify-content:center;
-      flex:0 0 auto;
+    .timer-live{
+      color:#22c55e !important;
     }
-    .team-logo img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      display:block;
-      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
-    }
-    .vs{
-      font-weight:800;
-      font-size:12px;
-      color: rgba(255,255,255,.68);
-      letter-spacing:.02em;
-    }
-    .comp-wrap{
-      width:26px;height:26px;
-      display:flex;align-items:center;justify-content:center;
-      flex:0 0 auto;
-    }
-    .comp-wrap img{
-      width:100%;height:100%;
-      object-fit:contain;
-      filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+    .timer-dot-live{
+      background:#22c55e !important;
+      box-shadow:0 0 0 3px rgba(34,197,94,.16) !important;
     }
 
-    .match-title{
-      font-size:15px;
-      font-weight:500;
-      line-height:1.15;
-      color: rgba(255,255,255,.92);
-    }
-    .match-sub{
-      font-size:12px;
-      font-weight:600;
-      color: rgba(255,255,255,.70);
-      line-height:1.25;
-    }
+    .team-logo{ width:30px;height:30px; display:flex;align-items:center;justify-content:center; flex:0 0 auto; }
+    .team-logo img{ width:100%; height:100%; object-fit:contain; display:block; filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)); }
+    .vs{ font-weight:800; font-size:12px; color: rgba(255,255,255,.68); letter-spacing:.02em; }
+    .comp-wrap{ width:26px;height:26px; display:flex;align-items:center;justify-content:center; flex:0 0 auto; }
+    .comp-wrap img{ width:100%; height:100%; object-fit:contain; filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)); }
 
+    .match-title{ font-size:15px; font-weight:500; line-height:1.15; color: rgba(255,255,255,.92); }
+    .match-sub{ font-size:12px; font-weight:600; color: rgba(255,255,255,.70); line-height:1.25; }
+
+    /* bouton regarder plus petit */
     .watch-pill{
       border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
@@ -150,7 +120,7 @@
       color:#fff;
       font-weight:800;
       font-size:12px;
-      padding:.45rem .70rem;
+      padding:.42rem .70rem;
       display:inline-flex;
       align-items:center;
       gap:.45rem;
@@ -169,10 +139,8 @@
     @media (max-width: 640px){
       .team-logo{ width:28px; height:28px; }
       .match-title{ font-size:14px; }
-      .watch-pill{ font-size:12px; padding:.45rem .65rem; }
-      .play{ width:26px; height:26px; }
+      .watch-pill{ font-size:12px; padding:.40rem .62rem; }
     }
-
   </style>
 </head>
 
@@ -182,7 +150,8 @@
 <!-- NAV -->
 <nav class="sticky top-0 z-10 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-700 shadow-sm">
   <div class="max-w-screen-2xl mx-auto py-2 px-5 md:px-24 h-16 flex items-center justify-between">
-    <button id="burgerBtn" class="flex md:hidden w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
+
+    <button id="burgerBtn" class="flex md:hidden w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200" aria-label="Menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
@@ -192,86 +161,322 @@
       <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
     </button>
 
-    <div class="h-11 flex items-center gap-2 md:gap-5 text-xl">
+    <div class="h-11 flex items-center gap-2 md:gap-4 text-xl">
       <div class="relative flex group">
         <a href="/shop" class="w-auto h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <div class="flex items-center gap-2">
-            <span class="text-sm font-semibold">NOTRE IPTV 1 AN À 50€ ICI</span>
-          </div>
+          <span class="text-sm font-semibold">NOTRE IPTV 1 AN À 50€ ICI</span>
         </a>
       </div>
+
+      <!-- Telegram -->
+      <a id="nav-btn-telegram" href="#" target="_blank"
+         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+         aria-label="Telegram">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M9.04 15.31 8.9 19.5c.57 0 .82-.25 1.12-.55l2.69-2.57 5.58 4.08c1.02.56 1.75.27 2-.94L23.9 4.7c.31-1.44-.55-2-1.56-1.63L1.55 10.86c-1.41.55-1.39 1.34-.24 1.7l5.32 1.66L19.1 6.5c.59-.39 1.13-.18.69.21"/>
+        </svg>
+      </a>
+
+      <!-- Discord -->
+      <a id="nav-btn-discord" href="#" target="_blank"
+         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+         aria-label="Discord">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.736 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04.106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
+        </svg>
+      </a>
+
+      <!-- X -->
+      <a id="nav-btn-twitter" href="#" target="_blank"
+         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+         aria-label="X">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/>
+        </svg>
+      </a>
+
+      <!-- Theme toggle (icône, pas emoji) -->
+      <button id="theme-toggle"
+              class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+              aria-label="Changer le thème">
+        <svg id="icon-sun" class="w-6 h-6 hidden dark:block" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-16h1v3h-1V2Zm0 19h1v3h-1v-3ZM2 12h3v1H2v-1Zm19 0h3v1h-3v-1ZM4.22 4.22l2.12 2.12-.7.7L3.52 4.92l.7-.7Zm14.02 14.02 2.12 2.12-.7.7-2.12-2.12.7-.7ZM19.78 4.22l.7.7-2.12 2.12-.7-.7 2.12-2.12ZM5.64 17.66l.7.7-2.12 2.12-.7-.7 2.12-2.12Z"/>
+        </svg>
+        <svg id="icon-moon" class="w-6 h-6 block dark:hidden" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+        </svg>
+      </button>
     </div>
   </div>
 </nav>
 
+<!-- SIDEBAR -->
+<aside id="sidebar" class="fixed top-0 left-0 h-screen w-60 bg-white dark:bg-zinc-950 p-6 flex flex-col justify-between border-r border-zinc-800 z-20 transform -translate-x-full transition-transform duration-300 ease-in-out">
+  <div>
+    <div class="h-11 flex justify-center gap-1">
+      <div class="text-2xl font-extrabold">IMFTX+</div>
+    </div>
+
+    <div class="w-full mt-8">
+      <a id="side-btn-telegram" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Telegram</a>
+      <a id="side-btn-discord" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Discord</a>
+      <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">X</a>
+    </div>
+  </div>
+
+  <div class="text-center text-sm text-zinc-500">Made with ❤️</div>
+</aside>
+
 <!-- CONTENT -->
 <div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col items-center justify-center md:px-24 p-5 transition-all duration-300 ease-out">
   <div class="w-full flex flex-col gap-12 mt-10">
+
+    <!-- STREAMS DISPONIBLES -->
     <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
-          <div class="w-3 h-3 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(255,193,7,0.7)]"></div>
-          <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Streams principaux</h2>
+          <!-- pastille VERTE (comme demandé) -->
+          <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)]"></div>
+          <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Streams disponibles</h2>
         </div>
 
-        <button type="button" id="refreshBtn" class="flex items-center justify-center w-9 h-9 rounded-xl bg-amber-500/90 hover:bg-amber-500 text-black transition-all duration-200 active:scale-95 shadow-md" aria-label="Rafraîchir">↻</button>
+        <button type="button" id="refreshBtn"
+          class="flex items-center justify-center w-9 h-9 rounded-xl bg-green-500/90 hover:bg-green-500 text-black transition-all duration-200 active:scale-95 shadow-md"
+          aria-label="Rafraîchir">↻</button>
       </div>
 
-      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <!-- Match Udinese vs Roma -->
-        <a href="udinese-roma.html" class="block">
-          <article class="match-card">
-            <div class="match-bg" style="background-image:url('https://empire-sport.online/upload/banners/roma-vs-genoa.png')"></div>
-            <div class="match-overlay"></div>
+      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+    </section>
 
-            <div class="absolute left-3 top-3">
-              <span class="timer-pill">
-                <span class="timer-dot"></span>
-                <span class="timer-text">--</span>
-              </span>
-            </div>
+    <!-- STREAMS BACKUPS -->
+    <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-3 h-3 rounded-full bg-zinc-500"></div>
+        <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Streams backups</h2>
+      </div>
 
-            <div class="absolute inset-x-0 bottom-0 p-4">
-              <div class="flex items-end justify-between gap-4">
-                <div class="min-w-0 max-w-[72%]">
-                  <div class="flex items-center gap-2">
-                    <div class="team-logo"><img src="https://empire-sport.online/upload/teams/4nbx93aqgzfapkel3fotjhbbfxwty3.png" alt="Udinese"></div>
-                    <span class="vs">VS</span>
-                    <div class="team-logo"><img src="https://empire-sport.online/upload/teams/zpnuspg97icikleby6tuqnsjwoqbap.png" alt="Roma"></div>
-                  </div>
-
-                  <div class="mt-2 flex items-center gap-2">
-                    <div class="comp-wrap"><img src="https://empire-sport.online/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png" alt="Compétition"></div>
-                    <div class="min-w-0">
-                      <div class="match-title truncate">Udinese - Roma</div>
-                      <div class="match-sub">Aujourd'hui · 20h45</div>
-                    </div>
-                  </div>
-                </div>
-
-                <span class="watch-pill">
-                  <span class="play">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
-                      <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
-                    </svg>
-                  </span>
-                  REGARDER
-                </span>
-              </div>
-            </div>
-          </article>
-        </a>
+      <div id="stream-list-bk" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div class="aspect-[16/9] w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
+        <div class="aspect-[16/9] hidden md:block w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
+        <div class="aspect-[16/9] hidden lg:block w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
+        <div class="aspect-[16/9] hidden xl:block w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
       </div>
     </section>
+
   </div>
 </div>
 
 <script>
-  // -------- Refresh Button --------
-  document.getElementById('refreshBtn').addEventListener('click', () => {
+  // -------- Sidebar toggle --------
+  const burgerBtn = document.getElementById('burgerBtn');
+  const sidebar = document.getElementById('sidebar');
+  function openSidebar(){ sidebar.classList.remove('-translate-x-full'); }
+  function closeSidebar(){ sidebar.classList.add('-translate-x-full'); }
+  burgerBtn?.addEventListener('click', () => {
+    const isClosed = sidebar.classList.contains('-translate-x-full');
+    isClosed ? openSidebar() : closeSidebar();
+  });
+  document.addEventListener('click', (e) => {
+    if (!sidebar) return;
+    const isOpen = !sidebar.classList.contains('-translate-x-full');
+    if (!isOpen) return;
+    if (e.target.closest('#sidebar') || e.target.closest('#burgerBtn')) return;
+    closeSidebar();
+  });
+
+  // -------- Theme toggle --------
+  const toggle = document.getElementById('theme-toggle');
+  function setTheme(mode){
+    if(mode === 'dark'){
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme','dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme','light');
+    }
+  }
+  toggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(isDark ? 'light' : 'dark');
+  });
+
+  // -------- Match data (4 matchs) --------
+  const MATCHES = [
+    {
+      title: "Bologna - AC Milan",
+      time: "20:45",
+      banner: "https://empire-sport.online/upload/teambanks/qbru1jzt91fdynafnprejydtyws4tj.png",
+      aLogo: "https://empire-sport.online/upload/teams/st0chboaaetaugwxkwfbilikuheagq.png",
+      bLogo: "https://empire-sport.online/upload/teams/ppdjkulnwa1qd4c6vzrng0bfe9t9np.png",
+      compLogo: "https://empire-sport.online/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
+      href: "bologna-milan.html"
+    },
+    {
+      title: "Albacete - Barcelona",
+      time: "21:00",
+      banner: "https://empire-sport.online/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
+      aLogo: "https://empire-sport.online/upload/teams/asm52gjvhzyppwklejlywkeahpsgpp.png",
+      bLogo: "https://empire-sport.online/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
+      compLogo: "https://empire-sport.online/upload/leagues/ifm4fzw0zm4vfe7xf0pzviqo0cchbv.png",
+      href: "albacete-barca.html"
+    },
+    {
+      title: "Arsenal - Chelsea",
+      time: "21:00",
+      banner: "https://empire-sport.online/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
+      aLogo: "https://empire-sport.online/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
+      bLogo: "https://empire-sport.online/upload/teams/8ut7uxa2csqdcpq7dpdez1f9dmfoj6.png",
+      compLogo: "https://empire-sport.online/upload/leagues/ovb56nsw5ij45mdzrtng2vjekoiy73.png",
+      href: "arsenal-chelsea.html"
+    },
+    {
+      title: "Marseille - Rennes",
+      time: "21:10",
+      banner: "https://empire-sport.online/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png",
+      aLogo: "https://empire-sport.online/upload/teams/5box72sxig3lzrlh1xkj44xqfw9j41.png",
+      bLogo: "https://empire-sport.online/upload/teams/1thklunb7wqcqrni6zoml4zrukfonj.png",
+      compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
+      href: "om-rennes.html"
+    }
+  ];
+
+  // -------- Timer logic: countdown -> LIVE (2h30) -> reset --------
+  const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000); // 2h30
+
+  function parseHHMM(hhmm){
+    const [h,m] = hhmm.split(':').map(Number);
+    return {h, m};
+  }
+
+  function getNextKickoff(timeHHMM){
+    const now = new Date();
+    const {h,m} = parseHHMM(timeHHMM);
+    const t = new Date(now);
+    t.setHours(h, m, 0, 0);
+
+    // si le "cycle" (match + 2h30) est déjà terminé, on décale au lendemain
+    if (now.getTime() > (t.getTime() + LIVE_WINDOW_MS)) {
+      t.setDate(t.getDate() + 1);
+      t.setHours(h, m, 0, 0);
+    }
+    return t;
+  }
+
+  function formatRemaining(ms){
+    if(ms <= 0) return "00h 00m 00s";
+    const total = Math.floor(ms / 1000);
+    const hh = Math.floor(total / 3600);
+    const mm = Math.floor((total % 3600) / 60);
+    const ss = total % 60;
+    const pad = (n) => String(n).padStart(2,"0");
+    return `${pad(hh)}h ${pad(mm)}m ${pad(ss)}s`;
+  }
+
+  function cardHTML(m, idx){
+    // data-kickoff = hh:mm
+    return `
+      <a href="${m.href}" class="block">
+        <article class="match-card">
+          <div class="match-bg" style="background-image:url('${m.banner}')"></div>
+          <div class="match-overlay"></div>
+
+          <div class="absolute left-3 top-3">
+            <span class="timer-pill" data-pill="${idx}">
+              <span class="timer-dot" data-dot="${idx}"></span>
+              <span class="timer-text" data-timer="${idx}">--</span>
+            </span>
+          </div>
+
+          <div class="absolute inset-x-0 bottom-0 p-4">
+            <div class="flex items-end justify-between gap-4">
+              <div class="min-w-0 max-w-[72%]">
+                <div class="flex items-center gap-2">
+                  <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
+                  <span class="vs">VS</span>
+                  <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
+                </div>
+
+                <div class="mt-2 flex items-center gap-2">
+                  <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
+                  <div class="min-w-0">
+                    <div class="match-title truncate">${m.title}</div>
+                    <div class="match-sub">Aujourd’hui · ${m.time}</div>
+                  </div>
+                </div>
+              </div>
+
+              <span class="watch-pill">
+                <span class="play">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
+                    <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
+                  </svg>
+                </span>
+                REGARDER
+              </span>
+            </div>
+          </div>
+        </article>
+      </a>
+    `;
+  }
+
+  function render(){
+    const el = document.getElementById('stream-list-principal');
+    if(!el) return;
+    el.innerHTML = MATCHES.map((m,i) => cardHTML(m,i)).join('');
+  }
+
+  function tick(){
+    const now = Date.now();
+
+    MATCHES.forEach((m, idx) => {
+      const kickoff = getNextKickoff(m.time).getTime();
+      const endLive = kickoff + LIVE_WINDOW_MS;
+
+      const timerEl = document.querySelector(`[data-timer="${idx}"]`);
+      const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
+      const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
+
+      if(!timerEl || !pillEl || !dotEl) return;
+
+      if (now < kickoff) {
+        // countdown normal (orange)
+        const diff = kickoff - now;
+        timerEl.textContent = formatRemaining(diff);
+        pillEl.classList.remove('timer-live');
+        timerEl.classList.remove('timer-live');
+        dotEl.classList.remove('timer-dot-live');
+      } else if (now >= kickoff && now <= endLive) {
+        // EN COURS (vert)
+        timerEl.textContent = "EN COURS";
+        pillEl.classList.add('timer-live');
+        timerEl.classList.add('timer-live');
+        dotEl.classList.add('timer-dot-live');
+      } else {
+        // cycle fini -> la fonction getNextKickoff() décale au lendemain automatiquement,
+        // donc au prochain tick, on repasse en countdown.
+        const next = getNextKickoff(m.time).getTime();
+        const diff = next - now;
+        timerEl.textContent = formatRemaining(diff);
+        pillEl.classList.remove('timer-live');
+        timerEl.classList.remove('timer-live');
+        dotEl.classList.remove('timer-dot-live');
+      }
+    });
+  }
+
+  // refresh button
+  document.getElementById('refreshBtn')?.addEventListener('click', () => {
     NProgress.start();
+    render();
+    tick();
     setTimeout(() => NProgress.done(), 350);
   });
+
+  render();
+  tick();
+  setInterval(tick, 1000);
 </script>
+
 </body>
 </html>
