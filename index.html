@@ -49,6 +49,87 @@
     body{ display:flex; flex-direction:column; }
     button *{ pointer-events:none; }
 
+    /* ===== Intro / Pop-up (Twitter) ===== */
+    .gate{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(6px);
+    }
+    .gate-card{
+      width: min(980px, 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(255,0,0,.55);
+      box-shadow: 0 30px 120px rgba(0,0,0,.65);
+      background:
+        radial-gradient(900px 420px at 50% 30%, rgba(255,0,0,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      overflow: hidden;
+    }
+    .gate-inner{
+      padding: 26px 24px 22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap: 14px;
+    }
+    .gate-avatar{
+      width: 92px;
+      height: 92px;
+      border-radius: 18px; /* carré arrondi */
+      object-fit: cover;
+      box-shadow: 0 14px 55px rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .gate-title{
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: .04em;
+      color:#fff;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-top: 6px;
+    }
+    .gate-text{
+      color: rgba(255,255,255,.85);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.35;
+      max-width: 720px;
+    }
+    .gate-btn{
+      width: min(720px, 100%);
+      height: 56px;
+      border-radius: 999px;
+      background: #ff0000;
+      color:#fff;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 20px 70px rgba(255,0,0,.22);
+      transition: transform .15s ease, filter .15s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+    }
+    .gate-btn:hover{ filter: brightness(1.06); }
+    .gate-btn:active{ transform: scale(.985); }
+    .gate-skip{
+      margin-top: 6px;
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      text-decoration: underline;
+      cursor: pointer;
+      user-select: none;
+    }
+
     /* --------- Match Cards --------- */
     .match-card{
       position:relative;
@@ -88,15 +169,13 @@
       color: rgba(255,255,255,.92);
       white-space: nowrap;
     }
-    /* DOT ORANGE (comme tu veux) */
+    /* DOT ORANGE */
     .timer-dot{
       width:8px;height:8px;border-radius:999px;background:#f59e0b;
       box-shadow:0 0 0 3px rgba(245,158,11,.12);
     }
     .timer-text{ font-variant-numeric: tabular-nums; }
-    .timer-live{
-      color:#22c55e !important;
-    }
+    .timer-live{ color:#22c55e !important; }
     .timer-dot-live{
       background:#22c55e !important;
       box-shadow:0 0 0 3px rgba(34,197,94,.16) !important;
@@ -140,12 +219,33 @@
       .team-logo{ width:28px; height:28px; }
       .match-title{ font-size:14px; }
       .watch-pill{ font-size:12px; padding:.40rem .62rem; }
+      .gate-title{ font-size: 40px; }
     }
   </style>
 </head>
 
 <body data-page="index" class="min-h-screen bg-white text-black dark:bg-zinc-900 dark:text-white flex flex-col font-[Outfit] transition-colors duration-200">
 <noscript>You need to enable JavaScript to run this website.</noscript>
+
+<!-- POP-UP TWITTER -->
+<div id="gate" class="gate" style="display:none">
+  <div class="gate-card">
+    <div class="gate-inner">
+      <img class="gate-avatar" src="https://pbs.twimg.com/profile_images/1610301960493703168/rDZ9v5xZ_400x400.jpg" alt="IMFTX">
+      <div class="gate-title">IMFTX</div>
+      <div class="gate-text">
+        Rejoins mon post sur <b>X</b> pour soutenir le site :<br>
+        <b>RT + abonne-toi au compte</b>, puis reviens ici ✅
+      </div>
+
+      <a id="gateOpen" class="gate-btn" href="https://x.com/imftxvw/status/2018021008729375186" target="_blank" rel="noopener">
+        OUVRIR LE POST
+      </a>
+
+      <div id="gateSkip" class="gate-skip">J’ai déjà fait</div>
+    </div>
+  </div>
+</div>
 
 <!-- NAV -->
 <nav class="sticky top-0 z-10 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-700 shadow-sm">
@@ -195,7 +295,7 @@
         </svg>
       </a>
 
-      <!-- Theme toggle (icône, pas emoji) -->
+      <!-- Theme toggle -->
       <button id="theme-toggle"
               class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
               aria-label="Changer le thème">
@@ -224,20 +324,18 @@
     </div>
   </div>
 
-  <div class="text-center text-sm text-zinc-500">Made with IMFTX</div>
+  <div class="text-center text-sm text-zinc-500">Made with ❤️</div>
 </aside>
 
 <!-- CONTENT -->
 <div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col items-center justify-center md:px-24 p-5 transition-all duration-300 ease-out">
   <div class="w-full flex flex-col gap-12 mt-10">
 
-    <!-- STREAMS DISPONIBLES -->
     <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
-          <!-- pastille VERTE (comme demandé) -->
           <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)]"></div>
-          <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Live disponibles</h2>
+          <h2 class="text-xl font-bold text-zinc-900 dark:text-white">Streams disponibles</h2>
         </div>
 
         <button type="button" id="refreshBtn"
@@ -267,6 +365,28 @@
 </div>
 
 <script>
+  // ===== Gate (Twitter pop-up) =====
+  const GATE_KEY = "imftx_gate_done_v1";
+  const gate = document.getElementById("gate");
+  const gateSkip = document.getElementById("gateSkip");
+  const gateOpen = document.getElementById("gateOpen");
+
+  function showGate(){
+    if(!gate) return;
+    gate.style.display = "grid";
+    document.body.style.overflow = "hidden";
+  }
+  function hideGate(){
+    if(!gate) return;
+    gate.style.display = "none";
+    document.body.style.overflow = "";
+    localStorage.setItem(GATE_KEY, "1");
+  }
+
+  if (!localStorage.getItem(GATE_KEY)) showGate();
+  gateSkip?.addEventListener("click", hideGate);
+  gateOpen?.addEventListener("click", () => { /* ne ferme pas auto */ });
+
   // -------- Sidebar toggle --------
   const burgerBtn = document.getElementById('burgerBtn');
   const sidebar = document.getElementById('sidebar');
@@ -300,47 +420,65 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // -------- Match data (4 matchs) --------
+  // ====== MATCHES (mis à jour avec tes logos + nouveaux matchs) ======
   const MATCHES = [
     {
-      title: "Bologna - AC Milan",
-      time: "20:45",
-      banner: "https://empire-sport.online/upload/teambanks/qbru1jzt91fdynafnprejydtyws4tj.png",
-      aLogo: "https://empire-sport.online/upload/teams/st0chboaaetaugwxkwfbilikuheagq.png",
-      bLogo: "https://empire-sport.online/upload/teams/ppdjkulnwa1qd4c6vzrng0bfe9t9np.png",
-      compLogo: "https://empire-sport.online/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
-      href: "bologna-milan.html"
-    },
-    {
-      title: "Albacete - Barcelona",
-      time: "21:00",
-      banner: "https://empire-sport.online/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
-      aLogo: "https://empire-sport.online/upload/teams/asm52gjvhzyppwklejlywkeahpsgpp.png",
-      bLogo: "https://empire-sport.online/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
-      compLogo: "https://empire-sport.online/upload/leagues/ifm4fzw0zm4vfe7xf0pzviqo0cchbv.png",
-      href: "albacete-barca.html"
-    },
-    {
-      title: "Arsenal - Chelsea",
-      time: "21:00",
-      banner: "https://empire-sport.online/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
-      aLogo: "https://empire-sport.online/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
-      bLogo: "https://empire-sport.online/upload/teams/8ut7uxa2csqdcpq7dpdez1f9dmfoj6.png",
-      compLogo: "https://empire-sport.online/upload/leagues/ovb56nsw5ij45mdzrtng2vjekoiy73.png",
-      href: "arsenal-chelsea.html"
-    },
-    {
-      title: "Marseille - Rennes",
-      time: "21:10",
-      banner: "https://empire-sport.online/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png",
-      aLogo: "https://empire-sport.online/upload/teams/5box72sxig3lzrlh1xkj44xqfw9j41.png",
-      bLogo: "https://empire-sport.online/upload/teams/1thklunb7wqcqrni6zoml4zrukfonj.png",
+      title: "Lyon - Laval",
+      time: "20:30",
+      banner: "https://empire-sport.online/upload/teambanks/ylteydywkmrc0skuw5qggtgqaoywpu.png",
+      aLogo: "https://empire-sport.online/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png",
+      bLogo: "https://empire-sport.online/upload/teams/hf4zrofabmdpps9zzsiaxhjcwnjzzk.png",
       compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
-      href: "om-rennes.html"
+      href: "lyon-laval.html"
+    },
+    {
+      title: "Nice - Montpellier",
+      time: "20:30",
+      banner: "https://empire-sport.online/upload/teambanks/xdw129cqkykdkilusvwbye88zf4j2d.png",
+      aLogo: "https://empire-sport.online/upload/teams/jhe4floxvwpovm1mexcuq4jnzrhwnp.png",
+      bLogo: "https://empire-sport.online/upload/teams/f8az692pzahh33xe0bujwuoitrcalg.png",
+      compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
+      href: "nice-montpellier.html"
+    },
+    {
+      title: "Lorient - Paris FC",
+      time: "20:30",
+      banner: "https://empire-sport.online/upload/banners/paris-fc-vs-auxerre.png",
+      aLogo: "https://empire-sport.online/upload/teams/l6tjesaxd015u6vjj8ybv6l5k78fqm.png",
+      bLogo: "https://empire-sport.online/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png",
+      compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
+      href: "lorient-parisfc.html"
+    },
+    {
+      title: "Troyes - Lens",
+      time: "21:00",
+      banner: "https://empire-sport.online/upload/teambanks/539s1pm6c5uacewa39e37rhhtiem00.png",
+      aLogo: "https://empire-sport.online/upload/teams/rsxaqgwzzuzmni6bnhn476tferjsfp.png",
+      bLogo: "https://empire-sport.online/upload/teams/qgwro2iyxo1vba0bcib2q1yddk3fxr.png",
+      compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
+      href: "troyes-lens.html"
+    },
+    {
+      title: "Manchester City - Newcastle United",
+      time: "21:00",
+      banner: "https://empire-sport.online/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
+      aLogo: "https://empire-sport.online/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
+      bLogo: "https://empire-sport.online/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
+      compLogo: "https://empire-sport.online/upload/leagues/ovb56nsw5ij45mdzrtng2vjekoiy73.png",
+      href: "city-newcastle.html"
+    },
+    {
+      title: "Inter - Torino",
+      time: "21:00",
+      banner: "https://empire-sport.online/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
+      aLogo: "https://empire-sport.online/upload/teams/ig0sk72cx0fakug4fzkfj4hay33pwr.png",
+      bLogo: "https://empire-sport.online/upload/teams/m2um3jfutj6nwpztwjzupdli2fhf0o.png",
+      compLogo: "https://empire-sport.online/upload/leagues/xposittvw2zwq2l7fzg70wslefd5au.png",
+      href: "inter-torino.html"
     }
   ];
 
-  // -------- Timer logic: countdown -> LIVE (2h30) -> reset --------
+  // ===== Timer logic: countdown -> LIVE (2h30) -> reset =====
   const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000); // 2h30
 
   function parseHHMM(hhmm){
@@ -354,7 +492,6 @@
     const t = new Date(now);
     t.setHours(h, m, 0, 0);
 
-    // si le "cycle" (match + 2h30) est déjà terminé, on décale au lendemain
     if (now.getTime() > (t.getTime() + LIVE_WINDOW_MS)) {
       t.setDate(t.getDate() + 1);
       t.setHours(h, m, 0, 0);
@@ -373,7 +510,6 @@
   }
 
   function cardHTML(m, idx){
-    // data-kickoff = hh:mm
     return `
       <a href="${m.href}" class="block">
         <article class="match-card">
@@ -440,21 +576,17 @@
       if(!timerEl || !pillEl || !dotEl) return;
 
       if (now < kickoff) {
-        // countdown normal (orange)
         const diff = kickoff - now;
         timerEl.textContent = formatRemaining(diff);
         pillEl.classList.remove('timer-live');
         timerEl.classList.remove('timer-live');
         dotEl.classList.remove('timer-dot-live');
       } else if (now >= kickoff && now <= endLive) {
-        // EN COURS (vert)
         timerEl.textContent = "EN COURS";
         pillEl.classList.add('timer-live');
         timerEl.classList.add('timer-live');
         dotEl.classList.add('timer-dot-live');
       } else {
-        // cycle fini -> la fonction getNextKickoff() décale au lendemain automatiquement,
-        // donc au prochain tick, on repasse en countdown.
         const next = getNextKickoff(m.time).getTime();
         const diff = next - now;
         timerEl.textContent = formatRemaining(diff);
@@ -465,7 +597,6 @@
     });
   }
 
-  // refresh button
   document.getElementById('refreshBtn')?.addEventListener('click', () => {
     NProgress.start();
     render();
@@ -480,5 +611,3 @@
 
 </body>
 </html>
-
-
