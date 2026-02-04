@@ -3,23 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Bologna - Milan</title>
+  <title>IMFTX+ — Lyon - Laval</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
-    html, body { height:100%; margin:0; }
+    html, body { height: 100%; margin: 0; }
     body{
-      font-family:'Outfit',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:#fff;
       overflow-x:hidden;
     }
 
-    /* Fond gris pro */
+    /* ✅ FOND GRIS IDENTIQUE "INDEX" (vibe dark/grey + glow) */
     .soft-bg{
-      background: #2e2e2e;
+      background:
+        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.08), transparent 62%),
+        radial-gradient(900px 520px at 20% 90%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(135deg, #16181c 0%, #111317 45%, #0c0e12 100%);
+      position:relative;
+    }
+    /* léger grain comme sur un fond “pro” */
+    .soft-bg:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.25;
     }
 
     .player-box{
@@ -39,7 +54,7 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.online/upload/events/wdics04ak12vgoc7qq4nirex7rko51.jpg") center/cover no-repeat;
+        url("https://empire-sport.online/upload/events/fhpto0awj61qxo1cxyeyrjobbc2ns8.jpg") center/cover no-repeat;
     }
 
     .cover-top{
@@ -103,6 +118,7 @@
       transition:.2s;
       background:rgba(0,0,0,.22);
     }
+    .strip-play i{ font-size:19px; }
     .strip-play:hover{ transform:scale(1.08); background:rgba(0,0,0,.35); }
 
     .source-btn{
@@ -118,6 +134,7 @@
       border:1px solid rgba(255,255,255,.10);
       color:#fff;
     }
+    .source-btn:hover{ opacity:.95; }
 
     .watch-bar{
       border-radius:18px;
@@ -151,6 +168,7 @@
       overflow:hidden;
       text-overflow:ellipsis;
     }
+    .watch-right{ flex-shrink:0; }
     .channel-logo{
       width:90px;
       height:auto;
@@ -182,6 +200,7 @@
   <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
+
       <a href="index.html"
          class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
         <i class="fa-solid fa-arrow-left"></i> Retour
@@ -191,27 +210,31 @@
 
   <main class="max-w-screen-2xl mx-auto px-6 py-10">
 
+    <!-- PLAYER -->
     <section class="player-box w-full aspect-video">
 
+      <!-- COVER -->
       <div id="cover" class="cover" onclick="loadVideo(1)">
+
         <div style="position:absolute;top:18px;right:18px;">
-          <span class="pill"><span class="dot"></span>20:45</span>
+          <span class="pill"><span class="dot"></span>20:30</span>
         </div>
 
         <div class="cover-top">
+          <!-- Logos équipes (tu peux changer si tu veux) -->
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/fr/f/fb/Logo_Bologna_FC_-_2018.svg"
-               alt="Bologna">
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c6/Olympique_lyonnais.svg/240px-Olympique_lyonnais.svg.png"
+               alt="Lyon">
           <span class="vs">VS</span>
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg"
-               alt="Milan">
+               src="https://upload.wikimedia.org/wikipedia/fr/thumb/8/85/Stade_Lavallois_Mayenne_FC_logo.svg/240px-Stade_Lavallois_Mayenne_FC_logo.svg.png"
+               alt="Laval">
         </div>
 
         <div class="cover-strip">
           <div>
             <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub">Bologna<br>Milan</div>
+            <div class="strip-sub">Lyon<br>Laval</div>
           </div>
 
           <div class="strip-play">
@@ -223,12 +246,14 @@
       <div id="videoTarget" class="w-full h-full"></div>
     </section>
 
+    <!-- SOURCES -->
     <section class="mt-5 flex flex-wrap gap-3">
       <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
       <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
       <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
     </section>
 
+    <!-- DIRECT LINK -->
     <div id="externalLink" class="hidden mt-4 text-center">
       <a id="directLink" href="#" target="_blank"
          class="text-amber-400 underline font-extrabold text-sm">
@@ -236,19 +261,20 @@
       </a>
     </div>
 
+    <!-- VOUS REGARDEZ -->
     <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img src="https://empire-sport.online/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png" alt="Compétition">
+        <img src="https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png" alt="Compétition">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
-          <div class="big">Bologna — Milan</div>
-          <div class="small">Serie A · 20h45</div>
+          <div class="big">Lyon — Laval</div>
+          <div class="small">Aujourd’hui · 20:30</div>
         </div>
       </div>
 
       <div class="watch-right">
         <img class="channel-logo"
-             src="https://empire-sport.online/upload/chaines/bry9cmx6ljl79tuo5sxfeaeafwxwmm.png"
+             src="https://empire-sport.online/upload/chaines/7xpt7ggvhhnf9ix4y88ovccr8xagls.png"
              alt="Chaîne">
       </div>
     </section>
@@ -261,10 +287,11 @@
   </main>
 
   <script>
+    // ✅ Mets tes liens ici (https / iframe)
     const SOURCES = {
-      1: "https://cdn-live.tv/api/v1/channels/player/?name=tnt+sports+1&code=gb&user=cdnlivetv&plan=free",
-      2: "https://cdn-live.tv/api/v1/channels/player/?name=cosmote+sport+1&code=gr&user=cdnlivetv&plan=free",
-      3: "https://cdn-live.tv/api/v1/channels/player/?name=digi+sport+3&code=ro&user=cdnlivetv&plan=free"
+      1: "https://embedsports.top/embed/echo/lyon-vs-laval-football-1506879/1",
+      2: "https://embedsports.top/embed/echo/lyon-vs-laval-football-1506879/2",
+      3: "https://embedsports.top/embed/echo/lyon-vs-laval-football-1506879/3"
     };
 
     function setActive(id){
@@ -282,12 +309,20 @@
 
       const ext = document.getElementById("externalLink");
       const link = document.getElementById("directLink");
-      link.href = SOURCES[id];
+      link.href = SOURCES[id] || "#";
       ext.classList.add("hidden");
 
       const target = document.getElementById("videoTarget");
+
+      if(!SOURCES[id] || SOURCES[id] === "#"){
+        target.innerHTML = `<div class="w-full h-full grid place-items-center text-white/70 font-bold">
+          Ajoute un lien dans SOURCES (Source ${id})
+        </div>`;
+        return;
+      }
+
       target.innerHTML = `
-        <iframe 
+        <iframe
           id="streamFrame"
           src="${SOURCES[id]}"
           allowfullscreen
@@ -296,13 +331,15 @@
           allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
           referrerpolicy="origin"
           sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
-        </iframe>`;
+        </iframe>
+      `;
 
+      // fallback si embed bloqué
       setTimeout(() => {
         const iframe = document.getElementById("streamFrame");
-        if (!iframe) return;
+        if(!iframe) return;
         try { iframe.contentWindow.location.href; }
-        catch (e) { ext.classList.remove("hidden"); }
+        catch(e){ ext.classList.remove("hidden"); }
       }, 2000);
     }
   </script>
