@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Liverpool - Qarabağ</title>
+  <title>IMFTX+ — Troyes - Lens</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -17,15 +17,25 @@
       overflow-x:hidden;
     }
 
-    /* ✅ FOND IDENTIQUE À TON INDEX */
+    /* ✅ FOND GRIS "INDEX" (comme OL-Laval) */
     .soft-bg{
       background:
-        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%),
-        #000;
+        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.08), transparent 62%),
+        radial-gradient(900px 520px at 20% 90%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(135deg, #16181c 0%, #111317 45%, #0c0e12 100%);
+      position:relative;
+    }
+    .soft-bg:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.25;
     }
 
-    /* player box */
     .player-box{
       border-radius:22px;
       overflow:hidden;
@@ -36,7 +46,7 @@
     }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
-    /* ✅ COVER (banniere) */
+    /* ✅ COVER */
     .cover{
       position:absolute;
       inset:0;
@@ -44,10 +54,10 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.world/upload/events/zmolxlaukhni2gu2mlpbkz2ouyvp6a.jpg") center/cover no-repeat;
+        url("https://empire-sport.online/upload/events/vgjkj4p9cdlmcxlenuls4sz3qr9uab.jpg") center/cover no-repeat;
     }
 
-    /* ✅ LOGOS TOP (teams + VS) */
+    /* ✅ LOGOS TOP */
     .cover-top{
       position:absolute;
       top:18px;
@@ -72,7 +82,7 @@
       opacity:.9;
     }
 
-    /* ✅ STRIP BOTTOM (Regarder Gratuitement) */
+    /* ✅ STRIP BOTTOM */
     .cover-strip{
       position:absolute;
       left:22px;
@@ -100,7 +110,6 @@
       line-height:1.1;
       font-style:italic;
       margin-top:3px;
-      text-transform: none;
     }
     .strip-play{
       width:50px;height:50px;
@@ -130,7 +139,7 @@
     }
     .source-btn:hover{ opacity:.95; }
 
-    /* ✅ bottom bar (Vous regardez) */
+    /* ✅ VOUS REGARDEZ */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
@@ -163,12 +172,7 @@
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .watch-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-shrink:0;
-    }
+    .watch-right{ flex-shrink:0; }
     .channel-logo{
       width:90px;
       height:auto;
@@ -176,7 +180,7 @@
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
 
-    /* ✅ petit pill timer (placeholder ici, tu changeras plus tard) */
+    /* pill time */
     .pill{
       display:inline-flex;
       align-items:center;
@@ -198,7 +202,6 @@
 
 <body class="soft-bg">
 
-  <!-- NAV -->
   <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
@@ -215,27 +218,27 @@
     <!-- PLAYER -->
     <section class="player-box w-full aspect-video">
 
-      <!-- ✅ COVER CLICK = LAUNCH STREAM -->
       <div id="cover" class="cover" onclick="loadVideo(1)">
 
+        <!-- heure (tu changes si besoin) -->
         <div style="position:absolute;top:18px;right:18px;">
           <span class="pill"><span class="dot"></span>21:00</span>
         </div>
 
         <div class="cover-top">
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg"
-               alt="Liverpool">
+               src="https://empire-sport.online/upload/teams/rsxaqgwzzuzmni6bnhn476tferjsfp.png"
+               alt="Troyes">
           <span class="vs">VS</span>
           <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/en/6/60/Qarabag_FK_logo.svg"
-               alt="Qarabağ">
+               src="https://empire-sport.online/upload/teams/qgwro2iyxo1vba0bcib2q1yddk3fxr.png"
+               alt="Lens">
         </div>
 
         <div class="cover-strip">
           <div>
             <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub">Liverpool<br>Qarabağ</div>
+            <div class="strip-sub">Troyes<br>Lens</div>
           </div>
 
           <div class="strip-play">
@@ -254,7 +257,7 @@
       <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
     </section>
 
-    <!-- ✅ DIRECT LINK (fallback) -->
+    <!-- DIRECT LINK (fallback) -->
     <div id="externalLink" class="hidden mt-4 text-center">
       <a id="directLink" href="#" target="_blank"
          class="text-amber-400 underline font-extrabold text-sm">
@@ -262,25 +265,24 @@
       </a>
     </div>
 
-    <!-- ✅ WATCH BAR -->
+    <!-- VOUS REGARDEZ -->
     <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Ligue des Champions">
+        <img src="https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png" alt="Compétition">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
-          <div class="big">Liverpool — Qarabağ</div>
-          <div class="small">Ligue des Champions · 21:00</div>
+          <div class="big">Troyes — Lens</div>
+          <div class="small">Aujourd’hui · 21:00</div>
         </div>
       </div>
 
       <div class="watch-right">
         <img class="channel-logo"
-             src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg"
-             alt="CANAL+">
+             src="https://empire-sport.online/upload/chaines/8rdidmr7uk3rpug7ffdtpw3htqadqr.png"
+             alt="Chaîne">
       </div>
     </section>
 
-    <!-- MESSAGE -->
     <div class="mt-8 text-center text-sm text-white/55 font-semibold">
       Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
       — L’équipe IMFTX+
@@ -288,13 +290,11 @@
 
   </main>
 
-  <!-- ✅ PLAYER SCRIPT -->
   <script>
-    // ✅ Remplace # par tes liens (légaux)
     const SOURCES = {
-      1: "https://bolaloca.my/player/4/38",
-      2: "https://bolaloca.my/player/4/38",
-      3: "https://bolaloca.my/player/4/38"
+      1: "https://embedsports.top/embed/echo/estac-troyes-vs-lens-football-1506885/2",
+      2: "https://embedsports.top/embed/echo/estac-troyes-vs-lens-football-1506885/2",
+      3: "https://embedsports.top/embed/echo/estac-troyes-vs-lens-football-1506885/2"
     };
 
     function setActive(id){
@@ -312,10 +312,18 @@
 
       const ext = document.getElementById("externalLink");
       const link = document.getElementById("directLink");
-      link.href = SOURCES[id];
+      link.href = SOURCES[id] || "#";
       ext.classList.add("hidden");
 
       const target = document.getElementById("videoTarget");
+
+      if(!SOURCES[id] || SOURCES[id] === "#"){
+        target.innerHTML = `<div class="w-full h-full grid place-items-center text-white/70 font-bold">
+          Ajoute un lien dans SOURCES (Source ${id})
+        </div>`;
+        return;
+      }
+
       target.innerHTML = `
         <iframe
           id="streamFrame"
@@ -329,7 +337,6 @@
         </iframe>
       `;
 
-      // fallback si embed bloqué
       setTimeout(() => {
         const iframe = document.getElementById("streamFrame");
         if(!iframe) return;
