@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Multiplex Ligue des Champions</title>
+  <title>IMFTX+ — Man City - New Castle</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -17,15 +17,26 @@
       overflow-x:hidden;
     }
 
-    /* ✅ FOND IDENTIQUE À TON INDEX */
+    /* ✅ FOND GRIS IDENTIQUE "INDEX" (vibe dark/grey + glow) */
     .soft-bg{
       background:
-        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.05), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.035), transparent 62%),
-        #000;
+        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.08), transparent 62%),
+        radial-gradient(900px 520px at 20% 90%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(135deg, #16181c 0%, #111317 45%, #0c0e12 100%);
+      position:relative;
+    }
+    /* léger grain comme sur un fond “pro” */
+    .soft-bg:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.25;
     }
 
-    /* player box */
     .player-box{
       border-radius:22px;
       overflow:hidden;
@@ -36,20 +47,16 @@
     }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
-    /* ✅ COVER (banniere) — Multiplex UCL */
     .cover{
       position:absolute;
       inset:0;
       z-index:15;
       cursor:pointer;
       background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(59,130,246,.20), transparent 55%),
-        radial-gradient(1200px 600px at 80% 10%, rgba(168,85,247,.18), transparent 55%),
-        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.40) 55%, rgba(0,0,0,.75) 100%),
-        url("https://empire-sport.world/upload/cards/multiplex_57.png") center/cover no-repeat;
+        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
+        url("https://empire-sport.online/upload/events/gktvwjgktufdcic4xdk59hu5usyvf4.jpg") center/cover no-repeat;
     }
 
-    /* ✅ LOGOS TOP (UCL + VS + UCL) */
     .cover-top{
       position:absolute;
       top:18px;
@@ -74,13 +81,12 @@
       opacity:.9;
     }
 
-    /* ✅ STRIP BOTTOM */
     .cover-strip{
       position:absolute;
       left:22px;
       right:22px;
       bottom:22px;
-      height:96px;
+      height:86px;
       border-radius:20px;
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.16);
@@ -96,13 +102,12 @@
       line-height:1;
     }
     .strip-sub{
-      font-size:13px;
+      font-size:15px;
       opacity:.85;
-      font-weight:700;
-      line-height:1.15;
+      font-weight:600;
+      line-height:1.1;
       font-style:italic;
-      margin-top:6px;
-      text-transform: none;
+      margin-top:3px;
     }
     .strip-play{
       width:50px;height:50px;
@@ -116,7 +121,6 @@
     .strip-play i{ font-size:19px; }
     .strip-play:hover{ transform:scale(1.08); background:rgba(0,0,0,.35); }
 
-    /* sources buttons */
     .source-btn{
       height:44px;
       border-radius:14px;
@@ -132,7 +136,6 @@
     }
     .source-btn:hover{ opacity:.95; }
 
-    /* ✅ watch bar */
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
@@ -173,7 +176,6 @@
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
     }
 
-    /* pill timer */
     .pill{
       display:inline-flex;
       align-items:center;
@@ -195,7 +197,6 @@
 
 <body class="soft-bg">
 
-  <!-- NAV -->
   <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
@@ -212,30 +213,28 @@
     <!-- PLAYER -->
     <section class="player-box w-full aspect-video">
 
-      <!-- ✅ COVER CLICK = LAUNCH STREAM -->
+      <!-- COVER -->
       <div id="cover" class="cover" onclick="loadVideo(1)">
 
         <div style="position:absolute;top:18px;right:18px;">
-          <span class="pill"><span class="dot"></span>21:00</span>
+          <span class="pill"><span class="dot"></span>21h00</span>
         </div>
 
         <div class="cover-top">
+          <!-- Logos équipes (tu peux changer si tu veux) -->
           <img class="team-logo"
-               src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png"
-               alt="Ligue des Champions">
+               src="https://empire-sport.online/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png"
+               alt="Lyon">
           <span class="vs">VS</span>
           <img class="team-logo"
-               src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png"
-               alt="Ligue des Champions">
+               src="https://empire-sport.online/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png"
+               alt="Laval">
         </div>
 
         <div class="cover-strip">
           <div>
             <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub">
-              Multiplex<br>
-              Ligue des Champions
-            </div>
+            <div class="strip-sub">Lorient<br>Paris FC</div>
           </div>
 
           <div class="strip-play">
@@ -254,7 +253,7 @@
       <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
     </section>
 
-    <!-- DIRECT LINK (fallback) -->
+    <!-- DIRECT LINK -->
     <div id="externalLink" class="hidden mt-4 text-center">
       <a id="directLink" href="#" target="_blank"
          class="text-amber-400 underline font-extrabold text-sm">
@@ -262,25 +261,24 @@
       </a>
     </div>
 
-    <!-- WATCH BAR -->
+    <!-- VOUS REGARDEZ -->
     <section class="mt-6 watch-bar">
       <div class="watch-left">
-        <img src="https://empire-sport.world/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Ligue des Champions">
+        <img src="https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png" alt="Compétition">
         <div class="watch-text">
           <div class="small">Vous regardez</div>
-          <div class="big">Multiplex — Ligue des Champions</div>
-          <div class="small">Ligue des Champions · 21:00</div>
+          <div class="big">Man city - Newcatsle</div>
+          <div class="small">Aujourd’hui · 21h00</div>
         </div>
       </div>
 
       <div class="watch-right">
         <img class="channel-logo"
-             src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg"
-             alt="CANAL+">
+             src="https://empire-sport.online/upload/chaines/7xpt7ggvhhnf9ix4y88ovccr8xagls.png"
+             alt="Chaîne">
       </div>
     </section>
 
-    <!-- MESSAGE -->
     <div class="mt-8 text-center text-sm text-white/55 font-semibold">
       Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
       — L’équipe IMFTX+
@@ -288,13 +286,12 @@
 
   </main>
 
-  <!-- ✅ PLAYER SCRIPT -->
   <script>
-    // Mets ici tes liens (légaux) quand tu veux
+    // ✅ Mets tes liens ici (https / iframe)
     const SOURCES = {
-      1: "https://bolaloca.my/player/4/11",
-      2: "https://bolaloca.my/player/3/11",
-      3: "https://bolaloca.my/player/2/11"
+      1: "https://cdn-live.tv/api/v1/channels/player/?name=sky+sports+football&code=gb&user=cdnlivetv&plan=free",
+      2: "https://cdn-live.tv/api/v1/channels/player/?name=sky+sports+football&code=gb&user=cdnlivetv&plan=free",
+      3: "https://cdn-live.tv/api/v1/channels/player/?name=sky+sports+football&code=gb&user=cdnlivetv&plan=free"
     };
 
     function setActive(id){
@@ -312,10 +309,18 @@
 
       const ext = document.getElementById("externalLink");
       const link = document.getElementById("directLink");
-      link.href = SOURCES[id];
+      link.href = SOURCES[id] || "#";
       ext.classList.add("hidden");
 
       const target = document.getElementById("videoTarget");
+
+      if(!SOURCES[id] || SOURCES[id] === "#"){
+        target.innerHTML = `<div class="w-full h-full grid place-items-center text-white/70 font-bold">
+          Ajoute un lien dans SOURCES (Source ${id})
+        </div>`;
+        return;
+      }
+
       target.innerHTML = `
         <iframe
           id="streamFrame"
