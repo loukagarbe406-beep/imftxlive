@@ -15,10 +15,9 @@
       font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:#fff;
       overflow-x:hidden;
-      background:#0f1012; /* ✅ fond gris sombre “chatgpt dark” */
+      background:#0f1012; /* ✅ fond gris sombre */
     }
 
-    /* petites ombres soft (pro) */
     .glass{
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.08);
@@ -26,7 +25,6 @@
       backdrop-filter: blur(14px);
     }
 
-    /* player box */
     .player-box{
       border-radius:20px;
       overflow:hidden;
@@ -34,7 +32,6 @@
     }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
-    /* cover */
     .cover{
       position:absolute;
       inset:0;
@@ -45,7 +42,6 @@
         url("https://empire-sport.online/upload/events/awravwrqxvfdpnammrujn6ydodfpbs.jpg") center/cover no-repeat;
     }
 
-    /* logos top */
     .cover-top{
       position:absolute;
       top:16px;
@@ -66,7 +62,6 @@
     }
     .vs{ font-weight:900; font-size:14px; opacity:.9; }
 
-    /* strip bottom */
     .cover-strip{
       position:absolute;
       left:16px;
@@ -95,38 +90,6 @@
     }
     .strip-play:hover{ transform:scale(1.06); background:rgba(255,255,255,.16); }
 
-    /* source buttons */
-    .source-btn{
-      height:42px;
-      border-radius:12px;
-      font-weight:900;
-      font-size:13px;
-      transition:.2s;
-    }
-    .source-btn.active{ background:#fff; color:#000; }
-    .source-btn.inactive{
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.08);
-      color:#fff;
-    }
-
-    /* watch bar */
-    .watch-bar{
-      border-radius:16px;
-      padding:14px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-    }
-    .watch-left{ display:flex; align-items:center; gap:12px; min-width:0; }
-    .watch-left img{ width:36px; height:36px; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
-    .watch-text{ min-width:0; line-height:1.1; }
-    .watch-text .small{ opacity:.75; font-weight:700; font-size:13px; }
-    .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
-
-    /* pill time */
     .pill{
       position:absolute;
       top:16px;
@@ -147,7 +110,35 @@
       box-shadow:0 0 0 4px rgba(245,158,11,.12);
     }
 
-    /* chat card */
+    .source-btn{
+      height:42px;
+      border-radius:12px;
+      font-weight:900;
+      font-size:13px;
+      transition:.2s;
+    }
+    .source-btn.active{ background:#fff; color:#000; }
+    .source-btn.inactive{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+    }
+
+    .watch-bar{
+      border-radius:16px;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .watch-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+    .watch-left img{ width:36px; height:36px; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
+    .watch-text{ min-width:0; line-height:1.1; }
+    .watch-text .small{ opacity:.75; font-weight:700; font-size:13px; }
+    .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
+
     .chat-box{
       border-radius:20px;
       overflow:hidden;
@@ -163,7 +154,6 @@
     .chat-head .title{ font-weight:900; }
     .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }
 
-    /* responsive: chat under on small screens */
     @media (max-width: 1024px){
       .chat-box{ min-height:420px; }
     }
@@ -176,7 +166,6 @@
   <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
-
       <a href="index.html"
          class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
         <i class="fa-solid fa-arrow-left"></i> Retour
@@ -185,13 +174,10 @@
   </nav>
 
   <main class="max-w-screen-2xl mx-auto px-6 py-8">
-
-    <!-- GRID: PLAYER + CHAT -->
     <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
 
       <!-- LEFT: PLAYER -->
       <div>
-
         <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
             <div class="pill"><span class="dot"></span>21:00</div>
@@ -221,9 +207,9 @@
           <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
         </div>
 
-        <!-- DIRECT LINK (fallback) -->
+        <!-- DIRECT LINK -->
         <div id="externalLink" class="hidden mt-3 text-center">
-          <a id="directLink" href="#" target="_blank"
+          <a id="directLink" href="#" target="_blank" rel="noreferrer"
              class="text-amber-400 underline font-extrabold text-sm">
             Le lecteur ne s’affiche pas ? Ouvrir le lien direct
           </a>
@@ -239,25 +225,17 @@
               <div class="small">Match · 21:00</div>
             </div>
           </div>
-
           <img class="channel-logo" src="https://empire-sport.online/upload/chaines/bd5lunnknhdwfqznkxxyhtqrresyy9.png" alt="Chaîne">
         </div>
-
-        <div class="mt-6 text-center text-sm text-white/50 font-semibold">
-          Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
-          — L’équipe IMFTX+
-        </div>
-
       </div>
 
-      <!-- RIGHT: LIVE CHAT (Twitch popout) -->
+      <!-- RIGHT: TWITCH CHAT DIRECT -->
       <aside class="chat-box glass">
         <div class="chat-head">
           <div>
             <div class="title">Chat en direct</div>
-            <div class="sub">Twitch — popout</div>
+            <div class="sub">Parler avec tout le respect - IMFTX+</div>
           </div>
-
           <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15"
              href="https://www.twitch.tv/popout/betfairlive/chat?popout="
              target="_blank" rel="noreferrer">
@@ -266,9 +244,8 @@
         </div>
 
         <div style="height: calc(100% - 54px); min-height: 520px;">
-          <iframe
-            src="https://www.twitch.tv/popout/betfairlive/chat?popout="
-            allowfullscreen
+          <iframe id="chatFrame"
+            src=""
             referrerpolicy="no-referrer-when-downgrade"
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
           </iframe>
@@ -278,27 +255,19 @@
     </section>
   </main>
 
-  <!-- ✅ PLAYER + ANTI POPUP -->
   <script>
-    // Mets tes liens https ici
+    // ✅ Mets tes liens stream HTTPS ici
     const SOURCES = {
-      1: "#",
+      1: "https://modistreams.org/embed/olympics/2026-02-05/figure-skating/figure-skating-training",
       2: "#",
       3: "#"
     };
 
-    // anti-popups / anti-redirect agressifs (mais safe)
+    // ✅ Twitch embed chat : parent = domaine automatiquement (important sinon “connexion refusée”)
     (function(){
-      try { window.open = () => null; } catch(e){}
-      document.addEventListener("contextmenu", e => e.preventDefault());
-      document.addEventListener("click", (e) => {
-        const a = e.target.closest && e.target.closest("a");
-        if(!a) return;
-        // on laisse le bouton “Ouvrir” du chat fonctionner
-        if (a.href && a.href.includes("twitch.tv/popout")) return;
-        // on bloque les liens target blank du player / pubs
-        if (a.target === "_blank") e.preventDefault();
-      }, true);
+      const parentDomain = window.location.hostname;  // ex: ftxplus.vercel.app
+      const chatUrl = `https://www.twitch.tv/embed/betfairlive/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
+      document.getElementById("chatFrame").src = chatUrl;
     })();
 
     function setActive(id){
@@ -340,7 +309,7 @@
         </iframe>
       `;
 
-      // fallback si embed bloqué
+      // fallback embed bloqué
       setTimeout(() => {
         const iframe = document.getElementById("streamFrame");
         if(!iframe) return;
@@ -352,3 +321,4 @@
 
 </body>
 </html>
+
