@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IMFTX+ — Al-Okhdood - Al Hilal</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body{
+      font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      color:#fff;
+      overflow-x:hidden;
+      background:#0f1012; /* ✅ fond gris sombre “chatgpt dark” */
+    }
+
+    /* petites ombres soft (pro) */
+    .glass{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 30px 120px rgba(0,0,0,.75);
+      backdrop-filter: blur(14px);
+    }
+
+    /* player box */
+    .player-box{
+      border-radius:20px;
+      overflow:hidden;
+      position:relative;
+    }
+    iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
+
+    /* cover */
+    .cover{
+      position:absolute;
+      inset:0;
+      z-index:15;
+      cursor:pointer;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
+        url("https://empire-sport.online/upload/events/awravwrqxvfdpnammrujn6ydodfpbs.jpg") center/cover no-repeat;
+    }
+
+    /* logos top */
+    .cover-top{
+      position:absolute;
+      top:16px;
+      left:16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(14px);
+    }
+    .team-logo{
+      width:34px;height:34px;
+      object-fit:contain;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.8));
+    }
+    .vs{ font-weight:900; font-size:14px; opacity:.9; }
+
+    /* strip bottom */
+    .cover-strip{
+      position:absolute;
+      left:16px;
+      right:16px;
+      bottom:16px;
+      height:80px;
+      border-radius:18px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(16px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px;
+    }
+    .strip-title{ font-size:16px; font-weight:900; line-height:1; }
+    .strip-sub{ font-size:14px; opacity:.85; font-weight:600; font-style:italic; margin-top:4px; line-height:1.1; }
+    .strip-play{
+      width:46px;height:46px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.12);
+      transition:.2s;
+    }
+    .strip-play:hover{ transform:scale(1.06); background:rgba(255,255,255,.16); }
+
+    /* source buttons */
+    .source-btn{
+      height:42px;
+      border-radius:12px;
+      font-weight:900;
+      font-size:13px;
+      transition:.2s;
+    }
+    .source-btn.active{ background:#fff; color:#000; }
+    .source-btn.inactive{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:#fff;
+    }
+
+    /* watch bar */
+    .watch-bar{
+      border-radius:16px;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .watch-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+    .watch-left img{ width:36px; height:36px; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
+    .watch-text{ min-width:0; line-height:1.1; }
+    .watch-text .small{ opacity:.75; font-weight:700; font-size:13px; }
+    .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
+
+    /* pill time */
+    .pill{
+      position:absolute;
+      top:16px;
+      right:16px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:900;
+      font-size:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      backdrop-filter: blur(14px);
+    }
+    .dot{
+      width:7px;height:7px;border-radius:999px;background:#f59e0b;
+      box-shadow:0 0 0 4px rgba(245,158,11,.12);
+    }
+
+    /* chat card */
+    .chat-box{
+      border-radius:20px;
+      overflow:hidden;
+      min-height:520px;
+    }
+    .chat-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .chat-head .title{ font-weight:900; }
+    .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }
+
+    /* responsive: chat under on small screens */
+    @media (max-width: 1024px){
+      .chat-box{ min-height:420px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+      <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
+
+      <a href="index.html"
+         class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
+        <i class="fa-solid fa-arrow-left"></i> Retour
+      </a>
+    </div>
+  </nav>
+
+  <main class="max-w-screen-2xl mx-auto px-6 py-8">
+
+    <!-- GRID: PLAYER + CHAT -->
+    <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
+
+      <!-- LEFT: PLAYER -->
+      <div>
+
+        <div class="player-box glass w-full aspect-video">
+          <div id="cover" class="cover" onclick="loadVideo(1)">
+            <div class="pill"><span class="dot"></span>21:00</div>
+
+            <div class="cover-top">
+              <img class="team-logo" src="https://empire-sport.online/upload/teams/jr13o69kszvagqo5ldwijwiqzutdkm.png" alt="Al-Okhdood">
+              <span class="vs">VS</span>
+              <img class="team-logo" src="https://empire-sport.online/upload/teams/tiktjuihr7d8begzdbo5lmnmt1hmdf.png" alt="Al Hilal">
+            </div>
+
+            <div class="cover-strip">
+              <div>
+                <div class="strip-title">Regarder Gratuitement</div>
+                <div class="strip-sub">Al-Okhdood<br>Al Hilal</div>
+              </div>
+              <div class="strip-play"><i class="fa-solid fa-play"></i></div>
+            </div>
+          </div>
+
+          <div id="videoTarget" class="w-full h-full"></div>
+        </div>
+
+        <!-- SOURCES -->
+        <div class="mt-4 flex flex-wrap gap-3">
+          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
+        </div>
+
+        <!-- DIRECT LINK (fallback) -->
+        <div id="externalLink" class="hidden mt-3 text-center">
+          <a id="directLink" href="#" target="_blank"
+             class="text-amber-400 underline font-extrabold text-sm">
+            Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+          </a>
+        </div>
+
+        <!-- VOUS REGARDEZ -->
+        <div class="mt-5 watch-bar glass">
+          <div class="watch-left">
+            <img src="https://empire-sport.online/upload/leagues/zt4mb7gnlrgn2drjplitpx3e7xwdsf.png" alt="Compétition">
+            <div class="watch-text">
+              <div class="small">Vous regardez</div>
+              <div class="big">Al-Okhdood — Al Hilal</div>
+              <div class="small">Match · 21:00</div>
+            </div>
+          </div>
+
+          <img class="channel-logo" src="https://empire-sport.online/upload/chaines/bd5lunnknhdwfqznkxxyhtqrresyy9.png" alt="Chaîne">
+        </div>
+
+        <div class="mt-6 text-center text-sm text-white/50 font-semibold">
+          Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
+          — L’équipe IMFTX+
+        </div>
+
+      </div>
+
+      <!-- RIGHT: LIVE CHAT (Twitch popout) -->
+      <aside class="chat-box glass">
+        <div class="chat-head">
+          <div>
+            <div class="title">Chat en direct</div>
+            <div class="sub">Twitch — popout</div>
+          </div>
+
+          <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15"
+             href="https://www.twitch.tv/popout/betfairlive/chat?popout="
+             target="_blank" rel="noreferrer">
+            Ouvrir
+          </a>
+        </div>
+
+        <div style="height: calc(100% - 54px); min-height: 520px;">
+          <iframe
+            src="https://www.twitch.tv/popout/betfairlive/chat?popout="
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
+          </iframe>
+        </div>
+      </aside>
+
+    </section>
+  </main>
+
+  <!-- ✅ PLAYER + ANTI POPUP -->
+  <script>
+    // Mets tes liens https ici
+    const SOURCES = {
+      1: "#",
+      2: "#",
+      3: "#"
+    };
+
+    // anti-popups / anti-redirect agressifs (mais safe)
+    (function(){
+      try { window.open = () => null; } catch(e){}
+      document.addEventListener("contextmenu", e => e.preventDefault());
+      document.addEventListener("click", (e) => {
+        const a = e.target.closest && e.target.closest("a");
+        if(!a) return;
+        // on laisse le bouton “Ouvrir” du chat fonctionner
+        if (a.href && a.href.includes("twitch.tv/popout")) return;
+        // on bloque les liens target blank du player / pubs
+        if (a.target === "_blank") e.preventDefault();
+      }, true);
+    })();
+
+    function setActive(id){
+      [1,2,3].forEach(n=>{
+        const b = document.getElementById("btn"+n);
+        b.className = (n===id) ? "source-btn active px-6" : "source-btn inactive px-6";
+      });
+    }
+
+    function loadVideo(id){
+      const cover = document.getElementById("cover");
+      if(cover) cover.style.display = "none";
+      setActive(id);
+
+      const ext = document.getElementById("externalLink");
+      const link = document.getElementById("directLink");
+      link.href = SOURCES[id] || "#";
+      ext.classList.add("hidden");
+
+      const target = document.getElementById("videoTarget");
+
+      if(!SOURCES[id] || SOURCES[id] === "#"){
+        target.innerHTML = `<div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
+          Ajoute un lien dans SOURCES (Source ${id})
+        </div>`;
+        return;
+      }
+
+      target.innerHTML = `
+        <iframe
+          id="streamFrame"
+          src="${SOURCES[id]}"
+          allowfullscreen
+          scrolling="no"
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+          referrerpolicy="origin"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+        </iframe>
+      `;
+
+      // fallback si embed bloqué
+      setTimeout(() => {
+        const iframe = document.getElementById("streamFrame");
+        if(!iframe) return;
+        try { iframe.contentWindow.location.href; }
+        catch(e){ ext.classList.remove("hidden"); }
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>
