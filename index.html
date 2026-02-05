@@ -264,12 +264,12 @@
     <div class="h-11 flex items-center gap-2 md:gap-4 text-xl">
       <div class="relative flex group">
         <a href="/shop" class="w-auto h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
-          <span class="text-sm font-semibold">NOTRE IPTV 1 AN À 50€ ICI</span>
+          <span class="text-sm font-semibold">NOTRE IMFTXIPTV 1 AN À 50€ ICI</span>
         </a>
       </div>
 
       <!-- Telegram -->
-      <a id="nav-btn-telegram" href="#" target="_blank"
+      <a id="nav-btn-telegram" href="https://discord.gg/q8d5Wpeq" target="_blank"
          class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
          aria-label="Telegram">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -324,7 +324,7 @@
     </div>
   </div>
 
-  <div class="text-center text-sm text-zinc-500">Made with ❤️</div>
+  <div class="text-center text-sm text-zinc-500">Made with IMFTX ( LKA )</div>
 </aside>
 
 <!-- CONTENT -->
@@ -420,66 +420,48 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // ====== MATCHES (mis à jour avec tes logos + nouveaux matchs) ======
+  // ===== MATCHES (tes 4 matchs) =====
   const MATCHES = [
     {
-      title: "Lyon - Laval",
-      time: "20:30",
-      banner: "https://empire-sport.online/upload/teambanks/ylteydywkmrc0skuw5qggtgqaoywpu.png",
-      aLogo: "https://empire-sport.online/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png",
-      bLogo: "https://empire-sport.online/upload/teams/hf4zrofabmdpps9zzsiaxhjcwnjzzk.png",
-      compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
-      href: "lyon-laval.html"
+      title: "Al-Okhdood - Al-Hilal",
+      time: "18:30",
+      banner: "https://empire-sport.online/upload/teambanks/qmi41jbddiyg50hvkxsxkjymnqcsi6.png",
+      aLogo: "https://empire-sport.online/upload/teams/jr13o69kszvagqo5ldwijwiqzutdkm.png",
+      bLogo: "https://empire-sport.online/upload/teams/tiktjuihr7d8begzdbo5lmnmt1hmdf.png",
+      compLogo: "https://empire-sport.online/upload/leagues/zt4mb7gnlrgn2drjplitpx3e7xwdsf.png",
+      href: "al-okhdood-alhilal.html"
     },
     {
-      title: "Nice - Montpellier",
-      time: "20:30",
-      banner: "https://empire-sport.online/upload/teambanks/xdw129cqkykdkilusvwbye88zf4j2d.png",
-      aLogo: "https://empire-sport.online/upload/teams/jhe4floxvwpovm1mexcuq4jnzrhwnp.png",
-      bLogo: "https://empire-sport.online/upload/teams/f8az692pzahh33xe0bujwuoitrcalg.png",
-      compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
-      href: "nice-montpellier.html"
-    },
-    {
-      title: "Lorient - Paris FC",
-      time: "20:30",
-      banner: "https://empire-sport.online/upload/banners/paris-fc-vs-auxerre.png",
-      aLogo: "https://empire-sport.online/upload/teams/l6tjesaxd015u6vjj8ybv6l5k78fqm.png",
-      bLogo: "https://empire-sport.online/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png",
-      compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
-      href: "lorient-parisfc.html"
-    },
-    {
-      title: "Troyes - Lens",
+      title: "Juventus - Atalanta",
       time: "21:00",
-      banner: "https://empire-sport.online/upload/teambanks/539s1pm6c5uacewa39e37rhhtiem00.png",
-      aLogo: "https://empire-sport.online/upload/teams/rsxaqgwzzuzmni6bnhn476tferjsfp.png",
-      bLogo: "https://empire-sport.online/upload/teams/qgwro2iyxo1vba0bcib2q1yddk3fxr.png",
-      compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
-      href: "troyes-lens.html"
-    },
-    {
-      title: "Manchester City - Newcastle United",
-      time: "21:00",
-      banner: "https://empire-sport.online/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
-      aLogo: "https://empire-sport.online/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
-      bLogo: "https://empire-sport.online/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
-      compLogo: "https://empire-sport.online/upload/leagues/ovb56nsw5ij45mdzrtng2vjekoiy73.png",
-      href: "city-newcastle.html"
-    },
-    {
-      title: "Inter - Torino",
-      time: "21:00",
-      banner: "https://empire-sport.online/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
-      aLogo: "https://empire-sport.online/upload/teams/ig0sk72cx0fakug4fzkfj4hay33pwr.png",
-      bLogo: "https://empire-sport.online/upload/teams/m2um3jfutj6nwpztwjzupdli2fhf0o.png",
+      banner: "https://empire-sport.online/upload/teambanks/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png",
+      aLogo: "https://empire-sport.online/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
+      bLogo: "https://empire-sport.online/upload/teams/vy6zoxxejgnc4yesfiuic45rndpgne.png",
       compLogo: "https://empire-sport.online/upload/leagues/xposittvw2zwq2l7fzg70wslefd5au.png",
-      href: "inter-torino.html"
+      href: "juventus-atalanta.html"
+    },
+    {
+      title: "Real Betis - Atlético Madrid",
+      time: "21:00",
+      banner: "https://empire-sport.online/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
+      aLogo: "https://empire-sport.online/upload/teams/0amrbeudimcjivqpfiuasmat8uwxts.png",
+      bLogo: "https://empire-sport.online/upload/teams/smp4oeizppz2hw9fbmb9dznhohcwly.png",
+      compLogo: "https://empire-sport.online/upload/leagues/ifm4fzw0zm4vfe7xf0pzviqo0cchbv.png",
+      href: "betis-atletico.html"
+    },
+    {
+      title: "Strasbourg - Monaco",
+      time: "21:00",
+      banner: "https://empire-sport.online/upload/teambanks/37xxoponwylvvkb4n6hpkjd3toosgw.png",
+      aLogo: "https://empire-sport.online/upload/teams/y5tcqer82p79xnuij4aw6hqjiovisl.png",
+      bLogo: "https://empire-sport.online/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
+      compLogo: "https://empire-sport.online/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png",
+      href: "strasbourg-monaco.html"
     }
   ];
 
   // ===== Timer logic: countdown -> LIVE (2h30) -> reset =====
-  const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000); // 2h30
+  const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
 
   function parseHHMM(hhmm){
     const [h,m] = hhmm.split(':').map(Number);
