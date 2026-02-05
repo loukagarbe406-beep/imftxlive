@@ -15,7 +15,7 @@
       font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:#fff;
       overflow-x:hidden;
-      background:#0f1012; /* ✅ fond gris sombre */
+      background:#0f1012;
     }
 
     .glass{
@@ -162,7 +162,6 @@
 
 <body>
 
-  <!-- NAV -->
   <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
@@ -176,7 +175,7 @@
   <main class="max-w-screen-2xl mx-auto px-6 py-8">
     <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
 
-      <!-- LEFT: PLAYER -->
+      <!-- PLAYER -->
       <div>
         <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
@@ -207,14 +206,6 @@
           <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
         </div>
 
-        <!-- DIRECT LINK -->
-        <div id="externalLink" class="hidden mt-3 text-center">
-          <a id="directLink" href="#" target="_blank" rel="noreferrer"
-             class="text-amber-400 underline font-extrabold text-sm">
-            Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-          </a>
-        </div>
-
         <!-- VOUS REGARDEZ -->
         <div class="mt-5 watch-bar glass">
           <div class="watch-left">
@@ -229,26 +220,22 @@
         </div>
       </div>
 
-      <!-- RIGHT: TWITCH CHAT DIRECT -->
+      <!-- CHAT -->
       <aside class="chat-box glass">
         <div class="chat-head">
           <div>
             <div class="title">Chat en direct</div>
-            <div class="sub">Parler avec tout le respect - IMFTX+</div>
+            <div class="sub">Twitch — thestreameast</div>
           </div>
           <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15"
-             href="https://www.twitch.tv/popout/betfairlive/chat?popout="
+             href="https://www.twitch.tv/popout/thestreameast/chat?popout="
              target="_blank" rel="noreferrer">
             Ouvrir
           </a>
         </div>
 
         <div style="height: calc(100% - 54px); min-height: 520px;">
-          <iframe id="chatFrame"
-            src=""
-            referrerpolicy="no-referrer-when-downgrade"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-popups">
-          </iframe>
+          <iframe id="chatFrame" src=""></iframe>
         </div>
       </aside>
 
@@ -256,18 +243,18 @@
   </main>
 
   <script>
-    // ✅ Mets tes liens stream HTTPS ici
+    // STREAM EMBED (HTTPS)
     const SOURCES = {
       1: "https://embedsports.top/embed/echo/premier-league-darts-newcastle-darts-1/1",
-      2: "#",
+      2: "https://dovkembed.pw/channel/BeINSport1[France]",
       3: "#"
     };
 
-    // ✅ Twitch embed chat : parent = domaine automatiquement (important sinon “connexion refusée”)
+    // TWITCH CHAT EMBED (parent auto)
     (function(){
-      const parentDomain = window.location.hostname;  // ex: ftxplus.vercel.app
-      const chatUrl = `https://www.twitch.tv/embed/betfairlive/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
-      document.getElementById("chatFrame").src = chatUrl;
+      const parentDomain = window.location.hostname;
+      document.getElementById("chatFrame").src =
+        `https://www.twitch.tv/embed/thestreameast/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
     })();
 
     function setActive(id){
@@ -280,19 +267,16 @@
     function loadVideo(id){
       const cover = document.getElementById("cover");
       if(cover) cover.style.display = "none";
-      setActive(id);
 
-      const ext = document.getElementById("externalLink");
-      const link = document.getElementById("directLink");
-      link.href = SOURCES[id] || "#";
-      ext.classList.add("hidden");
+      setActive(id);
 
       const target = document.getElementById("videoTarget");
 
       if(!SOURCES[id] || SOURCES[id] === "#"){
-        target.innerHTML = `<div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
-          Ajoute un lien dans SOURCES (Source ${id})
-        </div>`;
+        target.innerHTML = `
+          <div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
+            Source indisponible
+          </div>`;
         return;
       }
 
@@ -303,22 +287,12 @@
           allowfullscreen
           scrolling="no"
           frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          referrerpolicy="origin"
-          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+          allow="autoplay; fullscreen; picture-in-picture"
+          referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       `;
-
-      // fallback embed bloqué
-      setTimeout(() => {
-        const iframe = document.getElementById("streamFrame");
-        if(!iframe) return;
-        try { iframe.contentWindow.location.href; }
-        catch(e){ ext.classList.remove("hidden"); }
-      }, 2000);
     }
   </script>
 
 </body>
 </html>
-
