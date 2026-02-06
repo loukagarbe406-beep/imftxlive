@@ -157,6 +157,15 @@
     @media (max-width: 1024px){
       .chat-box{ min-height:420px; }
     }
+
+    /* ✅ AJOUT: Shield anti-pop (invisible) */
+    #shield{
+      position:absolute;
+      inset:0;
+      z-index:50;
+      background:rgba(0,0,0,0);
+      pointer-events:auto; /* bloque les clics */
+    }
   </style>
 </head>
 
@@ -197,6 +206,9 @@
           </div>
 
           <div id="videoTarget" class="w-full h-full"></div>
+
+          <!-- ✅ AJOUT: anti pop shield (invisible, au-dessus de l’iframe) -->
+          <div id="shield" style="display:none;"></div>
         </div>
 
         <!-- SOURCES -->
@@ -245,10 +257,13 @@
   <script>
     // STREAM EMBED (HTTPS)
     const SOURCES = {
-      1: "https://embedsports.top/embed/echo/premier-league-darts-newcastle-darts-1/1",
+      1: "https://dovkembed.pw/event/hellas-verona_pisa_1770407100",
       2: "https://dovkembed.pw/channel/BeINSport1[France]",
       3: "#"
     };
+
+    // ✅ AJOUT: Bloque window.open au niveau de TA page
+    window.open = () => null;
 
     // TWITCH CHAT EMBED (parent auto)
     (function(){
@@ -271,15 +286,18 @@
       setActive(id);
 
       const target = document.getElementById("videoTarget");
+      const shield = document.getElementById("shield");
 
       if(!SOURCES[id] || SOURCES[id] === "#"){
         target.innerHTML = `
           <div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
             Source indisponible
           </div>`;
+        if(shield) shield.style.display = "none";
         return;
       }
 
+      // ✅ iframe normal (PAS sandbox) + referrer OK
       target.innerHTML = `
         <iframe
           id="streamFrame"
@@ -291,7 +309,35 @@
           referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       `;
+
+      // ✅ AJOUT: active le shield (anti pop)
+      if(shield){
+        shield.style.display = "block";
+        shield.style.pointerEvents = "auto";
+      }
     }
+
+    // ✅ AJOUT: double-clic = autorise les clics 4s (plein écran), puis rebloque
+    (function(){
+      const shield = document.getElementById("shield");
+      if(!shield) return;
+
+      // clic normal = bloque (anti pub)
+      shield.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }, true);
+
+      // double clic = interactions pendant 4 secondes
+      shield.addEventListener("dblclick", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        shield.style.pointerEvents = "none";
+        setTimeout(() => {
+          shield.style.pointerEvents = "auto";
+        }, 4000);
+      }, true);
+    })();
   </script>
 
 </body>
