@@ -81,7 +81,7 @@
     .gate-avatar{
       width: 92px;
       height: 92px;
-      border-radius: 18px; /* carré arrondi */
+      border-radius: 18px;
       object-fit: cover;
       box-shadow: 0 14px 55px rgba(0,0,0,.55);
       border: 1px solid rgba(255,255,255,.10);
@@ -235,7 +235,7 @@
         Rejoins mon post sur <b>X</b> pour soutenir le site :<br>
         <b>RT + abonne-toi au compte</b>, puis reviens ici ✅
       </div>
-      <a id="gateOpen" class="gate-btn" href="https://x.com/imftxvw/status/2018021008729375186" target="_blank" rel="noopener">
+      <a class="gate-btn" href="https://x.com/imftxvw/status/2018021008729375186" target="_blank" rel="noopener">
         OUVRIR LE POST
       </a>
       <div id="gateSkip" class="gate-skip">J’ai déjà fait</div>
@@ -264,7 +264,6 @@
         </a>
       </div>
 
-      <!-- Telegram -->
       <a id="nav-btn-telegram" href="#" target="_blank"
          class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
          aria-label="Telegram">
@@ -273,7 +272,6 @@
         </svg>
       </a>
 
-      <!-- Discord -->
       <a id="nav-btn-discord" href="#" target="_blank"
          class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
          aria-label="Discord">
@@ -282,7 +280,6 @@
         </svg>
       </a>
 
-      <!-- X -->
       <a id="nav-btn-twitter" href="#" target="_blank"
          class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
          aria-label="X">
@@ -291,7 +288,6 @@
         </svg>
       </a>
 
-      <!-- Theme toggle -->
       <button id="theme-toggle"
               class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
               aria-label="Changer le thème">
@@ -364,7 +360,6 @@
   const GATE_KEY = "imftx_gate_done_v1";
   const gate = document.getElementById("gate");
   const gateSkip = document.getElementById("gateSkip");
-  const gateOpen = document.getElementById("gateOpen");
 
   function showGate(){
     if(!gate) return;
@@ -413,79 +408,98 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // ===== MATCHES (TES MATCHS) =====
+  // ===== MATCHES (NOUVEAUX) =====
   const MATCHES = [
     {
-      title: "Manchester United - Tottenham Hotspur",
-      time: "13:30",
-      banner: "https://empire-sport.online/upload/banners/tottenham-hotspur-vs-manchester-united.png",
-      aLogo: "https://empire-sport.online/upload/teams/mosfyquovho2tfyvalgqtbzjnhmcv5.png",
-      bLogo: "https://empire-sport.online/upload/teams/nq6xsqf5odoqosdvpfgeyr1b2z1gtb.png",
-      compLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
-      href: "manu-tottenham.html"
-    },
-    {
-      title: "Arsenal - Sunderland",
-      time: "16:00",
-      banner: "https://empire-sport.online/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
-      aLogo: "https://empire-sport.online/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
-      bLogo: "https://empire-sport.online/upload/teams/7w6lhalaomd3e5w3kolm74elp9tjiu.png",
-      compLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
-      href: "arsenal-sunderland.html"
-    },
-    {
-      title: "Wolverhampton Wanderers - Chelsea",
-      time: "16:00",
-      banner: "https://empire-sport.online/upload/teambanks/5yl7dl2h27lzgwseu8f5fm3pppav0o.png",
-      aLogo: "https://empire-sport.online/upload/teams/r9xtvhactfdouizlodajwym71bnemh.png",
-      bLogo: "https://empire-sport.online/upload/teams/8ut7uxa2csqdcpq7dpdez1f9dmfoj6.png",
-      compLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
-      href: "wolves-chelsea.html"
-    },
-    {
-      title: "Lens - Rennes",
-      time: "17:00",
-      banner: "https://empire-sport.online/upload/teambanks/539s1pm6c5uacewa39e37rhhtiem00.png",
-      aLogo: "https://empire-sport.online/upload/teams/qgwro2iyxo1vba0bcib2q1yddk3fxr.png",
-      bLogo: "https://empire-sport.online/upload/teams/1thklunb7wqcqrni6zoml4zrukfonj.png",
+      title: "Nice - Monaco",
+      time: "15:00",
+      banner: "https://empire-sport.online/upload/teambanks/37xxoponwylvvkb4n6hpkjd3toosgw.png",
+      aLogo: "https://empire-sport.online/upload/teams/jhe4floxvwpovm1mexcuq4jnzrhwnp.png",
+      bLogo: "https://empire-sport.online/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
       compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "lens-rennes.html"
+      href: "nice-monaco.html"
     },
     {
-      title: "Barcelona - Mallorca",
-      time: "16:15",
-      banner: "https://empire-sport.online/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
-      aLogo: "https://empire-sport.online/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
-      bLogo: "https://empire-sport.online/upload/teams/ow8fyk2ujsdshawee3odbeysyinfo1.png",
-      compLogo: "https://empire-sport.online/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-      href: "barca-mallorca.html"
+      title: "Multiplex Ligue 1",
+      time: "17:15",
+      banner: "https://empire-sport.online/upload/cards/multiplex_63.png",
+      aLogo: "",
+      bLogo: "",
+      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "multiplex-l1.html",
+      noTeams: true
     },
     {
-      title: "Newcastle United - Brentford",
+      title: "Auxerre - Paris FC",
+      time: "17:15",
+      banner: "https://empire-sport.online/upload/teambanks/vuwz5nxqhdfffzriwux50ivscvweg9.png",
+      aLogo: "https://empire-sport.online/upload/teams/bdafwakelppxzlrqst2frjm56vnneh.png",
+      bLogo: "https://empire-sport.online/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png",
+      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "auxerre-parisfc.html"
+    },
+    {
+      title: "Le Havre - Strasbourg",
+      time: "17:15",
+      banner: "https://empire-sport.online/upload/teambanks/4fcy4nh6etdcjsuh1euato3pz16hlo.png",
+      aLogo: "https://empire-sport.online/upload/teams/poyamdm2uaxrxrbgqmfpm1dr1meyon.png",
+      bLogo: "https://empire-sport.online/upload/teams/y5tcqer82p79xnuij4aw6hqjiovisl.png",
+      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "lehavre-strasbourg.html"
+    },
+    {
+      title: "Bayern Munich - Hoffenheim",
+      time: "17:30",
+      banner: "https://empire-sport.online/upload/teambanks/hy0xxpekk2ija3rbuccm0eibrrxtzg.png",
+      aLogo: "https://empire-sport.online/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png",
+      bLogo: "https://empire-sport.online/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png",
+      compLogo: "https://empire-sport.online/upload/leagues/gazvdx7x9mijtgdsbjxlnfuc6cr5uz.png",
+      href: "bayern-hoffenheim.html"
+    },
+    {
+      title: "Liverpool - Manchester City",
+      time: "17:30",
+      banner: "https://empire-sport.online/upload/banners/manchester-city-vs-liverpool.png",
+      aLogo: "https://empire-sport.online/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png",
+      bLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
+      compLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
+      href: "liverpool-city.html"
+    },
+    {
+      title: "Sassuolo - Inter Milan",
+      time: "18:00",
+      banner: "https://empire-sport.online/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
+      aLogo: "https://empire-sport.online/upload/teams/b7eyknawkv8twhapnjllmirhtijc6x.png",
+      bLogo: "https://empire-sport.online/upload/teams/ig0sk72cx0fakug4fzkfj4hay33pwr.png",
+      compLogo: "https://empire-sport.online/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
+      href: "sassuolo-inter.html"
+    },
+    {
+      title: "Atlético Madrid - Real Betis",
       time: "18:30",
-      banner: "https://empire-sport.online/upload/banners/west-ham-united-vs-newcastle-united.png",
-      aLogo: "https://empire-sport.online/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
-      bLogo: "https://empire-sport.online/upload/teams/pnorsrshxkxjwrkhoqg59b4gzglqyl.png",
-      compLogo: "https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
-      href: "newcastle-brentford.html"
+      banner: "https://empire-sport.online/upload/teambanks/qpwvi2cxhcladiu6ln8qlscrmnqidf.png",
+      aLogo: "https://empire-sport.online/upload/teams/smp4oeizppz2hw9fbmb9dznhohcwly.png",
+      bLogo: "https://empire-sport.online/upload/teams/0amrbeudimcjivqpfiuasmat8uwxts.png",
+      compLogo: "https://empire-sport.online/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
+      href: "atletico-betis.html"
     },
     {
-      title: "Brest - Lorient",
-      time: "19:00",
-      banner: "https://empire-sport.online/upload/teambanks/jpdgvoxsfswpse3oskgrown31io2qa.png",
-      aLogo: "https://upload.wikimedia.org/wikipedia/fr/1/14/Logo_Stade_Brestois.svg",
-      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/1/1d/Logo_FC_Lorient_Bretagne-Sud.svg/500px-Logo_FC_Lorient_Bretagne-Sud.svg.png?20231224191511",
-      compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "brest-lorient.html"
+      title: "Juventus - Lazio",
+      time: "20:45",
+      banner: "https://empire-sport.online/upload/teambanks/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png",
+      aLogo: "https://empire-sport.online/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
+      bLogo: "https://empire-sport.online/upload/teams/a1tng3okaurq1lb99aqaxcg4hlhenz.png",
+      compLogo: "https://empire-sport.online/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
+      href: "juve-lazio.html"
     },
     {
-      title: "Nantes - Lyon",
-      time: "21:05",
-      banner: "https://empire-sport.online/upload/teambanks/ylteydywkmrc0skuw5qggtgqaoywpu.png",
-      aLogo: "https://empire-sport.online/upload/teams/divqkvj7oin1bapguw2sl7dmo0djvd.png",
-      bLogo: "https://empire-sport.online/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png",
+      title: "PSG - OM",
+      time: "20:45",
+      banner: "https://empire-sport.online/upload/banners/paris-sg-vs-marseille.png",
+      aLogo: "https://empire-sport.online/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
+      bLogo: "https://empire-sport.online/upload/teams/5box72sxig3lzrlh1xkj44xqfw9j41.png",
       compLogo: "https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "nantes-lyon.html"
+      href: "psg-om.html"
     }
   ];
 
@@ -520,6 +534,18 @@
   }
 
   function cardHTML(m, idx){
+    const teamsRow = m.noTeams ? `
+      <div class="flex items-center gap-2">
+        <span class="vs">MULTIPLEX</span>
+      </div>
+    ` : `
+      <div class="flex items-center gap-2">
+        <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
+        <span class="vs">VS</span>
+        <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
+      </div>
+    `;
+
     return `
       <a href="${m.href}" class="block">
         <article class="match-card">
@@ -536,11 +562,7 @@
           <div class="absolute inset-x-0 bottom-0 p-4">
             <div class="flex items-end justify-between gap-4">
               <div class="min-w-0 max-w-[72%]">
-                <div class="flex items-center gap-2">
-                  <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
-                  <span class="vs">VS</span>
-                  <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
-                </div>
+                ${teamsRow}
 
                 <div class="mt-2 flex items-center gap-2">
                   <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
