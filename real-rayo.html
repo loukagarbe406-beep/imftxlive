@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Real Madrid - Rayo</title>
+  <title>IMFTX+ — Sassuolo - Inter</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -17,45 +17,50 @@
       overflow-x:hidden;
     }
 
-    /* ✅ FOND GRIS PRO (à la place du fond noir) */
     .soft-bg{
       background:
-        radial-gradient(1400px 620px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
-        radial-gradient(1000px 520px at 50% 30%, rgba(255,255,255,.08), transparent 62%),
-        radial-gradient(900px 520px at 20% 90%, rgba(255,255,255,.06), transparent 60%),
-        linear-gradient(135deg, #16181c 0%, #111317 45%, #0c0e12 100%);
+        radial-gradient(1100px 520px at 15% 15%, rgba(255,255,255,.08), transparent 55%),
+        radial-gradient(900px 520px at 85% 25%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(900px 520px at 30% 95%, rgba(255,255,255,.05), transparent 62%),
+        linear-gradient(135deg, #141518 0%, #0f1012 55%, #0b0c0f 100%);
+    }
+
+    .glass{
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.09);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 30px 120px rgba(0,0,0,.75);
     }
 
     .player-box{
       border-radius:22px;
       overflow:hidden;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      box-shadow: 0 30px 120px rgba(0,0,0,.85);
       position:relative;
     }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
+    /* ✅ COVER bannière */
     .cover{
       position:absolute;
       inset:0;
       z-index:15;
       cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.65) 100%),
-        url("https://empire-sport.online/upload/events/qkvxyzy74th2lob1cciik0ymbzm1tl.jpg") center/cover no-repeat;
+        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.70) 100%),
+        url("https://empire-sport.online/upload/events/sjsg1akefshrvg4ta3ow41hsxelxse.jpg") center/cover no-repeat;
+      transform: translateZ(0);
     }
 
     .cover-top{
       position:absolute;
-      top:18px;
-      left:18px;
+      top:16px;
+      left:16px;
       display:flex;
       align-items:center;
       gap:10px;
       padding:10px 12px;
       border-radius:18px;
-      background:rgba(0,0,0,.35);
+      background:rgba(0,0,0,.40);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(14px);
     }
@@ -67,52 +72,65 @@
     .vs{
       font-weight:900;
       font-size:14px;
-      opacity:.9;
+      opacity:.92;
     }
 
     .cover-strip{
       position:absolute;
-      left:22px;
-      right:22px;
-      bottom:22px;
-      height:86px;
+      left:16px;
+      right:16px;
+      bottom:16px;
+      height:84px;
       border-radius:20px;
-      background:rgba(255,255,255,.14);
-      border:1px solid rgba(255,255,255,.16);
+      background: rgba(160,160,160,.35);
+      border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(16px);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:0 22px;
+      padding:0 18px;
+    }
+    .strip-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+    .strip-icon{
+      width:28px;height:28px;
+      opacity:.9;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
     }
     .strip-title{
-      font-size:18px;
+      font-size:16px;
       font-weight:900;
       line-height:1;
     }
     .strip-sub{
       font-size:15px;
-      opacity:.85;
+      opacity:.92;
       font-weight:600;
       line-height:1.1;
       font-style:italic;
-      margin-top:3px;
-      text-transform: none;
+      margin-top:4px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
     .strip-play{
-      width:50px;height:50px;
+      width:44px;height:44px;
       border-radius:999px;
-      border:2px solid rgba(255,255,255,.38);
+      border:2px solid rgba(255,255,255,.45);
       display:grid;
       place-items:center;
       transition:.2s;
-      background:rgba(0,0,0,.22);
+      background:rgba(0,0,0,.15);
     }
-    .strip-play i{ font-size:19px; }
-    .strip-play:hover{ transform:scale(1.08); background:rgba(0,0,0,.35); }
+    .strip-play i{ font-size:18px; }
+    .strip-play:hover{ transform:scale(1.06); background:rgba(0,0,0,.25); }
 
     .source-btn{
-      height:44px;
+      height:42px;
       border-radius:14px;
       font-weight:900;
       font-size:13px;
@@ -124,27 +142,26 @@
       border:1px solid rgba(255,255,255,.10);
       color:#fff;
     }
-    .source-btn:hover{ opacity:.95; }
 
     .watch-bar{
       border-radius:18px;
       background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(16px);
-      padding:16px 18px;
+      padding:14px 16px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
+      gap:14px;
     }
     .watch-left{
       display:flex;
       align-items:center;
-      gap:14px;
+      gap:12px;
       min-width:0;
     }
     .watch-left img{
-      width:40px;height:40px;
+      width:38px;height:38px;
       object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
       flex-shrink:0;
@@ -153,35 +170,40 @@
     .watch-text .small{ opacity:.8; font-weight:700; font-size:13px; }
     .watch-text .big{
       font-weight:900;
-      font-size:16px;
+      font-size:15px;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
     }
-    .watch-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-shrink:0;
-    }
     .channel-logo{
-      width:90px;
+      width:94px;
       height:auto;
       object-fit:contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
+      flex-shrink:0;
+    }
+
+    .chat-box{
+      border-radius:22px;
+      overflow:hidden;
+      min-height:520px;
     }
 
     .pill{
+      position:absolute;
+      top:16px;
+      right:16px;
       display:inline-flex;
       align-items:center;
       gap:8px;
       padding:7px 12px;
       border-radius:999px;
-      background: rgba(0,0,0,.35);
+      background: rgba(0,0,0,.40);
       border:1px solid rgba(255,255,255,.14);
       backdrop-filter: blur(14px);
       font-weight:900;
       font-size:12px;
+      z-index:20;
     }
     .dot{
       width:7px;height:7px;border-radius:999px;background:#f59e0b;
@@ -192,10 +214,9 @@
 
 <body class="soft-bg">
 
-  <nav class="sticky top-0 z-40 bg-black/20 backdrop-blur-xl border-b border-white/5">
+  <nav class="sticky top-0 z-40 bg-black/25 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
-      <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
-
+      <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
       <a href="index.html"
          class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
         <i class="fa-solid fa-arrow-left"></i> Retour
@@ -203,84 +224,104 @@
     </div>
   </nav>
 
-  <main class="max-w-screen-2xl mx-auto px-6 py-10">
+  <main class="max-w-screen-2xl mx-auto px-6 py-8">
+    <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
 
-    <section class="player-box w-full aspect-video">
+      <!-- LEFT -->
+      <div>
+        <section class="player-box glass w-full aspect-video">
+          <div id="cover" class="cover" onclick="loadVideo(1)">
+            <div class="pill"><span class="dot"></span>18h00</div>
 
-      <div id="cover" class="cover" onclick="loadVideo(1)">
-        <div style="position:absolute;top:18px;right:18px;">
-          <span class="pill"><span class="dot"></span>21:00</span>
-        </div>
+            <div class="cover-top">
+              <img class="team-logo"
+                   src="https://empire-sport.online/upload/teams/b7eyknawkv8twhapnjllmirhtijc6x.png"
+                   alt="Sassuolo">
+              <span class="vs">VS</span>
+              <img class="team-logo"
+                   src="https://empire-sport.online/upload/teams/ig0sk72cx0fakug4fzkfj4hay33pwr.png"
+                   alt="Inter">
+            </div>
 
-        <div class="cover-top">
-          <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg"
-               alt="Benfica">
-          <span class="vs">VS</span>
-          <img class="team-logo"
-               src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/41/Logo_Rayo_Vallecano_de_Madrid_2016.svg/langfr-250px-Logo_Rayo_Vallecano_de_Madrid_2016.svg.png"
-               alt="Real Madrid">
-        </div>
+            <div class="cover-strip">
+              <div class="strip-left">
+                <img class="strip-icon"
+                     src="https://empire-sport.online/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png"
+                     alt="Compétition">
+                <div style="min-width:0">
+                  <div class="strip-title">Regarder Gratuitement</div>
+                  <div class="strip-sub">Sassuolo<br>Inter</div>
+                </div>
+              </div>
 
-        <div class="cover-strip">
-          <div>
-            <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-sub">Réal Madrid <br>Rayo</div>
+              <div class="strip-play">
+                <i class="fa-solid fa-play"></i>
+              </div>
+            </div>
           </div>
 
-          <div class="strip-play">
-            <i class="fa-solid fa-play"></i>
+          <div id="videoTarget" class="w-full h-full"></div>
+        </section>
+
+        <!-- SOURCES -->
+        <section class="mt-4 flex flex-wrap gap-3">
+          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">🇮🇹 (1440p) (1)</button>
+          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">🇮🇹 (1440p) (2)</button>
+          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">🇮🇹 (1440p) (3)</button>
+        </section>
+
+        <!-- DIRECT LINK (fallback) -->
+        <div id="externalLink" class="hidden mt-3 text-center">
+          <a id="directLink" href="#" target="_blank" rel="noreferrer"
+             class="text-amber-400 underline font-extrabold text-sm">
+            Le lecteur ne s’affiche pas ? Ouvrir le lien direct
+          </a>
+        </div>
+
+        <!-- VOUS REGARDEZ -->
+        <section class="mt-5 watch-bar glass">
+          <div class="watch-left">
+            <img src="https://empire-sport.online/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png" alt="Compétition">
+            <div class="watch-text">
+              <div class="small">Vous regardez</div>
+              <div class="big">Sassuolo - Inter</div>
+              <div class="small">Seria A · 18:00</div>
+            </div>
           </div>
+
+          <img class="channel-logo"
+               src="https://empire-sport.online/upload/chaines/anvamleibyccyx8zijteamqfonezdo.png"
+               alt="Chaîne">
+        </section>
+
+        <div class="mt-6 text-center text-sm text-white/45 font-semibold">
+          Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe). — IMFTX+
         </div>
       </div>
 
-      <div id="videoTarget" class="w-full h-full"></div>
+      <!-- RIGHT : CHAT -->
+      <aside class="chat-box glass">
+        <iframe id="chatFrame" src="" allow="autoplay" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </aside>
+
     </section>
-
-    <section class="mt-5 flex flex-wrap gap-3">
-      <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
-      <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
-      <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
-    </section>
-
-    <div id="externalLink" class="hidden mt-4 text-center">
-      <a id="directLink" href="#" target="_blank"
-         class="text-amber-400 underline font-extrabold text-sm">
-        Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-      </a>
-    </div>
-
-    <section class="mt-6 watch-bar">
-      <div class="watch-left">
-        <img src="https://empire-sport.online/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png" alt="Ligue des Champions">
-        <div class="watch-text">
-          <div class="small">Vous regardez</div>
-          <div class="big">Rayo — Real Madrid</div>
-          <div class="small">La Liga · 14h00</div>
-        </div>
-      </div>
-
-      <div class="watch-right">
-        <img class="channel-logo"
-             src="https://empire-sport.online/upload/chaines/8rdidmr7uk3rpug7ffdtpw3htqadqr.png"
-             alt="CANAL+">
-      </div>
-    </section>
-
-    <div class="mt-8 text-center text-sm text-white/55 font-semibold">
-      Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe).
-      — L’équipe IMFTX+
-    </div>
-
   </main>
 
   <script>
-    // ✅ Mets tes liens ICI (officiels/légaux)
+    // ✅ Mets tes liens OFFICIELS ici
     const SOURCES = {
-      1: "https://cdn-live-tv.ru/api/v1/channels/de-dazn-1/index.m3u8?token=44b281eba54db8c2d4cc3b40c2a913c29f2ebf84e98db589313e61e7eac7fc51.1769952707.3ae001e70c40c68102ea8319c1fd7ae2.68c133eeb39fbabf781322ca52ffc51a.d3d4d1cb7daf76b5eaa9da9b589e1b1c.92b4e7c06e969789",
-      2: "https://cdn-live-tv.ru/api/v1/channels/de-dazn-1/index.m3u8?token=44b281eba54db8c2d4cc3b40c2a913c29f2ebf84e98db589313e61e7eac7fc51.1769952707.3ae001e70c40c68102ea8319c1fd7ae2.68c133eeb39fbabf781322ca52ffc51a.d3d4d1cb7daf76b5eaa9da9b589e1b1c.92b4e7c06e969789",
-      3: "https://cdn-live-tv.ru/api/v1/channels/de-dazn-1/index.m3u8?token=44b281eba54db8c2d4cc3b40c2a913c29f2ebf84e98db589313e61e7eac7fc51.1769952707.3ae001e70c40c68102ea8319c1fd7ae2.68c133eeb39fbabf781322ca52ffc51a.d3d4d1cb7daf76b5eaa9da9b589e1b1c.92b4e7c06e9697894"
+      1: "https://d2nghbxg3nyer1.cloudfront.net/default/2/default.default",
+      2: "https://d2nghbxg3nyer1.cloudfront.net/default/2/default.default",
+      3: "https://d2nghbxg3nyer1.cloudfront.net/default/2/default.default"
     };
+
+    // ✅ Chat Twitch : seulement l’iframe, parent auto
+    (function(){
+      const parentDomain = window.location.hostname;
+      const channel = "betfairlive";
+      document.getElementById("chatFrame").src =
+        `https://www.twitch.tv/embed/${channel}/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
+    })();
 
     function setActive(id){
       [1,2,3].forEach(n=>{
@@ -297,10 +338,21 @@
 
       const ext = document.getElementById("externalLink");
       const link = document.getElementById("directLink");
-      link.href = SOURCES[id];
+      link.href = SOURCES[id] || "#";
       ext.classList.add("hidden");
 
       const target = document.getElementById("videoTarget");
+
+      if(!SOURCES[id] || SOURCES[id] === "#"
+         || (SOURCES[id] + "").includes("REMPLACE-MOI")){
+        target.innerHTML = `
+          <div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
+            Ajoute un lien dans SOURCES (Source ${id})
+          </div>`;
+        return;
+      }
+
+      // ⚠️ Pas de sandbox ici (sinon certains embeds affichent "Remove sandbox attributes")
       target.innerHTML = `
         <iframe
           id="streamFrame"
@@ -309,11 +361,11 @@
           scrolling="no"
           frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          referrerpolicy="origin"
-          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+          referrerpolicy="origin">
         </iframe>
       `;
 
+      // fallback si embed bloqué
       setTimeout(() => {
         const iframe = document.getElementById("streamFrame");
         if(!iframe) return;
