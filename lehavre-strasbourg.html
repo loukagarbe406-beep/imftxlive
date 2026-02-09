@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Le Havre - Strasbourg</title>
+  <title>IMFTX+ — Newcastle - Brentford</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -17,6 +17,7 @@
       overflow-x:hidden;
     }
 
+    /* ✅ fond gris sombre style */
     .soft-bg{
       background:
         radial-gradient(1100px 520px at 15% 15%, rgba(255,255,255,.08), transparent 55%),
@@ -39,6 +40,7 @@
     }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
+    /* ✅ cover bannière */
     .cover{
       position:absolute;
       inset:0;
@@ -46,8 +48,28 @@
       cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.70) 100%),
-        url("https://empire-sport.online/upload/events/sifuto3fspuolzjw4wqxhpa1bgbfft.jpg") center/cover no-repeat;
-      transform: translateZ(0);
+        url("https://images.unsplash.com/photo-1521412644187-c49fa049e84d?q=80&w=1600&auto=format&fit=crop") center/cover no-repeat;
+    }
+
+    .pill{
+      position:absolute;
+      top:16px;
+      right:16px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background: rgba(0,0,0,.40);
+      border:1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(14px);
+      font-weight:900;
+      font-size:12px;
+      z-index:20;
+    }
+    .dot{
+      width:7px;height:7px;border-radius:999px;background:#f59e0b;
+      box-shadow:0 0 0 4px rgba(245,158,11,.14);
     }
 
     .cover-top{
@@ -68,11 +90,7 @@
       object-fit:contain;
       filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
     }
-    .vs{
-      font-weight:900;
-      font-size:14px;
-      opacity:.92;
-    }
+    .vs{ font-weight:900; font-size:14px; opacity:.92; }
 
     .cover-strip{
       position:absolute;
@@ -89,22 +107,13 @@
       justify-content:space-between;
       padding:0 18px;
     }
-    .strip-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
+    .strip-left{ display:flex; align-items:center; gap:12px; min-width:0; }
     .strip-icon{
       width:28px;height:28px;
       opacity:.9;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
     }
-    .strip-title{
-      font-size:16px;
-      font-weight:900;
-      line-height:1;
-    }
+    .strip-title{ font-size:16px; font-weight:900; line-height:1; }
     .strip-sub{
       font-size:15px;
       opacity:.92;
@@ -153,12 +162,7 @@
       justify-content:space-between;
       gap:14px;
     }
-    .watch-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
+    .watch-left{ display:flex; align-items:center; gap:12px; min-width:0; }
     .watch-left img{
       width:38px;height:38px;
       object-fit:contain;
@@ -182,37 +186,45 @@
       flex-shrink:0;
     }
 
-    .chat-box{
-      border-radius:22px;
-      overflow:hidden;
-      min-height:520px;
-    }
+    /* chat */
+    .chat-box{ border-radius:22px; overflow:hidden; min-height:520px; }
 
-    .pill{
-      position:absolute;
-      top:16px;
-      right:16px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 12px;
-      border-radius:999px;
-      background: rgba(0,0,0,.40);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(14px);
-      font-weight:900;
-      font-size:12px;
-      z-index:20;
+    /* ✅ Safe-click (réduit les misclicks) */
+    .player-wrap{ position:relative; width:100%; height:100%; }
+    .click-guard{
+      position:absolute; inset:0; z-index:60;
+      background:rgba(0,0,0,0);
+      pointer-events:auto;
     }
-    .dot{
-      width:7px;height:7px;border-radius:999px;background:#f59e0b;
-      box-shadow:0 0 0 4px rgba(245,158,11,.14);
+    .guard-ui{
+      position:absolute; z-index:70;
+      right:14px; bottom:14px;
+      display:flex; gap:10px;
+    }
+    .guard-btn,.guard-badge{
+      height:40px; padding:0 14px;
+      border-radius:999px;
+      font-weight:900; font-size:12px;
+      backdrop-filter: blur(14px);
+    }
+    .guard-btn{
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .guard-badge{
+      display:flex; align-items:center; gap:8px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.10);
+      opacity:.9;
+    }
+    .guard-dot{
+      width:7px;height:7px;border-radius:999px;background:#22c55e;
+      box-shadow:0 0 0 4px rgba(34,197,94,.14);
     }
   </style>
 </head>
 
 <body class="soft-bg">
-
   <nav class="sticky top-0 z-40 bg-black/25 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
@@ -226,39 +238,49 @@
   <main class="max-w-screen-2xl mx-auto px-6 py-8">
     <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
 
+      <!-- LEFT -->
       <div>
         <section class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
-            <div class="pill"><span class="dot"></span>17H15</div>
+            <div class="pill"><span class="dot"></span>21:00</div>
 
             <div class="cover-top">
-              <img class="team-logo" src="https://empire-sport.online/upload/teams/poyamdm2uaxrxrbgqmfpm1dr1meyon.png" alt="Le Havre">
+              <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg" alt="Newcastle">
               <span class="vs">VS</span>
-              <img class="team-logo" src="https://www.rcstrasbourgalsace.fr/wp-content/uploads/2019/06/Racing_Club_de_Strasbourg_Alsace_RC_Strasbourg_-_RCS_-_RCSA_logo_officiel.svg" alt="Strasbourg">
+              <img class="team-logo" src="https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg" alt="Brentford">
             </div>
 
             <div class="cover-strip">
               <div class="strip-left">
-                <img class="strip-icon" src="https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="Compétition">
+                <img class="strip-icon" src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Compétition">
                 <div style="min-width:0">
                   <div class="strip-title">Regarder Gratuitement</div>
-                  <div class="strip-sub">Le Havre<br>Strasbourg</div>
+                  <div class="strip-sub">Newcastle United<br>Brentford</div>
                 </div>
               </div>
-
-              <div class="strip-play">
-                <i class="fa-solid fa-play"></i>
-              </div>
+              <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
           </div>
 
-          <div id="videoTarget" class="w-full h-full"></div>
+          <div class="player-wrap">
+            <div id="videoTarget" class="w-full h-full"></div>
+
+            <div id="clickGuard" class="click-guard"></div>
+            <div class="guard-ui">
+              <div class="guard-badge" id="guardStatus">
+                <span class="guard-dot"></span> Safe click
+              </div>
+              <button class="guard-btn" id="unlockBtn" type="button">
+                Activer interactions 10s
+              </button>
+            </div>
+          </div>
         </section>
 
         <section class="mt-4 flex flex-wrap gap-3">
-          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">🇫🇷 (1440p) (1)</button>
-          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">🇫🇷 (1440p) (2)</button>
-          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">🇫🇷 (1440p) (3)</button>
+          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
         </section>
 
         <div id="externalLink" class="hidden mt-3 text-center">
@@ -270,15 +292,14 @@
 
         <section class="mt-5 watch-bar glass">
           <div class="watch-left">
-            <img src="https://empire-sport.online/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="Compétition">
+            <img src="https://upload.wikimedia.org/wikipedia/en/f/f2/Premier_League_Logo.svg" alt="Compétition">
             <div class="watch-text">
               <div class="small">Vous regardez</div>
-              <div class="big">Le Havre - Strasbourg</div>
-              <div class="small">Compétition · 17h15</div>
+              <div class="big">Newcastle — Brentford</div>
+              <div class="small">Match · 21:00</div>
             </div>
           </div>
-
-          <img class="channel-logo" src="https://empire-sport.online/upload/chaines/4gxyid6dori5u5mgf73js05kvsmo9k.png" alt="Chaîne">
+          <img class="channel-logo" src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Logo_Canal%2B_1995.svg" alt="Chaîne">
         </section>
 
         <div class="mt-6 text-center text-sm text-white/45 font-semibold">
@@ -286,6 +307,7 @@
         </div>
       </div>
 
+      <!-- RIGHT : chat only -->
       <aside class="chat-box glass">
         <iframe id="chatFrame" src="" allow="autoplay" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </aside>
@@ -294,15 +316,17 @@
   </main>
 
   <script>
+    // ✅ Mets tes liens OFFICIELS ici
     const SOURCES = {
-      1: "https://embedsports.top/embed/admin/ppv-le-havre-ac-vs-strasbourg/1",
-      2: "https://btopyihn.store/default/4/default.default",
-      3: "https://btopyihn.store/default/4/default.default"
+      1: "https://spiderembed.top/embed/737022/atalanta-cremonese/easy/1",  // 🔁 remplace
+      2: "#",
+      3: "#"
     };
 
+    // ✅ chat twitch only (sans titre / sans bouton)
     (function(){
       const parentDomain = window.location.hostname;
-      const channel = "betfairlive";
+      const channel = "thestreameast"; // 🔁 change si tu veux
       document.getElementById("chatFrame").src =
         `https://www.twitch.tv/embed/${channel}/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
     })();
@@ -327,8 +351,7 @@
 
       const target = document.getElementById("videoTarget");
 
-      if(!SOURCES[id] || SOURCES[id] === "#"
-         || (SOURCES[id] + "").includes("REMPLACE-MOI")){
+      if(!SOURCES[id] || SOURCES[id] === "#"){
         target.innerHTML = `
           <div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
             Ajoute un lien dans SOURCES (Source ${id})
@@ -348,6 +371,7 @@
         </iframe>
       `;
 
+      // fallback si embed bloqué
       setTimeout(() => {
         const iframe = document.getElementById("streamFrame");
         if(!iframe) return;
@@ -355,6 +379,31 @@
         catch(e){ ext.classList.remove("hidden"); }
       }, 2000);
     }
+
+    /* ✅ Safe-click */
+    const clickGuard = document.getElementById("clickGuard");
+    const unlockBtn  = document.getElementById("unlockBtn");
+    const guardStatus= document.getElementById("guardStatus");
+
+    function lockGuard(){
+      clickGuard.style.pointerEvents = "auto";
+      guardStatus.style.opacity = ".9";
+      unlockBtn.textContent = "Activer interactions 10s";
+    }
+    function unlockGuard(ms=10000){
+      clickGuard.style.pointerEvents = "none";
+      guardStatus.style.opacity = ".55";
+      unlockBtn.textContent = "Interactions ON";
+      clearTimeout(window.__guardTimer);
+      window.__guardTimer = setTimeout(lockGuard, ms);
+    }
+
+    lockGuard();
+    unlockBtn.addEventListener("click", () => unlockGuard(10000));
+    clickGuard.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
   </script>
 
 </body>
