@@ -344,12 +344,7 @@
         <h2 class="text-xl font-bold text-zinc-900 dark:text-white">IMFTX+ — DEMAIN</h2>
       </div>
 
-      <div id="stream-list-bk" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <div class="aspect-[16/9] w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
-        <div class="aspect-[16/9] hidden md:block w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
-        <div class="aspect-[16/9] hidden lg:block w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
-        <div class="aspect-[16/9] hidden xl:block w-full rounded-lg bg-zinc-200 dark:bg-zinc-700 animate-pulse"></div>
-      </div>
+      <div id="stream-list-bk" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
     </section>
 
   </div>
@@ -408,40 +403,108 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // ===== MATCHES (NOUVEAUX) =====
+  // ===== MATCHES (AUJOURD’HUI) — NE CHANGE PAS =====
   const MATCHES = [
     {
       title: "Rennes - Paris SG", time: "19:00",
- banner: "https://empire-sport.fit/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png",
- aLogo: "https://empire-sport.fit/upload/teams/1thklunb7wqcqrni6zoml4zrukfonj.png", 
-bLogo: "https://empire-sport.fit/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png", 
-compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
- href: "rennes-psg.html"
+      banner: "https://empire-sport.fit/upload/teambanks/tdx3zlgni4ow0d5sv42pkkjysjxjud.png",
+      aLogo: "https://empire-sport.fit/upload/teams/1thklunb7wqcqrni6zoml4zrukfonj.png",
+      bLogo: "https://empire-sport.fit/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "rennes-psg.html"
     },
     {
-       title: "Hull City - Chelsea", time: "20:45",
- banner: "https://empire-sport.fit/upload/teambanks/5yl7dl2h27lzgwseu8f5fm3pppav0o.png",
- aLogo: "https://empire-sport.fit/upload/teams/favuf7ps0fcpyx811zof55yofs8n7j.png", 
-bLogo: "https://empire-sport.fit/upload/teams/8ut7uxa2csqdcpq7dpdez1f9dmfoj6.png", 
-compLogo: "https://empire-sport.fit/upload/leagues/ifm4fzw0zm4vfe7xf0pzviqo0cchbv.png",
- href: "che-city.html",
-      },
-    {
-       title: "Pisa - AC Milan", time: "21:00",
-     banner: "https://empire-sport.fit/upload/teambanks/qbru1jzt91fdynafnprejydtyws4tj.png", 
-aLogo: "https://empire-sport.fit/upload/teams/bpl26e7i1ygsldwx4oovan41rfyjzi.png", 
-bLogo: "https://empire-sport.fit/upload/teams/ppdjkulnwa1qd4c6vzrng0bfe9t9np.png",
- compLogo: "https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png", 
-href: "pisa-milan.html",
+      title: "Hull City - Chelsea", time: "20:45",
+      banner: "https://empire-sport.fit/upload/teambanks/5yl7dl2h27lzgwseu8f5fm3pppav0o.png",
+      aLogo: "https://empire-sport.fit/upload/teams/favuf7ps0fcpyx811zof55yofs8n7j.png",
+      bLogo: "https://empire-sport.fit/upload/teams/8ut7uxa2csqdcpq7dpdez1f9dmfoj6.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/ifm4fzw0zm4vfe7xf0pzviqo0cchbv.png",
+      href: "che-city.html",
     },
     {
-    title: "Monaco - Nantes", time: "21:05",
-     banner: "https://empire-sport.fit/upload/teambanks/37xxoponwylvvkb4n6hpkjd3toosgw.png", 
-aLogo: "https://empire-sport.fit/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png", 
-bLogo: "https://empire-sport.fit/upload/teams/divqkvj7oin1bapguw2sl7dmo0djvd.png",
- compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png", 
-href: "asm-fcn.html",
-   }
+      title: "Pisa - AC Milan", time: "21:00",
+      banner: "https://empire-sport.fit/upload/teambanks/qbru1jzt91fdynafnprejydtyws4tj.png",
+      aLogo: "https://empire-sport.fit/upload/teams/bpl26e7i1ygsldwx4oovan41rfyjzi.png",
+      bLogo: "https://empire-sport.fit/upload/teams/ppdjkulnwa1qd4c6vzrng0bfe9t9np.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
+      href: "pisa-milan.html",
+    },
+    {
+      title: "Monaco - Nantes", time: "21:05",
+      banner: "https://empire-sport.fit/upload/teambanks/37xxoponwylvvkb4n6hpkjd3toosgw.png",
+      aLogo: "https://empire-sport.fit/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
+      bLogo: "https://empire-sport.fit/upload/teams/divqkvj7oin1bapguw2sl7dmo0djvd.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "asm-fcn.html",
+    }
+  ];
+
+  // ===== MATCHES (DEMAIN) — AJOUTE ICI =====
+  const MATCHES_TOMORROW = [
+    {
+      title: "Montpellier - Le Mans", time: "14:00",
+      banner: "https://empire-sport.fit/upload/events/m2ulz5dsyrimkvady8leorpoc08fgi.jpg",
+      aLogo: "", bLogo: "",
+      compLogo: "https://empire-sport.fit/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png",
+      href: "montpellier-lemans.html",
+      noTeams: true
+    },
+    {
+      title: "Grenoble - Stade de Reims", time: "14:00",
+      banner: "https://empire-sport.fit/upload/events/q8k8mkcadhtyw6jampb5szfxuipfyp.jpg",
+      aLogo: "", bLogo: "",
+      compLogo: "https://empire-sport.fit/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png",
+      href: "grenoble-reims.html",
+      noTeams: true
+    },
+    {
+      title: "Espanyol - Celta Vigo", time: "14:30",
+      banner: "https://empire-sport.fit/upload/teambanks/v8gcuunqbt53yqnhbujrpoqemnzfvc.png",
+      aLogo: "https://empire-sport.fit/upload/teams/f556l4mvj3bkxivrglwjxdkbifqdle.png",
+      bLogo: "https://empire-sport.fit/upload/teams/clupwubxseaoaiah0zbxqeucpqskyu.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
+      href: "espanyol-celta.html"
+    },
+    {
+      title: "Werder Bremen - Bayern Munich", time: "15:30",
+      banner: "https://empire-sport.fit/upload/teambanks/hy0xxpekk2ija3rbuccm0eibrrxtzg.png",
+      aLogo: "https://empire-sport.fit/upload/teams/mg0nagdf3vps9sxlrk1f0jfo2g7ueb.png",
+      bLogo: "https://empire-sport.fit/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/gazvdx7x9mijtgdsbjxlnfuc6cr5uz.png",
+      href: "bremen-bayern.html"
+    },
+    {
+      title: "Bayer Leverkusen - St Pauli", time: "15:30",
+      banner: "https://empire-sport.fit/upload/teambanks/5xj4np6wt3clqh2pioqsxcki56nsy1.png",
+      aLogo: "https://empire-sport.fit/upload/teams/hbx63xj78c5emdkxh7wmfoknajaqoa.png",
+      bLogo: "https://empire-sport.fit/upload/teams/kvl1zke170ift3lwedyiy4jyccpydo.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/gazvdx7x9mijtgdsbjxlnfuc6cr5uz.png",
+      href: "leverkusen-stpauli.html"
+    },
+    {
+      title: "Burton Albion - West Ham United", time: "15:30",
+      banner: "https://empire-sport.fit/upload/teambanks/dyciooralyqkckg5jd1oj3yt03yrwu.png",
+      aLogo: "https://empire-sport.fit/upload/teams/y6yb1g5focq8cdy6ogpmt5fvnnptbb.png",
+      bLogo: "https://empire-sport.fit/upload/teams/tnjduh0wsc3gwkrqgbyxtsglkwiwj9.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/bwqxost8qzrfkxdyp0det4iissrjcf.png",
+      href: "burton-westham.html"
+    },
+    {
+      title: "Manchester City - Salford City", time: "16:00",
+      banner: "https://empire-sport.fit/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
+      aLogo: "https://empire-sport.fit/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
+      bLogo: "https://empire-sport.fit/upload/teams/83zjv8qabq3n1tmhgdnecismkxp1c2.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/bwqxost8qzrfkxdyp0det4iissrjcf.png",
+      href: "city-salford.html"
+    },
+    {
+      title: "Marseille - Strasbourg", time: "17:00",
+      banner: "https://empire-sport.fit/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png",
+      aLogo: "https://empire-sport.fit/upload/teams/5box72sxig3lzrlh1xkj44xqfw9j41.png",
+      bLogo: "https://empire-sport.fit/upload/teams/y5tcqer82p79xnuij4aw6hqjiovisl.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "om-rcs.html"
+    }
   ];
 
   const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
@@ -477,7 +540,7 @@ href: "asm-fcn.html",
   function cardHTML(m, idx){
     const teamsRow = m.noTeams ? `
       <div class="flex items-center gap-2">
-        <span class="vs">MULTIPLEX</span>
+        <span class="vs">MATCH</span>
       </div>
     ` : `
       <div class="flex items-center gap-2">
@@ -487,7 +550,7 @@ href: "asm-fcn.html",
       </div>
     `;
 
-    const cleanID = m.href.slice(0, -5);
+    const cleanID = (m.href || `match-${idx}`).replace(".html","");
 
     return `
       <a href="${m.href}" class="block">
@@ -503,10 +566,12 @@ href: "asm-fcn.html",
           </div>
 
           <div class="absolute right-3 top-3">
-            <span class="timer-pill" data-pill="${idx}">
-              <span class="timer-text" data-timer="${idx}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F54927" class="bi bi-person" viewBox="0 0 16 16">
+            <span class="timer-pill">
+              <span class="timer-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F54927" class="bi bi-person" viewBox="0 0 16 16">
                   <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                </svg></span>
+                </svg>
+              </span>
               <span data-viewer-counter="${cleanID}" data-viewer-readonly style="color: #F54927;font-family: Arial, Helvetica, sans-serif;"></span>
             </span>
           </div>
@@ -520,7 +585,7 @@ href: "asm-fcn.html",
                   <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
                   <div class="min-w-0">
                     <div class="match-title truncate">${m.title}</div>
-                    <div class="match-sub">Aujourd’hui · ${m.time}</div>
+                    <div class="match-sub">${m.dayLabel || "Aujourd’hui"} · ${m.time}</div>
                   </div>
                 </div>
               </div>
@@ -541,44 +606,51 @@ href: "asm-fcn.html",
   }
 
   function render(){
-    const el = document.getElementById('stream-list-principal');
-    if(!el) return;
-    el.innerHTML = MATCHES.map((m,i) => cardHTML(m,i)).join('');
+    const todayEl = document.getElementById('stream-list-principal');
+    const tomEl   = document.getElementById('stream-list-bk');
+    if(todayEl) todayEl.innerHTML = MATCHES.map((m,i) => cardHTML({ ...m, dayLabel:"Aujourd’hui" }, i)).join('');
+    if(tomEl)   tomEl.innerHTML   = MATCHES_TOMORROW.map((m,i) => cardHTML({ ...m, dayLabel:"Demain" }, i + 100)).join('');
   }
 
   function tick(){
     const now = Date.now();
 
-    MATCHES.forEach((m, idx) => {
-      const kickoff = getNextKickoff(m.time).getTime();
-      const endLive = kickoff + LIVE_WINDOW_MS;
+    function tickList(list, baseIdx){
+      list.forEach((m, localIdx) => {
+        const idx = baseIdx + localIdx;
+        const kickoff = getNextKickoff(m.time).getTime();
+        const endLive = kickoff + LIVE_WINDOW_MS;
 
-      const timerEl = document.querySelector(`[data-timer="${idx}"]`);
-      const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
-      const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
+        const timerEl = document.querySelector(`[data-timer="${idx}"]`);
+        const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
+        const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
 
-      if(!timerEl || !pillEl || !dotEl) return;
+        if(!timerEl || !pillEl || !dotEl) return;
 
-      if (now < kickoff) {
-        const diff = kickoff - now;
-        timerEl.textContent = formatRemaining(diff);
-        pillEl.classList.remove('timer-live');
-        timerEl.classList.remove('timer-live');
-        dotEl.classList.remove('timer-dot-live');
-      } else if (now >= kickoff && now <= endLive) {
-        timerEl.textContent = "En Cours";
-        pillEl.classList.add('timer-live');
-        timerEl.classList.add('timer-live');
-        dotEl.classList.add('timer-dot-live');
-      } else {
-        const next = getNextKickoff(m.time).getTime();
-        const diff = next - now;
-        timerEl.textContent = formatRemaining(diff);
-        pillEl.classList.remove('timer-live');
-        timerEl.classList.remove('timer-live');
-        dotEl.classList.remove('timer-dot-live');
-      }
-    });
+        if (now < kickoff) {
+          const diff = kickoff - now;
+          timerEl.textContent = formatRemaining(diff);
+          pillEl.classList.remove('timer-live');
+          timerEl.classList.remove('timer-live');
+          dotEl.classList.remove('timer-dot-live');
+        } else if (now >= kickoff && now <= endLive) {
+          timerEl.textContent = "En Cours";
+          pillEl.classList.add('timer-live');
+          timerEl.classList.add('timer-live');
+          dotEl.classList.add('timer-dot-live');
+        } else {
+          const next = getNextKickoff(m.time).getTime();
+          const diff = next - now;
+          timerEl.textContent = formatRemaining(diff);
+          pillEl.classList.remove('timer-live');
+          timerEl.classList.remove('timer-live');
+          dotEl.classList.remove('timer-dot-live');
+        }
+      });
+    }
+
+    tickList(MATCHES, 0);
+    tickList(MATCHES_TOMORROW, 100);
   }
 
   document.getElementById('refreshBtn')?.addEventListener('click', () => {
@@ -596,11 +668,3 @@ href: "asm-fcn.html",
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
