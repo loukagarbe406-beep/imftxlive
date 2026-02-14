@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="referrer" content="no-referrer-when-downgngrade"/>
+  <meta name="referrer" content="no-referrer-when-downgrade"/>
 
   <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@latest" url="https://google.com"></script>
 
@@ -403,7 +403,7 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // ===== AUJOURD’HUI = matchs donnés "la dernière fois" (Burton, Montpellier, Grenoble, Espanyol, etc.) =====
+  // ===== AUJOURD’HUI =====
   const MATCHES = [
     {
       title: "Burton Albion - West Ham United", time: "15:30",
@@ -469,6 +469,8 @@
       compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
       href: "om-strasbourg.html"
     },
+
+    /* --- ajouts --- */
     {
       title: "Trabzonspor - Fenerbahçe", time: "18:00",
       banner: "https://empire-sport.fit/upload/teambanks/mucaouljygx6wa8er6xr9ckbsb23mj.png",
@@ -478,15 +480,15 @@
       href: "trabzonpor-fern.html"
     },
     {
-       title: "Lazio - Atalanta", time: "18:00",
+      title: "Lazio - Atalanta", time: "18:00",
       banner: "https://empire-sport.fit/upload/teambanks/0bsxjwsijlmh5hgwe31ysy7impbg9c.png",
       aLogo: "https://empire-sport.fit/upload/teams/a1tng3okaurq1lb99aqaxcg4hlhenz.png",
       bLogo: "https://empire-sport.fit/upload/teams/vy6zoxxejgnc4yesfiuic45rndpgne.png",
       compLogo: "https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
-      href: "lazio-atalanta.html" 
+      href: "lazio-atalanta.html"
     },
     {
-     title: "Aston Villa - Newcastle United", time: "18:45",
+      title: "Aston Villa - Newcastle United", time: "18:45",
       banner: "https://empire-sport.fit/upload/teambanks/ym7ptuxlwoumskhf72wtbbtcvi8xla.png",
       aLogo: "https://empire-sport.fit/upload/teams/xrd0osaqrxqpyxbruna6zfn4ruvu00.png",
       bLogo: "https://empire-sport.fit/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
@@ -494,41 +496,40 @@
       href: "asvilla-new.html"
     },
     {
-     title: "Lille - Brest", time: "19:00",
+      title: "Lille - Brest", time: "19:00",
       banner: "https://empire-sport.fit/upload/teambanks/xuehysbxpq8cg1iabmeemelbwxme8g.png",
       aLogo: "https://empire-sport.fit/upload/teams/8cjgq2dnsdbrdb1bfdfor9qrqp3o1f.png",
       bLogo: "https://empire-sport.fit/upload/teams/os8aignwizzyij0fofayii3qpxdvjh.png",
       compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "losc-brest.html" 
+      href: "losc-brest.html"
     },
     {
       title: "Guingamp - St Etienne", time: "20:00",
       banner: "https://empire-sport.fit/upload/events/onhdp99psa3bj1qwrbvkarfnm4zthw.jpg",
       aLogo: "", bLogo: "",
       compLogo: "https://empire-sport.fit/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png",
-      href: "guingamp-stetienne.html" 
-      noTeams: true 
+      href: "guingamp-stetienne.html",
+      noTeams: true
     },
     {
-title: "Inter Milan - Juventus"
-, time: "20:45",
+      title: "Inter Milan - Juventus", time: "20:45",
       banner: "https://empire-sport.fit/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
       aLogo: "https://empire-sport.fit/upload/teams/ig0sk72cx0fakug4fzkfj4hay33pwr.png",
       bLogo: "https://empire-sport.fit/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
       compLogo: "https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
-      href: "inter-juv.html" 
+      href: "inter-juv.html"
     },
     {
-    title: "Liverpool - Brighton and Hove Albion", time: "21:00",
+      title: "Liverpool - Brighton and Hove Albion", time: "21:00",
       banner: "https://empire-sport.fit/upload/teambanks/eonefmr3jpwynxckyk7ijgoh1jzod8.png",
       aLogo: "https://empire-sport.fit/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png",
       bLogo: "https://empire-sport.fit/upload/teams/pidrlq9nincxbgnpenvu1g5qxox8dg.png",
       compLogo: "https://empire-sport.fit/upload/leagues/bwqxost8qzrfkxdyp0det4iissrjcf.png",
-      href: "liv-bri.html"   
+      href: "liv-bri.html"
     }
   ];
 
-  // ===== DEMAIN = les matchs que tu viens de donner (Oviedo, Havre, Rayo, etc.) =====
+  // ===== DEMAIN =====
   const MATCHES_TOMORROW = [
     {
       title: "Real Oviedo - Athletic Bilbao", time: "14:00",
@@ -785,5 +786,3 @@ title: "Inter Milan - Juventus"
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
-
-
