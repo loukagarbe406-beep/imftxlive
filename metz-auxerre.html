@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Aston Villa - Newcastle United</title>
+  <title>IMFTX+ — Metz - Auxerre</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -28,32 +28,20 @@
       backdrop-filter: blur(14px);
     }
 
-    .player-box{
-      border-radius:20px;
-      overflow:hidden;
-      position:relative;
-    }
+    .player-box{ border-radius:20px; overflow:hidden; position:relative; }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
     .cover{
-      position:absolute;
-      inset:0;
-      z-index:15;
-      cursor:pointer;
+      position:absolute; inset:0; z-index:15; cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
-        url("https://empire-sport.fit/upload/teambanks/ym7ptuxlwoumskhf72wtbbtcvi8xla.png") center/cover no-repeat;
+        url("https://empire-sport.fit/upload/events/oqw9t10g12b95nynfyiuqchfqbps3j.jpg") center/cover no-repeat;
     }
 
     .cover-top{
-      position:absolute;
-      top:16px;
-      left:16px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:16px;
+      position:absolute; top:16px; left:16px;
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:16px;
       background:rgba(0,0,0,.45);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(14px);
@@ -66,46 +54,32 @@
     .vs{ font-weight:900; font-size:14px; opacity:.9; }
 
     .cover-strip{
-      position:absolute;
-      left:16px;
-      right:16px;
-      bottom:16px;
-      height:80px;
-      border-radius:18px;
+      position:absolute; left:16px; right:16px; bottom:16px;
+      height:80px; border-radius:18px;
       background:rgba(0,0,0,.45);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(16px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       padding:0 18px;
     }
     .strip-title{ font-size:16px; font-weight:900; line-height:1; }
     .strip-sub{ font-size:14px; opacity:.85; font-weight:600; font-style:italic; margin-top:4px; line-height:1.1; }
     .strip-play{
-      width:46px;height:46px;
-      border-radius:999px;
+      width:46px;height:46px; border-radius:999px;
       border:1px solid rgba(255,255,255,.18);
-      display:grid;
-      place-items:center;
+      display:grid; place-items:center;
       background:rgba(255,255,255,.12);
       transition:.2s;
     }
     .strip-play:hover{ transform:scale(1.06); background:rgba(255,255,255,.16); }
 
     .pill{
-      position:absolute;
-      top:16px;
-      right:16px;
-      padding:7px 12px;
-      border-radius:999px;
+      position:absolute; top:16px; right:16px;
+      padding:7px 12px; border-radius:999px;
       background:rgba(0,0,0,.55);
       border:1px solid rgba(255,255,255,.12);
-      font-weight:900;
-      font-size:12px;
-      display:flex;
-      align-items:center;
-      gap:8px;
+      font-weight:900; font-size:12px;
+      display:flex; align-items:center; gap:8px;
       backdrop-filter: blur(14px);
     }
     .dot{
@@ -113,19 +87,9 @@
       box-shadow:0 0 0 4px rgba(245,158,11,.12);
     }
 
-    .source-btn{
-      height:42px;
-      border-radius:12px;
-      font-weight:900;
-      font-size:13px;
-      transition:.2s;
-    }
+    .source-btn{ height:42px; border-radius:12px; font-weight:900; font-size:13px; transition:.2s; }
     .source-btn.active{ background:#fff; color:#000; }
-    .source-btn.inactive{
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.08);
-      color:#fff;
-    }
+    .source-btn.inactive{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:#fff; }
 
     .watch-bar{
       border-radius:16px;
@@ -142,23 +106,26 @@
     .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
 
-    .chat-box{
-      border-radius:20px;
-      overflow:hidden;
+    /* CHAT SANS CADRE */
+    .chat-raw{
+      width:100%;
       min-height:520px;
+      height:100%;
+      border-radius:0;
+      overflow:hidden;
+      background:transparent;
     }
-    .chat-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:12px 14px;
-      border-bottom:1px solid rgba(255,255,255,.08);
+    .chat-raw iframe{
+      width:100%;
+      height:100%;
+      min-height:520px;
+      border:0;
+      background:#000;
+      display:block;
     }
-    .chat-head .title{ font-weight:900; }
-    .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }
 
     @media (max-width: 1024px){
-      .chat-box{ min-height:420px; }
+      .chat-raw, .chat-raw iframe{ min-height:420px; }
     }
   </style>
 </head>
@@ -182,22 +149,22 @@
       <div>
         <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
-            <div class="pill"><span class="dot"></span>18h45</div>
+            <div class="pill"><span class="dot"></span>17h15</div>
 
             <div class="cover-top">
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/xrd0osaqrxqpyxbruna6zfn4ruvu00.png"
-                   alt="Aston Villa">
+                   src="https://empire-sport.fit/upload/teams/qcuklxuxncckyihua7oh73wsacvqla.png"
+                   alt="Metz">
               <span class="vs">VS</span>
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png"
-                   alt="Newcastle United">
+                   src="https://empire-sport.fit/upload/teams/bdafwakelppxzlrqst2frjm56vnneh.png"
+                   alt="Auxerre">
             </div>
 
             <div class="cover-strip">
               <div>
                 <div class="strip-title">Regarder Gratuitement</div>
-                <div class="strip-sub">Aston Villa<br>Newcastle United</div>
+                <div class="strip-sub">Metz<br>Auxerre</div>
               </div>
               <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
@@ -220,7 +187,7 @@
                 </svg>
               </p>
             </div>
-            <span data-viewer-counter="asvilla-new" id="counterMatch1"
+            <span data-viewer-counter="metz-auxerre" id="counterMatch1"
                   style="color:#F54927; font-family:Arial, Helvetica, sans-serif; font-weight:bold;"></span>
           </div>
         </div>
@@ -228,59 +195,43 @@
         <!-- VOUS REGARDEZ -->
         <div class="mt-5 watch-bar glass">
           <div class="watch-left">
-            <img src="https://empire-sport.fit/upload/leagues/bwqxost8qzrfkxdyp0det4iissrjcf.png" alt="Compétition">
+            <img src="https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="Compétition">
             <div class="watch-text">
               <div class="small">Vous regardez</div>
-              <div class="big">Aston Villa - Newcastle United</div>
-              <div class="small">FA CUP · 18h45</div>
+              <div class="big">Metz - Auxerre</div>
+              <div class="small">Ligue 1 · 17h15</div>
             </div>
           </div>
           <img class="channel-logo"
-               src="https://empire-sport.fit/upload/chaines/nsjq4ttitwsqbk4qkkgoblfumrlonp.png"
+               src="https://empire-sport.fit/upload/chaines/fatflko7vb4axmwyrykxtmxf4c4udm.png"
                alt="Chaîne">
         </div>
       </div>
 
-      <!-- CHAT (Twitch comme avant) -->
-      <aside class="chat-box glass">
-        <div class="chat-head">
-          <div>
-            <div class="title">Chat en direct</div>
-            <div class="sub">Parler avec tout le respect !</div>
-          </div>
-          <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15"
-             href="https://www.twitch.tv/popout/drem0h/chat?popout="
-             target="_blank" rel="noreferrer">
-            Ouvrir
-          </a>
-        </div>
-
-        <div style="height: calc(100% - 54px); min-height: 520px;">
-          <iframe id="chatFrame" src=""></iframe>
-        </div>
-      </aside>
+      <!-- CHAT (JUSTE L'IFRAME) -->
+      <div class="chat-raw">
+        <iframe
+          src="https://chat.streamfree.to/"
+          referrerpolicy="no-referrer-when-downgrade"
+          allow="fullscreen">
+        </iframe>
+      </div>
 
     </section>
   </main>
 
   <script>
-    // ✅ Mets tes liens OFFICIELS ici (sinon laisse "#")
+    // ✅ Mets tes liens ici (jw / embed)
     const SOURCES = {
-      1: "https://sansat.link/ch?id=51",
-      2: "#",
-      3: "#"
+      1: "https://modistreams.org/embed/ligue1/2026-02-15/metz-aux",
+      2: "https://modistreams.org/embed/ligue1/2026-02-15/metz-aux",
+      3: "https://sportlive.plus/soccer/1.php"
     };
-
-    // TWITCH CHAT EMBED (parent auto)
-    (function(){
-      const parentDomain = window.location.hostname;
-      document.getElementById("chatFrame").src =
-        `https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
-    })();
 
     function setActive(id){
       [1,2,3].forEach(n=>{
         const b = document.getElementById("btn"+n);
+        if(!b) return;
         b.className = (n===id) ? "source-btn active px-6" : "source-btn inactive px-6";
       });
     }
@@ -292,8 +243,9 @@
       setActive(id);
 
       const target = document.getElementById("videoTarget");
+      const url = SOURCES[id];
 
-      if(!SOURCES[id] || SOURCES[id] === "#"){
+      if(!url || url === "#"){
         target.innerHTML = `
           <div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
             Source indisponible
@@ -304,7 +256,7 @@
       target.innerHTML = `
         <iframe
           id="streamFrame"
-          src="${SOURCES[id]}"
+          src="${url}"
           allowfullscreen
           scrolling="no"
           frameborder="0"
