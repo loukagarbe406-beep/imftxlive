@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Metz - Auxerre</title>
+  <title>IMFTX+ — Le Havre - Toulouse</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
       position:absolute; inset:0; z-index:15; cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
-        url("https://empire-sport.fit/upload/events/oqw9t10g12b95nynfyiuqchfqbps3j.jpg") center/cover no-repeat;
+        url("https://empire-sport.fit/upload/events/87bkgegfkzjbuy0rxzfn5bi0axixy4.jpg") center/cover no-repeat;
     }
 
     .cover-top{
@@ -106,27 +106,16 @@
     .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
 
-    /* CHAT SANS CADRE */
-    .chat-raw{
-      width:100%;
-      min-height:520px;
-      height:100%;
-      border-radius:0;
-      overflow:hidden;
-      background:transparent;
+    .chat-box{ border-radius:20px; overflow:hidden; min-height:520px; }
+    .chat-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
-    .chat-raw iframe{
-      width:100%;
-      height:100%;
-      min-height:520px;
-      border:0;
-      background:#000;
-      display:block;
-    }
+    .chat-head .title{ font-weight:900; }
+    .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }
 
-    @media (max-width: 1024px){
-      .chat-raw, .chat-raw iframe{ min-height:420px; }
-    }
+    @media (max-width: 1024px){ .chat-box{ min-height:420px; } }
   </style>
 </head>
 
@@ -149,22 +138,22 @@
       <div>
         <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
-            <div class="pill"><span class="dot"></span>17h15</div>
+            <div class="pill"><span class="dot"></span>15h00</div>
 
             <div class="cover-top">
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/qcuklxuxncckyihua7oh73wsacvqla.png"
-                   alt="Metz">
+                   src="https://empire-sport.fit/upload/teams/poyamdm2uaxrxrbgqmfpm1dr1meyon.png"
+                   alt="Le Havre">
               <span class="vs">VS</span>
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/bdafwakelppxzlrqst2frjm56vnneh.png"
-                   alt="Auxerre">
+                   src="https://empire-sport.fit/upload/teams/o1bcez0ds5tikrwlny5yt7nkalhje3.png"
+                   alt="Toulouse">
             </div>
 
             <div class="cover-strip">
               <div>
                 <div class="strip-title">Regarder Gratuitement</div>
-                <div class="strip-sub">Metz<br>Auxerre</div>
+                <div class="strip-sub">Le Havre<br>Toulouse</div>
               </div>
               <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
@@ -187,7 +176,7 @@
                 </svg>
               </p>
             </div>
-            <span data-viewer-counter="metz-auxerre" id="counterMatch1"
+            <span data-viewer-counter="lehavre-toulouse" id="counterMatch1"
                   style="color:#F54927; font-family:Arial, Helvetica, sans-serif; font-weight:bold;"></span>
           </div>
         </div>
@@ -198,24 +187,34 @@
             <img src="https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="Compétition">
             <div class="watch-text">
               <div class="small">Vous regardez</div>
-              <div class="big">Metz - Auxerre</div>
-              <div class="small">Ligue 1 · 17h15</div>
+              <div class="big">Le Havre - Toulouse</div>
+              <div class="small">Ligue 1 · 15h00</div>
             </div>
           </div>
           <img class="channel-logo"
-               src="https://empire-sport.fit/upload/chaines/fatflko7vb4axmwyrykxtmxf4c4udm.png"
+               src="https://empire-sport.fit/upload/chaines/dw3nqnkbiqo3k02dksv9dmt7sxawk8.png"
                alt="Chaîne">
         </div>
       </div>
 
-      <!-- CHAT (JUSTE L'IFRAME) -->
-      <div class="chat-raw">
-        <iframe
-          src="https://chat.streamfree.to/"
-          referrerpolicy="no-referrer-when-downgrade"
-          allow="fullscreen">
-        </iframe>
-      </div>
+      <!-- CHAT -->
+      <aside class="chat-box glass">
+        <div class="chat-head">
+          <div>
+            <div class="title">Chat en direct</div>
+            <div class="sub">Parler avec tout le respect !</div>
+          </div>
+          <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15"
+             href="https://www.twitch.tv/popout/drem0h/chat?popout="
+             target="_blank" rel="noreferrer">
+            Ouvrir
+          </a>
+        </div>
+
+        <div style="height: calc(100% - 54px); min-height: 520px;">
+          <iframe id="chatFrame" src=""></iframe>
+        </div>
+      </aside>
 
     </section>
   </main>
@@ -227,6 +226,13 @@
       2: "https://modistreams.org/embed/ligue1/2026-02-15/metz-aux",
       3: "https://sportlive.plus/soccer/1.php"
     };
+
+    // TWITCH CHAT EMBED (parent auto)
+    (function(){
+      const parentDomain = window.location.hostname;
+      document.getElementById("chatFrame").src =
+        `https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
+    })();
 
     function setActive(id){
       [1,2,3].forEach(n=>{
