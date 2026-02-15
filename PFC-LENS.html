@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Paris FC - Lens</title>
+  <title>IMFTX+ — Metz - Auxerre</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -20,14 +20,12 @@
         radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
         linear-gradient(135deg, #1a1c20 0%, #121318 45%, #0b0c10 100%);
     }
-
     .glass{
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.08);
       box-shadow: 0 30px 120px rgba(0,0,0,.75);
       backdrop-filter: blur(14px);
     }
-
     .player-box{ border-radius:20px; overflow:hidden; position:relative; }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
@@ -35,9 +33,8 @@
       position:absolute; inset:0; z-index:15; cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
-        url("https://empire-sport.fit/upload/events/jaoqbgxvaz11g1dqnbrcxwihu9uxl7.jpg") center/cover no-repeat;
+        url("https://empire-sport.fit/upload/events/oqw9t10g12b95nynfyiuqchfqbps3j.jpg") center/cover no-repeat;
     }
-
     .cover-top{
       position:absolute; top:16px; left:16px;
       display:flex; align-items:center; gap:10px;
@@ -106,16 +103,13 @@
     .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
 
-    .chat-box{ border-radius:20px; overflow:hidden; min-height:520px; }
-    .chat-head{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 14px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .chat-head .title{ font-weight:900; }
-    .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }
+    /* CHAT SANS CADRE */
+    .chat-raw{ width:100%; min-height:520px; height:100%; border-radius:0; overflow:hidden; background:transparent; }
+    .chat-raw iframe{ width:100%; height:100%; min-height:520px; border:0; background:#000; display:block; }
 
-    @media (max-width: 1024px){ .chat-box{ min-height:420px; } }
+    @media (max-width: 1024px){
+      .chat-raw, .chat-raw iframe{ min-height:420px; }
+    }
   </style>
 </head>
 
@@ -138,22 +132,22 @@
       <div>
         <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
-            <div class="pill"><span class="dot"></span>20h45</div>
+            <div class="pill"><span class="dot"></span>17h15</div>
 
             <div class="cover-top">
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/qcyokwrlo5qyk6e66qgmv3ffqhpbzr.png"
-                   alt="Paris FC">
+                   src="https://empire-sport.fit/upload/teams/qcuklxuxncckyihua7oh73wsacvqla.png"
+                   alt="Metz">
               <span class="vs">VS</span>
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/qgwro2iyxo1vba0bcib2q1yddk3fxr.png"
-                   alt="Lens">
+                   src="https://empire-sport.fit/upload/teams/bdafwakelppxzlrqst2frjm56vnneh.png"
+                   alt="Auxerre">
             </div>
 
             <div class="cover-strip">
               <div>
                 <div class="strip-title">Regarder Gratuitement</div>
-                <div class="strip-sub">Paris FC<br>Lens</div>
+                <div class="strip-sub">Metz<br>Auxerre</div>
               </div>
               <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
@@ -176,7 +170,7 @@
                 </svg>
               </p>
             </div>
-            <span data-viewer-counter="PFC-LENS" id="counterMatch1"
+            <span data-viewer-counter="metz-auxerre" id="counterMatch1"
                   style="color:#F54927; font-family:Arial, Helvetica, sans-serif; font-weight:bold;"></span>
           </div>
         </div>
@@ -187,52 +181,55 @@
             <img src="https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="Compétition">
             <div class="watch-text">
               <div class="small">Vous regardez</div>
-              <div class="big">Paris FC - Lens</div>
-              <div class="small">Ligue 1 · 20h45</div>
+              <div class="big">Metz - Auxerre</div>
+              <div class="small">Ligue 1 · 17h15</div>
             </div>
           </div>
           <img class="channel-logo"
-               src="https://empire-sport.fit/upload/chaines/ypg8caxs3ejxvrfz8tclysmflo3dmv.png"
+               src="https://empire-sport.fit/upload/chaines/fatflko7vb4axmwyrykxtmxf4c4udm.png"
                alt="Chaîne">
         </div>
       </div>
 
-      <!-- CHAT -->
-      <aside class="chat-box glass">
-        <div class="chat-head">
-          <div>
-            <div class="title">Chat en direct</div>
-            <div class="sub">Parler avec tout le respect !</div>
-          </div>
-          <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15"
-             href="https://www.twitch.tv/popout/drem0h/chat?popout="
-             target="_blank" rel="noreferrer">
-            Ouvrir
-          </a>
-        </div>
-
-        <div style="height: calc(100% - 54px); min-height: 520px;">
-          <iframe id="chatFrame" src=""></iframe>
-        </div>
-      </aside>
+      <!-- CHAT (JUSTE L'IFRAME) -->
+      <div class="chat-raw">
+        <iframe
+          src="https://chat.streamfree.to/"
+          referrerpolicy="no-referrer-when-downgrade"
+          allow="fullscreen">
+        </iframe>
+      </div>
 
     </section>
   </main>
 
   <script>
+    // ====== "ANTI POP-UP" PROPRE (ton site) ======
+    // 1) Bloque window.open / popup initiés par ton code (pas ceux internes à une iframe si elle n'est pas sandboxée)
+    (function(){
+      const _open = window.open;
+      window.open = function(){
+        console.log("[popup blocked]", arguments);
+        return null;
+      };
+      // 2) Empêche les liens target=_blank sur ta page (hors iframe)
+      document.addEventListener("click", (e) => {
+        const a = e.target.closest && e.target.closest("a");
+        if (!a) return;
+        const isBlank = (a.getAttribute("target") || "").toLowerCase() === "_blank";
+        if (isBlank){
+          e.preventDefault();
+          window.location.href = a.href; // ouvre dans la même page
+        }
+      }, true);
+    })();
+
     // ✅ Mets tes liens ici (jw / embed)
     const SOURCES = {
-      1: "https://spiderembed.top/embed/746602/paris-fc-lens/hd/1",
-      2: "https://spiderembed.top/embed/746602/paris-fc-lens/hd/1?player=jw",
-      3: "https://spiderembed.top/embed/746602/paris-fc-lens/hd/1?player=jw"
+      1: "https://goodstream.site/embed.php?token=3b55f1f176",
+      2: "https://sportlive.plus/soccer/1.php",
+      3: "https://sportlive.plus/soccer/1.php"
     };
-
-    // TWITCH CHAT EMBED (parent auto)
-    (function(){
-      const parentDomain = window.location.hostname;
-      document.getElementById("chatFrame").src =
-        `https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
-    })();
 
     function setActive(id){
       [1,2,3].forEach(n=>{
@@ -259,10 +256,13 @@
         return;
       }
 
+      // 3) Sandbox iframe = bloque les popups venant de la source (si la source accepte)
+      // NB: si ça casse la lecture, enlève sandbox (mais alors tu ne peux pas empêcher les popups de cette source)
       target.innerHTML = `
         <iframe
           id="streamFrame"
           src="${url}"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
           allowfullscreen
           scrolling="no"
           frameborder="0"
