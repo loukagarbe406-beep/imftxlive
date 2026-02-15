@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Manchester United - Tottenham</title>
+  <title>IMFTX+ — Napoli - Roma</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -15,214 +15,113 @@
       font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:#fff;
       overflow-x:hidden;
-    }
-
-    /* ✅ FOND GRIS EXACT (vibe sombre / vignette comme ton image) */
-    .soft-bg{
       background:
-        radial-gradient(1100px 520px at 15% 15%, rgba(255,255,255,.08), transparent 55%),
-        radial-gradient(900px 520px at 85% 25%, rgba(255,255,255,.06), transparent 60%),
-        radial-gradient(900px 520px at 30% 95%, rgba(255,255,255,.05), transparent 62%),
-        linear-gradient(135deg, #141518 0%, #0f1012 55%, #0b0c0f 100%);
+        radial-gradient(1200px 500px at 20% -10%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(135deg, #1a1c20 0%, #121318 45%, #0b0c10 100%);
     }
 
     .glass{
       background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.09);
-      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,.08);
       box-shadow: 0 30px 120px rgba(0,0,0,.75);
+      backdrop-filter: blur(14px);
     }
 
-    .player-box{
-      border-radius:22px;
-      overflow:hidden;
-      position:relative;
-    }
+    .player-box{ border-radius:20px; overflow:hidden; position:relative; }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
-    /* ✅ COVER bannière */
     .cover{
-      position:absolute;
-      inset:0;
-      z-index:15;
-      cursor:pointer;
+      position:absolute; inset:0; z-index:15; cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.10) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.70) 100%),
-        url("https://empire-sport.online/upload/events/y5r1icmcwlqfh8ejtyqlzmuy9qp95c.jpg") center/cover no-repeat;
-      transform: translateZ(0);
+        linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
+        url("https://empire-sport.fit/upload/events/a7cwomz7br3zkximeejhcwr6ujulz3.jpg") center/cover no-repeat;
     }
 
-    /* ✅ TOP logos */
     .cover-top{
-      position:absolute;
-      top:16px;
-      left:16px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:18px;
-      background:rgba(0,0,0,.40);
-      border:1px solid rgba(255,255,255,.14);
+      position:absolute; top:16px; left:16px;
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:16px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(14px);
     }
     .team-logo{
       width:34px;height:34px;
       object-fit:contain;
-      filter: drop-shadow(0 8px 20px rgba(0,0,0,.75));
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.8));
     }
-    .vs{
-      font-weight:900;
-      font-size:14px;
-      opacity:.92;
-    }
+    .vs{ font-weight:900; font-size:14px; opacity:.9; }
 
-    /* ✅ STRIP bottom style “Regarder Gratuitement” comme ton screen */
     .cover-strip{
-      position:absolute;
-      left:16px;
-      right:16px;
-      bottom:16px;
-      height:84px;
-      border-radius:20px;
-      background: rgba(160,160,160,.35);
-      border: 1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(16px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 18px;
-    }
-    .strip-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-    .strip-icon{
-      width:28px;height:28px;
-      opacity:.9;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
-    }
-    .strip-title{
-      font-size:16px;
-      font-weight:900;
-      line-height:1;
-    }
-    .strip-sub{
-      font-size:15px;
-      opacity:.92;
-      font-weight:600;
-      line-height:1.1;
-      font-style:italic;
-      margin-top:4px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .strip-play{
-      width:44px;height:44px;
-      border-radius:999px;
-      border:2px solid rgba(255,255,255,.45);
-      display:grid;
-      place-items:center;
-      transition:.2s;
-      background:rgba(0,0,0,.15);
-    }
-    .strip-play i{ font-size:18px; }
-    .strip-play:hover{ transform:scale(1.06); background:rgba(0,0,0,.25); }
-
-    /* sources buttons */
-    .source-btn{
-      height:42px;
-      border-radius:14px;
-      font-weight:900;
-      font-size:13px;
-      transition:.2s;
-    }
-    .source-btn.active{ background:#fff; color:#000; }
-    .source-btn.inactive{
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.10);
-      color:#fff;
-    }
-
-    /* ✅ “Vous regardez” bar */
-    .watch-bar{
-      border-radius:18px;
-      background:rgba(255,255,255,.10);
+      position:absolute; left:16px; right:16px; bottom:16px;
+      height:80px; border-radius:18px;
+      background:rgba(0,0,0,.45);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(16px);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 18px;
+    }
+    .strip-title{ font-size:16px; font-weight:900; line-height:1; }
+    .strip-sub{ font-size:14px; opacity:.85; font-weight:600; font-style:italic; margin-top:4px; line-height:1.1; }
+    .strip-play{
+      width:46px;height:46px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      display:grid; place-items:center;
+      background:rgba(255,255,255,.12);
+      transition:.2s;
+    }
+    .strip-play:hover{ transform:scale(1.06); background:rgba(255,255,255,.16); }
+
+    .pill{
+      position:absolute; top:16px; right:16px;
+      padding:7px 12px; border-radius:999px;
+      background:rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:900; font-size:12px;
+      display:flex; align-items:center; gap:8px;
+      backdrop-filter: blur(14px);
+    }
+    .dot{
+      width:7px;height:7px;border-radius:999px;background:#f59e0b;
+      box-shadow:0 0 0 4px rgba(245,158,11,.12);
+    }
+
+    .source-btn{ height:42px; border-radius:12px; font-weight:900; font-size:13px; transition:.2s; }
+    .source-btn.active{ background:#fff; color:#000; }
+    .source-btn.inactive{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:#fff; }
+
+    .watch-bar{
+      border-radius:16px;
       padding:14px 16px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:14px;
     }
-    .watch-left{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width:0;
-    }
-    .watch-left img{
-      width:38px;height:38px;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
-      flex-shrink:0;
-    }
+    .watch-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+    .watch-left img{ width:36px; height:36px; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
     .watch-text{ min-width:0; line-height:1.1; }
-    .watch-text .small{ opacity:.8; font-weight:700; font-size:13px; }
-    .watch-text .big{
-      font-weight:900;
-      font-size:15px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .channel-logo{
-      width:94px;
-      height:auto;
-      object-fit:contain;
-      filter: drop-shadow(0 6px 14px rgba(0,0,0,.7));
-      flex-shrink:0;
-    }
+    .watch-text .small{ opacity:.75; font-weight:700; font-size:13px; }
+    .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
 
-    /* ✅ Chat : uniquement l’iframe, aucune barre au dessus */
-    .chat-box{
-      border-radius:22px;
-      overflow:hidden;
-      min-height:520px;
+    .chat-box{ border-radius:20px; overflow:hidden; min-height:520px; }
+    .chat-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
     }
+    .chat-head .title{ font-weight:900; }
+    .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }
 
-    /* petit pill heure */
-    .pill{
-      position:absolute;
-      top:16px;
-      right:16px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 12px;
-      border-radius:999px;
-      background: rgba(0,0,0,.40);
-      border:1px solid rgba(255,255,255,.14);
-      backdrop-filter: blur(14px);
-      font-weight:900;
-      font-size:12px;
-      z-index:20;
-    }
-    .dot{
-      width:7px;height:7px;border-radius:999px;background:#f59e0b;
-      box-shadow:0 0 0 4px rgba(245,158,11,.14);
-    }
+    @media (max-width: 1024px){ .chat-box{ min-height:420px; } }
   </style>
 </head>
 
-<body class="soft-bg">
+<body>
 
-  <!-- NAV -->
-  <nav class="sticky top-0 z-40 bg-black/25 backdrop-blur-xl border-b border-white/5">
+  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/5">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
       <a href="index.html"
@@ -235,126 +134,112 @@
   <main class="max-w-screen-2xl mx-auto px-6 py-8">
     <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
 
-      <!-- LEFT -->
+      <!-- PLAYER -->
       <div>
-        <!-- PLAYER -->
-        <section class="player-box glass w-full aspect-video">
+        <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
-            <div class="pill"><span class="dot"></span>21:00</div>
+            <div class="pill"><span class="dot"></span>20h45</div>
 
             <div class="cover-top">
               <img class="team-logo"
-                   src="https://empire-sport.online/upload/teams/mosfyquovho2tfyvalgqtbzjnhmcv5.png"
-                   alt="Manchester United">
+                   src="https://empire-sport.fit/upload/teams/e9ibu14ynhyggw7cjydjpwfial6xha.png"
+                   alt="Napoli">
               <span class="vs">VS</span>
               <img class="team-logo"
-                   src="https://empire-sport.online/upload/teams/nq6xsqf5odoqosdvpfgeyr1b2z1gtb.png"
-                   alt="Tottenham">
+                   src="https://empire-sport.fit/upload/teams/zpnuspg97icikleby6tuqnsjwoqbap.png"
+                   alt="Roma">
             </div>
 
             <div class="cover-strip">
-              <div class="strip-left">
-                <img class="strip-icon" src="https://media.discordapp.net/attachments/1462153429261746383/1469654701854429367/image.png?ex=69887219&is=69872099&hm=8809c1f0e31d05b52c1ae9d5ee17019fc3fe6569b6f625eeac87905b8b007999&=&format=webp&quality=lossless&width=376&height=88" alt="Compétition">
-                <div style="min-width:0">
-                  <div class="strip-title">Regarder Gratuitement</div>
-                  <div class="strip-sub">Manchester United<br>Tottenham Hotspur</div>
-                </div>
+              <div>
+                <div class="strip-title">Regarder Gratuitement</div>
+                <div class="strip-sub">Napoli<br>Roma</div>
               </div>
-
-              <div class="strip-play">
-                <i class="fa-solid fa-play"></i>
-              </div>
+              <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
           </div>
 
           <div id="videoTarget" class="w-full h-full"></div>
-        </section>
+        </div>
 
         <!-- SOURCES -->
-        <section class="mt-4 flex flex-wrap gap-3">
-          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">🇫🇷 (1440p) (1)</button>
-          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">🇫🇷 (1440p) (2)</button>
-          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">🇫🇷 (1440p) (3)</button>
-        </section>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
 
-        <!-- DIRECT LINK (fallback) -->
-        <div id="externalLink" class="hidden mt-3 text-center">
-          <a id="directLink" href="#" target="_blank" rel="noreferrer"
-             class="text-amber-400 underline font-extrabold text-sm">
-            Le lecteur ne s’affiche pas ? Ouvrir le lien direct
-          </a>
+          <div style="display:flex; flex-direction:row; align-items:center; gap:8px; margin-left:auto;">
+            <div>
+              <p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-person" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                </svg>
+              </p>
+            </div>
+            <span data-viewer-counter="napoli-roma" id="counterMatch1"
+                  style="color:#F54927; font-family:Arial, Helvetica, sans-serif; font-weight:bold;"></span>
+          </div>
         </div>
 
         <!-- VOUS REGARDEZ -->
-        <section class="mt-5 watch-bar glass">
+        <div class="mt-5 watch-bar glass">
           <div class="watch-left">
-            <img src="https://empire-sport.online/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png" alt="Compétition">
+            <img src="https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png" alt="Compétition">
             <div class="watch-text">
               <div class="small">Vous regardez</div>
-              <div class="big">Manchester United — Tottenham</div>
-              <div class="small">Premiere leaugue · 21:00</div>
+              <div class="big">Napoli - Roma</div>
+              <div class="small">Serie A · 20h45</div>
             </div>
           </div>
-
           <img class="channel-logo"
-               src="https://empire-sport.online/upload/chaines/kanfbbzfcksnfvc5sbw5nnzv1zliki.png"
+               src="https://empire-sport.fit/upload/chaines/bry9cmx6ljl79tuo5sxfeaeafwxwmm.png"
                alt="Chaîne">
-        </section>
-
-        <div class="mt-6 text-center text-sm text-white/45 font-semibold">
-          Si le stream bug, nous ne sommes pas responsables (connexion / lecteur externe). — IMFTX+
         </div>
       </div>
 
-      <!-- RIGHT : CHAT (uniquement le chat, rien au dessus) -->
+      <!-- CHAT (sans barre grise / sans bouton) -->
       <aside class="chat-box glass">
-        <iframe id="chatFrame" src="" allow="autoplay" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe
+          src="https://chat.streamfree.to/"
+          style="width:100%; height:520px; border:0; display:block;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allow="autoplay">
+        </iframe>
       </aside>
 
     </section>
   </main>
 
   <script>
-    // ✅ Mets tes liens OFFICIELS ici
+    // ✅ Mets tes liens ici (jw / embed / hls player)
     const SOURCES = {
-      1: "https://spiderembed.top/embed/4452656/manchester-united-tottenham-hotspur/easy/1",
-      2: "https://mediahosting.space/embed/player?config=4f04eb9c-8832-4006-9a4b-5f5d28f2ef06",
-      3: "https://mediahosting.space/embed/player?config=4f04eb9c-8832-4006-9a4b-5f5d28f2ef06"
+      1: "https://sportlive.plus/soccer/2.php",
+      2: "https://sportlive.plus/soccer/2.php",
+      3: "https://sportlive.plus/soccer/2.php"
     };
-
-    // ✅ Chat Twitch : seulement l’iframe, parent auto
-    // Change "thestreameast" par le channel que tu veux
-    (function(){
-      const parentDomain = window.location.hostname;
-      const channel = "betfairlive";
-      document.getElementById("chatFrame").src =
-        `https://www.twitch.tv/embed/${channel}/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
-    })();
 
     function setActive(id){
       [1,2,3].forEach(n=>{
         const b = document.getElementById("btn"+n);
-        b.className = (n===id)
-          ? "source-btn active px-6"
-          : "source-btn inactive px-6";
+        if(!b) return;
+        b.className = (n===id) ? "source-btn active px-6" : "source-btn inactive px-6";
       });
     }
 
     function loadVideo(id){
-      document.getElementById("cover").style.display = "none";
+      const cover = document.getElementById("cover");
+      if(cover) cover.style.display = "none";
+
       setActive(id);
 
-      const ext = document.getElementById("externalLink");
-      const link = document.getElementById("directLink");
-      link.href = SOURCES[id] || "#";
-      ext.classList.add("hidden");
-
       const target = document.getElementById("videoTarget");
+      const url = SOURCES[id];
 
-      if(!SOURCES[id] || SOURCES[id] === "#"){
+      if(!url || url === "#"){
         target.innerHTML = `
           <div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
-            Ajoute un lien dans SOURCES (Source ${id})
+            Source indisponible
           </div>`;
         return;
       }
@@ -362,24 +247,17 @@
       target.innerHTML = `
         <iframe
           id="streamFrame"
-          src="${SOURCES[id]}"
+          src="${url}"
           allowfullscreen
           scrolling="no"
           frameborder="0"
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          referrerpolicy="origin">
+          allow="autoplay; fullscreen; picture-in-picture"
+          referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       `;
-
-      // fallback si embed bloqué
-      setTimeout(() => {
-        const iframe = document.getElementById("streamFrame");
-        if(!iframe) return;
-        try { iframe.contentWindow.location.href; }
-        catch(e){ ext.classList.remove("hidden"); }
-      }, 2000);
     }
   </script>
 
+  <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
