@@ -20,14 +20,12 @@
         radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
         linear-gradient(135deg, #1a1c20 0%, #121318 45%, #0b0c10 100%);
     }
-
     .glass{
       background: rgba(255,255,255,.06);
       border: 1px solid rgba(255,255,255,.08);
       box-shadow: 0 30px 120px rgba(0,0,0,.75);
       backdrop-filter: blur(14px);
     }
-
     .player-box{ border-radius:20px; overflow:hidden; position:relative; }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
@@ -37,7 +35,6 @@
         linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
         url("https://empire-sport.fit/upload/events/b7zwjowbpbh0em9c6xfhxutp3wkfbn.jpg") center/cover no-repeat;
     }
-
     .cover-top{
       position:absolute; top:16px; left:16px;
       display:flex; align-items:center; gap:10px;
@@ -106,9 +103,13 @@
     .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
 
-    .chat-box{ border-radius:20px; overflow:hidden; min-height:520px; }
+    /* CHAT SANS CADRE */
+    .chat-raw{ width:100%; min-height:520px; height:100%; border-radius:0; overflow:hidden; background:transparent; }
+    .chat-raw iframe{ width:100%; height:100%; min-height:520px; border:0; background:#000; display:block; }
 
-    @media (max-width: 1024px){ .chat-box{ min-height:420px; } }
+    @media (max-width: 1024px){
+      .chat-raw, .chat-raw iframe{ min-height:420px; }
+    }
   </style>
 </head>
 
@@ -190,26 +191,24 @@
         </div>
       </div>
 
-      <!-- CHAT (sans cadre / sans header) -->
-      <aside class="chat-box glass">
+      <!-- CHAT (JUSTE L'IFRAME) -->
+      <div class="chat-raw">
         <iframe
           src="https://chat.streamfree.to/"
-          style="width:100%; height:520px; border:0; display:block;"
-          loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"
-          allow="autoplay">
+          allow="fullscreen">
         </iframe>
-      </aside>
+      </div>
 
     </section>
   </main>
 
   <script>
-    // ✅ Mets tes liens ici (jw / embed / hls player)
+    // ✅ Mets tes liens ici (jw / embed)
     const SOURCES = {
-      1: "https://modistreams.org/embed/ligue1/2026-02-15/lyon-nice",
+      1: "https://ww1.sportzonline.click/channels/hd/hd4.php",
       2: "https://ww1.sportzonline.click/channels/hd/hd4.php",
-      3: "https://sportlive.plus/soccer/1.php"
+      3: "https://ww1.sportzonline.click/channels/hd/hd4.php"
     };
 
     function setActive(id){
