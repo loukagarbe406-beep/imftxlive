@@ -3,510 +3,266 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Stream</title>
+  <title>IMFTX+ — Bastia - Troyes</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
   <style>
-    :root{
-      --bgA:#0b0c10; --bgB:#121318; --bgC:#1a1c20;
-      --line: rgba(255,255,255,.06);
-      --muted2: rgba(255,255,255,.45);
-      --btn: rgba(255,255,255,.08);
-      --btn2: rgba(255,255,255,.12);
-      --btnStroke: rgba(255,255,255,.10);
-      --accent:#f59e0b;
-    }
-
-    html,body{height:100%;margin:0}
+    html, body { height: 100%; margin: 0; }
     body{
-      font-family:'Outfit',system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:#fff;
+      overflow-x:hidden;
       background:
         radial-gradient(1200px 500px at 20% -10%, rgba(255,255,255,.08), transparent 60%),
         radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
-        linear-gradient(135deg, var(--bgC) 0%, var(--bgB) 45%, var(--bgA) 100%);
-      overflow-x:hidden;
+        linear-gradient(135deg, #1a1c20 0%, #121318 45%, #0b0c10 100%);
     }
 
-    /* ====== DESKTOP GRID ====== */
-    .wrap{
-      height: 100vh;
-      display:grid;
-      grid-template-columns: 340px 1fr 380px;
-    }
-
-    /* ====== MOBILE STACK ====== */
-    @media (max-width: 1100px){
-      .wrap{
-        height:auto;
-        grid-template-columns: 1fr;
-      }
-      .left, .right, .center{
-        height:auto !important;
-      }
-    }
-
-    .left, .right{
-      background: rgba(0,0,0,.20);
-      backdrop-filter: blur(10px);
-      border-right: 1px solid var(--line);
-      display:flex;
-      flex-direction:column;
-      min-height: 0;
-    }
-    .right{ border-right:0; border-left: 1px solid var(--line); }
-
-    .center{
-      display:flex;
-      flex-direction:column;
-      min-width:0;
-      min-height:0;
-    }
-
-    /* headers */
-    .head{
-      height: 58px;
-      padding: 0 14px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      border-bottom: 1px solid var(--line);
-      background: rgba(0,0,0,.22);
-      backdrop-filter: blur(14px);
-      flex: 0 0 auto;
-    }
-    .title{
-      font-weight: 900;
-      font-size: 15px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      opacity:.95;
-    }
-    .iconbtn{
-      width:36px;height:36px;border-radius:10px;
-      display:grid;place-items:center;
-      background: transparent;
-      border: 1px solid transparent;
-      color: #fff;
-      opacity:.9;
-      transition:.15s;
-      cursor:pointer;
-    }
-    .iconbtn:hover{
+    .glass{
       background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.08);
-    }
-
-    /* ====== PLAYER ====== */
-    .playerArea{
-      flex:1;
-      display:flex;
-      flex-direction:column;
-      min-height:0;
-    }
-    .playerBox{
-      position:relative;
-      flex:1;
-      min-height: 360px; /* important mobile */
-      background: rgba(255,255,255,.06);
-      border-bottom: 1px solid var(--line);
-      overflow:hidden;
-    }
-    .playerBox iframe{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      border:0;
-      background:#000;
-      display:block;
-    }
-    /* sur mobile: player en ratio 16:9 (plus beau) */
-    @media (max-width: 1100px){
-      .playerBox{
-        flex: 0 0 auto;
-        height: auto;
-        aspect-ratio: 16 / 9;
-        min-height: unset;
-      }
-    }
-
-    /* message si pas stream */
-    .centerMsg{
-      position:absolute; inset:0;
-      display:grid;
-      place-items:center;
-      padding: 24px;
-      color: rgba(255,255,255,.85);
-      font-weight: 800;
-    }
-    .msgCard{
-      display:flex; align-items:center; gap:12px;
-      background: rgba(0,0,0,.45);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 12px 14px;
-      border-radius: 10px;
-      max-width: 520px;
-    }
-    .msgCard .small{ font-weight:700; opacity:.75; font-size: 12px; margin-top:2px; }
-
-    /* ====== SOURCES BAR (gris) ====== */
-    .bottomBar{
-      height: 64px;
-      background: rgba(0,0,0,.35);
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      padding: 0 14px;
-      border-top: 1px solid rgba(255,255,255,.05);
-      backdrop-filter: blur(14px);
-      flex:0 0 auto;
-    }
-    .eventTitle{
-      font-weight: 900;
-      font-size: 16px;
-      min-width: 110px;
-      opacity:.95;
-    }
-    .btnRow{
-      display:flex;
-      gap: 10px;
-      align-items:center;
-      justify-content:center;
-      flex:1;
-      min-width:0;
-      overflow:auto;
-      scrollbar-width: none;
-    }
-    .btnRow::-webkit-scrollbar{ display:none; }
-    .srcBtn{
-      height: 38px;
-      padding: 0 16px;
-      border-radius: 10px;
-      background: var(--btn);
-      border: 1px solid var(--btnStroke);
-      font-weight: 900;
-      font-size: 13px;
-      color: #fff;
-      transition:.12s;
-      cursor:pointer;
-      white-space:nowrap;
-      opacity: .92;
-      flex: 0 0 auto;
-    }
-    .srcBtn:hover{ background: var(--btn2); }
-    .srcBtn.active{
-      background: rgba(255,255,255,.18);
-      border-color: rgba(255,255,255,.22);
-      opacity: 1;
-    }
-    .count{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-      font-weight: 900;
-      color: #ff4d4d;
-      min-width: 54px;
-      justify-content:flex-end;
-    }
-
-    /* ====== CHAT ====== */
-    .chatBody{
-      flex:1;
-      min-height:0;
-      background: rgba(0,0,0,.25);
-      display:flex;
-      flex-direction:column;
-    }
-    .chatFrame{
-      flex:1;
-      min-height:0;
-    }
-    .chatFrame iframe{
-      width:100%;
-      height:100%;
-      border:0;
-      background:#000;
-      display:block;
-    }
-    /* mobile: chat height fixe */
-    @media (max-width: 1100px){
-      .chatFrame{ height: 420px; flex: 0 0 auto; }
-    }
-
-    /* bouton chat mobile */
-    .chatToggle{
-      display:none;
-      height: 46px;
-      margin: 10px 14px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.10);
-      font-weight: 900;
-      cursor:pointer;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-    }
-    @media (max-width: 1100px){
-      .chatToggle{ display:flex; }
-      .right{ border-left:0; border-top: 1px solid var(--line); }
-    }
-
-    /* ====== MATCHES LEFT ====== */
-    .left-sub{
-      padding: 10px 14px;
-      font-size: 12px;
-      color: var(--muted2);
-      border-bottom: 1px solid var(--line);
-      background: rgba(0,0,0,.25);
-      font-weight: 800;
-    }
-    .matches{ padding: 10px; overflow:auto; flex:1; }
-    @media (max-width: 1100px){
-      .matches{ max-height: unset; overflow: visible; }
-      .left{ border-right:0; border-bottom: 1px solid var(--line); }
-    }
-
-    .mcard{
-      position: relative;
-      border-radius: 14px;
-      overflow:hidden;
       border: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.04);
-      margin-bottom: 10px;
-      cursor:pointer;
-      transition: .14s;
-      display:block;
-      text-decoration:none;
-      color:#fff;
+      box-shadow: 0 30px 120px rgba(0,0,0,.75);
+      backdrop-filter: blur(14px);
     }
-    .mcard:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.14); }
 
-    .mcard-bg{
-      height: 92px;
-      background-size: cover;
-      background-position: center;
-      position: relative;
+    .player-box{ border-radius:20px; overflow:hidden; position:relative; }
+    iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
+
+    .cover{
+      position:absolute; inset:0; z-index:15; cursor:pointer;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
+        url("https://empire-sport.fit/upload/events/qesrkcawycmn2skr0froyfrcunujz0.jpg") center/cover no-repeat;
     }
-    .mcard-bg::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.70) 75%, rgba(0,0,0,.88) 100%);
+
+    .cover-top{
+      position:absolute; top:16px; left:16px;
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:16px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(14px);
     }
-    .mcard-top{
-      position:absolute; inset:0;
-      padding: 10px 10px 8px 10px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      z-index: 2;
+    .team-logo{
+      width:34px;height:34px;
+      object-fit:contain;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,.8));
     }
-    .mrow{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-    .timepill{
-      font-size: 11px;
-      font-weight: 900;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.45);
-      border: 1px solid rgba(255,255,255,.12);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
+    .vs{ font-weight:900; font-size:14px; opacity:.9; }
+
+    .cover-strip{
+      position:absolute; left:16px; right:16px; bottom:16px;
+      height:80px; border-radius:18px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(16px);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 18px;
     }
-    .timepill .dot{
-      width:7px;height:7px;border-radius:999px;background:var(--accent);
+    .strip-title{ font-size:16px; font-weight:900; line-height:1; }
+    .strip-sub{ font-size:14px; opacity:.85; font-weight:600; font-style:italic; margin-top:4px; line-height:1.1; }
+    .strip-play{
+      width:46px;height:46px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      display:grid; place-items:center;
+      background:rgba(255,255,255,.12);
+      transition:.2s;
+    }
+    .strip-play:hover{ transform:scale(1.06); background:rgba(255,255,255,.16); }
+
+    .pill{
+      position:absolute; top:16px; right:16px;
+      padding:7px 12px; border-radius:999px;
+      background:rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:900; font-size:12px;
+      display:flex; align-items:center; gap:8px;
+      backdrop-filter: blur(14px);
+    }
+    .dot{
+      width:7px;height:7px;border-radius:999px;background:#f59e0b;
       box-shadow:0 0 0 4px rgba(245,158,11,.12);
     }
-    .complogo{
-      width: 26px; height: 26px;
-      object-fit: contain;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,.75));
-      opacity: .95;
-    }
-    .teams{ display:flex; align-items:center; gap:10px; }
-    .tlogo{
-      width: 34px; height: 34px;
-      object-fit: contain;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,.75));
-    }
-    .vs{ font-weight: 900; font-size: 12px; opacity: .85; }
 
-    .mname{
-      padding: 10px 12px;
-      background: rgba(0,0,0,.25);
-      border-top: 1px solid rgba(255,255,255,.06);
-      font-weight: 900;
-      font-size: 13px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+    .source-btn{ height:42px; border-radius:12px; font-weight:900; font-size:13px; transition:.2s; }
+    .source-btn.active{ background:#fff; color:#000; }
+    .source-btn.inactive{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:#fff; }
 
+    .watch-bar{
+      border-radius:16px;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .watch-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+    .watch-left img{ width:36px; height:36px; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
+    .watch-text{ min-width:0; line-height:1.1; }
+    .watch-text .small{ opacity:.75; font-weight:700; font-size:13px; }
+    .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
+
+    .chat-box{ border-radius:20px; overflow:hidden; min-height:520px; }
+    .chat-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .chat-head .title{ font-weight:900; }
+    .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }
+
+    @media (max-width: 1024px){ .chat-box{ min-height:420px; } }
   </style>
 </head>
 
 <body>
 
-  <div class="wrap">
+  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+      <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
+      <a href="index.html"
+         class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">
+        <i class="fa-solid fa-arrow-left"></i> Retour
+      </a>
+    </div>
+  </nav>
 
-    <!-- LEFT (match tags) -->
-    <aside class="left">
-      <div class="head">
-        <div class="title"><i class="fa-solid fa-bolt"></i> Autre stream</div>
-        <button class="iconbtn" title="Retour" onclick="location.href='index.html'">
-          <i class="fa-solid fa-arrow-left"></i>
-        </button>
-      </div>
-      <div class="left-sub">Clique → ouvre la page du match (nouvel onglet)</div>
-      <div class="matches" id="matches"></div>
-    </aside>
+  <main class="max-w-screen-2xl mx-auto px-6 py-8">
+    <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
 
-    <!-- CENTER -->
-    <main class="center">
-      <div class="playerArea">
-        <div class="playerBox">
-          <div id="videoTarget"></div>
+      <!-- PLAYER -->
+      <div>
+        <div class="player-box glass w-full aspect-video">
+          <div id="cover" class="cover" onclick="loadVideo(1)">
+            <!-- mets l'heure si tu veux -->
+            <div class="pill"><span class="dot"></span>--:--</div>
 
-          <div id="fallbackMsg" class="centerMsg">
-            <div class="msgCard">
-              <i class="fa-solid fa-volume-xmark"></i>
+            <div class="cover-top">
+              <img class="team-logo"
+                   src="https://empire-sport.fit/upload/teams/xoyo0hcscbyllqdgppsksu8mcy4frb.png"
+                   alt="Bastia">
+              <span class="vs">VS</span>
+              <img class="team-logo"
+                   src="https://empire-sport.fit/upload/teams/rsxaqgwzzuzmni6bnhn476tferjsfp.png"
+                   alt="Troyes">
+            </div>
+
+            <div class="cover-strip">
               <div>
-                <div>This video file cannot be played.</div>
-                <div class="small">(Error Code: 232404)</div>
+                <div class="strip-title">Regarder Gratuitement</div>
+                <div class="strip-sub">Bastia<br>Troyes</div>
               </div>
+              <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
           </div>
+
+          <div id="videoTarget" class="w-full h-full"></div>
         </div>
 
-        <div class="bottomBar">
-          <div class="eventTitle" id="eventTitle">IMFTX+</div>
+        <!-- SOURCES -->
+        <div class="mt-4 flex flex-wrap gap-3">
+          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
 
-          <div class="btnRow">
-            <button id="btn1" class="srcBtn active" onclick="playSource(1)">Source 1</button>
-            <button id="btn2" class="srcBtn" onclick="playSource(2)">Source 2</button>
-            <button id="btn3" class="srcBtn" onclick="playSource(3)">Source 3</button>
+          <div style="display:flex; flex-direction:row; align-items:center; gap:8px; margin-left:auto;">
+            <div>
+              <p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-person" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                </svg>
+              </p>
+            </div>
+            <span data-viewer-counter="bastia-troyes" id="counterMatch1"
+                  style="color:#F54927; font-family:Arial, Helvetica, sans-serif; font-weight:bold;"></span>
           </div>
+        </div>
 
-          <div class="count">
-            <i class="fa-solid fa-user"></i>
-            <span id="viewerCount">1</span>
+        <!-- VOUS REGARDEZ -->
+        <div class="mt-5 watch-bar glass">
+          <div class="watch-left">
+            <img src="https://empire-sport.fit/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png" alt="Compétition">
+            <div class="watch-text">
+              <div class="small">Vous regardez</div>
+              <div class="big">Bastia - Troyes</div>
+              <div class="small">Compétition · --:--</div>
+            </div>
           </div>
-        </div>
-
-        <!-- Bouton chat MOBILE -->
-        <button class="chatToggle" onclick="toggleChat()">
-          <i class="fa-solid fa-comment"></i>
-          <span id="chatToggleText">Afficher le chat</span>
-        </button>
-      </div>
-    </main>
-
-    <!-- RIGHT CHAT -->
-    <aside class="right" id="rightChat">
-      <div class="head">
-        <div class="title"><i class="fa-solid fa-comment"></i> Chat du stream</div>
-        <button class="iconbtn" title="Reload" onclick="reloadChat()">
-          <i class="fa-solid fa-rotate"></i>
-        </button>
-      </div>
-
-      <div class="chatBody">
-        <div class="chatFrame">
-          <iframe id="chatFrame"
-            src="CHAT_URL"
-            referrerpolicy="no-referrer-when-downgrade"
-            allow="fullscreen">
-          </iframe>
+          <img class="channel-logo"
+               src="https://empire-sport.fit/upload/chaines/8rdidmr7uk3rpug7ffdtpw3htqadqr.png"
+               alt="Chaîne">
         </div>
       </div>
-    </aside>
 
-  </div>
+      <!-- CHAT (Twitch comme avant) -->
+      <aside class="chat-box glass">
+        <div class="chat-head">
+          <div>
+            <div class="title">Chat en direct</div>
+            <div class="sub">Parler avec tout le respect !</div>
+          </div>
+          <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15"
+             href="https://www.twitch.tv/popout/drem0h/chat?popout="
+             target="_blank" rel="noreferrer">
+            Ouvrir
+          </a>
+        </div>
+
+        <div style="height: calc(100% - 54px); min-height: 520px;">
+          <iframe id="chatFrame" src=""></iframe>
+        </div>
+      </aside>
+
+    </section>
+  </main>
 
   <script>
-    // ✅ Mets ICI ton URL de chat réel (sinon tu verras rien)
-    const CHAT_URL = "https://chat.streamfree.to/"; // <- change si besoin
-    document.getElementById("chatFrame").src = CHAT_URL;
-
-    const MATCHES = [
-      {
-        title: "Bastia - Troyes", time: "20:45",
-        banner: "https://empire-sport.fit/upload/events/qesrkcawycmn2skr0froyfrcunujz0.jpg",
-        aLogo: "https://empire-sport.fit/upload/teams/xoyo0hcscbyllqdgppsksu8mcy4frb.png",
-        bLogo: "https://empire-sport.fit/upload/teams/rsxaqgwzzuzmni6bnhn476tferjsfp.png",
-        compLogo: "https://empire-sport.fit/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png",
-        href: "bastia-troyes.html"
-      },
-      {
-        title: "Cagliari - Lecce", time: "20:45",
-        banner: "https://empire-sport.fit/upload/events/9sevu9jjcvmvi05e7qeupojzit8wqw.jpg",
-        aLogo: "https://empire-sport.fit/upload/teams/jnqrhgcn4c0i5xgbggjexuwodium8g.png",
-        bLogo: "https://empire-sport.fit/upload/teams/vy6zoxxejgnc4yesfiuic45rndpgne.png",
-        compLogo: "https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
-        href: "cagliari-lecce.html"
-      },
-      {
-        title: "Girona - Barcelona", time: "21:00",
-        banner: "https://empire-sport.fit/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
-        aLogo: "https://empire-sport.fit/upload/teams/reaapubdusaguk2owtsaixng0838kq.png",
-        bLogo: "https://empire-sport.fit/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
-        compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-        href: "girona-barcelona.html"
-      }
-    ];
-
-    // ⚠️ Mets tes sources autorisées/à toi ici
-    const STREAM_SOURCES = {
-      1: "STREAM_URL_SOURCE_1",
-      2: "STREAM_URL_SOURCE_2",
-      3: "STREAM_URL_SOURCE_3",
+    // ✅ Mets tes liens ici (sinon laisse "#")
+    const SOURCES = {
+      1: "#",
+      2: "#",
+      3: "#"
     };
 
-    function renderMatches(){
-      const root = document.getElementById("matches");
-      root.innerHTML = MATCHES.map(m => `
-        <a class="mcard" href="${m.href}" target="_blank" rel="noopener noreferrer">
-          <div class="mcard-bg" style="background-image:url('${m.banner}')">
-            <div class="mcard-top">
-              <div class="mrow">
-                <div class="timepill"><span class="dot"></span>${m.time}</div>
-                <img class="complogo" src="${m.compLogo}" alt="comp">
-              </div>
-              <div class="mrow">
-                <div class="teams">
-                  <img class="tlogo" src="${m.aLogo}" alt="A">
-                  <span class="vs">VS</span>
-                  <img class="tlogo" src="${m.bLogo}" alt="B">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mname">${m.title}</div>
-        </a>
-      `).join("");
-    }
+    // TWITCH CHAT EMBED (parent auto)
+    (function(){
+      const parentDomain = window.location.hostname;
+      document.getElementById("chatFrame").src =
+        `https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
+    })();
 
-    function setActiveBtn(id){
+    function setActive(id){
       [1,2,3].forEach(n=>{
         const b = document.getElementById("btn"+n);
         if(!b) return;
-        b.classList.toggle("active", n===id);
+        b.className = (n===id) ? "source-btn active px-6" : "source-btn inactive px-6";
       });
     }
 
-    function showFallback(show){
-      const el = document.getElementById("fallbackMsg");
-      if(el) el.style.display = show ? "grid" : "none";
-    }
+    function loadVideo(id){
+      const cover = document.getElementById("cover");
+      if(cover) cover.style.display = "none";
 
-    function mountIframe(url){
+      setActive(id);
+
       const target = document.getElementById("videoTarget");
+      const url = SOURCES[id];
+
+      if(!url || url === "#"){
+        target.innerHTML = `
+          <div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
+            Source indisponible
+          </div>`;
+        return;
+      }
+
       target.innerHTML = `
         <iframe
+          id="streamFrame"
           src="${url}"
           allowfullscreen
           scrolling="no"
@@ -516,46 +272,8 @@
         </iframe>
       `;
     }
-
-    function playSource(id){
-      setActiveBtn(id);
-      const url = STREAM_SOURCES[id];
-
-      if(!url || String(url).startsWith("STREAM_URL")){
-        document.getElementById("videoTarget").innerHTML = "";
-        showFallback(true);
-        return;
-      }
-      showFallback(false);
-      mountIframe(url);
-    }
-
-    function reloadChat(){
-      const f = document.getElementById("chatFrame");
-      const src = f.getAttribute("src");
-      f.setAttribute("src", src);
-    }
-
-    // MOBILE: toggle chat
-    function toggleChat(){
-      const panel = document.getElementById("rightChat");
-      const txt = document.getElementById("chatToggleText");
-      const isHidden = panel.style.display === "none";
-      panel.style.display = isHidden ? "flex" : "none";
-      txt.textContent = isHidden ? "Masquer le chat" : "Afficher le chat";
-    }
-
-    // init
-    renderMatches();
-    showFallback(true);
-    setActiveBtn(1);
-    document.getElementById("viewerCount").textContent = Math.floor(1 + Math.random()*9);
-
-    // Sur mobile, on cache le chat par défaut (plus propre)
-    if(window.matchMedia("(max-width: 1100px)").matches){
-      document.getElementById("rightChat").style.display = "none";
-    }
   </script>
 
+  <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
