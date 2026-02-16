@@ -427,31 +427,64 @@
 
   const MATCHES = [
     {
-      title: "Napoli - Roma", time: "20:45",
-      banner: "https://empire-sport.fit/upload/teambanks/hd6kb1rzofjc13ghneluhiemmygjsr.png",
-      aLogo: "https://empire-sport.fit/upload/teams/e9ibu14ynhyggw7cjydjpwfial6xha.png",
-      bLogo: "https://empire-sport.fit/upload/teams/zpnuspg97icikleby6tuqnsjwoqbap.png",
+      title: "Bastia - Troyes", time: "20:45",
+      banner: "https://empire-sport.fit/upload/events/qesrkcawycmn2skr0froyfrcunujz0.jpg",
+      aLogo: "https://empire-sport.fit/upload/teams/xoyo0hcscbyllqdgppsksu8mcy4frb.png",
+      bLogo: "https://empire-sport.fit/upload/teams/rsxaqgwzzuzmni6bnhn476tferjsfp.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png",
+      href: "bastia-troyes.html"
+    },
+    {
+      title: "Cagliari - Lecce", time: "20:45",
+      banner: "https://empire-sport.fit/upload/events/9sevu9jjcvmvi05e7qeupojzit8wqw.jpg",
+      aLogo: "https://empire-sport.fit/upload/teams/jnqrhgcn4c0i5xgbggjexuwodium8g.png",
+      bLogo: "https://empire-sport.fit/upload/teams/vy6zoxxejgnc4yesfiuic45rndpgne.png",
       compLogo: "https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
-      href: "napoli-roma.html"
+      href: "cagliari-lecce.html"
     },
     {
-      title: "Lyon - Nice", time: "20:45",
-      banner: "https://empire-sport.fit/upload/teambanks/ylteydywkmrc0skuw5qggtgqaoywpu.png",
-      aLogo: "https://empire-sport.fit/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png",
-      bLogo: "https://empire-sport.fit/upload/teams/jhe4floxvwpovm1mexcuq4jnzrhwnp.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "ol-nice.html"
-    },
-    {
-      title: "Mallorca - Real Betis", time: "21:00",
-      banner: "https://empire-sport.fit/upload/teambanks/r8s4thz7vbaq9n3gyvcp5njzewikht.png",
-      aLogo: "https://empire-sport.fit/upload/teams/ow8fyk2ujsdshawee3odbeysyinfo1.png",
-      bLogo: "https://empire-sport.fit/upload/teams/0amrbeudimcjivqpfiuasmat8uwxts.png",
+      title: "Girona - Barcelona", time: "21:00",
+      banner: "https://empire-sport.fit/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
+      aLogo: "https://empire-sport.fit/upload/teams/reaapubdusaguk2owtsaixng0838kq.png",
+      bLogo: "https://empire-sport.fit/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
       compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-      href: "mallorca-betis.html"
+      href: "girona-barcelona.html"
     }
   ];
-
+const MATCHES_TOMORROW = [
+    {
+      title: "Galatasaray - Juventus", time: "18:45",
+      banner: "https://empire-sport.fit/upload/banners/galatasaray-vs-juventus.png",
+      aLogo: "https://empire-sport.fit/upload/teams/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png",
+      bLogo: "https://empire-sport.fit/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
+      href: "galatasaray-juventus.html"
+    },
+    {
+      title: "Monaco - Paris SG", time: "21:00",
+      banner: "https://empire-sport.fit/upload/banners/monaco-vs-paris-sg_1.png",
+      aLogo: "https://empire-sport.fit/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
+      bLogo: "https://empire-sport.fit/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
+      href: "monaco-paris.html"
+    },
+    {
+      title: "Benfica - Real Madrid", time: "21:00",
+      banner: "https://empire-sport.fit/upload/banners/benfica-vs-real-madrid.png",
+      aLogo: "https://empire-sport.fit/upload/teams/1gmfrazydu7o6vh1z8rlnrduarisq5.png",
+      bLogo: "https://empire-sport.fit/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
+      href: "benfica-real.html"
+    },
+    {
+      title: "Borussia Dortmund - Atalanta", time: "21:00",
+      banner: "https://empire-sport.fit/upload/events/qorkyt4wxxe5zoykc8eties6ixptgh.jpg",
+      aLogo: "https://empire-sport.fit/upload/teams/ikwhf9se2yp73lxc5s4vh4qvhwjnec.png",
+      bLogo: "https://empire-sport.fit/upload/teams/vy6zoxxejgnc4yesfiuic45rndpgne.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
+      href: "dortmund-atalanta.html"
+    }
+  ];
   const MATCHES_TOMORROW = []; // vide pour l’instant
 
   const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
@@ -611,6 +644,7 @@
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
+
 
 
 
