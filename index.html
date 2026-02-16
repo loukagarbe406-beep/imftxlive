@@ -425,7 +425,7 @@
   // ✅ DEMAIN = VIDE (on fera plus tard)
   // ============================================================
 
-  const MATCHES = [
+ const MATCHES = [
     {
       title: "Bastia - Troyes", time: "20:45",
       banner: "https://empire-sport.fit/upload/events/qesrkcawycmn2skr0froyfrcunujz0.jpg",
@@ -450,267 +450,200 @@
       compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
       href: "girona-barcelona.html"
     }
-  ];
+];
+
 const MATCHES_TOMORROW = [
     {
-      title: "Real Oviedo - Athletic Bilbao", time: "14:00",
-      banner: "https://empire-sport.fit/upload/teambanks/bqiawsrwkodj2at1xdt19o8jgx0b8x.png",
-      aLogo: "https://empire-sport.fit/upload/teams/4vsoevi9g2qvn0ejp9qaifn8uss8y1.png",
-      bLogo: "https://empire-sport.fit/upload/teams/jd5hxty3g63isvu0ksssxzzyo4t0er.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-      href: "oviedo-bilbao.html"
+      title: "Galatasaray - Juventus", time: "18:45",
+      banner: "https://empire-sport.fit/upload/banners/galatasaray-vs-juventus.png",
+      aLogo: "https://empire-sport.fit/upload/teams/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png",
+      bLogo: "https://empire-sport.fit/upload/teams/hcp3cnlmwxp2mitonxqjktnrgzzxty.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
+      href: "galatasaray-juventus.html"
     },
     {
-      title: "Le Havre - Toulouse", time: "15:00",
-      banner: "https://empire-sport.fit/upload/events/87bkgegfkzjbuy0rxzfn5bi0axixy4.jpg",
-      aLogo: "", bLogo: "",
-      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "lehavre-toulouse.html",
-      noTeams: true
+      title: "Monaco - Paris SG", time: "21:00",
+      banner: "https://empire-sport.fit/upload/banners/monaco-vs-paris-sg_1.png",
+      aLogo: "https://empire-sport.fit/upload/teams/i7vfbawhmjc4pne1uh2azvklhcquh3.png",
+      bLogo: "https://empire-sport.fit/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
+      href: "monaco-paris.html"
     },
     {
-      title: "Rayo Vallecano - Atlético Madrid", time: "16:15",
-      banner: "https://empire-sport.fit/upload/teambanks/qpwvi2cxhcladiu6ln8qlscrmnqidf.png",
-      aLogo: "https://empire-sport.fit/upload/teams/hi85r5xby90rwanywjwcxijxzq7svh.png",
-      bLogo: "https://empire-sport.fit/upload/teams/smp4oeizppz2hw9fbmb9dznhohcwly.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-      href: "rayo-atletico.html"
+      title: "Benfica - Real Madrid", time: "21:00",
+      banner: "https://empire-sport.fit/upload/banners/benfica-vs-real-madrid.png",
+      aLogo: "https://empire-sport.fit/upload/teams/1gmfrazydu7o6vh1z8rlnrduarisq5.png",
+      bLogo: "https://empire-sport.fit/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
+      href: "benfica-real.html"
     },
     {
-      title: "Nacional de Madeira - FC Porto", time: "16:30",
-      banner: "https://empire-sport.fit/upload/teambanks/srb23a2wenl9aaobb85csjofijvg4s.png",
-      aLogo: "https://empire-sport.fit/upload/teams/6vxnorzvukdxdv8lir8mpycxsh7aiq.png",
-      bLogo: "https://empire-sport.fit/upload/teams/xbk0ru0oxlkydv0dtngfstpjywigwx.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/dilmdvjb9jdwxoa8crrblksc9uvtty.png",
-      href: "madeira-porto.html"
-    },
-    {
-      title: "Lorient - Angers", time: "17:15",
-      banner: "https://empire-sport.fit/upload/events/oo4e7ao267amviugq1uoecoucdufu2.jpg",
-      aLogo: "", bLogo: "",
-      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "lorient-angers.html",
-      noTeams: true
-    },
-    {
-      title: "Metz - Auxerre", time: "17:15",
-      banner: "https://empire-sport.fit/upload/events/oqw9t10g12b95nynfyiuqchfqbps3j.jpg",
-      aLogo: "", bLogo: "",
-      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "metz-auxerre.html",
-      noTeams: true
-    },
-    {
-      title: "Arsenal - Wigan Athletic", time: "17:30",
-      banner: "https://empire-sport.fit/upload/teambanks/qbnuabt5ro7bxxibfp4noeq0swedil.png",
-      aLogo: "https://empire-sport.fit/upload/teams/uombdnge8lt1jcopm7pvrqliystvbo.png",
-      bLogo: "https://empire-sport.fit/upload/teams/op9rpwesjtdxhuxhix8hto2bjwrq6d.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/bwqxost8qzrfkxdyp0det4iissrjcf.png",
-      href: "arsenal-wigan.html"
-    },
-    {
-      title: "Torino - Bologna", time: "18:00",
-      banner: "https://empire-sport.fit/upload/teambanks/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png",
-      aLogo: "https://empire-sport.fit/upload/teams/m2um3jfutj6nwpztwjzupdli2fhf0o.png",
-      bLogo: "https://empire-sport.fit/upload/teams/st0chboaaetaugwxkwfbilikuheagq.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
-      href: "torino-bologna.html"
-    },
-    {
-      title: "Levante - Valencia", time: "18:30",
-      banner: "https://empire-sport.fit/upload/teambanks/slbfvphuhaypjn5mqjtsmsxaq1auwj.png",
-      aLogo: "https://empire-sport.fit/upload/teams/9h3mwnp5elqbpxejqlhvcfkefgykku.png",
-      bLogo: "https://empire-sport.fit/upload/teams/zqcpxte7e0paxcr9u1gmrjw82mq5ve.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-      href: "levante-valencia.html"
-    },
-    {
-      title: "Napoli - Roma", time: "20:45",
-      banner: "https://empire-sport.fit/upload/teambanks/hd6kb1rzofjc13ghneluhiemmygjsr.png",
-      aLogo: "https://empire-sport.fit/upload/teams/e9ibu14ynhyggw7cjydjpwfial6xha.png",
-      bLogo: "https://empire-sport.fit/upload/teams/zpnuspg97icikleby6tuqnsjwoqbap.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
-      href: "napoli-roma.html"
-    },
-    {
-      title: "Lyon - Nice", time: "20:45",
-      banner: "https://empire-sport.fit/upload/teambanks/ylteydywkmrc0skuw5qggtgqaoywpu.png",
-      aLogo: "https://empire-sport.fit/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png",
-      bLogo: "https://empire-sport.fit/upload/teams/jhe4floxvwpovm1mexcuq4jnzrhwnp.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "ol-nice.html"
-    },
-    {
-      title: "Mallorca - Real Betis", time: "21:00",
-      banner: "https://empire-sport.fit/upload/teambanks/r8s4thz7vbaq9n3gyvcp5njzewikht.png",
-      aLogo: "https://empire-sport.fit/upload/teams/ow8fyk2ujsdshawee3odbeysyinfo1.png",
-      bLogo: "https://empire-sport.fit/upload/teams/0amrbeudimcjivqpfiuasmat8uwxts.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-      href: "mallorca-betis.html"
+      title: "Borussia Dortmund - Atalanta", time: "21:00",
+      banner: "https://empire-sport.fit/upload/events/qorkyt4wxxe5zoykc8eties6ixptgh.jpg",
+      aLogo: "https://empire-sport.fit/upload/teams/ikwhf9se2yp73lxc5s4vh4qvhwjnec.png",
+      bLogo: "https://empire-sport.fit/upload/teams/vy6zoxxejgnc4yesfiuic45rndpgne.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
+      href: "dortmund-atalanta.html"
     }
-  ];
-  const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
-  function parseHHMM(hhmm){
-    const [h,m] = hhmm.split(':').map(Number);
-    return {h, m};
-  }
-  function getNextKickoff(timeHHMM){
-    const now = new Date();
-    const {h,m} = parseHHMM(timeHHMM);
-    const t = new Date(now);
+];
+
+const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
+
+function parseHHMM(hhmm){
+  const [h,m] = hhmm.split(':').map(Number);
+  return {h, m};
+}
+
+function getNextKickoff(timeHHMM){
+  const now = new Date();
+  const {h,m} = parseHHMM(timeHHMM);
+  const t = new Date(now);
+  t.setHours(h, m, 0, 0);
+
+  if (now.getTime() > (t.getTime() + LIVE_WINDOW_MS)) {
+    t.setDate(t.getDate() + 1);
     t.setHours(h, m, 0, 0);
-
-    if (now.getTime() > (t.getTime() + LIVE_WINDOW_MS)) {
-      t.setDate(t.getDate() + 1);
-      t.setHours(h, m, 0, 0);
-    }
-    return t;
   }
-  function formatRemaining(ms){
-    if(ms <= 0) return "00h 00m 00s";
-    const total = Math.floor(ms / 1000);
-    const hh = Math.floor(total / 3600);
-    const mm = Math.floor((total % 3600) / 60);
-    const ss = total % 60;
-    const pad = (n) => String(n).padStart(2,"0");
-    return `${pad(hh)}h ${pad(mm)}m ${pad(ss)}s`;
-  }
+  return t;
+}
 
-  function cardHTML(m, idx, dayLabel){
-    const teamsRow = m.noTeams ? `
-      <div class="flex items-center gap-2" aria-hidden="true" style="height:30px"></div>
-    ` : `
-      <div class="flex items-center gap-2">
-        <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
-        <span class="vs">VS</span>
-        <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
-      </div>
-    `;
+function formatRemaining(ms){
+  if(ms <= 0) return "00h 00m 00s";
+  const total = Math.floor(ms / 1000);
+  const hh = Math.floor(total / 3600);
+  const mm = Math.floor((total % 3600) / 60);
+  const ss = total % 60;
+  const pad = (n) => String(n).padStart(2,"0");
+  return `${pad(hh)}h ${pad(mm)}m ${pad(ss)}s`;
+}
 
-    const cleanID = (m.href || `match-${idx}`).replace(".html","");
+function cardHTML(m, idx, dayLabel){
+  const teamsRow = m.noTeams ? `
+    <div class="flex items-center gap-2" aria-hidden="true" style="height:30px"></div>
+  ` : `
+    <div class="flex items-center gap-2">
+      <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
+      <span class="vs">VS</span>
+      <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
+    </div>
+  `;
 
-    return `
-      <a href="${m.href}" class="block">
-        <article class="match-card">
-          <div class="match-bg" style="background-image:url('${m.banner}')"></div>
-          <div class="match-overlay"></div>
+  const cleanID = (m.href || `match-${idx}`).replace(".html","");
 
-          <div class="absolute left-3 top-3">
-            <span class="timer-pill" data-pill="${idx}">
-              <span class="timer-dot" data-dot="${idx}"></span>
-              <span class="timer-text" data-timer="${idx}">--</span>
+  return `
+    <a href="${m.href}" class="block">
+      <article class="match-card">
+        <div class="match-bg" style="background-image:url('${m.banner}')"></div>
+        <div class="match-overlay"></div>
+
+        <div class="absolute left-3 top-3">
+          <span class="timer-pill" data-pill="${idx}">
+            <span class="timer-dot" data-dot="${idx}"></span>
+            <span class="timer-text" data-timer="${idx}">--</span>
+          </span>
+        </div>
+
+        <div class="absolute right-3 top-3">
+          <span class="timer-pill">
+            <span class="timer-text">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F54927" class="bi bi-person" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+              </svg>
             </span>
-          </div>
+            <span data-viewer-counter="${cleanID}" data-viewer-readonly style="color: #F54927;font-family: Arial, Helvetica, sans-serif;"></span>
+          </span>
+        </div>
 
-          <div class="absolute right-3 top-3">
-            <span class="timer-pill">
-              <span class="timer-text">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F54927" class="bi bi-person" viewBox="0 0 16 16">
-                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-                </svg>
-              </span>
-              <span data-viewer-counter="${cleanID}" data-viewer-readonly style="color: #F54927;font-family: Arial, Helvetica, sans-serif;"></span>
-            </span>
-          </div>
+        <div class="absolute inset-x-0 bottom-0 p-4">
+          <div class="flex items-end justify-between gap-4">
+            <div class="min-w-0 max-w-[72%]">
+              ${teamsRow}
 
-          <div class="absolute inset-x-0 bottom-0 p-4">
-            <div class="flex items-end justify-between gap-4">
-              <div class="min-w-0 max-w-[72%]">
-                ${teamsRow}
-
-                <div class="mt-2 flex items-center gap-2">
-                  <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
-                  <div class="min-w-0">
-                    <div class="match-title truncate">${m.title}</div>
-                    <div class="match-sub">${dayLabel} · ${m.time}</div>
-                  </div>
+              <div class="mt-2 flex items-center gap-2">
+                <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
+                <div class="min-w-0">
+                  <div class="match-title truncate">${m.title}</div>
+                  <div class="match-sub">${dayLabel} · ${m.time}</div>
                 </div>
               </div>
-
-              <span class="watch-pill">
-                <span class="play">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
-                    <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
-                  </svg>
-                </span>
-                REGARDER
-              </span>
             </div>
+
+            <span class="watch-pill">
+              <span class="play">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
+                  <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
+                </svg>
+              </span>
+              REGARDER
+            </span>
           </div>
-        </article>
-      </a>
-    `;
+        </div>
+      </article>
+    </a>
+  `;
+}
+
+function render(){
+  const todayEl = document.getElementById('stream-list-principal');
+  const tomEl   = document.getElementById('stream-list-bk');
+
+  if(todayEl) todayEl.innerHTML = MATCHES.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
+  if(tomEl) tomEl.innerHTML = MATCHES_TOMORROW.map((m,i) => cardHTML(m, i + 100, "Demain")).join('');
+}
+
+function tick(){
+  const now = Date.now();
+
+  function tickList(list, baseIdx){
+    list.forEach((m, localIdx) => {
+      const idx = baseIdx + localIdx;
+      const kickoff = getNextKickoff(m.time).getTime();
+      const endLive = kickoff + LIVE_WINDOW_MS;
+
+      const timerEl = document.querySelector(`[data-timer="${idx}"]`);
+      const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
+      const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
+
+      if(!timerEl || !pillEl || !dotEl) return;
+
+      if (now < kickoff) {
+        const diff = kickoff - now;
+        timerEl.textContent = formatRemaining(diff);
+        pillEl.classList.remove('timer-live');
+        timerEl.classList.remove('timer-live');
+        dotEl.classList.remove('timer-dot-live');
+      } else if (now >= kickoff && now <= endLive) {
+        timerEl.textContent = "En Cours";
+        pillEl.classList.add('timer-live');
+        timerEl.classList.add('timer-live');
+        dotEl.classList.add('timer-dot-live');
+      } else {
+        const next = getNextKickoff(m.time).getTime();
+        const diff = next - now;
+        timerEl.textContent = formatRemaining(diff);
+        pillEl.classList.remove('timer-live');
+        timerEl.classList.remove('timer-live');
+        dotEl.classList.remove('timer-dot-live');
+      }
+    });
   }
 
-  function render(){
-    const todayEl = document.getElementById('stream-list-principal');
-    const tomEl   = document.getElementById('stream-list-bk');
+  tickList(MATCHES, 0);
+  tickList(MATCHES_TOMORROW, 100);
+}
 
-    if(todayEl) todayEl.innerHTML = MATCHES.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
-    if(tomEl) tomEl.innerHTML = ""; // demain vide
-  }
-
-  function tick(){
-    const now = Date.now();
-
-    function tickList(list, baseIdx){
-      list.forEach((m, localIdx) => {
-        const idx = baseIdx + localIdx;
-        const kickoff = getNextKickoff(m.time).getTime();
-        const endLive = kickoff + LIVE_WINDOW_MS;
-
-        const timerEl = document.querySelector(`[data-timer="${idx}"]`);
-        const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
-        const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
-
-        if(!timerEl || !pillEl || !dotEl) return;
-
-        if (now < kickoff) {
-          const diff = kickoff - now;
-          timerEl.textContent = formatRemaining(diff);
-          pillEl.classList.remove('timer-live');
-          timerEl.classList.remove('timer-live');
-          dotEl.classList.remove('timer-dot-live');
-        } else if (now >= kickoff && now <= endLive) {
-          timerEl.textContent = "En Cours";
-          pillEl.classList.add('timer-live');
-          timerEl.classList.add('timer-live');
-          dotEl.classList.add('timer-dot-live');
-        } else {
-          const next = getNextKickoff(m.time).getTime();
-          const diff = next - now;
-          timerEl.textContent = formatRemaining(diff);
-          pillEl.classList.remove('timer-live');
-          timerEl.classList.remove('timer-live');
-          dotEl.classList.remove('timer-dot-live');
-        }
-      });
-    }
-
-    tickList(MATCHES, 0);
-  }
-
-  document.getElementById('refreshBtn')?.addEventListener('click', () => {
-    NProgress.start();
-    render();
-    tick();
-    setTimeout(() => NProgress.done(), 350);
-  });
-
+document.getElementById('refreshBtn')?.addEventListener('click', () => {
+  NProgress.start();
   render();
   tick();
-  setInterval(tick, 1000);
+  setTimeout(() => NProgress.done(), 350);
+});
+
+render();
+tick();
+setInterval(tick, 1000);
 </script>
 
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
