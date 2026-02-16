@@ -11,69 +11,62 @@
 
   <style>
     :root{
-      --bgA:#0b0c10;
-      --bgB:#121318;
-      --bgC:#1a1c20;
-
-      --panel:#121318;
-      --panel2:#0f1013;
+      --bgA:#0b0c10; --bgB:#121318; --bgC:#1a1c20;
       --line: rgba(255,255,255,.06);
-
-      --muted: rgba(255,255,255,.65);
       --muted2: rgba(255,255,255,.45);
-
-      /* boutons sources gris */
       --btn: rgba(255,255,255,.08);
       --btn2: rgba(255,255,255,.12);
       --btnStroke: rgba(255,255,255,.10);
-
       --accent:#f59e0b;
-      --shadow: 0 30px 120px rgba(0,0,0,.75);
     }
 
     html,body{height:100%;margin:0}
     body{
       font-family:'Outfit',system-ui,-apple-system,Segoe UI,Roboto,Arial;
       color:#fff;
-      overflow-x:hidden;
       background:
         radial-gradient(1200px 500px at 20% -10%, rgba(255,255,255,.08), transparent 60%),
         radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
         linear-gradient(135deg, var(--bgC) 0%, var(--bgB) 45%, var(--bgA) 100%);
+      overflow-x:hidden;
     }
 
-    /* Layout 3 colonnes comme ta photo */
+    /* ====== DESKTOP GRID ====== */
     .wrap{
       height: 100vh;
       display:grid;
-      grid-template-columns: 340px 1fr 380px; /* gauche / player / chat */
-      grid-template-rows: 100%;
+      grid-template-columns: 340px 1fr 380px;
     }
 
+    /* ====== MOBILE STACK ====== */
     @media (max-width: 1100px){
-      .wrap{ grid-template-columns: 1fr; height:auto; }
-      .left,.right{ height:520px; }
-      .center{ min-height:480px; height:auto; }
+      .wrap{
+        height:auto;
+        grid-template-columns: 1fr;
+      }
+      .left, .right, .center{
+        height:auto !important;
+      }
     }
 
     .left, .right{
       background: rgba(0,0,0,.20);
+      backdrop-filter: blur(10px);
       border-right: 1px solid var(--line);
-      height:100vh;
       display:flex;
       flex-direction:column;
-      backdrop-filter: blur(10px);
+      min-height: 0;
     }
     .right{ border-right:0; border-left: 1px solid var(--line); }
 
     .center{
-      height:100vh;
       display:flex;
       flex-direction:column;
       min-width:0;
+      min-height:0;
     }
 
-    /* Header de colonnes (simple comme photo) */
+    /* headers */
     .head{
       height: 58px;
       padding: 0 14px;
@@ -85,7 +78,7 @@
       backdrop-filter: blur(14px);
       flex: 0 0 auto;
     }
-    .head .title{
+    .title{
       font-weight: 900;
       font-size: 15px;
       display:flex;
@@ -93,7 +86,7 @@
       gap:10px;
       opacity:.95;
     }
-    .head .iconbtn{
+    .iconbtn{
       width:36px;height:36px;border-radius:10px;
       display:grid;place-items:center;
       background: transparent;
@@ -103,127 +96,12 @@
       transition:.15s;
       cursor:pointer;
     }
-    .head .iconbtn:hover{
+    .iconbtn:hover{
       background: rgba(255,255,255,.06);
       border-color: rgba(255,255,255,.08);
     }
 
-    /* LEFT: liste matchs */
-    .left-sub{
-      padding: 10px 14px;
-      font-size: 12px;
-      color: var(--muted2);
-      border-bottom: 1px solid var(--line);
-      background: rgba(0,0,0,.25);
-      flex:0 0 auto;
-      font-weight: 800;
-    }
-    .matches{
-      padding: 10px;
-      overflow:auto;
-      flex:1;
-    }
-
-    /* Card match (banner + logos) */
-    .mcard{
-      position: relative;
-      border-radius: 14px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.04);
-      margin-bottom: 10px;
-      cursor:pointer;
-      transition: .14s;
-    }
-    .mcard:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.14);
-    }
-
-    .mcard-bg{
-      height: 92px;
-      background: #111;
-      background-size: cover;
-      background-position: center;
-      position: relative;
-    }
-    .mcard-bg::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.70) 75%, rgba(0,0,0,.88) 100%);
-    }
-
-    .mcard-top{
-      position:absolute;
-      inset:0;
-      padding: 10px 10px 8px 10px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      z-index: 2;
-    }
-
-    .mrow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-    }
-
-    .timepill{
-      font-size: 11px;
-      font-weight: 900;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.45);
-      border: 1px solid rgba(255,255,255,.12);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-    }
-    .timepill .dot{
-      width:7px;height:7px;border-radius:999px;background:var(--accent);
-      box-shadow:0 0 0 4px rgba(245,158,11,.12);
-    }
-
-    .complogo{
-      width: 26px; height: 26px;
-      object-fit: contain;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,.75));
-      opacity: .95;
-    }
-
-    .teams{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-    .tlogo{
-      width: 34px; height: 34px;
-      object-fit: contain;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,.75));
-      flex:0 0 auto;
-    }
-    .vs{
-      font-weight: 900;
-      font-size: 12px;
-      opacity: .85;
-    }
-
-    .mname{
-      padding: 10px 12px;
-      background: rgba(0,0,0,.25);
-      border-top: 1px solid rgba(255,255,255,.06);
-      font-weight: 900;
-      font-size: 13px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    /* CENTER: player */
+    /* ====== PLAYER ====== */
     .playerArea{
       flex:1;
       display:flex;
@@ -233,7 +111,7 @@
     .playerBox{
       position:relative;
       flex:1;
-      min-height:0;
+      min-height: 360px; /* important mobile */
       background: rgba(255,255,255,.06);
       border-bottom: 1px solid var(--line);
       overflow:hidden;
@@ -245,8 +123,17 @@
       background:#000;
       display:block;
     }
+    /* sur mobile: player en ratio 16:9 (plus beau) */
+    @media (max-width: 1100px){
+      .playerBox{
+        flex: 0 0 auto;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        min-height: unset;
+      }
+    }
 
-    /* message center (si rien) */
+    /* message si pas stream */
     .centerMsg{
       position:absolute; inset:0;
       display:grid;
@@ -263,10 +150,9 @@
       border-radius: 10px;
       max-width: 520px;
     }
-    .msgCard i{ font-size: 18px; opacity:.9; }
     .msgCard .small{ font-weight:700; opacity:.75; font-size: 12px; margin-top:2px; }
 
-    /* bottom bar sources gris */
+    /* ====== SOURCES BAR (gris) ====== */
     .bottomBar{
       height: 64px;
       background: rgba(0,0,0,.35);
@@ -281,8 +167,7 @@
     .eventTitle{
       font-weight: 900;
       font-size: 16px;
-      letter-spacing:.2px;
-      min-width: 120px;
+      min-width: 110px;
       opacity:.95;
     }
     .btnRow{
@@ -292,7 +177,10 @@
       justify-content:center;
       flex:1;
       min-width:0;
+      overflow:auto;
+      scrollbar-width: none;
     }
+    .btnRow::-webkit-scrollbar{ display:none; }
     .srcBtn{
       height: 38px;
       padding: 0 16px;
@@ -304,11 +192,9 @@
       color: #fff;
       transition:.12s;
       cursor:pointer;
-      display:flex;
-      align-items:center;
-      gap:10px;
       white-space:nowrap;
       opacity: .92;
+      flex: 0 0 auto;
     }
     .srcBtn:hover{ background: var(--btn2); }
     .srcBtn.active{
@@ -316,18 +202,17 @@
       border-color: rgba(255,255,255,.22);
       opacity: 1;
     }
-
     .count{
       display:flex;
       align-items:center;
       gap: 8px;
       font-weight: 900;
       color: #ff4d4d;
-      min-width: 70px;
+      min-width: 54px;
       justify-content:flex-end;
     }
 
-    /* RIGHT chat */
+    /* ====== CHAT ====== */
     .chatBody{
       flex:1;
       min-height:0;
@@ -346,14 +231,121 @@
       background:#000;
       display:block;
     }
-
-    /* Scrollbar */
-    .matches::-webkit-scrollbar{ width: 10px; }
-    .matches::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.10);
-      border-radius: 999px;
-      border: 2px solid rgba(0,0,0,.35);
+    /* mobile: chat height fixe */
+    @media (max-width: 1100px){
+      .chatFrame{ height: 420px; flex: 0 0 auto; }
     }
+
+    /* bouton chat mobile */
+    .chatToggle{
+      display:none;
+      height: 46px;
+      margin: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      font-weight: 900;
+      cursor:pointer;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+    }
+    @media (max-width: 1100px){
+      .chatToggle{ display:flex; }
+      .right{ border-left:0; border-top: 1px solid var(--line); }
+    }
+
+    /* ====== MATCHES LEFT ====== */
+    .left-sub{
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--muted2);
+      border-bottom: 1px solid var(--line);
+      background: rgba(0,0,0,.25);
+      font-weight: 800;
+    }
+    .matches{ padding: 10px; overflow:auto; flex:1; }
+    @media (max-width: 1100px){
+      .matches{ max-height: unset; overflow: visible; }
+      .left{ border-right:0; border-bottom: 1px solid var(--line); }
+    }
+
+    .mcard{
+      position: relative;
+      border-radius: 14px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+      margin-bottom: 10px;
+      cursor:pointer;
+      transition: .14s;
+      display:block;
+      text-decoration:none;
+      color:#fff;
+    }
+    .mcard:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.14); }
+
+    .mcard-bg{
+      height: 92px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .mcard-bg::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.70) 75%, rgba(0,0,0,.88) 100%);
+    }
+    .mcard-top{
+      position:absolute; inset:0;
+      padding: 10px 10px 8px 10px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      z-index: 2;
+    }
+    .mrow{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .timepill{
+      font-size: 11px;
+      font-weight: 900;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.12);
+      display:flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .timepill .dot{
+      width:7px;height:7px;border-radius:999px;background:var(--accent);
+      box-shadow:0 0 0 4px rgba(245,158,11,.12);
+    }
+    .complogo{
+      width: 26px; height: 26px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.75));
+      opacity: .95;
+    }
+    .teams{ display:flex; align-items:center; gap:10px; }
+    .tlogo{
+      width: 34px; height: 34px;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.75));
+    }
+    .vs{ font-weight: 900; font-size: 12px; opacity: .85; }
+
+    .mname{
+      padding: 10px 12px;
+      background: rgba(0,0,0,.25);
+      border-top: 1px solid rgba(255,255,255,.06);
+      font-weight: 900;
+      font-size: 13px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
   </style>
 </head>
 
@@ -361,7 +353,7 @@
 
   <div class="wrap">
 
-    <!-- ================= LEFT (étiquettes matchs) ================= -->
+    <!-- LEFT (match tags) -->
     <aside class="left">
       <div class="head">
         <div class="title"><i class="fa-solid fa-bolt"></i> Autre stream</div>
@@ -369,13 +361,11 @@
           <i class="fa-solid fa-arrow-left"></i>
         </button>
       </div>
-
-      <div class="left-sub">Clique sur un match → ouvre la page en nouvel onglet</div>
-
+      <div class="left-sub">Clique → ouvre la page du match (nouvel onglet)</div>
       <div class="matches" id="matches"></div>
     </aside>
 
-    <!-- ================= CENTER (player) ================= -->
+    <!-- CENTER -->
     <main class="center">
       <div class="playerArea">
         <div class="playerBox">
@@ -406,11 +396,17 @@
             <span id="viewerCount">1</span>
           </div>
         </div>
+
+        <!-- Bouton chat MOBILE -->
+        <button class="chatToggle" onclick="toggleChat()">
+          <i class="fa-solid fa-comment"></i>
+          <span id="chatToggleText">Afficher le chat</span>
+        </button>
       </div>
     </main>
 
-    <!-- ================= RIGHT (chat) ================= -->
-    <aside class="right">
+    <!-- RIGHT CHAT -->
+    <aside class="right" id="rightChat">
       <div class="head">
         <div class="title"><i class="fa-solid fa-comment"></i> Chat du stream</div>
         <button class="iconbtn" title="Reload" onclick="reloadChat()">
@@ -421,7 +417,7 @@
       <div class="chatBody">
         <div class="chatFrame">
           <iframe id="chatFrame"
-            src="https://example.com/chat"
+            src="CHAT_URL"
             referrerpolicy="no-referrer-when-downgrade"
             allow="fullscreen">
           </iframe>
@@ -432,7 +428,10 @@
   </div>
 
   <script>
-    // ====== TES MATCHS (à gauche) ======
+    // ✅ Mets ICI ton URL de chat réel (sinon tu verras rien)
+    const CHAT_URL = "https://chat.streamfree.to/"; // <- change si besoin
+    document.getElementById("chatFrame").src = CHAT_URL;
+
     const MATCHES = [
       {
         title: "Bastia - Troyes", time: "20:45",
@@ -460,9 +459,7 @@
       }
     ];
 
-    // ====== STREAM AU CENTRE (optionnel) ======
-    // Tu peux laisser vide si tu veux que ce soit juste une page "player"
-    // Mets ici tes URLs autorisées/à toi.
+    // ⚠️ Mets tes sources autorisées/à toi ici
     const STREAM_SOURCES = {
       1: "STREAM_URL_SOURCE_1",
       2: "STREAM_URL_SOURCE_2",
@@ -472,17 +469,13 @@
     function renderMatches(){
       const root = document.getElementById("matches");
       root.innerHTML = MATCHES.map(m => `
-        <a class="mcard"
-           href="${m.href}"
-           target="_blank"
-           rel="noopener noreferrer">
+        <a class="mcard" href="${m.href}" target="_blank" rel="noopener noreferrer">
           <div class="mcard-bg" style="background-image:url('${m.banner}')">
             <div class="mcard-top">
               <div class="mrow">
                 <div class="timepill"><span class="dot"></span>${m.time}</div>
                 <img class="complogo" src="${m.compLogo}" alt="comp">
               </div>
-
               <div class="mrow">
                 <div class="teams">
                   <img class="tlogo" src="${m.aLogo}" alt="A">
@@ -533,7 +526,6 @@
         showFallback(true);
         return;
       }
-
       showFallback(false);
       mountIframe(url);
     }
@@ -544,12 +536,25 @@
       f.setAttribute("src", src);
     }
 
+    // MOBILE: toggle chat
+    function toggleChat(){
+      const panel = document.getElementById("rightChat");
+      const txt = document.getElementById("chatToggleText");
+      const isHidden = panel.style.display === "none";
+      panel.style.display = isHidden ? "flex" : "none";
+      txt.textContent = isHidden ? "Masquer le chat" : "Afficher le chat";
+    }
+
     // init
     renderMatches();
     showFallback(true);
     setActiveBtn(1);
-    // mini compteur (tu mets ton viewerCounter.js si tu veux)
     document.getElementById("viewerCount").textContent = Math.floor(1 + Math.random()*9);
+
+    // Sur mobile, on cache le chat par défaut (plus propre)
+    if(window.matchMedia("(max-width: 1100px)").matches){
+      document.getElementById("rightChat").style.display = "none";
+    }
   </script>
 
 </body>
