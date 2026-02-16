@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Liverpool</title>
+  <title>IMFTX+ — Cagliari - Lecce</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@
       position:absolute; inset:0; z-index:15; cursor:pointer;
       background:
         linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
-        url("https://empire-sport.fit/upload/events/rcucjbmxmiqwu8jkylyeyxdzj81woq.jpg") center/cover no-repeat;
+        url("https://empire-sport.fit/upload/events/9sevu9jjcvmvi05e7qeupojzit8wqw.jpg") center/cover no-repeat;
     }
 
     .cover-top{
@@ -138,22 +138,23 @@
       <div>
         <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
-            <div class="pill"><span class="dot"></span>20h45</div>
+            <!-- mets l'heure si tu veux -->
+            <div class="pill"><span class="dot"></span>--:--</div>
 
             <div class="cover-top">
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png"
-                   alt="Liverpool">
+                   src="https://empire-sport.fit/upload/teams/jnqrhgcn4c0i5xgbggjexuwodium8g.png"
+                   alt="Cagliari">
               <span class="vs">VS</span>
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/pidrlq9nincxbgnpenvu1g5qxox8dg.png"
-                   alt="Brighton">
+                   src="https://empire-sport.fit/upload/teams/dovds19vkltvyx7eqxzwwtfpqvshal.png"
+                   alt="Lecce">
             </div>
 
             <div class="cover-strip">
               <div>
                 <div class="strip-title">Regarder Gratuitement</div>
-                <div class="strip-sub">Liverpool<br>Brighton</div>
+                <div class="strip-sub">Cagliari<br>Lecce</div>
               </div>
               <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
@@ -176,7 +177,7 @@
                 </svg>
               </p>
             </div>
-            <span data-viewer-counter="liv-bri" id="counterMatch1"
+            <span data-viewer-counter="cagliari-lecce" id="counterMatch1"
                   style="color:#F54927; font-family:Arial, Helvetica, sans-serif; font-weight:bold;"></span>
           </div>
         </div>
@@ -184,20 +185,20 @@
         <!-- VOUS REGARDEZ -->
         <div class="mt-5 watch-bar glass">
           <div class="watch-left">
-            <img src="https://empire-sport.fit/upload/leagues/bwqxost8qzrfkxdyp0det4iissrjcf.png" alt="Compétition">
+            <img src="https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png" alt="Compétition">
             <div class="watch-text">
               <div class="small">Vous regardez</div>
-              <div class="big">Liverpool - Brighton</div>
-              <div class="small">Premier League · 20h45</div>
+              <div class="big">Cagliari - Lecce</div>
+              <div class="small">Serie A · --:--</div>
             </div>
           </div>
           <img class="channel-logo"
-               src="https://empire-sport.fit/upload/chaines/nsjq4ttitwsqbk4qkkgoblfumrlonp.png"
+               src="https://empire-sport.fit/upload/chaines/bry9cmx6ljl79tuo5sxfeaeafwxwmm.png"
                alt="Chaîne">
         </div>
       </div>
 
-      <!-- CHAT -->
+      <!-- CHAT (Twitch comme avant) -->
       <aside class="chat-box glass">
         <div class="chat-head">
           <div>
@@ -220,11 +221,19 @@
   </main>
 
   <script>
+    // ✅ Mets tes liens ici (sinon laisse "#")
     const SOURCES = {
-      1: "https://sportlive.plus/soccer/4.php",
-      2: "https://sportlive.plus/soccer/4.php",
-      3: "https://sportlive.plus/soccer/4.php"
+      1: "https://viewembed.ru/channel/ESPN2[Argentina]",
+      2: "https://viewembed.ru/channel/ESPN2[Argentina]",
+      3: "https://viewembed.ru/channel/ESPN2[Argentina]"
     };
+
+    // TWITCH CHAT EMBED (parent auto)
+    (function(){
+      const parentDomain = window.location.hostname;
+      document.getElementById("chatFrame").src =
+        `https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
+    })();
 
     function setActive(id){
       [1,2,3].forEach(n=>{
