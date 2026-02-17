@@ -11,7 +11,7 @@
   <meta name="description" content="IMFTX+ : matchs, scores et résultats en direct.">
   <meta name="robots" content="index,follow">
 
-  <link rel="icon" href="https://media.discordapp.net/attachments/1472651603206209697/1473033071916879922/full-android-chrome-192x192.png?ex=6994bc73&is=69936af3&hm=9bbdc0c7ad181eda1cc1315f09b3ae15af4656f7014dbbd448b8131e9208c916&=&format=webp&quality=lossless&width=211&height=211">
+  <link rel="icon" href="https://media.discordapp.net/attachments/1472651603206209697/1473033071916879922/full-android-chrome-192x-192.png?ex=6994bc73&is=69936af3&hm=9bbdc0c7ad181eda1cc1315f09b3ae15af4656f7014dbbd448b8131e9208c916&=&format=webp&quality=lossless&width=211&height=211">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="IMFTX+ — 100% Des Matchs en direct">
@@ -145,34 +145,58 @@
       user-select: none;
     }
 
-    /* ===== Banner (milieu) ===== */
-    .mid-wrap{ width: 100%; padding: 14px 0 6px; }
-    .mid-banner{
-      width: 100%;
+    /* ✅ BANNIÈRE (AUCUN TRUC AUTOUR DU LOGO) */
+    .hero-wrap{ width:100%; padding: 14px 0 6px; }
+    .hero{
+      width:100%;
       border-radius: 22px;
-      overflow: hidden;
+      overflow:hidden;
       border: 1px solid rgba(255,255,255,.10);
       box-shadow: 0 22px 90px rgba(0,0,0,.55);
-      background: rgba(255,255,255,.04);
+      position: relative;
     }
-    .mid-banner img{
-      width: 100%;
-      height: clamp(170px, 28vw, 300px);
+    .hero > img{
+      width:100%;
+      height: clamp(170px, 26vw, 300px);
       object-fit: cover;
       display:block;
-      filter: contrast(1.06) saturate(1.06);
     }
-    .mid-banner::after{
+    .hero::after{
       content:"";
       position:absolute;
       inset:0;
       pointer-events:none;
       background:
-        radial-gradient(900px 360px at 25% 55%, rgba(0,0,0,.52), transparent 60%),
-        radial-gradient(900px 360px at 75% 35%, rgba(255,0,0,.10), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.55));
+        radial-gradient(900px 360px at 20% 60%, rgba(0,0,0,.35), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45));
     }
-    .mid-banner{ position:relative; }
+
+    /* ✅ JUSTE L'IMAGE DU LOGO (pas de fond, pas de gris) */
+    .hero-logo{
+      position:absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: min(820px, 92%);
+      height: clamp(90px, 10vw, 140px);
+      z-index: 2;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .hero-logo img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* ✅ pas cover */
+      display:block;
+    }
+    @media (max-width: 640px){
+      .hero{ border-radius: 18px; }
+      .hero-logo{
+        width: 92%;
+        height: 92px;
+      }
+    }
 
     /* --------- Match Cards --------- */
     .match-card{
@@ -256,7 +280,6 @@
       .match-title{ font-size:14px; }
       .watch-pill{ font-size:12px; padding:.40rem .62rem; }
       .gate-title{ font-size: 40px; }
-      .mid-banner{ border-radius: 18px; }
     }
   </style>
 </head>
@@ -292,7 +315,7 @@
       </svg>
     </button>
 
-    <!-- ✅ IMFTX+ visible TEL + PC, en blanc, comme dab -->
+    <!-- ✅ IMFTX+ visible TEL + PC, blanc -->
     <button id="nav-pfp" type="button" class="h-11 flex items-center gap-1">
       <div class="text-3xl font-extrabold tracking-tight text-white">IMFTX+</div>
     </button>
@@ -323,7 +346,7 @@
          class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
          aria-label="Discord">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04.106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084-.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157 1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
+          <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04 .106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
         </svg>
       </a>
 
@@ -349,11 +372,14 @@
   </div>
 </nav>
 
-<!-- ✅ BANNIÈRE (logo rectangle) -->
-<div class="my_container max-w-screen-2xl mx-auto w-full flex flex-col md:px-24 px-5 transition-all duration-300 ease-out">
-  <div class="mid-wrap">
-    <div class="mid-banner">
-      <img src="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500" alt="IMFTX+ Banner">
+<!-- ✅ BANNIÈRE + JUSTE TON IMAGE (AUCUN FOND) -->
+<div class="max-w-screen-2xl mx-auto w-full px-5 md:px-24">
+  <div class="hero-wrap">
+    <div class="hero">
+      <img src="https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg" alt="Bannière">
+      <div class="hero-logo">
+        <img src="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500" alt="IMFTX+">
+      </div>
     </div>
   </div>
 </div>
@@ -425,8 +451,8 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // ====== MATCHES ======
-  const MATCHES_TOMORROW = [
+  // ✅ MATCHES (demain -> aujourd'hui)
+  const MATCHES = [
     {
       title: "Galatasaray - Juventus", time: "18:45",
       banner: "https://empire-sport.fit/upload/banners/galatasaray-vs-juventus.png",
@@ -447,7 +473,7 @@
       title: "Benfica - Real Madrid", time: "21:00",
       banner: "https://empire-sport.fit/upload/banners/benfica-vs-real-madrid.png",
       aLogo: "https://empire-sport.fit/upload/teams/1gmfrazydu7o6vh1z8rlnrduarisq5.png",
-      bLogo: "https://empire-sport.fit/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png",
+      bLogo: "https://upload.wikimedia.org/wikipedia/fr/thumb/a/a2/SL_Benfica_logo.svg/500px-SL_Benfica_logo.svg.png",
       compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
       href: "benfica-real.html"
     },
@@ -514,7 +540,7 @@
                   <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                 </svg>
               </span>
-              <span data-viewer-counter="${cleanID}" data-viewer-readonly style="color: #F54927;font-family: Arial, Helvetica, sans-serif;"></span>
+              <span data-viewer-counter="${cleanID}" data-viewer-readonly style="color:#F54927;font-family:Arial, Helvetica, sans-serif;"></span>
             </span>
           </div>
 
@@ -555,15 +581,13 @@
     const todayEl = document.getElementById('stream-list-principal');
     const tomEl   = document.getElementById('stream-list-bk');
 
-    // ✅ matchs de demain -> aujourd'hui
-    if(todayEl) todayEl.innerHTML = MATCHES_TOMORROW.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
+    if(todayEl) todayEl.innerHTML = MATCHES.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
     if(tomEl) tomEl.innerHTML = '';
   }
 
   function tick(){
     const now = Date.now();
-
-    MATCHES_TOMORROW.forEach((m, idx) => {
+    MATCHES.forEach((m, idx) => {
       const kickoff = getNextKickoff(m.time).getTime();
       const endLive = kickoff + LIVE_WINDOW_MS;
 
