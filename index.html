@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
- <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="referrer" content="no-referrer-when-downgrade"/>
   <meta name="trustpilot-one-time-domain-verification-id" content="01e3c9c3-543d-4096-85ad-8e8429545832"/>
-  <!-- ✅ Titre -->
-  <title>IMFTX+ — 100% Des Matchs en direct</title>
 
-  <!-- ✅ SEO -->
+  <title>IMFTX+ — 100% Des Matchs en direct</title>
   <meta name="description" content="IMFTX+ : matchs, scores et résultats en direct.">
   <meta name="robots" content="index,follow">
 
-  <!-- ✅ Favicon simple (sans fichiers à upload) -->
   <link rel="icon" href="https://media.discordapp.net/attachments/1472651603206209697/1473033071916879922/full-android-chrome-192x192.png?ex=6994bc73&is=69936af3&hm=9bbdc0c7ad181eda1cc1315f09b3ae15af4656f7014dbbd448b8131e9208c916&=&format=webp&quality=lossless&width=211&height=211">
 
-  <!-- ✅ Preview partage (OG) -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="IMFTX+ — 100% Des Matchs en direct">
   <meta property="og:description" content="IMFTX+ : matchs, scores et résultats en direct.">
@@ -45,6 +41,8 @@
     #nprogress .bar { top: 64px !important; }
     #nprogress .spinner { top: 75px !important; }
     html, body { font-family: 'Outfit', sans-serif; }
+    body{ display:flex; flex-direction:column; }
+    button *{ pointer-events:none; }
 
     .dark body{
       background-image: url('https://cdn.jsdelivr.net/gh/Nyx0xFF/turbo-palm-tree/noise.png');
@@ -63,8 +61,6 @@
     ::-webkit-scrollbar-thumb:hover { background-color: rgba(100, 100, 100, 0.6); }
     *{ scrollbar-width: thin; scrollbar-color: rgba(100, 100, 100, 0.4) transparent; }
     ::selection { background-color: #444; color: white; }
-    body{ display:flex; flex-direction:column; }
-    button *{ pointer-events:none; }
 
     /* ===== Intro / Pop-up (Twitter) ===== */
     .gate{
@@ -147,6 +143,61 @@
       user-select: none;
     }
 
+    /* ===== HERO GIF FULL (milieu page) ===== */
+    .mid-wrap{
+      width: 100%;
+      padding: 14px 0 10px;
+    }
+    .mid-banner{
+      width: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 30px 120px rgba(0,0,0,.55);
+    }
+    .mid-banner img{
+      width: 100%;
+      height: clamp(180px, 32vw, 340px); /* ✅ prend bien la page au milieu */
+      object-fit: cover;
+      display:block;
+      filter: contrast(1.06) saturate(1.06);
+    }
+    .mid-overlay{
+      position: relative;
+    }
+    .mid-overlay::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 360px at 25% 55%, rgba(0,0,0,.52), transparent 60%),
+        radial-gradient(900px 360px at 75% 35%, rgba(255,0,0,.10), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.55));
+      pointer-events:none;
+    }
+
+    /* ===== Nav brand (rectangle banner) ===== */
+    .nav-logo{
+      height: 44px;
+      width: 220px;
+      border-radius: 12px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 18px 70px rgba(0,0,0,.25);
+      background: rgba(0,0,0,.25);
+    }
+    .nav-logo img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
+    }
+    @media (max-width: 640px){
+      .nav-logo{ width: 170px; height: 40px; border-radius: 11px; }
+      .mid-banner{ border-radius: 18px; }
+    }
+
     /* --------- Match Cards --------- */
     .match-card{
       position:relative;
@@ -157,55 +208,34 @@
       box-shadow: 0 18px 70px rgba(0,0,0,.45);
       aspect-ratio: 16 / 9;
     }
-    .match-bg{
-      position:absolute; inset:0;
-      background-size:cover;
-      background-position:center;
-      transform:scale(1.02);
-      opacity:.96;
-    }
+    .match-bg{ position:absolute; inset:0; background-size:cover; background-position:center; transform:scale(1.02); opacity:.96; }
     .match-overlay{
       position:absolute; inset:0;
       background:
         radial-gradient(700px 320px at 28% 55%, rgba(0,0,0,.35), transparent 60%),
         linear-gradient(90deg, rgba(0,0,0,.70) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.10) 100%);
     }
-
     .timer-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
       background: rgba(18,18,18,.62);
       border:1px solid rgba(255,255,255,.10);
       backdrop-filter: blur(8px);
-      font-weight:800;
-      font-size:12px;
-      line-height:1;
+      font-weight:800; font-size:12px; line-height:1;
       color: rgba(255,255,255,.92);
       white-space: nowrap;
     }
-    .timer-dot{
-      width:8px;height:8px;border-radius:999px;background:#f59e0b;
-      box-shadow:0 0 0 3px rgba(245,158,11,.12);
-    }
+    .timer-dot{ width:8px;height:8px;border-radius:999px;background:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,.12); }
     .timer-text{ font-variant-numeric: tabular-nums; }
     .timer-live{ color:#22c55e !important; }
-    .timer-dot-live{
-      background:#22c55e !important;
-      box-shadow:0 0 0 3px rgba(34,197,94,.16) !important;
-    }
-
+    .timer-dot-live{ background:#22c55e !important; box-shadow:0 0 0 3px rgba(34,197,94,.16) !important; }
     .team-logo{ width:30px;height:30px; display:flex;align-items:center;justify-content:center; flex:0 0 auto; }
     .team-logo img{ width:100%; height:100%; object-fit:contain; display:block; filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)); }
     .vs{ font-weight:800; font-size:12px; color: rgba(255,255,255,.68); letter-spacing:.02em; }
     .comp-wrap{ width:26px;height:26px; display:flex;align-items:center;justify-content:center; flex:0 0 auto; }
     .comp-wrap img{ width:100%; height:100%; object-fit:contain; filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)); }
-
     .match-title{ font-size:15px; font-weight:500; line-height:1.15; color: rgba(255,255,255,.92); }
     .match-sub{ font-size:12px; font-weight:600; color: rgba(255,255,255,.70); line-height:1.25; }
-
     .watch-pill{
       border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
@@ -270,13 +300,22 @@
       </svg>
     </button>
 
-    <button id="nav-pfp" type="button" class="h-11 hidden md:flex items-center gap-1">
-      <div class="text-3xl font-extrabold tracking-tight">IMFTX+</div>
-    </button>
+    <!-- ✅ LOGO rectangle (banner) -->
+    <a href="/" class="nav-logo" aria-label="IMFTX+">
+      <img src="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500" alt="IMFTX+">
+    </a>
 
     <div class="h-11 flex items-center gap-2 md:gap-4 text-xl">
       <div class="relative flex group">
-        <a href="/shop" class="w-auto h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
+        <!-- Mobile -->
+        <a href="/shop"
+           class="md:hidden h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+           aria-label="IPTV">
+          <span class="text-sm font-extrabold tracking-wide">IPTV</span>
+        </a>
+        <!-- Desktop -->
+        <a href="/shop"
+           class="hidden md:flex w-auto h-11 px-3 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
           <span class="text-sm font-semibold">OBTENEZ UN IPTV À PARTIR DE 9,99€</span>
         </a>
       </div>
@@ -293,7 +332,7 @@
          class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
          aria-label="Discord">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04.106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
+          <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006-.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04.106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084-.027 a19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
         </svg>
       </a>
 
@@ -337,10 +376,18 @@
 </aside>
 
 <!-- CONTENT -->
-<div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col items-center justify-center md:px-24 p-5 transition-all duration-300 ease-out">
-  <div class="w-full flex flex-col gap-12 mt-10">
+<div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col md:px-24 px-5 transition-all duration-300 ease-out">
 
-    <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
+  <!-- ✅ MILIEU = GIF FULL LARGE -->
+  <div class="mid-wrap">
+    <div class="mid-banner mid-overlay">
+      <img src="https://share.creavite.co/69945c72e4a21b3f8b000816.gif" alt="IMFTX+">
+    </div>
+  </div>
+
+  <div class="w-full flex flex-col gap-12 mt-6 pb-10">
+
+    <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full" id="todaySection">
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
           <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)]"></div>
@@ -420,12 +467,8 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // ============================================================
-  // ✅ MAJ : MATCHES = EX "DEMAIN" (aujourd'hui)
-  // ✅ DEMAIN = VIDE (on fera plus tard)
-  // ============================================================
-
- const MATCHES = [
+  // ====== MATCHES ======
+  const MATCHES = [
     {
       title: "Bastia - Troyes", time: "20:45",
       banner: "https://empire-sport.fit/upload/events/qesrkcawycmn2skr0froyfrcunujz0.jpg",
@@ -450,9 +493,9 @@
       compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
       href: "girona-barcelona.html"
     }
-];
+  ];
 
-const MATCHES_TOMORROW = [
+  const MATCHES_TOMORROW = [
     {
       title: "Galatasaray - Juventus", time: "18:45",
       banner: "https://empire-sport.fit/upload/banners/galatasaray-vs-juventus.png",
@@ -485,170 +528,166 @@ const MATCHES_TOMORROW = [
       compLogo: "https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png",
       href: "dortmund-atalanta.html"
     }
-];
+  ];
 
-const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
+  const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
 
-function parseHHMM(hhmm){
-  const [h,m] = hhmm.split(':').map(Number);
-  return {h, m};
-}
-
-function getNextKickoff(timeHHMM){
-  const now = new Date();
-  const {h,m} = parseHHMM(timeHHMM);
-  const t = new Date(now);
-  t.setHours(h, m, 0, 0);
-
-  if (now.getTime() > (t.getTime() + LIVE_WINDOW_MS)) {
-    t.setDate(t.getDate() + 1);
-    t.setHours(h, m, 0, 0);
+  function parseHHMM(hhmm){
+    const [h,m] = hhmm.split(':').map(Number);
+    return {h, m};
   }
-  return t;
-}
 
-function formatRemaining(ms){
-  if(ms <= 0) return "00h 00m 00s";
-  const total = Math.floor(ms / 1000);
-  const hh = Math.floor(total / 3600);
-  const mm = Math.floor((total % 3600) / 60);
-  const ss = total % 60;
-  const pad = (n) => String(n).padStart(2,"0");
-  return `${pad(hh)}h ${pad(mm)}m ${pad(ss)}s`;
-}
+  function getNextKickoff(timeHHMM){
+    const now = new Date();
+    const {h,m} = parseHHMM(timeHHMM);
+    const t = new Date(now);
+    t.setHours(h, m, 0, 0);
 
-function cardHTML(m, idx, dayLabel){
-  const teamsRow = m.noTeams ? `
-    <div class="flex items-center gap-2" aria-hidden="true" style="height:30px"></div>
-  ` : `
-    <div class="flex items-center gap-2">
-      <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
-      <span class="vs">VS</span>
-      <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
-    </div>
-  `;
+    if (now.getTime() > (t.getTime() + LIVE_WINDOW_MS)) {
+      t.setDate(t.getDate() + 1);
+      t.setHours(h, m, 0, 0);
+    }
+    return t;
+  }
 
-  const cleanID = (m.href || `match-${idx}`).replace(".html","");
+  function formatRemaining(ms){
+    if(ms <= 0) return "00h 00m 00s";
+    const total = Math.floor(ms / 1000);
+    const hh = Math.floor(total / 3600);
+    const mm = Math.floor((total % 3600) / 60);
+    const ss = total % 60;
+    const pad = (n) => String(n).padStart(2,"0");
+    return `${pad(hh)}h ${pad(mm)}m ${pad(ss)}s`;
+  }
 
-  return `
-    <a href="${m.href}" class="block">
-      <article class="match-card">
-        <div class="match-bg" style="background-image:url('${m.banner}')"></div>
-        <div class="match-overlay"></div>
+  function cardHTML(m, idx, dayLabel){
+    const teamsRow = m.noTeams ? `
+      <div class="flex items-center gap-2" aria-hidden="true" style="height:30px"></div>
+    ` : `
+      <div class="flex items-center gap-2">
+        <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
+        <span class="vs">VS</span>
+        <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
+      </div>
+    `;
 
-        <div class="absolute left-3 top-3">
-          <span class="timer-pill" data-pill="${idx}">
-            <span class="timer-dot" data-dot="${idx}"></span>
-            <span class="timer-text" data-timer="${idx}">--</span>
-          </span>
-        </div>
+    const cleanID = (m.href || `match-${idx}`).replace(".html","");
 
-        <div class="absolute right-3 top-3">
-          <span class="timer-pill">
-            <span class="timer-text">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F54927" class="bi bi-person" viewBox="0 0 16 16">
-                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-              </svg>
-            </span>
-            <span data-viewer-counter="${cleanID}" data-viewer-readonly style="color: #F54927;font-family: Arial, Helvetica, sans-serif;"></span>
-          </span>
-        </div>
+    return `
+      <a href="${m.href}" class="block">
+        <article class="match-card">
+          <div class="match-bg" style="background-image:url('${m.banner}')"></div>
+          <div class="match-overlay"></div>
 
-        <div class="absolute inset-x-0 bottom-0 p-4">
-          <div class="flex items-end justify-between gap-4">
-            <div class="min-w-0 max-w-[72%]">
-              ${teamsRow}
-
-              <div class="mt-2 flex items-center gap-2">
-                <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
-                <div class="min-w-0">
-                  <div class="match-title truncate">${m.title}</div>
-                  <div class="match-sub">${dayLabel} · ${m.time}</div>
-                </div>
-              </div>
-            </div>
-
-            <span class="watch-pill">
-              <span class="play">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
-                  <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
-                </svg>
-              </span>
-              REGARDER
+          <div class="absolute left-3 top-3">
+            <span class="timer-pill" data-pill="${idx}">
+              <span class="timer-dot" data-dot="${idx}"></span>
+              <span class="timer-text" data-timer="${idx}">--</span>
             </span>
           </div>
-        </div>
-      </article>
-    </a>
-  `;
-}
 
-function render(){
-  const todayEl = document.getElementById('stream-list-principal');
-  const tomEl   = document.getElementById('stream-list-bk');
+          <div class="absolute right-3 top-3">
+            <span class="timer-pill">
+              <span class="timer-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F54927" class="bi bi-person" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                </svg>
+              </span>
+              <span data-viewer-counter="${cleanID}" data-viewer-readonly style="color: #F54927;font-family: Arial, Helvetica, sans-serif;"></span>
+            </span>
+          </div>
 
-  // ✅ AUJOURD'HUI = matchs de demain
-  if(todayEl) todayEl.innerHTML = MATCHES_TOMORROW.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
+          <div class="absolute inset-x-0 bottom-0 p-4">
+            <div class="flex items-end justify-between gap-4">
+              <div class="min-w-0 max-w-[72%]">
+                ${teamsRow}
 
-  // ✅ DEMAIN = vide (ou tu peux laisser un message si tu veux plus tard)
-  if(tomEl) tomEl.innerHTML = '';
-}
+                <div class="mt-2 flex items-center gap-2">
+                  <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
+                  <div class="min-w-0">
+                    <div class="match-title truncate">${m.title}</div>
+                    <div class="match-sub">${dayLabel} · ${m.time}</div>
+                  </div>
+                </div>
+              </div>
 
-function tick(){
-  const now = Date.now();
-
-  function tickList(list, baseIdx){
-    list.forEach((m, localIdx) => {
-      const idx = baseIdx + localIdx;
-      const kickoff = getNextKickoff(m.time).getTime();
-      const endLive = kickoff + LIVE_WINDOW_MS;
-
-      const timerEl = document.querySelector(`[data-timer="${idx}"]`);
-      const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
-      const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
-
-      if(!timerEl || !pillEl || !dotEl) return;
-
-      if (now < kickoff) {
-        const diff = kickoff - now;
-        timerEl.textContent = formatRemaining(diff);
-        pillEl.classList.remove('timer-live');
-        timerEl.classList.remove('timer-live');
-        dotEl.classList.remove('timer-dot-live');
-      } else if (now >= kickoff && now <= endLive) {
-        timerEl.textContent = "En Cours";
-        pillEl.classList.add('timer-live');
-        timerEl.classList.add('timer-live');
-        dotEl.classList.add('timer-dot-live');
-      } else {
-        const next = getNextKickoff(m.time).getTime();
-        const diff = next - now;
-        timerEl.textContent = formatRemaining(diff);
-        pillEl.classList.remove('timer-live');
-        timerEl.classList.remove('timer-live');
-        dotEl.classList.remove('timer-dot-live');
-      }
-    });
+              <span class="watch-pill">
+                <span class="play">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
+                    <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
+                  </svg>
+                </span>
+                REGARDER
+              </span>
+            </div>
+          </div>
+        </article>
+      </a>
+    `;
   }
 
-  tickList(MATCHES, 0);
-  tickList(MATCHES_TOMORROW, 100);
-}
+  // ✅ tu avais demandé: "matchs de demain -> aujourd'hui"
+  function render(){
+    const todayEl = document.getElementById('stream-list-principal');
+    const tomEl   = document.getElementById('stream-list-bk');
 
-document.getElementById('refreshBtn')?.addEventListener('click', () => {
-  NProgress.start();
+    if(todayEl) todayEl.innerHTML = MATCHES_TOMORROW.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
+    if(tomEl) tomEl.innerHTML = '';
+  }
+
+  function tick(){
+    const now = Date.now();
+
+    function tickList(list, baseIdx){
+      list.forEach((m, localIdx) => {
+        const idx = baseIdx + localIdx;
+        const kickoff = getNextKickoff(m.time).getTime();
+        const endLive = kickoff + LIVE_WINDOW_MS;
+
+        const timerEl = document.querySelector(`[data-timer="${idx}"]`);
+        const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
+        const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
+
+        if(!timerEl || !pillEl || !dotEl) return;
+
+        if (now < kickoff) {
+          const diff = kickoff - now;
+          timerEl.textContent = formatRemaining(diff);
+          pillEl.classList.remove('timer-live');
+          timerEl.classList.remove('timer-live');
+          dotEl.classList.remove('timer-dot-live');
+        } else if (now >= kickoff && now <= endLive) {
+          timerEl.textContent = "En Cours";
+          pillEl.classList.add('timer-live');
+          timerEl.classList.add('timer-live');
+          dotEl.classList.add('timer-dot-live');
+        } else {
+          const next = getNextKickoff(m.time).getTime();
+          const diff = next - now;
+          timerEl.textContent = formatRemaining(diff);
+          pillEl.classList.remove('timer-live');
+          timerEl.classList.remove('timer-live');
+          dotEl.classList.remove('timer-dot-live');
+        }
+      });
+    }
+
+    tickList(MATCHES_TOMORROW, 0);
+  }
+
+  document.getElementById('refreshBtn')?.addEventListener('click', () => {
+    NProgress.start();
+    render();
+    tick();
+    setTimeout(() => NProgress.done(), 350);
+  });
+
   render();
   tick();
-  setTimeout(() => NProgress.done(), 350);
-});
-
-render();
-tick();
-setInterval(tick, 1000);
+  setInterval(tick, 1000);
 </script>
 
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
-
 
