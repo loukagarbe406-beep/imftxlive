@@ -7,7 +7,6 @@
   <meta name="trustpilot-one-time-domain-verification-id" content="01e3c9c3-543d-4096-85ad-8e8429545832"/>
 
   <title>IMFTX+ — 100% Des Matchs en direct</title>
-
   <meta name="description" content="IMFTX+ : matchs, scores et résultats en direct.">
   <meta name="robots" content="index,follow">
 
@@ -43,14 +42,30 @@
     #nprogress .spinner { top: 75px !important; }
 
     html, body { font-family: 'Outfit', sans-serif; }
-    body{ display:flex; flex-direction:column; }
-    button *{ pointer-events:none; }
 
-    .dark body{
-      background-image: url('https://cdn.jsdelivr.net/gh/Nyx0xFF/turbo-palm-tree/noise.png');
-      background-repeat: repeat;
-      background-size: 96px 96px;
+    /* ✅ BACKGROUND IMAGE GLOBAL */
+    body{
+      display:flex;
+      flex-direction:column;
+      min-height: 100vh;
+      background-image: url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
     }
+    /* overlay léger pour lisibilité */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body > *{ position: relative; z-index: 1; }
+    button *{ pointer-events:none; }
 
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: transparent; }
@@ -145,57 +160,35 @@
       user-select: none;
     }
 
-    /* ✅ BANNIÈRE (AUCUN TRUC AUTOUR DU LOGO) */
-    .hero-wrap{ width:100%; padding: 14px 0 6px; }
-    .hero{
-      width:100%;
-      border-radius: 22px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: 0 22px 90px rgba(0,0,0,.55);
-      position: relative;
+    /* ✅ Logo center (sans bannière) */
+    .logo-wrap{
+      width: 100%;
+      max-width: 1536px;
+      margin: 0 auto;
+      padding: 18px 20px 0;
     }
-    .hero > img{
-      width:100%;
-      height: clamp(170px, 26vw, 300px);
-      object-fit: cover;
-      display:block;
-    }
-    .hero::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      background:
-        radial-gradient(900px 360px at 20% 60%, rgba(0,0,0,.35), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45));
-    }
-
-    /* ✅ JUSTE L'IMAGE DU LOGO (pas de fond, pas de gris) */
-    .hero-logo{
-      position:absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: min(820px, 92%);
-      height: clamp(90px, 10vw, 140px);
-      z-index: 2;
+    .logo-center{
+      width: 100%;
       display:flex;
       align-items:center;
       justify-content:center;
+      margin-top: 10px;
+      margin-bottom: 18px;
     }
-    .hero-logo img{
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* ✅ pas cover */
+    .logo-center img{
+      width: min(820px, 92%);
+      height: clamp(90px, 10vw, 140px);
+      object-fit: contain;
       display:block;
     }
-    @media (max-width: 640px){
-      .hero{ border-radius: 18px; }
-      .hero-logo{
-        width: 92%;
-        height: 92px;
-      }
+
+    /* ✅ Sections glass */
+    .glass-section{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 70px rgba(0,0,0,.45);
     }
 
     /* --------- Match Cards --------- */
@@ -276,15 +269,12 @@
     }
 
     @media (max-width: 640px){
-      .team-logo{ width:28px; height:28px; }
-      .match-title{ font-size:14px; }
-      .watch-pill{ font-size:12px; padding:.40rem .62rem; }
       .gate-title{ font-size: 40px; }
     }
   </style>
 </head>
 
-<body data-page="index" class="min-h-screen bg-white text-black dark:bg-zinc-900 dark:text-white flex flex-col font-[Outfit] transition-colors duration-200">
+<body data-page="index" class="text-white flex flex-col font-[Outfit] transition-colors duration-200">
 <noscript>You need to enable JavaScript to run this website.</noscript>
 
 <!-- POP-UP TWITTER -->
@@ -306,16 +296,16 @@
 </div>
 
 <!-- NAV -->
-<nav class="sticky top-0 z-10 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-700 shadow-sm">
+<nav class="sticky top-0 z-10 backdrop-blur-xl border-b border-white/10 shadow-sm bg-black/30">
   <div class="max-w-screen-2xl mx-auto py-2 px-5 md:px-24 h-16 flex items-center justify-between">
 
-    <button id="burgerBtn" class="flex md:hidden w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200" aria-label="Menu">
+    <button id="burgerBtn" class="flex md:hidden w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200" aria-label="Menu">
       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
 
-    <!-- ✅ IMFTX+ visible TEL + PC, blanc -->
+    <!-- ✅ visible TEL + PC -->
     <button id="nav-pfp" type="button" class="h-11 flex items-center gap-1">
       <div class="text-3xl font-extrabold tracking-tight text-white">IMFTX+</div>
     </button>
@@ -323,19 +313,19 @@
     <div class="h-11 flex items-center gap-2 md:gap-4 text-xl">
       <div class="relative flex group">
         <a href="/shop"
-           class="md:hidden h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+           class="md:hidden h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
            aria-label="IPTV">
           <span class="text-sm font-extrabold tracking-wide">IPTV</span>
         </a>
 
         <a href="/shop"
-           class="hidden md:flex w-auto h-11 px-3 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
+           class="hidden md:flex w-auto h-11 px-3 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200">
           <span class="text-sm font-semibold">OBTENEZ UN IPTV À PARTIR DE 9,99€</span>
         </a>
       </div>
 
       <a id="nav-btn-telegram" href="https://t.me/addlist/sDF7qOMdHTMyYzA0" target="_blank"
-         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
          aria-label="Telegram">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
           <path d="M9.04 15.31 8.9 19.5c.57 0 .82-.25 1.12-.55l2.69-2.57 5.58 4.08c1.02.56 1.75.27 2-.94L23.9 4.7c.31-1.44-.55-2-1.56-1.63L1.55 10.86c-1.41.55-1.39 1.34-.24 1.7l5.32 1.66L19.1 6.5c.59-.39 1.13-.18.69.21"/>
@@ -343,7 +333,7 @@
       </a>
 
       <a id="nav-btn-discord" href="https://discord.gg/KmFD2GXd" target="_blank"
-         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
          aria-label="Discord">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
           <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04 .106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
@@ -351,7 +341,7 @@
       </a>
 
       <a id="nav-btn-twitter" href="https://x.com/imftxvw" target="_blank"
-         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
          aria-label="X">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/>
@@ -359,7 +349,7 @@
       </a>
 
       <button id="theme-toggle"
-              class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
+              class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
               aria-label="Changer le thème">
         <svg id="icon-sun" class="w-6 h-6 hidden dark:block" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-16h1v3h-1V2Zm0 19h1v3h-1v-3ZM2 12h3v1H2v-1Zm19 0h3v1h-3v-1ZM4.22 4.22l2.12 2.12-.7.7L3.52 4.92l.7-.7Zm14.02 14.02 2.12 2.12-.7.7-2.12-2.12.7-.7ZM19.78 4.22l.7.7-2.12 2.12-.7-.7 2.12-2.12ZM5.64 17.66l.7.7-2.12 2.12-.7-.7 2.12-2.12Z"/>
@@ -372,27 +362,22 @@
   </div>
 </nav>
 
-<!-- ✅ BANNIÈRE + JUSTE TON IMAGE (AUCUN FOND) -->
-<div class="max-w-screen-2xl mx-auto w-full px-5 md:px-24">
-  <div class="hero-wrap">
-    <div class="hero">
-      <img src="https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg" alt="Bannière">
-      <div class="hero-logo">
-        <img src="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500" alt="IMFTX+">
-      </div>
-    </div>
+<!-- ✅ LOGO SEUL (bannière supprimée) -->
+<div class="logo-wrap">
+  <div class="logo-center">
+    <img src="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500" alt="IMFTX+">
   </div>
 </div>
 
 <!-- CONTENT -->
 <div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col md:px-24 px-5 transition-all duration-300 ease-out">
-  <div class="w-full flex flex-col gap-12 mt-6 pb-10">
+  <div class="w-full flex flex-col gap-12 mt-2 pb-10">
 
-    <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
+    <section class="glass-section p-6 w-full">
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
           <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)]"></div>
-          <h2 class="text-xl font-bold text-zinc-900 dark:text-white">IMFTX+ — AUJOURD’HUI</h2>
+          <h2 class="text-xl font-bold text-white">IMFTX+ — AUJOURD’HUI</h2>
         </div>
 
         <button type="button" id="refreshBtn"
@@ -403,10 +388,10 @@
       <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
     </section>
 
-    <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
+    <section class="glass-section p-6 w-full">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-3 h-3 rounded-full bg-zinc-500"></div>
-        <h2 class="text-xl font-bold text-zinc-900 dark:text-white">IMFTX+ — DEMAIN</h2>
+        <h2 class="text-xl font-bold text-white">IMFTX+ — DEMAIN</h2>
       </div>
 
       <div id="stream-list-bk" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
@@ -451,8 +436,10 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // ✅ MATCHES (demain -> aujourd'hui)
-  const MATCHES = [
+  // ============================================================
+  // ✅ MATCHES (SCRIPT COPIER/COLLER ICI)
+  // ============================================================
+  const MATCHES_TODAY = [
     {
       title: "Galatasaray - Juventus", time: "18:45",
       banner: "https://empire-sport.fit/upload/banners/galatasaray-vs-juventus.png",
@@ -486,6 +473,8 @@
       href: "dortmund-atalanta.html"
     }
   ];
+
+  const MATCHES_TOMORROW = []; // si tu veux en mettre, colle-les ici
 
   const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
 
@@ -581,13 +570,15 @@
     const todayEl = document.getElementById('stream-list-principal');
     const tomEl   = document.getElementById('stream-list-bk');
 
-    if(todayEl) todayEl.innerHTML = MATCHES.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
-    if(tomEl) tomEl.innerHTML = '';
+    if(todayEl) todayEl.innerHTML = MATCHES_TODAY.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
+    if(tomEl) tomEl.innerHTML = MATCHES_TOMORROW.length
+      ? MATCHES_TOMORROW.map((m,i) => cardHTML(m, i + 100, "Demain")).join('')
+      : '';
   }
 
   function tick(){
     const now = Date.now();
-    MATCHES.forEach((m, idx) => {
+    MATCHES_TODAY.forEach((m, idx) => {
       const kickoff = getNextKickoff(m.time).getTime();
       const endLive = kickoff + LIVE_WINDOW_MS;
 
@@ -631,4 +622,3 @@
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
-
