@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer-when-downgrade"/>
   <meta name="trustpilot-one-time-domain-verification-id" content="01e3c9c3-543d-4096-85ad-8e8429545832"/>
 
   <title>IMFTX+ — 100% Des Matchs en direct</title>
+
   <meta name="description" content="IMFTX+ : matchs, scores et résultats en direct.">
   <meta name="robots" content="index,follow">
 
@@ -40,6 +41,7 @@
   <style>
     #nprogress .bar { top: 64px !important; }
     #nprogress .spinner { top: 75px !important; }
+
     html, body { font-family: 'Outfit', sans-serif; }
     body{ display:flex; flex-direction:column; }
     button *{ pointer-events:none; }
@@ -143,60 +145,34 @@
       user-select: none;
     }
 
-    /* ===== HERO GIF FULL (milieu page) ===== */
-    .mid-wrap{
-      width: 100%;
-      padding: 14px 0 10px;
-    }
+    /* ===== Banner (milieu) ===== */
+    .mid-wrap{ width: 100%; padding: 14px 0 6px; }
     .mid-banner{
       width: 100%;
       border-radius: 22px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 22px 90px rgba(0,0,0,.55);
       background: rgba(255,255,255,.04);
-      box-shadow: 0 30px 120px rgba(0,0,0,.55);
     }
     .mid-banner img{
       width: 100%;
-      height: clamp(180px, 32vw, 340px); /* ✅ prend bien la page au milieu */
+      height: clamp(170px, 28vw, 300px);
       object-fit: cover;
       display:block;
       filter: contrast(1.06) saturate(1.06);
     }
-    .mid-overlay{
-      position: relative;
-    }
-    .mid-overlay::after{
+    .mid-banner::after{
       content:"";
       position:absolute;
       inset:0;
+      pointer-events:none;
       background:
         radial-gradient(900px 360px at 25% 55%, rgba(0,0,0,.52), transparent 60%),
         radial-gradient(900px 360px at 75% 35%, rgba(255,0,0,.10), transparent 60%),
         linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.55));
-      pointer-events:none;
     }
-
-    /* ===== Nav brand (rectangle banner) ===== */
-    .nav-logo{
-      height: 44px;
-      width: 220px;
-      border-radius: 12px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: 0 18px 70px rgba(0,0,0,.25);
-      background: rgba(0,0,0,.25);
-    }
-    .nav-logo img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display:block;
-    }
-    @media (max-width: 640px){
-      .nav-logo{ width: 170px; height: 40px; border-radius: 11px; }
-      .mid-banner{ border-radius: 18px; }
-    }
+    .mid-banner{ position:relative; }
 
     /* --------- Match Cards --------- */
     .match-card{
@@ -215,27 +191,42 @@
         radial-gradient(700px 320px at 28% 55%, rgba(0,0,0,.35), transparent 60%),
         linear-gradient(90deg, rgba(0,0,0,.70) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.10) 100%);
     }
+
     .timer-pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px; border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
       background: rgba(18,18,18,.62);
       border:1px solid rgba(255,255,255,.10);
       backdrop-filter: blur(8px);
-      font-weight:800; font-size:12px; line-height:1;
+      font-weight:800;
+      font-size:12px;
+      line-height:1;
       color: rgba(255,255,255,.92);
       white-space: nowrap;
     }
-    .timer-dot{ width:8px;height:8px;border-radius:999px;background:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,.12); }
+    .timer-dot{
+      width:8px;height:8px;border-radius:999px;background:#f59e0b;
+      box-shadow:0 0 0 3px rgba(245,158,11,.12);
+    }
     .timer-text{ font-variant-numeric: tabular-nums; }
     .timer-live{ color:#22c55e !important; }
-    .timer-dot-live{ background:#22c55e !important; box-shadow:0 0 0 3px rgba(34,197,94,.16) !important; }
+    .timer-dot-live{
+      background:#22c55e !important;
+      box-shadow:0 0 0 3px rgba(34,197,94,.16) !important;
+    }
+
     .team-logo{ width:30px;height:30px; display:flex;align-items:center;justify-content:center; flex:0 0 auto; }
     .team-logo img{ width:100%; height:100%; object-fit:contain; display:block; filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)); }
     .vs{ font-weight:800; font-size:12px; color: rgba(255,255,255,.68); letter-spacing:.02em; }
     .comp-wrap{ width:26px;height:26px; display:flex;align-items:center;justify-content:center; flex:0 0 auto; }
     .comp-wrap img{ width:100%; height:100%; object-fit:contain; filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)); }
+
     .match-title{ font-size:15px; font-weight:500; line-height:1.15; color: rgba(255,255,255,.92); }
     .match-sub{ font-size:12px; font-weight:600; color: rgba(255,255,255,.70); line-height:1.25; }
+
     .watch-pill{
       border-radius:999px;
       border:1px solid rgba(255,255,255,.14);
@@ -265,6 +256,7 @@
       .match-title{ font-size:14px; }
       .watch-pill{ font-size:12px; padding:.40rem .62rem; }
       .gate-title{ font-size: 40px; }
+      .mid-banner{ border-radius: 18px; }
     }
   </style>
 </head>
@@ -300,20 +292,19 @@
       </svg>
     </button>
 
-    <!-- ✅ LOGO rectangle (banner) -->
-    <a href="/" class="nav-logo" aria-label="IMFTX+">
-      <img src="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500" alt="IMFTX+">
-    </a>
+    <!-- ✅ IMFTX+ visible TEL + PC, en blanc, comme dab -->
+    <button id="nav-pfp" type="button" class="h-11 flex items-center gap-1">
+      <div class="text-3xl font-extrabold tracking-tight text-white">IMFTX+</div>
+    </button>
 
     <div class="h-11 flex items-center gap-2 md:gap-4 text-xl">
       <div class="relative flex group">
-        <!-- Mobile -->
         <a href="/shop"
            class="md:hidden h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
            aria-label="IPTV">
           <span class="text-sm font-extrabold tracking-wide">IPTV</span>
         </a>
-        <!-- Desktop -->
+
         <a href="/shop"
            class="hidden md:flex w-auto h-11 px-3 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200">
           <span class="text-sm font-semibold">OBTENEZ UN IPTV À PARTIR DE 9,99€</span>
@@ -332,7 +323,7 @@
          class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-zinc-300 dark:ring-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-700 active:scale-95 transition-all duration-200"
          aria-label="Discord">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006-.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04.106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084-.027 a19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
+          <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04.106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084-.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157 1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
         </svg>
       </a>
 
@@ -358,36 +349,20 @@
   </div>
 </nav>
 
-<!-- SIDEBAR -->
-<aside id="sidebar" class="fixed top-0 left-0 h-screen w-60 bg-white dark:bg-zinc-950 p-6 flex flex-col justify-between border-r border-zinc-800 z-20 transform -translate-x-full transition-transform duration-300 ease-in-out">
-  <div>
-    <div class="h-11 flex justify-center gap-1">
-      <div class="text-2xl font-extrabold">IMFTX+</div>
-    </div>
-
-    <div class="w-full mt-8">
-      <a id="side-btn-telegram" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Telegram</a>
-      <a id="side-btn-discord" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">Discord</a>
-      <a id="side-btn-twitter" href="#" target="_blank" class="block mt-4 px-4 py-2 rounded-lg ring-1 dark:ring-0 ring-zinc-700 dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">X</a>
+<!-- ✅ BANNIÈRE (logo rectangle) -->
+<div class="my_container max-w-screen-2xl mx-auto w-full flex flex-col md:px-24 px-5 transition-all duration-300 ease-out">
+  <div class="mid-wrap">
+    <div class="mid-banner">
+      <img src="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500" alt="IMFTX+ Banner">
     </div>
   </div>
-
-  <div class="text-center text-sm text-zinc-500">Made with IMFTX (LKA)</div>
-</aside>
+</div>
 
 <!-- CONTENT -->
 <div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col md:px-24 px-5 transition-all duration-300 ease-out">
-
-  <!-- ✅ MILIEU = GIF FULL LARGE -->
-  <div class="mid-wrap">
-    <div class="mid-banner mid-overlay">
-      <img src="https://share.creavite.co/69945c72e4a21b3f8b000816.gif" alt="IMFTX+">
-    </div>
-  </div>
-
   <div class="w-full flex flex-col gap-12 mt-6 pb-10">
 
-    <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full" id="todaySection">
+    <section class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm dark:shadow-none w-full">
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
           <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)]"></div>
@@ -434,23 +409,6 @@
   if (!localStorage.getItem(GATE_KEY)) showGate();
   gateSkip?.addEventListener("click", hideGate);
 
-  // -------- Sidebar toggle --------
-  const burgerBtn = document.getElementById('burgerBtn');
-  const sidebar = document.getElementById('sidebar');
-  function openSidebar(){ sidebar.classList.remove('-translate-x-full'); }
-  function closeSidebar(){ sidebar.classList.add('-translate-x-full'); }
-  burgerBtn?.addEventListener('click', () => {
-    const isClosed = sidebar.classList.contains('-translate-x-full');
-    isClosed ? openSidebar() : closeSidebar();
-  });
-  document.addEventListener('click', (e) => {
-    if (!sidebar) return;
-    const isOpen = !sidebar.classList.contains('-translate-x-full');
-    if (!isOpen) return;
-    if (e.target.closest('#sidebar') || e.target.closest('#burgerBtn')) return;
-    closeSidebar();
-  });
-
   // -------- Theme toggle --------
   const toggle = document.getElementById('theme-toggle');
   function setTheme(mode){
@@ -468,33 +426,6 @@
   });
 
   // ====== MATCHES ======
-  const MATCHES = [
-    {
-      title: "Bastia - Troyes", time: "20:45",
-      banner: "https://empire-sport.fit/upload/events/qesrkcawycmn2skr0froyfrcunujz0.jpg",
-      aLogo: "https://empire-sport.fit/upload/teams/xoyo0hcscbyllqdgppsksu8mcy4frb.png",
-      bLogo: "https://empire-sport.fit/upload/teams/rsxaqgwzzuzmni6bnhn476tferjsfp.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png",
-      href: "bastia-troyes.html"
-    },
-    {
-      title: "Cagliari - Lecce", time: "20:45",
-      banner: "https://empire-sport.fit/upload/events/9sevu9jjcvmvi05e7qeupojzit8wqw.jpg",
-      aLogo: "https://empire-sport.fit/upload/teams/jnqrhgcn4c0i5xgbggjexuwodium8g.png",
-      bLogo: "https://empire-sport.fit/upload/teams/vy6zoxxejgnc4yesfiuic45rndpgne.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png",
-      href: "cagliari-lecce.html"
-    },
-    {
-      title: "Girona - Barcelona", time: "21:00",
-      banner: "https://empire-sport.fit/upload/teambanks/kmuysams1cj3ddqzeqlp1k5nwfqxaf.png",
-      aLogo: "https://empire-sport.fit/upload/teams/reaapubdusaguk2owtsaixng0838kq.png",
-      bLogo: "https://empire-sport.fit/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-      href: "girona-barcelona.html"
-    }
-  ];
-
   const MATCHES_TOMORROW = [
     {
       title: "Galatasaray - Juventus", time: "18:45",
@@ -561,16 +492,6 @@
   }
 
   function cardHTML(m, idx, dayLabel){
-    const teamsRow = m.noTeams ? `
-      <div class="flex items-center gap-2" aria-hidden="true" style="height:30px"></div>
-    ` : `
-      <div class="flex items-center gap-2">
-        <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
-        <span class="vs">VS</span>
-        <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
-      </div>
-    `;
-
     const cleanID = (m.href || `match-${idx}`).replace(".html","");
 
     return `
@@ -600,7 +521,11 @@
           <div class="absolute inset-x-0 bottom-0 p-4">
             <div class="flex items-end justify-between gap-4">
               <div class="min-w-0 max-w-[72%]">
-                ${teamsRow}
+                <div class="flex items-center gap-2">
+                  <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
+                  <span class="vs">VS</span>
+                  <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
+                </div>
 
                 <div class="mt-2 flex items-center gap-2">
                   <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
@@ -626,11 +551,11 @@
     `;
   }
 
-  // ✅ tu avais demandé: "matchs de demain -> aujourd'hui"
   function render(){
     const todayEl = document.getElementById('stream-list-principal');
     const tomEl   = document.getElementById('stream-list-bk');
 
+    // ✅ matchs de demain -> aujourd'hui
     if(todayEl) todayEl.innerHTML = MATCHES_TOMORROW.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
     if(tomEl) tomEl.innerHTML = '';
   }
@@ -638,41 +563,33 @@
   function tick(){
     const now = Date.now();
 
-    function tickList(list, baseIdx){
-      list.forEach((m, localIdx) => {
-        const idx = baseIdx + localIdx;
-        const kickoff = getNextKickoff(m.time).getTime();
-        const endLive = kickoff + LIVE_WINDOW_MS;
+    MATCHES_TOMORROW.forEach((m, idx) => {
+      const kickoff = getNextKickoff(m.time).getTime();
+      const endLive = kickoff + LIVE_WINDOW_MS;
 
-        const timerEl = document.querySelector(`[data-timer="${idx}"]`);
-        const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
-        const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
+      const timerEl = document.querySelector(`[data-timer="${idx}"]`);
+      const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
+      const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
+      if(!timerEl || !pillEl || !dotEl) return;
 
-        if(!timerEl || !pillEl || !dotEl) return;
-
-        if (now < kickoff) {
-          const diff = kickoff - now;
-          timerEl.textContent = formatRemaining(diff);
-          pillEl.classList.remove('timer-live');
-          timerEl.classList.remove('timer-live');
-          dotEl.classList.remove('timer-dot-live');
-        } else if (now >= kickoff && now <= endLive) {
-          timerEl.textContent = "En Cours";
-          pillEl.classList.add('timer-live');
-          timerEl.classList.add('timer-live');
-          dotEl.classList.add('timer-dot-live');
-        } else {
-          const next = getNextKickoff(m.time).getTime();
-          const diff = next - now;
-          timerEl.textContent = formatRemaining(diff);
-          pillEl.classList.remove('timer-live');
-          timerEl.classList.remove('timer-live');
-          dotEl.classList.remove('timer-dot-live');
-        }
-      });
-    }
-
-    tickList(MATCHES_TOMORROW, 0);
+      if (now < kickoff) {
+        timerEl.textContent = formatRemaining(kickoff - now);
+        pillEl.classList.remove('timer-live');
+        timerEl.classList.remove('timer-live');
+        dotEl.classList.remove('timer-dot-live');
+      } else if (now >= kickoff && now <= endLive) {
+        timerEl.textContent = "En Cours";
+        pillEl.classList.add('timer-live');
+        timerEl.classList.add('timer-live');
+        dotEl.classList.add('timer-dot-live');
+      } else {
+        const next = getNextKickoff(m.time).getTime();
+        timerEl.textContent = formatRemaining(next - now);
+        pillEl.classList.remove('timer-live');
+        timerEl.classList.remove('timer-live');
+        dotEl.classList.remove('timer-dot-live');
+      }
+    });
   }
 
   document.getElementById('refreshBtn')?.addEventListener('click', () => {
@@ -690,4 +607,3 @@
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
-
