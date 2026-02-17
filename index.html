@@ -587,8 +587,11 @@ function render(){
   const todayEl = document.getElementById('stream-list-principal');
   const tomEl   = document.getElementById('stream-list-bk');
 
-  if(todayEl) todayEl.innerHTML = MATCHES.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
-  if(tomEl) tomEl.innerHTML = MATCHES_TOMORROW.map((m,i) => cardHTML(m, i + 100, "Demain")).join('');
+  // ✅ AUJOURD'HUI = matchs de demain
+  if(todayEl) todayEl.innerHTML = MATCHES_TOMORROW.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
+
+  // ✅ DEMAIN = vide (ou tu peux laisser un message si tu veux plus tard)
+  if(tomEl) tomEl.innerHTML = '';
 }
 
 function tick(){
@@ -647,4 +650,5 @@ setInterval(tick, 1000);
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
+
 
