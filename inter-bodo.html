@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Lille - Brest</title>
+  <title>IMFTX+ — Club Brugge - Atlético Madrid</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -15,45 +15,34 @@
       font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:#fff;
       overflow-x:hidden;
+
+      /* ✅ Fond demandé */
       background:
-        radial-gradient(1200px 500px at 20% -10%, rgba(255,255,255,.08), transparent 60%),
-        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
-        linear-gradient(135deg, #1a1c20 0%, #121318 45%, #0b0c10 100%);
+        linear-gradient(135deg, rgba(10,10,12,.92) 0%, rgba(10,10,12,.88) 40%, rgba(10,10,12,.92) 100%),
+        url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg") center/cover no-repeat fixed;
     }
 
     .glass{
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
       box-shadow: 0 30px 120px rgba(0,0,0,.75);
       backdrop-filter: blur(14px);
     }
 
-    .player-box{
-      border-radius:20px;
-      overflow:hidden;
-      position:relative;
-    }
+    .player-box{ border-radius:20px; overflow:hidden; position:relative; }
     iframe{ width:100%; height:100%; border:0; background:#000; display:block; }
 
     .cover{
-      position:absolute;
-      inset:0;
-      z-index:15;
-      cursor:pointer;
+      position:absolute; inset:0; z-index:15; cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
-        url("https://empire-sport.fit/upload/events/p9wujrotqomzlfttlny0rkikvldhkc.jpg") center/cover no-repeat;
+        linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.80) 100%),
+        url("https://empire-sport.fit/upload/events/pbihoj4wm2gyww3vxfa6ykuemluinu.jpg") center/cover no-repeat;
     }
 
     .cover-top{
-      position:absolute;
-      top:16px;
-      left:16px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:16px;
+      position:absolute; top:16px; left:16px;
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px; border-radius:16px;
       background:rgba(0,0,0,.45);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(14px);
@@ -66,46 +55,32 @@
     .vs{ font-weight:900; font-size:14px; opacity:.9; }
 
     .cover-strip{
-      position:absolute;
-      left:16px;
-      right:16px;
-      bottom:16px;
-      height:80px;
-      border-radius:18px;
+      position:absolute; left:16px; right:16px; bottom:16px;
+      height:80px; border-radius:18px;
       background:rgba(0,0,0,.45);
       border:1px solid rgba(255,255,255,.12);
       backdrop-filter: blur(16px);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       padding:0 18px;
     }
     .strip-title{ font-size:16px; font-weight:900; line-height:1; }
     .strip-sub{ font-size:14px; opacity:.85; font-weight:600; font-style:italic; margin-top:4px; line-height:1.1; }
     .strip-play{
-      width:46px;height:46px;
-      border-radius:999px;
+      width:46px;height:46px; border-radius:999px;
       border:1px solid rgba(255,255,255,.18);
-      display:grid;
-      place-items:center;
+      display:grid; place-items:center;
       background:rgba(255,255,255,.12);
       transition:.2s;
     }
     .strip-play:hover{ transform:scale(1.06); background:rgba(255,255,255,.16); }
 
     .pill{
-      position:absolute;
-      top:16px;
-      right:16px;
-      padding:7px 12px;
-      border-radius:999px;
+      position:absolute; top:16px; right:16px;
+      padding:7px 12px; border-radius:999px;
       background:rgba(0,0,0,.55);
       border:1px solid rgba(255,255,255,.12);
-      font-weight:900;
-      font-size:12px;
-      display:flex;
-      align-items:center;
-      gap:8px;
+      font-weight:900; font-size:12px;
+      display:flex; align-items:center; gap:8px;
       backdrop-filter: blur(14px);
     }
     .dot{
@@ -113,19 +88,9 @@
       box-shadow:0 0 0 4px rgba(245,158,11,.12);
     }
 
-    .source-btn{
-      height:42px;
-      border-radius:12px;
-      font-weight:900;
-      font-size:13px;
-      transition:.2s;
-    }
+    .source-btn{ height:42px; border-radius:12px; font-weight:900; font-size:13px; transition:.2s; }
     .source-btn.active{ background:#fff; color:#000; }
-    .source-btn.inactive{
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.08);
-      color:#fff;
-    }
+    .source-btn.inactive{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:#fff; }
 
     .watch-bar{
       border-radius:16px;
@@ -142,30 +107,22 @@
     .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
 
-    .chat-box{
-      border-radius:20px;
-      overflow:hidden;
-      min-height:520px;
-    }
+    .chat-box{ border-radius:20px; overflow:hidden; min-height:520px; }
     .chat-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       padding:12px 14px;
-      border-bottom:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.10);
     }
     .chat-head .title{ font-weight:900; }
     .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }
 
-    @media (max-width: 1024px){
-      .chat-box{ min-height:420px; }
-    }
+    @media (max-width: 1024px){ .chat-box{ min-height:420px; } }
   </style>
 </head>
 
 <body>
 
-  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/5">
+  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/10">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
       <a href="index.html"
@@ -182,22 +139,22 @@
       <div>
         <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
-            <div class="pill"><span class="dot"></span>19h00</div>
+            <div class="pill"><span class="dot"></span>21h00</div>
 
             <div class="cover-top">
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/8cjgq2dnsdbrdb1bfdfor9qrqp3o1f.png"
-                   alt="Lille (LOSC)">
+                   src="https://empire-sport.fit/upload/teams/2czopj7ezzm3epryc2ddg3xegzi6oa.png"
+                   alt="Club Brugge">
               <span class="vs">VS</span>
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/os8aignwizzyij0fofayii3qpxdvjh.png"
-                   alt="Brest">
+                   src="https://empire-sport.fit/upload/teams/smp4oeizppz2hw9fbmb9dznhohcwly.png"
+                   alt="Atlético Madrid">
             </div>
 
             <div class="cover-strip">
               <div>
                 <div class="strip-title">Regarder Gratuitement</div>
-                <div class="strip-sub">Lille<br>Brest</div>
+                <div class="strip-sub">Club Brugge<br>Atlético Madrid</div>
               </div>
               <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
@@ -220,7 +177,7 @@
                 </svg>
               </p>
             </div>
-            <span data-viewer-counter="losc-brest" id="counterMatch1"
+            <span data-viewer-counter="brugge-atletico" id="counterMatch1"
                   style="color:#F54927; font-family:Arial, Helvetica, sans-serif; font-weight:bold;"></span>
           </div>
         </div>
@@ -228,15 +185,15 @@
         <!-- VOUS REGARDEZ -->
         <div class="mt-5 watch-bar glass">
           <div class="watch-left">
-            <img src="https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="Compétition">
+            <img src="https://empire-sport.fit/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Compétition">
             <div class="watch-text">
               <div class="small">Vous regardez</div>
-              <div class="big">Lille - Brest</div>
-              <div class="small">Ligue 1 · 19h00</div>
+              <div class="big">Club Brugge - Atlético Madrid</div>
+              <div class="small">Compétition · 21h00</div>
             </div>
           </div>
           <img class="channel-logo"
-               src="https://empire-sport.fit/upload/chaines/dw3nqnkbiqo3k02dksv9dmt7sxawk8.png"
+               src="https://empire-sport.fit/upload/chaines/kanfbbzfcksnfvc5sbw5nnzv1zliki.png"
                alt="Chaîne">
         </div>
       </div>
@@ -264,10 +221,10 @@
   </main>
 
   <script>
-    // ✅ Mets tes liens OFFICIELS ici (sinon laisse "#")
+    // ✅ Mets tes liens ici (jw / embed)
     const SOURCES = {
-      1: "https://witv.team/player/playerjs/witv-player.php?id=7",
-      2: "https://spiderembed.top/embed/4463933/lille-brest/hd/1",
+      1: "#",
+      2: "#",
       3: "#"
     };
 
@@ -281,6 +238,7 @@
     function setActive(id){
       [1,2,3].forEach(n=>{
         const b = document.getElementById("btn"+n);
+        if(!b) return;
         b.className = (n===id) ? "source-btn active px-6" : "source-btn inactive px-6";
       });
     }
@@ -292,8 +250,9 @@
       setActive(id);
 
       const target = document.getElementById("videoTarget");
+      const url = SOURCES[id];
 
-      if(!SOURCES[id] || SOURCES[id] === "#"){
+      if(!url || url === "#"){
         target.innerHTML = `
           <div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
             Source indisponible
@@ -304,7 +263,7 @@
       target.innerHTML = `
         <iframe
           id="streamFrame"
-          src="${SOURCES[id]}"
+          src="${url}"
           allowfullscreen
           scrolling="no"
           frameborder="0"
