@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IMFTX+ — Rayo Vallecano - Atlético Madrid</title>
+  <title>IMFTX+ — Troyes - Pau Fc </title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -15,15 +15,16 @@
       font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:#fff;
       overflow-x:hidden;
+
+      /* ✅ Background demandé */
       background:
-        radial-gradient(1200px 500px at 20% -10%, rgba(255,255,255,.08), transparent 60%),
-        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
-        linear-gradient(135deg, #1a1c20 0%, #121318 45%, #0b0c10 100%);
+        linear-gradient(135deg, rgba(10,10,12,.92) 0%, rgba(10,10,12,.88) 40%, rgba(10,10,12,.92) 100%),
+        url("https://thumb.canalplus.pro/http/unsafe/1824x1026/filters:quality(80)/canalplus-cdn.canal-plus.io/p1/brand/11319020/canal-ouah_50009/STD169/myCANAL_EC_16x9_1920x108015--5Mv-LNsl") center/cover no-repeat fixed;
     }
 
     .glass{
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
       box-shadow: 0 30px 120px rgba(0,0,0,.75);
       backdrop-filter: blur(14px);
     }
@@ -34,8 +35,8 @@
     .cover{
       position:absolute; inset:0; z-index:15; cursor:pointer;
       background:
-        linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.75) 100%),
-        url("https://empire-sport.fit/upload/events/69lhuduif8sucwxliferfkjqaon2hf.jpg") center/cover no-repeat;
+        linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.80) 100%),
+        url("https://empire-sport.fit/upload/events/xe0ejkkjlfc7jvj4sm2zttaqjnvfpg.jpg") center/cover no-repeat;
     }
 
     .cover-top{
@@ -106,33 +107,22 @@
     .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .channel-logo{ width:92px; height:auto; object-fit:contain; filter: drop-shadow(0 6px 12px rgba(0,0,0,.75)); }
 
-    /* === CHAT SANS CADRE / SANS BARRE === */
-    .chat-raw{
-      width:100%;
-      min-height:520px;
-      height:100%;
-      border-radius:0;      /* pas d'arrondi */
-      overflow:hidden;
-      background:transparent;
+    .chat-box{ border-radius:20px; overflow:hidden; min-height:520px; }
+    .chat-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px;
+      border-bottom:1px solid rgba(255,255,255,.10);
     }
-    .chat-raw iframe{
-      width:100%;
-      height:100%;
-      min-height:520px;
-      border:0;
-      background:#000;
-      display:block;
-    }
+    .chat-head .title{ font-weight:900; }
+    .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }
 
-    @media (max-width: 1024px){
-      .chat-raw, .chat-raw iframe{ min-height:420px; }
-    }
+    @media (max-width: 1024px){ .chat-box{ min-height:420px; } }
   </style>
 </head>
 
 <body>
 
-  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/5">
+  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/10">
     <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
       <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
       <a href="index.html"
@@ -149,22 +139,22 @@
       <div>
         <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
-            <div class="pill"><span class="dot"></span>16h15</div>
+            <div class="pill"><span class="dot"></span>14h00</div>
 
             <div class="cover-top">
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/hi85r5xby90rwanywjwcxijxzq7svh.png"
-                   alt="Rayo Vallecano">
+                   src="https://empire-sport.fit/upload/teams/rsxaqgwzzuzmni6bnhn476tferjsfp.png"
+                   alt="Dortmund">
               <span class="vs">VS</span>
               <img class="team-logo"
-                   src="https://empire-sport.fit/upload/teams/smp4oeizppz2hw9fbmb9dznhohcwly.png"
-                   alt="Atlético Madrid">
+                   src="https://empire-sport.fit/upload/teams/81hel3yrxqrzyztytqsfto6jocwvmw.png"
+                   alt="Atalanta">
             </div>
 
             <div class="cover-strip">
               <div>
                 <div class="strip-title">Regarder Gratuitement</div>
-                <div class="strip-sub">Rayo Vallecano<br>Atlético Madrid</div>
+                <div class="strip-sub">Troyes<br>Pau Fc</div>
               </div>
               <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
@@ -176,7 +166,7 @@
         <!-- SOURCES -->
         <div class="mt-4 flex flex-wrap gap-3">
           <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
-          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2</button>
+          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2 (HD)</button>
           <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
 
           <div style="display:flex; flex-direction:row; align-items:center; gap:8px; margin-left:auto;">
@@ -187,7 +177,7 @@
                 </svg>
               </p>
             </div>
-            <span data-viewer-counter="rayo-atletico" id="counterMatch1"
+            <span data-viewer-counter="troyes-paufc" id="counterMatch1"
                   style="color:#F54927; font-family:Arial, Helvetica, sans-serif; font-weight:bold;"></span>
           </div>
         </div>
@@ -195,27 +185,37 @@
         <!-- VOUS REGARDEZ -->
         <div class="mt-5 watch-bar glass">
           <div class="watch-left">
-            <img src="https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png" alt="Compétition">
+            <img src="https://empire-sport.fit/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png" alt="Compétition">
             <div class="watch-text">
               <div class="small">Vous regardez</div>
-              <div class="big">Rayo Vallecano - Atlético Madrid</div>
-              <div class="small">La Liga · 16h15</div>
+              <div class="big">Troyes - Pau Fc</div>
+              <div class="small">Ligue 2 · 14h00</div>
             </div>
           </div>
           <img class="channel-logo"
-               src="https://empire-sport.fit/upload/chaines/7ntowv3ojzrii7lcnnwosme7mbcwno.png"
+               src="https://empire-sport.fit/upload/chaines/8rdidmr7uk3rpug7ffdtpw3htqadqr.png"
                alt="Chaîne">
         </div>
       </div>
 
-      <!-- CHAT (JUSTE L'IFRAME, SANS CADRE / SANS BARRE) -->
-      <div class="chat-raw">
-        <iframe
-          src="https://chat.streamfree.to/"
-          referrerpolicy="no-referrer-when-downgrade"
-          allow="fullscreen">
-        </iframe>
-      </div>
+      <!-- CHAT (Twitch comme avant) -->
+      <aside class="chat-box glass">
+        <div class="chat-head">
+          <div>
+            <div class="title">Chat en direct</div>
+            <div class="sub">Parler avec tout le respect !</div>
+          </div>
+          <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15"
+             href="https://www.twitch.tv/popout/drem0h/chat?popout="
+             target="_blank" rel="noreferrer">
+            Ouvrir
+          </a>
+        </div>
+
+        <div style="height: calc(100% - 54px); min-height: 520px;">
+          <iframe id="chatFrame" src=""></iframe>
+        </div>
+      </aside>
 
     </section>
   </main>
@@ -223,10 +223,17 @@
   <script>
     // ✅ Mets tes liens ici (jw / embed)
     const SOURCES = {
-      1: "https://spiderembed.top/embed/748382/rayo-vallecano-atletico-de-madrid/hd/1",
-      2: "https://spiderembed.top/embed/748382/rayo-vallecano-atletico-de-madrid/easy/2",
-      3: "https://sportlive.plus/soccer/1.php"
+      1: "",
+      2: "",
+      3: ""
     };
+
+    // TWITCH CHAT EMBED (parent auto)
+    (function(){
+      const parentDomain = window.location.hostname;
+      document.getElementById("chatFrame").src =
+        `https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;
+    })();
 
     function setActive(id){
       [1,2,3].forEach(n=>{
@@ -248,7 +255,7 @@
       if(!url || url === "#"){
         target.innerHTML = `
           <div class="w-full h-full grid place-items-center text-white/70 font-extrabold">
-            Source indisponible
+            Le match n'a pas encore débuté !
           </div>`;
         return;
       }
@@ -261,7 +268,9 @@
           scrolling="no"
           frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture"
-          referrerpolicy="no-referrer-when-downgrade">
+          referrerpolicy="no-referrer-when-downgrade"
+          sandbox="allow-forms banner-message allow-scripts allow-same-origin allow-presentation"
+        >
         </iframe>
       `;
     }
