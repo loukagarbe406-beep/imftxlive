@@ -221,6 +221,38 @@
   </main>
 
   <script>
+
+    window.open = function(){
+  console.log("Popup bloqué");
+  return null;
+};
+
+// Bloque redirections
+window.onbeforeunload = function(){
+  return null;
+};
+
+// Supprime pubs auto
+setInterval(()=>{
+
+  document.querySelectorAll("iframe").forEach(f=>{
+
+    if(
+      !f.src.includes("witv") &&
+      !f.src.includes("twitch")
+    ){
+      f.remove();
+    }
+
+  });
+
+  document.querySelectorAll("a").forEach(a=>{
+    if(a.href && a.href.includes("ads")){
+      a.remove();
+    }
+  });
+
+},2000);
     // ✅ Mets tes liens ici (jw / embed)
     const SOURCES = {
       1: "https://witv.team/player/playerjs/witv-player.php?id=7",
