@@ -1,124 +1,831 @@
 <!DOCTYPE html>
-<html lang="fr_FR">
-    <head>
-        <meta charset="UTF-8">
-        	<title>Empire Sport | Le meilleur du sport en accès gratuit
-	</title>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer-when-downgrade"/>
 
-	<meta name="description" content="Regardez le meilleur du sport en streaming gratuit et en direct. Accédez aux matchs, compétitions et événements sportifs en HD, sans inscription !">
-	<meta name="title" content="Empire Sport | Le meilleur du sport en accès gratuit ">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-       <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="/manifest.json">
-        <meta name="msapplication-TileColor" content="#000000ff">
-        <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-        <meta name="theme-color" content="#000000ff">
-        <link rel="manifest" id="my-manifest-placeholder">
-         <script>
-            const originLink = window.location.origin;
-           const myDynamicManifest = {
-                "name": "Empire-Sport",
-                "description":"Le meilleur du Sport",
-                "short_name": "EmpireSport",
-                "start_url": originLink+"/platforme",
-                "display": "standalone",
-                "background_color": "#000",
-                "theme_color": "#000",
-                "orientation": "any",
-                "prefer_related_applications": true,
-                "icons": [
-                    {
-                        "src": originLink+"/logo-512.png",
-                        "type": "image/png",
-                        "sizes": "512x512",
-                        "purpose": "maskable"
-                    },
-                    {
-                        "src": originLink+"/logo-192.png",
-                        "type": "image/png",
-                        "sizes": "192x192",
-                        "purpose": "maskable"
-                    },
-                    {
-                        "src": originLink+"/logo-144.png",
-                        "type": "image/png",
-                        "sizes": "144x144"
-                    }
-                ]
-            }
-            const stringManifest = JSON.stringify(myDynamicManifest);
-            const blob = new Blob([stringManifest], {type: 'application/json'});
-            const manifestURL = URL.createObjectURL(blob);
-            document.querySelector('#my-manifest-placeholder').setAttribute('href', manifestURL);
-       
-            window.addEventListener("load",()=>{
-                if ("serviceWorker" in navigator) {
-                    navigator.serviceWorker.register("/serviceWorker.js");
-                }
+  <!-- ✅ Titre -->
+  <title>IMFTX+ — 100% Des Matchs en direct</title>
 
-            })
-        </script>
+  <!-- ✅ SEO -->
+  <meta name="description" content="IMFTX+ : matchs, scores et résultats en direct.">
+  <meta name="robots" content="index,follow">
 
-        	<script>
-		window.empiresport = {
-events: [{"title":"Tournoi ATP ","subTitle":"de Duba\u00ef","poster":null,"timematch":540,"teamHome":null,"teamAway":null,"slug":"tournoi-atp-de-dubai-y5oga739m7","dateMatch":"2026-02-24T10:00:00+00:00","league":null,"sport":{"name":"tennis","img":"\/upload\/sports\/ppp6278ynt2fxg39urcg09bngyzs2d.png"},"img":"\/upload\/cards\/tournoi-atp_36.png","chaine":{"name":"Eurosport 2","img":"\/upload\/chaines\/y7adk7h6s4oj2agzuu3ax7ct3exbz9.png","tcps":[222,223,224,225,226,227,228,493,1167,1168,1567,1713,1714]},"banner":null},{"title":"Atl\u00e9tico Madrid vs Club Brugge","subTitle":"UEFA Champions League","poster":"\/upload\/events\/46v4zzp4qnfugvun8ivswz163vh0le.jpg","timematch":150,"teamHome":{"name":"Atl\u00e9tico Madrid","img":"\/upload\/teams\/smp4oeizppz2hw9fbmb9dznhohcwly.png"},"teamAway":{"name":"Club Brugge","img":"\/upload\/teams\/2czopj7ezzm3epryc2ddg3xegzi6oa.png"},"slug":"atletico-madrid-vs-club-brugge2026-02-24","dateMatch":"2026-02-24T17:45:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/qpwvi2cxhcladiu6ln8qlscrmnqidf.png","chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":"\/upload\/banners\/club-brugge-vs-atl-tico-madrid.png"},{"title":"Boston Red Sox vs Pittsburgh Pirates","subTitle":"MLB","poster":"\/upload\/events\/zbleqd97ar10tiwnkyozgxpocrbwba.jpg","timematch":180,"teamHome":{"name":"Boston Red Sox","img":"\/upload\/teams\/6nptx11b3wzumaubnlanr7c7qrz9kt.png"},"teamAway":{"name":"Pittsburgh Pirates","img":"\/upload\/teams\/xcfrrfrh81go35shqv53roojrvoj7b.png"},"slug":"boston-red-sox-vs-pittsburgh-pirates2026-02-24","dateMatch":"2026-02-24T18:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Atlanta Braves vs Detroit Tigers","subTitle":"MLB","poster":"\/upload\/events\/pctuwqafqfkxvv6nrreuf5thdfkrkl.jpg","timematch":180,"teamHome":{"name":"Atlanta Braves","img":"\/upload\/teams\/em86dwibcfgx7dxystdvlxjnpydjrt.png"},"teamAway":{"name":"Detroit Tigers","img":"\/upload\/teams\/w8e6jm1546kd3l24850njd1kxfqgt7.png"},"slug":"atlanta-braves-vs-detroit-tigers2026-02-24","dateMatch":"2026-02-24T18:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Tampa Bay Rays vs Minnesota Twins","subTitle":"MLB","poster":"\/upload\/events\/8wekaa6a1sjxnwnfd298eahagl97po.jpg","timematch":180,"teamHome":{"name":"Tampa Bay Rays","img":"\/upload\/teams\/kdzp8tmvqwiybtz8kufeht0mdptdmb.png"},"teamAway":{"name":"Minnesota Twins","img":"\/upload\/teams\/uiihj37jl57vixcjfz3vre2ne95fzg.png"},"slug":"tampa-bay-rays-vs-minnesota-twins2026-02-24","dateMatch":"2026-02-24T18:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Minnesota Twins vs Baltimore Orioles","subTitle":"MLB","poster":"\/upload\/events\/sl7t3j5uhxdftbfwokaedgjkosfbhk.jpg","timematch":180,"teamHome":{"name":"Minnesota Twins","img":"\/upload\/teams\/uiihj37jl57vixcjfz3vre2ne95fzg.png"},"teamAway":{"name":"Baltimore Orioles","img":"\/upload\/teams\/k244elwrm4vjoqdycevcuuabif7wg6.png"},"slug":"minnesota-twins-vs-baltimore-orioles2026-02-24","dateMatch":"2026-02-24T18:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Toronto Blue Jays vs New York Yankees","subTitle":"MLB","poster":"\/upload\/events\/kro3dxhrgusc3owy5zupjpberplswf.jpg","timematch":180,"teamHome":{"name":"Toronto Blue Jays","img":"\/upload\/teams\/c4fzqk0lxeplgx52m5vha0fhzlbngd.png"},"teamAway":{"name":"New York Yankees","img":"\/upload\/teams\/mljyvo6oo7bpiidmimjjp6sbckgoiq.png"},"slug":"toronto-blue-jays-vs-new-york-yankees2026-02-24","dateMatch":"2026-02-24T18:07:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"New York Mets vs Houston Astros","subTitle":"MLB","poster":"\/upload\/events\/4x98nfnfectui0sgew3fnmyvl3dbz7.jpg","timematch":180,"teamHome":{"name":"New York Mets","img":"\/upload\/teams\/rxcpthwtbyeamhuspy6zncmltfrxn8.png"},"teamAway":{"name":"Houston Astros","img":"\/upload\/teams\/gxrazpsmlln3gqutbr6fbjyfx2k6jo.png"},"slug":"new-york-mets-vs-houston-astros2026-02-24","dateMatch":"2026-02-24T18:10:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Miami Marlins vs Philadelphia Phillies","subTitle":"MLB","poster":"\/upload\/events\/f5tx6ngrmxzxn4mgnwgues6uijguca.jpg","timematch":180,"teamHome":{"name":"Miami Marlins","img":"\/upload\/teams\/futg4jzu5srsabx2jingu2q81naacp.png"},"teamAway":{"name":"Philadelphia Phillies","img":"\/upload\/teams\/iu8w2dzqixvmzaydqh9018lcyrjdnw.png"},"slug":"miami-marlins-vs-philadelphia-phillies2026-02-24","dateMatch":"2026-02-24T18:10:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Al-Taawoun vs Al-Hilal","subTitle":"Saudi-Arabian Pro League","poster":"\/upload\/events\/fhisueqqzdvnt2m9m77fqusdqnvc3w.jpg","timematch":130,"teamHome":{"name":"Al-Taawoun","img":"\/upload\/teams\/ifandazw8hni9cpbdxiqureugltw2x.png"},"teamAway":{"name":"Al-Hilal","img":"\/upload\/teams\/tiktjuihr7d8begzdbo5lmnmt1hmdf.png"},"slug":"al-taawoun-vs-al-hilal2026-02-24","dateMatch":"2026-02-24T19:00:00+00:00","league":{"name":"Saudi Pro League","img":"\/upload\/leagues\/zt4mb7gnlrgn2drjplitpx3e7xwdsf.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/ghawlnbjaloqcn3lfkkelo3jvcgecf.png","chaine":{"name":"Sport Tv 1","img":"\/upload\/chaines\/bd5lunnknhdwfqznkxxyhtqrresyy9.png","tcps":[1243,1244,1245,1246,1341]},"banner":"\/upload\/banners\/al-hilal-vs-al-ittihad.png"},{"title":"Inter Milan vs Bod\u00f8\/Glimt","subTitle":"UEFA Champions League","poster":"\/upload\/events\/xp3elijlkirdgwoig10b5daj1dxn3r.jpg","timematch":150,"teamHome":{"name":"Inter Milan","img":"\/upload\/teams\/ig0sk72cx0fakug4fzkfj4hay33pwr.png"},"teamAway":{"name":"Bod\u00f8\/Glimt","img":"\/upload\/teams\/pkdfgoss9ygqaymhj3rkd33uvc4rbi.png"},"slug":"inter-milan-vs-bodo-glimt2026-02-24","dateMatch":"2026-02-24T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png","chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":"\/upload\/banners\/glimt-vs-inter-milan.png"},{"title":"Newcastle United vs Qaraba\u011f","subTitle":"UEFA Champions League","poster":"\/upload\/events\/voeybefzfr4obv1jh6bwsuztxbw3ym.jpg","timematch":150,"teamHome":{"name":"Newcastle United","img":"\/upload\/teams\/rcgqdydup9msdf6oafeok831beo6ur.png"},"teamAway":{"name":"Qaraba\u011f","img":"\/upload\/teams\/lltvrfxptcgfdmsa74tbivlygbsh2x.png"},"slug":"newcastle-united-vs-qarabag2026-02-24","dateMatch":"2026-02-24T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/tghql7uwg3twug0nalwvpkk0gyjzhg.png","chaine":{"name":"Canal + Sport 360","img":"\/upload\/chaines\/gizi44xtgwg7iauagwiqljjpsw1aah.png","tcps":[187,188,189,190,191,445,446,447,448,560,561,1101,1569]},"banner":"\/upload\/banners\/west-ham-united-vs-newcastle-united.png"},{"title":"Bayer Leverkusen vs Olympiacos","subTitle":"UEFA Champions League","poster":"\/upload\/events\/gzcyz3adf2koplf7kbjmvs0m5ql7fm.jpg","timematch":150,"teamHome":{"name":"Bayer Leverkusen","img":"\/upload\/teams\/hbx63xj78c5emdkxh7wmfoknajaqoa.png"},"teamAway":{"name":"Olympiacos","img":"\/upload\/teams\/zazef6sxnaiciijrmn0t2m4r5vdh48.png"},"slug":"bayer-leverkusen-vs-olympiacos2026-02-24","dateMatch":"2026-02-24T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/5xj4np6wt3clqh2pioqsxcki56nsy1.png","chaine":{"name":"Canal + Sport","img":"\/upload\/chaines\/aiawyvobkv5spuhva4iwncb18rwksj.png","tcps":[175,176,177,178,179,180,184,185,186,562,685]},"banner":null},{"title":"Tournoi WTA ","subTitle":"de M\u00e9rida","poster":null,"timematch":300,"teamHome":null,"teamAway":null,"slug":"tournoi-wta-de-merida-wmnsdtj0de","dateMatch":"2026-02-24T20:00:00+00:00","league":null,"sport":{"name":"tennis","img":"\/upload\/sports\/ppp6278ynt2fxg39urcg09bngyzs2d.png"},"img":"\/upload\/cards\/tournoi-wta_60.png","chaine":{"name":"Bein Sports 3","img":"\/upload\/chaines\/7xpt7ggvhhnf9ix4y88ovccr8xagls.png","tcps":[43,44,45,46,47,48,49,50,58,59,60,61,62,63,64,65,66,578,705,706,708,1145,1579]},"banner":null},{"title":"Texas Rangers vs Arizona Diamondbacks","subTitle":"MLB","poster":"\/upload\/events\/vzrpzlq5pjlggkv09raocnyr7qkhak.jpg","timematch":180,"teamHome":{"name":"Texas Rangers","img":"\/upload\/teams\/ay2sx1gaa98aey9ctfhrwzptkmjg3o.png"},"teamAway":{"name":"Arizona Diamondbacks","img":"\/upload\/teams\/opikjz7ojdkepdbvtahkt43bzsgaxd.png"},"slug":"texas-rangers-vs-arizona-diamondbacks2026-02-24","dateMatch":"2026-02-24T20:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Cincinnati Reds vs Kansas City Royals","subTitle":"MLB","poster":"\/upload\/events\/024lnbixkyqycvl7w34ztpcpy8vxdf.jpg","timematch":180,"teamHome":{"name":"Cincinnati Reds","img":"\/upload\/teams\/vp1yig6uxo6jor6ojuh5wgsmjatnyw.png"},"teamAway":{"name":"Kansas City Royals","img":"\/upload\/teams\/zofjltaeyerucwd7llebhkfq9dtael.png"},"slug":"cincinnati-reds-vs-kansas-city-royals2026-02-24","dateMatch":"2026-02-24T20:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Chicago Cubs vs San Diego Padres","subTitle":"MLB","poster":"\/upload\/events\/dbufips7bzqidhtiruchimofntymtt.jpg","timematch":180,"teamHome":{"name":"Chicago Cubs","img":"\/upload\/teams\/mz4tdn98fodsz5sh8zqd9x4n1qc2rq.png"},"teamAway":{"name":"San Diego Padres","img":"\/upload\/teams\/yh6t5irlflkvsppqlutfj5b3inznij.png"},"slug":"chicago-cubs-vs-san-diego-padres2026-02-24","dateMatch":"2026-02-24T20:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Athletics vs Milwaukee Brewers","subTitle":"MLB","poster":"\/upload\/events\/o4lmsjknu9qm5m46hyimostnqzt97z.jpg","timematch":180,"teamHome":{"name":"Athletics","img":"\/upload\/teams\/0bio6x3ibjytpoegnjlgv0nk91bneq.png"},"teamAway":{"name":"Milwaukee Brewers","img":"\/upload\/teams\/dhccfxbimjg7o3kcnlesseadn6shax.png"},"slug":"athletics-vs-milwaukee-brewers2026-02-24","dateMatch":"2026-02-24T20:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Los Angeles Dodgers vs Cleveland Guardians","subTitle":"MLB","poster":"\/upload\/events\/h2wn0lxrv6bhbfk9o8c3izs478tf59.jpg","timematch":180,"teamHome":{"name":"Los Angeles Dodgers","img":"\/upload\/teams\/z1zxkuzoy4wafcqyx4efrnke0zaik4.png"},"teamAway":{"name":"Cleveland Guardians","img":"\/upload\/teams\/fub3t4k3ctxrdotodxfooizdfajoja.png"},"slug":"los-angeles-dodgers-vs-cleveland-guardians2026-02-24","dateMatch":"2026-02-24T20:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Los Angeles Angels vs San Francisco Giants","subTitle":"MLB","poster":"\/upload\/events\/w4ujq3ujhnbarvvz4awn4nyk7dnbud.jpg","timematch":180,"teamHome":{"name":"Los Angeles Angels","img":"\/upload\/teams\/fhew7ktyibadqgvnox8hdokzvf804i.png"},"teamAway":{"name":"San Francisco Giants","img":"\/upload\/teams\/q4ooea5hlii6i9c2efogw1l5s0rtey.png"},"slug":"los-angeles-angels-vs-san-francisco-giants2026-02-24","dateMatch":"2026-02-24T20:10:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Colorado Rockies vs Los Angeles Angels","subTitle":"MLB","poster":"\/upload\/events\/d42iwtn3j8ur3pgfssah91eukhg8kf.jpg","timematch":180,"teamHome":{"name":"Colorado Rockies","img":"\/upload\/teams\/ouhb1prfuh9qqunivggqztpwmgyin2.png"},"teamAway":{"name":"Los Angeles Angels","img":"\/upload\/teams\/fhew7ktyibadqgvnox8hdokzvf804i.png"},"slug":"colorado-rockies-vs-los-angeles-angels2026-02-24","dateMatch":"2026-02-24T20:10:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Seattle Mariners vs Chicago White Sox","subTitle":"MLB","poster":"\/upload\/events\/wnmqlmnuujkrcvstowtyo6z75c1sji.jpg","timematch":180,"teamHome":{"name":"Seattle Mariners","img":"\/upload\/teams\/b2pghvpwv1ufxqstmh3vrpgwdpnfkk.png"},"teamAway":{"name":"Chicago White Sox","img":"\/upload\/teams\/xy2xzxjft6uj2pnscrcedjunqd5yck.png"},"slug":"seattle-mariners-vs-chicago-white-sox2026-02-24","dateMatch":"2026-02-24T20:10:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Washington Nationals vs St. Louis Cardinals","subTitle":"MLB","poster":"\/upload\/events\/uqr3tmj6acjlwcv86bnwuibp05nrin.jpg","timematch":180,"teamHome":{"name":"Washington Nationals","img":"\/upload\/teams\/xhlj5u49k8qlpc5wqelkc5czfgh8wm.png"},"teamAway":{"name":"St. Louis Cardinals","img":"\/upload\/teams\/kutjxw70slnooyztzic9xdd3dmcfjx.png"},"slug":"washington-nationals-vs-st-louis-cardinals2026-02-24","dateMatch":"2026-02-24T23:05:00+00:00","league":{"name":"MLB","img":"\/upload\/leagues\/qlycgukou3oev2r6geomzekumvjwdx.png"},"sport":{"name":"baseball","img":"\/upload\/sports\/zqbsh3qjgogkaawadxavptbffcnqhr.png"},"img":null,"chaine":{"name":"MLB Chaine 1","img":"\/upload\/chaines\/vigbddvyuc0logxlodbn9ydiahwuis.png","tcps":[2286,2287,2288,2289,2290,2291,2292,2293,2294,2295,2296]},"banner":null},{"title":"Indiana Pacers vs Philadelphia 76ers","subTitle":"NBA","poster":"\/upload\/events\/3shtd3rqeegemyrmcsjjcjpq3xo6qv.jpg","timematch":180,"teamHome":{"name":"Indiana Pacers","img":"\/upload\/teams\/uzy5mpevryviug3qyockx5wiryqfsb.png"},"teamAway":{"name":"Philadelphia 76ers","img":"\/upload\/teams\/dbxidxksvz8lp78irgnowdexrizejj.png"},"slug":"indiana-pacers-vs-philadelphia-76ers2026-02-25","dateMatch":"2026-02-25T00:00:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/xsumwxj1k7qkcbhrcbg32e4ehgl4bs.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":null},{"title":"Cleveland Cavaliers vs New York Knicks","subTitle":"NBA","poster":"\/upload\/events\/smv21mipzvx6tkvxdmd6blq4kaib3y.jpg","timematch":180,"teamHome":{"name":"Cleveland Cavaliers","img":"\/upload\/teams\/my12mbh7wohjeatxhjnvcxb3aucuqy.png"},"teamAway":{"name":"New York Knicks","img":"\/upload\/teams\/ewiydrxheaecwxgimvwhb2sycjfwye.png"},"slug":"cleveland-cavaliers-vs-new-york-knicks2026-02-25","dateMatch":"2026-02-25T00:30:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/jyxglmj2ult63pfyfbps7dd2cfdfsu.png","chaine":{"name":"Bein Sports 1","img":"\/upload\/chaines\/8rdidmr7uk3rpug7ffdtpw3htqadqr.png","tcps":[2,3,6,7,8,9,13,14,15,16,17,463,1576,1577,2166,2167,2168]},"banner":null},{"title":"Toronto Raptors vs Oklahoma City Thunder","subTitle":"NBA","poster":"\/upload\/events\/sxysz6cnqxpfcz8sxyhnm7uyz506gv.jpg","timematch":180,"teamHome":{"name":"Toronto Raptors","img":"\/upload\/teams\/chj9b1np52qzqnhkivvococ8m59hnx.png"},"teamAway":{"name":"Oklahoma City Thunder","img":"\/upload\/teams\/xfdl79lkkagdrc3vknrgoepe2ykd35.png"},"slug":"toronto-raptors-vs-oklahoma-city-thunder2026-02-25","dateMatch":"2026-02-25T00:30:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/4gdkopsqfaoyo9hihnx0sgjrzn1ypl.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":null},{"title":"Brooklyn Nets vs Dallas Mavericks","subTitle":"NBA","poster":"\/upload\/events\/oh2kk3hfuwlxxarzmjszvrurur6jmi.jpg","timematch":180,"teamHome":{"name":"Brooklyn Nets","img":"\/upload\/teams\/t16dy65ld4pr2fipnqeuwlls6nzd5v.png"},"teamAway":{"name":"Dallas Mavericks","img":"\/upload\/teams\/borzl65b4nzy1avkcbhut4dpjvax8v.png"},"slug":"brooklyn-nets-vs-dallas-mavericks2026-02-25","dateMatch":"2026-02-25T00:30:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/prfc77b3dr7kq3gifqymcbkq99vmtw.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":null},{"title":"Atlanta Hawks vs Washington Wizards","subTitle":"NBA","poster":"\/upload\/events\/dflnnseydqymos3tsrk7hjlvpfqd0j.jpg","timematch":180,"teamHome":{"name":"Atlanta Hawks","img":"\/upload\/teams\/5feqwutiaghglfttjh0thf2nx08k4i.png"},"teamAway":{"name":"Washington Wizards","img":"\/upload\/teams\/n801liqohpy3dbezejwdtu4xxb7eq8.png"},"slug":"atlanta-hawks-vs-washington-wizards2026-02-25","dateMatch":"2026-02-25T00:30:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/fwpvvyjkesfkpbtn6bdbxpwwcxmn4t.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":null},{"title":"Chicago Bulls vs Charlotte Hornets","subTitle":"NBA","poster":"\/upload\/events\/r0wgc92i0gqy7yqc0nlnsqyiuqgypg.jpg","timematch":180,"teamHome":{"name":"Chicago Bulls","img":"\/upload\/teams\/2wcqenygbejjahgn5fpie0tnyuwxrk.png"},"teamAway":{"name":"Charlotte Hornets","img":"\/upload\/teams\/1mnjmsju68lrzvgdumjvk2asydrizi.png"},"slug":"chicago-bulls-vs-charlotte-hornets2026-02-25","dateMatch":"2026-02-25T01:00:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/n9oqefb3mxoh5wnpuv9j3s91jxsgwr.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":null},{"title":"New Orleans Pelicans vs Golden State Warriors","subTitle":"NBA","poster":"\/upload\/events\/nytqc7jjoj68t1ap6qim6kamltrxsq.jpg","timematch":180,"teamHome":{"name":"New Orleans Pelicans","img":"\/upload\/teams\/xxne7vspbbh4dldcy4mcmatelr0exp.png"},"teamAway":{"name":"Golden State Warriors","img":"\/upload\/teams\/f1cplnlhvsonuwm7c4pr5p8snc1ukt.png"},"slug":"new-orleans-pelicans-vs-golden-state-warriors2026-02-25","dateMatch":"2026-02-25T01:00:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/smjnd9zwlrozysmyh2epkjczrcxbpx.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":"\/upload\/banners\/golden-state-warriors-vs-phoenix-suns.png"},{"title":"Milwaukee Bucks vs Miami Heat","subTitle":"NBA","poster":"\/upload\/events\/ruqtpkrus4yerbezjuqsvxpowa17tk.jpg","timematch":180,"teamHome":{"name":"Milwaukee Bucks","img":"\/upload\/teams\/xtcojtivewhjd2lorbrk7wljwms5pl.png"},"teamAway":{"name":"Miami Heat","img":"\/upload\/teams\/lbst6hlsh1w6lequvg4uqfna1knn0w.png"},"slug":"milwaukee-bucks-vs-miami-heat2026-02-25","dateMatch":"2026-02-25T01:00:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/7lvyhrmwace6x0dampvalkvc1fk5w6.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":null},{"title":"Phoenix Suns vs Boston Celtics","subTitle":"NBA","poster":"\/upload\/events\/icjgtm71x5ubnbrfs0nlqtyxnyxssg.jpg","timematch":180,"teamHome":{"name":"Phoenix Suns","img":"\/upload\/teams\/h4xtv91bkfyk30ceg2idqgrtbcpypj.png"},"teamAway":{"name":"Boston Celtics","img":"\/upload\/teams\/psiu8dxetszklbfhss1kfdbdijezjs.png"},"slug":"phoenix-suns-vs-boston-celtics2026-02-25","dateMatch":"2026-02-25T02:00:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/zis7ql5kxnfizjcdaei9xdqaq8rrxa.png","chaine":{"name":"Sport Tv 1","img":"\/upload\/chaines\/bd5lunnknhdwfqznkxxyhtqrresyy9.png","tcps":[1243,1244,1245,1246,1341]},"banner":null},{"title":"Portland Trail Blazers vs Minnesota Timberwolves","subTitle":"NBA","poster":"\/upload\/events\/twd2lvuiqwse0tsc7fcfgxponbfuo4.jpg","timematch":180,"teamHome":{"name":"Portland Trail Blazers","img":"\/upload\/teams\/a9xokracvd7t50dxi5m8bycc6tdh5i.png"},"teamAway":{"name":"Minnesota Timberwolves","img":"\/upload\/teams\/anvvozo74vg60ycfsak56jb7jdub3z.png"},"slug":"portland-trail-blazers-vs-minnesota-timberwolves2026-02-25","dateMatch":"2026-02-25T03:00:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/0tj4uxq3i9xslmz0xb5wnk2kjatrvg.png","chaine":{"name":"Bein Sports 1","img":"\/upload\/chaines\/8rdidmr7uk3rpug7ffdtpw3htqadqr.png","tcps":[2,3,6,7,8,9,13,14,15,16,17,463,1576,1577,2166,2167,2168]},"banner":null},{"title":"Los Angeles Lakers vs Orlando Magic","subTitle":"NBA","poster":"\/upload\/events\/rmih7jsqnmoelvofwx63y1wfnmo7rz.jpg","timematch":180,"teamHome":{"name":"Los Angeles Lakers","img":"\/upload\/teams\/m5zelfeest1rzxclfekfs7sbhgfjde.png"},"teamAway":{"name":"Orlando Magic","img":"\/upload\/teams\/ndzdzg9aww5iqms70iorwuuq3tm2j3.png"},"slug":"los-angeles-lakers-vs-orlando-magic2026-02-25","dateMatch":"2026-02-25T03:30:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/sffvjd0w7l08k2aardmcxep5iif3ty.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":"\/upload\/banners\/charlotte-hornets-vs-los-angeles-lakers.png"},{"title":"Tournoi ATP ","subTitle":"de Duba\u00ef","poster":null,"timematch":540,"teamHome":null,"teamAway":null,"slug":"tournoi-atp-de-dubai-cllizr04me","dateMatch":"2026-02-25T10:00:00+00:00","league":null,"sport":{"name":"tennis","img":"\/upload\/sports\/ppp6278ynt2fxg39urcg09bngyzs2d.png"},"img":"\/upload\/cards\/tournoi-atp_37.png","chaine":{"name":"Eurosport 2","img":"\/upload\/chaines\/y7adk7h6s4oj2agzuu3ax7ct3exbz9.png","tcps":[222,223,224,225,226,227,228,493,1167,1168,1567,1713,1714]},"banner":null},{"title":"Paris Saint-Germain Academy vs HJK Helsinki Youth","subTitle":"UEFA Youth League","poster":null,"timematch":130,"teamHome":{"name":"Paris Saint-Germain Academy","img":"\/upload\/teams\/m1gx9qw9ffgfenkrkobwvfuqnudo1n.png"},"teamAway":{"name":"HJK Helsinki Youth","img":"\/upload\/teams\/lpkc9xiwbr3vqwfvhhmrj0y1vvhlek.png"},"slug":"paris-saint-germain-academy-vs-hjk-helsinki-youth2026-02-25","dateMatch":"2026-02-25T13:00:00+00:00","league":{"name":"Youth League","img":"\/upload\/leagues\/op5ffzyyfqino6iki3rhvbgsoreexp.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":null,"chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":null},{"title":"Real Madrid Juvenil vs Chelsea Youth","subTitle":"UEFA Youth League","poster":null,"timematch":130,"teamHome":{"name":"Real Madrid Juvenil","img":"\/upload\/teams\/xn1lmexc5npxapw9nsqkn9katkdcxi.png"},"teamAway":{"name":"Chelsea Youth","img":"\/upload\/teams\/ojoh71tplpxpitw2axawosrgrslm7j.png"},"slug":"real-madrid-juvenil-vs-chelsea-youth2026-02-25","dateMatch":"2026-02-25T15:00:00+00:00","league":{"name":"Youth League","img":"\/upload\/leagues\/op5ffzyyfqino6iki3rhvbgsoreexp.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":null,"chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":null},{"title":"Fenerbah\u00e7e Basketbol vs KK Partizan","subTitle":"EuroLeague Basketball","poster":"\/upload\/events\/9kfgumjw77cejszossgwgcauylej2r.jpg","timematch":180,"teamHome":{"name":"Fenerbah\u00e7e Basketbol","img":"\/upload\/teams\/t2pk3q2d4apsftwp4sth3f8ythgjs1.png"},"teamAway":{"name":"KK Partizan","img":"\/upload\/teams\/jrisjr0ljxz2nxcrd9gubuh4ebndb8.png"},"slug":"fenerbah-e-basketbol-vs-kk-partizan2026-02-25","dateMatch":"2026-02-25T17:45:00+00:00","league":{"name":"Euro League Basket","img":"\/upload\/leagues\/t1qcykpnklpgjdtanxmecw4a6rzalw.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":null,"chaine":{"name":"EuroLeague 1","img":"\/upload\/chaines\/uvg1wysxxlmfq1oq3qihnsckseg8cb.png","tcps":[1126,1127,1128,1129,1130,1131,1132,1133,1134,1135,1136,1137,1138,1139,1140,1141,1142,1143,1322,1323,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1344,1345,1346,1347,1710,1926]},"banner":null},{"title":"Atalanta vs Borussia Dortmund","subTitle":"UEFA Champions League","poster":"\/upload\/events\/bafasejet9wqhjxrjdjfsgibfqw8cv.jpg","timematch":150,"teamHome":{"name":"Atalanta","img":"\/upload\/teams\/vy6zoxxejgnc4yesfiuic45rndpgne.png"},"teamAway":{"name":"Borussia Dortmund","img":"\/upload\/teams\/ikwhf9se2yp73lxc5s4vh4qvhwjnec.png"},"slug":"atalanta-vs-borussia-dortmund2026-02-25","dateMatch":"2026-02-25T17:45:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/djj2j8cg1nwamyc44nye0olnube1mx.png","chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":"\/upload\/events\/bafasejet9wqhjxrjdjfsgibfqw8cv.jpg"},{"title":"BC \u017dalgiris vs Olympiacos BC","subTitle":"EuroLeague Basketball","poster":"\/upload\/events\/pbbobbaxi0jpi2w8l8h6bxpeoc2rzj.jpg","timematch":180,"teamHome":{"name":"BC \u017dalgiris","img":"\/upload\/teams\/5fabsct9yitlt9ogy4xhoccpm4m6il.png"},"teamAway":{"name":"Olympiacos BC","img":"\/upload\/teams\/ipk6szvgedivtcsywk8esxmjab8gap.png"},"slug":"bc-algiris-vs-olympiacos-bc2026-02-25","dateMatch":"2026-02-25T18:00:00+00:00","league":{"name":"Euro League Basket","img":"\/upload\/leagues\/t1qcykpnklpgjdtanxmecw4a6rzalw.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":null,"chaine":{"name":"EuroLeague 1","img":"\/upload\/chaines\/uvg1wysxxlmfq1oq3qihnsckseg8cb.png","tcps":[1126,1127,1128,1129,1130,1131,1132,1133,1134,1135,1136,1137,1138,1139,1140,1141,1142,1143,1322,1323,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1344,1345,1346,1347,1710,1926]},"banner":null},{"title":"Al-Najma Unaizah vs Al-Nassr","subTitle":"Saudi-Arabian Pro League","poster":"\/upload\/events\/ehru3jcfm0nrivrxffioub2xqjv0wz.jpg","timematch":130,"teamHome":{"name":"Al-Najma Unaizah","img":"\/upload\/teams\/h9jcwwcx3ehvkni5bii6vthqdrynk7.png"},"teamAway":{"name":"Al-Nassr","img":"\/upload\/teams\/mtzbpz6pfb1m267tnjjs8pljc1mo9b.png"},"slug":"al-najma-unaizah-vs-al-nassr2026-02-25","dateMatch":"2026-02-25T19:00:00+00:00","league":{"name":"Saudi Pro League","img":"\/upload\/leagues\/zt4mb7gnlrgn2drjplitpx3e7xwdsf.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/m00e4hj1zle8uzbxrayvcjnn53higc.png","chaine":{"name":"Sport Tv 1","img":"\/upload\/chaines\/bd5lunnknhdwfqznkxxyhtqrresyy9.png","tcps":[1243,1244,1245,1246,1341]},"banner":"\/upload\/banners\/al-nassr-vs-al-khaleej.png"},{"title":"KK Crvena zvezda vs Anadolu Efes SK","subTitle":"EuroLeague Basketball","poster":"\/upload\/events\/pmd3lg1hl8t7rp9xrwdmsl2mhsqi6n.jpg","timematch":180,"teamHome":{"name":"KK Crvena zvezda","img":"\/upload\/teams\/u0q2ndlhzcwwkqp6hrkqmikbywhopm.png"},"teamAway":{"name":"Anadolu Efes SK","img":"\/upload\/teams\/ff4py839w3uw9tuv78rjjmeknqutso.png"},"slug":"kk-crvena-zvezda-vs-anadolu-efes-sk2026-02-25","dateMatch":"2026-02-25T19:30:00+00:00","league":{"name":"Euro League Basket","img":"\/upload\/leagues\/t1qcykpnklpgjdtanxmecw4a6rzalw.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":null,"chaine":{"name":"EuroLeague 1","img":"\/upload\/chaines\/uvg1wysxxlmfq1oq3qihnsckseg8cb.png","tcps":[1126,1127,1128,1129,1130,1131,1132,1133,1134,1135,1136,1137,1138,1139,1140,1141,1142,1143,1322,1323,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1344,1345,1346,1347,1710,1926]},"banner":null},{"title":"Virtus Pallacanestro Bologna vs FC Barcelona Basquet","subTitle":"EuroLeague Basketball","poster":"\/upload\/events\/cfgyh0xtn2i3jnno9qfktcr5ebt0qc.jpg","timematch":180,"teamHome":{"name":"Virtus Pallacanestro Bologna","img":"\/upload\/teams\/lsfgi1yervcq9dlok8fs5nrfca6toh.png"},"teamAway":{"name":"FC Barcelona Basquet","img":"\/upload\/teams\/winumgon0djirmgowsa1pshfcv6f4o.png"},"slug":"virtus-pallacanestro-bologna-vs-fc-barcelona-basquet2026-02-25","dateMatch":"2026-02-25T19:30:00+00:00","league":{"name":"Euro League Basket","img":"\/upload\/leagues\/t1qcykpnklpgjdtanxmecw4a6rzalw.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":null,"chaine":{"name":"EuroLeague 1","img":"\/upload\/chaines\/uvg1wysxxlmfq1oq3qihnsckseg8cb.png","tcps":[1126,1127,1128,1129,1130,1131,1132,1133,1134,1135,1136,1137,1138,1139,1140,1141,1142,1143,1322,1323,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1344,1345,1346,1347,1710,1926]},"banner":null},{"title":"Real Madrid vs Benfica","subTitle":"UEFA Champions League","poster":"\/upload\/events\/dtyvivwvvel60awfpmv7jt8c40dgvp.jpg","timematch":150,"teamHome":{"name":"Real Madrid","img":"\/upload\/teams\/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png"},"teamAway":{"name":"Benfica","img":"\/upload\/teams\/1gmfrazydu7o6vh1z8rlnrduarisq5.png"},"slug":"real-madrid-vs-benfica2026-02-25","dateMatch":"2026-02-25T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/3gwmaipdy06pqttqlt2o8rs4rryzo3.png","chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":"\/upload\/banners\/benfica-vs-real-madrid.png"},{"title":"Juventus vs Galatasaray","subTitle":"UEFA Champions League","poster":"\/upload\/events\/4vnivwhb16bnrulbe2gnzldirrdtvc.jpg","timematch":130,"teamHome":{"name":"Juventus","img":"\/upload\/teams\/hcp3cnlmwxp2mitonxqjktnrgzzxty.png"},"teamAway":{"name":"Galatasaray","img":"\/upload\/teams\/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png"},"slug":"juventus-vs-galatasaray2026-02-25","dateMatch":"2026-02-25T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png","chaine":{"name":"Canal + Sport","img":"\/upload\/chaines\/aiawyvobkv5spuhva4iwncb18rwksj.png","tcps":[175,176,177,178,179,180,184,185,186,562,685]},"banner":"\/upload\/banners\/galatasaray-vs-juventus.png"},{"title":"Paris SG vs Monaco","subTitle":"UEFA Champions League","poster":"\/upload\/events\/5zkght5per0up9excabcqdvkqvcxwx.jpg","timematch":130,"teamHome":{"name":"Paris SG","img":"\/upload\/teams\/fxdcxolvnmos15nopn7zc7qe7ornox.png"},"teamAway":{"name":"Monaco","img":"\/upload\/teams\/i7vfbawhmjc4pne1uh2azvklhcquh3.png"},"slug":"paris-sg-vs-monaco2026-02-25","dateMatch":"2026-02-25T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/67yruujoqy7yvdudtk6uvivz8ampqa.png","chaine":{"name":"Canal +","img":"\/upload\/chaines\/poqxsy7vbdgxxb1r2x1koldqf8tgko.png","tcps":[4,91,92,93,94,95,96,97,614,1343,2242,2243,2276]},"banner":"\/upload\/banners\/monaco-vs-paris-sg_1.png"},{"title":"Tournoi WTA ","subTitle":"de M\u00e9rida","poster":null,"timematch":420,"teamHome":null,"teamAway":null,"slug":"tournoi-wta-de-merida-2ge69lmcbs","dateMatch":"2026-02-25T20:00:00+00:00","league":null,"sport":{"name":"tennis","img":"\/upload\/sports\/ppp6278ynt2fxg39urcg09bngyzs2d.png"},"img":"\/upload\/cards\/tournoi-wta_61.png","chaine":{"name":"Bein Sports 3","img":"\/upload\/chaines\/7xpt7ggvhhnf9ix4y88ovccr8xagls.png","tcps":[43,44,45,46,47,48,49,50,58,59,60,61,62,63,64,65,66,578,705,706,708,1145,1579]},"banner":null}],
-banners: [{"img":"\/upload\/banners\/club-brugge-vs-atl-tico-madrid.png","event":{"title":"Atl\u00e9tico Madrid vs Club Brugge","subTitle":"UEFA Champions League","poster":"\/upload\/events\/46v4zzp4qnfugvun8ivswz163vh0le.jpg","timematch":150,"teamHome":{"name":"Atl\u00e9tico Madrid","img":"\/upload\/teams\/smp4oeizppz2hw9fbmb9dznhohcwly.png"},"teamAway":{"name":"Club Brugge","img":"\/upload\/teams\/2czopj7ezzm3epryc2ddg3xegzi6oa.png"},"slug":"atletico-madrid-vs-club-brugge2026-02-24","dateMatch":"2026-02-24T17:45:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/qpwvi2cxhcladiu6ln8qlscrmnqidf.png","chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":"\/upload\/banners\/club-brugge-vs-atl-tico-madrid.png"}},{"img":"\/upload\/banners\/al-hilal-vs-al-ittihad.png","event":{"title":"Al-Taawoun vs Al-Hilal","subTitle":"Saudi-Arabian Pro League","poster":"\/upload\/events\/fhisueqqzdvnt2m9m77fqusdqnvc3w.jpg","timematch":130,"teamHome":{"name":"Al-Taawoun","img":"\/upload\/teams\/ifandazw8hni9cpbdxiqureugltw2x.png"},"teamAway":{"name":"Al-Hilal","img":"\/upload\/teams\/tiktjuihr7d8begzdbo5lmnmt1hmdf.png"},"slug":"al-taawoun-vs-al-hilal2026-02-24","dateMatch":"2026-02-24T19:00:00+00:00","league":{"name":"Saudi Pro League","img":"\/upload\/leagues\/zt4mb7gnlrgn2drjplitpx3e7xwdsf.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/ghawlnbjaloqcn3lfkkelo3jvcgecf.png","chaine":{"name":"Sport Tv 1","img":"\/upload\/chaines\/bd5lunnknhdwfqznkxxyhtqrresyy9.png","tcps":[1243,1244,1245,1246,1341]},"banner":"\/upload\/banners\/al-hilal-vs-al-ittihad.png"}},{"img":"\/upload\/banners\/glimt-vs-inter-milan.png","event":{"title":"Inter Milan vs Bod\u00f8\/Glimt","subTitle":"UEFA Champions League","poster":"\/upload\/events\/xp3elijlkirdgwoig10b5daj1dxn3r.jpg","timematch":150,"teamHome":{"name":"Inter Milan","img":"\/upload\/teams\/ig0sk72cx0fakug4fzkfj4hay33pwr.png"},"teamAway":{"name":"Bod\u00f8\/Glimt","img":"\/upload\/teams\/pkdfgoss9ygqaymhj3rkd33uvc4rbi.png"},"slug":"inter-milan-vs-bodo-glimt2026-02-24","dateMatch":"2026-02-24T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/m6fg7iide2xqqw83yuxhcp1o6cpkqj.png","chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":"\/upload\/banners\/glimt-vs-inter-milan.png"}},{"img":"\/upload\/banners\/west-ham-united-vs-newcastle-united.png","event":{"title":"Newcastle United vs Qaraba\u011f","subTitle":"UEFA Champions League","poster":"\/upload\/events\/voeybefzfr4obv1jh6bwsuztxbw3ym.jpg","timematch":150,"teamHome":{"name":"Newcastle United","img":"\/upload\/teams\/rcgqdydup9msdf6oafeok831beo6ur.png"},"teamAway":{"name":"Qaraba\u011f","img":"\/upload\/teams\/lltvrfxptcgfdmsa74tbivlygbsh2x.png"},"slug":"newcastle-united-vs-qarabag2026-02-24","dateMatch":"2026-02-24T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/tghql7uwg3twug0nalwvpkk0gyjzhg.png","chaine":{"name":"Canal + Sport 360","img":"\/upload\/chaines\/gizi44xtgwg7iauagwiqljjpsw1aah.png","tcps":[187,188,189,190,191,445,446,447,448,560,561,1101,1569]},"banner":"\/upload\/banners\/west-ham-united-vs-newcastle-united.png"}},{"img":"\/upload\/banners\/golden-state-warriors-vs-phoenix-suns.png","event":{"title":"New Orleans Pelicans vs Golden State Warriors","subTitle":"NBA","poster":"\/upload\/events\/nytqc7jjoj68t1ap6qim6kamltrxsq.jpg","timematch":180,"teamHome":{"name":"New Orleans Pelicans","img":"\/upload\/teams\/xxne7vspbbh4dldcy4mcmatelr0exp.png"},"teamAway":{"name":"Golden State Warriors","img":"\/upload\/teams\/f1cplnlhvsonuwm7c4pr5p8snc1ukt.png"},"slug":"new-orleans-pelicans-vs-golden-state-warriors2026-02-25","dateMatch":"2026-02-25T01:00:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/smjnd9zwlrozysmyh2epkjczrcxbpx.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":"\/upload\/banners\/golden-state-warriors-vs-phoenix-suns.png"}},{"img":"\/upload\/banners\/charlotte-hornets-vs-los-angeles-lakers.png","event":{"title":"Los Angeles Lakers vs Orlando Magic","subTitle":"NBA","poster":"\/upload\/events\/rmih7jsqnmoelvofwx63y1wfnmo7rz.jpg","timematch":180,"teamHome":{"name":"Los Angeles Lakers","img":"\/upload\/teams\/m5zelfeest1rzxclfekfs7sbhgfjde.png"},"teamAway":{"name":"Orlando Magic","img":"\/upload\/teams\/ndzdzg9aww5iqms70iorwuuq3tm2j3.png"},"slug":"los-angeles-lakers-vs-orlando-magic2026-02-25","dateMatch":"2026-02-25T03:30:00+00:00","league":{"name":"Nba","img":"\/upload\/leagues\/d7kddtuhbjaf23fgdnj8wiulccahfc.png"},"sport":{"name":"basket-ball","img":"\/upload\/sports\/ias4uusgvforsbyk5hjhxmw0k462oj.png"},"img":"\/upload\/teambanks\/sffvjd0w7l08k2aardmcxep5iif3ty.png","chaine":{"name":"NBA chaine 1","img":"\/upload\/chaines\/vsrioymbh1bu9virmehnzgz3p5z5me.png","tcps":[1104,1105,1106,1107,1108,1109,1110,1111,1112,1113,1114,1115,1116,1117,1118,1119,1120,1121,1122,1123,1177,1178,1179,1180,1181,1182,1183,1184,1185,1186,1187,1188,1189,1190,1191,1408,1409,1558,1559,1917,1918,1919,1920]},"banner":"\/upload\/banners\/charlotte-hornets-vs-los-angeles-lakers.png"}},{"img":"\/upload\/events\/bafasejet9wqhjxrjdjfsgibfqw8cv.jpg","event":{"title":"Atalanta vs Borussia Dortmund","subTitle":"UEFA Champions League","poster":"\/upload\/events\/bafasejet9wqhjxrjdjfsgibfqw8cv.jpg","timematch":150,"teamHome":{"name":"Atalanta","img":"\/upload\/teams\/vy6zoxxejgnc4yesfiuic45rndpgne.png"},"teamAway":{"name":"Borussia Dortmund","img":"\/upload\/teams\/ikwhf9se2yp73lxc5s4vh4qvhwjnec.png"},"slug":"atalanta-vs-borussia-dortmund2026-02-25","dateMatch":"2026-02-25T17:45:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/djj2j8cg1nwamyc44nye0olnube1mx.png","chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":"\/upload\/events\/bafasejet9wqhjxrjdjfsgibfqw8cv.jpg"}},{"img":"\/upload\/banners\/al-nassr-vs-al-khaleej.png","event":{"title":"Al-Najma Unaizah vs Al-Nassr","subTitle":"Saudi-Arabian Pro League","poster":"\/upload\/events\/ehru3jcfm0nrivrxffioub2xqjv0wz.jpg","timematch":130,"teamHome":{"name":"Al-Najma Unaizah","img":"\/upload\/teams\/h9jcwwcx3ehvkni5bii6vthqdrynk7.png"},"teamAway":{"name":"Al-Nassr","img":"\/upload\/teams\/mtzbpz6pfb1m267tnjjs8pljc1mo9b.png"},"slug":"al-najma-unaizah-vs-al-nassr2026-02-25","dateMatch":"2026-02-25T19:00:00+00:00","league":{"name":"Saudi Pro League","img":"\/upload\/leagues\/zt4mb7gnlrgn2drjplitpx3e7xwdsf.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/m00e4hj1zle8uzbxrayvcjnn53higc.png","chaine":{"name":"Sport Tv 1","img":"\/upload\/chaines\/bd5lunnknhdwfqznkxxyhtqrresyy9.png","tcps":[1243,1244,1245,1246,1341]},"banner":"\/upload\/banners\/al-nassr-vs-al-khaleej.png"}},{"img":"\/upload\/banners\/monaco-vs-paris-sg_1.png","event":{"title":"Paris SG vs Monaco","subTitle":"UEFA Champions League","poster":"\/upload\/events\/5zkght5per0up9excabcqdvkqvcxwx.jpg","timematch":130,"teamHome":{"name":"Paris SG","img":"\/upload\/teams\/fxdcxolvnmos15nopn7zc7qe7ornox.png"},"teamAway":{"name":"Monaco","img":"\/upload\/teams\/i7vfbawhmjc4pne1uh2azvklhcquh3.png"},"slug":"paris-sg-vs-monaco2026-02-25","dateMatch":"2026-02-25T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/67yruujoqy7yvdudtk6uvivz8ampqa.png","chaine":{"name":"Canal +","img":"\/upload\/chaines\/poqxsy7vbdgxxb1r2x1koldqf8tgko.png","tcps":[4,91,92,93,94,95,96,97,614,1343,2242,2243,2276]},"banner":"\/upload\/banners\/monaco-vs-paris-sg_1.png"}},{"img":"\/upload\/banners\/benfica-vs-real-madrid.png","event":{"title":"Real Madrid vs Benfica","subTitle":"UEFA Champions League","poster":"\/upload\/events\/dtyvivwvvel60awfpmv7jt8c40dgvp.jpg","timematch":150,"teamHome":{"name":"Real Madrid","img":"\/upload\/teams\/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png"},"teamAway":{"name":"Benfica","img":"\/upload\/teams\/1gmfrazydu7o6vh1z8rlnrduarisq5.png"},"slug":"real-madrid-vs-benfica2026-02-25","dateMatch":"2026-02-25T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/3gwmaipdy06pqttqlt2o8rs4rryzo3.png","chaine":{"name":"Canal + Foot","img":"\/upload\/chaines\/kanfbbzfcksnfvc5sbw5nnzv1zliki.png","tcps":[98,99,100,101,102,103,104,577,1570,1571,1734]},"banner":"\/upload\/banners\/benfica-vs-real-madrid.png"}},{"img":"\/upload\/banners\/galatasaray-vs-juventus.png","event":{"title":"Juventus vs Galatasaray","subTitle":"UEFA Champions League","poster":"\/upload\/events\/4vnivwhb16bnrulbe2gnzldirrdtvc.jpg","timematch":130,"teamHome":{"name":"Juventus","img":"\/upload\/teams\/hcp3cnlmwxp2mitonxqjktnrgzzxty.png"},"teamAway":{"name":"Galatasaray","img":"\/upload\/teams\/9fvdgr8wbnuk3j5teocgsp7f1icuvk.png"},"slug":"juventus-vs-galatasaray2026-02-25","dateMatch":"2026-02-25T20:00:00+00:00","league":{"name":"Champions League","img":"\/upload\/leagues\/lnjvd4afeukdyr5agooauznrzjyeoh.png"},"sport":{"name":"football","img":"\/upload\/sports\/oqcsnyrnorgtywzgpjwgnfaqkd0hsg.png"},"img":"\/upload\/teambanks\/ch0rsuzd57lpy8vwvyfh7mf1x1klas.png","chaine":{"name":"Canal + Sport","img":"\/upload\/chaines\/aiawyvobkv5spuhva4iwncb18rwksj.png","tcps":[175,176,177,178,179,180,184,185,186,562,685]},"banner":"\/upload\/banners\/galatasaray-vs-juventus.png"}}],
-chaines: [{"img":"\/upload\/chaines\/vqaluscuqknszbwtxgcuq6c07oxjmw.png","name":"Bein Sports","slug":"bein-sports-en-streaming","count":10,"tcds":[2,3,6,7,8,9,13,14,15,16,17,463,1576,1577,2166,2167,2168,18,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,466,467,579,1578,1580,43,44,45,46,47,48,49,50,58,59,60,61,62,63,64,65,66,578,705,706,708,1145,1579,53,54,55,56,57,492,707,1080,1573,1574,1575,52,67,68,69,70,479,71,72,73,74,75,482,76,77,78,79,80,483,487,81,82,83,84,85,484,86,87,88,89,90,1175,1176,20,21,22,23,24,25,26,572]},{"img":"\/upload\/chaines\/hanqhzexphjcx9zmg6bh9mc5xbkcdf.png","name":"Ligue1+","slug":"ligue1-en-streaming","count":10,"tcds":[10,11,12,268,269,442,443,444,462,1757,1758,1759,276,277,278,279,280,281,282,283,468,284,285,286,287,288,289,290,291,471,292,293,295,296,297,298,299,300,472,301,302,303,304,305,306,307,308,473,309,310,311,312,313,314,315,316,474,317,318,319,320,321,322,323,324,477,325,326,327,328,329,330,331,332,476,333,334,335,336,337,338,478,270,271,272,273,274,275]},{"img":"\/upload\/chaines\/wgva2gjdtfx7phace2tbic0ehkbxuh.png","name":"Canal +","slug":"canal-en-streaming","count":22,"tcds":[4,91,92,93,94,95,96,97,614,1343,2242,2243,2276,98,99,100,101,102,103,104,577,1570,1571,1734,175,176,177,178,179,180,184,185,186,562,685,187,188,189,190,191,445,446,447,448,560,561,1101,1569,105,106,107,108,143,144,145,146,817,1211,147,148,149,150,1203,1210,151,152,153,154,710,1209,155,156,157,158,712,1340,159,160,161,162,711,1205,163,164,165,166,713,1208,167,168,169,170,1200,1204,171,172,173,174,1201,1206,109,110,111,112,1202,1207,113,114,115,116,1353,1354,117,118,119,120,2239,121,122,123,124,1668,1669,125,126,127,128,1670,1671,129,130,131,132,1672,1673,133,134,135,136,2252,137,138,139,2241,140,141,142,2240]},{"img":"\/upload\/chaines\/e4hdtolsxdqvllrooy13zulawtkfsz.png","name":"Rmc Sport","slug":"rmc-sport-en-streaming","count":2,"tcds":[348,349,350,351,352,353,354,355,356,357,358,359,360,361,1077,1078,1079,362,363,364,365,366,367,368,369,370,371,372,373,374,580,581,1563,1564]},{"img":"\/upload\/chaines\/tzff4a0hsczvhtf90yxp9bxvg9li9w.png","name":"Eurosport","slug":"eurosport-en-streaming","count":3,"tcds":[216,217,218,219,220,221,458,459,563,804,1565,1568,222,223,224,225,226,227,228,493,1167,1168,1567,1713,1714,403,404,405]},{"img":"\/upload\/chaines\/ksmonccbwycptfyhpywsw6i3ymdpmj.png","name":"L'\u00e9quipe","slug":"l-equipe-en-streaming","count":3,"tcds":[247,248,249,250,251,252,253,254,496,1144,255,256,257,258,259,260,261,262,263,264,265,266,267]},{"img":"\/upload\/chaines\/deicm4wmkcfhvdinrtv6noouhsifdd.png","name":"Dazn","slug":"dazn-en-streaming","count":7,"tcds":[192,193,194,2297,2298,2299,2300,608,609,610,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215]},{"img":"\/upload\/chaines\/erkmnsuj087owg8tc3zzzchrlues1k.png","name":"France Tv","slug":"france-tv-en-streaming","count":7,"tcds":[375,376,377,378,379,380,381,382,383,806,1519,1520,1521,1581,229,230,231,232,233,234,235,236,237,1081,1082,1083,1084,238,239,240,241,242,243,244,245,246,1085,1086,1087,1088,384,385,386,387,388,389,1102,1103,1572,339,340,341,342,343,344,345,346,347,1093,1094,1095,1096,1530,406,407,408,409,410,411,1089,1090,1091,1092,449,450,451,452,453,454,455,456,457,1097,1098,1099,1100,1562]}],
-dataExtrn: {"ES":{"url":"https:\/\/empire-streami.live","data":{"films":[{"title":"Pavane","note":3,"img":"\/images\/medias\/22RlxpIT4u4psfIx9tmtbPvgAbm.jpg","link":"film\/Pavane-en-streaming-hd\/e1046778659b6e87271037f4a444a907"},{"title":"The Dreadful","note":3,"img":"\/images\/medias\/8fFnF6VfFojVXYeNjBOyUjuvm70.jpg","link":"film\/The-Dreadful-en-streaming-hd\/a81159da163b36520d7f39135f297683"},{"title":"Coupe-feu","note":3,"img":"\/images\/medias\/gqzIKAeBKkiwj5qz2oZCOuZKHPA.jpg","link":"film\/Coupe-feu-en-streaming-hd\/9a586838d707023561c1735411890396"},{"title":"Kaamelott Deuxi\u00e8me volet (Partie 1)","note":3,"img":"\/images\/medias\/qozUrQZwmsTEFfLziB6r6Swxdb0.jpg","link":"film\/Kaamelott-Deuxi%C3%A8me-volet-(Partie-1)-en-streaming-hd\/1985333916638690467c61f101959677"},{"title":"Aucun autre choix","note":4,"img":"\/images\/medias\/jAXLv6FG98609OlLdncYsbRGFe7.jpg","link":"film\/Aucun-autre-choix-en-streaming-hd\/55731798636951271f24a69577145529"},{"title":"Doux pow wow d'\u00e9t\u00e9","note":2,"img":"\/images\/medias\/w9ZAAGkenj8K5JP4XIXC4fkgg6f.jpg","link":"film\/Doux-pow-wow-d'%C3%A9t%C3%A9-en-streaming-hd\/c546984e91511597a176956927203168"},{"title":"Ghost Train","note":3,"img":"\/images\/medias\/2tsSBC8v47oBbdKkyGmvMWy2IhK.jpg","link":"film\/Ghost-Train-en-streaming-hd\/4790e809054617175099663331298706"},{"title":"Reconnu coupable","note":3,"img":"\/images\/medias\/fk5igdZhR9p3N9t9Y7zM6UX2XOJ.jpg","link":"film\/Reconnu-coupable-en-streaming-hd\/43f23f758927870534224a9161814218"},{"title":"Joe et l'\u00e9cole de la vie","note":2,"img":"\/images\/medias\/hFvH6hycJFFOX2DyDQOvrMjkJpH.jpg","link":"film\/Joe-et-l'%C3%A9cole-de-la-vie-en-streaming-hd\/86367012b4a307714994792127767677"},{"title":"28 Ans plus tard Le Temple des morts","note":4,"img":"\/images\/medias\/pgglrx81AJ7uL6ytcuHdHkiipcA.jpg","link":"film\/28-Ans-plus-tard-Le-Temple-des-morts-en-streaming-hd\/9113113623637252e983624071731694"},{"title":"Hopper et le Secret de la Marmotte","note":4,"img":"\/images\/medias\/wjMCp298feITxBpZx4zlU7g979r.jpg","link":"film\/Hopper-et-le-Secret-de-la-Marmotte-en-streaming-hd\/5d38a1573895601285526c1d97212966"},{"title":"Night Call","note":4,"img":"\/images\/medias\/pATJSq0OobFU9DmcKQUqQPpzDET.jpg","link":"film\/Night-Call-en-streaming-hd\/281171979173401d727759de11654e00"},{"title":"Last Straw","note":3,"img":"\/images\/medias\/hgpUvybRQzRK6UagoHNQRrO8sUg.jpg","link":"film\/Last-Straw-en-streaming-hd\/273d96721257017276941fa399872914"},{"title":"It Feeds","note":3,"img":"\/images\/medias\/uC3lzzgOUgkubje7HR20qznAAGj.jpg","link":"film\/It-Feeds-en-streaming-hd\/9977128793374371625615654d419767"},{"title":"Love Me Love Me","note":3,"img":"\/images\/medias\/jfwHKRHRE2X4NTexdzblaioHH51.jpg","link":"film\/Love-Me-Love-Me-en-streaming-hd\/915692b399d989f438c7093699148787"},{"title":"Le Roi des rois","note":4,"img":"\/images\/medias\/nR8tt8jxIZTyH6sm6mcJKx8wwMy.jpg","link":"film\/Le-Roi-des-rois-en-streaming-hd\/3f5733377cc7d8600839504d01776989"},{"title":"Roman Frayssinet \u00d4 del\u00e0","note":3,"img":"\/images\/medias\/zLivuChk5QKy7c0FdXx0Bh3Rra0.jpg","link":"film\/Roman-Frayssinet-%C3%94-del%C3%A0-en-streaming-hd\/89c5867144017274dc073169970dd482"},{"title":"On a March\u00e9 sur Bangkok","note":2,"img":"\/images\/medias\/8CQa9RqPUmAFGKk9d8U17CgyDRR.jpg","link":"film\/On-a-March%C3%A9-sur-Bangkok-en-streaming-hd\/6839977c9830514469430d21891650f8"},{"title":"Marty Supreme","note":4,"img":"\/images\/medias\/bT5Y8w67r7tj3wFiFGvy72V5znJ.jpg","link":"film\/Marty-Supreme-en-streaming-hd\/982760749240575892173dc060043119"},{"title":"Primate","note":3,"img":"\/images\/medias\/seHZ5tcGX08Bprm3qvwzFwSd39r.jpg","link":"film\/Primate-en-streaming-hd\/77376800717518090633681c535147c1"},{"title":"The Huntsman","note":3,"img":"\/images\/medias\/la1CvCbIaXj9Xd9BOSgEBM15uO0.jpg","link":"film\/The-Huntsman-en-streaming-hd\/723937dd083774614f939a8a279b9023"},{"title":"Dust Bunny","note":3,"img":"\/images\/medias\/hoJcoJlGOM6C08TmGGlP7bhk8AN.jpg","link":"film\/Dust-Bunny-en-streaming-hd\/77395443063127cd6c8905498276816e"},{"title":"We Bury the Dead","note":3,"img":"\/images\/medias\/xZqo0yPARmyF8TACVNyaOACkYWG.jpg","link":"film\/We-Bury-the-Dead-en-streaming-hd\/89d74879a80e057e0b1701415a299656"},{"title":"Exit 8","note":3,"img":"\/images\/medias\/hJ9qCQ3Dx9vwet09Lbqs8eZTd8e.jpg","link":"film\/Exit-8-en-streaming-hd\/568d806470377979f373887567119860"},{"title":"The Shadow's Edge","note":4,"img":"\/images\/medias\/t1PFVsGYdUHtPv0Xowoc9b4PAap.jpg","link":"film\/The-Shadow's-Edge-en-streaming-hd\/3d657750787818277757a9960388fb20"},{"title":"C'\u00e9tait mieux demain","note":3,"img":"\/images\/medias\/bTXovtY1XO4Tol95fIPmXkRtfXd.jpg","link":"film\/C'%C3%A9tait-mieux-demain-en-streaming-hd\/5c154078713077954067116896d01580"},{"title":"Fuck Valentine\u2019s Day","note":2,"img":"\/images\/medias\/56v1Ipm54DdEEuo9SIxaIpdcLEP.jpg","link":"film\/Fuck-Valentine%E2%80%99s-Day-en-streaming-hd\/5308531d94897162d9300690773a7317"},{"title":"The Edge of Love","note":3,"img":"\/images\/medias\/uo7ZDvipL2OZu6G44hDP0sjDZ9n.jpg","link":"film\/The-Edge-of-Love-en-streaming-hd\/6423844731145d49676917200677974a"},{"title":"The Bad Batch","note":2,"img":"\/images\/medias\/sykzAkOWg5R9pd4H84k3mGDOPb2.jpg","link":"film\/The-Bad-Batch-en-streaming-hd\/6e7210060194e1449897071673012159"},{"title":"Twisted","note":3,"img":"\/images\/medias\/hluMzOgA98EXRRyc7qcXW3UgkO5.jpg","link":"film\/Twisted-en-streaming-hd\/3466907f69211192b1d2386650a07841"},{"title":"Avatar","note":4,"img":"\/images\/medias\/3npygfmEhqnmNTmDWhHLz1LPcbA.jpg","link":"film\/Avatar-en-streaming-hd\/88934966239889988134541615216a85"},{"title":"Five Nights at Freddy's 2","note":3,"img":"\/images\/medias\/enRyaRthhsuAqBwzYKqb7VfCJg.jpg","link":"film\/Five-Nights-at-Freddy's-2-en-streaming-hd\/4264916e8d297488755781376a764356"},{"title":"Regretting You","note":3,"img":"\/images\/medias\/tulNImprvr3I3vUSrvSExbdaXgN.jpg","link":"film\/Regretting-You-en-streaming-hd\/95aca9b512968036761527b0c9778474"},{"title":"Dis-le-moi tout bas","note":4,"img":"\/images\/medias\/6NugNYN0Q2VUwYh3JwtVYPQFfHX.jpg","link":"film\/Dis-le-moi-tout-bas-en-streaming-hd\/29a1660b558826371b7763573558582c"},{"title":"Tron Ares","note":3,"img":"\/images\/medias\/tkILExgVXhNLoxy4KNgCk9PC4lU.jpg","link":"film\/Tron-Ares-en-streaming-hd\/230952d691957363c046db25c9417e64"},{"title":"Running Man","note":3,"img":"\/images\/medias\/7IwZANZ0V9ygf0LM7NsRVeIKZJR.jpg","link":"film\/Running-Man-en-streaming-hd\/919350f648704642531623bc28860721"},{"title":"L'\u00c9lue","note":2,"img":"\/images\/medias\/7LEKkQYZH7UpQpuf5B6hj6VPBaF.jpg","link":"film\/L'%C3%89lue-en-streaming-hd\/14365d71073608a20793867345159003"},{"title":"Sidelined 2 Intercepted","note":4,"img":"\/images\/medias\/sEIP1pTVXa8BJaYSuVeVG3wFN10.jpg","link":"film\/Sidelined-2-Intercepted-en-streaming-hd\/6a9764209a80387081230550dd892740"},{"title":"Zootopie","note":3,"img":"\/images\/medias\/xEx4dHi2IrTB0vkVPccrGrMcZQW.jpg","link":"film\/Zootopie-en-streaming-hd\/153d6087561992110364a93698803864"},{"title":"F1 Le Film","note":4,"img":"\/images\/medias\/9i5VlOVWAQ8yTyCLNNVXa7hozUu.jpg","link":"film\/F1-Le-Film-en-streaming-hd\/5986740ae968026a618263571102e68a"},{"title":"\u00c0 contre-sens 3","note":4,"img":"\/images\/medias\/iNncvRAgj8SQA25OhjNZeEElWCK.jpg","link":"film\/%C3%80-contre-sens-3-en-streaming-hd\/3668519658648506201c81f98e190578"},{"title":"Wicked","note":3,"img":"\/images\/medias\/kQkgPhj6sCuoMWzPKWQVOWUXzib.jpg","link":"film\/Wicked-en-streaming-hd\/86725f776335e1a795d1136269321694"},{"title":"Une bataille apr\u00e8s l'autre","note":4,"img":"\/images\/medias\/pY61936dHuGtvpxh8mm30mRl1Md.jpg","link":"film\/Une-bataille-apr%C3%A8s-l'autre-en-streaming-hd\/8e68634662078d25928d3032316b7110"},{"title":"Harry Potter \u00e0 l'\u00e9cole des sorciers","note":4,"img":"\/images\/medias\/fbxQ44VRdM2PVzHSNajUseUteem.jpg","link":"film\/Harry-Potter-%C3%A0-l'%C3%A9cole-des-sorciers-en-streaming-hd\/345689924010981581346ab411986363"},{"title":"Lilo et Stitch le film","note":3,"img":"\/images\/medias\/71IjwRa88OJMYJBntId7nn0eFHy.jpg","link":"film\/Lilo-et-Stitch-le-film-en-streaming-hd\/54e722d35058777182b1d451e435d62b"},{"title":"Turtles All the Way Down","note":4,"img":"\/images\/medias\/apdfKuF32HpbQxmhbPQa6gxSo1Q.jpg","link":"film\/Turtles-All-the-Way-Down-en-streaming-hd\/40014696f71a77391356d6656d848880"},{"title":"Five Nights at Freddy's","note":4,"img":"\/images\/medias\/tEY81I7lpiHaLJa7AZ3O4vWXmJo.jpg","link":"film\/Five-Nights-at-Freddy's-en-streaming-hd\/1752493c6c7275458613257ea63c8918"},{"title":"Avant toi","note":4,"img":"\/images\/medias\/hHWrwq2Gskh4hn9SGYesFThduR5.jpg","link":"film\/Avant-toi-en-streaming-hd\/a32269348323309416135964615868e8"},{"title":"Maman, j'ai rat\u00e9 l'avion !","note":4,"img":"\/images\/medias\/7hvfmQ5zgwoxZZOHQ9uGMdIk43t.jpg","link":"film\/Maman,-j'ai-rat%C3%A9-l'avion-!-en-streaming-hd\/693282463363f92613a8337695986134"},{"title":"Spider-Man : Across the Spider-Verse","note":4,"img":"\/images\/medias\/xGOZ2gh5esxdwS6MWKuWn2aJOkA.jpg","link":"film\/Spider-Man-:-Across-the-Spider-Verse-en-streaming-hd\/967664141edc27941816207413da1883"}],"series":[{"title":"The Pitt","note":4,"img":"\/images\/medias\/tXjhN4bsHiB56lqbwhHBLJpTlbA.jpg","link":"serie\/The-Pitt-en-streaming-hd\/3b6438724f693568066371f4621e2728"},{"title":"T\u00e9h\u00e9ran","note":4,"img":"\/images\/medias\/yeoNmTcgFmP0OYmAGLJIVcdWb9C.jpg","link":"serie\/T%C3%A9h%C3%A9ran-en-streaming-hd\/f2795791069306e4d690416519d77165"},{"title":"Watching You","note":3,"img":"\/images\/medias\/inACOKbKfYXjegZTgBVrAfZT9bR.jpg","link":"serie\/Watching-You-en-streaming-hd\/192e977d4698867869b205c354e69611"},{"title":"Grey's Anatomy","note":4,"img":"\/images\/medias\/clnyhPqj1SNgpAdeSS6a6fwE6Bo.jpg","link":"serie\/Grey's-Anatomy-en-streaming-hd\/926d029371239d9e18c647575a719515"},{"title":"High Potential","note":4,"img":"\/images\/medias\/sEWC7lzVKfuwXhzdahW4AX1F05s.jpg","link":"serie\/High-Potential-en-streaming-hd\/4b713620471a26771713b976f0061233"},{"title":"Unfamiliar","note":4,"img":"\/images\/medias\/fX0Kvvo6hj9feqS3JyFpVmscz2Y.jpg","link":"serie\/Unfamiliar-en-streaming-hd\/5e760610b2681a778379697011483541"},{"title":"Prisme","note":3,"img":"\/images\/medias\/dsHR29EQnCZcMRTc8bzDkwY9mRh.jpg","link":"serie\/Prisme-en-streaming-hd\/d7857171961393d939713d15675591f6"},{"title":"The Night Agent","note":3,"img":"\/images\/medias\/xjsx6rGEgHl2tUqkimo6Bz2KzVo.jpg","link":"serie\/The-Night-Agent-en-streaming-hd\/e306635312245c2358476262b1a970a9"},{"title":"The Beauty","note":3,"img":"\/images\/medias\/d2KSymSoJMxGpTgPGtYuKfaTD95.jpg","link":"serie\/The-Beauty-en-streaming-hd\/89a547006661246990184721b6479776"},{"title":"Canada Shore","note":2,"img":"\/images\/medias\/3YpomoZuBl43rjKxc3xDwl5a2oJ.jpg","link":"serie\/Canada-Shore-en-streaming-hd\/1916b797261c60109946b7f9553e004d"},{"title":"Will Trent","note":3,"img":"\/images\/medias\/qqMh6R7lDJ0ny3yB3bchLCHO79g.jpg","link":"serie\/Will-Trent-en-streaming-hd\/6107f9826956129482260608039e0a49"},{"title":"Star Trek Starfleet Academy","note":3,"img":"\/images\/medias\/wAxeapp1AUd16UoBc7u8rHZ9emP.jpg","link":"serie\/Star-Trek-Starfleet-Academy-en-streaming-hd\/0861d5796029089f9768209468f45577"},{"title":"Bloody Flower","note":4,"img":"\/images\/medias\/kvt266zMIzyz0YAKMHWd7Mke5CD.jpg","link":"serie\/Bloody-Flower-en-streaming-hd\/217924799196954125679810719673b9"},{"title":"Pr\u00e9dictions qui dira vrai ?","note":3,"img":"\/images\/medias\/5V2n2JTYCTPD4fpikmPxldpuzos.jpg","link":"serie\/Pr%C3%A9dictions-qui-dira-vrai-?-en-streaming-hd\/295f1f7914f2b1763777249461281112"},{"title":"El secreto del r\u00edo","note":4,"img":"\/images\/medias\/x6b634Y0U8gzXOPd6VeLsxNDYON.jpg","link":"serie\/El-secreto-del-r%C3%ADo-en-streaming-hd\/8b641741925b87989974756445647099"},{"title":"Cross","note":3,"img":"\/images\/medias\/oArnlWvky2KtWoGC0ChaDboEvcH.jpg","link":"serie\/Cross-en-streaming-hd\/672702e11338b417c86741331306a476"},{"title":"Beast Games","note":3,"img":"\/images\/medias\/9y8rDYtbVr1tkEAanS0zOW52VLk.jpg","link":"serie\/Beast-Games-en-streaming-hd\/149533d770914765c33669c1629364de"},{"title":"56 jours","note":2,"img":"\/images\/medias\/dQrwzWg3a2m6d2QlvADErMxN7Os.jpg","link":"serie\/56-jours-en-streaming-hd\/98941f731110381969196157c5b92772"},{"title":"Hijack","note":5,"img":"\/images\/medias\/eotjreUn1d3RlEhrSVFXXbQR0d.jpg","link":"serie\/Hijack-en-streaming-hd\/490656846982210151b504182c887790"},{"title":"The Rookie : Le flic de Los Angeles","note":4,"img":"\/images\/medias\/dIxvlQczm4Jn7RpXhm0CzyN21IK.jpg","link":"serie\/The-Rookie-:-Le-flic-de-Los-Angeles-en-streaming-hd\/259157396c58463642141453329991db"},{"title":"Spartacus House of Ashur","note":3,"img":"\/images\/medias\/vNByuzy60v31nmUVPMA8oAtneUK.jpg","link":"serie\/Spartacus-House-of-Ashur-en-streaming-hd\/8b760608813763995144208367e66286"},{"title":"Les Lionnes","note":3,"img":"\/images\/medias\/j61N3pNeywGhPj2jl1uYoRrikG4.jpg","link":"serie\/Les-Lionnes-en-streaming-hd\/8545949277907e936161172705999869"},{"title":"Love Story John F. Kennedy Jr et Carolyn Bessette","note":4,"img":"\/images\/medias\/3JkNg1rEhJjVbodFjC4Q0H3UbaD.jpg","link":"serie\/Love-Story-John-F.-Kennedy-Jr-et-Carolyn-Bessette-en-streaming-hd\/9475096172a135961787c73e39465a59"},{"title":"Vanished","note":3,"img":"\/images\/medias\/KVyfJoW4nO1CATxHrD7oR8rRJH.jpg","link":"serie\/Vanished-en-streaming-hd\/1792667787b614d948752160225acc71"},{"title":"Chocolat amer","note":5,"img":"\/images\/medias\/mcdJy2csCUQ2zLFqiTtnBDsyQCp.jpg","link":"serie\/Chocolat-amer-en-streaming-hd\/167917c493baf933cc709912097e0326"},{"title":"De Belfast au paradis","note":4,"img":"\/images\/medias\/pzSaSmq4SZiIxQnfJZB8qjyHyMn.jpg","link":"serie\/De-Belfast-au-paradis-en-streaming-hd\/413971719376948181544416219673f9"},{"title":"Industry","note":3,"img":"\/images\/medias\/4G2aJJs1lXoS0n6ftZglkXtZpc6.jpg","link":"serie\/Industry-en-streaming-hd\/1d59779746391964066e715d0f267101"},{"title":"B.R.I","note":1,"img":"\/images\/medias\/6WUQbkiJeD7vQFXIfIkrmbbwe0j.jpg","link":"serie\/B.R.I-en-streaming-hd\/27166439467813832d2b435f247916c9"},{"title":"A Knight of the Seven Kingdoms","note":4,"img":"\/images\/medias\/aGYI50SOovltFi3b2jlXODO6kky.jpg","link":"serie\/A-Knight-of-the-Seven-Kingdoms-en-streaming-hd\/61f9e515a76959f82e98732684565966"},{"title":"Salvador","note":3,"img":"\/images\/medias\/8pLnnRB2qG1vZHXpjm2gVFNyUX.jpg","link":"serie\/Salvador-en-streaming-hd\/35585102707f537e3d44861357415379"},{"title":"Stranger Things","note":4,"img":"\/images\/medias\/joCCbrgiXbVxcpnWOzrIwNz8tC6.jpg","link":"serie\/Stranger-Things-en-streaming-hd\/935456871d7154690899a1228d1977e6"},{"title":"Game of Thrones","note":4,"img":"\/images\/medias\/v9rg012OtFGxXK6tO9Jq2BOWesk.jpg","link":"serie\/Game-of-Thrones-en-streaming-hd\/1790d7712d59960645951199e6731264"},{"title":"Maxton Hall \u2013 Le monde qui nous s\u00e9pare","note":3,"img":"\/images\/medias\/7WhDncdSzASEoXJQ0lx4ZdNG4Dg.jpg","link":"serie\/Maxton-Hall-%E2%80%93-Le-monde-qui-nous-s%C3%A9pare-en-streaming-hd\/4651f826672025574b2282d3c6189674"},{"title":"Desperate Housewives","note":4,"img":"\/images\/medias\/bqPo6t7YF38QYwuuy3zJwmFWaYz.jpg","link":"serie\/Desperate-Housewives-en-streaming-hd\/39315611794d12e46777d27d69185701"},{"title":"Grey's Anatomy","note":4,"img":"\/images\/medias\/clnyhPqj1SNgpAdeSS6a6fwE6Bo.jpg","link":"serie\/Grey's-Anatomy-en-streaming-hd\/926d029371239d9e18c647575a719515"},{"title":"Vampire Diaries","note":4,"img":"\/images\/medias\/lh2Fms8mUR9C1o5AqxZ4DwHcxkA.jpg","link":"serie\/Vampire-Diaries-en-streaming-hd\/4861c17142652756720e359149d3d193"},{"title":"L'\u00c9t\u00e9 o\u00f9 je suis devenue jolie","note":4,"img":"\/images\/medias\/863dec0af44234f206d2572517ccdce6.jpeg","link":"serie\/L'%C3%89t%C3%A9-o%C3%B9-je-suis-devenue-jolie-en-streaming-hd\/de15d77794675f019921690341073025"},{"title":"The Buccaneers","note":3,"img":"\/images\/medias\/sNuGK4rU0R1HYaTWsFm1lnRtL2M.jpg","link":"serie\/The-Buccaneers-en-streaming-hd\/96584c356514512a251934e70469488e"},{"title":"The Rookie : Le flic de Los Angeles","note":4,"img":"\/images\/medias\/dIxvlQczm4Jn7RpXhm0CzyN21IK.jpg","link":"serie\/The-Rookie-:-Le-flic-de-Los-Angeles-en-streaming-hd\/259157396c58463642141453329991db"},{"title":"Snowfall","note":4,"img":"\/images\/medias\/orvFrLzqSeW5qTFpfJEbPfHRPWg.jpg","link":"serie\/Snowfall-en-streaming-hd\/665140a044659906793307e861a78159"},{"title":"Teen Wolf","note":4,"img":"\/images\/medias\/8Ij1O2nU8exLgwPXU8Eo6PZdCDC.jpg","link":"serie\/Teen-Wolf-en-streaming-hd\/50774646d557e97176175d1729739181"},{"title":"Ginny & Georgia","note":4,"img":"\/images\/medias\/e4aqizYQ8eeTGNZMq6WiFfqoZbz.jpg","link":"serie\/Ginny-&-Georgia-en-streaming-hd\/1449736006529797d05e5911326d173f"},{"title":"Pretty Little Liars","note":4,"img":"\/images\/medias\/frB4pyzEnYnO3F67iYPGZGEpEbr.jpg","link":"serie\/Pretty-Little-Liars-en-streaming-hd\/91e67189703635d154372806d3335191"},{"title":"MobLand","note":4,"img":"\/images\/medias\/abeH7n5pcuQcwYcTxG6DTZvXLP1.jpg","link":"serie\/MobLand-en-streaming-hd\/22796327261661b92594f02687386560"},{"title":"Soy Luna","note":4,"img":"\/images\/medias\/mK1egVq2qMLMw4HIREUXuihKj9g.jpg","link":"serie\/Soy-Luna-en-streaming-hd\/9751993169158c1e9d076645945d7072"},{"title":"Motorheads","note":0,"img":"\/images\/medias\/jglGmYMPEiHD7tVncvif7WtCOBJA.jpg","link":"serie\/Motorheads-en-streaming-hd\/d3235fcc127840582227861874600781"},{"title":"Squid Game, Le jeu du calmar","note":4,"img":"\/images\/medias\/sPnaey220lHqJyArBBivdM5RNYU.jpg","link":"serie\/Squid-Game,-Le-jeu-du-calmar-en-streaming-hd\/171696a7e700d53021497946752023d1"},{"title":"Careme","note":3,"img":"\/images\/medias\/ffz1hS9PnGmJVnq98Mz1GVQklDu.jpg","link":"serie\/Careme-en-streaming-hd\/64715ff06961664d64558d47b1487a24"},{"title":"Nous les menteurs","note":4,"img":"\/images\/medias\/zIws8D25WyZEmYywMhe0PaO7LgE.jpg","link":"serie\/Nous-les-menteurs-en-streaming-hd\/4005165a138918810165658b59555778"}]}},"EAPP":{"url":"https:\/\/empire-application.com\/starter","data":[]},"EADIV":{"url":"https:\/\/empire-divertissement.com","data":[]}}
-};
-	</script>
-                        <link rel="stylesheet" href="/build/430.3ecb77fa.css"><link rel="stylesheet" href="/build/app.1971c6a3.css">
-        <link rel="stylesheet" href="/build/general.ea58dd37.css">
-    </head>
-    <body>
-        	<main class=" hp">
-		<div class="wrapper header-banner">
-			<header class="header">
-	<a href="/" class="df aic gap1">
-		<img class="logo" src="/img/logo.png" alt="logo empire sport"></img>
-		<div class="df fdc cw">
-			<p class="fbb ttu cw fs13">Empire</p>
-			<p class="fb ttu fs15 cw">Sport</p>
-		</div>
-	</a>
-	<a target="_blank" class="btn s btn-nav fr w is-active" href="https://empire-application.com/starter">Application</a>
-</header>
-		</div>
-		<section id="banner"></section>
-		<section id="events"></section>
-		<section id="chaines"></section>
-		<div class="wrapper ">
-	<div class="py4 df fdc aic jcc bcgrey3 br10">
-		<a href="/" class="df mb2">
-			<img style="height:50px;width:50px" class="logo" src="/img/logo.png" alt="logo empire sport"></img>
-	</a>
-	<p class="fs25 tac fb cw">Empire Sport change d’adresse toutes les deux semaines</p>
-	<p class="fs18 tac fr cgrey">Ne perdez plus votre chemin</p>
-	<div class="pt4 df fdc aic jcc">
-		<a href="https://empire-application.com/starter" class="btn s btn-nav fr w is-active">Télécharger l'application</a>
-		<p class="fr cw py1">Ou</p>
-		<a href="https://empire-streamings-sport.com" class="btn s btn-nav fr w is-active">Empire-streamings-sport</a>
-	</div>
-</div></div>
+  <!-- ✅ Favicon simple (sans fichiers à upload) -->
+  <link rel="icon" href="https://pbs.twimg.com/profile_images/1610301960493703168/rDZ9v5xZ_400x400.jpg">
 
-		<section id="list"></section>
-		<section id="extern"></section>
-	</main>
+  <!-- ✅ Preview partage (OG) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="IMFTX+ — 100% Des Matchs en direct">
+  <meta property="og:description" content="IMFTX+ : matchs, scores et résultats en direct.">
+  <meta property="og:url" content="https://imftxplus.vercel.app/">
+  <meta property="og:image" content="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500">
 
-        	<script src="/build/runtime.b6dce506.js"></script><script src="/build/375.7d44d227.js"></script><script src="/build/85.84770677.js"></script><script src="/build/106.2abed507.js"></script><script src="/build/303.fe1eef2b.js"></script><script src="/build/homepage.a0733612.js"></script>
-    </body>
+  <!-- ✅ Preview partage (Twitter/X) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IMFTX+ — 100% Des Matchs en direct">
+  <meta name="twitter:description" content="IMFTX+ : matchs, scores et résultats en direct.">
+  <meta name="twitter:image" content="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500">
+
+  <!-- ✅ ensuite tu laisses TOUS tes scripts/style comme tu avais -->
+
+  <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@latest" url="https://google.com"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    window.tailwind = window.tailwind || {};
+    tailwind.config = { darkMode: 'class' };
+  </script>
+
+  <script>
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/nprogress/nprogress.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/nprogress/nprogress.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    #nprogress .bar { top: 64px !important; }
+    #nprogress .spinner { top: 75px !important; }
+
+    html, body { font-family: 'Outfit', sans-serif; }
+
+    /* ✅ BACKGROUND IMAGE GLOBAL */
+    body{
+      display:flex;
+      flex-direction:column;
+      min-height: 100vh;
+      background-image: url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #fff;
+    }
+    /* overlay léger pour lisibilité */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body > *{ position: relative; z-index: 1; }
+    button *{ pointer-events:none; }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb{
+      background-color: rgba(100, 100, 100, 0.4);
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+    }
+    ::-webkit-scrollbar-thumb:hover { background-color: rgba(100, 100, 100, 0.6); }
+    *{ scrollbar-width: thin; scrollbar-color: rgba(100, 100, 100, 0.4) transparent; }
+    ::selection { background-color: #444; color: white; }
+
+    /* ===== Intro / Pop-up (Twitter) ===== */
+    .gate{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(6px);
+    }
+    .gate-card{
+      width: min(980px, 100%);
+      border-radius: 18px;
+      border: 1px solid rgba(255,0,0,.55);
+      box-shadow: 0 30px 120px rgba(0,0,0,.65);
+      background:
+        radial-gradient(900px 420px at 50% 30%, rgba(255,0,0,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      overflow: hidden;
+    }
+    .gate-inner{
+      padding: 26px 24px 22px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap: 14px;
+    }
+    .gate-avatar{
+      width: 92px;
+      height: 92px;
+      border-radius: 18px;
+      object-fit: cover;
+      box-shadow: 0 14px 55px rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .gate-title{
+      font-size: 46px;
+      font-weight: 900;
+      letter-spacing: .04em;
+      color:#fff;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-top: 6px;
+    }
+    .gate-text{
+      color: rgba(255,255,255,.85);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.35;
+      max-width: 720px;
+    }
+    .gate-btn{
+      width: min(720px, 100%);
+      height: 56px;
+      border-radius: 999px;
+      background: #ff0000;
+      color:#fff;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 20px 70px rgba(255,0,0,.22);
+      transition: transform .15s ease, filter .15s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+    }
+    .gate-btn:hover{ filter: brightness(1.06); }
+    .gate-btn:active{ transform: scale(.985); }
+    .gate-skip{
+      margin-top: 6px;
+      font-size: 12px;
+      color: rgba(255,255,255,.55);
+      text-decoration: underline;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* ✅ Logo center (sans bannière) */
+    .logo-wrap{
+      width: 100%;
+      max-width: 1536px;
+      margin: 0 auto;
+      padding: 18px 20px 0;
+    }
+    .logo-center{
+      width: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-top: 10px;
+      margin-bottom: 18px;
+    }
+    .logo-center img{
+      width: min(820px, 92%);
+      height: clamp(90px, 10vw, 140px);
+      object-fit: contain;
+      display:block;
+    }
+
+    /* ✅ Sections glass */
+    .glass-section{
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 70px rgba(0,0,0,.45);
+    }
+
+    /* --------- Match Cards --------- */
+    .match-card{
+      position:relative;
+      overflow:hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 18px 70px rgba(0,0,0,.45);
+      aspect-ratio: 16 / 9;
+    }
+    .match-bg{ position:absolute; inset:0; background-size:cover; background-position:center; transform:scale(1.02); opacity:.96; }
+    .match-overlay{
+      position:absolute; inset:0;
+      background:
+        radial-gradient(700px 320px at 28% 55%, rgba(0,0,0,.35), transparent 60%),
+        linear-gradient(90deg, rgba(0,0,0,.70) 0%, rgba(0,0,0,.45) 45%, rgba(0,0,0,.10) 100%);
+    }
+
+    .timer-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(18,18,18,.62);
+      border:1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(8px);
+      font-weight:800;
+      font-size:12px;
+      line-height:1;
+      color: rgba(255,255,255,.92);
+      white-space: nowrap;
+    }
+    .timer-dot{
+      width:8px;height:8px;border-radius:999px;background:#f59e0b;
+      box-shadow:0 0 0 3px rgba(245,158,11,.12);
+    }
+    .timer-text{ font-variant-numeric: tabular-nums; }
+    .timer-live{ color:#22c55e !important; }
+    .timer-dot-live{
+      background:#22c55e !important;
+      box-shadow:0 0 0 3px rgba(34,197,94,.16) !important;
+    }
+
+    .team-logo{ width:30px;height:30px; display:flex;align-items:center;justify-content:center; flex:0 0 auto; }
+    .team-logo img{ width:100%; height:100%; object-fit:contain; display:block; filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)); }
+    .vs{ font-weight:800; font-size:12px; color: rgba(255,255,255,.68); letter-spacing:.02em; }
+    .comp-wrap{ width:26px;height:26px; display:flex;align-items:center;justify-content:center; flex:0 0 auto; }
+    .comp-wrap img{ width:100%; height:100%; object-fit:contain; filter: drop-shadow(0 1px 0 rgba(0,0,0,.35)); }
+
+    .match-title{ font-size:15px; font-weight:500; line-height:1.15; color: rgba(255,255,255,.92); }
+    .match-sub{ font-size:12px; font-weight:600; color: rgba(255,255,255,.70); line-height:1.25; }
+
+    .watch-pill{
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.10);
+      backdrop-filter: blur(10px);
+      color:#fff;
+      font-weight:800;
+      font-size:12px;
+      padding:.42rem .70rem;
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      transition: transform .15s ease, background .15s ease;
+      white-space: nowrap;
+    }
+    .watch-pill:hover{ background: rgba(255,255,255,.14); }
+    .watch-pill:active{ transform: scale(.98); }
+    .play{
+      width:26px;height:26px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      display:grid; place-items:center;
+      background: rgba(0,0,0,.20);
+    }
+
+    @media (max-width: 640px){
+      .gate-title{ font-size: 40px; }
+    }
+
+    /* ══════════════════════════════
+       TV LIVE — section chaînes
+    ══════════════════════════════ */
+    .tv-section-label {
+      font-size: 13px; font-weight: 800;
+      color: rgba(255,255,255,.60);
+      text-transform: uppercase; letter-spacing: .09em;
+      margin-bottom: 14px;
+    }
+    .tv-carousel-wrap { display: flex; align-items: center; gap: 8px; }
+    .tv-row {
+      display: flex; align-items: center; gap: 12px;
+      overflow-x: auto; flex: 1;
+      scrollbar-width: none; padding: 4px 2px;
+    }
+    .tv-row::-webkit-scrollbar { display: none; }
+
+    .tv-car-btn {
+      flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.55);
+      color: rgba(255,255,255,.65); font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .2s;
+    }
+    .tv-car-btn:hover { background: rgba(255,255,255,.14); color: #fff; }
+
+    .tv-card {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      flex: 0 0 auto; text-decoration: none; cursor: pointer;
+    }
+    .tv-card-inner {
+      width: 120px; height: 78px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 12px;
+      background: rgba(16,16,26,.92);
+      border: 1px solid rgba(255,255,255,.09);
+      box-shadow: 0 4px 18px rgba(0,0,0,.4);
+      overflow: hidden; padding: 8px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .tv-card:hover .tv-card-inner {
+      border-color: rgba(255,255,255,.26);
+      box-shadow: 0 8px 30px rgba(0,0,0,.55);
+      transform: translateY(-3px);
+    }
+    .tv-card-inner img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain; display: block;
+    }
+    .tv-card-name {
+      font-size: 11px; font-weight: 700;
+      color: rgba(255,255,255,.65);
+      text-align: center; white-space: nowrap;
+    }
+    .tv-empty {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 16px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      font-size: 13px; color: rgba(255,255,255,.38);
+    }
+  </style>
+</head>
+
+<body data-page="index" class="text-white flex flex-col font-[Outfit] transition-colors duration-200">
+<noscript>You need to enable JavaScript to run this website.</noscript>
+
+<!-- POP-UP TWITTER -->
+<div id="gate" class="gate" style="display:none">
+  <div class="gate-card">
+    <div class="gate-inner">
+      <img class="gate-avatar" src="https://pbs.twimg.com/profile_images/1610301960493703168/rDZ9v5xZ_400x400.jpg" alt="IMFTX">
+      <div class="gate-title">IMFTX</div>
+      <div class="gate-text">
+        Rejoins mon post sur <b>X</b> pour soutenir le site :<br>
+        <b>RT + abonne-toi au compte</b>, puis reviens ici ✅
+      </div>
+      <a class="gate-btn" href="https://x.com/imftxvw/status/2024927890341511585" target="_blank" rel="noopener">
+        OUVRIR LE POST
+      </a>
+      <div id="gateSkip" class="gate-skip">J’ai déjà fait</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="sticky top-0 z-10 backdrop-blur-xl border-b border-white/10 shadow-sm bg-black/30">
+  <div class="max-w-screen-2xl mx-auto py-2 px-5 md:px-24 h-16 flex items-center justify-between">
+
+    <button id="burgerBtn" class="flex md:hidden w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200" aria-label="Menu">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+
+    <!-- ✅ visible TEL + PC -->
+    <button id="nav-pfp" type="button" class="h-11 flex items-center gap-1">
+      <div class="text-3xl font-extrabold tracking-tight text-white">IMFTX+</div>
+    </button>
+
+    <div class="h-11 flex items-center gap-2 md:gap-4 text-xl">
+      <div class="relative flex group">
+        <a href="/shop"
+           class="md:hidden h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+           aria-label="IPTV">
+          <span class="text-sm font-extrabold tracking-wide">IPTV</span>
+        </a>
+
+        <a href="/shop"
+           class="hidden md:flex w-auto h-11 px-3 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200">
+          <span class="text-sm font-semibold">OBTENEZ UN IPTV À PARTIR DE 9,99€</span>
+        </a>
+      </div>
+
+      <a id="nav-btn-telegram" href="https://t.me/addlist/sDF7qOMdHTMyYzA0" target="_blank"
+         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+         aria-label="Telegram">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M9.04 15.31 8.9 19.5c.57 0 .82-.25 1.12-.55l2.69-2.57 5.58 4.08c1.02.56 1.75.27 2-.94L23.9 4.7c.31-1.44-.55-2-1.56-1.63L1.55 10.86c-1.41.55-1.39 1.34-.24 1.7l5.32 1.66L19.1 6.5c.59-.39 1.13-.18.69.21"/>
+        </svg>
+      </a>
+
+      <a id="nav-btn-discord" href="https://discord.gg/KmFD2GXd" target="_blank"
+         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+         aria-label="Discord">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04 .106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
+        </svg>
+      </a>
+
+      <a id="nav-btn-twitter" href="https://x.com/imftxvw" target="_blank"
+         class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+         aria-label="X">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/>
+        </svg>
+      </a>
+
+      <button id="theme-toggle"
+              class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+              aria-label="Changer le thème">
+        <svg id="icon-sun" class="w-6 h-6 hidden dark:block" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-16h1v3h-1V2Zm0 19h1v3h-1v-3ZM2 12h3v1H2v-1Zm19 0h3v1h-3v-1ZM4.22 4.22l2.12 2.12-.7.7L3.52 4.92l.7-.7Zm14.02 14.02 2.12 2.12-.7.7-2.12-2.12.7-.7ZM19.78 4.22l.7.7-2.12 2.12-.7-.7 2.12-2.12ZM5.64 17.66l.7.7-2.12 2.12-.7-.7 2.12-2.12Z"/>
+        </svg>
+        <svg id="icon-moon" class="w-6 h-6 block dark:hidden" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ✅ LOGO SEUL (bannière supprimée) -->
+<div class="logo-wrap">
+  <div class="logo-center">
+    <img src="https://cdn.discordapp.com/attachments/1473372368809234720/1475851998376104039/1500x500-removebg-preview.png?ex=699efdc8&is=699dac48&hm=3feeace23e71e47abc05309bef62a9d376744cc6851e5125c376cb38034ac757&" alt="IMFTX+">
+  </div>
+</div>
+
+
+<!-- ══ TV LIVE ══ -->
+<div class="max-w-screen-2xl mx-auto w-full md:px-24 px-5 mt-6 mb-2">
+  <div class="tv-section-label">TV Live</div>
+  <div class="tv-carousel-wrap">
+    <button class="tv-car-btn" id="tvCarLeft">‹</button>
+    <div class="tv-row" id="tvLiveRow">
+      <div class="tv-empty">📡&nbsp; TV Live indisponible</div>
+    </div>
+    <button class="tv-car-btn" id="tvCarRight">›</button>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col md:px-24 px-5 transition-all duration-300 ease-out">
+  <div class="w-full flex flex-col gap-12 mt-2 pb-10">
+
+    <section class="glass-section p-6 w-full">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)]"></div>
+          <h2 class="text-xl font-bold text-white">IMFTX+ — AUJOURD’HUI</h2>
+        </div>
+
+        <button type="button" id="refreshBtn"
+          class="flex items-center justify-center w-9 h-9 rounded-xl bg-green-500/90 hover:bg-green-500 text-black transition-all duration-200 active:scale-95 shadow-md"
+          aria-label="Rafraîchir">↻</button>
+      </div>
+
+      <div id="stream-list-principal" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+    </section>
+
+    <section class="glass-section p-6 w-full">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-3 h-3 rounded-full bg-zinc-500"></div>
+        <h2 class="text-xl font-bold text-white">IMFTX+ — DEMAIN</h2>
+      </div>
+
+      <div id="stream-list-bk" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // ===== Gate (Twitter pop-up) =====
+  const GATE_KEY = "imftx_gate_done_v1";
+  const gate = document.getElementById("gate");
+  const gateSkip = document.getElementById("gateSkip");
+
+  function showGate(){
+    if(!gate) return;
+    gate.style.display = "grid";
+    document.body.style.overflow = "hidden";
+  }
+  function hideGate(){
+    if(!gate) return;
+    gate.style.display = "none";
+    document.body.style.overflow = "";
+    localStorage.setItem(GATE_KEY, "1");
+  }
+  if (!localStorage.getItem(GATE_KEY)) showGate();
+  gateSkip?.addEventListener("click", hideGate);
+
+  // -------- Theme toggle --------
+  const toggle = document.getElementById('theme-toggle');
+  function setTheme(mode){
+    if(mode === 'dark'){
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme','dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme','light');
+    }
+  }
+  toggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    setTheme(isDark ? 'light' : 'dark');
+  });
+
+  // ============================================================
+  // ✅ MATCHES (SCRIPT COPIER/COLLER ICI)
+  // ============================================================
+  const MATCHES_TODAY = [
+{
+      title: "Al-Hilal - Al-Ittihad", time: "20:00",
+      banner: "https://empire-sport.fit/upload/teambanks/qmi41jbddiyg50hvkxsxkjymnqcsi6.png",
+      aLogo: "https://empire-sport.fit/upload/teams/tiktjuihr7d8begzdbo5lmnmt1hmdf.png",
+      bLogo: "https://empire-sport.fit/upload/teams/eer11qxbsl47tqggjr5u1gstuvsxxl.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/zt4mb7gnlrgn2drjplitpx3e7xwdsf.png",
+      href: "alh-ali.html"
+  },
+{
+      title: "Atlético Madrid - Espanyol", time: "21:00",
+      banner: "https://empire-sport.fit/upload/teambanks/qpwvi2cxhcladiu6ln8qlscrmnqidf.png",
+      aLogo: "https://empire-sport.fit/upload/teams/smp4oeizppz2hw9fbmb9dznhohcwly.png",
+      bLogo: "https://empire-sport.fit/upload/teams/f556l4mvj3bkxivrglwjxdkbifqdle.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
+      href: "atm-espanyol.html"
+ },
+{
+      title: "Manchester City - Newcastle", time: "21:00",
+      banner: "https://empire-sport.fit/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
+      aLogo: "https://empire-sport.fit/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
+      bLogo: "https://empire-sport.fit/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
+      href: "mancity-new.html"
+  },
+{
+      title: "Paris SG - Metz", time: "21:05",
+      banner: "https://empire-sport.fit/upload/teambanks/67yruujoqy7yvdudtk6uvivz8ampqa.png",
+      aLogo: "https://empire-sport.fit/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
+      bLogo: "https://empire-sport.fit/upload/teams/qcuklxuxncckyihua7oh73wsacvqla.png",
+      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
+      href: "psg-metz.html"
+    }
+  ];
+
+  const MATCHES_TOMORROW = []; // si tu veux en mettre, colle-les ici
+
+  const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
+
+  function parseHHMM(hhmm){
+    const [h,m] = hhmm.split(':').map(Number);
+    return {h, m};
+  }
+
+  function getNextKickoff(timeHHMM){
+    const now = new Date();
+    const {h,m} = parseHHMM(timeHHMM);
+    const t = new Date(now);
+    t.setHours(h, m, 0, 0);
+
+    if (now.getTime() > (t.getTime() + LIVE_WINDOW_MS)) {
+      t.setDate(t.getDate() + 1);
+      t.setHours(h, m, 0, 0);
+    }
+    return t;
+  }
+
+  function formatRemaining(ms){
+    if(ms <= 0) return "00h 00m 00s";
+    const total = Math.floor(ms / 1000);
+    const hh = Math.floor(total / 3600);
+    const mm = Math.floor((total % 3600) / 60);
+    const ss = total % 60;
+    const pad = (n) => String(n).padStart(2,"0");
+    return `${pad(hh)}h ${pad(mm)}m ${pad(ss)}s`;
+  }
+
+  function cardHTML(m, idx, dayLabel){
+    const cleanID = (m.href || `match-${idx}`).replace(".html","");
+
+    return `
+      <a href="${m.href}" class="block">
+        <article class="match-card">
+          <div class="match-bg" style="background-image:url('${m.banner}')"></div>
+          <div class="match-overlay"></div>
+
+          <div class="absolute left-3 top-3">
+            <span class="timer-pill" data-pill="${idx}">
+              <span class="timer-dot" data-dot="${idx}"></span>
+              <span class="timer-text" data-timer="${idx}">--</span>
+            </span>
+          </div>
+
+          <div class="absolute right-3 top-3">
+            <span class="timer-pill">
+              <span class="timer-text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F54927" class="bi bi-person" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                </svg>
+              </span>
+              <span data-viewer-counter="${cleanID}" data-viewer-readonly style="color:#F54927;font-family:Arial, Helvetica, sans-serif;"></span>
+            </span>
+          </div>
+
+          <div class="absolute inset-x-0 bottom-0 p-4">
+            <div class="flex items-end justify-between gap-4">
+              <div class="min-w-0 max-w-[72%]">
+                <div class="flex items-center gap-2">
+                  <div class="team-logo"><img src="${m.aLogo}" alt=""></div>
+                  <span class="vs">VS</span>
+                  <div class="team-logo"><img src="${m.bLogo}" alt=""></div>
+                </div>
+
+                <div class="mt-2 flex items-center gap-2">
+                  <div class="comp-wrap"><img src="${m.compLogo}" alt=""></div>
+                  <div class="min-w-0">
+                    <div class="match-title truncate">${m.title}</div>
+                    <div class="match-sub">${dayLabel} · ${m.time}</div>
+                  </div>
+                </div>
+              </div>
+
+              <span class="watch-pill">
+                <span class="play">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
+                    <path d="M10 8l8 4-8 4V8Z" fill="currentColor"/>
+                  </svg>
+                </span>
+                REGARDER
+              </span>
+            </div>
+          </div>
+        </article>
+      </a>
+    `;
+  }
+
+  function render(){
+    const todayEl = document.getElementById('stream-list-principal');
+    const tomEl   = document.getElementById('stream-list-bk');
+
+    if(todayEl) todayEl.innerHTML = MATCHES_TODAY.map((m,i) => cardHTML(m, i, "Aujourd’hui")).join('');
+    if(tomEl) tomEl.innerHTML = MATCHES_TOMORROW.length
+      ? MATCHES_TOMORROW.map((m,i) => cardHTML(m, i + 100, "Demain")).join('')
+      : '';
+  }
+
+  function tick(){
+    const now = Date.now();
+    MATCHES_TODAY.forEach((m, idx) => {
+      const kickoff = getNextKickoff(m.time).getTime();
+      const endLive = kickoff + LIVE_WINDOW_MS;
+
+      const timerEl = document.querySelector(`[data-timer="${idx}"]`);
+      const pillEl  = document.querySelector(`[data-pill="${idx}"]`);
+      const dotEl   = document.querySelector(`[data-dot="${idx}"]`);
+      if(!timerEl || !pillEl || !dotEl) return;
+
+      if (now < kickoff) {
+        timerEl.textContent = formatRemaining(kickoff - now);
+        pillEl.classList.remove('timer-live');
+        timerEl.classList.remove('timer-live');
+        dotEl.classList.remove('timer-dot-live');
+      } else if (now >= kickoff && now <= endLive) {
+        timerEl.textContent = "En Cours";
+        pillEl.classList.add('timer-live');
+        timerEl.classList.add('timer-live');
+        dotEl.classList.add('timer-dot-live');
+      } else {
+        const next = getNextKickoff(m.time).getTime();
+        timerEl.textContent = formatRemaining(next - now);
+        pillEl.classList.remove('timer-live');
+        timerEl.classList.remove('timer-live');
+        dotEl.classList.remove('timer-dot-live');
+      }
+    });
+  }
+
+  document.getElementById('refreshBtn')?.addEventListener('click', () => {
+    NProgress.start();
+    render();
+    tick();
+    setTimeout(() => NProgress.done(), 350);
+  });
+
+
+  /* ════════════════════════════════════════════
+     TV CHANNELS
+     ─────────────────────────────────────────
+     logo : URL directe .png/.jpg/.svg/.webp
+            → laisse "" pour logo coloré auto
+     ═══════════════════════════════════════════ */
+  const CHANNEL_STYLES = {
+    "beIN Sports 1":  { bg:'#5c0f8b', l1:'beIN',     l2:'SPORTS 1', c2:'#ffd700' },
+    "beIN Sports 2":  { bg:'#5c0f8b', l1:'beIN',     l2:'SPORTS 2', c2:'#ffd700' },
+    "beIN Sports 3":  { bg:'#5c0f8b', l1:'beIN',     l2:'SPORTS 3', c2:'#ffd700' },
+    "Canal+":         { bg:'#000000', l1:'CANAL+',   l2:'',          c2:'#fff'    },
+    "Canal+ Sport":   { bg:'#000000', l1:'CANAL+',   l2:'SPORT',     c2:'#ff2222' },
+    "Canal+ Foot":    { bg:'#000000', l1:'CANAL+',   l2:'FOOT',      c2:'#00cc44' },
+    "RMC Sport 1":    { bg:'#d10a11', l1:'RMC',      l2:'SPORT 1',   c2:'#fff'    },
+    "RMC Sport 2":    { bg:'#d10a11', l1:'RMC',      l2:'SPORT 2',   c2:'#fff'    },
+    "Eurosport 1":    { bg:'#ff6600', l1:'EURO',     l2:'SPORT 1',   c2:'#fff'    },
+    "Eurosport 2":    { bg:'#ff6600', l1:'EURO',     l2:'SPORT 2',   c2:'#fff'    },
+    "L'Équipe":      { bg:'#ffcc00', l1:"L'ÉQUIPE",l2:'',          c2:'#000'    },
+    "Sky Sports":     { bg:'#001a6e', l1:'SKY',      l2:'SPORTS',    c2:'#00aaff' },
+    "TNT Sports 1":   { bg:'#111111', l1:'TNT',      l2:'SPORTS 1',  c2:'#ff2200' },
+    "TNT Sports 2":   { bg:'#111111', l1:'TNT',      l2:'SPORTS 2',  c2:'#ff2200' },
+    "DAZN":           { bg:'#f5f400', l1:'DAZN',     l2:'',          c2:'#000'    }
+  };
+
+  function makeSvgFallback(name) {
+    const s = CHANNEL_STYLES[name] || { bg:'#222', l1:name, l2:'', c2:'#fff' };
+    const lines = s.l2
+      ? [[s.l1, 18, '#fff'], [s.l2, 13, s.c2]]
+      : [[s.l1, 22, '#fff']];
+    const step = 80 / (lines.length + 1);
+    const txt = lines.map((l,i) =>
+      `<text x='50%' y='${Math.round(step*(i+1))}' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='${l[1]}' fill='${l[2]}'>${l[0]}</text>`
+    ).join('');
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
+      `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80'><rect width='200' height='80' rx='10' fill='${s.bg}'/>${txt}</svg>`
+    );
+  }
+
+  /* ── Liste des chaînes ──
+     Pour ajouter un logo URL : logo:"https://ton-cdn.com/bein1.png"
+     Pour logo auto coloré    : logo:""                               */
+  const TV_CHANNELS = [
+    { name:"beIN Sports 1",  href:"bein1.html",           logo:"https://only-us.win/tv/logos/bein_3.png" },
+    { name:"beIN Sports 2",  href:"bein2.html",           logo:"" },
+    { name:"beIN Sports 3",  href:"bein3.html",           logo:"" },
+    { name:"Canal+",         href:"canalplus.html",       logo:"" },
+    { name:"Canal+ Sport",   href:"canalplus-sport.html", logo:"" },
+    { name:"Canal+ Foot",    href:"canalplus-foot.html",  logo:"" },
+    { name:"RMC Sport 1",    href:"rmc1.html",            logo:"" },
+    { name:"RMC Sport 2",    href:"rmc2.html",            logo:"" },
+    { name:"Eurosport 1",    href:"eurosport1.html",      logo:"" },
+    { name:"Eurosport 2",    href:"eurosport2.html",      logo:"" },
+    { name:"L'Équipe",      href:"lequipe.html",         logo:"" },
+    { name:"Sky Sports",     href:"skysports.html",       logo:"" },
+    { name:"TNT Sports 1",   href:"tntsports1.html",      logo:"" },
+    { name:"TNT Sports 2",   href:"tntsports2.html",      logo:"" },
+    { name:"DAZN",           href:"dazn.html",            logo:"" }
+  ];
+
+  function renderTV() {
+    const row = document.getElementById('tvLiveRow');
+    if (!row) return;
+    if (!TV_CHANNELS.length) {
+      row.innerHTML = '<div class="tv-empty">📡&nbsp; TV Live indisponible</div>';
+      return;
+    }
+    row.innerHTML = '';
+    TV_CHANNELS.forEach(ch => {
+      const svg = makeSvgFallback(ch.name);
+      const a = document.createElement('a');
+      a.className = 'tv-card';
+      a.href = ch.href || '#';
+
+      const inner = document.createElement('div');
+      inner.className = 'tv-card-inner';
+
+      const img = document.createElement('img');
+      if (ch.logo && ch.logo.trim()) {
+        img.src = ch.logo.trim();
+        img.onerror = () => { img.src = svg; img.onerror = null; };
+      } else {
+        img.src = svg;
+      }
+      img.alt = ch.name;
+      img.loading = 'lazy';
+      inner.appendChild(img);
+
+      const label = document.createElement('span');
+      label.className = 'tv-card-name';
+      label.textContent = ch.name;
+
+      a.appendChild(inner);
+      a.appendChild(label);
+      row.appendChild(a);
+    });
+  }
+
+  renderTV();
+
+  /* ── Flèches carousel ── */
+  (function(){
+    const row = document.getElementById('tvLiveRow');
+    const lft = document.getElementById('tvCarLeft');
+    const rgt = document.getElementById('tvCarRight');
+    if (!row || !lft || !rgt) return;
+    const step = () => { const c = row.querySelector('.tv-card'); return c ? Math.max(150, c.getBoundingClientRect().width * 3 + 24) : 370; };
+    lft.addEventListener('click', () => row.scrollBy({ left: -step(), behavior: 'smooth' }));
+    rgt.addEventListener('click', () => row.scrollBy({ left:  step(), behavior: 'smooth' }));
+    const upd = () => {
+      const max = row.scrollWidth - row.clientWidth - 2;
+      lft.style.opacity = row.scrollLeft <= 2   ? '0.28' : '1';
+      rgt.style.opacity = row.scrollLeft >= max ? '0.28' : '1';
+    };
+    row.addEventListener('scroll', () => requestAnimationFrame(upd));
+    window.addEventListener('resize', upd);
+    setTimeout(upd, 350);
+  })();
+
+  render();
+  tick();
+  setInterval(tick, 1000);
+</script>
+
+<script type="module" src="./js/viewerCounter.js"></script>
+</body>
 </html>
