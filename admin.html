@@ -35,14 +35,11 @@
       overflow-x: hidden;
     }
 
-    /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 10px; }
 
-    /* ══════════════════════════════
-       LOGIN SCREEN
-    ══════════════════════════════ */
+    /* LOGIN */
     #login-screen {
       position: fixed; inset: 0; z-index: 999;
       display: flex; align-items: center; justify-content: center;
@@ -67,14 +64,9 @@
       animation: fadeUp .4s ease;
     }
     @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:none; } }
-
-    .login-logo {
-      font-size: 30px; font-weight: 900; color: #fff; letter-spacing: .02em;
-      margin-bottom: 6px;
-    }
+    .login-logo { font-size: 30px; font-weight: 900; color: #fff; letter-spacing: .02em; margin-bottom: 6px; }
     .login-logo span { color: var(--accent2); }
     .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 32px; }
-
     .field { margin-bottom: 16px; }
     .field label { display: block; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 7px; }
     .field input {
@@ -86,7 +78,6 @@
       transition: border-color .2s, background .2s;
     }
     .field input:focus { border-color: var(--accent); background: rgba(124,58,237,0.07); }
-
     .login-btn {
       width: 100%; height: 48px; border-radius: 12px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -99,13 +90,10 @@
     .login-btn:active { transform: scale(.98); }
     .login-error { font-size: 12px; color: var(--red); margin-top: 10px; text-align: center; min-height: 18px; }
 
-    /* ══════════════════════════════
-       LAYOUT
-    ══════════════════════════════ */
+    /* LAYOUT */
     #app { display: none; min-height: 100vh; }
     #app.visible { display: flex; }
 
-    /* ── SIDEBAR ── */
     .sidebar {
       width: var(--sidebar-w); flex: 0 0 var(--sidebar-w);
       background: var(--surface);
@@ -114,14 +102,10 @@
       position: sticky; top: 0; height: 100vh;
       overflow-y: auto;
     }
-    .sidebar-logo {
-      padding: 22px 20px 18px;
-      border-bottom: 1px solid var(--border);
-    }
+    .sidebar-logo { padding: 22px 20px 18px; border-bottom: 1px solid var(--border); }
     .sidebar-logo-text { font-size: 22px; font-weight: 900; color: #fff; }
     .sidebar-logo-text span { color: var(--accent2); }
     .sidebar-logo-sub { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
-
     .sidebar-nav { padding: 14px 10px; flex: 1; }
     .nav-section-label {
       font-size: 10px; font-weight: 800; color: rgba(255,255,255,.28);
@@ -144,11 +128,7 @@
       background: var(--accent); color: #fff;
       border-radius: 999px; padding: 1px 7px;
     }
-
-    .sidebar-footer {
-      padding: 14px 10px;
-      border-top: 1px solid var(--border);
-    }
+    .sidebar-footer { padding: 14px 10px; border-top: 1px solid var(--border); }
     .logout-btn {
       display: flex; align-items: center; gap: 10px;
       width: 100%; padding: 10px 12px; border-radius: 10px;
@@ -157,13 +137,8 @@
     }
     .logout-btn:hover { background: rgba(239,68,68,.1); color: var(--red); }
 
-    /* ── MAIN CONTENT ── */
-    .main {
-      flex: 1; min-width: 0;
-      display: flex; flex-direction: column;
-    }
+    .main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
-    /* ── TOPBAR ── */
     .topbar {
       height: 60px; padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between;
@@ -182,41 +157,31 @@
     .topbar-badge::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--green); animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
-    /* ── PAGE CONTENT ── */
     .page { padding: 28px 24px; display: none; animation: fadeIn .25s ease; }
     .page.active { display: block; }
     @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
 
-    /* ── STATS CARDS ── */
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 14px; margin-bottom: 28px; }
     .stat-card {
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: 14px; padding: 20px;
-      transition: border-color .2s;
+      border-radius: 14px; padding: 20px; transition: border-color .2s;
     }
     .stat-card:hover { border-color: var(--border2); }
-    .stat-icon {
-      width: 38px; height: 38px; border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; margin-bottom: 14px;
-    }
+    .stat-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 14px; }
     .stat-num { font-size: 28px; font-weight: 900; color: #fff; line-height: 1; }
     .stat-label { font-size: 12px; font-weight: 600; color: var(--muted); margin-top: 4px; }
 
-    /* ── SECTION PANELS ── */
     .panel {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: 16px; margin-bottom: 24px; overflow: hidden;
     }
     .panel-head {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--border);
+      padding: 18px 20px; border-bottom: 1px solid var(--border);
     }
     .panel-head h2 { font-size: 14px; font-weight: 800; color: #fff; }
     .panel-body { padding: 20px; }
 
-    /* ── BUTTONS ── */
     .btn-add {
       display: inline-flex; align-items: center; gap: 7px;
       padding: 8px 16px; border-radius: 10px;
@@ -234,16 +199,17 @@
       display: inline-flex; align-items: center; gap: 5px;
       transition: all .15s;
     }
-    .btn-edit { background: rgba(124,58,237,.15); border: 1px solid rgba(124,58,237,.25); color: var(--accent2); }
+    .btn-edit   { background: rgba(124,58,237,.15); border: 1px solid rgba(124,58,237,.25); color: var(--accent2); }
     .btn-edit:hover { background: rgba(124,58,237,.28); }
     .btn-delete { background: rgba(239,68,68,.12); border: 1px solid rgba(239,68,68,.22); color: #f87171; }
     .btn-delete:hover { background: rgba(239,68,68,.24); }
-    .btn-save { background: rgba(34,197,94,.15); border: 1px solid rgba(34,197,94,.25); color: var(--green); }
+    .btn-save   { background: rgba(34,197,94,.15); border: 1px solid rgba(34,197,94,.25); color: var(--green); }
     .btn-save:hover { background: rgba(34,197,94,.28); }
     .btn-cancel { background: rgba(255,255,255,.06); border: 1px solid var(--border); color: var(--muted); }
     .btn-cancel:hover { background: rgba(255,255,255,.10); color: #fff; }
+    .btn-dl     { background: rgba(245,158,11,.15); border: 1px solid rgba(245,158,11,.25); color: var(--orange); }
+    .btn-dl:hover { background: rgba(245,158,11,.28); }
 
-    /* ── TABLE ── */
     .table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     thead th {
@@ -259,17 +225,17 @@
     tbody td { padding: 12px 14px; vertical-align: middle; }
     .td-name { font-weight: 700; color: #fff; }
     .td-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
-    .td-actions { display: flex; align-items: center; gap: 6px; }
+    .td-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
     .status-badge {
       display: inline-flex; align-items: center; gap: 5px;
       padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700;
     }
-    .status-live { background: rgba(34,197,94,.14); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
+    .status-live     { background: rgba(34,197,94,.14); color: var(--green); border: 1px solid rgba(34,197,94,.25); }
     .status-upcoming { background: rgba(245,158,11,.12); color: var(--orange); border: 1px solid rgba(245,158,11,.22); }
-    .status-ended { background: rgba(255,255,255,.06); color: var(--muted); border: 1px solid var(--border); }
+    .status-ended    { background: rgba(255,255,255,.06); color: var(--muted); border: 1px solid var(--border); }
 
-    /* ── MODAL / FORM OVERLAY ── */
+    /* MODAL */
     .modal-overlay {
       position: fixed; inset: 0; z-index: 500;
       background: rgba(0,0,0,.72); backdrop-filter: blur(6px);
@@ -280,8 +246,8 @@
     .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal {
       background: var(--surface2); border: 1px solid var(--border2);
-      border-radius: 18px; width: min(540px, 100%);
-      max-height: 90vh; overflow-y: auto;
+      border-radius: 18px; width: min(640px, 100%);
+      max-height: 92vh; overflow-y: auto;
       box-shadow: 0 40px 100px rgba(0,0,0,.7);
       transform: translateY(16px); transition: transform .22s;
     }
@@ -289,6 +255,7 @@
     .modal-head {
       display: flex; align-items: center; justify-content: space-between;
       padding: 20px 22px; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--surface2); z-index: 2;
     }
     .modal-head h3 { font-size: 15px; font-weight: 800; color: #fff; }
     .modal-close {
@@ -302,6 +269,7 @@
     .modal-foot {
       padding: 16px 22px; border-top: 1px solid var(--border);
       display: flex; justify-content: flex-end; gap: 10px;
+      position: sticky; bottom: 0; background: var(--surface2); z-index: 2;
     }
 
     .form-row { margin-bottom: 16px; }
@@ -314,9 +282,17 @@
     }
     .form-row input:focus, .form-row select:focus { border-color: var(--accent); background: rgba(124,58,237,.06); }
     .form-row select option { background: #1a1a2e; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
-    /* ── TOAST ── */
+    .section-divider {
+      font-size: 11px; font-weight: 800; color: var(--accent2);
+      text-transform: uppercase; letter-spacing: .1em;
+      padding: 18px 0 10px;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .section-divider:first-child { border-top: none; padding-top: 0; }
+
     .toast {
       position: fixed; bottom: 24px; right: 24px; z-index: 9999;
       background: var(--surface2); border: 1px solid var(--border2);
@@ -334,14 +310,9 @@
     .toast.success .toast-dot { background: var(--green); }
     .toast.error   .toast-dot { background: var(--red); }
 
-    /* ── EMPTY STATE ── */
-    .empty-state {
-      text-align: center; padding: 48px 20px;
-      color: var(--muted); font-size: 13px;
-    }
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--muted); font-size: 13px; }
     .empty-state-icon { font-size: 36px; margin-bottom: 12px; }
 
-    /* ── MOBILE SIDEBAR ── */
     .hamburger {
       display: none; width: 38px; height: 38px;
       align-items: center; justify-content: center;
@@ -349,24 +320,18 @@
       background: var(--surface); color: var(--muted);
     }
     @media (max-width: 768px) {
-      .sidebar {
-        position: fixed; top: 0; left: 0; z-index: 200;
-        transform: translateX(-100%); transition: transform .28s;
-        height: 100vh;
-      }
+      .sidebar { position: fixed; top: 0; left: 0; z-index: 200; transform: translateX(-100%); transition: transform .28s; height: 100vh; }
       .sidebar.open { transform: none; }
       .hamburger { display: flex; }
-      .sidebar-backdrop {
-        position: fixed; inset: 0; z-index: 199;
-        background: rgba(0,0,0,.6); display: none;
-      }
+      .sidebar-backdrop { position: fixed; inset: 0; z-index: 199; background: rgba(0,0,0,.6); display: none; }
       .sidebar-backdrop.open { display: block; }
+      .form-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ══ LOGIN ══ -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">IMFTX<span>+</span></div>
@@ -384,13 +349,10 @@
   </div>
 </div>
 
-<!-- ══ APP ══ -->
+<!-- APP -->
 <div id="app">
-
-  <!-- Sidebar backdrop mobile -->
   <div class="sidebar-backdrop" id="sb-backdrop" onclick="closeSidebar()"></div>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
       <div class="sidebar-logo-text">IMFTX<span>+</span></div>
@@ -402,14 +364,12 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         Vue d'ensemble
       </div>
-
       <div class="nav-section-label">Contenu</div>
       <div class="nav-item" data-page="matches" onclick="goPage('matches',this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
         Matchs
         <span class="badge" id="badge-matches">0</span>
       </div>
-
       <div class="nav-section-label">Système</div>
       <div class="nav-item" data-page="settings" onclick="goPage('settings',this)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -424,7 +384,6 @@
     </div>
   </aside>
 
-  <!-- MAIN -->
   <div class="main">
     <div class="topbar">
       <div style="display:flex;align-items:center;gap:14px;">
@@ -438,7 +397,7 @@
       </div>
     </div>
 
-    <!-- ── PAGE : DASHBOARD ── -->
+    <!-- DASHBOARD -->
     <div class="page active" id="page-dashboard">
       <div class="stats-grid">
         <div class="stat-card">
@@ -457,20 +416,14 @@
           <div class="stat-label">À venir aujourd'hui</div>
         </div>
       </div>
-
-      <!-- Recent matches preview -->
       <div class="panel">
         <div class="panel-head">
           <h2>Matchs récents</h2>
-          <button class="btn-add" onclick="goPage('matches', document.querySelector('[data-page=matches]'))">
-            Gérer les matchs →
-          </button>
+          <button class="btn-add" onclick="goPage('matches', document.querySelector('[data-page=matches]'))">Gérer les matchs →</button>
         </div>
         <div class="panel-body table-wrap">
           <table>
-            <thead><tr>
-              <th>Match</th><th>Heure</th><th>Statut</th><th>Actions</th>
-            </tr></thead>
+            <thead><tr><th>Match</th><th>Heure</th><th>Statut</th><th>Actions</th></tr></thead>
             <tbody id="dash-matches-tbody">
               <tr><td colspan="4"><div class="empty-state"><div class="empty-state-icon">⚽</div>Aucun match. Ajoutez-en dans "Matchs".</div></td></tr>
             </tbody>
@@ -479,7 +432,7 @@
       </div>
     </div>
 
-    <!-- ── PAGE : MATCHS ── -->
+    <!-- MATCHS -->
     <div class="page" id="page-matches">
       <div class="panel">
         <div class="panel-head">
@@ -491,57 +444,38 @@
         </div>
         <div class="panel-body table-wrap">
           <table>
-            <thead><tr>
-              <th>Match</th><th>Compétition</th><th>Heure</th><th>Page</th><th>Statut</th><th>Actions</th>
-            </tr></thead>
+            <thead><tr><th>Match</th><th>Compétition</th><th>Heure</th><th>Fichier HTML</th><th>Statut</th><th>Actions</th></tr></thead>
             <tbody id="matches-tbody"></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ── PAGE : PARAMÈTRES ── -->
+    <!-- PARAMÈTRES -->
     <div class="page" id="page-settings">
       <div class="panel">
         <div class="panel-head"><h2>Paramètres du site</h2></div>
         <div class="panel-body">
           <div class="form-grid">
-            <div class="form-row">
-              <label>Nom du site</label>
-              <input type="text" id="set-sitename" value="IMFTX+">
-            </div>
-            <div class="form-row">
-              <label>Mot de passe admin</label>
-              <input type="password" id="set-pass" placeholder="Nouveau mot de passe">
-            </div>
+            <div class="form-row"><label>Nom du site</label><input type="text" id="set-sitename" value="IMFTX+"></div>
+            <div class="form-row"><label>Nouveau mot de passe admin</label><input type="password" id="set-pass" placeholder="••••••••"></div>
           </div>
-          <div class="form-row">
-            <label>URL arrière-plan</label>
-            <input type="text" id="set-bg" value="https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/6671a71542da8/uploads/media/myCANAL_Cover_web_2760x720_foot.jpg">
-          </div>
-          <div class="form-row">
-            <label>Lien Telegram</label>
-            <input type="text" id="set-tg" value="https://t.me/addlist/sDF7qOMdHTMyYzA0">
-          </div>
-          <div class="form-row">
-            <label>Lien Discord</label>
-            <input type="text" id="set-discord" value="https://discord.gg/KmFD2GXd">
-          </div>
-          <div class="form-row">
-            <label>Lien X / Twitter</label>
-            <input type="text" id="set-twitter" value="https://x.com/imftxvw">
+          <div class="form-row"><label>URL arrière-plan</label><input type="text" id="set-bg"></div>
+          <div class="form-row"><label>Lien Telegram</label><input type="text" id="set-tg"></div>
+          <div class="form-row"><label>Lien Discord</label><input type="text" id="set-discord"></div>
+          <div class="form-row"><label>Lien X / Twitter</label><input type="text" id="set-twitter"></div>
+          <div class="form-grid">
+            <div class="form-row"><label>Channel Twitch (chat)</label><input type="text" id="set-twitch" placeholder="drem0h"></div>
+            <div class="form-row"><label>Chemin JS compteur viewers</label><input type="text" id="set-counterjs" placeholder="./js/viewerCounter.js"></div>
           </div>
           <div style="margin-top:8px;">
-            <button class="btn-sm btn-save" style="padding:10px 20px;font-size:13px;" onclick="saveSettings()">
-              💾 Sauvegarder
-            </button>
+            <button class="btn-sm btn-save" style="padding:10px 20px;font-size:13px;" onclick="saveSettings()">💾 Sauvegarder</button>
           </div>
         </div>
       </div>
 
-      <!-- Export config -->
       <div class="panel">
-        <div class="panel-head"><h2>Export de configuration</h2></div>
+        <div class="panel-head"><h2>Export index.html</h2></div>
         <div class="panel-body">
           <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">Copie ce bloc et remplace la section correspondante dans ton <code style="background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;font-size:12px;">index.html</code>.</p>
           <textarea id="export-output" readonly style="width:100%;height:220px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:10px;color:#a0e0ff;font-family:'Courier New',monospace;font-size:12px;padding:14px;resize:vertical;outline:none;line-height:1.6;"></textarea>
@@ -553,10 +487,10 @@
       </div>
     </div>
 
-  </div><!-- /main -->
-</div><!-- /app -->
+  </div>
+</div>
 
-<!-- ══ MODAL : MATCH ══ -->
+<!-- MODAL MATCH -->
 <div class="modal-overlay" id="match-modal-overlay">
   <div class="modal">
     <div class="modal-head">
@@ -564,23 +498,40 @@
       <button class="modal-close" onclick="closeMatchModal()">×</button>
     </div>
     <div class="modal-body">
+
+      <div class="section-divider">📋 Informations générales</div>
       <div class="form-row">
         <label>Titre du match *</label>
         <input type="text" id="m-title" placeholder="Ex: PSG - Marseille">
       </div>
       <div class="form-grid">
         <div class="form-row">
-          <label>Heure *</label>
-          <input type="time" id="m-time" value="21:00">
+          <label>Heure * (ex: 21h00)</label>
+          <input type="text" id="m-time" placeholder="21h00">
         </div>
         <div class="form-row">
-          <label>Page (href) *</label>
+          <label>Nom du fichier HTML *</label>
           <input type="text" id="m-href" placeholder="psg-om.html">
         </div>
       </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label>Jour</label>
+          <select id="m-day">
+            <option value="today">Aujourd'hui</option>
+            <option value="tomorrow">Demain</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Compétition (ex: La Liga)</label>
+          <input type="text" id="m-competition" placeholder="La Liga">
+        </div>
+      </div>
+
+      <div class="section-divider">🖼️ Images & Logos</div>
       <div class="form-row">
-        <label>Image bannière (URL)</label>
-        <input type="text" id="m-banner" placeholder="https://...">
+        <label>Image de couverture du player (URL)</label>
+        <input type="text" id="m-cover" placeholder="https://... (image visible avant de lancer la vidéo)">
       </div>
       <div class="form-grid">
         <div class="form-row">
@@ -592,17 +543,37 @@
           <input type="text" id="m-blogo" placeholder="https://...">
         </div>
       </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label>Logo compétition (URL)</label>
+          <input type="text" id="m-complogo" placeholder="https://...">
+        </div>
+        <div class="form-row">
+          <label>Logo chaîne TV (URL)</label>
+          <input type="text" id="m-channellogo" placeholder="https://...">
+        </div>
+      </div>
+
+      <div class="section-divider">📺 Sources vidéo (liens embed)</div>
       <div class="form-row">
-        <label>Logo compétition (URL)</label>
-        <input type="text" id="m-complogo" placeholder="https://...">
+        <label>Source 1</label>
+        <input type="text" id="m-src1" placeholder="https://rereyano.ru/player/4/2">
       </div>
       <div class="form-row">
-        <label>Jour</label>
-        <select id="m-day">
-          <option value="today">Aujourd'hui</option>
-          <option value="tomorrow">Demain</option>
-        </select>
+        <label>Source 2 (HD)</label>
+        <input type="text" id="m-src2" placeholder="https://rereyano.ru/player/1/2">
       </div>
+      <div class="form-row">
+        <label>Source 3</label>
+        <input type="text" id="m-src3" placeholder="https://rereyano.ru/player/3/2">
+      </div>
+
+      <div class="section-divider">🔢 Compteur de viewers</div>
+      <div class="form-row">
+        <label>ID du compteur (ex: psg-om)</label>
+        <input type="text" id="m-counterid" placeholder="psg-om  ← sans .html">
+      </div>
+
     </div>
     <div class="modal-foot">
       <button class="btn-sm btn-cancel" style="padding:9px 18px;" onclick="closeMatchModal()">Annuler</button>
@@ -612,183 +583,173 @@
 </div>
 
 <!-- Toast -->
-<div class="toast" id="toast">
-  <div class="toast-dot"></div>
-  <span id="toast-msg"></span>
-</div>
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
 
 <script>
-/* ══════════════════════════════════════════
-   AUTH
-══════════════════════════════════════════ */
+/* ══ AUTH ══ */
 var ADMIN_USER = 'admin';
-var ADMIN_PASS = 'imftx2024'; /* change ce mot de passe */
+var ADMIN_PASS = 'imftx2024';
 
 function doLogin(){
   var u = document.getElementById('login-user').value.trim();
   var p = document.getElementById('login-pass').value;
   var err = document.getElementById('login-error');
-  if (u === ADMIN_USER && p === ADMIN_PASS){
-    document.getElementById('login-screen').style.display = 'none';
+  if(u===ADMIN_USER && p===ADMIN_PASS){
+    document.getElementById('login-screen').style.display='none';
     document.getElementById('app').classList.add('visible');
     refreshAll();
   } else {
-    err.textContent = 'Identifiant ou mot de passe incorrect.';
+    err.textContent='Identifiant ou mot de passe incorrect.';
     setTimeout(function(){ err.textContent=''; }, 3000);
   }
 }
-
-document.getElementById('login-pass').addEventListener('keydown', function(e){
-  if (e.key === 'Enter') doLogin();
-});
-
+document.getElementById('login-pass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
 function doLogout(){
   document.getElementById('app').classList.remove('visible');
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('login-pass').value = '';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('login-pass').value='';
 }
 
-/* ══════════════════════════════════════════
-   DATA — stocké en localStorage
-══════════════════════════════════════════ */
-function loadData(key, def){ try{ return JSON.parse(localStorage.getItem('imftx_'+key)) || def; }catch(e){ return def; } }
+/* ══ DATA ══ */
+function loadData(key, def){ try{ return JSON.parse(localStorage.getItem('imftx_'+key))||def; }catch(e){ return def; } }
 function saveData(key, val){ localStorage.setItem('imftx_'+key, JSON.stringify(val)); }
 
-var matches = loadData('matches', []);
+var matches  = loadData('matches', []);
+var settings = loadData('settings', {
+  sitename:'IMFTX+',
+  bg:'https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/6671a71542da8/uploads/media/myCANAL_Cover_web_2760x720_foot.jpg',
+  tg:'https://t.me/addlist/sDF7qOMdHTMyYzA0',
+  discord:'https://discord.gg/KmFD2GXd',
+  twitter:'https://x.com/imftxvw',
+  twitch:'drem0h',
+  counterjs:'./js/viewerCounter.js'
+});
 
-/* ══════════════════════════════════════════
-   NAVIGATION
-══════════════════════════════════════════ */
-var pageTitles = { dashboard:'Vue d\'ensemble', matches:'Matchs', settings:'Paramètres' };
-
+/* ══ NAV ══ */
+var pageTitles = {dashboard:'Vue d\'ensemble', matches:'Matchs', settings:'Paramètres'};
 function goPage(name, el){
   document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
   document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
   document.getElementById('page-'+name).classList.add('active');
   if(el) el.classList.add('active');
-  document.getElementById('topbar-title').textContent = pageTitles[name] || name;
-  if (name === 'matches') renderMatchesTable();
-  if (name === 'settings') generateExport();
+  document.getElementById('topbar-title').textContent = pageTitles[name]||name;
+  if(name==='matches') renderMatchesTable();
+  if(name==='settings'){ loadSettingsForm(); generateExport(); }
   closeSidebar();
 }
-
-/* ══════════════════════════════════════════
-   SIDEBAR MOBILE
-══════════════════════════════════════════ */
 function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sb-backdrop').classList.toggle('open'); }
 function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('sb-backdrop').classList.remove('open'); }
 
-/* ══════════════════════════════════════════
-   TOAST
-══════════════════════════════════════════ */
+/* ══ TOAST ══ */
 var toastTimer;
 function showToast(msg, type){
   var t = document.getElementById('toast');
-  t.className = 'toast ' + (type||'success');
-  document.getElementById('toast-msg').textContent = msg;
+  t.className='toast '+(type||'success');
+  document.getElementById('toast-msg').textContent=msg;
   t.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+  toastTimer=setTimeout(function(){ t.classList.remove('show'); }, 3500);
 }
 
-/* ══════════════════════════════════════════
-   MATCH STATUS
-══════════════════════════════════════════ */
-var LIVE_MS = 2.5 * 60 * 60 * 1000;
-function matchStatus(time){
-  var now = Date.now(), p = time.split(':'), t = new Date();
-  t.setHours(+p[0], +p[1], 0, 0);
-  var ko = t.getTime();
-  if (now >= ko && now <= ko + LIVE_MS) return 'live';
-  if (now < ko) return 'upcoming';
+/* ══ STATUS ══ */
+var LIVE_MS = 2.5*60*60*1000;
+function matchStatus(timeStr){
+  var now=Date.now();
+  var clean=timeStr.replace(/h/i,':');
+  var p=clean.split(':');
+  var t=new Date();
+  t.setHours(+(p[0]||21),+(p[1]||0),0,0);
+  var ko=t.getTime();
+  if(now>=ko && now<=ko+LIVE_MS) return 'live';
+  if(now<ko) return 'upcoming';
   return 'ended';
 }
 function statusBadge(time){
-  var s = matchStatus(time);
-  if (s === 'live')     return '<span class="status-badge status-live">🔴 En direct</span>';
-  if (s === 'upcoming') return '<span class="status-badge status-upcoming">⏰ À venir</span>';
+  var s=matchStatus(time);
+  if(s==='live')     return '<span class="status-badge status-live">🔴 En direct</span>';
+  if(s==='upcoming') return '<span class="status-badge status-upcoming">⏰ À venir</span>';
   return '<span class="status-badge status-ended">✓ Terminé</span>';
 }
 
-/* ══════════════════════════════════════════
-   REFRESH DASHBOARD
-══════════════════════════════════════════ */
+/* ══ DASHBOARD ══ */
 function refreshAll(){
-  document.getElementById('badge-matches').textContent = matches.length;
-  document.getElementById('stat-matches').textContent  = matches.length;
+  document.getElementById('badge-matches').textContent=matches.length;
+  document.getElementById('stat-matches').textContent=matches.length;
+  var live=matches.filter(function(m){ return matchStatus(m.time)==='live'; }).length;
+  var up=matches.filter(function(m){ return matchStatus(m.time)==='upcoming'; }).length;
+  document.getElementById('stat-live').textContent=live;
+  document.getElementById('stat-upcoming').textContent=up;
 
-  var live = matches.filter(function(m){ return matchStatus(m.time) === 'live'; }).length;
-  var up   = matches.filter(function(m){ return matchStatus(m.time) === 'upcoming'; }).length;
-  document.getElementById('stat-live').textContent     = live;
-  document.getElementById('stat-upcoming').textContent = up;
-
-  /* dash matches */
-  var tbody = document.getElementById('dash-matches-tbody');
-  if (!matches.length){
-    tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-state-icon">⚽</div>Aucun match. Ajoutez-en dans "Matchs".</div></td></tr>';
+  var tbody=document.getElementById('dash-matches-tbody');
+  if(!matches.length){
+    tbody.innerHTML='<tr><td colspan="4"><div class="empty-state"><div class="empty-state-icon">⚽</div>Aucun match. Ajoutez-en dans "Matchs".</div></td></tr>';
   } else {
-    tbody.innerHTML = matches.slice(0,5).map(function(m, i){
+    tbody.innerHTML=matches.slice(0,5).map(function(m,i){
       return '<tr>'
-        + '<td><div class="td-name">'+m.title+'</div></td>'
-        + '<td><span style="font-size:13px;font-weight:700;color:var(--orange)">'+m.time+'</span></td>'
-        + '<td>'+statusBadge(m.time)+'</td>'
-        + '<td><div class="td-actions">'
-        + '<button class="btn-sm btn-edit" onclick="editMatch('+i+')">✏️ Éditer</button>'
-        + '</div></td>'
-        + '</tr>';
+        +'<td><div class="td-name">'+m.title+'</div>'
+        +(m.competition?'<div class="td-sub">'+m.competition+'</div>':'')
+        +'</td>'
+        +'<td><span style="font-size:13px;font-weight:700;color:var(--orange)">'+m.time+'</span></td>'
+        +'<td>'+statusBadge(m.time)+'</td>'
+        +'<td><div class="td-actions">'
+        +'<button class="btn-sm btn-edit" onclick="editMatch('+i+')">✏️ Éditer</button>'
+        +'<button class="btn-sm btn-dl" onclick="downloadMatchPage('+i+')">⬇️ HTML</button>'
+        +'</div></td>'
+        +'</tr>';
     }).join('');
   }
 }
 
-/* ══════════════════════════════════════════
-   MATCHES TABLE
-══════════════════════════════════════════ */
+/* ══ TABLE MATCHS ══ */
 function renderMatchesTable(){
-  var tbody = document.getElementById('matches-tbody');
-  if (!matches.length){
-    tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">⚽</div>Aucun match configuré. Cliquez sur "Ajouter un match".</div></td></tr>';
+  var tbody=document.getElementById('matches-tbody');
+  if(!matches.length){
+    tbody.innerHTML='<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">⚽</div>Aucun match configuré. Cliquez sur "Ajouter un match".</div></td></tr>';
     return;
   }
-  tbody.innerHTML = matches.map(function(m, i){
+  tbody.innerHTML=matches.map(function(m,i){
     return '<tr>'
-      + '<td><div class="td-name">'+m.title+'</div>'
-      +   (m.banner ? '<div class="td-sub">Bannière: ✓</div>':'')
-      + '</td>'
-      + '<td><div class="td-sub" style="color:var(--muted)">'+(m.day==='tomorrow'?'Demain':'Aujourd\'hui')+'</div></td>'
-      + '<td><span style="font-weight:800;color:var(--orange)">'+m.time+'</span></td>'
-      + '<td><a href="'+m.href+'" style="font-size:12px;color:var(--accent2);">'+m.href+'</a></td>'
-      + '<td>'+statusBadge(m.time)+'</td>'
-      + '<td><div class="td-actions">'
-      +   '<button class="btn-sm btn-edit" onclick="editMatch('+i+')">✏️</button>'
-      +   '<button class="btn-sm btn-delete" onclick="deleteMatch('+i+')">🗑️</button>'
-      + '</div></td>'
-      + '</tr>';
+      +'<td><div class="td-name">'+m.title+'</div></td>'
+      +'<td><div class="td-sub">'+(m.competition||'—')+'</div></td>'
+      +'<td><span style="font-weight:800;color:var(--orange)">'+m.time+'</span></td>'
+      +'<td><span style="font-size:12px;color:var(--accent2)">'+m.href+'</span></td>'
+      +'<td>'+statusBadge(m.time)+'</td>'
+      +'<td><div class="td-actions">'
+      +'<button class="btn-sm btn-edit" onclick="editMatch('+i+')" title="Modifier">✏️</button>'
+      +'<button class="btn-sm btn-dl" onclick="downloadMatchPage('+i+')" title="Télécharger la page HTML">⬇️ HTML</button>'
+      +'<button class="btn-sm btn-delete" onclick="deleteMatch('+i+')" title="Supprimer">🗑️</button>'
+      +'</div></td>'
+      +'</tr>';
   }).join('');
   refreshAll();
 }
 
-/* ══════════════════════════════════════════
-   MATCH MODAL
-══════════════════════════════════════════ */
-var editMatchIdx = -1;
+/* ══ MODAL ══ */
+var editMatchIdx=-1;
 function openMatchModal(idx){
-  editMatchIdx = (idx !== undefined) ? idx : -1;
-  document.getElementById('match-modal-title').textContent = editMatchIdx >= 0 ? 'Modifier le match' : 'Ajouter un match';
-
-  if (editMatchIdx >= 0){
-    var m = matches[editMatchIdx];
-    document.getElementById('m-title').value   = m.title   || '';
-    document.getElementById('m-time').value    = m.time    || '21:00';
-    document.getElementById('m-href').value    = m.href    || '';
-    document.getElementById('m-banner').value  = m.banner  || '';
-    document.getElementById('m-alogo').value   = m.aLogo   || '';
-    document.getElementById('m-blogo').value   = m.bLogo   || '';
-    document.getElementById('m-complogo').value= m.compLogo|| '';
-    document.getElementById('m-day').value     = m.day     || 'today';
+  editMatchIdx=(idx!==undefined)?idx:-1;
+  document.getElementById('match-modal-title').textContent=editMatchIdx>=0?'Modifier le match':'Ajouter un match';
+  var allFields=['m-title','m-time','m-href','m-competition','m-cover','m-alogo','m-blogo','m-complogo','m-channellogo','m-src1','m-src2','m-src3','m-counterid'];
+  if(editMatchIdx>=0){
+    var m=matches[editMatchIdx];
+    document.getElementById('m-title').value       = m.title       ||'';
+    document.getElementById('m-time').value        = m.time        ||'21h00';
+    document.getElementById('m-href').value        = m.href        ||'';
+    document.getElementById('m-competition').value = m.competition ||'';
+    document.getElementById('m-cover').value       = m.cover       ||'';
+    document.getElementById('m-alogo').value       = m.aLogo       ||'';
+    document.getElementById('m-blogo').value       = m.bLogo       ||'';
+    document.getElementById('m-complogo').value    = m.compLogo    ||'';
+    document.getElementById('m-channellogo').value = m.channelLogo ||'';
+    document.getElementById('m-src1').value        = m.src1        ||'';
+    document.getElementById('m-src2').value        = m.src2        ||'';
+    document.getElementById('m-src3').value        = m.src3        ||'';
+    document.getElementById('m-counterid').value   = m.counterId   ||'';
+    document.getElementById('m-day').value         = m.day         ||'today';
   } else {
-    ['m-title','m-banner','m-alogo','m-blogo','m-complogo','m-href'].forEach(function(id){ document.getElementById(id).value=''; });
-    document.getElementById('m-time').value = '21:00';
-    document.getElementById('m-day').value  = 'today';
+    allFields.forEach(function(id){ document.getElementById(id).value=''; });
+    document.getElementById('m-time').value='21h00';
+    document.getElementById('m-day').value='today';
   }
   document.getElementById('match-modal-overlay').classList.add('open');
 }
@@ -796,83 +757,301 @@ function closeMatchModal(){ document.getElementById('match-modal-overlay').class
 function editMatch(i){ openMatchModal(i); }
 
 function saveMatch(){
-  var title = document.getElementById('m-title').value.trim();
-  var time  = document.getElementById('m-time').value.trim();
-  var href  = document.getElementById('m-href').value.trim();
-  if (!title || !time || !href){ showToast('Titre, heure et page sont requis.', 'error'); return; }
-  var obj = {
+  var title=document.getElementById('m-title').value.trim();
+  var time =document.getElementById('m-time').value.trim();
+  var href =document.getElementById('m-href').value.trim();
+  if(!title||!time||!href){ showToast('Titre, heure et nom de fichier sont requis.','error'); return; }
+  if(!href.endsWith('.html')) href+='.html';
+
+  var obj={
     title, time, href,
-    banner:   document.getElementById('m-banner').value.trim(),
-    aLogo:    document.getElementById('m-alogo').value.trim(),
-    bLogo:    document.getElementById('m-blogo').value.trim(),
-    compLogo: document.getElementById('m-complogo').value.trim(),
-    day:      document.getElementById('m-day').value
+    day:         document.getElementById('m-day').value,
+    competition: document.getElementById('m-competition').value.trim(),
+    cover:       document.getElementById('m-cover').value.trim(),
+    aLogo:       document.getElementById('m-alogo').value.trim(),
+    bLogo:       document.getElementById('m-blogo').value.trim(),
+    compLogo:    document.getElementById('m-complogo').value.trim(),
+    channelLogo: document.getElementById('m-channellogo').value.trim(),
+    src1:        document.getElementById('m-src1').value.trim(),
+    src2:        document.getElementById('m-src2').value.trim(),
+    src3:        document.getElementById('m-src3').value.trim(),
+    counterId:   document.getElementById('m-counterid').value.trim()
   };
-  if (editMatchIdx >= 0) matches[editMatchIdx] = obj;
+
+  if(editMatchIdx>=0) matches[editMatchIdx]=obj;
   else matches.push(obj);
   saveData('matches', matches);
   closeMatchModal();
   renderMatchesTable();
-  showToast(editMatchIdx >= 0 ? 'Match mis à jour ✓' : 'Match ajouté ✓');
+  showToast(editMatchIdx>=0?'Match mis à jour ✓':'Match ajouté ✓');
 }
 
 function deleteMatch(i){
-  if (!confirm('Supprimer ce match ?')) return;
-  matches.splice(i, 1);
+  if(!confirm('Supprimer ce match ?')) return;
+  matches.splice(i,1);
   saveData('matches', matches);
   renderMatchesTable();
-  showToast('Match supprimé.', 'error');
+  showToast('Match supprimé.','error');
 }
 
-/* ══════════════════════════════════════════
-   SETTINGS
-══════════════════════════════════════════ */
+/* ══ GÉNÉRATION PAGE HTML MATCH ══ */
+function generateMatchHTML(m){
+  var twitch   = settings.twitch    || 'drem0h';
+  var cntJs    = settings.counterjs || './js/viewerCounter.js';
+  var compLine = m.competition ? m.competition+' · '+m.time : m.time;
+  var coverBg  = m.cover
+    ? 'linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.80) 100%),\n        url("'+m.cover+'") center/cover no-repeat'
+    : 'linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.80) 100%)';
+
+  var aLogoHTML      = m.aLogo      ? '<img class="team-logo" src="'+m.aLogo+'" alt="Equipe A">' : '';
+  var bLogoHTML      = m.bLogo      ? '<img class="team-logo" src="'+m.bLogo+'" alt="Equipe B">' : '';
+  var compLogoHTML   = m.compLogo   ? '<img src="'+m.compLogo+'" alt="Compétition">' : '';
+  var channelLogoHTML= m.channelLogo? '<img class="channel-logo" src="'+m.channelLogo+'" alt="Chaîne">' : '';
+  var counterId      = m.counterId  || m.href.replace('.html','');
+  var titleLines     = m.title.split(' - ');
+  var stripSub       = titleLines.length>=2 ? titleLines[0]+'<br>'+titleLines[1] : m.title;
+
+  return '<!doctype html>\n'
++'<html lang="fr">\n'
++'<head>\n'
++'  <meta charset="utf-8" />\n'
++'  <meta name="viewport" content="width=device-width, initial-scale=1" />\n'
++'  <title>IMFTX+ — '+m.title+'</title>\n'
++'\n'
++'  <script src="https://cdn.tailwindcss.com"><\/script>\n'
++'  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">\n'
++'  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>\n'
++'\n'
++'  <style>\n'
++'    html, body { height: 100%; margin: 0; }\n'
++'    body{\n'
++'      font-family: \'Outfit\', system-ui, -apple-system, "Segoe UI", Roboto, Arial;\n'
++'      color:#fff;\n'
++'      overflow-x:hidden;\n'
++'      background:\n'
++'        linear-gradient(135deg, rgba(10,10,12,.92) 0%, rgba(10,10,12,.88) 40%, rgba(10,10,12,.92) 100%),\n'
++'        url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/68ef5649d83b5/uploads/media/myCANAL_Cover_web_2760x720_35.jpg") center/cover no-repeat fixed;\n'
++'    }\n'
++'    .glass{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.10); box-shadow:0 30px 120px rgba(0,0,0,.75); backdrop-filter:blur(14px); }\n'
++'    .player-box{ border-radius:20px; overflow:hidden; position:relative; }\n'
++'    iframe{ width:100%; height:100%; border:0; background:#000; display:block; }\n'
++'    .cover{\n'
++'      position:absolute; inset:0; z-index:15; cursor:pointer;\n'
++'      background:\n'
++'        '+coverBg+';\n'
++'    }\n'
++'    .cover-top{ position:absolute; top:16px; left:16px; display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:16px; background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(14px); }\n'
++'    .team-logo{ width:34px; height:34px; object-fit:contain; filter:drop-shadow(0 8px 18px rgba(0,0,0,.8)); }\n'
++'    .vs{ font-weight:900; font-size:14px; opacity:.9; }\n'
++'    .cover-strip{ position:absolute; left:16px; right:16px; bottom:16px; height:80px; border-radius:18px; background:rgba(0,0,0,.45); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(16px); display:flex; align-items:center; justify-content:space-between; padding:0 18px; }\n'
++'    .strip-title{ font-size:16px; font-weight:900; line-height:1; }\n'
++'    .strip-sub{ font-size:14px; opacity:.85; font-weight:600; font-style:italic; margin-top:4px; line-height:1.1; }\n'
++'    .strip-play{ width:46px; height:46px; border-radius:999px; border:1px solid rgba(255,255,255,.18); display:grid; place-items:center; background:rgba(255,255,255,.12); transition:.2s; }\n'
++'    .strip-play:hover{ transform:scale(1.06); background:rgba(255,255,255,.16); }\n'
++'    .pill{ position:absolute; top:16px; right:16px; padding:7px 12px; border-radius:999px; background:rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); font-weight:900; font-size:12px; display:flex; align-items:center; gap:8px; backdrop-filter:blur(14px); }\n'
++'    .dot{ width:7px; height:7px; border-radius:999px; background:#f59e0b; box-shadow:0 0 0 4px rgba(245,158,11,.12); }\n'
++'    .source-btn{ height:42px; border-radius:12px; font-weight:900; font-size:13px; transition:.2s; }\n'
++'    .source-btn.active{ background:#fff; color:#000; }\n'
++'    .source-btn.inactive{ background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.08); color:#fff; }\n'
++'    .watch-bar{ border-radius:16px; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:14px; }\n'
++'    .watch-left{ display:flex; align-items:center; gap:12px; min-width:0; }\n'
++'    .watch-left img{ width:36px; height:36px; object-fit:contain; filter:drop-shadow(0 6px 12px rgba(0,0,0,.75)); }\n'
++'    .watch-text{ min-width:0; line-height:1.1; }\n'
++'    .watch-text .small{ opacity:.75; font-weight:700; font-size:13px; }\n'
++'    .watch-text .big{ font-weight:900; font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }\n'
++'    .channel-logo{ width:92px; height:auto; object-fit:contain; filter:drop-shadow(0 6px 12px rgba(0,0,0,.75)); }\n'
++'    .chat-box{ border-radius:20px; overflow:hidden; min-height:520px; }\n'
++'    .chat-head{ display:flex; align-items:center; justify-content:space-between; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.10); }\n'
++'    .chat-head .title{ font-weight:900; }\n'
++'    .chat-head .sub{ font-size:12px; opacity:.7; font-weight:700; }\n'
++'    @media (max-width: 1024px){ .chat-box{ min-height:420px; } }\n'
++'  </style>\n'
++'</head>\n'
++'<body>\n'
++'\n'
++'  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/10">\n'
++'    <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">\n'
++'      <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>\n'
++'      <a href="index.html"\n'
++'         class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition">\n'
++'        <i class="fa-solid fa-arrow-left"></i> Retour\n'
++'      </a>\n'
++'    </div>\n'
++'  </nav>\n'
++'\n'
++'  <main class="max-w-screen-2xl mx-auto px-6 py-8">\n'
++'    <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">\n'
++'\n'
++'      <!-- PLAYER -->\n'
++'      <div>\n'
++'        <div class="player-box glass w-full aspect-video">\n'
++'          <div id="cover" class="cover" onclick="loadVideo(1)">\n'
++'            <div class="pill"><span class="dot"></span>'+m.time+'</div>\n'
++'            <div class="cover-top">\n'
++'              '+aLogoHTML+'\n'
++'              <span class="vs">VS</span>\n'
++'              '+bLogoHTML+'\n'
++'            </div>\n'
++'            <div class="cover-strip">\n'
++'              <div>\n'
++'                <div class="strip-title">Regarder Gratuitement</div>\n'
++'                <div class="strip-sub">'+stripSub+'</div>\n'
++'              </div>\n'
++'              <div class="strip-play"><i class="fa-solid fa-play"></i></div>\n'
++'            </div>\n'
++'          </div>\n'
++'          <div id="videoTarget" class="w-full h-full"></div>\n'
++'        </div>\n'
++'\n'
++'        <!-- SOURCES -->\n'
++'        <div class="mt-4 flex flex-wrap gap-3">\n'
++'          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>\n'
++'          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2 (HD)</button>\n'
++'          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>\n'
++'          <div style="display:flex;flex-direction:row;align-items:center;gap:8px;margin-left:auto;">\n'
++'            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>\n'
++'            <span data-viewer-counter="'+counterId+'" id="counterMatch1" style="color:#F54927;font-family:Arial,Helvetica,sans-serif;font-weight:bold;"></span>\n'
++'          </div>\n'
++'        </div>\n'
++'\n'
++'        <!-- VOUS REGARDEZ -->\n'
++'        <div class="mt-5 watch-bar glass">\n'
++'          <div class="watch-left">\n'
++'            '+compLogoHTML+'\n'
++'            <div class="watch-text">\n'
++'              <div class="small">Vous regardez</div>\n'
++'              <div class="big">'+m.title+'</div>\n'
++'              <div class="small">'+compLine+'</div>\n'
++'            </div>\n'
++'          </div>\n'
++'          '+channelLogoHTML+'\n'
++'        </div>\n'
++'      </div>\n'
++'\n'
++'      <!-- CHAT -->\n'
++'      <aside class="chat-box glass">\n'
++'        <div class="chat-head">\n'
++'          <div>\n'
++'            <div class="title">Chat en direct</div>\n'
++'            <div class="sub">Parler avec tout le respect !</div>\n'
++'          </div>\n'
++'          <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15"\n'
++'             href="https://www.twitch.tv/popout/'+twitch+'/chat?popout="\n'
++'             target="_blank" rel="noreferrer">Ouvrir</a>\n'
++'        </div>\n'
++'        <div style="height:calc(100% - 54px);min-height:520px;">\n'
++'          <iframe id="chatFrame" src=""></iframe>\n'
++'        </div>\n'
++'      </aside>\n'
++'\n'
++'    </section>\n'
++'  </main>\n'
++'\n'
++'  <script>\n'
++'    const SOURCES = {\n'
++'      1: "'+( m.src1||'#' )+'",\n'
++'      2: "'+( m.src2||'#' )+'",\n'
++'      3: "'+( m.src3||'#' )+'"\n'
++'    };\n'
++'    (function(){\n'
++'      const parentDomain = window.location.hostname;\n'
++'      document.getElementById("chatFrame").src =\n'
++'        `https://www.twitch.tv/embed/'+twitch+'/chat?darkpopout&parent=${encodeURIComponent(parentDomain)}`;\n'
++'    })();\n'
++'    function setActive(id){\n'
++'      [1,2,3].forEach(n=>{\n'
++'        const b=document.getElementById("btn"+n);\n'
++'        if(!b) return;\n'
++'        b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";\n'
++'      });\n'
++'    }\n'
++'    function loadVideo(id){\n'
++'      const cover=document.getElementById("cover");\n'
++'      if(cover) cover.style.display="none";\n'
++'      setActive(id);\n'
++'      const target=document.getElementById("videoTarget");\n'
++'      const url=SOURCES[id];\n'
++'      if(!url||url==="#"){\n'
++'        target.innerHTML=`<div class="w-full h-full grid place-items-center text-white/70 font-extrabold">soit pacient ça arrive 😉</div>`;\n'
++'        return;\n'
++'      }\n'
++'      target.innerHTML=`<iframe id="streamFrame" src="${url}" allowfullscreen scrolling="no" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation"></iframe>`;\n'
++'    }\n'
++'  <\/script>\n'
++'\n'
++'  <script type="module" src="'+cntJs+'"><\/script>\n'
++'</body>\n'
++'</html>';
+}
+
+/* ══ TÉLÉCHARGEMENT ══ */
+function downloadMatchPage(i){
+  var m=matches[i];
+  if(!m){ showToast('Match introuvable.','error'); return; }
+  var html=generateMatchHTML(m);
+  var blob=new Blob([html], {type:'text/html;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url; a.download=m.href;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 1000);
+  showToast('📄 "'+m.href+'" téléchargé ! Place-le dans ton dossier site.');
+}
+
+/* ══ SETTINGS ══ */
+function loadSettingsForm(){
+  document.getElementById('set-sitename').value  = settings.sitename  ||'IMFTX+';
+  document.getElementById('set-bg').value        = settings.bg        ||'';
+  document.getElementById('set-tg').value        = settings.tg        ||'';
+  document.getElementById('set-discord').value   = settings.discord   ||'';
+  document.getElementById('set-twitter').value   = settings.twitter   ||'';
+  document.getElementById('set-twitch').value    = settings.twitch    ||'drem0h';
+  document.getElementById('set-counterjs').value = settings.counterjs ||'./js/viewerCounter.js';
+}
 function saveSettings(){
-  var np = document.getElementById('set-pass').value.trim();
-  if (np) ADMIN_PASS = np;
+  var np=document.getElementById('set-pass').value.trim();
+  if(np) ADMIN_PASS=np;
+  settings.sitename  = document.getElementById('set-sitename').value.trim();
+  settings.bg        = document.getElementById('set-bg').value.trim();
+  settings.tg        = document.getElementById('set-tg').value.trim();
+  settings.discord   = document.getElementById('set-discord').value.trim();
+  settings.twitter   = document.getElementById('set-twitter').value.trim();
+  settings.twitch    = document.getElementById('set-twitch').value.trim();
+  settings.counterjs = document.getElementById('set-counterjs').value.trim();
+  saveData('settings', settings);
   showToast('Paramètres sauvegardés ✓');
   generateExport();
 }
 
-/* ══════════════════════════════════════════
-   EXPORT
-══════════════════════════════════════════ */
+/* ══ EXPORT INDEX ══ */
 function generateExport(){
-  var todayMatches = matches.filter(function(m){ return m.day !== 'tomorrow'; });
-  var tomMatches   = matches.filter(function(m){ return m.day === 'tomorrow'; });
-
-  var matchArr = function(arr){
-    if (!arr.length) return '[]';
-    return '[\n' + arr.map(function(m){
+  var todayM=matches.filter(function(m){ return m.day!=='tomorrow'; });
+  var tomM  =matches.filter(function(m){ return m.day==='tomorrow'; });
+  var matchArr=function(arr){
+    if(!arr.length) return '[]';
+    return '[\n'+arr.map(function(m){
       return '  {\n'
-        + '    title:"'+m.title+'", time:"'+m.time+'",\n'
-        + '    banner:"'+m.banner+'",\n'
-        + '    aLogo:"'+m.aLogo+'",\n'
-        + '    bLogo:"'+m.bLogo+'",\n'
-        + '    compLogo:"'+m.compLogo+'",\n'
-        + '    href:"'+m.href+'"\n'
-        + '  }';
-    }).join(',\n') + '\n]';
+        +'    title:"'+m.title+'", time:"'+m.time+'",\n'
+        +'    banner:"'+(m.cover||'')+'",\n'
+        +'    aLogo:"'+(m.aLogo||'')+'",\n'
+        +'    bLogo:"'+(m.bLogo||'')+'",\n'
+        +'    compLogo:"'+(m.compLogo||'')+'",\n'
+        +'    href:"'+m.href+'"\n'
+        +'  }';
+    }).join(',\n')+'\n]';
   };
-
-  var out = '/* ══ MATCHES_TODAY (copier dans index.html) ══ */\n'
-    + 'var MATCHES_TODAY = ' + matchArr(todayMatches) + ';\n\n'
-    + '/* ══ MATCHES_TOMORROW ══ */\n'
-    + 'var MATCHES_TOMORROW = ' + matchArr(tomMatches) + ';\n';
-
-  document.getElementById('export-output').value = out;
+  var out='/* ══ MATCHES_TODAY ══ */\nvar MATCHES_TODAY = '+matchArr(todayM)+';\n\n'
+         +'/* ══ MATCHES_TOMORROW ══ */\nvar MATCHES_TOMORROW = '+matchArr(tomM)+';\n';
+  document.getElementById('export-output').value=out;
 }
-
 function copyExport(){
-  var ta = document.getElementById('export-output');
+  var ta=document.getElementById('export-output');
   ta.select();
-  try { document.execCommand('copy'); showToast('Copié dans le presse-papier ✓'); }
+  try{ document.execCommand('copy'); showToast('Copié dans le presse-papier ✓'); }
   catch(e){ showToast('Erreur de copie.','error'); }
 }
 
-/* ══════════════════════════════════════════
-   INIT
-══════════════════════════════════════════ */
+/* ══ INIT ══ */
 refreshAll();
 setInterval(refreshAll, 30000);
 </script>
