@@ -371,6 +371,21 @@
           </div>
         </div>
       </div>
+
+      <!-- EXPORT PANEL -->
+      <div class="panel">
+        <div class="panel-head"><h2>📤 Export pour index.html</h2></div>
+        <div class="panel-body">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">
+            Copie ce bloc et remplace les variables <code style="background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;font-size:12px;">MATCHES_TODAY</code> et <code style="background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;font-size:12px;">MATCHES_TOMORROW</code> dans ton <code style="background:rgba(255,255,255,.08);padding:2px 6px;border-radius:4px;font-size:12px;">index.html</code>.
+          </p>
+          <textarea id="export-output" readonly style="width:100%;height:260px;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:10px;color:#a0e0ff;font-family:'Courier New',monospace;font-size:12px;padding:14px;resize:vertical;outline:none;line-height:1.6;"></textarea>
+          <div style="margin-top:10px;display:flex;gap:10px;">
+            <button class="btn-sm btn-save" style="padding:9px 18px;" onclick="generateExport()">⚙️ Générer</button>
+            <button class="btn-sm btn-edit" style="padding:9px 18px;" onclick="copyExport()">📋 Copier</button>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -477,7 +492,7 @@ function goPage(name,el){
   if(el) el.classList.add('active');
   document.getElementById('topbar-title').textContent=pageTitles[name]||name;
   if(name==='matches') renderMatchesTable();
-  if(name==='settings') loadSettingsForm();
+  if(name==='settings'){ loadSettingsForm(); generateExport(); }
   if(name==='setup') loadSetupPage();
   closeSidebar();
 }
@@ -1040,6 +1055,40 @@ function downloadMatchPage(i){
   document.body.appendChild(a); a.click();
   setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); },1000);
   showToast('\ud83d\udcc4 "'+m.href+'" t\u00e9l\u00e9charg\u00e9 !');
+}
+
+/* ══ EXPORT INDEX.HTML ══ */
+function generateExport(){
+  var todayM=matches.filter(function(m){ return m.day!=='tomorrow'; });
+  var tomM  =matches.filter(function(m){ return m.day==='tomorrow'; });
+  var NL='\n';
+  function matchArr(arr){
+    if(!arr.length) return '[]';
+    return '['+NL+arr.map(function(m){
+      return '  {'+NL
+        +'    title:"'+m.title+'", time:"'+m.time+'",'+NL
+        +'    banner:"'+(m.banner||'')+'",'+NL
+        +'    aLogo:"'+(m.aLogo||'')+'",'+NL
+        +'    bLogo:"'+(m.bLogo||'')+'",'+NL
+        +'    compLogo:"'+(m.compLogo||'')+'",'+NL
+        +'    href:"'+m.href+'"'+NL
+        +'  }';
+    }).join(','+NL)+NL+']';
+  }
+  var out='/* Matchs Aujourd hui */'+NL
+    +'var MATCHES_TODAY = '+matchArr(todayM)+';'+NL+NL
+    +'/* Matchs Demain */'+NL
+    +'var MATCHES_TOMORROW = '+matchArr(tomM)+';'+NL;
+  var ta=document.getElementById('export-output');
+  if(ta) ta.value=out;
+}
+
+function copyExport(){
+  var ta = document.getElementById('export-output');
+  if(!ta) return;
+  ta.select();
+  try { document.execCommand('copy'); showToast('Copié dans le presse-papier ✓'); }
+  catch(e) { showToast('Erreur de copie.','error'); }
 }
 
 /* ══ INIT ══ */
