@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>IMFTX+ — Barcelona - Atlético Madrid</title>
+  <title>IMFTX+ — Marseille - Toulouse</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -13,7 +13,7 @@
     .glass{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);box-shadow:0 30px 120px rgba(0,0,0,.75);backdrop-filter:blur(14px)}
     .player-box{border-radius:20px;overflow:hidden;position:relative}
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
-    .cover{position:absolute;inset:0;z-index:15;cursor:pointer;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.80) 100%),url("https://empire-sport.live/upload/events/hfxlqrogyrxpkrivpxymwuecatbgj9.jpg") center/cover no-repeat}
+    .cover{position:absolute;inset:0;z-index:15;cursor:pointer;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.80) 100%),url("https://empire-sport.live/upload/teambanks/edmzxupzeqsdjtwsxmbpswkkkfchvk.png") center/cover no-repeat}
     .cover-top{position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px)}
     .team-logo{width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.8))}
     .vs{font-weight:900;font-size:14px;opacity:.9}
@@ -54,8 +54,8 @@
         <div class="player-box glass w-full aspect-video">
           <div id="cover" class="cover" onclick="loadVideo(1)">
             <div class="pill"><span class="dot"></span>21:00</div>
-            <div class="cover-top"><img class="team-logo" src="https://empire-sport.live/upload/teams/yna7jb3wlgu3qdxjf7mu9j0rt7ksrg.png" alt="A"><span class="vs">VS</span><img class="team-logo" src="https://empire-sport.live/upload/teams/smp4oeizppz2hw9fbmb9dznhohcwly.png" alt="B"></div>
-            <div class="cover-strip"><div><div class="strip-title">Regarder Gratuitement</div><div class="strip-sub">Barcelona<br>Atlético Madrid</div></div><div class="strip-play"><i class="fa-solid fa-play"></i></div></div>
+            <div class="cover-top"><img class="team-logo" src="https://empire-sport.live/upload/teams/5box72sxig3lzrlh1xkj44xqfw9j41.png" alt="A"><span class="vs">VS</span><img class="team-logo" src="https://empire-sport.live/upload/teams/o1bcez0ds5tikrwlny5yt7nkalhje3.png" alt="B"></div>
+            <div class="cover-strip"><div><div class="strip-title">Regarder Gratuitement</div><div class="strip-sub">Marseille<br>Toulouse</div></div><div class="strip-play"><i class="fa-solid fa-play"></i></div></div>
           </div>
           <div id="videoTarget" class="w-full h-full"></div>
         </div>
@@ -65,12 +65,12 @@
           <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
           <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
-            <span data-viewer-counter="bar-atletico" id="counterMatch1" style="color:#F54927;font-family:Arial,sans-serif;font-weight:bold"></span>
+            <span data-viewer-counter="om-tfc" id="counterMatch1" style="color:#F54927;font-family:Arial,sans-serif;font-weight:bold"></span>
           </div>
         </div>
         <div class="mt-5 watch-bar glass">
-          <div class="watch-left"><img src="https://empire-sport.live/upload/leagues/ifm4fzw0zm4vfe7xf0pzviqo0cchbv.png" alt="Comp"><div class="watch-text"><div class="small">Vous regardez</div><div class="big">Barcelona - Atlético Madrid</div><div class="small">Coupe du roi · 21:00</div></div></div>
-          <img class="channel-logo" src="https://empire-sport.live/upload/chaines/bry9cmx6ljl79tuo5sxfeaeafwxwmm.png" alt="Ch">
+          <div class="watch-left"><img src="https://empire-sport.live/upload/leagues/nsnmlketyltkftezcw1n3ckysgceyu.png" alt="Comp"><div class="watch-text"><div class="small">Vous regardez</div><div class="big">Marseille - Toulouse</div><div class="small">Coupe de france · 21:00</div></div></div>
+          <img class="channel-logo" src="https://empire-sport.live/upload/chaines/8rdidmr7uk3rpug7ffdtpw3htqadqr.png" alt="Ch">
         </div>
       </div>
       <aside class="chat-box glass">
@@ -83,7 +83,7 @@
     </section>
   </main>
   <script>
-    var SOURCES={1:"https://euw31.playlist.ttvnw.net/v1/playlist/CucGRvWmMpHEfEBZfdSzlF8zBMag6GzLWN4ZX_6aTVCohqDojo7MVaUBIwbpNXEYmMlp_6TFlS6RN88A1G2EZ9mtoBnwnqEKIVXvkFy-3qyUL5rCqFopP8B4yAhMvuO1Q_UdfL5utzSn8q6MefFIZu7tigWl5_N8YqGGkUaB5RIPy9IR_pkNMz1AHQIy-u9XT24eiX6Cs1sDykp4KE_fMv4j8U_z9L7w1BXUZXEF302ofveN9E9JtkyY2ANLywwn3Paz5dg3uSbGgjB0_zZmxG85Svl3cXRghowhG5QDd4j_zvhmz5s1ltMWBs0ifZP6pA5DDHEKHUkMchBgI9LTLxIN2hWTZh9y2jAH_j4txjA0qZhjIeMCcx90LbRqRQIWbH2B27TZsbPGY2JPS9zc4lfl6Uj_1Ie6gwfV9ZErRJGAWhtGs7-L2dOO2OOSzRslV4QAgZwPdUYDE71uyff6sAJTJKvf2s-oV8YEs6LDRxV3xbRbi_NTXJu-FvZj5C0RFOLdF70CXZntYDnRhlW6GWn5Lxj_umGNUlth6t7x-EzbLDzyRkHumFRKUQi1-2BdDdChrJI9euOOZcxjcvgprhtZqHY6BQKckEleUMzO_slbHDbM_z9Ub1aw1NixcMKE8pdb9z9QgGdNb6SkfmhanA2aR_93QNkgape6gDu4vQV9f_n1x9HeMkM68xrq5Nt7dIth95y59bxN5i3Ofp0h-8z2-J3nI4eV73LMwoNjeDdwPMzsHAUjQ3yIq0vNyF9hQgUIncaQExyZ6EJYiIt3ZMAl8otpBe3I6FVKU5quiXucYX07R6HJbJnTe4QIG3i6PmPlOgT1KSlg-KdR-FHCs4IfsdJu3ulzvqahHtlAbFnovKpFbElY5ZC3Hn4FNzYgSmQlcwTJR1FppCcTjqJusOZpaWsooyKoCk9YgJLj1M9NIAgQ5FnsiWz-GRqMGT4W1sDUZJqd68ATZfhSxzpY3AeiHRC14rXWjcUqoNAnRMK_6cHZhX-JE4n7ym1JRhdoqElGo6xB8MQ1gup9X87aYbUwqcc_GYT6wavVGgNVMypyShMMoekY8n-np0EAzeKqBNbSUIeYRJZ1mHuuv5sOCNjkFLXCAauA-i1iHrDMYETl4dk1aXfGVo1p_B7MsrT1J9JyLQRWKjFDIRoMWz-2BxH4OOkKT_A5IAEqCWV1LXdlc3QtMjDIDg.m3u8",2:"https://euw31.playlist.ttvnw.net/v1/playlist/CucGRvWmMpHEfEBZfdSzlF8zBMag6GzLWN4ZX_6aTVCohqDojo7MVaUBIwbpNXEYmMlp_6TFlS6RN88A1G2EZ9mtoBnwnqEKIVXvkFy-3qyUL5rCqFopP8B4yAhMvuO1Q_UdfL5utzSn8q6MefFIZu7tigWl5_N8YqGGkUaB5RIPy9IR_pkNMz1AHQIy-u9XT24eiX6Cs1sDykp4KE_fMv4j8U_z9L7w1BXUZXEF302ofveN9E9JtkyY2ANLywwn3Paz5dg3uSbGgjB0_zZmxG85Svl3cXRghowhG5QDd4j_zvhmz5s1ltMWBs0ifZP6pA5DDHEKHUkMchBgI9LTLxIN2hWTZh9y2jAH_j4txjA0qZhjIeMCcx90LbRqRQIWbH2B27TZsbPGY2JPS9zc4lfl6Uj_1Ie6gwfV9ZErRJGAWhtGs7-L2dOO2OOSzRslV4QAgZwPdUYDE71uyff6sAJTJKvf2s-oV8YEs6LDRxV3xbRbi_NTXJu-FvZj5C0RFOLdF70CXZntYDnRhlW6GWn5Lxj_umGNUlth6t7x-EzbLDzyRkHumFRKUQi1-2BdDdChrJI9euOOZcxjcvgprhtZqHY6BQKckEleUMzO_slbHDbM_z9Ub1aw1NixcMKE8pdb9z9QgGdNb6SkfmhanA2aR_93QNkgape6gDu4vQV9f_n1x9HeMkM68xrq5Nt7dIth95y59bxN5i3Ofp0h-8z2-J3nI4eV73LMwoNjeDdwPMzsHAUjQ3yIq0vNyF9hQgUIncaQExyZ6EJYiIt3ZMAl8otpBe3I6FVKU5quiXucYX07R6HJbJnTe4QIG3i6PmPlOgT1KSlg-KdR-FHCs4IfsdJu3ulzvqahHtlAbFnovKpFbElY5ZC3Hn4FNzYgSmQlcwTJR1FppCcTjqJusOZpaWsooyKoCk9YgJLj1M9NIAgQ5FnsiWz-GRqMGT4W1sDUZJqd68ATZfhSxzpY3AeiHRC14rXWjcUqoNAnRMK_6cHZhX-JE4n7ym1JRhdoqElGo6xB8MQ1gup9X87aYbUwqcc_GYT6wavVGgNVMypyShMMoekY8n-np0EAzeKqBNbSUIeYRJZ1mHuuv5sOCNjkFLXCAauA-i1iHrDMYETl4dk1aXfGVo1p_B7MsrT1J9JyLQRWKjFDIRoMWz-2BxH4OOkKT_A5IAEqCWV1LXdlc3QtMjDIDg.m3u8",3:"https://rereyano.ru/player/3/45"};
+    var SOURCES={1:"https://rereyano.ru/player/4/1",2:"https://rereyano.ru/player/3/1",3:"https://rereyano.ru/player/2/1"};
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
