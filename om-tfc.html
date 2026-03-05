@@ -2,52 +2,63 @@
 <html>
 <head>
     <style>
-        body { margin: 0; background: #000; overflow: hidden; }
-        #player-wrap { position: relative; width: 100vw; height: 100vh; }
+        #wrapper { position: relative; width: 100%; max-width: 800px; aspect-ratio: 16/9; background: #000; }
         iframe { width: 100%; height: 100%; border: 0; }
+        
+        /* Le bouclier qui va intercepter les 2 premières pubs */
+        #ad-killer {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 9999; cursor: pointer;
+            background: rgba(0,0,0,0.1); /* On le laisse un peu sombre pour voir qu'il est là */
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-family: sans-serif; font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
-<div id="player-wrap">
-    <div id="target"></div>
+<div id="wrapper">
+    <div id="ad-killer">CLIQUEZ POUR NETTOYER LES PUBS (<span id="count">2</span>)</div>
+    <div id="player"></div>
 </div>
 
 <script>
     const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
-    const target = document.getElementById('target');
+    const player = document.getElementById('player');
+    const killer = document.getElementById('ad-killer');
+    const countTxt = document.getElementById('count');
 
-    // 1. Injection propre de l'iframe
-    target.innerHTML = `<iframe id="video-frame" src="${url}" allow="autoplay; fullscreen" scrolling="no" frameborder="0"></iframe>`;
+    let pubsRestantes = 2; // On sait qu'il y en a deux
 
-    // 2. LA MAGIE : On neutralise window.open au niveau du "Prototype"
-    // Cela empêche même les scripts cachés de l'utiliser.
-    const silentBlocker = function() { 
-        console.log("🚫 Pop-up stoppée net !"); 
+    // On charge l'iframe SANS sandbox
+    player.innerHTML = `<iframe src="${url}" allow="autoplay; fullscreen" scrolling="no"></iframe>`;
+
+    // BLOQUEUR RADICAL DE WINDOW.OPEN
+    // On remplace la fonction par une version qui ne fait absolument rien
+    window.open = function() { 
+        console.log("Une pub a tenté de s'ouvrir, mais je l'ai tuée.");
         return null; 
     };
 
-    // On écrase la fonction native
-    window.open = silentBlocker;
-    Object.defineProperty(window, 'open', { value: silentBlocker, writable: false });
-
-    // 3. Empêcher le changement d'URL de la page actuelle (le "Tab-jacking")
-    let allowNavigation = true;
-    window.onbeforeunload = function() {
-        if (allowNavigation) {
-            setTimeout(() => { allowNavigation = true; }, 1000);
-            return "Une pub a essayé de vous rediriger. Rester ici ?";
+    killer.addEventListener('click', function(e) {
+        pubsRestantes--;
+        
+        if (pubsRestantes > 0) {
+            countTxt.innerText = pubsRestantes;
+            console.log("Première pub absorbée.");
+        } else {
+            // AU DERNIER CLIC : on libère le passage
+            killer.style.display = 'none';
+            console.log("Chemin nettoyé. Cliquez maintenant sur le bouton PLAY du lecteur.");
+            
+            // On tente de passer en plein écran pour "verrouiller" l'affichage
+            if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
         }
-    };
+    });
 
-    // 4. LE TRUC EN PLUS : On intercepte les clics sur toute la page
-    // pour bloquer les tentatives de création de liens <a> fantômes.
-    document.addEventListener('click', function(e) {
-        // On laisse le clic passer pour que la vidéo se lance
-        // Mais on verrouille toute sortie vers un autre site
-        console.log("Clic détecté sur le lecteur...");
-    }, true);
-
+    // Anti-redirection de l'onglet actuel
+    window.onbeforeunload = function() { return "Une pub essaie de vous faire partir !"; };
 </script>
+
 </body>
 </html>
