@@ -1,49 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
+    <title>Lecteur Stream - No Ads</title>
     <style>
-        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        #container { position: relative; width: 800px; height: 450px; background: #222; }
-        iframe { width: 100%; height: 100%; border: 0; display: none; }
-        
-        /* LE FAUX BOUTON QUI MANGE LES PUBS */
-        #fake-player {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 100; background: url('https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg') center/cover;
-            display: flex; justify-content: center; align-items: center; cursor: pointer;
-        }
-        #play-icon { width: 80px; height: 80px; background: rgba(255,0,0,0.8); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; color: white; }
+        body { margin: 0; background: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        #video-container { position: relative; width: 100%; max-width: 960px; aspect-ratio: 16/9; }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<div id="container">
-    <div id="fake-player">
-        <div id="play-icon">▶</div>
-    </div>
-    <div id="real-player"></div>
+<div id="video-container">
+    <div id="player-target"></div>
 </div>
 
 <script>
-    const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
-    const fake = document.getElementById('fake-player');
-    const real = document.getElementById('real-player');
+    const playerUrl = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
 
-    fake.onclick = function() {
-        // 1. On ouvre les deux pubs de force vers Google pour "vider" le stock du player
-        // (Certains navigateurs bloqueront ça, mais ça "casse" la file d'attente des scripts de pub)
-        window.open(url, '_blank'); 
-        
-        // 2. On remplace tout de suite par le vrai player
-        fake.style.display = 'none';
-        real.innerHTML = `<iframe src="${url}" allow="autoplay; fullscreen" style="display:block;"></iframe>`;
-        
-        // 3. On demande le plein écran pour cacher les onglets qui s'ouvrent
-        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    // 1. BLOCAGE PRÉVENTIF DES POPUPS (NIVEAU JS)
+    // On verrouille window.open avant même de charger l'iframe
+    const noOp = () => {
+        console.warn("🚫 Popup bloquée automatiquement.");
+        return null;
     };
+    
+    try {
+        Object.defineProperty(window, 'open', { value: noOp, writable: false });
+    } catch(e) {
+        window.open = noOp;
+    }
 
-    // Bloque la redirection de TA page
-    window.onbeforeunload = function() { return "Pub bloquée"; };
+    // 2. INJECTION DU PLAYER (SANS SANDBOX)
+    document.getElementById('player-target').innerHTML = `
+        <iframe 
+            id="stream-frame"
+            src="${playerUrl}" 
+            allowfullscreen 
+            allow="autoplay; fullscreen"
+            referrerpolicy="no-referrer">
+        </iframe>
+    `;
+
+    // 3. LA PROTECTION ANTI-REDIRECTION (LA CLÉ)
+    // On surveille si l'onglet actuel essaie de charger une page de pub
+    let isMatchPlaying = false;
+    
+    window.addEventListener('beforeunload', (event) => {
+        // Si le match tourne et que la page veut changer d'URL, on bloque.
+        event.preventDefault();
+        event.returnValue = ''; // Affiche une alerte de confirmation navigateur
+    });
+
+    // 4. PROTECTION CONTRE LES CLICS FANTÔMES
+    // Si une pub s'ouvre "sous" ton onglet (Pop-under)
+    setInterval(() => {
+        window.focus(); // On force le focus sur ton onglet toutes les secondes
+    }, 1000);
+
 </script>
 
 </body>
