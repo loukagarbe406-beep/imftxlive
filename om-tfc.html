@@ -1,81 +1,44 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Player Sans Pop-up</title>
-    <style>
-        body { background: #111; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        #video-container { position: relative; width: 80%; max-width: 900px; aspect-ratio: 16/9; border: 2px solid #333; background: #000; }
-        
-        /* Le Bouclier Invisible */
-        #ad-shield {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 9999;
-            cursor: pointer;
-            background: rgba(0,0,0,0.1); /* Légèrement visible pour le test, mettre à 0 ensuite */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #shield-msg {
-            background: rgba(0,0,0,0.7);
-            padding: 10px 20px;
-            border-radius: 5px;
-            pointer-events: none; /* Le texte ne doit pas bloquer le clic sur le div parent */
-        }
-    </style>
-</head>
-<body>
-
-    <h2>Match : Lyon vs RC Lens</h2>
-    <p>Cliquez sur le lecteur pour neutraliser les pubs (2 clics requis).</p>
-
-    <div id="video-container" style="position:relative; width:100%; height:500px;">
+<div id="video-container" style="position:relative; width:100%; height:100vh; background:#000;">
     <div id="player-target" style="width:100%; height:100%;"></div>
     
-    <div id="click-protector" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:9999; cursor:pointer;"></div>
+    <div id="launcher" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:9999; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,0.5); cursor:pointer;">
+        <div style="padding:20px; background:#e50914; color:white; border-radius:50px; font-weight:bold; font-size:1.2rem;">
+            CLIQUEZ POUR LANCER LE MATCH (SANS PUB)
+        </div>
+    </div>
 </div>
 
 <script>
-    const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
+    // On ajoute muted=1 et autoplay=1 si le player les supporte
+    const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl?autoplay=1&muted=1";
     const target = document.getElementById('player-target');
-    const protector = document.getElementById('click-protector');
+    const launcher = document.getElementById('launcher');
 
-    // 1. On injecte l'iframe normalement
-    target.innerHTML = `<iframe src="${url}" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen" style="width:100%;height:100%;border:0"></iframe>`;
+    // Insertion de l'iframe
+    target.innerHTML = `<iframe id="myPlayer" src="${url}" allow="autoplay; fullscreen" scrolling="no" frameborder="0" style="width:100%;height:100%;border:0"></iframe>`;
 
-    // 2. LA MAGIE : On neutralise window.open de manière agressive
-    // On remplace la fonction native par une version qui ne fait rien
-    const blocker = function() {
-        console.log("🚫 Tentative de pop-up bloquée !");
-        return null;
-    };
+    // Neutralisation agressive de window.open sur TA page
+    window.open = function() { return null; };
 
-    // On l'applique au parent et on essaie de l'injecter dans l'enfant si possible
-    window.open = blocker;
-
-    // 3. Quand on clique sur le protecteur
-    protector.addEventListener('mousedown', function(e) {
-        // On désactive window.open juste avant que l'iframe reçoive le clic
-        window.open = blocker;
+    launcher.addEventListener('click', function() {
+        const container = document.getElementById('video-container');
         
-        // On rend le protecteur invisible pour que le clic traverse (pointer-events)
-        protector.style.pointerEvents = 'none';
+        // 1. On tente le plein écran (demande un clic utilisateur, donc ici c'est bon)
+        if (container.requestFullscreen) {
+            container.requestFullscreen();
+        } else if (container.webkitRequestFullscreen) {
+            container.webkitRequestFullscreen();
+        }
+
+        // 2. On fait disparaître le bouton pour laisser place au player
+        launcher.style.display = 'none';
+
+        // 3. Petit hack : on redonne le focus à l'iframe pour que les raccourcis clavier marchent
+        document.getElementById('myPlayer').focus();
         
-        console.log("Cliqué ! Le prochain clic sur l'iframe est protégé.");
+        console.log("Mode Cinéma activé, clics de redirection bloqués sur le parent.");
+    });
 
-        // On remet le protecteur après 500ms pour bloquer le prochain clic de pub
-        setTimeout(() => {
-            protector.style.pointerEvents = 'auto';
-        }, 500);
-    }, true);
-
-    // 4. Bloquer les changements de page (Redirections)
-    window.onbeforeunload = function() {
-        return "Voulez-vous vraiment quitter ?";
-    };
+    // Empêche de quitter la page par erreur sur un clic de pub résiduel
+    window.onbeforeunload = function() { return "Pub bloquée"; };
 </script>
