@@ -1,64 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Live - Lyon vs Lens</title>
     <style>
-        #wrapper { position: relative; width: 100%; max-width: 800px; aspect-ratio: 16/9; background: #000; }
-        iframe { width: 100%; height: 100%; border: 0; }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            aspect-ratio: 16 / 9;
+            border: 2px solid #333;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #status {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Petit overlay pour forcer le focus utilisateur */
+        #init-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: opacity 0.5s;
+        }
         
-        /* Le bouclier qui va intercepter les 2 premières pubs */
-        #ad-killer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 9999; cursor: pointer;
-            background: rgba(0,0,0,0.1); /* On le laisse un peu sombre pour voir qu'il est là */
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-family: sans-serif; font-weight: bold;
+        .btn-play {
+            padding: 15px 30px;
+            background: #e50914;
+            color: white;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-<div id="wrapper">
-    <div id="ad-killer">CLIQUEZ POUR NETTOYER LES PUBS (<span id="count">2</span>)</div>
-    <div id="player"></div>
-</div>
-
-<script>
-    const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
-    const player = document.getElementById('player');
-    const killer = document.getElementById('ad-killer');
-    const countTxt = document.getElementById('count');
-
-    let pubsRestantes = 2; // On sait qu'il y en a deux
-
-    // On charge l'iframe SANS sandbox
-    player.innerHTML = `<iframe src="${url}" allow="autoplay; fullscreen" scrolling="no"></iframe>`;
-
-    // BLOQUEUR RADICAL DE WINDOW.OPEN
-    // On remplace la fonction par une version qui ne fait absolument rien
-    window.open = function() { 
-        console.log("Une pub a tenté de s'ouvrir, mais je l'ai tuée.");
-        return null; 
-    };
-
-    killer.addEventListener('click', function(e) {
-        pubsRestantes--;
+    <div class="container" id="video-wrapper">
+        <div id="init-overlay">
+            <div class="btn-play">DÉBLOQUER LE MATCH (SANS PUB)</div>
+        </div>
         
-        if (pubsRestantes > 0) {
-            countTxt.innerText = pubsRestantes;
-            console.log("Première pub absorbée.");
-        } else {
-            // AU DERNIER CLIC : on libère le passage
-            killer.style.display = 'none';
-            console.log("Chemin nettoyé. Cliquez maintenant sur le bouton PLAY du lecteur.");
-            
-            // On tente de passer en plein écran pour "verrouiller" l'affichage
-            if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
-        }
-    });
+        <div id="player-target"></div>
+    </div>
 
-    // Anti-redirection de l'onglet actuel
-    window.onbeforeunload = function() { return "Une pub essaie de vous faire partir !"; };
-</script>
+    <div id="status">Protection anti-popup : Activée ✅</div>
+
+    <script>
+        const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
+        const target = document.getElementById('player-target');
+        const overlay = document.getElementById('init-overlay');
+
+        // --- 1. NEUTRALISATION RADICALE DE WINDOW.OPEN ---
+        // On remplace la fonction par une version qui ne fait rien
+        const blockPopups = function() {
+            console.warn("🚫 Tentative de pop-up bloquée !");
+            return null;
+        };
+
+        // On l'injecte de façon non-modifiable (Writable: false)
+        try {
+            Object.defineProperty(window, 'open', {
+                value: blockPopups,
+                writable: false,
+                configurable: false
+            });
+            // On fait la même chose pour d'autres méthodes de pop-up
+            window.showModalDialog = blockPopups;
+            window.alert = function(msg) { console.log("Alert bloquée: " + msg); };
+        } catch (e) {
+            window.open = blockPopups;
+        }
+
+        // --- 2. L'INTERCEPTOR ---
+        overlay.addEventListener('click', function() {
+            // On injecte l'iframe seulement APRÈS le premier clic
+            target.innerHTML = `
+                <iframe 
+                    id="myIframe"
+                    src="${url}" 
+                    allowfullscreen 
+                    scrolling="no" 
+                    allow="autoplay; fullscreen; picture-in-picture" 
+                    referrerpolicy="no-referrer"
+                    style="width:100%; height:100%;">
+                </iframe>`;
+            
+            // On cache l'overlay
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
+
+            // On demande le plein écran pour "piéger" le focus sur la vidéo
+            const wrapper = document.getElementById('video-wrapper');
+            if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+            
+            console.log("Player injecté et protégé.");
+        });
+
+        // --- 3. LE VERROU DE NAVIGATION (ANTI-TABJACKING) ---
+        // Si une pub essaie de rediriger TA page, le navigateur l'arrête.
+        window.onbeforeunload = function() {
+            return "Une publicité essaie de vous rediriger. Voulez-vous rester sur le match ?";
+        };
+
+        // --- 4. NETTOYAGE DES CLICS ---
+        // On intercepte tous les clics qui "remontent" de l'iframe vers le parent
+        document.addEventListener('click', function(e) {
+            // Si le clic tente d'ouvrir un nouvel onglet, on l'ignore
+            if (e.target.tagName === 'A' && e.target.target === '_blank') {
+                e.preventDefault();
+                return false;
+            }
+        }, true);
+    </script>
 
 </body>
 </html>
