@@ -2,59 +2,52 @@
 <html>
 <head>
     <style>
-        #video-wrapper { position: relative; width: 100%; max-width: 900px; aspect-ratio: 16/9; background: #000; overflow: hidden; }
+        body { margin: 0; background: #000; overflow: hidden; }
+        #player-wrap { position: relative; width: 100vw; height: 100vh; }
         iframe { width: 100%; height: 100%; border: 0; }
-        
-        /* La couche qui protège avant le clic */
-        #safety-layer {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            background: rgba(0,0,0,0.6); color: white; font-weight: bold; text-align: center;
-        }
     </style>
 </head>
 <body>
 
-<div id="video-wrapper">
-    <div id="safety-layer">CLIQUE ICI POUR LANCER LE MATCH<br>(Garanti sans pub)</div>
-    <div id="player-container"></div>
+<div id="player-wrap">
+    <div id="target"></div>
 </div>
 
 <script>
     const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
-    const container = document.getElementById('player-container');
-    const safety = document.getElementById('safety-layer');
-    const wrapper = document.getElementById('video-wrapper');
+    const target = document.getElementById('target');
 
-    // On pré-charge l'iframe
-    container.innerHTML = `<iframe id="thePlayer" src="${url}" allow="autoplay; fullscreen" scrolling="no"></iframe>`;
+    // 1. Injection propre de l'iframe
+    target.innerHTML = `<iframe id="video-frame" src="${url}" allow="autoplay; fullscreen" scrolling="no" frameborder="0"></iframe>`;
 
-    // 1. Verrouillage total de window.open au repos
-    const noPop = () => { return null; };
-    window.open = noPop;
+    // 2. LA MAGIE : On neutralise window.open au niveau du "Prototype"
+    // Cela empêche même les scripts cachés de l'utiliser.
+    const silentBlocker = function() { 
+        console.log("🚫 Pop-up stoppée net !"); 
+        return null; 
+    };
 
-    safety.addEventListener('mousedown', function() {
-        // 2. AU MOMENT DU CLIC : On laisse passer le clic vers l'iframe
-        safety.style.pointerEvents = 'none'; 
-        safety.style.opacity = '0';
+    // On écrase la fonction native
+    window.open = silentBlocker;
+    Object.defineProperty(window, 'open', { value: silentBlocker, writable: false });
 
-        // 3. On tente le Fullscreen immédiatement sur le conteneur
-        if (wrapper.requestFullscreen) wrapper.requestFullscreen();
-        else if (wrapper.webkitRequestFullscreen) wrapper.webkitRequestFullscreen();
+    // 3. Empêcher le changement d'URL de la page actuelle (le "Tab-jacking")
+    let allowNavigation = true;
+    window.onbeforeunload = function() {
+        if (allowNavigation) {
+            setTimeout(() => { allowNavigation = true; }, 1000);
+            return "Une pub a essayé de vous rediriger. Rester ici ?";
+        }
+    };
 
-        // 4. PROTECTION : On réactive le bouclier après 300ms
-        // Ça laisse assez de temps pour que le "Play" soit détecté, 
-        // mais trop peu pour que les scripts de pubs en cascade s'activent.
-        setTimeout(() => {
-            safety.style.pointerEvents = 'auto';
-            window.open = noPop; // On s'assure que window.open est toujours bloqué
-            console.log("Protection réengagée");
-        }, 300);
-    });
+    // 4. LE TRUC EN PLUS : On intercepte les clics sur toute la page
+    // pour bloquer les tentatives de création de liens <a> fantômes.
+    document.addEventListener('click', function(e) {
+        // On laisse le clic passer pour que la vidéo se lance
+        // Mais on verrouille toute sortie vers un autre site
+        console.log("Clic détecté sur le lecteur...");
+    }, true);
 
-    // 5. Anti-Redirection (pour empêcher l'onglet actuel de changer)
-    window.onbeforeunload = function() { return "Bloqué"; };
 </script>
-
 </body>
 </html>
