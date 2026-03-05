@@ -108,7 +108,20 @@ var originalOpen = window.open;
 window.open = function() { return null; };
 
 // 2. Ton code d'injection (sans le mot-clé sandbox)
-target.innerHTML = '<iframe src="' + url + '" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:100%;border:0"></iframe>';
+// On crée un conteneur pour l'iframe et le bouclier
+target.style.position = 'relative';
+target.innerHTML = `
+    <div id="shield" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:10; cursor:pointer;"></div>
+    <iframe id="myIframe" src="${url}" allowfullscreen scrolling="no" frameborder="0" 
+    allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer" 
+    style="width:100%; height:100%; border:0"></iframe>
+`;
+
+// Quand on clique sur le bouclier, il disparaît
+document.getElementById('shield').onclick = function() {
+    this.remove(); // Le bouclier s'en va, tu peux maintenant cliquer sur Play
+    console.log("Premier clic de pub bloqué !");
+};
 
 // 3. Optionnel : On remet window.open après un petit délai si tu en as besoin ailleurs
 setTimeout(function() {
