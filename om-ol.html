@@ -1,111 +1,346 @@
 <!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>IMFTX+ — Marseille - Lyon</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-  <style>
-    html,body{height:100%;margin:0}
-    body{font-family:'Outfit',sans-serif;color:#fff;overflow-x:hidden;background:linear-gradient(135deg,rgba(10,10,12,.92) 0%,rgba(10,10,12,.88) 40%,rgba(10,10,12,.92) 100%),url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/66bcb907deab5/uploads/media/myCANAL_Cover_web_2760x720_(2).jpg") center/cover no-repeat fixed}
-    .glass{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);box-shadow:0 30px 120px rgba(0,0,0,.75);backdrop-filter:blur(14px)}
-    .player-box{border-radius:20px;overflow:hidden;position:relative}
-    iframe{width:100%;height:100%;border:0;background:#000;display:block}
-    .cover{position:absolute;inset:0;z-index:15;cursor:pointer;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.80) 100%),url("https://empire-sport.live/upload/events/4mthgckaywvu44uk7iqd49hcmfwaxy.jpg") center/cover no-repeat}
-    .cover-top{position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px)}
-    .team-logo{width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.8))}
-    .vs{font-weight:900;font-size:14px;opacity:.9}
-    .cover-strip{position:absolute;left:16px;right:16px;bottom:16px;height:80px;border-radius:18px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;padding:0 18px}
-    .strip-title{font-size:16px;font-weight:900;line-height:1}
-    .strip-sub{font-size:14px;opacity:.85;font-weight:600;font-style:italic;margin-top:4px;line-height:1.1}
-    .strip-play{width:46px;height:46px;border-radius:999px;border:1px solid rgba(255,255,255,.18);display:grid;place-items:center;background:rgba(255,255,255,.12);transition:.2s}
-    .strip-play:hover{transform:scale(1.06);background:rgba(255,255,255,.16)}
-    .pill{position:absolute;top:16px;right:16px;padding:7px 12px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12);font-weight:900;font-size:12px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(14px)}
-    .dot{width:7px;height:7px;border-radius:999px;background:#f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,.12)}
-    .source-btn{height:42px;border-radius:12px;font-weight:900;font-size:13px;transition:.2s}
-    .source-btn.active{background:#fff;color:#000}
-    .source-btn.inactive{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#fff}
-    .watch-bar{border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px}
-    .watch-left{display:flex;align-items:center;gap:12px;min-width:0}
-    .watch-left img{width:36px;height:36px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.75))}
-    .watch-text{min-width:0;line-height:1.1}
-    .watch-text .small{opacity:.75;font-weight:700;font-size:13px}
-    .watch-text .big{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .channel-logo{width:92px;height:auto;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.75))}
-    .chat-box{border-radius:20px;overflow:hidden;min-height:520px}
-    .chat-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.10)}
-    .chat-head .title{font-weight:900}
-    .chat-head .sub{font-size:12px;opacity:.7;font-weight:700}
-    @media(max-width:1024px){.chat-box{min-height:420px}}
-  </style>
-</head>
-<body>
-  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/10">
-    <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
-      <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
-      <a href="index.html" class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition"><i class="fa-solid fa-arrow-left"></i> Retour</a>
-    </div>
-  </nav>
-  <main class="max-w-screen-2xl mx-auto px-6 py-8">
-    <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
-      <div>
-        <div class="player-box glass w-full aspect-video">
-          <div id="cover" class="cover" onclick="loadVideo(1)">
-            <div class="pill"><span class="dot"></span>20:45</div>
-            <div class="cover-top"><img class="team-logo" src="https://empire-sport.live/upload/teams/5box72sxig3lzrlh1xkj44xqfw9j41.png" alt="A"><span class="vs">VS</span><img class="team-logo" src="https://empire-sport.live/upload/teams/9spcq5dpm1bwlgrsjczadm4vezajnv.png" alt="B"></div>
-            <div class="cover-strip"><div><div class="strip-title">Regarder Gratuitement</div><div class="strip-sub">Marseille<br>Lyon</div></div><div class="strip-play"><i class="fa-solid fa-play"></i></div></div>
-          </div>
-          <div id="videoTarget" class="w-full h-full"></div>
+<html data-n-head-ssr>
+    <head>
+        <meta data-n-head="ssr" charset="utf-8">
+        <meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta data-n-head="ssr" name="msapplication-TileColor" content="#00aba9">
+        <title>Live Stream</title>
+        <script data-n-head="ssr" src="/js/mtg.js?v=2"></script>
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/6835667b3.js" as="script">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/57fa2a98010.js" as="script">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/8f857b6818.js" as="script">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/css/b3845c9a6.css" as="style">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/a100f395f9.js" as="script">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/css/53ca3bd49.css" as="style">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/3b8cab5e151.js" as="script">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/css/f7b9b251a.css" as="style">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/98044325571.js" as="script">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/css/b73f8a4c7.css" as="style">
+        <link rel="preload" href="https://statics1.tctrf551psv.xyz/statics/06acfc5730.js" as="script">
+        <link rel="stylesheet" href="https://statics1.tctrf551psv.xyz/statics/css/b3845c9a6.css">
+        <link rel="stylesheet" href="https://statics1.tctrf551psv.xyz/statics/css/53ca3bd49.css">
+        <link rel="stylesheet" href="https://statics1.tctrf551psv.xyz/statics/css/f7b9b251a.css">
+        <link rel="stylesheet" href="https://statics1.tctrf551psv.xyz/statics/css/b73f8a4c7.css">
+    </head>
+    <body>
+        <div data-server-rendered="true" id="__main">
+            <div id="__layout">
+                <div class="__layout--inside">
+                    <div class="r-player-page" data-v-ba16c47c>
+                        <div class="player-outside player-outside-1 player-type-def" data-v-65c39b1c data-v-ba16c47c>
+                            <div class="hover-op hover-op-show" data-v-65c39b1c>
+                                <div class="flss left" data-v-65c39b1c>
+                                    <img src="https://statics1.tctrf551psv.xyz/img/player/icon_player_op_arrow.svg" data-v-65c39b1c>
+                                </div>
+                            </div>
+                            <!---->
+                            <div class="player-inside player-control-show" data-v-65c39b1c>
+                                <div id="player" data-v-65c39b1c>
+                                <!---->
+                                </div>
+                            </div>
+                            <!---->
+                            <div class="re-loading van-loading van-loading--circular" data-v-65c39b1c data-v-65c39b1c>
+                                <span class="van-loading__spinner van-loading__spinner--circular" style="width:45px;height:45px;" data-v-65c39b1c data-v-65c39b1c>
+                                    <svg viewBox="25 25 50 50" class="van-loading__circular" data-v-65c39b1c data-v-65c39b1c>
+                                        <circle cx="50" cy="50" r="20" fill="none" data-v-65c39b1c data-v-65c39b1c></circle>
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                        <!---->
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mt-4 flex flex-wrap gap-3">
-          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
-          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2 (HD)</button>
-          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
-          <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
-            <span data-viewer-counter="om-ol" id="counterMatch1" style="color:#F54927;font-family:Arial,sans-serif;font-weight:bold"></span>
-          </div>
-        </div>
-        <div class="mt-5 watch-bar glass">
-          <div class="watch-left"><img src="https://empire-sport.live/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="Comp"><div class="watch-text"><div class="small">Vous regardez</div><div class="big">Marseille - Lyon</div><div class="small">Ligue 1 · 20:45</div></div></div>
-          <img class="channel-logo" src="https://empire-sport.live/upload/chaines/ypg8caxs3ejxvrfz8tclysmflo3dmv.png" alt="Ch">
-        </div>
-      </div>
-      <aside class="chat-box glass">
-        <div class="chat-head">
-          <div><div class="title">Chat en direct</div><div class="sub">Parler avec tout le respect !</div></div>
-          <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15" href="https://www.twitch.tv/popout/drem0h/chat?popout=" target="_blank" rel="noreferrer">Ouvrir</a>
-        </div>
-        <div style="height:calc(100% - 54px);min-height:520px"><iframe id="chatFrame" src=""></iframe></div>
-      </aside>
-    </section>
-  </main>
-  <script>
-    var SOURCES={1:"https://euw31.playlist.ttvnw.net/v1/playlist/CugGWP4tE2NhrhHj-flw3QoSqEIWGZhly8JGmcVOEkfruvgsQUqj_Kp2sOvPhXZqzY53hHeNb9fhJP3xFjpwe5tUCNHn4ky11VzCCMRu5VHULn8-iREhwnNItT2GygOJeGiK4Uc4ead6A3TcDOreCjQ7cdmhrPoXund30bR69Ci7F9kYfyfA75qOxkdxH7U5pUI4Al6UQ4Pw4A28pUXcuA0vrp64mtpj-7rPvPEQIWXtIEtg8FAoacOASI5XypyT6Gw6wYjyviGqfuUDgou7boITOB_8cJ0hkV3KKJhJf3rNDT-9ImKvO1Gr4zq1qnbIaWuvzjmzJorM-BgnkEsm0iJlzFExML8QNYWft0yuYpK4yLFLO91VOidmlP2T6tj34DEZCtTFZ4LxMXYL7ehAIQsrjl_wQOPsN9WdKVGSlp-dLCV3R1tGHRUzZuIOj0xJOAph0k94ivyivdtPm5HjC_SvvfhzeC6icgq-AaCbSqWw-nwTsXnQaSJMa9xmbkoNSFlfH5EKEEdGLcTtfMdK2ZlS9MrtZM7gdBl4fpgGY_tuH1p_fLOP-vNEaoQwPqkQgWJoAVVgG1JQnUBge_D3oF9vOvc4lq2iIRBiLzhFtz0v-5M8Y7uSi2C_UIYBCZeMDdvHbGB5cY3IGOCieIrZwsWpQOJWXquB2IvqXQdXYFnebYDSU-bGedJfa1sBUMQHLervZIVv2ekZlOzzphSQh-eKvc2-j4TCLrF7cKuhFY4192ctTEzv4foMnsltClAQZDVkDAN66_hDZ_fDDIPTbBGav4_pGZGHm2GNCNNaNqCyqH3hQykWOfodF-5W8YhHegRIkvupRBMxT6uEXCQNxM6bOOJW2Jiwv9758iftqQZu9pisNheiEWmZ4l9O3fkgNLZsyZ4judL_1BzonoH391RMOirRckLk3VMcHFmEjO7bl4xSeyxGdYvtegKhFJMhEu_uenXBc5jYboWj16RexEVRaogVjx_ghnwO6jnbNpxWAU5WtsDg-NJfLOk07Ygj63uqgdFSQV7Yd0jqq0jYVTkfip-mi-614k_IPBnAvlKgxPwjYcn5DVruoPuCi5qtJ6E6BcO6HAPcNBVKkNa4yGhVqjqSrIk-wyvfa1f86IqtOl3uAUO61TANO21Os4Jk15VtRcFtlZ-TzGsaDCR_elno0Hh-v-EZzyABKglldS13ZXN0LTIwxg4.m3u8",2:"https://euw31.playlist.ttvnw.net/v1/playlist/CugGWP4tE2NhrhHj-flw3QoSqEIWGZhly8JGmcVOEkfruvgsQUqj_Kp2sOvPhXZqzY53hHeNb9fhJP3xFjpwe5tUCNHn4ky11VzCCMRu5VHULn8-iREhwnNItT2GygOJeGiK4Uc4ead6A3TcDOreCjQ7cdmhrPoXund30bR69Ci7F9kYfyfA75qOxkdxH7U5pUI4Al6UQ4Pw4A28pUXcuA0vrp64mtpj-7rPvPEQIWXtIEtg8FAoacOASI5XypyT6Gw6wYjyviGqfuUDgou7boITOB_8cJ0hkV3KKJhJf3rNDT-9ImKvO1Gr4zq1qnbIaWuvzjmzJorM-BgnkEsm0iJlzFExML8QNYWft0yuYpK4yLFLO91VOidmlP2T6tj34DEZCtTFZ4LxMXYL7ehAIQsrjl_wQOPsN9WdKVGSlp-dLCV3R1tGHRUzZuIOj0xJOAph0k94ivyivdtPm5HjC_SvvfhzeC6icgq-AaCbSqWw-nwTsXnQaSJMa9xmbkoNSFlfH5EKEEdGLcTtfMdK2ZlS9MrtZM7gdBl4fpgGY_tuH1p_fLOP-vNEaoQwPqkQgWJoAVVgG1JQnUBge_D3oF9vOvc4lq2iIRBiLzhFtz0v-5M8Y7uSi2C_UIYBCZeMDdvHbGB5cY3IGOCieIrZwsWpQOJWXquB2IvqXQdXYFnebYDSU-bGedJfa1sBUMQHLervZIVv2ekZlOzzphSQh-eKvc2-j4TCLrF7cKuhFY4192ctTEzv4foMnsltClAQZDVkDAN66_hDZ_fDDIPTbBGav4_pGZGHm2GNCNNaNqCyqH3hQykWOfodF-5W8YhHegRIkvupRBMxT6uEXCQNxM6bOOJW2Jiwv9758iftqQZu9pisNheiEWmZ4l9O3fkgNLZsyZ4judL_1BzonoH391RMOirRckLk3VMcHFmEjO7bl4xSeyxGdYvtegKhFJMhEu_uenXBc5jYboWj16RexEVRaogVjx_ghnwO6jnbNpxWAU5WtsDg-NJfLOk07Ygj63uqgdFSQV7Yd0jqq0jYVTkfip-mi-614k_IPBnAvlKgxPwjYcn5DVruoPuCi5qtJ6E6BcO6HAPcNBVKkNa4yGhVqjqSrIk-wyvfa1f86IqtOl3uAUO61TANO21Os4Jk15VtRcFtlZ-TzGsaDCR_elno0Hh-v-EZzyABKglldS13ZXN0LTIwxg4.m3u8",3:"https://rereyano.ru/player/3/20"};
-    (function(){
-      var d=window.location.hostname;
-      document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
-    })();
-    function setActive(id){
-      [1,2,3].forEach(function(n){
-        var b=document.getElementById("btn"+n);
-        if(b) b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";
-      });
-    }
-    function loadVideo(id){
-      var c=document.getElementById("cover"); if(c) c.style.display="none";
-      setActive(id);
-      var target=document.getElementById("videoTarget");
-      var url=SOURCES[id];
-      if(!url||url==="#"){
-        target.innerHTML='<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
-        return;
-      }
-      target.innerHTML='<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0"></iframe>';
-    }
-  </script>
-  <script type="module" src="./js/viewerCounter.js"></script>
-</body>
+        <script>
+            window.__NUXT__ = (function(a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v) {
+                s.meta = {
+                    rels: [{
+                        href: j,
+                        type: "image\u002Fx-icon",
+                        rel: "shortcut icon"
+                    }, {
+                        href: j,
+                        sizes: "16x16",
+                        type: "image\u002Fpng",
+                        rel: "icon"
+                    }],
+                    themeColorMDetail: "#00141e",
+                    themeColor: "#001e28",
+                    brandKey: t
+                };
+                s.img = {
+                    favicon: j,
+                    brandLogo: j
+                };
+                s.style = {
+                    themeColor: "#ff0046",
+                    classKey: "ipr"
+                };
+                s.brandName = t;
+                s.digit = e;
+                u.basePath = h;
+                u.assetsPath = h;
+                u.cdnURL = k;
+                return {
+                    layout: e,
+                    data: [{}],
+                    fetch: {},
+                    error: b,
+                    state: {
+                        pi: {
+                            fdom: a,
+                            fscript: a,
+                            fmmg: a,
+                            fv: b,
+                            ifed: a
+                        },
+                        c$config: {
+                            DIGIT_ENV: e,
+                            APP_ENV: g,
+                            NODE_ENV: g,
+                            API_URL_BROWSER: h,
+                            SERVER_DA_API: l,
+                            SERVER_LE_API: m,
+                            CF_DA_API: n,
+                            CF_LE_API: o,
+                            CF_DA_API_EU: p,
+                            CF_LE_API_EU: q,
+                            DIGIT_ENV_MIRROR: c,
+                            STATIC_CDN_URL: i,
+                            PUBLIC_PATH: k,
+                            LOGOS_URL: r,
+                            IMG_CDN_URL: i,
+                            skin: s,
+                            _app: u
+                        },
+                        cDigit: e,
+                        cDigitMirror: c,
+                        cParentBasicInfo: {},
+                        cLocale: "fr",
+                        cLoading: f,
+                        cHostname: "brit.287wd0wifeqsjrfought.cfd",
+                        cMaindomain: "287wd0wifeqsjrfought.cfd",
+                        cHead: {},
+                        cSportType: v,
+                        cCalType: "live",
+                        cTsDif: d,
+                        cBackTop: f,
+                        cUserInfo: {
+                            ip: b,
+                            country: b,
+                            continent: b
+                        },
+                        cCalendar: {
+                            show: a
+                        },
+                        cPlaySiteUrl: c,
+                        cShowIframe: a,
+                        cShowPlaySitePop: a,
+                        cHomeScrollPosition: d,
+                        cComParams: {},
+                        cComParamsSsr: {},
+                        cScroll: {},
+                        cL0ElHeight: d,
+                        cParentUrl: c,
+                        player: {
+                            cIframeLoading: f,
+                            cPlayerKey: d,
+                            cStreamItem: {},
+                            cStreamList: [],
+                            ptpData: {
+                                PTPEnabled: c,
+                                PTP: d,
+                                Peers: d,
+                                HTTP: d,
+                                Uploaded: d,
+                                peers: [],
+                                Ver: c
+                            },
+                            showPtst: a,
+                            showDirectLink: a,
+                            directLink: "https:\u002F\u002Froastoup.com\u002F4\u002F6755572",
+                            playerEnv: {
+                                playerRole: v,
+                                judgeHs: c,
+                                isExistRef: a,
+                                primaryDomain: c,
+                                fcode: c,
+                                validDomains: []
+                            }
+                        },
+                        payment: {
+                            planList: [],
+                            currentOrder: b,
+                            loading: f,
+                            placeOrderLoading: a,
+                            formErrCode: c,
+                            formErrVer: d
+                        },
+                        data: {
+                            home: {
+                                hCalDate: b,
+                                reqParams: {},
+                                list: [],
+                                streamList: [],
+                                matchCount: {}
+                            },
+                            match: {
+                                tabType: "overview",
+                                reqParams: {},
+                                match: {
+                                    matchDate: b,
+                                    matchId: b,
+                                    sportType: b,
+                                    status: b,
+                                    home: {},
+                                    away: {},
+                                    home2: {},
+                                    away2: {},
+                                    homeExtra: {},
+                                    awayExtra: {},
+                                    league: {},
+                                    matchExtra: {
+                                        firstStartDate: b,
+                                        secondStartDate: b,
+                                        teamLink: b,
+                                        leagueLink: b,
+                                        leagueSeasonNameLink: b,
+                                        hasData: {
+                                            teamStats: a,
+                                            lineup: a,
+                                            odds: a,
+                                            analysis: a,
+                                            standing: a,
+                                            trend: a,
+                                            overviewStats: a,
+                                            event: a
+                                        }
+                                    },
+                                    stream: []
+                                },
+                                trend: {
+                                    periodItem: []
+                                },
+                                event: [],
+                                stats: [],
+                                analysis: {
+                                    h2h: [],
+                                    homeLatest: [],
+                                    awayLatest: [],
+                                    homeNext: [],
+                                    awayNext: []
+                                },
+                                lineup: {
+                                    homeLineup: [],
+                                    awayLineup: []
+                                },
+                                oddsList: [],
+                                oddsDetail: []
+                            },
+                            league: {
+                                tabType: "standings",
+                                reqParams: {},
+                                league: {
+                                    country: {}
+                                },
+                                season: [],
+                                matches: [],
+                                standings: {
+                                    standing: [],
+                                    team: [],
+                                    stage: []
+                                },
+                                players: {
+                                    playerTotal: [],
+                                    team: []
+                                },
+                                teams: {
+                                    teamTotal: [],
+                                    team: []
+                                }
+                            }
+                        },
+                        modules: {
+                            player: {},
+                            com: {
+                                site: {}
+                            },
+                            data: {
+                                home: {},
+                                league: {},
+                                match: {},
+                                payment: {}
+                            }
+                        },
+                        i18n: {
+                            routeParams: {}
+                        }
+                    },
+                    serverRendered: f,
+                    routePath: "\u002Ffr\u002Fplayer.html",
+                    config: {
+                        DIGIT_ENV: e,
+                        APP_ENV: g,
+                        NODE_ENV: g,
+                        API_URL_BROWSER: h,
+                        SERVER_DA_API: l,
+                        SERVER_LE_API: m,
+                        CF_DA_API: n,
+                        CF_LE_API: o,
+                        CF_DA_API_EU: p,
+                        CF_LE_API_EU: q,
+                        DIGIT_ENV_MIRROR: c,
+                        STATIC_CDN_URL: i,
+                        PUBLIC_PATH: k,
+                        LOGOS_URL: r,
+                        IMG_CDN_URL: i,
+                        skin: s,
+                        _app: u
+                    },
+                    __i18n: {
+                        langs: {
+                            fr: {
+                                l_player: {
+                                    PlayText: "Lecture",
+                                    PauseText: "Pause",
+                                    FullscreenText: "Activer le mode plein écran",
+                                    ExitFullscreenText: "Quitter le mode plein écran",
+                                    ChooseaChannel: "Choisissez un canal",
+                                    Gameisover: "La rencontre est terminée",
+                                    ClickToPlay: "Cliquez pour jouer",
+                                    SkipAds: "Fermer les annonces",
+                                    Bannerwillgoaway: "La bannière disparaîtra dans {x} secondes",
+                                    LoadText: "La page est en cours de chargement, veuillez patienter",
+                                    EndText: "Le signal en direct est terminé",
+                                    OngoingText: "Le signal en direct est en cours de traitement, veuillez patienter",
+                                    NoLiveText: "Il n'y a pas de signal en direct",
+                                    NetErrorText: "Veuillez vérifier votre connexion réseau",
+                                    NoSupportText: "Service non pris en charge",
+                                    Servers: "Serveuses",
+                                    Asia: "Asie",
+                                    Global: "Mondial",
+                                    Europe: "Europe",
+                                    Others: "Autres",
+                                    Servertips: "Conseils : Si le flux en direct est souvent en retard, se fige ou se charge lentement, essayez d'utiliser WARP+ pour accélérer le réseau ou les services VPN tels que : {TunnelBear} {NordVPN} {FastestVPN} {ExpressVPN}"
+                                },
+                                l_error: {
+                                    ErrorTips: "Quelque chose c'est mal passé. Merci d'essayer plus tard",
+                                    BacktoHome: "De retour à la maison"
+                                }
+                            }
+                        }
+                    }
+                }
+            }(false, null, "", 0, "sith", true, "production", "\u002F", "https:\u002F\u002Fstatics1.tctrf551psv.xyz", "https:\u002F\u002Fstatics1.tctrf551psv.xyz\u002Fimg\u002Fplayer\u002Ffavicon.svg", "https:\u002F\u002Fstatics1.tctrf551psv.xyz\u002Fstatics\u002F", "http:\u002F\u002F192.168.20.1:6700", "http:\u002F\u002F192.168.20.1:6601", "https:\u002F\u002Fapis-data10.tctrf551psv.xyz", "https:\u002F\u002Fapis-live.tafs40c3.xyz ", "https:\u002F\u002Fapis-data-defra11.tctrf551psv.xyz", "https:\u002F\u002Fapis-live-defra.tafs40c3.xyz ", "https:\u002F\u002Flogos1.tctrf551psv.xyz", {}, "IframePlayer", {}, 1));
+        </script>
+        <script src="https://statics1.tctrf551psv.xyz/statics/6835667b3.js" defer></script>
+        <script src="https://statics1.tctrf551psv.xyz/statics/3b8cab5e151.js" defer></script>
+        <script src="https://statics1.tctrf551psv.xyz/statics/98044325571.js" defer></script>
+        <script src="https://statics1.tctrf551psv.xyz/statics/06acfc5730.js" defer></script>
+        <script src="https://statics1.tctrf551psv.xyz/statics/57fa2a98010.js" defer></script>
+        <script src="https://statics1.tctrf551psv.xyz/statics/8f857b6818.js" defer></script>
+        <script src="https://statics1.tctrf551psv.xyz/statics/a100f395f9.js" defer></script>
+    </body>
 </html>
