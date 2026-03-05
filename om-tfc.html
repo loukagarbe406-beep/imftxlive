@@ -1,147 +1,50 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Live - Lyon vs Lens</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #fff;
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .container {
-            position: relative;
-            width: 90%;
-            max-width: 1000px;
-            aspect-ratio: 16 / 9;
-            border: 2px solid #333;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        #status {
-            margin-top: 15px;
-            font-size: 0.9rem;
-            color: #888;
-        }
-
-        /* Petit overlay pour forcer le focus utilisateur */
-        #init-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: opacity 0.5s;
-        }
+        body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        #container { position: relative; width: 800px; height: 450px; background: #222; }
+        iframe { width: 100%; height: 100%; border: 0; display: none; }
         
-        .btn-play {
-            padding: 15px 30px;
-            background: #e50914;
-            color: white;
-            border-radius: 5px;
-            font-weight: bold;
-            text-transform: uppercase;
+        /* LE FAUX BOUTON QUI MANGE LES PUBS */
+        #fake-player {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 100; background: url('https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg') center/cover;
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
         }
+        #play-icon { width: 80px; height: 80px; background: rgba(255,0,0,0.8); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; color: white; }
     </style>
 </head>
 <body>
 
-    <div class="container" id="video-wrapper">
-        <div id="init-overlay">
-            <div class="btn-play">DÉBLOQUER LE MATCH (SANS PUB)</div>
-        </div>
-        
-        <div id="player-target"></div>
+<div id="container">
+    <div id="fake-player">
+        <div id="play-icon">▶</div>
     </div>
+    <div id="real-player"></div>
+</div>
 
-    <div id="status">Protection anti-popup : Activée ✅</div>
+<script>
+    const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
+    const fake = document.getElementById('fake-player');
+    const real = document.getElementById('real-player');
 
-    <script>
-        const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
-        const target = document.getElementById('player-target');
-        const overlay = document.getElementById('init-overlay');
+    fake.onclick = function() {
+        // 1. On ouvre les deux pubs de force vers Google pour "vider" le stock du player
+        // (Certains navigateurs bloqueront ça, mais ça "casse" la file d'attente des scripts de pub)
+        window.open(url, '_blank'); 
+        
+        // 2. On remplace tout de suite par le vrai player
+        fake.style.display = 'none';
+        real.innerHTML = `<iframe src="${url}" allow="autoplay; fullscreen" style="display:block;"></iframe>`;
+        
+        // 3. On demande le plein écran pour cacher les onglets qui s'ouvrent
+        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    };
 
-        // --- 1. NEUTRALISATION RADICALE DE WINDOW.OPEN ---
-        // On remplace la fonction par une version qui ne fait rien
-        const blockPopups = function() {
-            console.warn("🚫 Tentative de pop-up bloquée !");
-            return null;
-        };
-
-        // On l'injecte de façon non-modifiable (Writable: false)
-        try {
-            Object.defineProperty(window, 'open', {
-                value: blockPopups,
-                writable: false,
-                configurable: false
-            });
-            // On fait la même chose pour d'autres méthodes de pop-up
-            window.showModalDialog = blockPopups;
-            window.alert = function(msg) { console.log("Alert bloquée: " + msg); };
-        } catch (e) {
-            window.open = blockPopups;
-        }
-
-        // --- 2. L'INTERCEPTOR ---
-        overlay.addEventListener('click', function() {
-            // On injecte l'iframe seulement APRÈS le premier clic
-            target.innerHTML = `
-                <iframe 
-                    id="myIframe"
-                    src="${url}" 
-                    allowfullscreen 
-                    scrolling="no" 
-                    allow="autoplay; fullscreen; picture-in-picture" 
-                    referrerpolicy="no-referrer"
-                    style="width:100%; height:100%;">
-                </iframe>`;
-            
-            // On cache l'overlay
-            overlay.style.opacity = '0';
-            setTimeout(() => { overlay.style.display = 'none'; }, 500);
-
-            // On demande le plein écran pour "piéger" le focus sur la vidéo
-            const wrapper = document.getElementById('video-wrapper');
-            if (wrapper.requestFullscreen) wrapper.requestFullscreen();
-            
-            console.log("Player injecté et protégé.");
-        });
-
-        // --- 3. LE VERROU DE NAVIGATION (ANTI-TABJACKING) ---
-        // Si une pub essaie de rediriger TA page, le navigateur l'arrête.
-        window.onbeforeunload = function() {
-            return "Une publicité essaie de vous rediriger. Voulez-vous rester sur le match ?";
-        };
-
-        // --- 4. NETTOYAGE DES CLICS ---
-        // On intercepte tous les clics qui "remontent" de l'iframe vers le parent
-        document.addEventListener('click', function(e) {
-            // Si le clic tente d'ouvrir un nouvel onglet, on l'ignore
-            if (e.target.tagName === 'A' && e.target.target === '_blank') {
-                e.preventDefault();
-                return false;
-            }
-        }, true);
-    </script>
+    // Bloque la redirection de TA page
+    window.onbeforeunload = function() { return "Pub bloquée"; };
+</script>
 
 </body>
 </html>
