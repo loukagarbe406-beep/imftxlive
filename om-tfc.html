@@ -34,44 +34,48 @@
     <h2>Match : Lyon vs RC Lens</h2>
     <p>Cliquez sur le lecteur pour neutraliser les pubs (2 clics requis).</p>
 
-    <div id="video-container">
-        <div id="ad-shield">
-            <div id="shield-msg">Cliquez pour débloquer le lecteur (<span id="count">2</span>)</div>
-        </div>
-        <div id="target" style="width:100%; height:100%;"></div>
-    </div>
+    <div id="video-container" style="position:relative; width:100%; height:500px;">
+    <div id="player-target" style="width:100%; height:100%;"></div>
+    
+    <div id="click-protector" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:9999; cursor:pointer;"></div>
+</div>
 
-    <script>
-        const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
-        const target = document.getElementById('target');
-        const shield = document.getElementById('ad-shield');
-        const countDisplay = document.getElementById('count');
+<script>
+    const url = "https://pooembed.eu/embed/coupe-de-france/2026-03-05/lyon-rcl";
+    const target = document.getElementById('player-target');
+    const protector = document.getElementById('click-protector');
+
+    // 1. On injecte l'iframe normalement
+    target.innerHTML = `<iframe src="${url}" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen" style="width:100%;height:100%;border:0"></iframe>`;
+
+    // 2. LA MAGIE : On neutralise window.open de manière agressive
+    // On remplace la fonction native par une version qui ne fait rien
+    const blocker = function() {
+        console.log("🚫 Tentative de pop-up bloquée !");
+        return null;
+    };
+
+    // On l'applique au parent et on essaie de l'injecter dans l'enfant si possible
+    window.open = blocker;
+
+    // 3. Quand on clique sur le protecteur
+    protector.addEventListener('mousedown', function(e) {
+        // On désactive window.open juste avant que l'iframe reçoive le clic
+        window.open = blocker;
         
-        let clicksBlocked = 2; // Nombre de pubs à "manger" avant de libérer le bouton Play
+        // On rend le protecteur invisible pour que le clic traverse (pointer-events)
+        protector.style.pointerEvents = 'none';
+        
+        console.log("Cliqué ! Le prochain clic sur l'iframe est protégé.");
 
-        // Insertion de l'iframe SANS sandbox (pour ne pas fâcher le player)
-        target.innerHTML = '<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer" style="width:100%;height:100%;border:0"></iframe>';
+        // On remet le protecteur après 500ms pour bloquer le prochain clic de pub
+        setTimeout(() => {
+            protector.style.pointerEvents = 'auto';
+        }, 500);
+    }, true);
 
-        // Gestion du bouclier
-        shield.onclick = function() {
-            clicksBlocked--;
-            
-            if (clicksBlocked > 0) {
-                countDisplay.innerText = clicksBlocked;
-                console.log("Clic de pub neutralisé.");
-            } else {
-                // On retire le bouclier définitivement
-                shield.style.display = 'none';
-                console.log("Bouclier retiré. Le vrai player est accessible.");
-            }
-        };
-
-        // Sécurité supplémentaire : On neutralise window.open au cas où un script "s'échappe"
-        window.open = function() { 
-            console.log("Tentative de popup externe bloquée par script.");
-            return null; 
-        };
-    </script>
-
-</body>
-</html>
+    // 4. Bloquer les changements de page (Redirections)
+    window.onbeforeunload = function() {
+        return "Voulez-vous vraiment quitter ?";
+    };
+</script>
