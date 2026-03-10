@@ -96,6 +96,7 @@
       });
     }
 
+    // --- LA PROTECTION ULTIME SANS SANDBOX ---
     function loadVideo(id){
       var c=document.getElementById("cover"); if(c) c.style.display="none";
       setActive(id);
@@ -107,25 +108,33 @@
         return;
       }
 
-      // Création du lecteur avec un bouclier anti-premier-clic
-      target.innerHTML = `
-        <div id="wrapper" style="position:relative;width:100%;height:100%;">
-          <div id="shield" style="position:absolute;inset:0;z-index:10;cursor:pointer;background:transparent;"></div>
-          <iframe src="${url}" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen" style="width:100%;height:100%;border:0"></iframe>
-        </div>
-      `;
+      // On injecte l'iframe normalement
+      target.innerHTML = `<iframe id="player-iframe" src="${url}" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen" style="width:100%;height:100%;border:0"></iframe>`;
 
-      // Quand on clique sur le bouclier, on le retire. 
-      // Ça "mange" le premier clic qui déclenche normalement la pub.
-      document.getElementById('shield').addEventListener('click', function() {
-        this.remove();
-        console.log("Bouclier retiré, accès au lecteur.");
+      // 1. Neutralise l'ouverture de fenêtres au niveau du parent
+      window.open = function() { return null; };
+
+      // 2. Détection de changement de focus (quand l'iframe essaie de "sortir")
+      window.addEventListener('blur', function() {
+        if (document.activeElement === document.getElementById('player-iframe')) {
+            console.log("Tentative de pop-up détectée et bloquée.");
+            // On force le focus à revenir sur notre page instantanément
+            setTimeout(function() {
+                window.focus();
+                document.body.click(); 
+            }, 100);
+        }
       });
     }
 
-    // Blocage strict des tentatives d'ouverture de fenêtres
-    window.open = function() { return null; };
+    // Bloque les alertes et les clics fantômes
     window.alert = function() { return null; };
+    document.addEventListener('click', function(e) {
+        if (!e.isTrusted) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }, true);
   </script>
   <script type="module" src="./js/viewerCounter.js"></script>
 </body>
