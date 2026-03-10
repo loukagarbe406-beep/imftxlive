@@ -88,23 +88,53 @@
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
     })();
+
     function setActive(id){
       [1,2,3].forEach(function(n){
         var b=document.getElementById("btn"+n);
         if(b) b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";
       });
     }
+
+    // --- LA PROTECTION ULTIME SANS SANDBOX ---
     function loadVideo(id){
       var c=document.getElementById("cover"); if(c) c.style.display="none";
       setActive(id);
       var target=document.getElementById("videoTarget");
       var url=SOURCES[id];
+      
       if(!url||url==="#"){
         target.innerHTML='<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
         return;
       }
-      target.innerHTML='<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" "allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0"></iframe>';
+
+      // On injecte l'iframe normalement
+      target.innerHTML = `<iframe id="player-iframe" src="${url}" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen" style="width:100%;height:100%;border:0"></iframe>`;
+
+      // 1. Neutralise l'ouverture de fenêtres au niveau du parent
+      window.open = function() { return null; };
+
+      // 2. Détection de changement de focus (quand l'iframe essaie de "sortir")
+      window.addEventListener('blur', function() {
+        if (document.activeElement === document.getElementById('player-iframe')) {
+            console.log("Tentative de pop-up détectée et bloquée.");
+            // On force le focus à revenir sur notre page instantanément
+            setTimeout(function() {
+                window.focus();
+                document.body.click(); 
+            }, 100);
+        }
+      });
     }
+
+    // Bloque les alertes et les clics fantômes
+    window.alert = function() { return null; };
+    document.addEventListener('click', function(e) {
+        if (!e.isTrusted) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }, true);
   </script>
   <script type="module" src="./js/viewerCounter.js"></script>
 </body>
