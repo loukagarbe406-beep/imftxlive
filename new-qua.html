@@ -1,45 +1,34 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Lecteur Sport Clean</title>
-    <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #000; }
-        
-        /* L'iframe occupe tout l'écran */
-        iframe { width: 100%; height: 100%; border: none; z-index: 1; }
+<script>
+// Bloque window.open (popups)
+window.open = function () {
+    console.log("Popup bloquée");
+    return null;
+};
 
-        /* Le bouclier transparent par-dessus l'iframe */
-        #shield {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 9999;
-            background: rgba(0,0,0,0.01); /* Presque invisible */
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
+// Bloque les redirections forcées
+Object.defineProperty(window, 'location', {
+    value: window.location,
+    writable: false
+});
 
-    <div id="shield" onclick="removeShield()"></div>
+// Empêche les clics qui ouvrent des pubs
+document.addEventListener("click", function(e) {
+    if (e.target.tagName === "A") {
+        e.preventDefault();
+    }
+}, true);
 
-    <iframe 
-        id="player"
-        src="https://viewembed.ru/channel/CanalSport2%5BFrance%5D" 
-        allowfullscreen>
-    </iframe>
+// Bloque les scripts qui essayent d'ouvrir une nouvelle page
+window.addEventListener("beforeunload", function(e) {
+    e.preventDefault();
+    e.returnValue = '';
+});
+</script>
 
-    <script>
-        // Bloque l'ouverture de fenêtres au niveau du navigateur
-        window.open = function() { return null; };
-
-        function removeShield() {
-            const shield = document.getElementById('shield');
-            shield.style.display = 'none';
-            console.log("Bouclier retiré, accès au lecteur autorisé.");
-        }
-    </script>
-
-</body>
-</html>
+<iframe 
+src="https://viewembed.ru/channel/CanalSport1%5BFrance%5D"
+width="100%" 
+height="600"
+frameborder="0"
+allowfullscreen>
+</iframe>
