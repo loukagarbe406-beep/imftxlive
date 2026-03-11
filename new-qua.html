@@ -22,14 +22,14 @@ height:100%;
 border:none;
 }
 
-/* couche transparente anti clic pub */
-#antiClick{
+#blocker{
 position:absolute;
 top:0;
 left:0;
 width:100%;
 height:100%;
 z-index:10;
+cursor:pointer;
 }
 </style>
 </head>
@@ -40,19 +40,35 @@ z-index:10;
 
 <iframe src="https://viewembed.ru/channel/CanalSport1%5BFrance%5D"></iframe>
 
-<div id="antiClick"></div>
+<div id="blocker"></div>
 
 </div>
 
 <script>
 
-// bloque les popups
-window.open=function(){return null}
+let clicks = 0;
 
-// enlève la protection si l'utilisateur veut cliquer play
-document.getElementById("antiClick").addEventListener("click",function(){
-this.style.display="none"
-})
+document.getElementById("blocker").addEventListener("click", function(e){
+
+clicks++;
+
+// bloque les 2 premières pubs
+if(clicks <= 2){
+e.preventDefault();
+console.log("Pub bloquée");
+}
+
+// après 2 clics on enlève le blocage
+if(clicks > 2){
+this.style.display = "none";
+}
+
+});
+
+// bloque les popups
+window.open = function(){
+return null;
+};
 
 </script>
 
