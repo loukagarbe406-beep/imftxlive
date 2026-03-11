@@ -1,34 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>IMFTX+ Live</title>
+
+<style>
+body{
+margin:0;
+background:black;
+}
+
+#player{
+position:relative;
+width:100%;
+height:100vh;
+}
+
+iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+/* couche transparente anti clic pub */
+#antiClick{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:10;
+}
+</style>
+</head>
+
+<body>
+
+<div id="player">
+
+<iframe src="https://viewembed.ru/channel/CanalSport1%5BFrance%5D"></iframe>
+
+<div id="antiClick"></div>
+
+</div>
+
 <script>
-// Bloque window.open (popups)
-window.open = function () {
-    console.log("Popup bloquée");
-    return null;
-};
 
-// Bloque les redirections forcées
-Object.defineProperty(window, 'location', {
-    value: window.location,
-    writable: false
-});
+// bloque les popups
+window.open=function(){return null}
 
-// Empêche les clics qui ouvrent des pubs
-document.addEventListener("click", function(e) {
-    if (e.target.tagName === "A") {
-        e.preventDefault();
-    }
-}, true);
+// enlève la protection si l'utilisateur veut cliquer play
+document.getElementById("antiClick").addEventListener("click",function(){
+this.style.display="none"
+})
 
-// Bloque les scripts qui essayent d'ouvrir une nouvelle page
-window.addEventListener("beforeunload", function(e) {
-    e.preventDefault();
-    e.returnValue = '';
-});
 </script>
 
-<iframe 
-src="https://viewembed.ru/channel/CanalSport1%5BFrance%5D"
-width="100%" 
-height="600"
-frameborder="0"
-allowfullscreen>
-</iframe>
+</body>
+</html>
