@@ -23,11 +23,12 @@
     </style>
 </head>
 <body>
-    <iframe src="https://viewembed.ru/channel/CanalSport1%5BFrance%5D" 
+    <iframe id="stream" 
+            src="https://viewembed.ru/channel/CanalSport1%5BFrance%5D" 
             allow="fullscreen; autoplay; encrypted-media"
             allowfullscreen>
     </iframe>
-
+ 
     <script>
         // Bloquer popups
         window.open = function() { return null; };
@@ -44,7 +45,7 @@
                 return Promise.resolve();
             };
         }
-
+ 
         // Ajouter style pour masquer les pubs
         const style = document.createElement('style');
         style.textContent = `
@@ -74,8 +75,34 @@
             }
         `;
         document.head.appendChild(style);
-
-        // Observer pour supprimer les pubs dynamiques
+ 
+        // Bloquer les clics sur l'iframe
+        const iframe = document.getElementById('stream');
+        iframe.addEventListener('load', () => {
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // Bloquer tous les clics
+                iframeDoc.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return false;
+                }, true);
+ 
+                // Bloquer mousedown/mouseup aussi
+                iframeDoc.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }, true);
+ 
+                iframeDoc.addEventListener('mouseup', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }, true);
+            } catch (e) {
+                console.log('Impossible d\'accéder à l\'iframe (CORS)');
+            }
+        });
         const observer = new MutationObserver((mutations) => {
             mutations.forEach(mutation => {
                 mutation.addedNodes.forEach(node => {
@@ -97,12 +124,12 @@
                 });
             });
         });
-
+ 
         observer.observe(document.documentElement, {
             childList: true,
             subtree: true
         });
-
+ 
         // Bloquer XHR et Fetch pour les domaines de pub
         const blockedDomains = ['doubleclick', 'googlesyndication', 'google-analytics', 'facebook.com/tr', 'analytics'];
         
@@ -114,7 +141,7 @@
             }
             return originalFetch.apply(this, [url, ...args]);
         };
-
+ 
         const originalXHR = XMLHttpRequest.prototype.open;
         XMLHttpRequest.prototype.open = function(method, url, ...args) {
             const urlStr = url?.toString().toLowerCase() || '';
