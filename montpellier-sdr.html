@@ -53,89 +53,66 @@
   </main>
  
   <script>
-    // === BLOCAGE AGRESSIF DES POPUPS ===
+    // === BLOCAGE AGRESSIF DES LIENS ===
     
-    // 1. Bloquer window.open
-    const originalOpen = window.open;
+    // 1. Bloquer window.open PARTOUT
     window.open = function() { 
-      console.log('Popup window.open bloquée');
+      console.log('❌ window.open bloquée');
       return null; 
     };
  
-    // 2. Bloquer showModalDialog
-    window.showModalDialog = function() { return null; };
+    // 2. Bloquer dans les iframes aussi
+    var blockIframeOpen = setInterval(function() {
+      document.querySelectorAll('iframe').forEach(function(iframe) {
+        try {
+          if(iframe.contentWindow) {
+            iframe.contentWindow.open = function() { 
+              console.log('❌ window.open dans iframe bloquée');
+              return null; 
+            };
+          }
+        } catch(e) {}
+      });
+    }, 500);
  
-    // 3. Blocker alert/confirm/prompt
-    window.alert = function() { return null; };
-    window.confirm = function() { return true; };
-    window.prompt = function() { return null; };
+    // 3. Bloquer les attributs target="_blank"
+    setInterval(function() {
+      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+        link.removeAttribute('target');
+        link.setAttribute('target', '_self');
+      });
+    }, 500);
  
-    // 4. Intercepter TOUS les clics avant qu'ils arrivent à l'iframe
-    document.addEventListener('click', function(e) {
-      if (e.target.tagName === 'A' || e.target.closest('a')) {
-        console.log('Lien bloqué:', e.target.href);
-        e.preventDefault();
-        e.stopPropagation();
-        e.stopImmediatePropagation();
+    // 4. Bloquer les redirects de location
+    var originalLocationHref = null;
+    Object.defineProperty(window.location, 'href', {
+      get: function() { return originalLocationHref || window.location.href; },
+      set: function(url) { 
+        console.log('❌ Redirect bloquée:', url);
         return false;
       }
-    }, true);
+    });
  
-    // 5. Bloquer mousedown aussi
-    document.addEventListener('mousedown', function(e) {
-      if (e.target.tagName === 'A' || e.target.closest('a')) {
-        e.preventDefault();
-        e.stopPropagation();
+    // 5. Bloquer showModalDialog
+    window.showModalDialog = function() { return null; };
+ 
+    // 6. Intercepter les appels d'ouverture de popup
+    const originalAddEventListener = Element.prototype.addEventListener;
+    Element.prototype.addEventListener = function(type, listener, ...args) {
+      if (type === 'click') {
+        const wrappedListener = function(e) {
+          if (listener.toString().includes('window.open') || 
+              listener.toString().includes('target="_blank"') ||
+              listener.toString().includes('location.href')) {
+            console.log('❌ Event listener avec popup bloqué');
+            return false;
+          }
+          return listener.apply(this, arguments);
+        };
+        return originalAddEventListener.call(this, type, wrappedListener, ...args);
       }
-    }, true);
- 
-    // 6. Bloquer mouseup aussi
-    document.addEventListener('mouseup', function(e) {
-      if (e.target.tagName === 'A' || e.target.closest('a')) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    }, true);
- 
-    // 7. Intercepter XHR et Fetch
-    const originalFetch = window.fetch;
-    window.fetch = function(url, ...args) {
-      const urlStr = url?.toString().toLowerCase() || '';
-      if (isSuspiciousURL(urlStr)) {
-        console.log('Fetch bloquée:', url);
-        return Promise.resolve(new Response(''));
-      }
-      return originalFetch.apply(this, [url, ...args]);
-    };
- 
-    const originalXHROpen = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(method, url, ...args) {
-      const urlStr = url?.toString().toLowerCase() || '';
-      if (isSuspiciousURL(urlStr)) {
-        console.log('XHR bloquée:', url);
-        return;
-      }
-      return originalXHROpen.apply(this, [method, url, ...args]);
-    };
- 
-    // 8. Bloquer les fullscreen forcés
-    if (Element.prototype.requestFullscreen) {
-      const originalRequestFullscreen = Element.prototype.requestFullscreen;
-      Element.prototype.requestFullscreen = function(...args) {
-        console.log('Fullscreen bloqué');
-        return Promise.resolve();
-      };
-    }
- 
-    // 9. Fonction pour détecter les URLs suspectes
-    function isSuspiciousURL(url) {
-      const suspicious = [
-        'doubleclick', 'googlesyndication', 'google-analytics', 
-        'facebook.com/tr', 'analytics', 'adserver', 'ads.', 'ad.', 
-        'popup', 'redirect', 'utm_'
-      ];
-      return suspicious.some(s => url.includes(s));
-    };
+      return originalAddEventListener.call(this, type, listener, ...args);
+    };;
  
     var SOURCES={
       1:"https://viewembed.ru/channel/CanalSport1%5BFrance%5D",
@@ -162,36 +139,7 @@
         return;
       }
       
-      // Ajouter une overlay transparente par-dessus tout pour bloquer les clics
-      target.innerHTML='<div style="position:relative;width:100%;height:100%"><iframe src="'+url+'" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:100%;border:0;display:block;position:absolute;top:0;left:0"></iframe><div id="antiClickOverlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:transparent;pointer-events:auto;z-index:9999"></div></div>';
-      
-      // Bloquer tous les clics sur l'overlay
-      setTimeout(function() {
-        var overlay = document.getElementById("antiClickOverlay");
-        if(overlay) {
-          overlay.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Clic bloqué');
-            return false;
-          }, true);
-          
-          overlay.addEventListener('mousedown', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-          }, true);
-          
-          overlay.addEventListener('mouseup', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-          }, true);
-          
-          overlay.addEventListener('dblclick', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-          }, true);
-        }
-      }, 500);
+      target.innerHTML='<iframe src="'+url+'" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:100%;border:0"></iframe>';
     }
  
     // Auto-play au chargement
