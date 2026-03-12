@@ -15,150 +15,67 @@
             height: 100vh;
             overflow: hidden;
         }
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
+        }
+        .blocker-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: auto;
+            z-index: 999999;
+            background: transparent;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
-    <iframe id="stream" 
-            src="https://viewembed.ru/channel/CanalSport1%5BFrance%5D" 
-            allow="fullscreen; autoplay; encrypted-media"
-            allowfullscreen>
-    </iframe>
+    <div class="container">
+        <iframe id="stream" 
+                src="https://viewembed.ru/channel/CanalSport1%5BFrance%5D" 
+                allow="fullscreen; autoplay; encrypted-media"
+                allowfullscreen>
+        </iframe>
+        <div class="blocker-overlay" id="blocker"></div>
+    </div>
  
     <script>
-        // Bloquer popups AGRESSIF
+        // Overlay qui bloque les clics
+        const blocker = document.getElementById('blocker');
+        
+        blocker.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        });
+ 
+        blocker.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+ 
+        blocker.addEventListener('mouseup', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+ 
+        blocker.addEventListener('dblclick', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+ 
+        // Bloquer window.open
         window.open = function() { return null; };
-        window.showModalDialog = function() { return null; };
-        
-        // Bloquer redirects
-        Object.defineProperty(window, 'location', {
-            writable: true,
-            value: window.location
-        });
-        
-        // Bloquer fullscreen
-        if (Element.prototype.requestFullscreen) {
-            Element.prototype.requestFullscreen = function() {
-                return Promise.resolve();
-            };
-        }
- 
-        // CSS AGRESSIF pour masquer TOUT
-        const style = document.createElement('style');
-        style.textContent = `
-            [class*="ad"],
-            [id*="ad"],
-            [class*="banner"],
-            [id*="banner"],
-            [class*="popup"],
-            [id*="popup"],
-            [class*="modal"],
-            [id*="modal"],
-            [class*="overlay"],
-            [id*="overlay"],
-            [class*="dialog"],
-            [id*="dialog"],
-            .advertisement,
-            #advertisement,
-            .sponsor,
-            .doubleclick,
-            iframe[src*="ad"],
-            iframe[src*="doubleclick"],
-            iframe[src*="googlesyndication"],
-            div[data-ad-slot],
-            div[data-slot],
-            ins.adsbygoogle,
-            div[role="dialog"],
-            div[role="alertdialog"],
-            [style*="position: fixed"][style*="z-index"],
-            [style*="position: absolute"][style*="z-index"] {
-                display: none !important;
-                visibility: hidden !important;
-                height: 0 !important;
-                width: 0 !important;
-                overflow: hidden !important;
-                pointer-events: none !important;
-            }
-        `;
-        document.head.appendChild(style);
- 
-        // Observer AGRESSIF
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach(mutation => {
-                mutation.addedNodes.forEach(node => {
-                    if (node.nodeType === 1) {
-                        const className = node.className?.toString().toLowerCase() || '';
-                        const id = node.id?.toString().toLowerCase() || '';
-                        const src = node.src?.toString().toLowerCase() || '';
-                        const role = node.getAttribute('role')?.toLowerCase() || '';
-                        const tag = node.tagName?.toLowerCase() || '';
-                        
-                        // Supprimer/masquer agressivement
-                        if (className.includes('ad') || className.includes('banner') || 
-                            className.includes('popup') || className.includes('modal') ||
-                            className.includes('dialog') || className.includes('overlay') ||
-                            id.includes('ad') || id.includes('banner') || 
-                            id.includes('popup') || id.includes('modal') ||
-                            id.includes('dialog') || id.includes('overlay') ||
-                            src.includes('ad') || src.includes('doubleclick') || 
-                            src.includes('googlesyndication') ||
-                            role === 'dialog' || role === 'alertdialog' ||
-                            (tag === 'iframe' && (src.includes('ad') || src.includes('banner'))) ||
-                            (tag === 'script' && src.includes('ad'))) {
-                            
-                            try {
-                                node.remove();
-                            } catch {
-                                node.style.display = 'none';
-                                node.style.visibility = 'hidden';
-                            }
-                        }
-                    }
-                });
-            });
-        });
- 
-        observer.observe(document.documentElement, {
-            childList: true,
-            subtree: true
-        });
- 
-        // Vérifier toutes les 100ms
-        setInterval(() => {
-            document.querySelectorAll('[class*="popup"], [id*="popup"], [class*="modal"], [id*="modal"], [role="dialog"], [class*="ad"][style*="z-index"]').forEach(el => {
-                try {
-                    el.remove();
-                } catch {
-                    el.style.display = 'none';
-                    el.style.visibility = 'hidden';
-                }
-            });
-        }, 100);
- 
-        // Bloquer XHR et Fetch
-        const blockedDomains = ['doubleclick', 'googlesyndication', 'google-analytics', 'facebook.com/tr', 'analytics', 'adserver', 'ads.', 'ad.'];
-        
-        const originalFetch = window.fetch;
-        window.fetch = function(url, ...args) {
-            const urlStr = url?.toString().toLowerCase() || '';
-            if (blockedDomains.some(domain => urlStr.includes(domain))) {
-                return Promise.resolve(new Response(''));
-            }
-            return originalFetch.apply(this, [url, ...args]);
-        };
- 
-        const originalXHR = XMLHttpRequest.prototype.open;
-        XMLHttpRequest.prototype.open = function(method, url, ...args) {
-            const urlStr = url?.toString().toLowerCase() || '';
-            if (blockedDomains.some(domain => urlStr.includes(domain))) {
-                return;
-            }
-            return originalXHR.apply(this, [method, url, ...args]);
-        };
     </script>
 </body>
 </html>
