@@ -51,7 +51,7 @@
       </div>
     </section>
   </main>
-
+ 
   <script>
     // === BLOCAGE AGRESSIF DES POPUPS ===
     
@@ -61,15 +61,15 @@
       console.log('Popup window.open bloquée');
       return null; 
     };
-
+ 
     // 2. Bloquer showModalDialog
     window.showModalDialog = function() { return null; };
-
+ 
     // 3. Blocker alert/confirm/prompt
     window.alert = function() { return null; };
     window.confirm = function() { return true; };
     window.prompt = function() { return null; };
-
+ 
     // 4. Intercepter TOUS les clics avant qu'ils arrivent à l'iframe
     document.addEventListener('click', function(e) {
       if (e.target.tagName === 'A' || e.target.closest('a')) {
@@ -80,7 +80,7 @@
         return false;
       }
     }, true);
-
+ 
     // 5. Bloquer mousedown aussi
     document.addEventListener('mousedown', function(e) {
       if (e.target.tagName === 'A' || e.target.closest('a')) {
@@ -88,7 +88,7 @@
         e.stopPropagation();
       }
     }, true);
-
+ 
     // 6. Bloquer mouseup aussi
     document.addEventListener('mouseup', function(e) {
       if (e.target.tagName === 'A' || e.target.closest('a')) {
@@ -96,7 +96,7 @@
         e.stopPropagation();
       }
     }, true);
-
+ 
     // 7. Intercepter XHR et Fetch
     const originalFetch = window.fetch;
     window.fetch = function(url, ...args) {
@@ -107,7 +107,7 @@
       }
       return originalFetch.apply(this, [url, ...args]);
     };
-
+ 
     const originalXHROpen = XMLHttpRequest.prototype.open;
     XMLHttpRequest.prototype.open = function(method, url, ...args) {
       const urlStr = url?.toString().toLowerCase() || '';
@@ -117,7 +117,7 @@
       }
       return originalXHROpen.apply(this, [method, url, ...args]);
     };
-
+ 
     // 8. Bloquer les fullscreen forcés
     if (Element.prototype.requestFullscreen) {
       const originalRequestFullscreen = Element.prototype.requestFullscreen;
@@ -126,7 +126,7 @@
         return Promise.resolve();
       };
     }
-
+ 
     // 9. Fonction pour détecter les URLs suspectes
     function isSuspiciousURL(url) {
       const suspicious = [
@@ -136,20 +136,20 @@
       ];
       return suspicious.some(s => url.includes(s));
     };
-
+ 
     var SOURCES={
       1:"https://viewembed.ru/channel/CanalSport1%5BFrance%5D",
       2:"https://viewembed.ru/channel/CanalSport1%5BFrance%5D",
       3:"https://viewembed.ru/channel/CanalSport1%5BFrance%5D"
     };
-
+ 
     function setActive(id){
       [1,2,3].forEach(function(n){
         var b=document.getElementById("btn"+n);
         if(b) b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";
       });
     }
-
+ 
     function loadVideo(id){
       var c=document.getElementById("cover"); 
       if(c) c.style.display="none";
@@ -162,9 +162,38 @@
         return;
       }
       
-      target.innerHTML='<iframe src="'+url+'" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:100%;border:0"></iframe>';
+      // Ajouter une overlay transparente par-dessus tout pour bloquer les clics
+      target.innerHTML='<div style="position:relative;width:100%;height:100%"><iframe src="'+url+'" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:100%;border:0;display:block;position:absolute;top:0;left:0"></iframe><div id="antiClickOverlay" style="position:absolute;top:0;left:0;width:100%;height:100%;background:transparent;pointer-events:auto;z-index:9999"></div></div>';
+      
+      // Bloquer tous les clics sur l'overlay
+      setTimeout(function() {
+        var overlay = document.getElementById("antiClickOverlay");
+        if(overlay) {
+          overlay.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Clic bloqué');
+            return false;
+          }, true);
+          
+          overlay.addEventListener('mousedown', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }, true);
+          
+          overlay.addEventListener('mouseup', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }, true);
+          
+          overlay.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }, true);
+        }
+      }, 500);
     }
-
+ 
     // Auto-play au chargement
     window.addEventListener('load', function(){
       setTimeout(function(){
