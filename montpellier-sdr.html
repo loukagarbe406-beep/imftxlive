@@ -1,1 +1,54 @@
-<iframe src="https://viewembed.ru/channel/CanalSport2%5BFrance%5D" width="100%" height="600" frameborder="0" allowfullscreen></iframe>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Lecteur Sport Clean</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
+        .container { position: relative; width: 100%; height: 100vh; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <iframe 
+        id="video-frame"
+        src="https://viewembed.ru/channel/CanalSport1%5BFrance%5D" 
+        allowfullscreen>
+    </iframe>
+</div>
+
+<script>
+    /**
+     * TRUC DE SIUX : On remplace la fonction window.open 
+     * avant que l'iframe n'ait le temps de l'appeler.
+     */
+    window.open = function() { 
+        console.log("Pop-up bloquée avec succès !");
+        return null; 
+    };
+
+    /**
+     * PROTECTION ANTI-REDIRECTION
+     * Si le site essaie de changer la page parente (ton site) 
+     * vers une pub, on bloque l'action.
+     */
+    var prevent_bust = 0;
+    window.onbeforeunload = function() { prevent_bust++; };
+    
+    setInterval(function() {
+        if (prevent_bust > 0) {
+            prevent_bust -= 2;
+            window.top.location = 'about:blank'; // On neutralise la redirection
+        }
+    }, 1);
+
+    // On s'assure que l'iframe ne peut pas prendre le focus pour ouvrir des trucs
+    document.getElementById('video-frame').addEventListener('blur', function() {
+        window.focus();
+    });
+</script>
+
+</body>
+</html>
