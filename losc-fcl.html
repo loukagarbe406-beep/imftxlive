@@ -83,28 +83,60 @@
     </section>
   </main>
   <script>
-    var SOURCES={1:"https://rereyano.ru/player/3/22",2:"https://rereyano.ru/player/3/22",3:"https://rereyano.ru/player/3/22"};
+    var SOURCES={1:"https://viewembed.ru/channel/CanalSport1%5BFrance%5D",2:"https://rereyano.ru/player/3/22",3:"https://rereyano.ru/player/3/22"};
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
-    })();
-    function setActive(id){
-      [1,2,3].forEach(function(n){
-        var b=document.getElementById("btn"+n);
-        if(b) b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";
-      });
-    }
-    function loadVideo(id){
-      var c=document.getElementById("cover"); if(c) c.style.display="none";
-      setActive(id);
-      var target=document.getElementById("videoTarget");
-      var url=SOURCES[id];
-      if(!url||url==="#"){
-        target.innerHTML='<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
-        return;
+    (function(){
+  /* 1. Bloque window.open */
+  window.open = function(){ return null; };
+
+  /* 2. Bloque les redirections via location */
+  var _loc = Object.getOwnPropertyDescriptor(window,'location');
+  var _href = Object.getOwnPropertyDescriptor(location,'href');
+  try {
+    Object.defineProperty(location,'href',{
+      set: function(v){
+        /* Autorise seulement les sources connues */
+        var allowed = ['viewembed.ru','bolaloca.my'];
+        var ok = allowed.some(function(d){ return v.indexOf(d)!==-1; });
+        if(ok) _href.set.call(location,v);
       }
-      target.innerHTML='<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0"></iframe>';
-    }
+    });
+  } catch(e){}
+
+  /* 3. Bloque les clics sur des liens inconnus */
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href]');
+    if(!a) return;
+    var href = a.getAttribute('href');
+    if(!href || href.startsWith('#') || href.startsWith('javascript')) return;
+    var allowed = ['empire-sport.live','viewembed.ru','bolaloca.my','twitch.tv'];
+    var isSafe = allowed.some(function(d){ return href.indexOf(d)!==-1; });
+    if(!isSafe){ e.preventDefault(); e.stopImmediatePropagation(); }
+  }, true);
+
+  /* 4. Bloque les faux overlays/popups injectés dans le DOM */
+  var observer = new MutationObserver(function(mutations){
+    mutations.forEach(function(m){
+      m.addedNodes.forEach(function(node){
+        if(node.nodeType!==1) return;
+        var z = parseInt(getComputedStyle(node).zIndex)||0;
+        var pos = getComputedStyle(node).position;
+        if(z>9000 && (pos==='fixed'||pos==='absolute')){
+          node.remove();
+        }
+      });
+    });
+  });
+  observer.observe(document.body,{childList:true,subtree:true});
+
+  /* 5. Bloque beforeunload publicitaire */
+  window.addEventListener('beforeunload', function(e){
+    e.stopImmediatePropagation();
+  }, true);
+
+})();
   </script>
   <script type="module" src="./js/viewerCounter.js"></script>
 </body>
