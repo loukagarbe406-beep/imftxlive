@@ -30,8 +30,9 @@
     </iframe>
  
     <script>
-        // Bloquer popups
+        // Bloquer popups AGRESSIF
         window.open = function() { return null; };
+        window.showModalDialog = function() { return null; };
         
         // Bloquer redirects
         Object.defineProperty(window, 'location', {
@@ -46,7 +47,7 @@
             };
         }
  
-        // Ajouter style pour masquer les pubs
+        // CSS AGRESSIF pour masquer TOUT
         const style = document.createElement('style');
         style.textContent = `
             [class*="ad"],
@@ -59,6 +60,8 @@
             [id*="modal"],
             [class*="overlay"],
             [id*="overlay"],
+            [class*="dialog"],
+            [id*="dialog"],
             .advertisement,
             #advertisement,
             .sponsor,
@@ -67,42 +70,23 @@
             iframe[src*="doubleclick"],
             iframe[src*="googlesyndication"],
             div[data-ad-slot],
-            ins.adsbygoogle {
+            div[data-slot],
+            ins.adsbygoogle,
+            div[role="dialog"],
+            div[role="alertdialog"],
+            [style*="position: fixed"][style*="z-index"],
+            [style*="position: absolute"][style*="z-index"] {
                 display: none !important;
                 visibility: hidden !important;
                 height: 0 !important;
                 width: 0 !important;
+                overflow: hidden !important;
+                pointer-events: none !important;
             }
         `;
         document.head.appendChild(style);
  
-        // Bloquer les clics sur l'iframe
-        const iframe = document.getElementById('stream');
-        iframe.addEventListener('load', () => {
-            try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                
-                // Bloquer tous les clics
-                iframeDoc.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    return false;
-                }, true);
- 
-                // Bloquer mousedown/mouseup aussi
-                iframeDoc.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }, true);
- 
-                iframeDoc.addEventListener('mouseup', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }, true);
-            } catch (e) {
-                console.log('Impossible d\'accéder à l\'iframe (CORS)');
-            }
-        });
+        // Observer AGRESSIF
         const observer = new MutationObserver((mutations) => {
             mutations.forEach(mutation => {
                 mutation.addedNodes.forEach(node => {
@@ -110,15 +94,28 @@
                         const className = node.className?.toString().toLowerCase() || '';
                         const id = node.id?.toString().toLowerCase() || '';
                         const src = node.src?.toString().toLowerCase() || '';
+                        const role = node.getAttribute('role')?.toLowerCase() || '';
+                        const tag = node.tagName?.toLowerCase() || '';
                         
-                        // Supprimer les pubs
+                        // Supprimer/masquer agressivement
                         if (className.includes('ad') || className.includes('banner') || 
                             className.includes('popup') || className.includes('modal') ||
+                            className.includes('dialog') || className.includes('overlay') ||
                             id.includes('ad') || id.includes('banner') || 
                             id.includes('popup') || id.includes('modal') ||
+                            id.includes('dialog') || id.includes('overlay') ||
                             src.includes('ad') || src.includes('doubleclick') || 
-                            src.includes('googlesyndication')) {
-                            node.remove();
+                            src.includes('googlesyndication') ||
+                            role === 'dialog' || role === 'alertdialog' ||
+                            (tag === 'iframe' && (src.includes('ad') || src.includes('banner'))) ||
+                            (tag === 'script' && src.includes('ad'))) {
+                            
+                            try {
+                                node.remove();
+                            } catch {
+                                node.style.display = 'none';
+                                node.style.visibility = 'hidden';
+                            }
                         }
                     }
                 });
@@ -130,8 +127,20 @@
             subtree: true
         });
  
-        // Bloquer XHR et Fetch pour les domaines de pub
-        const blockedDomains = ['doubleclick', 'googlesyndication', 'google-analytics', 'facebook.com/tr', 'analytics'];
+        // Vérifier toutes les 100ms
+        setInterval(() => {
+            document.querySelectorAll('[class*="popup"], [id*="popup"], [class*="modal"], [id*="modal"], [role="dialog"], [class*="ad"][style*="z-index"]').forEach(el => {
+                try {
+                    el.remove();
+                } catch {
+                    el.style.display = 'none';
+                    el.style.visibility = 'hidden';
+                }
+            });
+        }, 100);
+ 
+        // Bloquer XHR et Fetch
+        const blockedDomains = ['doubleclick', 'googlesyndication', 'google-analytics', 'facebook.com/tr', 'analytics', 'adserver', 'ads.', 'ad.'];
         
         const originalFetch = window.fetch;
         window.fetch = function(url, ...args) {
