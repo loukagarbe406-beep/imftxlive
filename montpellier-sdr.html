@@ -53,110 +53,65 @@
   </main>
  
   <script>
-    // === BLOCAGE AGRESSIF DES POPUPS ===
+    // === BLOCAGE ULTRA AGRESSIF ===
     
-    // 1. Bloquer window.open PARTOUT
-    window.open = function() { 
-      console.log('❌ window.open bloquée');
-      return null; 
-    };
- 
-    // 2. Bloquer dans les iframes aussi
-    var blockIframeOpen = setInterval(function() {
-      document.querySelectorAll('iframe').forEach(function(iframe) {
+    // Bloquer window.open immédiatement
+    window.open = function() { return null; };
+    
+    // Bloquer dans tous les iframes en boucle
+    setInterval(() => {
+      document.querySelectorAll('iframe').forEach(iframe => {
         try {
-          if(iframe.contentWindow) {
-            iframe.contentWindow.open = function() { 
-              console.log('❌ window.open dans iframe bloquée');
-              return null; 
-            };
-          }
+          iframe.contentWindow.open = () => null;
+          iframe.contentWindow.window.open = () => null;
         } catch(e) {}
       });
-    }, 500);
- 
-    // 3. Bloquer les attributs target="_blank"
-    setInterval(function() {
-      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
-        link.removeAttribute('target');
-        link.setAttribute('target', '_self');
+    }, 100);
+    
+    // Intercepter et bloquer TOUS les redirects
+    window.location.href = window.location.href;
+    const handler = {
+      get(target, prop) {
+        if (prop === 'href' || prop === 'replace' || prop === 'assign') {
+          return function() { console.log('Redirect bloqué'); return null; };
+        }
+        return target[prop];
+      }
+    };
+    window.location = new Proxy(window.location, handler);
+    
+    // Bloquer target="_blank"
+    setInterval(() => {
+      document.querySelectorAll('a[target="_blank"]').forEach(a => {
+        a.target = '_self';
+        a.onclick = (e) => { e.preventDefault(); return false; };
       });
-    }, 500);
- 
-    // 4. Bloquer XHR et Fetch pour pubs
+    }, 100);
+    
+    // Bloquer les clics externes
+    document.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' && e.target.href && !e.target.href.includes(window.location.hostname)) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    }, true);
+    
+    // Bloquer XHR suspectes
     const originalFetch = window.fetch;
     window.fetch = function(url, ...args) {
-      const urlStr = url?.toString().toLowerCase() || '';
-      if (isSuspiciousURL(urlStr)) {
-        console.log('❌ Fetch bloquée:', url);
+      if (typeof url === 'string' && (url.includes(':/') || url.includes('google'))) {
         return Promise.resolve(new Response(''));
       }
       return originalFetch.apply(this, [url, ...args]);
     };
- 
-    const originalXHROpen = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(method, url, ...args) {
-      const urlStr = url?.toString().toLowerCase() || '';
-      if (isSuspiciousURL(urlStr)) {
-        console.log('❌ XHR bloquée:', url);
-        return;
-      }
-      return originalXHROpen.apply(this, [method, url, ...args]);
-    };
- 
-    // 5. Masquer les pubs avec CSS
-    const style = document.createElement('style');
-    style.textContent = `
-      [class*="ad"], [id*="ad"], [class*="popup"], [id*="popup"],
-      [class*="modal"], [id*="modal"], [class*="banner"], [id*="banner"],
-      [class*="overlay"], [id*="overlay"], .advertisement, #advertisement {
-        display: none !important;
-        visibility: hidden !important;
-      }
-    `;
-    document.head.appendChild(style);
- 
-    // 6. MutationObserver pour supprimer les pubs dynamiques
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach(mutation => {
-        mutation.addedNodes.forEach(node => {
-          if (node.nodeType === 1) {
-            const className = node.className?.toString().toLowerCase() || '';
-            const id = node.id?.toString().toLowerCase() || '';
-            
-            if (className.includes('ad') || className.includes('popup') || 
-                className.includes('modal') || id.includes('ad') || 
-                id.includes('popup') || id.includes('modal')) {
-              try {
-                node.remove();
-                console.log('❌ Pub DOM supprimée');
-              } catch (e) {}
-            }
-          }
-        });
+    
+    // Supprimer les pubs du DOM
+    setInterval(() => {
+      document.querySelectorAll('[class*="ad"], [id*="ad"], [class*="popup"], [id*="popup"]').forEach(el => {
+        try { el.remove(); } catch(e) {}
       });
-    });
- 
-    observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
- 
-    // 7. Fonction pour détecter les URLs suspectes
-    function isSuspiciousURL(url) {
-      const suspicious = [
-        'doubleclick', 'googlesyndication', 'google-analytics', 
-        'facebook.com/tr', 'analytics', 'adserver', 'ads.', 'ad.', 
-        'popup', 'redirect', 'utm_', 'banner', 'clickserve', 'pagead'
-      ];
-      return suspicious.some(s => url.includes(s));
-    }
- 
-    // 8. Bloquer showModalDialog et alert
-    window.showModalDialog = function() { return null; };
-    window.alert = function() { return null; };
-    window.confirm = function() { return true; };
-    window.prompt = function() { return null; };;
+    }, 100);;
  
     var SOURCES={
       1:"https://viewembed.ru/channel/CanalSport1%5BFrance%5D",
@@ -183,7 +138,7 @@
         return;
       }
       
-      target.innerHTML='<iframe src="'+url+'" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0"></iframe>';
+      target.innerHTML='<iframe src="'+url+'" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:100%;border:0"></iframe>';
     }
  
     // Auto-play au chargement
