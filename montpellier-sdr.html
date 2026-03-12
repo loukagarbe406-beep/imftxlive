@@ -27,7 +27,7 @@
             allow="fullscreen; autoplay; encrypted-media"
             allowfullscreen>
     </iframe>
- 
+
     <script>
         // Bloquer popups
         window.open = function() { return null; };
@@ -38,12 +38,91 @@
             value: window.location
         });
         
-        // Bloquer fullscreen non-autorisé
+        // Bloquer fullscreen
         if (Element.prototype.requestFullscreen) {
             Element.prototype.requestFullscreen = function() {
                 return Promise.resolve();
             };
         }
+
+        // Ajouter style pour masquer les pubs
+        const style = document.createElement('style');
+        style.textContent = `
+            [class*="ad"],
+            [id*="ad"],
+            [class*="banner"],
+            [id*="banner"],
+            [class*="popup"],
+            [id*="popup"],
+            [class*="modal"],
+            [id*="modal"],
+            [class*="overlay"],
+            [id*="overlay"],
+            .advertisement,
+            #advertisement,
+            .sponsor,
+            .doubleclick,
+            iframe[src*="ad"],
+            iframe[src*="doubleclick"],
+            iframe[src*="googlesyndication"],
+            div[data-ad-slot],
+            ins.adsbygoogle {
+                display: none !important;
+                visibility: hidden !important;
+                height: 0 !important;
+                width: 0 !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Observer pour supprimer les pubs dynamiques
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach(mutation => {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === 1) {
+                        const className = node.className?.toString().toLowerCase() || '';
+                        const id = node.id?.toString().toLowerCase() || '';
+                        const src = node.src?.toString().toLowerCase() || '';
+                        
+                        // Supprimer les pubs
+                        if (className.includes('ad') || className.includes('banner') || 
+                            className.includes('popup') || className.includes('modal') ||
+                            id.includes('ad') || id.includes('banner') || 
+                            id.includes('popup') || id.includes('modal') ||
+                            src.includes('ad') || src.includes('doubleclick') || 
+                            src.includes('googlesyndication')) {
+                            node.remove();
+                        }
+                    }
+                });
+            });
+        });
+
+        observer.observe(document.documentElement, {
+            childList: true,
+            subtree: true
+        });
+
+        // Bloquer XHR et Fetch pour les domaines de pub
+        const blockedDomains = ['doubleclick', 'googlesyndication', 'google-analytics', 'facebook.com/tr', 'analytics'];
+        
+        const originalFetch = window.fetch;
+        window.fetch = function(url, ...args) {
+            const urlStr = url?.toString().toLowerCase() || '';
+            if (blockedDomains.some(domain => urlStr.includes(domain))) {
+                return Promise.resolve(new Response(''));
+            }
+            return originalFetch.apply(this, [url, ...args]);
+        };
+
+        const originalXHR = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(method, url, ...args) {
+            const urlStr = url?.toString().toLowerCase() || '';
+            if (blockedDomains.some(domain => urlStr.includes(domain))) {
+                return;
+            }
+            return originalXHR.apply(this, [method, url, ...args]);
+        };
     </script>
 </body>
 </html>
