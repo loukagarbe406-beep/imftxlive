@@ -51,7 +51,7 @@
       </div>
     </section>
   </main>
-
+ 
   <script>
     // === BLOCAGE AGRESSIF DES POPUPS ===
     
@@ -61,26 +61,43 @@
       console.log('Popup window.open bloquée');
       return null; 
     };
-
+ 
     // 2. Bloquer showModalDialog
     window.showModalDialog = function() { return null; };
-
-    // 3. Bloquer alert/confirm/prompt
+ 
+    // 3. Blocker alert/confirm/prompt
     window.alert = function() { return null; };
     window.confirm = function() { return true; };
     window.prompt = function() { return null; };
-
-    // 4. Bloquer les redirects forcés
-    const originalReplace = window.location.replace;
-    window.location.replace = function(url) {
-      if (isSuspiciousURL(url)) {
-        console.log('Redirect bloquée:', url);
-        return;
+ 
+    // 4. Intercepter TOUS les clics avant qu'ils arrivent à l'iframe
+    document.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
+        console.log('Lien bloqué:', e.target.href);
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
       }
-      return originalReplace.call(window.location, url);
-    };
-
-    // 5. Intercepter XHR et Fetch
+    }, true);
+ 
+    // 5. Bloquer mousedown aussi
+    document.addEventListener('mousedown', function(e) {
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+ 
+    // 6. Bloquer mouseup aussi
+    document.addEventListener('mouseup', function(e) {
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+ 
+    // 7. Intercepter XHR et Fetch
     const originalFetch = window.fetch;
     window.fetch = function(url, ...args) {
       const urlStr = url?.toString().toLowerCase() || '';
@@ -90,7 +107,7 @@
       }
       return originalFetch.apply(this, [url, ...args]);
     };
-
+ 
     const originalXHROpen = XMLHttpRequest.prototype.open;
     XMLHttpRequest.prototype.open = function(method, url, ...args) {
       const urlStr = url?.toString().toLowerCase() || '';
@@ -100,8 +117,8 @@
       }
       return originalXHROpen.apply(this, [method, url, ...args]);
     };
-
-    // 6. Bloquer les fullscreen forcés
+ 
+    // 8. Bloquer les fullscreen forcés
     if (Element.prototype.requestFullscreen) {
       const originalRequestFullscreen = Element.prototype.requestFullscreen;
       Element.prototype.requestFullscreen = function(...args) {
@@ -109,37 +126,8 @@
         return Promise.resolve();
       };
     }
-
-    // 7. MutationObserver pour supprimer les popups dynamiques
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach(mutation => {
-        mutation.addedNodes.forEach(node => {
-          if (node.nodeType === 1) {
-            const html = node.outerHTML?.toLowerCase() || '';
-            const className = node.className?.toString().toLowerCase() || '';
-            const id = node.id?.toString().toLowerCase() || '';
-            
-            // Supprimer les éléments suspects
-            if (className.includes('popup') || className.includes('modal') || 
-                className.includes('overlay') || className.includes('ad') ||
-                id.includes('popup') || id.includes('modal') || id.includes('overlay') ||
-                html.includes('onclick=') && html.includes('window.open')) {
-              try {
-                node.remove();
-                console.log('Popup DOM supprimée');
-              } catch (e) {}
-            }
-          }
-        });
-      });
-    });
-
-    observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true
-    });
-
-    // 8. Fonction pour détecter les URLs suspectes
+ 
+    // 9. Fonction pour détecter les URLs suspectes
     function isSuspiciousURL(url) {
       const suspicious = [
         'doubleclick', 'googlesyndication', 'google-analytics', 
@@ -147,31 +135,21 @@
         'popup', 'redirect', 'utm_'
       ];
       return suspicious.some(s => url.includes(s));
-    }
-
-    // 9. Bloquer les event listeners suspects
-    const originalAddEventListener = Element.prototype.addEventListener;
-    Element.prototype.addEventListener = function(type, listener, ...args) {
-      if (type === 'click' && listener.toString().includes('window.open')) {
-        console.log('Event listener suspect bloqué');
-        return;
-      }
-      return originalAddEventListener.call(this, type, listener, ...args);
     };
-
+ 
     var SOURCES={
       1:"https://viewembed.ru/channel/CanalSport1%5BFrance%5D",
       2:"https://viewembed.ru/channel/CanalSport1%5BFrance%5D",
       3:"https://viewembed.ru/channel/CanalSport1%5BFrance%5D"
     };
-
+ 
     function setActive(id){
       [1,2,3].forEach(function(n){
         var b=document.getElementById("btn"+n);
         if(b) b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";
       });
     }
-
+ 
     function loadVideo(id){
       var c=document.getElementById("cover"); 
       if(c) c.style.display="none";
@@ -186,7 +164,7 @@
       
       target.innerHTML='<iframe src="'+url+'" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:100%;border:0"></iframe>';
     }
-
+ 
     // Auto-play au chargement
     window.addEventListener('load', function(){
       setTimeout(function(){
