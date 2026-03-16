@@ -2,53 +2,56 @@
 <html>
 <head>
     <style>
-        .player-wrapper {
+        .container {
             position: relative;
-            width: 100%;
-            max-width: 850px;
-            height: 480px;
-            margin: auto;
+            width: 800px;
+            height: 450px;
             background: #000;
         }
+
+        /* TON LIEN QUI COUVRE TOUT */
+        #le-lien-mort {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999999; /* Toujours au-dessus */
+            display: block;
+            cursor: pointer;
+            background: rgba(0,0,0,0); /* Invisible mais présent */
+        }
+
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
-        /* La zone de clic "sécurisée" */
-        #safety-layer {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 999999;
-            background: transparent;
-        }
     </style>
 </head>
 <body>
 
-<div class="player-wrapper">
-    <div id="safety-layer"></div>
-    
-    <iframe id="live-player" src="https://viewembed.ru/channel/CanalSport%5BFrance%5D" allowfullscreen></iframe>
+<div class="container">
+    <a href="javascript:void(0)" id="le-lien-mort"></a>
+
+    <iframe src="https://viewembed.ru/channel/CanalSport%5BFrance%5D" allowfullscreen></iframe>
 </div>
 
 <script>
-    const layer = document.getElementById('safety-layer');
-    const iframe = document.getElementById('live-player');
+    const shield = document.getElementById('le-lien-mort');
 
-    layer.addEventListener('mousedown', function(e) {
-        // 1. On masque la couche de protection instantanément
+    shield.addEventListener('mousedown', function() {
+        // 1. On rend le lien "transparent" aux clics instantanément
         this.style.pointerEvents = 'none';
-        
-        // 2. On attend une fraction de seconde (le temps du clic sur le Play)
-        setTimeout(() => {
-            // 3. On remet la protection pour le prochain clic de pub
-            this.style.pointerEvents = 'auto';
-        }, 100); 
-    });
 
-    // Optionnel : Bloquer les alertes agaçantes
-    window.alert = function() {};
+        // 2. On le remet "solide" après 200ms
+        // C'est assez rapide pour que le script de pub ne se déclenche pas,
+        // mais assez long pour que TON clic valide le bouton Play.
+        setTimeout(() => {
+            this.style.pointerEvents = 'auto';
+            console.log("Le bouclier est de nouveau actif sur toute l'iframe");
+        }, 200);
+    });
 </script>
 
 </body>
