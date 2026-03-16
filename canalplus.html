@@ -2,55 +2,57 @@
 <html>
 <head>
     <style>
-        .container {
+        .video-box {
             position: relative;
             width: 800px;
             height: 450px;
+            overflow: hidden;
             background: #000;
         }
-
-        /* TON LIEN QUI COUVRE TOUT */
-        #le-lien-mort {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 999999; /* Toujours au-dessus */
-            display: block;
-            cursor: pointer;
-            background: rgba(0,0,0,0); /* Invisible mais présent */
-        }
-
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
+        /* TON LIEN MORT QUI SUIT LA SOURIS */
+        #anti-pub-link {
+            position: absolute;
+            width: 50px;  /* Petit carré sous la souris */
+            height: 50px;
+            z-index: 999999;
+            background: rgba(255, 0, 0, 0); /* Invisible */
+            cursor: pointer;
+            pointer-events: auto;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <a href="javascript:void(0)" id="le-lien-mort"></a>
-
-    <iframe src="https://viewembed.ru/channel/CanalSport%5BFrance%5D" allowfullscreen></iframe>
+<div class="video-box" id="container">
+    <a href="javascript:void(0)" id="anti-pub-link"></a>
+    
+    <iframe id="player" src="https://viewembed.ru/channel/CanalSport%5BFrance%5D" allowfullscreen></iframe>
 </div>
 
 <script>
-    const shield = document.getElementById('le-lien-mort');
+    const link = document.getElementById('anti-pub-link');
+    const container = document.getElementById('container');
 
-    shield.addEventListener('mousedown', function() {
-        // 1. On rend le lien "transparent" aux clics instantanément
-        this.style.pointerEvents = 'none';
+    // Le lien suit ta souris dans le cadre de la vidéo
+    container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        link.style.left = (e.clientX - rect.left - 25) + 'px';
+        link.style.top = (e.clientY - rect.top - 25) + 'px';
+    });
 
-        // 2. On le remet "solide" après 200ms
-        // C'est assez rapide pour que le script de pub ne se déclenche pas,
-        // mais assez long pour que TON clic valide le bouton Play.
+    // Quand tu cliques, on désactive le lien 0.1s pour laisser passer TON clic sur Play
+    link.addEventListener('mousedown', () => {
+        link.style.pointerEvents = 'none';
+        console.log("Clic protégé envoyé !");
+        
         setTimeout(() => {
-            this.style.pointerEvents = 'auto';
-            console.log("Le bouclier est de nouveau actif sur toute l'iframe");
-        }, 200);
+            link.style.pointerEvents = 'auto';
+        }, 150);
     });
 </script>
 
