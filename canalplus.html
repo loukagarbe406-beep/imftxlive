@@ -1,52 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        .player-box {
+        .player-wrapper {
             position: relative;
             width: 100%;
-            height: 250px; /* Ajuste selon tes besoins */
+            max-width: 800px;
+            aspect-ratio: 16/9;
             background: #000;
+            overflow: hidden;
         }
-        iframe { width: 100%; height: 100%; border: none; }
-
-        /* TON LIEN MORT - INVISIBLE ET PERMANENT */
+        /* TON LIEN MORT GÉANT */
         #shield-link {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 9999;
-            background: rgba(0,0,0,0);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            display: block;
-            -webkit-tap-highlight-color: transparent;
+            background: url('https://via.placeholder.com/800x450/000000/FFFFFF?text=CLIQUE+POUR+LANCER+LE+FLUX') no-repeat center;
+            background-size: cover;
         }
+        iframe { width: 100%; height: 100%; border: none; display: none; }
     </style>
 </head>
 <body>
 
-<div class="player-box">
+<div class="player-wrapper">
     <a href="javascript:void(0)" id="shield-link"></a>
-
-    <iframe id="vid" src="https://viewembed.ru/channel/CanalSport%5BFrance%5D"></iframe>
+    
+    <iframe id="live-video" src="" allowfullscreen></iframe>
 </div>
 
 <script>
+    let clickCount = 0;
     const shield = document.getElementById('shield-link');
+    const iframe = document.getElementById('live-video');
+    const streamUrl = "https://viewembed.ru/channel/CanalSport%5BFrance%5D";
 
-    // Cette fonction s'active dès qu'on pose le doigt
-    shield.addEventListener('touchstart', function() {
-        // 1. On rend le lien "fantôme" (cliquable à travers)
-        shield.style.pointerEvents = 'none';
+    shield.addEventListener('click', function(e) {
+        clickCount++;
 
-        // 2. On le remet "solide" après 150ms
-        // C'est trop court pour qu'une popup s'ouvre, 
-        // mais assez long pour que l'iframe reçoive le clic du Play
-        setTimeout(() => {
-            shield.style.pointerEvents = 'auto';
-            console.log("Clic transmis au lecteur, protection réactivée.");
-        }, 150);
-    }, {passive: true});
+        if (clickCount === 1) {
+            // Premier clic : on ne fait rien, on laisse le href="javascript:void(0)" bloquer
+            console.log("Première tentative de pub bloquée");
+        } 
+        else if (clickCount === 2) {
+            // Deuxième clic : on commence à charger l'iframe en arrière-plan
+            console.log("Deuxième tentative bloquée. Chargement du flux...");
+            iframe.src = streamUrl;
+            iframe.style.display = "block";
+        }
+        else if (clickCount === 3) {
+            // Troisième clic : on dégage le bouclier définitivement
+            this.style.display = "none";
+            console.log("Bouclier retiré. Bon match !");
+        }
+    });
 </script>
 
 </body>
