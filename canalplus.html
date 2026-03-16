@@ -1,32 +1,45 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Canal+</title>
-
-<style>
-html, body{
-  margin:0;
-  padding:0;
-  height:100%;
-  background:black;
-}
-
-iframe{
-  width:100%;
-  height:100%;
-  border:none;
-}
-</style>
-
+    <style>
+        .video-container {
+            position: relative;
+            width: 800px;
+            height: 450px;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* La zone qui bloque les clics */
+        #anti-pop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            cursor: pointer;
+            background: rgba(0,0,0,0); /* Totalement transparent */
+        }
+    </style>
 </head>
 <body>
 
-<iframe 
-src="https://rereyano.ru/player/3/11"
-sandbox="allow-same-origin allow-scripts allow-fullscreen"
-allowfullscreen>
-</iframe>
+<div class="video-container">
+    <div id="anti-pop" onclick="removeShield()"></div>
+    
+    <iframe src="https://viewembed.ru/channel/CanalSport%5BFrance%5D" allowfullscreen></iframe>
+</div>
+
+<script>
+    function removeShield() {
+        const shield = document.getElementById('anti-pop');
+        shield.style.display = 'none';
+        console.log("Premier clic intercepté, protection retirée.");
+    }
+</script>
 
 </body>
 </html>
