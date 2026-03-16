@@ -3,63 +3,66 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        .player-container {
+        body { margin: 0; background: #000; overflow: hidden; }
+        .container {
             position: relative;
-            width: 100%;
-            max-width: 600px;
-            aspect-ratio: 16 / 9;
-            background: #000;
-            margin: auto;
+            width: 100vw;
+            height: 56.25vw; /* Ratio 16:9 */
         }
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
-        /* TON LIEN MORT PERMANENT */
-        #mobile-shield {
+        /* TON LIEN MORT - L'ARMURE */
+        #shield {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: 999999;
-            display: block;
             background: rgba(0,0,0,0);
             cursor: pointer;
-            -webkit-tap-highlight-color: transparent; /* Enleve le flash bleu sur mobile */
         }
     </style>
 </head>
 <body>
 
-<div class="player-container">
-    <a href="javascript:void(0)" id="mobile-shield"></a>
-
+<div class="container">
+    <a href="javascript:void(0)" id="shield"></a>
+    
     <iframe 
-        id="stream-iframe"
+        id="player" 
         src="https://viewembed.ru/channel/CanalSport%5BFrance%5D?autoplay=1&muted=1" 
-        allow="autoplay; encrypted-media" 
-        allowfullscreen>
-    </iframe>
+        allow="autoplay; fullscreen"
+    ></iframe>
 </div>
 
 <script>
-    const shield = document.getElementById('mobile-shield');
-    const iframe = document.getElementById('stream-iframe');
+    const shield = document.getElementById('shield');
+    const player = document.getElementById('player');
 
+    // TENTATIVE D'AUTO-LANCEMENT
+    window.onload = () => {
+        // On essaie de redonner le focus à l'iframe pour qu'elle se lance
+        player.focus();
+        
+        // On simule une interaction après 1 seconde
+        setTimeout(() => {
+            console.log("Tentative de réveil du flux...");
+            player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        }, 1000);
+    };
+
+    // LE BOUCLIER ACTIF
     shield.addEventListener('touchstart', function(e) {
-        // 1. On rend le lien "fantôme" au toucher
+        // On laisse passer le clic vers l'iframe
         this.style.pointerEvents = 'none';
-
-        // 2. On le remet après un court instant
-        // Ça permet de cliquer sur le bouton "Unmute" (son) sans déclencher de pop-up
+        
+        // On le remet DIRECTEMENT après (très court) pour bloquer la popup
+        // 100ms c'est trop rapide pour l'ouverture d'un onglet de pub
         setTimeout(() => {
             this.style.pointerEvents = 'auto';
-        }, 300);
-    }, {passive: true});
-
-    // Forcer le rechargement de l'iframe si l'autoplay galère au début
-    window.onload = () => {
-        iframe.src = iframe.src; 
-    };
+        }, 100);
+    });
 </script>
 
 </body>
