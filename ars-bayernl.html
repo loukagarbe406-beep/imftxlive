@@ -67,49 +67,42 @@
 </div>
 
 <script>
-  /* ── Anti-popup : intercepte window.open avant qu'il s'exécute ── */
-  const _origOpen = window.open;
-  window.open = function(...args) {
-    console.warn('[Anti-popup] Fenêtre bloquée :', args[0]);
-    return null; // bloque tout window.open
-  };
+  /* ── 1. Bloque window.open ── */
+  window.open = function() { return null; };
 
-  /* ── Bloque les redirections automatiques via location ── */
-  const _origAssign   = window.location.assign.bind(window.location);
-  const _origReplace  = window.location.replace.bind(window.location);
+  /* ── 2. Bloque window.location redirect ── */
+  const _assign = window.location.assign.bind(window.location);
   try {
     Object.defineProperty(window.location, 'href', {
       set(url) {
-        // Autorise uniquement si c'est la même origine
-        if (new URL(url, location.href).origin === location.origin) {
-          _origAssign(url);
-        } else {
-          console.warn('[Anti-redirect] Bloqué :', url);
-        }
+        if (new URL(url, location.href).origin === location.origin) _assign(url);
       }
     });
   } catch(e) {}
 
-  /* ── Bloque les nouveaux onglets via faux clic ── */
+  /* ── 3. Bloque les liens _blank ── */
   document.addEventListener('click', function(e) {
     const a = e.target.closest('a');
-    if (a && a.target === '_blank') {
-      e.preventDefault();
-      e.stopPropagation();
-      console.warn('[Anti-popup] Lien _blank bloqué :', a.href);
-    }
+    if (a && a.target === '_blank') { e.preventDefault(); e.stopPropagation(); }
   }, true);
 
-  /* ── Supprime les iframes cachées injectées dynamiquement ── */
+  /* ── 4. Overlay anti-premier-clic piégé ── */
+  const shield = document.getElementById('click-shield');
+  shield.addEventListener('click', function(e) {
+    shield.style.display = 'none';
+    setTimeout(() => { shield.style.display = 'block'; }, 400);
+  });
+
+  /* ── 5. Blur trick : reprend le focus si une page s'ouvre ── */
+  window.addEventListener('blur', function() {
+    setTimeout(() => { window.focus(); }, 50);
+  });
+
+  /* ── 6. Supprime les iframes parasites injectées ── */
   const observer = new MutationObserver(mutations => {
     for (const m of mutations) {
       for (const node of m.addedNodes) {
         if (node.tagName === 'IFRAME' && node !== document.getElementById('stream-frame')) {
-          console.warn('[Anti-popup] Iframe parasite supprimée');
-          node.remove();
-        }
-        // Supprime aussi les div/script de pub connus
-        if (node.tagName === 'SCRIPT' && node.src && !node.src.includes('dlstreams')) {
           node.remove();
         }
       }
@@ -117,21 +110,14 @@
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
-  /* ── Bloque focus() automatique (trick classique pour popup) ── */
-  const _origFocus = window.focus;
-  window.focus = function() {};
-
-  /* ── Gère le plein écran natif (double-clic) ── */
+  /* ── 7. Plein écran double-clic ── */
   const wrapper = document.getElementById('player-wrapper');
   document.addEventListener('dblclick', () => {
-    if (!document.fullscreenElement) {
-      wrapper.requestFullscreen().catch(()=>{});
-    } else {
-      document.exitFullscreen();
-    }
+    if (!document.fullscreenElement) wrapper.requestFullscreen().catch(()=>{});
+    else document.exitFullscreen();
   });
 
-  console.log('%c🛡️ Anti-popup chargé avec succès', 'color:#00e676;font-weight:bold');
+  console.log('%c🛡️ Anti-popup actif', 'color:#00e676;font-weight:bold');
 </script>
 
 </body>
