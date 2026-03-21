@@ -3,70 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        .video-container {
+        .stream-wrapper {
             position: relative;
             width: 100%;
-            max-width: 800px; /* Ajuste à ta guise */
-            margin: auto;
+            max-width: 900px;
+            margin: 20px auto;
             background: #000;
         }
-        
-        /* L'iframe du match */
+
+        /* L'iframe reste en dessous */
         iframe {
             width: 100%;
             aspect-ratio: 16 / 9;
             border: none;
+            z-index: 1;
         }
 
-        /* LE BOUCLIER : Il est au-dessus de l'iframe au début */
-        #shield {
+        /* TA COUCHE DE LIEN PAR-DESSUS */
+        .click-killer {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 999;
-            background: rgba(0,0,0,0); /* Invisible */
-            cursor: pointer;
+            z-index: 10; /* Toujours au-dessus */
+            display: block;
+            text-decoration: none;
+            background: rgba(0,0,0,0); /* Invisible mais cliquable */
+        }
+        
+        .click-killer.disabled {
+            display: none; /* Disparaît pour laisser jouer le match */
         }
     </style>
 </head>
 <body>
 
-<div class="video-container">
-    <div id="shield"></div>
+<div class="stream-wrapper">
+    <a href="javascript:void(0)" class="click-killer" id="ad-shield"></a>
+
     <iframe 
         id="player"
         src="https://pooembed.eu/embed/ligue1/2026-03-21/nice-psg#autoplay" 
-        allow="autoplay; fullscreen" 
         allowfullscreen>
     </iframe>
 </div>
 
 <script>
-    const shield = document.getElementById('shield');
-    const player = document.getElementById('player');
+    const shield = document.getElementById('ad-shield');
 
-    // 1. Bloquer window.open au cas où la pub arrive à sortir
+    // On tue window.open au niveau de la page hôte
     window.open = function() { return null; };
 
-    // 2. Gérer le clic sur le bouclier
-    shield.addEventListener('click', function() {
-        console.log("Clic de pub intercepté !");
-        
-        // On rend le bouclier "cliquable à travers" (fantôme)
-        // Cela permet au DEUXIÈME clic de toucher le vrai bouton Play
-        shield.style.pointerEvents = 'none';
+    shield.addEventListener('click', function(e) {
+        // On empêche le clic de faire quoi que ce soit d'autre
+        e.preventDefault();
+        e.stopPropagation();
 
-        // On remet le bouclier après 10 secondes au cas où l'utilisateur 
-        // veut mettre en pause plus tard (souvent une 2ème pub attend)
+        console.log("Premier clic (pub potentielle) absorbé par le lien fantôme.");
+
+        // On enlève le bouclier pour que l'utilisateur puisse cliquer sur PLAY
+        shield.classList.add('disabled');
+
+        // PROTECTION : On remet le bouclier après 8 secondes 
+        // pour bloquer la pub qui apparaît quand on veut mettre PAUSE
         setTimeout(() => {
-            shield.style.pointerEvents = 'auto';
-            console.log("Bouclier réactivé pour la suite.");
-        }, 10000);
+            shield.classList.remove('disabled');
+            console.log("Lien fantôme réactivé.");
+        }, 8000);
     });
 
-    // 3. Empêcher l'iframe de rediriger TA page (Frame-Busting)
+    // Empêche la page de se rafraîchir vers une pub (Frame Busting)
     window.onbeforeunload = function() {
-        return "Tentative de pub bloquée !";
+        return "Rester sur le match ?";
     };
 </script>
 
