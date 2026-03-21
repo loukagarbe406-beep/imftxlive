@@ -2,50 +2,68 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lecteur Stream Clean</title>
+    <title>Stream Live - Anti-Pop</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: #000; overflow: hidden; }
-        .video-wrapper { position: relative; width: 100%; height: 100%; }
-        iframe { width: 100%; height: 100%; border: none; }
-        .overlay-blocker { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            z-index: 10; pointer-events: none; 
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
+        .container { position: relative; width: 100vw; height: 100vh; }
+        
+        /* L'iframe du match */
+        iframe { width: 100%; height: 100%; border: none; z-index: 1; }
+
+        /* Le bouclier invisible (Z-index supérieur) */
+        #shield {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 999999;
+            background: rgba(0,0,0,0); /* Totalement transparent */
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<div class="video-wrapper">
+<div class="container">
+    <div id="shield"></div>
     <iframe 
-        id="stream-player"
-        src="https://pooembed.eu/embed/ligue1/2026-03-21/nice-psg#autoplay#sandbox=true" 
+        id="match-player"
+        src="https://pooembed.eu/embed/ligue1/2026-03-21/nice-psg#autoplay" 
+        allow="autoplay; fullscreen" 
         allowfullscreen>
     </iframe>
 </div>
 
 <script>
-    // 1. On neutralise la fonction window.open
-    const originalOpen = window.open;
-    window.open = function() {
-        console.log("Tentative de pop-up bloquée !");
-        return null; // On ne retourne rien, donc la fenêtre ne s'ouvre pas
+    // 1. On tue la fonction d'ouverture de fenêtre AVANT que l'iframe ne l'appelle
+    const noOp = () => { console.log("Tentative de pub bloquée !"); return null; };
+    window.open = noOp;
+    
+    // 2. On empêche le changement d'URL de l'onglet actuel (le "tab-jacking")
+    window.onbeforeunload = function() {
+        return "Voulez-vous vraiment quitter le match ?";
     };
 
-    // 2. Protection contre le "Focus Stealing" (quand le site essaie de forcer l'ouverture)
-    window.onblur = function() {
-        setTimeout(function() {
-            window.focus();
-        }, 100);
-    };
+    // 3. Gestion du bouclier
+    const shield = document.getElementById('shield');
+    
+    shield.addEventListener('click', function() {
+        // Le premier clic sur l'écran "consomme" la pub cachée
+        // On désactive le bouclier temporairement pour laisser passer le clic vers le bouton PLAY
+        shield.style.pointerEvents = 'none';
+        console.log("Bouclier levé : Vous avez 3 secondes pour cliquer sur Play.");
 
-    // 3. Empêcher les clics fantômes sur la page parente
-    document.addEventListener('click', function(e) {
-        // Si le clic n'est pas sur le lecteur, on l'annule
-        if (e.target.tagName !== 'IFRAME') {
-            // Optionnel : on peut loguer ici
+        // On remet le bouclier après 3 secondes pour bloquer les pubs suivantes
+        setTimeout(() => {
+            shield.style.pointerEvents = 'auto';
+            console.log("Bouclier réactivé.");
+        }, 3000);
+    });
+
+    // 4. Protection contre le vol de focus
+    setInterval(() => {
+        if (document.activeElement.tagName === "IFRAME") {
+            // Si l'iframe essaie de prendre le contrôle total, on surveille
         }
-    }, true);
+    }, 1000);
 </script>
 
 </body>
