@@ -2,79 +2,130 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <title>LIVE : Nice vs PSG - Flux Protégé</title>
     <style>
-        .stream-wrapper {
+        body { margin: 0; padding: 0; background-color: #0b0e14; color: white; font-family: sans-serif; overflow: hidden; }
+        
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Conteneur Vidéo */
+        .player-wrapper {
             position: relative;
-            width: 100%;
-            max-width: 900px;
-            margin: 20px auto;
+            width: 90%;
+            max-width: 1000px;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
             background: #000;
         }
 
-        /* L'iframe reste en dessous */
         iframe {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            height: 100%;
             border: none;
-            z-index: 1;
         }
 
-        /* TA COUCHE DE LIEN PAR-DESSUS */
-        .click-killer {
+        /* LE BOUCLIER ANTI-CLIC */
+        #anti-pop-shield {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 10; /* Toujours au-dessus */
-            display: block;
-            text-decoration: none;
-            background: rgba(0,0,0,0); /* Invisible mais cliquable */
+            z-index: 9999;
+            background: rgba(0,0,0,0); /* Invisible */
+            cursor: pointer;
         }
-        
-        .click-killer.disabled {
-            display: none; /* Disparaît pour laisser jouer le match */
+
+        /* Petit message d'info */
+        .info-bar {
+            background: #e63946;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-<div class="stream-wrapper">
-    <a href="javascript:void(0)" class="click-killer" id="ad-shield"></a>
+<div class="main-container">
+    
+    <div class="info-bar" id="status-msg">
+        🛡️ PROTECTION ACTIVE : CLIQUEZ 2 FOIS POUR LANCER LE MATCH SANS PUB
+    </div>
 
-    <iframe 
-        id="player"
-        src="https://pooembed.eu/embed/ligue1/2026-03-21/nice-psg#autoplay" 
-        allowfullscreen>
-    </iframe>
+    <div class="player-wrapper">
+        <div id="anti-pop-shield"></div>
+
+        <iframe 
+            id="video-player"
+            src="https://goodstream.site/embed.php?token=707d3ad5d0" 
+            allow="autoplay; fullscreen" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
 </div>
 
 <script>
-    const shield = document.getElementById('ad-shield');
+    /**
+     * 1. PROTECTION GLOBALE DU SITE
+     */
+    (function() {
+        const killPop = () => {
+            window.open = function() { 
+                console.log("Pop-up bloqué !"); 
+                return { focus: () => {}, close: () => {} }; 
+            };
+        };
+        killPop();
 
-    // On tue window.open au niveau de la page hôte
-    window.open = function() { return null; };
+        // On réinitialise le blocage à chaque clic sur le document
+        document.addEventListener('click', killPop, true);
 
-    shield.addEventListener('click', function(e) {
-        // On empêche le clic de faire quoi que ce soit d'autre
-        e.preventDefault();
-        e.stopPropagation();
+        // Anti-redirection (Tab-jacking)
+        window.onbeforeunload = function() {
+            return "Une pub tente de vous rediriger. Rester sur le match ?";
+        };
+    })();
 
-        console.log("Premier clic (pub potentielle) absorbé par le lien fantôme.");
+    /**
+     * 2. GESTION DU BOUCLIER SUR L'IFRAME
+     */
+    const shield = document.getElementById('anti-pop-shield');
+    const msg = document.getElementById('status-msg');
 
-        // On enlève le bouclier pour que l'utilisateur puisse cliquer sur PLAY
-        shield.classList.add('disabled');
+    shield.addEventListener('click', function() {
+        // Le 1er clic "mange" la pub
+        console.log("Bouclier : Première tentative de pub absorbée.");
+        
+        // On désactive le bouclier pour laisser passer le 2ème clic vers le bouton Play
+        shield.style.pointerEvents = 'none';
+        
+        // On change le message
+        msg.style.background = "#2a9d8f";
+        msg.innerText = "✅ SÉCURISÉ : CLIQUEZ MAINTENANT SUR LE BOUTON PLAY";
 
-        // PROTECTION : On remet le bouclier après 8 secondes 
-        // pour bloquer la pub qui apparaît quand on veut mettre PAUSE
+        // On remet la protection après 10 secondes (si l'utilisateur veut mettre pause/volume)
         setTimeout(() => {
-            shield.classList.remove('disabled');
-            console.log("Lien fantôme réactivé.");
-        }, 8000);
+            shield.style.pointerEvents = 'auto';
+            msg.style.background = "#e63946";
+            msg.innerText = "🛡️ PROTECTION RÉACTIVÉE (ANTIP-POP)";
+        }, 10000);
     });
-
-    // Empêche la page de se rafraîchir vers une pub (Frame Busting)
-    window.onbeforeunload = function() {
-        return "Rester sur le match ?";
-    };
 </script>
 
 </body>
