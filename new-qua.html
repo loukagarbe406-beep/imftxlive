@@ -2,68 +2,41 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Stream Live - Anti-Pop</title>
+    <title>Nice-PSG Autoplay</title>
     <style>
         body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
-        .container { position: relative; width: 100vw; height: 100vh; }
-        
-        /* L'iframe du match */
-        iframe { width: 100%; height: 100%; border: none; z-index: 1; }
-
-        /* Le bouclier invisible (Z-index supérieur) */
-        #shield {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 999999;
-            background: rgba(0,0,0,0); /* Totalement transparent */
-            cursor: pointer;
-        }
+        iframe { width: 100%; height: 100%; border: none; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div id="shield"></div>
     <iframe 
-        id="match-player"
+        id="player"
         src="https://pooembed.eu/embed/ligue1/2026-03-21/nice-psg#autoplay" 
-        allow="autoplay; fullscreen" 
+        allow="autoplay; fullscreen; encrypted-media" 
         allowfullscreen>
     </iframe>
-</div>
 
 <script>
-    // 1. On tue la fonction d'ouverture de fenêtre AVANT que l'iframe ne l'appelle
-    const noOp = () => { console.log("Tentative de pub bloquée !"); return null; };
-    window.open = noOp;
+    /* ANTI-POP UP SANS SANDBOX */
     
-    // 2. On empêche le changement d'URL de l'onglet actuel (le "tab-jacking")
-    window.onbeforeunload = function() {
-        return "Voulez-vous vraiment quitter le match ?";
-    };
+    // On remplace window.open par une fonction qui ne fait rien
+    window.open = function() { return null; };
 
-    // 3. Gestion du bouclier
-    const shield = document.getElementById('shield');
+    // On surveille si l'iframe tente de rediriger la page principale (Frame Busting)
+    var prevent_bust = 0;
+    window.onbeforeunload = function() { prevent_bust++; };
     
-    shield.addEventListener('click', function() {
-        // Le premier clic sur l'écran "consomme" la pub cachée
-        // On désactive le bouclier temporairement pour laisser passer le clic vers le bouton PLAY
-        shield.style.pointerEvents = 'none';
-        console.log("Bouclier levé : Vous avez 3 secondes pour cliquer sur Play.");
-
-        // On remet le bouclier après 3 secondes pour bloquer les pubs suivantes
-        setTimeout(() => {
-            shield.style.pointerEvents = 'auto';
-            console.log("Bouclier réactivé.");
-        }, 3000);
-    });
-
-    // 4. Protection contre le vol de focus
-    setInterval(() => {
-        if (document.activeElement.tagName === "IFRAME") {
-            // Si l'iframe essaie de prendre le contrôle total, on surveille
+    setInterval(function() {
+        if (prevent_bust > 0) {
+            prevent_bust -= 2;
+            window.top.location = 'about:blank'; // Bloque la redirection si elle est tentée
         }
-    }, 1000);
+    }, 1);
+
+    // Note : Pour que l'autoplay marche à 100% sur Chrome/Edge, 
+    // il faudra peut-être cliquer une seule fois n'importe où sur la page 
+    // pour "activer" le son, car les navigateurs l'exigent.
 </script>
 
 </body>
