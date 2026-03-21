@@ -2,41 +2,72 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Nice-PSG Autoplay</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; }
-        iframe { width: 100%; height: 100%; border: none; }
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Ajuste à ta guise */
+            margin: auto;
+            background: #000;
+        }
+        
+        /* L'iframe du match */
+        iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+        }
+
+        /* LE BOUCLIER : Il est au-dessus de l'iframe au début */
+        #shield {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 999;
+            background: rgba(0,0,0,0); /* Invisible */
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
+<div class="video-container">
+    <div id="shield"></div>
     <iframe 
         id="player"
         src="https://pooembed.eu/embed/ligue1/2026-03-21/nice-psg#autoplay" 
-        allow="autoplay; fullscreen; encrypted-media" 
+        allow="autoplay; fullscreen" 
         allowfullscreen>
     </iframe>
+</div>
 
 <script>
-    /* ANTI-POP UP SANS SANDBOX */
-    
-    // On remplace window.open par une fonction qui ne fait rien
+    const shield = document.getElementById('shield');
+    const player = document.getElementById('player');
+
+    // 1. Bloquer window.open au cas où la pub arrive à sortir
     window.open = function() { return null; };
 
-    // On surveille si l'iframe tente de rediriger la page principale (Frame Busting)
-    var prevent_bust = 0;
-    window.onbeforeunload = function() { prevent_bust++; };
-    
-    setInterval(function() {
-        if (prevent_bust > 0) {
-            prevent_bust -= 2;
-            window.top.location = 'about:blank'; // Bloque la redirection si elle est tentée
-        }
-    }, 1);
+    // 2. Gérer le clic sur le bouclier
+    shield.addEventListener('click', function() {
+        console.log("Clic de pub intercepté !");
+        
+        // On rend le bouclier "cliquable à travers" (fantôme)
+        // Cela permet au DEUXIÈME clic de toucher le vrai bouton Play
+        shield.style.pointerEvents = 'none';
 
-    // Note : Pour que l'autoplay marche à 100% sur Chrome/Edge, 
-    // il faudra peut-être cliquer une seule fois n'importe où sur la page 
-    // pour "activer" le son, car les navigateurs l'exigent.
+        // On remet le bouclier après 10 secondes au cas où l'utilisateur 
+        // veut mettre en pause plus tard (souvent une 2ème pub attend)
+        setTimeout(() => {
+            shield.style.pointerEvents = 'auto';
+            console.log("Bouclier réactivé pour la suite.");
+        }, 10000);
+    });
+
+    // 3. Empêcher l'iframe de rediriger TA page (Frame-Busting)
+    window.onbeforeunload = function() {
+        return "Tentative de pub bloquée !";
+    };
 </script>
 
 </body>
