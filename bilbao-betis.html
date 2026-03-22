@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>IMFTX+ — Ath Bilbao - Betis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <style>
+    html,body{height:100%;margin:0}
+    body{font-family:'Outfit',sans-serif;color:#fff;overflow-x:hidden;background:linear-gradient(135deg,rgba(10,10,12,.92) 0%,rgba(10,10,12,.88) 40%,rgba(10,10,12,.92) 100%),url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/68ef5649d83b5/uploads/media/myCANAL_Cover_web_2760x720_35.jpg") center/cover no-repeat fixed}
+    .glass{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);box-shadow:0 30px 120px rgba(0,0,0,.75);backdrop-filter:blur(14px)}
+    .player-box{border-radius:20px;overflow:hidden;position:relative}
+    iframe{width:100%;height:100%;border:0;background:#000;display:block}
+    .cover{position:absolute;inset:0;z-index:15;cursor:pointer;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.80) 100%),url("https://empire-sport.art/upload/events/qs9qzgnmx90e0tf4e5gky89noleuln.jpg") center/cover no-repeat}
+    .cover-top{position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px)}
+    .team-logo{width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.8))}
+    .vs{font-weight:900;font-size:14px;opacity:.9}
+    .cover-strip{position:absolute;left:16px;right:16px;bottom:16px;height:80px;border-radius:18px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:space-between;padding:0 18px}
+    .strip-title{font-size:16px;font-weight:900;line-height:1}
+    .strip-sub{font-size:14px;opacity:.85;font-weight:600;font-style:italic;margin-top:4px;line-height:1.1}
+    .strip-play{width:46px;height:46px;border-radius:999px;border:1px solid rgba(255,255,255,.18);display:grid;place-items:center;background:rgba(255,255,255,.12);transition:.2s}
+    .strip-play:hover{transform:scale(1.06);background:rgba(255,255,255,.16)}
+    .pill{position:absolute;top:16px;right:16px;padding:7px 12px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.12);font-weight:900;font-size:12px;display:flex;align-items:center;gap:8px;backdrop-filter:blur(14px)}
+    .dot{width:7px;height:7px;border-radius:999px;background:#f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,.12)}
+    .source-btn{height:42px;border-radius:12px;font-weight:900;font-size:13px;transition:.2s}
+    .source-btn.active{background:#fff;color:#000}
+    .source-btn.inactive{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:#fff}
+    .watch-bar{border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .watch-left{display:flex;align-items:center;gap:12px;min-width:0}
+    .watch-left img{width:36px;height:36px;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.75))}
+    .watch-text{min-width:0;line-height:1.1}
+    .watch-text .small{opacity:.75;font-weight:700;font-size:13px}
+    .watch-text .big{font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .channel-logo{width:92px;height:auto;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.75))}
+    .chat-box{border-radius:20px;overflow:hidden;min-height:520px}
+    .chat-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.10)}
+    .chat-head .title{font-weight:900}
+    .chat-head .sub{font-size:12px;opacity:.7;font-weight:700}
+    @media(max-width:1024px){.chat-box{min-height:420px}}
+  </style>
+</head>
+<body>
+  <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/10">
+    <div class="max-w-screen-2xl mx-auto px-6 py-3 flex items-center justify-between">
+      <div class="text-2xl md:text-3xl font-extrabold tracking-tight">IMFTX+</div>
+      <a href="index.html" class="inline-flex items-center gap-2 px-4 h-10 rounded-full bg-white/10 border border-white/10 hover:bg-white/15 font-bold text-sm active:scale-95 transition"><i class="fa-solid fa-arrow-left"></i> Retour</a>
+    </div>
+  </nav>
+  <main class="max-w-screen-2xl mx-auto px-6 py-8">
+    <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
+      <div>
+        <div class="player-box glass w-full aspect-video">
+          <div id="cover" class="cover" onclick="loadVideo(1)">
+            <div class="pill"><span class="dot"></span>18:30</div>
+            <div class="cover-top"><img class="team-logo" src="https://empire-sport.art/upload/teams/jd5hxty3g63isvu0ksssxzzyo4t0er.png" alt="A"><span class="vs">VS</span><img class="team-logo" src="https://empire-sport.art/upload/teams/0amrbeudimcjivqpfiuasmat8uwxts.png" alt="B"></div>
+            <div class="cover-strip"><div><div class="strip-title">Regarder Gratuitement</div><div class="strip-sub">Ath Bilbao<br>Betis</div></div><div class="strip-play"><i class="fa-solid fa-play"></i></div></div>
+          </div>
+          <div id="videoTarget" class="w-full h-full"></div>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-3">
+          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
+          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2 (HD)</button>
+          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
+          <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
+            <span data-viewer-counter="bilbao-betis" id="counterMatch1" style="color:#F54927;font-family:Arial,sans-serif;font-weight:bold"></span>
+          </div>
+        </div>
+        <div class="mt-5 watch-bar glass">
+          <div class="watch-left"><img src="https://empire-sport.art/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png" alt="Comp"><div class="watch-text"><div class="small">Vous regardez</div><div class="big">Ath Bilbao - Betis</div><div class="small">La Liga · 18:30</div></div></div>
+          <img class="channel-logo" src="https://empire-sport.art/upload/chaines/hkivdd9f1tdvfov522pt9abvltuk8r.png" alt="Ch">
+        </div>
+      </div>
+      <aside class="chat-box glass">
+        <div class="chat-head">
+          <div><div class="title">Chat en direct</div><div class="sub">Parler avec tout le respect !</div></div>
+          <a class="text-xs font-extrabold px-3 h-9 inline-flex items-center rounded-full bg-white/10 border border-white/10 hover:bg-white/15" href="https://www.twitch.tv/popout/drem0h/chat?popout=" target="_blank" rel="noreferrer">Ouvrir</a>
+        </div>
+        <div style="height:calc(100% - 54px);min-height:520px"><iframe id="chatFrame" src=""></iframe></div>
+      </aside>
+    </section>
+  </main>
+  <script>
+    var SOURCES={1:"https://rereyano.ru/player/1/2",2:"https://rereyano.ru/player/2/2",3:"https://rereyano.ru/player/3/2"};
+    (function(){
+      var d=window.location.hostname;
+      document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
+    })();
+    function setActive(id){
+      [1,2,3].forEach(function(n){
+        var b=document.getElementById("btn"+n);
+        if(b) b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";
+      });
+    }
+    function loadVideo(id){
+      var c=document.getElementById("cover"); if(c) c.style.display="none";
+      setActive(id);
+      var target=document.getElementById("videoTarget");
+      var url=SOURCES[id];
+      if(!url||url==="#"){
+        target.innerHTML='<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
+        return;
+      }
+      target.innerHTML='<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0"></iframe>';
+    }
+  </script>
+  <script type="module" src="./js/viewerCounter.js"></script>
+</body>
+</html>
