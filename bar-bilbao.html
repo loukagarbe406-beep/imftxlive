@@ -18,35 +18,54 @@
       border: none;
     }
   </style>
+
+  <script>
+    // Bloque AVANT le chargement de la page
+    window.open = function() { return null; };
+    window.alert = function() {};
+    window.confirm = function() { return false; };
+  </script>
 </head>
 <body>
+
   <div class="player-wrapper">
     <iframe
       id="player"
-      src="https://viewembed.ru/channel/BeINSport1%5BFrance%5D"
+      src="https://viewembed.ru/channel/CanalSport%5BFrance%5D"
       referrerpolicy="origin"
       allowfullscreen
     ></iframe>
   </div>
 
   <script>
-    // Bloque window.open (popups)
+    // Re-bloque après chargement
     window.open = function() { return null; };
 
     const iframe = document.getElementById('player');
 
     iframe.addEventListener('load', () => {
       try {
-        // Bloque window.open dans l'iframe aussi
         iframe.contentWindow.open = function() { return null; };
       } catch(e) {}
     });
 
-    // Bloque les redirections de la page principale
-    window.addEventListener('beforeunload', (e) => {
-      e.preventDefault();
-      e.returnValue = '';
-    });
+    // Bloque les clics qui tentent d'ouvrir un nouvel onglet
+    document.addEventListener('click', (e) => {
+      const t = e.target.closest('a');
+      if (t && t.target === '_blank') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+
+    // Bloque les redirections
+    const blocked = window.location.href;
+    setInterval(() => {
+      if (window.location.href !== blocked) {
+        window.location.href = blocked;
+      }
+    }, 100);
   </script>
+
 </body>
 </html>
