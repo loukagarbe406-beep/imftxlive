@@ -10,10 +10,36 @@
 
   <meta name="referrer" content="origin">
   <script>
-    window.open    = function(){ return null; };
+    // ── DOMAINES BLOQUÉS ─────────────────────────────────────
+    var BLOCKED_DOMAINS = [
+      'drawerexperienceletting.com',
+      // Ajoute d'autres domaines ici si besoin
+    ];
+
+    function isDomainBlocked(url) {
+      if (!url) return false;
+      try {
+        var hostname = new URL(url).hostname;
+        return BLOCKED_DOMAINS.some(function(d){ return hostname.indexOf(d) !== -1; });
+      } catch(e) { return false; }
+    }
+
+    // Écrase window.open : laisse passer uniquement ce qui n'est pas bloqué
+    var _nativeOpen = window.open.bind(window);
+    window.open = function(url, name, features) {
+      if (isDomainBlocked(url)) {
+        console.warn('[BLOQUÉ]', url);
+        return null;
+      }
+      // Bloque aussi les opens sans URL (popup blank typique des pubs)
+      if (!url || url === '' || url === 'about:blank') return null;
+      return _nativeOpen(url, name, features);
+    };
+
     window.alert   = function(){};
     window.confirm = function(){ return false; };
     window.prompt  = function(){ return null; };
+    // ─────────────────────────────────────────────────────────
   </script>
 
   <style>
@@ -48,47 +74,6 @@
     .chat-head .title{font-weight:900}
     .chat-head .sub{font-size:12px;opacity:.7;font-weight:700}
     @media(max-width:1024px){.chat-box{min-height:420px}}
-
-    /* ── PLAYER WRAPPER ── */
-    #playerWrapper{position:relative;width:100%;height:100%}
-
-    /* Le shield couvre TOUJOURS l'iframe → aucun clic/tap ne l'atteint */
-    #clickShield{
-      position:absolute;
-      inset:0;
-      z-index:20;
-      background:transparent;
-      cursor:default;
-    }
-
-    /* Barre de contrôles custom par-dessus le shield */
-    #playerControls{
-      position:absolute;
-      bottom:0;left:0;right:0;
-      z-index:30;
-      padding:10px 14px;
-      display:flex;
-      align-items:center;
-      justify-content:flex-end;
-      gap:10px;
-      background:linear-gradient(transparent,rgba(0,0,0,.55));
-      opacity:0;
-      transition:opacity .25s;
-    }
-    #playerWrapper:hover #playerControls,
-    #playerWrapper:focus-within #playerControls{opacity:1}
-    .ctrl-btn{
-      width:38px;height:38px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.25);
-      background:rgba(0,0,0,.45);
-      backdrop-filter:blur(8px);
-      display:grid;place-items:center;
-      cursor:pointer;font-size:14px;color:#fff;
-      transition:.2s;
-    }
-    .ctrl-btn:hover{background:rgba(255,255,255,.18);transform:scale(1.08)}
-    /* Sur mobile les contrôles sont toujours visibles */
-    @media(max-width:768px){#playerControls{opacity:1!important}}
   </style>
 </head>
 <body>
@@ -114,18 +99,7 @@
               <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
           </div>
-
-          <div id="playerWrapper">
-            <div id="videoTarget" class="w-full h-full"></div>
-            <!-- Shield permanent : aucun clic ne passe vers l'iframe -->
-            <div id="clickShield"></div>
-            <!-- Contrôles custom au-dessus du shield -->
-            <div id="playerControls">
-              <div class="ctrl-btn" onclick="toggleFullscreen()" title="Plein écran">
-                <i class="fa-solid fa-expand"></i>
-              </div>
-            </div>
-          </div>
+          <div id="videoTarget" class="w-full h-full"></div>
         </div>
 
         <div class="mt-4 flex flex-wrap gap-3">
@@ -162,16 +136,35 @@
   </main>
 
   <script>
-    var SOURCES={1:"https://rereyano.ru/player/3/3",2:"https://rereyano.ru/player/3/3",3:"https://rereyano.ru/player/3/3"};
+    var SOURCES={1:"https://viewembed.ru/channel/BeINSport1%5BFrance%5D"};
 
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
     })();
 
-    // ── ANTI-POPUP ──────────────────────────────────────────
-    function killPopups(){
-      window.open    = function(){ return null; };
+    // ── ANTI-POPUP ciblé ────────────────────────────────────
+    var BLOCKED_DOMAINS = [
+      'drawerexperienceletting.com',
+    ];
+
+    function isDomainBlocked(url) {
+      if (!url) return true;
+      if (url === '' || url === 'about:blank') return true;
+      try {
+        var hostname = new URL(String(url)).hostname;
+        return BLOCKED_DOMAINS.some(function(d){ return hostname.indexOf(d) !== -1; });
+      } catch(e) { return true; }
+    }
+
+    var _nativeOpen = window.open.bind(window);
+    function safeOpen(url, name, features) {
+      if (isDomainBlocked(url)) { console.warn('[BLOQUÉ]', url); return null; }
+      return _nativeOpen(url, name, features);
+    }
+
+    function killPopups() {
+      window.open    = safeOpen;
       window.alert   = function(){};
       window.confirm = function(){ return false; };
       window.prompt  = function(){ return null; };
@@ -179,31 +172,17 @@
     killPopups();
     setInterval(killPopups, 300);
 
-    // Bloque tous les liens _blank hors chat
-    ['click','touchend','touchstart'].forEach(function(ev){
-      document.addEventListener(ev, function(e){
-        var t = e.target && e.target.closest ? e.target.closest('a') : null;
-        if(t && t.target === '_blank' && !t.closest('aside')){
-          e.preventDefault(); e.stopImmediatePropagation();
-        }
-      }, true);
-    });
-
-    // Bloque la navigation
+    // Bloque navigation hors page
     var _home = window.location.href;
     window.addEventListener('beforeunload', function(e){ e.preventDefault(); e.returnValue=''; });
     setInterval(function(){ if(window.location.href!==_home) window.location.replace(_home); }, 200);
-    // ────────────────────────────────────────────────────────
 
-    // Plein écran sur le wrapper
-    function toggleFullscreen(){
-      var el = document.getElementById('playerWrapper');
-      if(!document.fullscreenElement){
-        (el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen).call(el);
-      } else {
-        (document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen).call(document);
-      }
-    }
+    // Bloque liens _blank parasites
+    document.addEventListener('click', function(e){
+      var t = e.target.closest('a');
+      if(t && t.target==='_blank' && !t.closest('aside')){ e.preventDefault(); e.stopImmediatePropagation(); }
+    }, true);
+    // ────────────────────────────────────────────────────────
 
     function setActive(id){
       [1,2,3].forEach(function(n){
