@@ -7,6 +7,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+  <!-- ✅ ANTI-POPUP : bloque AVANT tout chargement -->
+  <meta name="referrer" content="origin">
+  <script>
+    window.open = function() { return null; };
+    window.alert = function() {};
+    window.confirm = function() { return false; };
+    window.prompt = function() { return null; };
+  </script>
+
   <style>
     html,body{height:100%;margin:0}
     body{font-family:'Outfit',sans-serif;color:#fff;overflow-x:hidden;background:linear-gradient(135deg,rgba(10,10,12,.92) 0%,rgba(10,10,12,.88) 40%,rgba(10,10,12,.92) 100%),url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/68ef5649d83b5/uploads/media/myCANAL_Cover_web_2760x720_35.jpg") center/cover no-repeat fixed}
@@ -82,18 +92,22 @@
       </aside>
     </section>
   </main>
+
   <script>
     var SOURCES={1:"https://rereyano.ru/player/3/3",2:"https://rereyano.ru/player/3/3",3:"https://rereyano.ru/player/3/3"};
+
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
     })();
+
     function setActive(id){
       [1,2,3].forEach(function(n){
         var b=document.getElementById("btn"+n);
         if(b) b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";
       });
     }
+
     function loadVideo(id){
       var c=document.getElementById("cover"); if(c) c.style.display="none";
       setActive(id);
@@ -103,9 +117,32 @@
         target.innerHTML='<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
         return;
       }
-      target.innerHTML='<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0"></iframe>';
+      target.innerHTML='<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="origin" style="width:100%;height:100%;border:0"></iframe>';
+
+      // ✅ ANTI-POPUP : re-bloque après injection de l'iframe
+      setTimeout(function(){
+        window.open = function() { return null; };
+      }, 500);
     }
+
+    // ✅ ANTI-POPUP : bloque les liens _blank parasites (sauf chat Twitch)
+    document.addEventListener('click', function(e){
+      var t = e.target.closest('a');
+      if(t && t.target === '_blank' && !t.closest('aside')){
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+
+    // ✅ ANTI-POPUP : surveille les tentatives de redirection
+    var currentUrl = window.location.href;
+    setInterval(function(){
+      if(window.location.href !== currentUrl){
+        window.location.href = currentUrl;
+      }
+    }, 300);
   </script>
+
   <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
