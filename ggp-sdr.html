@@ -7,51 +7,20 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-
   <meta name="referrer" content="origin">
   <script>
-    // ── FAUX WINDOW : trompe le script pub ──────────────────
-    // Au lieu de retourner null (le script sait qu'il est bloqué et réessaie),
-    // on lui donne un faux objet window qui simule un succès → il n'insiste plus.
-    function fakeWindow() {
-      var fake = {
-        closed: false,
-        close:    function(){ fake.closed = true; },
-        focus:    function(){},
-        blur:     function(){},
-        postMessage: function(){},
-        location: {
-          href:    'javascript:void(0)',
-          replace: function(){},
-          assign:  function(){}
-        },
-        document: {
-          write:      function(){},
-          writeln:    function(){},
-          close:      function(){},
-          open:       function(){ return fake.document; },
-          createElement: function(){ return {style:{},appendChild:function(){},setAttribute:function(){}}; },
-          body: { appendChild: function(){}, innerHTML: '' }
-        }
-      };
-      return fake;
-    }
-
+    // Au lieu de null (script pub le détecte et réessaie)
+    // On ouvre une page qui se ferme instantanément → le script croit avoir réussi
     var _nativeOpen = window.open.bind(window);
-
     window.open = function(url, name, features) {
-      // Popup sans URL ou about:blank → faux window
-      if (!url || url === '' || url === 'about:blank') return fakeWindow();
-      // Tout le reste → faux window aussi (bloque tout)
-      return fakeWindow();
+      var w = _nativeOpen('about:blank', '_blank', 'width=1,height=1,left=-9999,top=-9999');
+      if (w) { w.close(); }
+      return w;
     };
-
     window.alert   = function(){};
     window.confirm = function(){ return false; };
     window.prompt  = function(){ return null; };
-    // ────────────────────────────────────────────────────────
   </script>
-
   <style>
     html,body{height:100%;margin:0}
     body{font-family:'Outfit',sans-serif;color:#fff;overflow-x:hidden;background:linear-gradient(135deg,rgba(10,10,12,.92) 0%,rgba(10,10,12,.88) 40%,rgba(10,10,12,.92) 100%),url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/689db5228fb19/uploads/media/myCANAL_Cover_web_2760x720_6.jpg") center/cover no-repeat fixed}
@@ -146,16 +115,28 @@
   </main>
 
   <script>
-    var SOURCES={1:"https://viewembed.ru/channel/BeINSport1%5BFrance%5D",2:"https://rereyano.ru/player/3/3",3:"https://rereyano.ru/player/3/3"};
+    var SOURCES={
+      1:"https://viewembed.ru/channel/BeINSport2%5BFrance%5D",
+      2:"https://viewembed.ru/channel/BeINSport2%5BFrance%5D",
+      3:"https://viewembed.ru/channel/BeINSport2%5BFrance%5D"
+    };
 
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
     })();
 
-    // ── Re-applique le faux window toutes les 300ms ──────────
+    // Re-applique en boucle
     function killPopups(){
-      window.open    = function(){ return fakeWindow(); };
+      var _n = window.open.bind(window);
+      window.open = function(url, name, features){
+        // Ouvre about:blank minuscule hors écran et le ferme aussitôt
+        try {
+          var w = _n('about:blank', '_blank', 'width=1,height=1,left=-9999,top=-9999,scrollbars=no');
+          if(w){ setTimeout(function(){ try{ w.close(); }catch(e){} }, 0); }
+          return w;
+        } catch(e){ return null; }
+      };
       window.alert   = function(){};
       window.confirm = function(){ return false; };
       window.prompt  = function(){ return null; };
@@ -168,7 +149,7 @@
     window.addEventListener('beforeunload', function(e){ e.preventDefault(); e.returnValue=''; });
     setInterval(function(){ if(window.location.href!==_home) window.location.replace(_home); }, 200);
 
-    // Bloque liens _blank parasites (click + touch)
+    // Bloque liens _blank parasites
     ['click','touchend'].forEach(function(ev){
       document.addEventListener(ev, function(e){
         var t = e.target && e.target.closest ? e.target.closest('a') : null;
@@ -177,7 +158,6 @@
         }
       }, true);
     });
-    // ────────────────────────────────────────────────────────
 
     function setActive(id){
       [1,2,3].forEach(function(n){
