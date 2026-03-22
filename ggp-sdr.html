@@ -10,36 +10,46 @@
 
   <meta name="referrer" content="origin">
   <script>
-    // ── DOMAINES BLOQUÉS ─────────────────────────────────────
-    var BLOCKED_DOMAINS = [
-      'drawerexperienceletting.com',
-      // Ajoute d'autres domaines ici si besoin
-    ];
-
-    function isDomainBlocked(url) {
-      if (!url) return false;
-      try {
-        var hostname = new URL(url).hostname;
-        return BLOCKED_DOMAINS.some(function(d){ return hostname.indexOf(d) !== -1; });
-      } catch(e) { return false; }
+    // ── FAUX WINDOW : trompe le script pub ──────────────────
+    // Au lieu de retourner null (le script sait qu'il est bloqué et réessaie),
+    // on lui donne un faux objet window qui simule un succès → il n'insiste plus.
+    function fakeWindow() {
+      var fake = {
+        closed: false,
+        close:    function(){ fake.closed = true; },
+        focus:    function(){},
+        blur:     function(){},
+        postMessage: function(){},
+        location: {
+          href:    'javascript:void(0)',
+          replace: function(){},
+          assign:  function(){}
+        },
+        document: {
+          write:      function(){},
+          writeln:    function(){},
+          close:      function(){},
+          open:       function(){ return fake.document; },
+          createElement: function(){ return {style:{},appendChild:function(){},setAttribute:function(){}}; },
+          body: { appendChild: function(){}, innerHTML: '' }
+        }
+      };
+      return fake;
     }
 
-    // Écrase window.open : laisse passer uniquement ce qui n'est pas bloqué
     var _nativeOpen = window.open.bind(window);
+
     window.open = function(url, name, features) {
-      if (isDomainBlocked(url)) {
-        console.warn('[BLOQUÉ]', url);
-        return null;
-      }
-      // Bloque aussi les opens sans URL (popup blank typique des pubs)
-      if (!url || url === '' || url === 'about:blank') return null;
-      return _nativeOpen(url, name, features);
+      // Popup sans URL ou about:blank → faux window
+      if (!url || url === '' || url === 'about:blank') return fakeWindow();
+      // Tout le reste → faux window aussi (bloque tout)
+      return fakeWindow();
     };
 
     window.alert   = function(){};
     window.confirm = function(){ return false; };
     window.prompt  = function(){ return null; };
-    // ─────────────────────────────────────────────────────────
+    // ────────────────────────────────────────────────────────
   </script>
 
   <style>
@@ -136,35 +146,16 @@
   </main>
 
   <script>
-    var SOURCES={1:"https://viewembed.ru/channel/BeINSport1%5BFrance%5D"};
+    var SOURCES={1:"https://rereyano.ru/player/3/3",2:"https://rereyano.ru/player/3/3",3:"https://rereyano.ru/player/3/3"};
 
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
     })();
 
-    // ── ANTI-POPUP ciblé ────────────────────────────────────
-    var BLOCKED_DOMAINS = [
-      'drawerexperienceletting.com',
-    ];
-
-    function isDomainBlocked(url) {
-      if (!url) return true;
-      if (url === '' || url === 'about:blank') return true;
-      try {
-        var hostname = new URL(String(url)).hostname;
-        return BLOCKED_DOMAINS.some(function(d){ return hostname.indexOf(d) !== -1; });
-      } catch(e) { return true; }
-    }
-
-    var _nativeOpen = window.open.bind(window);
-    function safeOpen(url, name, features) {
-      if (isDomainBlocked(url)) { console.warn('[BLOQUÉ]', url); return null; }
-      return _nativeOpen(url, name, features);
-    }
-
-    function killPopups() {
-      window.open    = safeOpen;
+    // ── Re-applique le faux window toutes les 300ms ──────────
+    function killPopups(){
+      window.open    = function(){ return fakeWindow(); };
       window.alert   = function(){};
       window.confirm = function(){ return false; };
       window.prompt  = function(){ return null; };
@@ -177,11 +168,15 @@
     window.addEventListener('beforeunload', function(e){ e.preventDefault(); e.returnValue=''; });
     setInterval(function(){ if(window.location.href!==_home) window.location.replace(_home); }, 200);
 
-    // Bloque liens _blank parasites
-    document.addEventListener('click', function(e){
-      var t = e.target.closest('a');
-      if(t && t.target==='_blank' && !t.closest('aside')){ e.preventDefault(); e.stopImmediatePropagation(); }
-    }, true);
+    // Bloque liens _blank parasites (click + touch)
+    ['click','touchend'].forEach(function(ev){
+      document.addEventListener(ev, function(e){
+        var t = e.target && e.target.closest ? e.target.closest('a') : null;
+        if(t && t.target==='_blank' && !t.closest('aside')){
+          e.preventDefault(); e.stopImmediatePropagation();
+        }
+      }, true);
+    });
     // ────────────────────────────────────────────────────────
 
     function setActive(id){
