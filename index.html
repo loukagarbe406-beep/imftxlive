@@ -6,28 +6,28 @@
   <meta name="referrer" content="no-referrer-when-downgrade"/>
 
   <!-- ✅ Titre -->
-  <title>IMFTX+ — 100% Des Matchs en direct</title>
+  <title>IMFTX+</title>
 
   <!-- ✅ SEO -->
   <meta name="description" content="IMFTX+ : matchs, scores et résultats en direct.">
   <meta name="robots" content="index,follow">
 
   <!-- ✅ Favicon simple (sans fichiers à upload) -->
-  <link rel="icon" href="https://pbs.twimg.com/profile_images/1610301960493703168/rDZ9v5xZ_400x400.jpg">
+  <link rel="icon" href="https://png.pngtree.com/png-clipart/20190516/original/pngtree-vector-plus-icon-png-image_4254480.jpg">
 
   <!-- ✅ Preview partage (OG) -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="IMFTX+ — 100% Des Matchs en direct">
-  <meta property="og:description" content="IMFTX+ : matchs, scores et résultats en direct.">
-  <meta property="og:url" content="https://imftxplus.vercel.app/">
-  <meta property="og:image" content="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500">
+  <meta property="og:description" content="IMFTX+ : IMFTX : N°1 du Streaming en France avec 100% des Matchs en Direct.">
+  <meta property="og:url" content="https://imftx.vercel.app/">
+  <meta property="og:image" content="https://png.pngtree.com/png-clipart/20190516/original/pngtree-vector-plus-icon-png-image_4254480.jpg">
 
   <!-- ✅ Preview partage (Twitter/X) -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="IMFTX+ — 100% Des Matchs en direct">
   <meta name="twitter:description" content="IMFTX+ : matchs, scores et résultats en direct.">
-  <meta name="twitter:image" content="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500">
-
+  <meta name="twitter:image" content="https://png.pngtree.com/png-clipart/20190516/original/pngtree-vector-plus-icon-png-image_4254480.jpg">
+<meta name="google-site-verification" content="XleAz11eP4R7oHKJS07L7chA-OcJVEYF8u0u1KyRpBk" />
   <!-- ✅ ensuite tu laisses TOUS tes scripts/style comme tu avais -->
 
   <script disable-devtool-auto src="https://cdn.jsdelivr.net/npm/disable-devtool@latest" url="https://google.com"></script>
@@ -48,7 +48,7 @@
   <script src="https://cdn.jsdelivr.net/npm/nprogress/nprogress.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/nprogress/nprogress.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+  
   <style>
     #nprogress .bar { top: 64px !important; }
     #nprogress .spinner { top: 75px !important; }
@@ -60,7 +60,7 @@
       display:flex;
       flex-direction:column;
       min-height: 100vh;
-      background-image: url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/6671a71542da8/uploads/media/myCANAL_Cover_web_2760x720_foot.jpg");
+      background-image: url("https://media.istockphoto.com/id/1332097112/fr/photo/le-noir-et-largent-sont-gris-clair-avec-du-blanc-le-d%C3%A9grad%C3%A9-est-la-surface-avec-des-mod%C3%A8les.jpg?s=612x612&w=0&k=20&c=RAH-8_B_OPQ1RHGxK53n21RdghO7D2hqaFnpj1X-93M=");
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -283,6 +283,69 @@
     @media (max-width: 640px){
       .gate-title{ font-size: 40px; }
     }
+
+    /* ══════════════════════════════
+       TV LIVE — section chaînes
+    ══════════════════════════════ */
+    .tv-section-label {
+      font-size: 13px; font-weight: 800;
+      color: rgba(255,255,255,.60);
+      text-transform: uppercase; letter-spacing: .09em;
+      margin-bottom: 14px;
+    }
+    .tv-carousel-wrap { display: flex; align-items: center; gap: 8px; }
+    .tv-row {
+      display: flex; align-items: center; gap: 12px;
+      overflow-x: auto; flex: 1;
+      scrollbar-width: none; padding: 4px 2px;
+    }
+    .tv-row::-webkit-scrollbar { display: none; }
+
+    .tv-car-btn {
+      flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.55);
+      color: rgba(255,255,255,.65); font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all .2s;
+    }
+    .tv-car-btn:hover { background: rgba(255,255,255,.14); color: #fff; }
+
+    .tv-card {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      flex: 0 0 auto; text-decoration: none; cursor: pointer;
+    }
+    .tv-card-inner {
+      width: 120px; height: 78px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 12px;
+      background: rgba(16,16,26,.92);
+      border: 1px solid rgba(255,255,255,.09);
+      box-shadow: 0 4px 18px rgba(0,0,0,.4);
+      overflow: hidden; padding: 8px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .tv-card:hover .tv-card-inner {
+      border-color: rgba(255,255,255,.26);
+      box-shadow: 0 8px 30px rgba(0,0,0,.55);
+      transform: translateY(-3px);
+    }
+    .tv-card-inner img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain; display: block;
+    }
+    .tv-card-name {
+      font-size: 11px; font-weight: 700;
+      color: rgba(255,255,255,.65);
+      text-align: center; white-space: nowrap;
+    }
+    .tv-empty {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 16px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+      font-size: 13px; color: rgba(255,255,255,.38);
+    }
   </style>
 </head>
 
@@ -296,11 +359,11 @@
       <img class="gate-avatar" src="https://pbs.twimg.com/profile_images/1610301960493703168/rDZ9v5xZ_400x400.jpg" alt="IMFTX">
       <div class="gate-title">IMFTX</div>
       <div class="gate-text">
-        Rejoins mon post sur <b>X</b> pour soutenir le site :<br>
-        <b>RT + abonne-toi au compte</b>, puis reviens ici ✅
+        LIKE ET RT LE POST <b>Twitter</b> Pour regarder le matchs !  :<br>
+        <b>Rejoint </b>, puis profite du matchs ✅
       </div>
-      <a class="gate-btn" href="https://x.com/imftxvw/status/2024927890341511585" target="_blank" rel="noopener">
-        OUVRIR LE POST
+      <a class="gate-btn" href="https://x.com/imftxvxv/status/2037977759851397371" target="_blank" rel="noopener">
+        POST TWITTER IMFTX (obligatoire , SINON BAN)
       </a>
       <div id="gateSkip" class="gate-skip">J’ai déjà fait</div>
     </div>
@@ -336,7 +399,7 @@
         </a>
       </div>
 
-      <a id="nav-btn-telegram" href="https://t.me/addlist/sDF7qOMdHTMyYzA0" target="_blank"
+      <a id="nav-btn-telegram" href="https://t.me/+Nhks8hh-5840ODU8" target="_blank"
          class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
          aria-label="Telegram">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -344,7 +407,7 @@
         </svg>
       </a>
 
-      <a id="nav-btn-discord" href="https://discord.gg/KmFD2GXd" target="_blank"
+      <a id="nav-btn-discord" href="https://discord.gg/MTUsxvJSR" target="_blank"
          class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
          aria-label="Discord">
         <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
@@ -377,19 +440,31 @@
 <!-- ✅ LOGO SEUL (bannière supprimée) -->
 <div class="logo-wrap">
   <div class="logo-center">
-    <img src="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500" alt="IMFTX+">
+    <img src="https://pbs.twimg.com/profile_banners/2030637428135141377/1772976906/1500x500" alt="IMFTX+">
   </div>
 </div>
 
+
+<!-- ══ TV LIVE ══ -->
+<div class="max-w-screen-2xl mx-auto w-full md:px-24 px-5 mt-10 mb-2">
+  <div class="tv-section-label">TV Live</div>
+  <div class="tv-carousel-wrap">
+    <button class="tv-car-btn" id="tvCarLeft">‹</button>
+    <div class="tv-row" id="tvLiveRow">
+      <div class="tv-empty">📡&nbsp; TV Live indisponible</div>
+    </div>
+    <button class="tv-car-btn" id="tvCarRight">›</button>
+  </div>
+</div>
 <!-- CONTENT -->
 <div class="my_container max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col md:px-24 px-5 transition-all duration-300 ease-out">
-  <div class="w-full flex flex-col gap-12 mt-2 pb-10">
+  <div class="w-full flex flex-col gap-12 mt-6 pb-10">
 
     <section class="glass-section p-6 w-full">
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
           <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)]"></div>
-          <h2 class="text-xl font-bold text-white">IMFTX+ — AUJOURD’HUI</h2>
+          <h2 class="text-xl font-bold text-white">AUJOURD’HUI</h2>
         </div>
 
         <button type="button" id="refreshBtn"
@@ -403,7 +478,7 @@
     <section class="glass-section p-6 w-full">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-3 h-3 rounded-full bg-zinc-500"></div>
-        <h2 class="text-xl font-bold text-white">IMFTX+ — DEMAIN</h2>
+        <h2 class="text-xl font-bold text-white">DEMAIN</h2>
       </div>
 
       <div id="stream-list-bk" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
@@ -448,45 +523,99 @@
     setTheme(isDark ? 'light' : 'dark');
   });
 
-  // ============================================================
-  // ✅ MATCHES (SCRIPT COPIER/COLLER ICI)
-  // ============================================================
-  const MATCHES_TODAY = [
-{
-      title: "Al-Hilal - Al-Ittihad", time: "20:00",
-      banner: "https://empire-sport.fit/upload/teambanks/qmi41jbddiyg50hvkxsxkjymnqcsi6.png",
-      aLogo: "https://empire-sport.fit/upload/teams/tiktjuihr7d8begzdbo5lmnmt1hmdf.png",
-      bLogo: "https://empire-sport.fit/upload/teams/eer11qxbsl47tqggjr5u1gstuvsxxl.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/zt4mb7gnlrgn2drjplitpx3e7xwdsf.png",
-      href: "alh-ali.html"
+  /* ══ MATCHES_TODAY (copier dans index.html) ══ */
+/* Matchs Aujourd hui */
+var MATCHES_TODAY = [ 
+  
+  {
+    title:"Lithuania - Georgia", time:"15:00",
+    banner:"https://empire-sport.art/upload/events/dvwl4mu5ruxvg4enr0pl5hyxr8k6pk.jpg",
+    aLogo:"https://empire-sport.art/upload/teams/zl1udkbzk3ijyzclwb6smjrr9qouuh.png",
+    bLogo:"https://empire-sport.art/upload/teams/4yxe4glebhy5uscdphtmvuxg7daw46.png",
+    compLogo:"https://empire-sport.art/upload/leagues/p9kne7rr5qfsjkaaiurnz5xvenzntt.png",
+    href:"lit-geo.html"
+  },
+  {
+    title:"Armenia - Belarus", time:"15:00",
+    banner:"https://empire-sport.art/upload/events/gofvqudf6t4ww46leu4lgubbtq21aj.jpg",
+    aLogo:"https://empire-sport.art/upload/teams/agstjkxymus9ngsnnrexd56lti8za0.png",
+    bLogo:"https://empire-sport.art/upload/teams/43mtnzafmeolgidijknxttg06p8xoo.png",
+    compLogo:"https://empire-sport.art/upload/leagues/p9kne7rr5qfsjkaaiurnz5xvenzntt.png",
+    href:"arm-blr.html"
+  },
+  
+  {
+    title:"Colombia - France", time:"21:00",
+    banner:"https://empire-sport.art/upload/teambanks/k6l73sprhq6m2iplgmmqu9bbtgveqk.png",
+    aLogo:"https://empire-sport.art/upload/teams/aqa7ubju9eebt2fp0lgcojy4kab1ix.png",
+    bLogo:"https://empire-sport.art/upload/teams/hccueethavbdwkk4hbuhbxqz9xutrb.png",
+    compLogo:"https://empire-sport.art/upload/leagues/p9kne7rr5qfsjkaaiurnz5xvenzntt.png",
+    href:"col-fra.html"
+       },
+  
+  {
+    title:"Milwaukee Bucks - Los Angeles Clippers", time:"21:30",
+    banner:"https://empire-sport.art/upload/teambanks/7lvyhrmwace6x0dampvalkvc1fk5w6.png",
+    aLogo:"https://empire-sport.art/upload/teams/xtcojtivewhjd2lorbrk7wljwms5pl.png",
+    bLogo:"https://empire-sport.art/upload/teams/cr2mkpozwor3cgi6iili2qodc98lsz.png",
+    compLogo:"https://empire-sport.art/upload/leagues/d7kddtuhbjaf23fgdnj8wiulccahfc.png",
+    href:"bucks-clippers.html"
+     },
+  
+  {
+    title:"Indiana Pacers - Miami Heat", time:"23:00",
+    banner:"https://empire-sport.art/upload/teambanks/xsumwxj1k7qkcbhrcbg32e4ehgl4bs.png",
+    aLogo:"https://empire-sport.art/upload/teams/uzy5mpevryviug3qyockx5wiryqfsb.png",
+    bLogo:"https://empire-sport.art/upload/teams/lbst6hlsh1w6lequvg4uqfna1knn0w.png",
+    compLogo:"https://empire-sport.art/upload/leagues/d7kddtuhbjaf23fgdnj8wiulccahfc.png",
+    href:"indiana-heat.html"
   },
 {
-      title: "Atlético Madrid - Espanyol", time: "21:00",
-      banner: "https://empire-sport.fit/upload/teambanks/qpwvi2cxhcladiu6ln8qlscrmnqidf.png",
-      aLogo: "https://empire-sport.fit/upload/teams/smp4oeizppz2hw9fbmb9dznhohcwly.png",
-      bLogo: "https://empire-sport.fit/upload/teams/f556l4mvj3bkxivrglwjxdkbifqdle.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/fcdzqkdt37rdotxtgldxpni3nupbok.png",
-      href: "atm-espanyol.html"
- },
-{
-      title: "Manchester City - Newcastle", time: "21:00",
-      banner: "https://empire-sport.fit/upload/teambanks/s3tao2jh65mct2aol622o4lxh0brxp.png",
-      aLogo: "https://empire-sport.fit/upload/teams/pipe4pxa4d72rx5m9zfl1dipyj0nqm.png",
-      bLogo: "https://empire-sport.fit/upload/teams/rcgqdydup9msdf6oafeok831beo6ur.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png",
-      href: "mancity-new.html"
+    title:"Toronto Raptors - Orlando Magic", time:"23:59",
+    banner:"https://empire-sport.art/upload/teambanks/4gdkopsqfaoyo9hihnx0sgjrzn1ypl.png",
+    aLogo:"https://empire-sport.art/upload/teams/chj9b1np52qzqnhkivvococ8m59hnx.png",
+    bLogo:"https://empire-sport.art/upload/teams/ndzdzg9aww5iqms70iorwuuq3tm2j3.png",
+    compLogo:"https://empire-sport.art/upload/leagues/d7kddtuhbjaf23fgdnj8wiulccahfc.png",
+    href:"raptors-magic.html"
   },
 {
-      title: "Paris SG - Metz", time: "21:05",
-      banner: "https://empire-sport.fit/upload/teambanks/67yruujoqy7yvdudtk6uvivz8ampqa.png",
-      aLogo: "https://empire-sport.fit/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png",
-      bLogo: "https://empire-sport.fit/upload/teams/qcuklxuxncckyihua7oh73wsacvqla.png",
-      compLogo: "https://empire-sport.fit/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png",
-      href: "psg-metz.html"
-    }
-  ];
+    title:"Brooklyn Nets - Sacramento Kings", time:"23:59",
+    banner:"https://empire-sport.art/upload/teambanks/prfc77b3dr7kq3gifqymcbkq99vmtw.png",
+    aLogo:"https://empire-sport.art/upload/teams/t16dy65ld4pr2fipnqeuwlls6nzd5v.png",
+    bLogo:"https://empire-sport.art/upload/teams/kbuo9ajwcbrkjaa22dpspfpiuwevge.png",
+    compLogo:"https://empire-sport.art/upload/leagues/d7kddtuhbjaf23fgdnj8wiulccahfc.png",
+    href:"nets-kings.html"
+  },
+{
+    title:"Charlotte Hornets - Boston Celtics", time:"23:59",
+    banner:"https://empire-sport.art/upload/teambanks/n9oqefb3mxoh5wnpuv9j3s91jxsgwr.png",
+    aLogo:"https://empire-sport.art/upload/teams/1mnjmsju68lrzvgdumjvk2asydrizi.png",
+    bLogo:"https://empire-sport.art/upload/teams/psiu8dxetszklbfhss1kfdbdijezjs.png",
+    compLogo:"https://empire-sport.art/upload/leagues/d7kddtuhbjaf23fgdnj8wiulccahfc.png",
+    href:"hornets-celtics.html"
+  },
+{
+    title:"Portland Trail Blazers - Washington Wizards", time:"23:59",
+    banner:"https://empire-sport.art/upload/teambanks/kfuitoju6hrfpuivjwmqxokstu2rcl.png",
+    aLogo:"https://empire-sport.art/upload/teams/a9xokracvd7t50dxi5m8bycc6tdh5i.png",
+    bLogo:"https://empire-sport.art/upload/teams/n801liqohpy3dbezejwdtu4xxb7eq8.png",
+    compLogo:"https://empire-sport.art/upload/chaines/vsrioymbh1bu9virmehnzgz3p5z5me.png",
+    href:"blazers-wizards.html"
+      },
+    
+];
+  
 
-  const MATCHES_TOMORROW = []; // si tu veux en mettre, colle-les ici
+/* Matchs Demain */
+/* Matchs Demain */
+/* Matchs Demain */
+var MATCHES_TOMORROW = [
+  
+    
+    
+];
+
+
 
   const LIVE_WINDOW_MS = Math.floor(2.5 * 60 * 60 * 1000);
 
@@ -626,6 +755,125 @@
     setTimeout(() => NProgress.done(), 350);
   });
 
+
+  /* ════════════════════════════════════════════
+     TV CHANNELS
+     ─────────────────────────────────────────
+     logo : URL directe .png/.jpg/.svg/.webp
+            → laisse "" pour logo coloré auto
+     ═══════════════════════════════════════════ */
+  const CHANNEL_STYLES = {
+    "beIN Sports 1":  { bg:'#5c0f8b', l1:'beIN',     l2:'SPORTS 1', c2:'#ffd700' },
+    "beIN Sports 2":  { bg:'#5c0f8b', l1:'beIN',     l2:'SPORTS 2', c2:'#ffd700' },
+    "beIN Sports 3":  { bg:'#5c0f8b', l1:'beIN',     l2:'SPORTS 3', c2:'#ffd700' },
+    "Canal+":         { bg:'#000000', l1:'CANAL+',   l2:'',          c2:'#fff'    },
+    "Canal+ Sport":   { bg:'#000000', l1:'CANAL+',   l2:'SPORT',     c2:'#ff2222' },
+    "Canal+ Foot":    { bg:'#000000', l1:'CANAL+',   l2:'FOOT',      c2:'#00cc44' },
+    "RMC Sport 1":    { bg:'#d10a11', l1:'RMC',      l2:'SPORT 1',   c2:'#fff'    },
+    "RMC Sport 2":    { bg:'#d10a11', l1:'RMC',      l2:'SPORT 2',   c2:'#fff'    },
+    "Eurosport 1":    { bg:'#ff6600', l1:'EURO',     l2:'SPORT 1',   c2:'#fff'    },
+    "Eurosport 2":    { bg:'#ff6600', l1:'EURO',     l2:'SPORT 2',   c2:'#fff'    },
+    "L'Équipe":      { bg:'#ffcc00', l1:"L'ÉQUIPE",l2:'',          c2:'#000'    },
+    "Sky Sports":     { bg:'#001a6e', l1:'SKY',      l2:'SPORTS',    c2:'#00aaff' },
+    "TNT Sports 1":   { bg:'#111111', l1:'TNT',      l2:'SPORTS 1',  c2:'#ff2200' },
+    "TNT Sports 2":   { bg:'#111111', l1:'TNT',      l2:'SPORTS 2',  c2:'#ff2200' },
+    "DAZN":           { bg:'#f5f400', l1:'DAZN',     l2:'',          c2:'#000'    }
+  };
+
+  function makeSvgFallback(name) {
+    const s = CHANNEL_STYLES[name] || { bg:'#222', l1:name, l2:'', c2:'#fff' };
+    const lines = s.l2
+      ? [[s.l1, 18, '#fff'], [s.l2, 13, s.c2]]
+      : [[s.l1, 22, '#fff']];
+    const step = 80 / (lines.length + 1);
+    const txt = lines.map((l,i) =>
+      `<text x='50%' y='${Math.round(step*(i+1))}' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='${l[1]}' fill='${l[2]}'>${l[0]}</text>`
+    ).join('');
+    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
+      `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80'><rect width='200' height='80' rx='10' fill='${s.bg}'/>${txt}</svg>`
+    );
+  }
+
+  /* ── Liste des chaînes ──
+     Pour ajouter un logo URL : logo:"https://ton-cdn.com/bein1.png"
+     Pour logo auto coloré    : logo:""                               */
+  const TV_CHANNELS = [
+    { name:"beIN Sports 1",  href:"bein1.html",           logo:"https://only-us.win/tv/logos/bein_1.png" },
+    { name:"beIN Sports 2",  href:"bein2.html",           logo:"https://only-us.win/tv/logos/bein_2.png" },
+    { name:"beIN Sports 3",  href:"bein3.html",           logo:"https://only-us.win/tv/logos/bein_3.png" },
+    { name:"Canal+",         href:"canalplus.html",       logo:"https://only-us.win/tv/logos/canalplus.png" },
+    { name:"Canal+ Sport",   href:"canalplus-sport.html", logo:"https://upload.wikimedia.org/wikipedia/fr/2/2c/C%2B_Sport_%282023%29.png" },
+    { name:"Canal+ Foot",    href:"canalplus-foot.html",  logo:"https://upload.wikimedia.org/wikipedia/fr/3/3b/C%2B_Foot.png" },
+    { name:"Canal+ Sport 360", href:"canalplus-360.html",  logo:"https://upload.wikimedia.org/wikipedia/fr/1/11/C%2B_Sport_360.png" },
+    { name:"RMC Sport 1",    href:"rmc1.html",            logo:"https://only-us.win/tv/logos/rmc_sport_1.png" },
+    { name:"RMC Sport 2",    href:"rmc2.html",            logo:"https://only-us.win/tv/logos/rmc_sport_2.png" },
+    { name:"Eurosport 1",    href:"eurosport1.html",      logo:"https://only-us.win/tv/logos/eurosport_1.png" },
+    { name:"Eurosport 2",    href:"eurosport2.html",      logo:"https://only-us.win/tv/logos/eurosport_2.png" },
+    { name:"L'Équipe",      href:"lequipe.html",         logo:"https://only-us.win/tv/logos/lequipe.png" },
+    { name:"LIGUE 1+",     href:"L1+.html",       logo:"https://mag.bouyguestelecom.fr/wp-content/uploads/2025/07/OK_LFP_CHANNEL_LOGOTYPE_L1_BLUE_660x660_RVB-e1752765595538.png" },
+    { name:"LIGUE 1+",   href:"L1+2.html",      logo:"https://www.monpetitforfait.com/comparateur-box-internet/wp-content/uploads/2025/07/ligue-1-plus-2-300x100.png" },
+    { name:"LIGUE 1+",   href:"L1+3.html",      logo:"https://www.monpetitforfait.com/comparateur-box-internet/wp-content/uploads/2025/07/ligue-1plus-3-box-internet.png" }
+  ];
+
+  function renderTV() {
+    const row = document.getElementById('tvLiveRow');
+    if (!row) return;
+    if (!TV_CHANNELS.length) {
+      row.innerHTML = '<div class="tv-empty">📡&nbsp; TV Live indisponible</div>';
+      return;
+    }
+    row.innerHTML = '';
+    TV_CHANNELS.forEach(ch => {
+      const svg = makeSvgFallback(ch.name);
+      const a = document.createElement('a');
+      a.className = 'tv-card';
+      a.href = ch.href || '#';
+
+      const inner = document.createElement('div');
+      inner.className = 'tv-card-inner';
+
+      const img = document.createElement('img');
+      if (ch.logo && ch.logo.trim()) {
+        img.src = ch.logo.trim();
+        img.onerror = () => { img.src = svg; img.onerror = null; };
+      } else {
+        img.src = svg;
+      }
+      img.alt = ch.name;
+      img.loading = 'lazy';
+      inner.appendChild(img);
+
+      const label = document.createElement('span');
+      label.className = 'tv-card-name';
+      label.textContent = ch.name;
+
+      a.appendChild(inner);
+      a.appendChild(label);
+      row.appendChild(a);
+    });
+  }
+
+  renderTV();
+
+  /* ── Flèches carousel ── */
+  (function(){
+    const row = document.getElementById('tvLiveRow');
+    const lft = document.getElementById('tvCarLeft');
+    const rgt = document.getElementById('tvCarRight');
+    if (!row || !lft || !rgt) return;
+    const step = () => { const c = row.querySelector('.tv-card'); return c ? Math.max(150, c.getBoundingClientRect().width * 3 + 24) : 370; };
+    lft.addEventListener('click', () => row.scrollBy({ left: -step(), behavior: 'smooth' }));
+    rgt.addEventListener('click', () => row.scrollBy({ left:  step(), behavior: 'smooth' }));
+    const upd = () => {
+      const max = row.scrollWidth - row.clientWidth - 2;
+      lft.style.opacity = row.scrollLeft <= 2   ? '0.28' : '1';
+      rgt.style.opacity = row.scrollLeft >= max ? '0.28' : '1';
+    };
+    row.addEventListener('scroll', () => requestAnimationFrame(upd));
+    window.addEventListener('resize', upd);
+    setTimeout(upd, 350);
+  })();
+
   render();
   tick();
   setInterval(tick, 1000);
@@ -634,18 +882,3 @@
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
