@@ -8,43 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   <style>
-     <script>
-/* 🚫 Bloquer clic droit */
-document.addEventListener("contextmenu", function(e) {
-  e.preventDefault();
-  window.location.href = "https://www.google.com";
-});
-
-/* 🚫 Bloquer touches inspecteur */
-document.addEventListener("keydown", function(e) {
-
-  // F12
-  if (e.key === "F12") {
-    e.preventDefault();
-    window.location.href = "https://www.google.com";
-  }
-
-  // CTRL + SHIFT + I / J / C
-  if (e.ctrlKey && e.shiftKey && ["I","J","C"].includes(e.key)) {
-    e.preventDefault();
-    window.location.href = "https://www.google.com";
-  }
-
-  // CTRL + U (voir code source)
-  if (e.ctrlKey && e.key === "u") {
-    e.preventDefault();
-    window.location.href = "https://www.google.com";
-  }
-
-});
-
-/* 🚫 Détection ouverture DevTools (approx) */
-setInterval(function() {
-  if (window.outerWidth - window.innerWidth > 160 || 
-      window.outerHeight - window.innerHeight > 160) {
-    window.location.href = "https://www.google.com";
-  }
-}, 1000);
 </script>
   </script>
     html,body{height:100%;margin:0}
