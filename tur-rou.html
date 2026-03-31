@@ -1,36 +1,35 @@
-<div id="video-wrapper" style="position:relative; width:800px; height:450px;">
-    
+<div style="position: relative; width: 800px; height: 450px; background: #000;">
+
     <iframe 
-        id="player-frame"
         src="https://sportsembed.su/embed/401856594/cameroon-china/easy/1?player=jwplayer" 
-        style="width:100%; height:100%; border:none;" 
+        style="width: 100%; height: 100%; border: none;" 
         allowfullscreen>
     </iframe>
 
     <a href="javascript:void(0)" 
-       id="shield"
-       onclick="neutralize(event)"
-       style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:999; background:transparent;">
+       id="blocker"
+       style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2147483647; cursor: pointer; background: rgba(0,0,0,0);">
     </a>
+
 </div>
 
 <script>
-function neutralize(e) {
-    // 1. On bloque l'action par défaut du navigateur
-    e.preventDefault();
-    // 2. On empêche le clic de "traverser" vers l'iframe pour le moment
-    e.stopPropagation();
-    
-    console.log("Clic intercepté : Pop-up bloquée.");
+    const blocker = document.getElementById('blocker');
 
-    // 3. On désactive temporairement le bouclier pour te laisser cliquer sur PLAY
-    const shield = document.getElementById('shield');
-    shield.style.pointerEvents = 'none'; 
+    // On neutralise tous les types d'événements que les pubs utilisent
+    ['click', 'mousedown', 'mouseup', 'touchstart'].forEach(evt => {
+        blocker.addEventListener(evt, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log("Tentative de pub bloquée sur : " + evt);
 
-    // 4. On remet le bouclier après 2 secondes pour bloquer les pubs suivantes
-    setTimeout(() => {
-        shield.style.pointerEvents = 'auto';
-        console.log("Bouclier réactivé.");
-    }, 2000);
-}
+            // On retire le bloqueur une fraction de seconde pour laisser passer 
+            // le clic vers le bouton PLAY, puis on le remet instantanément
+            blocker.style.display = 'none';
+            setTimeout(() => {
+                blocker.style.display = 'block';
+            }, 300); 
+        }, true);
+    });
 </script>
