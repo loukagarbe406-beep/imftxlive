@@ -563,9 +563,9 @@ function buildChat(){
   if(!ch) try{ch=JSON.parse(localStorage.getItem('imftx_settings')||'{}').twitch||'';}catch(e){}
   if(!ch) return;
   const host=window.location.hostname||'localhost';
-  document.getElementById('chatOpenBtn').href=`https://www.twitch.tv/popout/${ch}/chat?popout=`;
+  document.getElementById('chatOpenBtn').href=`https://www.twitch.tv/popout/${imftxplus1}/chat?popout=`;
   const body=document.getElementById('chatBody');
-  body.innerHTML=`<iframe id="chatFrame" src="https://www.twitch.tv/embed/${ch}/chat?darkpopout&parent=${host}" style="width:100%;height:100%;min-height:500px;border:0;background:#111;"></iframe>`;
+  body.innerHTML=`<iframe id="chatFrame" src="https://www.twitch.tv/embed/${imftxplus1}/chat?darkpopout&parent=${host}" style="width:100%;height:100%;min-height:500px;border:0;background:#111;"></iframe>`;
 }
 
 // Fix referrerpolicy sur toutes les images chargées dynamiquement
