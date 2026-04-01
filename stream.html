@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <title>IMFTX+ — Stream</title>
+  <link rel="icon" href="https://media.discordapp.net/attachments/1485253416098730054/1485283135045369916/favicon-32x32.png?ex=69c14d36&is=69bffbb6&hm=ca14730649885e11b25569281738318b65a43ac06235014cb98de994c39a0e0a&=&format=webp&quality=lossless&width=40&height=40">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { font-family: 'Outfit', sans-serif; background: #0d0d0d; color: #fff; min-height: 100vh; overflow-x: hidden; }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      height: 56px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 28px;
+      background: #111;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: .04em; color: #fff; text-decoration: none; }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 20px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.06);
+      color: #fff; font-size: 13px; font-weight: 700;
+      text-decoration: none; cursor: pointer; transition: all .18s;
+    }
+    .nav-back:hover { background: rgba(255,255,255,.12); }
+    .nav-back svg { flex-shrink: 0; }
+
+    /* LAYOUT */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 0;
+      min-height: calc(100vh - 56px);
+    }
+    @media (max-width: 960px) { .layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+
+    /* LEFT COL */
+    .left-col { padding: 20px 20px 20px 20px; display: flex; flex-direction: column; gap: 14px; }
+
+    /* PLAYER */
+    .player-wrap {
+      position: relative; width: 100%; padding-top: 56.25%;
+      border-radius: 14px; overflow: hidden; background: #000;
+    }
+    .player-wrap > * { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+    /* COVER */
+    #cover {
+      position: absolute; inset: 0; z-index: 5; cursor: pointer;
+      background-size: cover; background-position: center;
+      display: flex; flex-direction: column;
+    }
+    .cover-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.5) 60%, rgba(0,0,0,.85) 100%);
+    }
+    /* top-left badge : logos équipes */
+    .cover-badge {
+      position: absolute; top: 12px; left: 12px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 12px; border-radius: 10px;
+      background: rgba(20,20,20,.75); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .c-logo { width: 28px; height: 28px; object-fit: contain; border-radius: 50%; }
+    .c-vs { font-size: 11px; font-weight: 800; color: rgba(255,255,255,.5); }
+    /* top-right pill heure */
+    .cover-time {
+      position: absolute; top: 12px; right: 12px;
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 999px;
+      background: rgba(20,20,20,.75); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 12px; font-weight: 800;
+    }
+    .ct-dot { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,.2); animation: blink 1.4s infinite; }
+    .ct-dot.live { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.2); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+    /* bottom strip */
+    .cover-strip {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 14px 16px;
+      background: linear-gradient(0deg, rgba(0,0,0,.82) 0%, transparent 100%);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .strip-info { flex: 1; min-width: 0; }
+    .strip-title { font-size: 15px; font-weight: 900; line-height: 1; }
+    .strip-names { font-size: 13px; font-weight: 500; opacity: .75; margin-top: 3px; }
+    .strip-play {
+      width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+      transition: all .2s;
+    }
+    .strip-play:hover { background: rgba(255,255,255,.25); transform: scale(1.05); }
+    #videoTarget { display: none; }
+
+    /* SOURCES ROW */
+    .sources-row {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .source-btn {
+      height: 38px; padding: 0 20px; border-radius: 8px;
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 13px;
+      cursor: pointer; border: none; transition: all .18s;
+    }
+    .source-btn.active { background: #fff; color: #000; }
+    .source-btn.inactive { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.10); color: #fff; }
+    .source-btn.inactive:hover { background: rgba(255,255,255,.14); }
+    .viewer-pill {
+      margin-left: auto; display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 999px; padding: 5px 12px;
+      font-size: 13px; font-weight: 700; color: #F54927;
+    }
+
+    /* WATCH BAR (infos match bas) */
+    .watch-bar {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; border-radius: 12px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+    }
+    .wb-logo { width: 34px; height: 34px; object-fit: contain; border-radius: 8px; flex-shrink: 0; }
+    .wb-texts { flex: 1; min-width: 0; }
+    .wb-watching { font-size: 11px; font-weight: 600; opacity: .5; }
+    .wb-title { font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wb-sub { font-size: 11px; font-weight: 600; opacity: .55; }
+    .wb-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
+    .wb-dots { display: flex; gap: 5px; }
+    .wb-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.2); }
+    .wb-dot.active { background: #f59e0b; }
+    .wb-help { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: rgba(255,255,255,.5); }
+
+    /* SIDEBAR */
+    .sidebar {
+      border-left: 1px solid rgba(255,255,255,.07);
+      display: flex; flex-direction: column;
+      background: #111;
+    }
+    .chat-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .chat-head-title { font-size: 15px; font-weight: 900; }
+    .chat-head-sub { font-size: 11px; opacity: .5; margin-top: 2px; }
+    .chat-open {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px; border-radius: 7px;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.10);
+      color: #fff; font-size: 12px; font-weight: 700; text-decoration: none;
+      transition: all .18s; flex-shrink: 0;
+    }
+    .chat-open:hover { background: rgba(255,255,255,.14); }
+    .chat-body { flex: 1; display: flex; flex-direction: column; }
+    .chat-body iframe { width: 100%; flex: 1; min-height: 500px; border: 0; background: #111; }
+    .chat-placeholder {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; padding: 24px; text-align: center; color: rgba(255,255,255,.35);
+    }
+    .chat-placeholder svg { opacity: .2; }
+    .chat-placeholder p { font-size: 13px; line-height: 1.6; }
+
+    /* CHAT DU STREAM tab */
+    .chat-tab {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: 13px; font-weight: 700; color: rgba(255,255,255,.65);
+    }
+    .chat-tab svg { opacity: .5; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="index.html">IMFTX+</a>
+  <a class="nav-back" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    Retour
+  </a>
+</nav>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- LEFT -->
+  <div class="left-col">
+
+    <!-- PLAYER -->
+    <div class="player-wrap" id="playerWrap">
+      <div id="cover" onclick="loadVideo(0)">
+        <div class="cover-overlay"></div>
+        <div class="cover-badge">
+          <img id="cLogoA" src="" alt="" class="c-logo" style="display:none">
+          <span id="cEmojiA" class="c-vs">⚽</span>
+          <span class="c-vs">VS</span>
+          <img id="cLogoB" src="" alt="" class="c-logo" style="display:none">
+          <span id="cEmojiB" class="c-vs">⚽</span>
+        </div>
+        <div class="cover-time">
+          <span class="ct-dot" id="ctDot"></span>
+          <span id="ctText">--</span>
+        </div>
+        <div class="cover-strip">
+          <div class="strip-info">
+            <div class="strip-title">Regarder Gratuitement</div>
+            <div class="strip-names" id="stripNames">—</div>
+          </div>
+          <div class="strip-play">&#9654;</div>
+        </div>
+      </div>
+      <div id="videoTarget"></div>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="sources-row">
+      <div id="sourcesBtns"></div>
+      <div class="viewer-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="#F54927" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4"/></svg>
+        <span id="viewerCount">0</span>
+      </div>
+    </div>
+
+    <!-- WATCH BAR -->
+    <div class="watch-bar">
+      <img id="wbLogo" src="" alt="" class="wb-logo" style="display:none">
+      <span id="wbEmoji" style="font-size:1.6rem;flex-shrink:0">🏆</span>
+      <div class="wb-texts">
+        <div class="wb-watching">Vous regardez</div>
+        <div class="wb-title" id="wbTitle">—</div>
+        <div class="wb-sub" id="wbSub">—</div>
+      </div>
+      <div class="wb-right">
+        <div class="wb-dots">
+          <div class="wb-dot active" id="wbD1"></div>
+          <div class="wb-dot" id="wbD2"></div>
+          <div class="wb-dot" id="wbD3"></div>
+        </div>
+        <div class="wb-help">?</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR (CHAT) -->
+  <div class="sidebar">
+    <div class="chat-head">
+      <div>
+        <div class="chat-head-title">Chat en direct</div>
+        <div class="chat-head-sub">Parler avec tout le respect !</div>
+      </div>
+      <a class="chat-open" id="chatOpenBtn" href="#" target="_blank" rel="noreferrer">Ouvrir</a>
+    </div>
+    <div class="chat-tab">
+      <span>Chat du stream</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="chat-placeholder" id="chatPlaceholder">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <p>Chat non configuré.<br>Ajoutez un channel Twitch<br>dans le panel admin.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+(function() {
+  const kill = () => { window.open = function(){ return {focus:()=>{},close:()=>{}}; }; };
+  kill(); setInterval(kill, 100);
+  window.addEventListener('blur', () => setTimeout(() => window.focus(), 80));
+  let lastUrl = location.href;
+  new MutationObserver(() => {
+    if (location.href !== lastUrl) {
+      const bad = [/doubleclick/,/googlesyndication/,/popads/,/popcash/,/trafficjunky/,/exoclick/,/adsterra/];
+      if (bad.some(p => p.test(location.href))) history.replaceState(null,'',lastUrl);
+      else lastUrl = location.href;
+    }
+  }).observe(document, {subtree:true, childList:true});
+  setInterval(() => {
+    document.querySelectorAll('iframe').forEach(f => {
+      try {
+        const z = parseInt(window.getComputedStyle(f).zIndex);
+        const bad = [/popads/,/popcash/,/exoclick/,/trafficjunky/,/adsterra/,/hilltopads/];
+        if (bad.some(p => p.test(f.src||'')) || (z > 9000 && f.id !== 'chatFrame' && !f.closest('#videoTarget'))) f.remove();
+      } catch(e){}
+    });
+    document.querySelectorAll('div[style*="position:fixed"],div[style*="position: fixed"]').forEach(d => {
+      if (parseInt(d.style.zIndex||0) > 9000) d.remove();
+    });
+  }, 800);
+  const _ce = document.createElement.bind(document);
+  document.createElement = function(tag) {
+    const el = _ce(tag);
+    if (tag.toLowerCase() === 'iframe') {
+      const desc = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'src');
+      if (desc?.set) {
+        Object.defineProperty(el, 'src', {
+          set(val) { const bad=[/popads/,/popcash/,/exoclick/,/trafficjunky/,/adsterra/,/hilltopads/]; if(val&&bad.some(p=>p.test(val)))return; desc.set.call(this,val); },
+          get() { return el.getAttribute('src')||''; }
+        });
+      }
+    }
+    return el;
+  };
+})();
+// ════════════════════════════════════════════════════════
+// PROXY IMAGE — contourne les CDNs qui bloquent sans referrer
+// ════════════════════════════════════════════════════════
+var IMG_PROXY   = 'https://wsrv.nl/?url=';
+var CDN_BLOCKED = ['empire-sport.art','empire-sport.live','empire-sport.fit',
+                   'empire-sport.tv','only-us.win'];
+function proxyUrl(url) {
+  if (!url || !url.trim()) return '';
+  return CDN_BLOCKED.some(function(b){ return url.indexOf(b) >= 0; })
+    ? IMG_PROXY + encodeURIComponent(url) : url;
+}
+
+// ════════════════════════════════════════════════════════
+// PARSE MATCH DEPUIS L'URL
+// ════════════════════════════════════════════════════════
+let match = null;
+try {
+  const raw = new URLSearchParams(window.location.search).get('match');
+  if (raw) match = JSON.parse(decodeURIComponent(raw));
+} catch(e) {}
+
+if (match) {
+  // Normalise format : title "PSG - OM" → home/away
+  if (!match.home && match.title) {
+    const p = match.title.split(/\s*[-–]\s*/);
+    match.home = (p[0] || match.title).trim();
+    match.away = (p[1] || '').trim();
+  }
+  // Normalise champs logos
+  if (!match.homeLogo) match.homeLogo = match.aLogo || '';
+  if (!match.awayLogo) match.awayLogo = match.bLogo || '';
+  // Normalise status
+  if (match.status === 'upcoming') match.status = 'soon';
+  if (!match.status) match.status = 'soon';
+}
+
+// ════════════════════════════════════════════════════════
+// SOURCES VIDÉO
+// ════════════════════════════════════════════════════════
+function getStreamUrls() {
+  if (match?.streamUrls?.length) return match.streamUrls;
+  if (match?.streamUrl) return [{label:'Source 1', url:match.streamUrl}];
+  const inline = [];
+  if (match?.src1) inline.push({label:'Source 1', url:match.src1});
+  if (match?.src2) inline.push({label:'Source 2 (HD)', url:match.src2});
+  if (match?.src3) inline.push({label:'Source 3', url:match.src3});
+  if (inline.length) return inline;
+  try {
+    const href = match?.href||'';
+    const all = JSON.parse(localStorage.getItem('lz_sources')||'[]');
+    const linked = all.filter(s => s.matchHref===href);
+    if (linked.length) return linked.map((s,i)=>({label:s.name||'Source '+(i+1),url:s.url}));
+  } catch(e){}
+  return [];
+}
+const streamUrls = getStreamUrls();
+
+// 
+
+// ════════════════════════════════════════════════════════
+// FILL PAGE — propre, sans duplication
+// ════════════════════════════════════════════════════════
+function fillPage() {
+  if (!match) return;
+
+  // URLs proxifiées
+  const hLogo = proxyUrl(match.homeLogo || match.aLogo || '');
+  const aLogo = proxyUrl(match.awayLogo || match.bLogo || '');
+  const cLogo = proxyUrl(match.compLogo || '');
+  const bg    = proxyUrl(match.cover)  || proxyUrl(match.banner) || proxyUrl(match.bannerUrl) || '';
+  const hE    = match.homeE || '⚽';
+  const aE    = match.awayE || '⚽';
+  const compEmoji = '🏆';
+
+  // Titre onglet
+  document.title = (match.home||'') + (match.away ? ' vs '+match.away : '') + ' — IMFTX+';
+
+  // ── COVER FOND ──────────────────────────────────────
+  const cover = document.getElementById('cover');
+  if (bg) {
+    var testImg = new Image();
+    testImg.onload  = function(){ cover.style.backgroundImage = "url('" + bg + "')"; };
+    testImg.onerror = function(){ cover.style.background = 'linear-gradient(135deg,#0d1b2a,#1a0828,#0a1a0a)'; };
+    testImg.src = bg;
+  } else {
+    cover.style.background = 'linear-gradient(135deg,#0d1b2a,#1a0828,#0a1a0a)';
+  }
+
+  // ── LOGOS COVER (badge haut gauche) ─────────────────
+  const cLA = document.getElementById('cLogoA'), cEA = document.getElementById('cEmojiA');
+  const cLB = document.getElementById('cLogoB'), cEB = document.getElementById('cEmojiB');
+  if (hLogo) {
+    cLA.src = hLogo; cLA.style.display = '';
+    cEA.style.display = 'none';
+    cLA.onerror = function(){ cLA.style.display='none'; cEA.style.display=''; cEA.textContent=hE; };
+  } else { cEA.textContent = hE; }
+
+  if (aLogo) {
+    cLB.src = aLogo; cLB.style.display = '';
+    cEB.style.display = 'none';
+    cLB.onerror = function(){ cLB.style.display='none'; cEB.style.display=''; cEB.textContent=aE; };
+  } else { cEB.textContent = aE; }
+
+  // ── PILL STATUT / HEURE ─────────────────────────────
+  const ctDot  = document.getElementById('ctDot');
+  const ctText = document.getElementById('ctText');
+  if (match.status === 'live') {
+    ctDot.classList.add('live'); ctText.textContent = 'EN DIRECT';
+  } else {
+    ctText.textContent = match.time || 'À venir';
+  }
+
+  // ── STRIP BAS (cover) ────────────────────────────────
+  document.getElementById('stripNames').innerHTML =
+    (match.home||'') + (match.away ? '<br>' + match.away : '');
+
+  // ── COMPÉTITION COVER ────────────────────────────────
+  document.getElementById('coverCompName').textContent = match.competition || match.comp || '';
+  if (cLogo) {
+    document.getElementById('coverCompL').innerHTML =
+      `<img src="${cLogo}" alt="" class="cover-comp-logo" referrerpolicy="no-referrer-when-downgrade">`;
+  }
+
+  // ── WATCH BAR ─────────────────────────────────────────
+  const wbLogo  = document.getElementById('wbLogo');
+  const wbEmoji = document.getElementById('wbEmoji');
+  if (cLogo && wbLogo) {
+    wbLogo.src = cLogo; wbLogo.style.display = '';
+    if (wbEmoji) wbEmoji.style.display = 'none';
+    wbLogo.onerror = function(){ wbLogo.style.display='none'; if(wbEmoji){wbEmoji.style.display='';wbEmoji.textContent=compEmoji;} };
+  }
+  const wbTitle = document.getElementById('wbTitle');
+  const wbComp  = document.getElementById('wbComp');
+  const wbStatus = document.getElementById('wbStatus');
+  if (wbTitle)  wbTitle.textContent  = (match.home||'') + (match.away ? '  vs  '+match.away : '');
+  if (wbComp)   wbComp.textContent   = match.competition || match.comp || '';
+  const sm = {live:'🔴 EN DIRECT', soon:'⏱ À venir', fin:'✅ Terminé'};
+  if (wbStatus) wbStatus.textContent = sm[match.status] || '—';
+
+  // ── DOTS SOURCES ─────────────────────────────────────
+  const d2=document.getElementById('wbD2'), d3=document.getElementById('wbD3');
+  if (d2 && streamUrls.length>=2) d2.classList.add('active');
+  if (d3 && streamUrls.length>=3) d3.classList.add('active');
+
+  // ── INFO CARD ─────────────────────────────────────────
+  const imHL = document.getElementById('imHomeL');
+  const imAL = document.getElementById('imAwayL');
+  if (imHL) imHL.innerHTML = hLogo
+    ? `<img src="${hLogo}" alt="" class="im-team-logo" referrerpolicy="no-referrer-when-downgrade" onerror="this.parentElement.textContent='${hE}'">`
+    : hE;
+  if (imAL) imAL.innerHTML = aLogo
+    ? `<img src="${aLogo}" alt="" class="im-team-logo" referrerpolicy="no-referrer-when-downgrade" onerror="this.parentElement.textContent='${aE}'">`
+    : aE;
+
+  const imHome  = document.getElementById('imHome');
+  const imAway  = document.getElementById('imAway');
+  const imComp  = document.getElementById('imComp');
+  const imTime  = document.getElementById('imTime');
+  const imSport = document.getElementById('imSport');
+  if (imHome)  imHome.textContent  = match.home  || '—';
+  if (imAway)  imAway.textContent  = match.away  || '—';
+  if (imComp)  imComp.textContent  = match.competition || match.comp || '—';
+  if (imTime)  imTime.textContent  = match.time  || '—';
+  if (imSport) imSport.textContent = match.sport === 'basket' ? '🏀 Basket' : '⚽ Football';
+
+  // Badge statut
+  const badge = document.getElementById('imBadge');
+  if (badge) {
+    badge.className = `im-badge ${match.status||'fin'}`;
+    badge.textContent = match.status==='live' ? 'EN DIRECT' : match.status==='soon' ? 'À venir' : 'Terminé';
+  }
+
+  // ── COMPTE À REBOURS ─────────────────────────────────
+  function isHHMM(t){ return t && /^\d{1,2}:\d{2}$/.test((t||'').trim()); }
+  function nextKO(hhmm){
+    const [h,m]=hhmm.split(':').map(Number), now=new Date(), t=new Date(now);
+    t.setHours(h,m,0,0);
+    if(Date.now()>t.getTime()+9e6){t.setDate(t.getDate()+1);t.setHours(h,m,0,0);}
+    return t;
+  }
+  function fmtMs(ms){
+    const s=Math.floor(ms/1000),h=Math.floor(s/3600),mn=Math.floor((s%3600)/60),sc=s%60;
+    return String(h).padStart(2,'0')+'h '+String(mn).padStart(2,'0')+'m '+String(sc).padStart(2,'0')+'s';
+  }
+  function fmtTime(ms){
+    const s=Math.floor(ms/1000),h=Math.floor(s/3600),mn=Math.floor((s%3600)/60),sc=s%60;
+    function z(n){return String(n).padStart(2,'0');}
+    return z(h)+'h '+z(mn)+'m '+z(sc)+'s';
+  }
+  if (isHHMM(match.time)) {
+    function tickClock(){
+      const ko=nextKO(match.time).getTime(), now=Date.now(), live=now>=ko&&now<=ko+9e6;
+      if(live){
+        ctText.textContent='EN DIRECT'; ctDot.classList.add('live');
+        if(badge){badge.className='im-badge live';badge.textContent='EN DIRECT';}
+        if(wbStatus) wbStatus.textContent='🔴 EN DIRECT';
+      } else if(now<ko){
+        const cd=fmtTime(ko-now); ctText.textContent=cd;
+        if(badge){badge.className='im-badge soon';badge.textContent=cd;}
+      }
+    }
+    tickClock(); setInterval(tickClock,1000);
+  }
+
+  buildSources();
+  buildChat();
+  startViewerCounter();
+}
+
+function buildSources() {
+  const wrap = document.getElementById('sourcesBtns');
+  if (!streamUrls.length) {
+    wrap.innerHTML = `<span style="font-size:13px;color:rgba(255,255,255,.35)">Aucune source — configurez-en dans l'admin</span>`;
+    return;
+  }
+  wrap.innerHTML = streamUrls.map((s,i)=>
+    `<button id="sbtn${i}" class="source-btn ${i===0?'active':'inactive'}" onclick="loadVideo(${i})">${s.label||'Source '+(i+1)}</button>`
+  ).join('');
+}
+function setActiveBtn(idx){ streamUrls.forEach((_,i)=>{const b=document.getElementById('sbtn'+i);if(b)b.className=`source-btn ${i===idx?'active':'inactive'}`;}); }
+function buildStreamUrl(url){
+  if(!url) return '';
+  if(url.includes('youtube.com/watch?v=')){const id=url.split('v=')[1]?.split('&')[0];return`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;}
+  if(url.includes('youtu.be/')){const id=url.split('youtu.be/')[1]?.split('?')[0];return`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;}
+  if(url.includes('twitch.tv/')&&!url.includes('embed')){const ch=url.split('twitch.tv/')[1]?.split('/')[0];return`https://player.twitch.tv/?channel=${ch}&parent=${location.hostname}&autoplay=true`;}
+  return url;
+}
+function loadVideo(idx){
+  const cover=document.getElementById('cover');
+  if(cover) cover.style.display='none';
+  setActiveBtn(idx);
+  const target=document.getElementById('videoTarget');
+  target.style.cssText='display:block;position:absolute;inset:0;';
+  const s=streamUrls[idx];
+  if(!s||!s.url||s.url==='#'||s.url===''){
+    target.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.45);font-weight:800;font-size:15px;">Soit patient, ça arrive 😉</div>`;
+    return;
+  }
+  target.innerHTML=`<iframe src="${buildStreamUrl(s.url)}" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0;position:absolute;inset:0;"></iframe>`;
+}
+
+
+function buildChat(){
+  let ch=match?.twitchChannel||'';
+  if(!ch) ch=DB_SETTINGS.twitch||'';
+  if(!ch) try{ch=JSON.parse(localStorage.getItem('imftx_settings')||'{}').twitch||'';}catch(e){}
+  if(!ch) return;
+  const host=window.location.hostname||'localhost';
+  document.getElementById('chatOpenBtn').href=`https://www.twitch.tv/popout/${ch}/chat?popout=`;
+  const body=document.getElementById('chatBody');
+  body.innerHTML=`<iframe id="chatFrame" src="https://www.twitch.tv/embed/${ch}/chat?darkpopout&parent=${host}" style="width:100%;height:100%;min-height:500px;border:0;background:#111;"></iframe>`;
+}
+
+// Fix referrerpolicy sur toutes les images chargées dynamiquement
+(function fixImgReferrer(){
+  function apply(){
+    document.querySelectorAll('img:not([referrerpolicy])').forEach(function(img){
+      img.referrerPolicy = 'no-referrer-when-downgrade';
+    });
+  }
+  apply();
+  new MutationObserver(apply).observe(document.body||document.documentElement, {childList:true, subtree:true});
+})();
+fillPage();
+</script>
+</body>
+</html>
+
+function startViewerCounter(){
+  const el=document.getElementById('viewerCount');
+  if(match?.status!=='live'){el.textContent='0';return;}
+  let v=800+Math.floor(Math.random()*2500);
+  function upd(){v+=Math.floor((Math.random()-.45)*60);v=Math.max(50,v);el.textContent=v.toLocaleString('fr-FR');}
+  upd(); setInterval(upd,5000);
+}
+
+
+fillPage();
+
+</script>
+</body>
+</html>
