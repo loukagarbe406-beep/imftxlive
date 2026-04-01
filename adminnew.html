@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMFTX+ — Panel Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    input, textarea, select { font-family: inherit; }
+    a { text-decoration: none; }
+
+    :root {
+      --bg:        #08080f;
+      --surface:   #0f0f1a;
+      --surface2:  #141424;
+      --border:    rgba(255,255,255,0.08);
+      --border2:   rgba(255,255,255,0.14);
+      --accent:    #7c3aed;
+      --accent2:   #a855f7;
+      --green:     #22c55e;
+      --red:       #ef4444;
+      --orange:    #f59e0b;
+      --text:      #e8e8f0;
+      --muted:     rgba(255,255,255,0.45);
+      --sidebar-w: 240px;
+    }
+
+    html, body { font-family:'Outfit',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+    ::-webkit-scrollbar { width:5px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.12); border-radius:10px; }
+
+    /* LOGIN */
+    #login-screen { position:fixed; inset:0; z-index:999; display:flex; align-items:center; justify-content:center; background:var(--bg); }
+    #login-screen::before { content:""; position:absolute; inset:0; background: radial-gradient(ellipse 60% 50% at 30% 40%, rgba(124,58,237,0.18) 0%, transparent 65%), radial-gradient(ellipse 50% 40% at 80% 70%, rgba(168,85,247,0.10) 0%, transparent 60%); pointer-events:none; }
+    .login-card { position:relative; width:min(420px,94vw); background:var(--surface); border:1px solid var(--border2); border-radius:20px; padding:40px 36px 36px; box-shadow:0 40px 120px rgba(0,0,0,0.7),0 0 0 1px rgba(124,58,237,0.15); animation:fadeUp .4s ease; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+    .login-logo { font-size:30px; font-weight:900; color:#fff; letter-spacing:.02em; margin-bottom:6px; }
+    .login-logo span { color:var(--accent2); }
+    .login-sub { font-size:13px; color:var(--muted); margin-bottom:32px; }
+    .field { margin-bottom:16px; }
+    .field label { display:block; font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:7px; }
+    .field input { width:100%; padding:11px 14px; background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:10px; color:var(--text); font-size:14px; outline:none; transition:border-color .2s,background .2s; }
+    .field input:focus { border-color:var(--accent); background:rgba(124,58,237,0.07); }
+    .login-btn { width:100%; height:48px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-weight:800; font-size:14px; letter-spacing:.04em; box-shadow:0 8px 32px rgba(124,58,237,0.35); transition:filter .2s,transform .15s; margin-top:8px; }
+    .login-btn:hover { filter:brightness(1.1); }
+    .login-btn:active { transform:scale(.98); }
+    .login-error { font-size:12px; color:var(--red); margin-top:10px; text-align:center; min-height:18px; }
+
+    /* LAYOUT */
+    #app { display:none; min-height:100vh; }
+    #app.visible { display:flex; }
+
+    .sidebar { width:var(--sidebar-w); flex:0 0 var(--sidebar-w); background:var(--surface); border-right:1px solid var(--border); display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow-y:auto; }
+    .sidebar-logo { padding:22px 20px 18px; border-bottom:1px solid var(--border); }
+    .sidebar-logo-text { font-size:22px; font-weight:900; color:#fff; }
+    .sidebar-logo-text span { color:var(--accent2); }
+    .sidebar-logo-sub { font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-top:2px; }
+    .sidebar-nav { padding:14px 10px; flex:1; }
+    .nav-section-label { font-size:10px; font-weight:800; color:rgba(255,255,255,.28); text-transform:uppercase; letter-spacing:.1em; padding:12px 10px 6px; }
+    .nav-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; transition:all .18s; margin-bottom:2px; user-select:none; }
+    .nav-item svg { flex:0 0 18px; opacity:.7; }
+    .nav-item:hover { background:rgba(255,255,255,.06); color:rgba(255,255,255,.85); }
+    .nav-item.active { background:rgba(124,58,237,.18); color:#fff; }
+    .nav-item.active svg { opacity:1; }
+    .nav-item .badge { margin-left:auto; font-size:10px; font-weight:800; background:var(--accent); color:#fff; border-radius:999px; padding:1px 7px; }
+    .sidebar-footer { padding:14px 10px; border-top:1px solid var(--border); }
+    .logout-btn { display:flex; align-items:center; gap:10px; width:100%; padding:10px 12px; border-radius:10px; font-size:13px; font-weight:600; color:rgba(239,68,68,.75); transition:all .18s; }
+    .logout-btn:hover { background:rgba(239,68,68,.1); color:var(--red); }
+
+    .main { flex:1; min-width:0; display:flex; flex-direction:column; }
+    .topbar { height:60px; padding:0 24px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); background:var(--surface); position:sticky; top:0; z-index:10; }
+    .topbar-title { font-size:16px; font-weight:800; color:#fff; }
+    .topbar-right { display:flex; align-items:center; gap:10px; }
+    .topbar-badge { display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; background:rgba(34,197,94,.12); border:1px solid rgba(34,197,94,.25); font-size:12px; font-weight:700; color:var(--green); }
+    .topbar-badge::before { content:''; width:7px; height:7px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .page { padding:28px 24px; display:none; animation:fadeIn .25s ease; }
+    .page.active { display:block; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px; margin-bottom:28px; }
+    .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:20px; transition:border-color .2s; }
+    .stat-card:hover { border-color:var(--border2); }
+    .stat-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:14px; }
+    .stat-num { font-size:28px; font-weight:900; color:#fff; line-height:1; }
+    .stat-label { font-size:12px; font-weight:600; color:var(--muted); margin-top:4px; }
+
+    .panel { background:var(--surface); border:1px solid var(--border); border-radius:16px; margin-bottom:24px; overflow:hidden; }
+    .panel-head { display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid var(--border); }
+    .panel-head h2 { font-size:14px; font-weight:800; color:#fff; }
+    .panel-body { padding:20px; }
+
+    .btn-add { display:inline-flex; align-items:center; gap:7px; padding:8px 16px; border-radius:10px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-size:13px; font-weight:700; box-shadow:0 4px 16px rgba(124,58,237,0.3); transition:filter .18s,transform .12s; }
+    .btn-add:hover { filter:brightness(1.1); }
+    .btn-add:active { transform:scale(.97); }
+    .btn-sm { padding:5px 11px; border-radius:7px; font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:5px; transition:all .15s; }
+    .btn-edit   { background:rgba(124,58,237,.15); border:1px solid rgba(124,58,237,.25); color:var(--accent2); }
+    .btn-edit:hover { background:rgba(124,58,237,.28); }
+    .btn-delete { background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.22); color:#f87171; }
+    .btn-delete:hover { background:rgba(239,68,68,.24); }
+    .btn-save   { background:rgba(34,197,94,.15); border:1px solid rgba(34,197,94,.25); color:var(--green); }
+    .btn-save:hover { background:rgba(34,197,94,.28); }
+    .btn-cancel { background:rgba(255,255,255,.06); border:1px solid var(--border); color:var(--muted); }
+    .btn-cancel:hover { background:rgba(255,255,255,.10); color:#fff; }
+    .btn-dl     { background:rgba(245,158,11,.15); border:1px solid rgba(245,158,11,.25); color:var(--orange); }
+    .btn-dl:hover { background:rgba(245,158,11,.28); }
+    .btn-sync   { background:rgba(56,189,248,.12); border:1px solid rgba(56,189,248,.25); color:#38bdf8; }
+    .btn-sync:hover { background:rgba(56,189,248,.22); }
+
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    thead th { text-align:left; padding:10px 14px; font-size:11px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; border-bottom:1px solid var(--border); white-space:nowrap; }
+    tbody tr { border-bottom:1px solid rgba(255,255,255,.04); transition:background .15s; }
+    tbody tr:last-child { border-bottom:none; }
+    tbody tr:hover { background:rgba(255,255,255,.03); }
+    tbody td { padding:12px 14px; vertical-align:middle; }
+    .td-name { font-weight:700; color:#fff; }
+    .td-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+    .td-actions { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+
+    .status-badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:700; }
+    .status-live     { background:rgba(34,197,94,.14); color:var(--green); border:1px solid rgba(34,197,94,.25); }
+    .status-upcoming { background:rgba(245,158,11,.12); color:var(--orange); border:1px solid rgba(245,158,11,.22); }
+    .status-ended    { background:rgba(255,255,255,.06); color:var(--muted); border:1px solid var(--border); }
+
+    /* MODAL */
+    .modal-overlay { position:fixed; inset:0; z-index:500; background:rgba(0,0,0,.72); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:16px; opacity:0; pointer-events:none; transition:opacity .22s; }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+    .modal { background:var(--surface2); border:1px solid var(--border2); border-radius:18px; width:min(640px,100%); max-height:92vh; overflow-y:auto; box-shadow:0 40px 100px rgba(0,0,0,.7); transform:translateY(16px); transition:transform .22s; }
+    .modal-overlay.open .modal { transform:none; }
+    .modal-head { display:flex; align-items:center; justify-content:space-between; padding:20px 22px; border-bottom:1px solid var(--border); position:sticky; top:0; background:var(--surface2); z-index:2; }
+    .modal-head h3 { font-size:15px; font-weight:800; color:#fff; }
+    .modal-close { width:30px; height:30px; border-radius:8px; background:rgba(255,255,255,.07); color:var(--muted); font-size:18px; display:flex; align-items:center; justify-content:center; transition:all .15s; }
+    .modal-close:hover { background:rgba(255,255,255,.13); color:#fff; }
+    .modal-body { padding:22px; }
+    .modal-foot { padding:16px 22px; border-top:1px solid var(--border); display:flex; justify-content:flex-end; gap:10px; position:sticky; bottom:0; background:var(--surface2); z-index:2; }
+
+    .form-row { margin-bottom:16px; }
+    .form-row label { display:block; font-size:11px; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:.07em; margin-bottom:7px; }
+    .form-row input, .form-row select { width:100%; padding:10px 13px; background:rgba(255,255,255,.05); border:1px solid var(--border); border-radius:9px; color:var(--text); font-size:13px; outline:none; transition:border-color .18s,background .18s; }
+    .form-row input:focus, .form-row select:focus { border-color:var(--accent); background:rgba(124,58,237,.06); }
+    .form-row select option { background:#1a1a2e; }
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .section-divider { font-size:11px; font-weight:800; color:var(--accent2); text-transform:uppercase; letter-spacing:.1em; padding:18px 0 10px; border-top:1px solid var(--border); margin-top:4px; }
+    .section-divider:first-child { border-top:none; padding-top:0; }
+
+    /* SHEETS BANNER */
+    .sheets-banner { background:rgba(34,197,94,.06); border:1px solid rgba(34,197,94,.18); border-radius:12px; padding:14px 16px; margin-bottom:20px; display:flex; align-items:center; gap:12px; font-size:13px; }
+    .sheets-banner svg { flex:0 0 20px; color:var(--green); }
+    .sheets-banner strong { color:var(--green); }
+
+    /* SETUP PANEL */
+    .setup-banner { background:rgba(245,158,11,.06); border:1px solid rgba(245,158,11,.2); border-radius:12px; padding:16px; margin-bottom:20px; font-size:13px; line-height:1.7; }
+    .setup-banner h3 { color:var(--orange); font-size:14px; font-weight:800; margin-bottom:10px; }
+    .setup-banner code { background:rgba(255,255,255,.08); padding:2px 7px; border-radius:5px; font-family:'Courier New',monospace; font-size:12px; color:#a0e0ff; }
+    .setup-step { display:flex; gap:10px; margin-bottom:8px; }
+    .step-num { width:22px; height:22px; border-radius:50%; background:rgba(245,158,11,.2); border:1px solid rgba(245,158,11,.3); color:var(--orange); font-size:11px; font-weight:900; display:flex; align-items:center; justify-content:center; flex:0 0 22px; margin-top:1px; }
+
+    .toast { position:fixed; bottom:24px; right:24px; z-index:9999; background:var(--surface2); border:1px solid var(--border2); border-radius:12px; padding:13px 18px; display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; color:#fff; box-shadow:0 16px 50px rgba(0,0,0,.5); transform:translateY(8px); opacity:0; transition:all .3s; pointer-events:none; }
+    .toast.show { transform:none; opacity:1; }
+    .toast.success { border-color:rgba(34,197,94,.3); }
+    .toast.error   { border-color:rgba(239,68,68,.3); }
+    .toast.info    { border-color:rgba(56,189,248,.3); }
+    .toast-dot { width:8px; height:8px; border-radius:50%; flex:0 0 auto; }
+    .toast.success .toast-dot { background:var(--green); }
+    .toast.error   .toast-dot { background:var(--red); }
+    .toast.info    .toast-dot { background:#38bdf8; }
+
+    .empty-state { text-align:center; padding:48px 20px; color:var(--muted); font-size:13px; }
+    .empty-state-icon { font-size:36px; margin-bottom:12px; }
+
+    .hamburger { display:none; width:38px; height:38px; align-items:center; justify-content:center; border-radius:9px; border:1px solid var(--border); background:var(--surface); color:var(--muted); }
+    @media (max-width:768px) {
+      .sidebar { position:fixed; top:0; left:0; z-index:200; transform:translateX(-100%); transition:transform .28s; height:100vh; }
+      .sidebar.open { transform:none; }
+      .hamburger { display:flex; }
+      .sidebar-backdrop { position:fixed; inset:0; z-index:199; background:rgba(0,0,0,.6); display:none; }
+      .sidebar-backdrop.open { display:block; }
+      .form-grid { grid-template-columns:1fr; }
+    }
+
+    .spin { animation: spinning 1s linear infinite; display:inline-block; }
+    @keyframes spinning { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">IMFTX<span>+</span></div>
+    <div class="login-sub">Panneau d'administration</div>
+    <div class="field"><label>Identifiant</label><input type="text" id="login-user" placeholder="admin" autocomplete="off"></div>
+    <div class="field"><label>Mot de passe</label><input type="password" id="login-pass" placeholder="••••••••"></div>
+    <button class="login-btn" onclick="doLogin()">Connexion</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="sidebar-backdrop" id="sb-backdrop" onclick="closeSidebar()"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-text">IMFTX<span>+</span></div>
+      <div class="sidebar-logo-sub">Administration</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Tableau de bord</div>
+      <div class="nav-item active" data-page="dashboard" onclick="goPage('dashboard',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Vue d'ensemble
+      </div>
+      <div class="nav-section-label">Contenu</div>
+      <div class="nav-item" data-page="matches" onclick="goPage('matches',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+        Matchs
+        <span class="badge" id="badge-matches">0</span>
+      </div>
+      <div class="nav-section-label">Système</div>
+      <div class="nav-item" data-page="settings" onclick="goPage('settings',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Paramètres
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Déconnexion
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:14px;">
+        <button class="hamburger" onclick="toggleSidebar()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <span class="topbar-title" id="topbar-title">Vue d'ensemble</span>
+      </div>
+      <div class="topbar-right">
+        <div id="sync-status-badge" class="topbar-badge" style="background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.25);color:var(--orange);">⚙️ Config requise</div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(124,58,237,.15);">⚽</div>
+          <div class="stat-num" id="stat-matches">0</div>
+          <div class="stat-label">Matchs configurés</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(245,158,11,.12);">🔴</div>
+          <div class="stat-num" id="stat-live">0</div>
+          <div class="stat-label">En direct maintenant</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:rgba(239,68,68,.10);">⏰</div>
+          <div class="stat-num" id="stat-upcoming">0</div>
+          <div class="stat-label">À venir aujourd'hui</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Matchs récents</h2>
+          <button class="btn-add" onclick="goPage('matches',document.querySelector('[data-page=matches]'))">Gérer les matchs →</button>
+        </div>
+        <div class="panel-body table-wrap">
+          <table>
+            <thead><tr><th>Match</th><th>Heure</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="dash-matches-tbody">
+              <tr><td colspan="4"><div class="empty-state"><div class="empty-state-icon">⚽</div>Aucun match.</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- MATCHS -->
+    <div class="page" id="page-matches">
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Tous les matchs</h2>
+          <div style="display:flex;gap:10px;">
+            <button class="btn-sm btn-sync" style="padding:8px 14px;" onclick="dbLoad(function(){renderMatchesTable();showToast('✅ Données actualisées')})">
+              🔄 Actualiser
+            </button>
+            <button class="btn-add" onclick="openMatchModal()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Ajouter un match
+            </button>
+          </div>
+        </div>
+        <div class="panel-body table-wrap">
+          <table>
+            <thead><tr><th>Match</th><th>Heure</th><th>Statut</th><th>Voir</th><th>Actions</th></tr></thead>
+            <tbody id="matches-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- PARAMÈTRES -->
+    <div class="page" id="page-settings">
+      <!-- JSONBin Config -->
+      <div class="panel">
+        <div class="panel-head"><h2>🗄️ Base de données JSONBin.io</h2><span id="sync-status-badge" class="topbar-badge" style="background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);color:var(--orange);font-size:12px;padding:5px 12px;border-radius:999px;">⚙️ Non configuré</span></div>
+        <div class="panel-body">
+          <div class="setup-banner" style="margin-bottom:18px;">
+            <h3>📋 Configuration — JSONBin.io (gratuit, 2 min)</h3>
+            <div class="setup-step"><div class="step-num">1</div><div>Va sur <a href="https://jsonbin.io" target="_blank" style="color:#38bdf8;">jsonbin.io</a> → crée un compte gratuit</div></div>
+            <div class="setup-step"><div class="step-num">2</div><div>Clique <strong>+ Create Bin</strong> → colle ce JSON : <code style="background:rgba(255,255,255,.08);padding:2px 7px;border-radius:4px;">{"matches":[],"settings":{}}</code></div></div>
+            <div class="setup-step"><div class="step-num">3</div><div>Copie l'<strong>ID du Bin</strong> (ex: 6801abc…) et colle-le ci-dessous</div></div>
+            <div class="setup-step"><div class="step-num">4</div><div>Dans <strong>API Keys</strong> → copie ta <strong>X-Master-Key</strong> et colle-la ci-dessous</div></div>
+            <div class="setup-step"><div class="step-num">5</div><div>Colle les mêmes valeurs dans <strong>index.html</strong> et <strong>stream.html</strong> (même 2 lignes)</div></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row"><label>ID du Bin JSONBin</label><input type="text" id="set-jsonbin-id" placeholder="6801abc123def456"></div>
+            <div class="form-row"><label>X-Master-Key (clé API)</label><input type="text" id="set-jsonbin-key" placeholder="$2a$10$…"></div>
+          </div>
+          <div style="margin-top:4px;margin-bottom:14px;">
+            <button class="btn-sm btn-save" style="padding:9px 18px;" onclick="testJsonBin()">🔌 Tester la connexion</button>
+            <div id="jsonbin-test-result" style="margin-top:10px;font-size:13px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paramètres du site -->
+      <div class="panel">
+        <div class="panel-head"><h2>Paramètres du site</h2></div>
+        <div class="panel-body">
+          <div class="form-grid">
+            <div class="form-row"><label>Nom du site</label><input type="text" id="set-sitename" value="IMFTX+"></div>
+            <div class="form-row"><label>Nouveau mot de passe admin</label><input type="password" id="set-pass" placeholder="••••••••"></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row"><label>Lien Telegram</label><input type="text" id="set-tg"></div>
+            <div class="form-row"><label>Lien Discord</label><input type="text" id="set-discord"></div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row"><label>Lien X / Twitter</label><input type="text" id="set-twitter"></div>
+            <div class="form-row"><label>Channel Twitch (chat)</label><input type="text" id="set-twitch" placeholder="drem0h"></div>
+          </div>
+          <div style="margin-top:8px;">
+            <button class="btn-sm btn-save" style="padding:10px 20px;font-size:13px;" onclick="saveSettings()">💾 Sauvegarder</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL MATCH -->
+<div class="modal-overlay" id="match-modal-overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="match-modal-title">Ajouter un match</h3>
+      <button class="modal-close" onclick="closeMatchModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="section-divider">📋 Informations générales</div>
+      <div class="form-row"><label>Titre du match *</label><input type="text" id="m-title" placeholder="Ex: PSG - Marseille"></div>
+      <div class="form-grid">
+        <div class="form-row"><label>Heure * (ex: 21h00)</label><input type="text" id="m-time" placeholder="21h00"></div>
+        <div class="form-row"><label>Nom du fichier HTML *</label><input type="text" id="m-href" placeholder="psg-om.html"></div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row"><label>Jour</label><select id="m-day"><option value="today">Aujourd'hui</option><option value="tomorrow">Demain</option></select></div>
+        <div class="form-row"><label>Compétition (ex: La Liga)</label><input type="text" id="m-competition" placeholder="La Liga"></div>
+      </div>
+
+      <div class="section-divider">🖼️ Images & Logos</div>
+      <div class="form-row"><label>🏠 Bannière index.html (URL) — carte du match sur la page d'accueil</label><input type="text" id="m-banner" placeholder="https://... (image affichée dans index.html)"></div>
+      <div class="form-row"><label>🎬 Image cover du player (URL) — fond avant de lancer la vidéo</label><input type="text" id="m-cover" placeholder="https://... (image sur la page stream)"></div>
+      <div class="form-grid">
+        <div class="form-row"><label>Logo équipe A (URL)</label><input type="text" id="m-alogo" placeholder="https://..."></div>
+        <div class="form-row"><label>Logo équipe B (URL)</label><input type="text" id="m-blogo" placeholder="https://..."></div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row"><label>Logo compétition (URL)</label><input type="text" id="m-complogo" placeholder="https://..."></div>
+        <div class="form-row"><label>Logo chaîne TV (URL)</label><input type="text" id="m-channellogo" placeholder="https://..."></div>
+      </div>
+
+      <div class="section-divider">📺 Sources vidéo (liens embed)</div>
+      <div class="form-row"><label>Source 1</label><input type="text" id="m-src1" placeholder="https://rereyano.ru/player/4/2"></div>
+      <div class="form-row"><label>Source 2 (HD)</label><input type="text" id="m-src2" placeholder="https://rereyano.ru/player/1/2"></div>
+      <div class="form-row"><label>Source 3</label><input type="text" id="m-src3" placeholder="https://rereyano.ru/player/3/2"></div>
+
+      <div class="section-divider">🔢 Compteur de viewers</div>
+      <div class="form-row"><label>ID du compteur (ex: psg-om)</label><input type="text" id="m-counterid" placeholder="psg-om  ← sans .html"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sm btn-cancel" style="padding:9px 18px;" onclick="closeMatchModal()">Annuler</button>
+      <button class="btn-sm btn-save" style="padding:9px 18px;" id="btn-modal-save" onclick="saveMatch()">💾 Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   IMFTX+ — Panel Admin
+   Base de données : JSONBin.io (centralisée, partagée)
+
+   SETUP (une seule fois, 2 minutes) :
+   1. https://jsonbin.io → compte gratuit → "Create Bin"
+   2. Contenu initial du Bin :
+      {"matches":[],"settings":{"twitch":"","discord":"","tg":"","twitter":""}}
+   3. Copie l'ID du Bin et ta X-Master-Key ci-dessous
+   ════════════════════════════════════════════════════════════ */
+
+var DB_BIN_ID  = '69c006ccc3097a1dd54b65c8';   // ex: 6801abc123def456
+var DB_API_KEY = '$2a$10$kdnvIZ0TWeUkwCmlMeb7veqYvTVVxA0NoeSeDtp5IlbdsoKdzB1NW';   // ex: $2a$10$xxxxx
+var DB_URL = 'https://api.jsonbin.io/v3/b/' + DB_BIN_ID;
+
+/* ══ AUTH ══ */
+var ADMIN_USER = 'admin';
+var ADMIN_PASS = 'imftx2024';
+
+/* ══ ÉTAT (cache en mémoire) ══ */
+var matches  = [];
+var settings = { sitename:'IMFTX+', tg:'', discord:'', twitter:'', twitch:'' };
+
+/* ══════════════════════════════════════════
+   DB — LECTURE (JSONBin → mémoire)
+   ══════════════════════════════════════════ */
+function dbLoad(callback) {
+  fetch(DB_URL + '/latest', {
+    headers: { 'X-Master-Key': DB_API_KEY, 'X-Bin-Meta': 'false' }
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    if (data && data.record) {
+      matches  = Array.isArray(data.record.matches)  ? data.record.matches  : [];
+      settings = Object.assign({ sitename:'IMFTX+', tg:'', discord:'', twitter:'', twitch:'' }, data.record.settings || {});
+    }
+    showSyncBadge('✅ DB connectée', 'green');
+    if (callback) callback(null);
+  })
+  .catch(function(e) {
+    console.warn('[DB] Lecture échouée :', e.message);
+    showSyncBadge('⚠️ Mode hors-ligne', 'orange');
+    // Fallback sur le backup localStorage
+    try {
+      var bk = JSON.parse(localStorage.getItem('imftx_db') || 'null');
+      if (bk) { matches = bk.matches || []; settings = Object.assign({}, settings, bk.settings || {}); }
+    } catch(le) {}
+    if (callback) callback(e);
+  });
+}
+
+/* ══════════════════════════════════════════
+   DB — ÉCRITURE (mémoire → JSONBin)
+   ══════════════════════════════════════════ */
+function dbSave(callback) {
+  var payload = { matches: matches, settings: settings };
+  // Backup local immédiat
+  try { localStorage.setItem('imftx_db', JSON.stringify(payload)); } catch(e) {}
+
+  fetch(DB_URL, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', 'X-Master-Key': DB_API_KEY },
+    body: JSON.stringify(payload)
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
+  .then(function() {
+    showSyncBadge('✅ DB synchronisée', 'green');
+    if (callback) callback(null);
+  })
+  .catch(function(e) {
+    console.warn('[DB] Écriture échouée :', e.message);
+    showSyncBadge('⚠️ Sauvegarde locale seulement', 'orange');
+    if (DB_BIN_ID === 'METS_TON_BIN_ID_ICI') {
+      showToast('⚙️ Configurez JSONBin dans admin.html pour partager les données', 'info');
+    } else {
+      showToast('⚠️ JSONBin injoignable — données sauvegardées localement', 'error');
+    }
+    if (callback) callback(e);
+  });
+}
+
+/* ══ LOGIN / LOGOUT ══ */
+function doLogin() {
+  var u   = document.getElementById('login-user').value.trim();
+  var p   = document.getElementById('login-pass').value;
+  var err = document.getElementById('login-error');
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+    showSyncBadge('⏳ Connexion…', 'orange');
+    dbLoad(function() { initApp(); });
+  } else {
+    err.textContent = 'Identifiant ou mot de passe incorrect.';
+    setTimeout(function() { err.textContent = ''; }, 3000);
+  }
+}
+document.getElementById('login-pass').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+
+function doLogout() {
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-pass').value = '';
+}
+
+function showSyncBadge(msg, color) {
+  var b = document.getElementById('sync-status-badge');
+  if (!b) return;
+  var map = {
+    green:  { bg:'rgba(34,197,94,.12)',  bd:'rgba(34,197,94,.25)',  c:'var(--green)'  },
+    orange: { bg:'rgba(245,158,11,.12)', bd:'rgba(245,158,11,.25)', c:'var(--orange)' },
+    red:    { bg:'rgba(239,68,68,.12)',  bd:'rgba(239,68,68,.25)',  c:'var(--red)'    }
+  };
+  var s = map[color] || map.orange;
+  b.style.background   = s.bg;
+  b.style.borderColor  = s.bd;
+  b.style.color        = s.c;
+  b.textContent        = msg;
+}
+
+/* ══ NAV ══ */
+var pageTitles = { dashboard:'Vue d\'ensemble', matches:'Matchs', settings:'Paramètres' };
+function goPage(name, el) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  if (el) el.classList.add('active');
+  document.getElementById('topbar-title').textContent = pageTitles[name] || name;
+  if (name === 'matches')  renderMatchesTable();
+  if (name === 'settings') loadSettingsForm();
+  closeSidebar();
+}
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sb-backdrop').classList.toggle('open'); }
+function closeSidebar()   { document.getElementById('sidebar').classList.remove('open');  document.getElementById('sb-backdrop').classList.remove('open'); }
+
+/* ══ TOAST ══ */
+var toastTimer;
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.className = 'toast ' + (type || 'success');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { t.classList.remove('show'); }, 4000);
+}
+
+/* ══ STATUS ══ */
+var LIVE_MS = 2.5 * 60 * 60 * 1000;
+function matchStatus(timeStr) {
+  var clean = (timeStr || '').replace(/h/i, ':');
+  var p = clean.split(':');
+  var t = new Date();
+  t.setHours(+(p[0] || 21), +(p[1] || 0), 0, 0);
+  var ko = t.getTime(), now = Date.now();
+  if (now >= ko && now <= ko + LIVE_MS) return 'live';
+  if (now < ko) return 'upcoming';
+  return 'ended';
+}
+function statusBadge(time) {
+  var s = matchStatus(time);
+  if (s === 'live')     return '<span class="status-badge status-live">🔴 En direct</span>';
+  if (s === 'upcoming') return '<span class="status-badge status-upcoming">⏰ À venir</span>';
+  return '<span class="status-badge status-ended">✓ Terminé</span>';
+}
+
+/* ══ DASHBOARD ══ */
+function refreshAll() {
+  var live = matches.filter(function(m) { return matchStatus(m.time) === 'live'; }).length;
+  var up   = matches.filter(function(m) { return matchStatus(m.time) === 'upcoming'; }).length;
+  document.getElementById('badge-matches').textContent = matches.length;
+  document.getElementById('stat-matches').textContent  = matches.length;
+  document.getElementById('stat-live').textContent     = live;
+  document.getElementById('stat-upcoming').textContent = up;
+
+  var tbody = document.getElementById('dash-matches-tbody');
+  if (!matches.length) {
+    tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-state-icon">⚽</div>Aucun match. Ajoutez-en dans "Matchs".</div></td></tr>';
+  } else {
+    tbody.innerHTML = matches.slice(0, 6).map(function(m, i) {
+      return '<tr>'
+        + '<td><div class="td-name">' + m.title + '</div>' + (m.competition ? '<div class="td-sub">' + m.competition + '</div>' : '') + '</td>'
+        + '<td><span style="font-weight:800;color:var(--orange)">' + m.time + '</span></td>'
+        + '<td>' + statusBadge(m.time) + '</td>'
+        + '<td><div class="td-actions"><button class="btn-sm btn-edit" onclick="editMatch(' + i + ')">✏️ Éditer</button></div></td>'
+        + '</tr>';
+    }).join('');
+  }
+}
+
+/* ══ TABLE MATCHS ══ */
+function renderMatchesTable() {
+  var tbody = document.getElementById('matches-tbody');
+  if (!matches.length) {
+    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">⚽</div>Aucun match. Cliquez sur "Ajouter".</div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = matches.map(function(m, i) {
+    var streamUrl = 'stream.html?match=' + encodeURIComponent(JSON.stringify(m));
+    return '<tr>'
+      + '<td><div class="td-name">' + m.title + '</div>' + (m.competition ? '<div class="td-sub">' + m.competition + '</div>' : '') + '</td>'
+      + '<td><span style="font-weight:800;color:var(--orange)">' + m.time + '</span> <span style="font-size:11px;color:var(--muted)">(' + (m.day === 'tomorrow' ? 'Demain' : 'Aujourd\'hui') + ')</span></td>'
+      + '<td>' + statusBadge(m.time) + '</td>'
+      + '<td><a href="' + streamUrl + '" target="_blank" class="btn-sm btn-sync" style="padding:5px 10px;text-decoration:none">👁 Voir</a></td>'
+      + '<td><div class="td-actions">'
+      + '<button class="btn-sm btn-edit"   onclick="editMatch(' + i + ')" title="Modifier">✏️</button>'
+      + '<button class="btn-sm btn-delete" onclick="deleteMatch(' + i + ')" title="Supprimer">🗑️</button>'
+      + '</div></td></tr>';
+  }).join('');
+  refreshAll();
+}
+
+/* ══ MODAL MATCH ══ */
+var editMatchIdx = -1;
+function openMatchModal(idx) {
+  editMatchIdx = (idx !== undefined) ? idx : -1;
+  document.getElementById('match-modal-title').textContent = editMatchIdx >= 0 ? 'Modifier le match' : 'Ajouter un match';
+  var fields = ['m-title','m-time','m-href','m-competition','m-banner','m-cover','m-alogo','m-blogo','m-complogo','m-channellogo','m-src1','m-src2','m-src3','m-counterid'];
+  if (editMatchIdx >= 0) {
+    var m = matches[editMatchIdx];
+    document.getElementById('m-title').value       = m.title        || '';
+    document.getElementById('m-time').value        = m.time         || '21h00';
+    document.getElementById('m-href').value        = m.href         || '';
+    document.getElementById('m-competition').value = m.competition  || '';
+    document.getElementById('m-banner').value      = m.banner       || '';
+    document.getElementById('m-cover').value       = m.cover        || '';
+    document.getElementById('m-alogo').value       = m.aLogo        || '';
+    document.getElementById('m-blogo').value       = m.bLogo        || '';
+    document.getElementById('m-complogo').value    = m.compLogo     || '';
+    document.getElementById('m-channellogo').value = m.channelLogo  || '';
+    document.getElementById('m-src1').value        = m.src1         || '';
+    document.getElementById('m-src2').value        = m.src2         || '';
+    document.getElementById('m-src3').value        = m.src3         || '';
+    document.getElementById('m-counterid').value   = m.counterId    || '';
+    document.getElementById('m-day').value         = m.day          || 'today';
+  } else {
+    fields.forEach(function(id) { document.getElementById(id).value = ''; });
+    document.getElementById('m-time').value = '21h00';
+    document.getElementById('m-day').value  = 'today';
+  }
+  document.getElementById('match-modal-overlay').classList.add('open');
+}
+function closeMatchModal() { document.getElementById('match-modal-overlay').classList.remove('open'); }
+function editMatch(i) { openMatchModal(i); }
+
+function saveMatch() {
+  var title = document.getElementById('m-title').value.trim();
+  var time  = document.getElementById('m-time').value.trim();
+  var href  = document.getElementById('m-href').value.trim();
+  if (!title || !time || !href) { showToast('Titre, heure et nom de fichier sont requis.', 'error'); return; }
+  if (!href.endsWith('.html')) href += '.html';
+
+  var obj = {
+    title, time, href,
+    day:         document.getElementById('m-day').value,
+    competition: document.getElementById('m-competition').value.trim(),
+    banner:      document.getElementById('m-banner').value.trim(),
+    cover:       document.getElementById('m-cover').value.trim(),
+    aLogo:       document.getElementById('m-alogo').value.trim(),
+    bLogo:       document.getElementById('m-blogo').value.trim(),
+    compLogo:    document.getElementById('m-complogo').value.trim(),
+    channelLogo: document.getElementById('m-channellogo').value.trim(),
+    src1:        document.getElementById('m-src1').value.trim(),
+    src2:        document.getElementById('m-src2').value.trim(),
+    src3:        document.getElementById('m-src3').value.trim(),
+    counterId:   document.getElementById('m-counterid').value.trim()
+  };
+
+  if (editMatchIdx >= 0) matches[editMatchIdx] = obj;
+  else matches.push(obj);
+
+  var btn = document.getElementById('btn-modal-save');
+  if (btn) { btn.textContent = '⏳ Sauvegarde…'; btn.disabled = true; }
+
+  dbSave(function(e) {
+    if (btn) { btn.textContent = '💾 Enregistrer'; btn.disabled = false; }
+    closeMatchModal();
+    renderMatchesTable();
+    if (!e) showToast(editMatchIdx >= 0 ? '✅ Match mis à jour — visible par tous !' : '✅ Match ajouté — visible par tous !');
+  });
+}
+
+function deleteMatch(i) {
+  if (!confirm('Supprimer ce match ? Il sera retiré pour tous les visiteurs.')) return;
+  matches.splice(i, 1);
+  dbSave(function(e) {
+    renderMatchesTable();
+    if (!e) showToast('Match supprimé ✓', 'error');
+  });
+}
+
+/* ══ PARAMÈTRES ══ */
+function loadSettingsForm() {
+  document.getElementById('set-sitename').value = settings.sitename || 'IMFTX+';
+  document.getElementById('set-tg').value       = settings.tg       || '';
+  document.getElementById('set-discord').value  = settings.discord  || '';
+  document.getElementById('set-twitter').value  = settings.twitter  || '';
+  document.getElementById('set-twitch').value   = settings.twitch   || '';
+  document.getElementById('set-jsonbin-id').value  = DB_BIN_ID  !== 'METS_TON_BIN_ID_ICI' ? DB_BIN_ID  : '';
+  document.getElementById('set-jsonbin-key').value = DB_API_KEY !== 'METS_TA_CLE_API_ICI'  ? DB_API_KEY : '';
+}
+
+function saveSettings() {
+  var np = document.getElementById('set-pass').value.trim();
+  if (np) ADMIN_PASS = np;
+  settings.sitename = document.getElementById('set-sitename').value.trim();
+  settings.tg       = document.getElementById('set-tg').value.trim();
+  settings.discord  = document.getElementById('set-discord').value.trim();
+  settings.twitter  = document.getElementById('set-twitter').value.trim();
+  settings.twitch   = document.getElementById('set-twitch').value.trim();
+  dbSave(function(e) {
+    if (!e) showToast('✅ Paramètres sauvegardés — visibles par tous !');
+    else    showToast('Paramètres sauvegardés localement', 'info');
+  });
+}
+
+/* ══ INIT ══ */
+function initApp() {
+  refreshAll();
+  renderMatchesTable();
+  // Auto-refresh DB toutes les 30s
+  setInterval(function() {
+    dbLoad(function() { refreshAll(); renderMatchesTable(); });
+  }, 30000);
+}
+
+/* ══ TEST JSONBIN ══ */
+function testJsonBin() {
+  var id  = document.getElementById('set-jsonbin-id').value.trim();
+  var key = document.getElementById('set-jsonbin-key').value.trim();
+  var res = document.getElementById('jsonbin-test-result');
+  if (!id || !key) { res.innerHTML = '<span style="color:var(--red)">❌ Remplissez les deux champs.</span>'; return; }
+  res.innerHTML = '<span style="color:var(--orange)">⏳ Test en cours…</span>';
+  fetch('https://api.jsonbin.io/v3/b/' + id + '/latest', {
+    headers: { 'X-Master-Key': key, 'X-Bin-Meta': 'false' }
+  })
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    res.innerHTML = '<span style="color:var(--green)">✅ Connexion réussie ! Copiez ces mêmes valeurs dans index.html et stream.html.</span>';
+    // Update live config
+    DB_BIN_ID  = id;
+    DB_API_KEY = key;
+    DB_URL = 'https://api.jsonbin.io/v3/b/' + id;
+    showSyncBadge('✅ DB connectée', 'green');
+    showToast('✅ JSONBin connecté !');
+  })
+  .catch(function(e) {
+    res.innerHTML = '<span style="color:var(--red)">❌ Échec : ' + e.message + ' — vérifiez l\'ID et la clé.</span>';
+  });
+}
+
+refreshAll();
+</script>
+</body>
+</html>
