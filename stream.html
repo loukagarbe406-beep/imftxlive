@@ -583,16 +583,7 @@ fillPage();
 </body>
 </html>
 
-function startViewerCounter(){
-  const el=document.getElementById('viewerCount');
-  if(match?.status!=='live'){el.textContent='0';return;}
-  let v=800+Math.floor(Math.random()*2500);
-  function upd(){v+=Math.floor((Math.random()-.45)*60);v=Math.max(50,v);el.textContent=v.toLocaleString('fr-FR');}
-  upd(); setInterval(upd,5000);
-}
-
-
-fillPage();
+<script type="module" src="./js/viewerCounter.js"></script>
 
 </script>
 </body>
