@@ -41,35 +41,6 @@
     @media(max-width:1024px){.chat-box{min-height:420px}}
   </style>
 </head>
-<script>
-
-var matchTime = new Date("2026-04-03T20:45:00").getTime();
-
-var timer = setInterval(function(){
-
-var now = new Date().getTime();
-var distance = matchTime - now;
-
-var hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
-var minutes = Math.floor((distance % (1000*60*60))/(1000*60));
-var seconds = Math.floor((distance % (1000*60))/1000);
-
-document.getElementById("countdownTimer").innerHTML =
-hours.toString().padStart(2,'0') + ":" +
-minutes.toString().padStart(2,'0') + ":" +
-seconds.toString().padStart(2,'0');
-
-if(distance < 0){
-clearInterval(timer);
-
-document.getElementById("countdownBox").style.display="none";
-
-loadVideo(1);
-
-}
-
-},1000);
-
 </script>
 <body>
   <nav class="sticky top-0 z-40 bg-black/30 backdrop-blur-xl border-b border-white/10">
@@ -88,34 +59,6 @@ loadVideo(1);
             <div class="cover-strip"><div><div class="strip-title">Regarder Gratuitement</div><div class="strip-sub">Paris SG<br>Toulouse</div></div><div class="strip-play"><i class="fa-solid fa-play"></i></div></div>
           </div>
           <div id="videoTarget" class="w-full h-full"></div>
-
-<div id="countdownBox" style="
-position:absolute;
-inset:0;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-background:rgba(0,0,0,.75);
-z-index:20;
-">
-
-<div style="font-size:14px;opacity:.8;font-weight:700;margin-bottom:10px">
-DIFFUSION À VENIR
-</div>
-
-<div style="font-size:28px;font-weight:900;margin-bottom:20px">
-PARIS SG VS TOULOUSE
-</div>
-
-<div id="countdownTimer" style="font-size:70px;font-weight:900;letter-spacing:3px">
-00:00:00
-</div>
-
-<div style="opacity:.7;margin-top:15px">
-Le lecteur s'affichera automatiquement
-</div>
         </div>
         <div class="mt-4 flex flex-wrap gap-3">
           <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
