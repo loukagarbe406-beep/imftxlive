@@ -9,10 +9,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAGMzjuw6LEQT5tRUiXpBqoi0qLBQEcNaI",
-  authDomain: "imftx-5be48.firebaseapp.com",
-  databaseURL: "https://imftx-5be48-default-rtdb.firebaseio.com/",
-  projectId: "imftx-5be48",
+  apiKey: "AIzaSyDPP6MQDLbDaVu2f6cFy44iUvAZ1RCJPtQ",
+  authDomain: "imftxlive.firebaseapp.com",
+  databaseURL: "https://imftxlive-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "imftxlive",
 };
 
 const app = initializeApp(firebaseConfig);
