@@ -60,9 +60,9 @@
           <div id="videoTarget" class="w-full h-full"></div>
         </div>
         <div class="mt-4 flex flex-wrap gap-3">
-          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
-          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2 (HD)</button>
-          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
+          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">JW PLAYER</button>
+          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">JW PLAYER</button>
+          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">CLAPR</button>
           <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
             <span data-viewer-counter="atletico-barca" id="counterMatch1" style="color:#F54927;font-family:Arial,sans-serif;font-weight:bold"></span>
@@ -83,7 +83,7 @@
     </section>
   </main>
   <script>
-    var SOURCES={1:"https://cartelive.club/player/1/2",2:"https://voterole.net/embed/npso0ge9at8sqw6",3:"https://cartelive.club/player/4/2"};
+    var SOURCES={1:"https://sportsembed.su/embed/4837401/atletico-de-madrid-barcelona/prime/8?player=jwplayer",2:"https://sportsembed.su/embed/4837401/atletico-de-madrid-barcelona/prime/8?player=jwplayer",3:"https://sportsembed.su/embed/4837401/atletico-de-madrid-barcelona/prime/8"};
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
@@ -103,7 +103,7 @@
         target.innerHTML='<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
         return;
       }
-      target.innerHTML='<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0"></iframe>';
+      target.innerHTML='<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" ="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0"></iframe>';
     }
   </script>
   <script type="module" src="./js/viewerCounter.js"></script>
