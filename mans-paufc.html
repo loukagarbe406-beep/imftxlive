@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <script src="https://cdn.jwplayer.com/libraries/IDzF9Zmk.js"></script>
   <style>
     html,body{height:100%;margin:0}
     body{font-family:'Outfit',sans-serif;color:#fff;overflow-x:hidden;background:linear-gradient(135deg,rgba(10,10,12,.96) 0%,rgba(10,10,12,.30) 40%,rgba(10,10,12,.30) 100%),url("https://thumb.canalplus.pro/http/unsafe/1824x1026/filters:quality(80)/media.prod.hawc.canal.aws.io-cplus.net/007d68ebccc6e37311a58f66c083da0a.jpg") center/cover no-repeat fixed}
@@ -57,7 +58,7 @@
             <div class="cover-top"><img class="team-logo" src="https://empire-sport.art/upload/teams/qhftetksteoqowccs609apvfgocnsn.png" alt="A"><span class="vs">VS</span><img class="team-logo" src="https://empire-sport.art/upload/teams/81hel3yrxqrzyztytqsfto6jocwvmw.png" alt="B"></div>
             <div class="cover-strip"><div><div class="strip-title">Regarder Gratuitement</div><div class="strip-sub">Le Mans<br>Pau FC</div></div><div class="strip-play"><i class="fa-solid fa-play"></i></div></div>
           </div>
-          <div id="videoTarget" class="w-full h-full"></div>
+          <div id="jwplayer-container" class="w-full h-full"></div>
         </div>
         <div class="mt-4 flex flex-wrap gap-3">
           <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
@@ -83,27 +84,66 @@
     </section>
   </main>
   <script>
-    var SOURCES={1:"https://witv.team/player/playerjs/witv-player.php?id=4",2:"https://witv.team/player/playerjs/witv-player.php?id=4",3:"https://witv.team/player/playerjs/witv-player.php?id=4"};
-    (function(){
-      var d=window.location.hostname;
-      document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
+    var playerInstance;
+
+    var SOURCES = {
+      1: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/4.m3u8",
+      2: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/4.m3u8",
+      3: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/4.m3u8"
+    };
+
+    (function () {
+      var d = window.location.hostname;
+      document.getElementById("chatFrame").src =
+        "https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent=" + encodeURIComponent(d);
     })();
-    function setActive(id){
-      [1,2,3].forEach(function(n){
-        var b=document.getElementById("btn"+n);
-        if(b) b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";
+
+    function setActive(id) {
+      [1, 2, 3].forEach(function (n) {
+        var b = document.getElementById("btn" + n);
+        if (b) {
+          b.className = (n === id)
+            ? "source-btn active px-6"
+            : "source-btn inactive px-6";
+        }
       });
     }
-    function loadVideo(id){
-      var c=document.getElementById("cover"); if(c) c.style.display="none";
+
+    function initPlayer(source) {
+      if (window.playerInstance && typeof window.playerInstance.remove === "function") {
+        try { window.playerInstance.remove(); } catch (e) {}
+      }
+
+      playerInstance = jwplayer("jwplayer-container").setup({
+        file: source,
+        type: "hls",
+        width: "100%",
+        aspectratio: "16:9",
+        autostart: true,
+        primary: "html5",
+        hlshtml: true,
+        stretching: "uniform",
+        preload: "metadata",
+        controls: true,
+        displaytitle: false,
+        displaydescription: false
+      });
+    }
+
+    function loadVideo(id) {
+      var c = document.getElementById("cover");
+      if (c) c.style.display = "none";
+
       setActive(id);
-      var target=document.getElementById("videoTarget");
-      var url=SOURCES[id];
-      if(!url||url==="#"){
-        target.innerHTML='<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
+
+      var url = SOURCES[id];
+      if (!url || url === "#") {
+        document.getElementById("jwplayer-container").innerHTML =
+          '<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
         return;
       }
-      target.innerHTML='<iframe src="'+url+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0"></iframe>';
+
+      initPlayer(url);
     }
   </script>
   <script type="module" src="./js/viewerCounter.js"></script>
