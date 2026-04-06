@@ -17,7 +17,7 @@
       overflow-x:hidden;
       background:
         linear-gradient(135deg,rgba(10,10,12,.92) 0%,rgba(10,10,12,.88) 40%,rgba(10,10,12,.92) 100%),
-        url("https://www.shutterstock.com/image-photo/defocused-background-exciting-basketball-game-600nw-2706619783.jpg") center/cover no-repeat fixed
+        url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/68ef5649d83b5/uploads/media/myCANAL_Cover_web_2760x720_35.jpg") center/cover no-repeat fixed
     }
     .glass{
       background:rgba(255,255,255,.08);
@@ -354,12 +354,40 @@
       var url = SOURCES[id];
       if (!url || url === "#") {
         document.getElementById("jwplayer-container").innerHTML =
-          '<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
+          '<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit patient ça arrive 😉</div>';
         return;
       }
 
       initPlayer(url);
     }
+  </script>
+
+  <script>
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      const key = e.key.toUpperCase();
+
+      if (
+        key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(key)) ||
+        (e.ctrlKey && key === "U") ||
+        (e.ctrlKey && key === "S")
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    document.addEventListener("dragstart", function (e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener("selectstart", function (e) {
+      e.preventDefault();
+    });
   </script>
 
   <script type="module" src="./js/viewerCounter.js"></script>
