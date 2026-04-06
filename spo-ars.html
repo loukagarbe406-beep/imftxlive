@@ -83,6 +83,7 @@
     </section>
   </main>
  <script>
+   <script>
     var playerInstance;
 
     var SOURCES = {
@@ -138,12 +139,40 @@
       var url = SOURCES[id];
       if (!url || url === "#") {
         document.getElementById("jwplayer-container").innerHTML =
-          '<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
+          '<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit patient ça arrive 😉</div>';
         return;
       }
 
       initPlayer(url);
     }
+  </script>
+
+  <script>
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      const key = e.key.toUpperCase();
+
+      if (
+        key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(key)) ||
+        (e.ctrlKey && key === "U") ||
+        (e.ctrlKey && key === "S")
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    document.addEventListener("dragstart", function (e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener("selectstart", function (e) {
+      e.preventDefault();
+    });
   </script>
 
   <script type="module" src="./js/viewerCounter.js"></script>
