@@ -83,20 +83,63 @@
     </section>
   </main>
   <script>
-    function initPlayer() {
-            playerInstance = jwplayer("jwplayer-container").setup({
-                file: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/5.m3u8",
-                type: "hls",
-                width: "100%",
-                aspectratio: "16:9",
-                autostart: true,
-                primary: "html5",
-                hlshtml: true,
-                stretching: "uniform",
-                preload: "metadata",
-                controls: true,
-                displaytitle: false,
-                displaydescription: false
+    <script>
+  var playerInstance;
+  var SOURCES = {
+    1: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/5.m3u8",
+    2: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/5.m3u8",
+    3: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/5.m3u8"
+  };
+
+  (function(){
+    var d = window.location.hostname;
+    document.getElementById("chatFrame").src =
+      "https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent=" + encodeURIComponent(d);
+  })();
+
+  function setActive(id){
+    [1,2,3].forEach(function(n){
+      var b = document.getElementById("btn" + n);
+      if (b) b.className = (n === id) ? "source-btn active px-6" : "source-btn inactive px-6";
+    });
+  }
+
+  function initPlayer(source){
+    if (window.playerInstance && typeof window.playerInstance.remove === "function"){
+      try { window.playerInstance.remove(); } catch(e){}
+    }
+
+    playerInstance = jwplayer("jwplayer-container").setup({
+      file: source,
+      type: "hls",
+      width: "100%",
+      aspectratio: "16:9",
+      autostart: true,
+      primary: "html5",
+      hlshtml: true,
+      stretching: "uniform",
+      preload: "metadata",
+      controls: true,
+      displaytitle: false,
+      displaydescription: false
+    });
+  }
+
+  function loadVideo(id){
+    var c = document.getElementById("cover");
+    if (c) c.style.display = "none";
+    setActive(id);
+
+    var url = SOURCES[id];
+    if (!url || url === "#"){
+      document.getElementById("jwplayer-container").innerHTML =
+        '<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit pacient ça arrive 😉</div>';
+      return;
+    }
+
+    initPlayer(url);
+  }
+</script>
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
