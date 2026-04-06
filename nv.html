@@ -17,26 +17,11 @@
   <meta name="twitter:title" content="IMFTX+ — 100% Des Matchs en direct">
   <meta name="twitter:image" content="https://pbs.twimg.com/profile_banners/1490316829109239810/1770049817/1500x500">
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>window.tailwind=window.tailwind||{};tailwind.config={darkMode:'class'};</script>
-  <script>
-    const saved=localStorage.getItem('theme');
-    if(saved==='dark'||(!saved&&window.matchMedia('(prefers-color-scheme: dark)').matches)){
-      document.documentElement.classList.add('dark');
-    }
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/nprogress/nprogress.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/nprogress/nprogress.css" rel="stylesheet">
+ <link rel="icon" href="https://media.discordapp.net/attachments/1485253416098730054/1485283135045369916/favicon-32x32.png?ex=69c14d36&is=69bffbb6&hm=ca14730649885e11b25569281738318b65a43ac06235014cb98de994c39a0e0a&=&format=webp&quality=lossless&width=40&height=40">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
   <style>
-    #nprogress .bar{top:64px!important;}
-    #nprogress .spinner{top:75px!important;}
-    html,body{font-family:'Outfit',sans-serif;}
-    body{
-      display:flex;flex-direction:column;min-height:100vh;
-      background-image:url("https://media.istockphoto.com/id/2119624053/fr/vectoriel/conception-abstraite-de-fond-de-courbe-de-ligne-de-motif-noir-illustration-vectorielle.jpg?s=612x612&w=0&k=20&c=K_jVlXEkuXH1yyhYec-epFTsb8KuZq3-OZvmhii6TUA=");
-      background-size:cover;background-position:center;background-repeat:no-repeat;background-attachment:fixed;color:#fff;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { font-family: 'Outfit', sans-serif; background: #0d0d0d; color: #fff; min-height: 100vh; overflow-x: hidden; }
     }
     body::before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.55);pointer-events:none;z-index:0;}
     body>*{position:relative;z-index:1;}
