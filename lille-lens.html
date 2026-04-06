@@ -83,7 +83,20 @@
     </section>
   </main>
   <script>
-    var SOURCES={1:"https://sportsembed.su/embed/4463888/lille-lens/easy/3",2:"https://sportsembed.su/embed/4463888/lille-lens/easy/3",3:"https://sportsembed.su/embed/4463888/lille-lens/easy/3"};
+    function initPlayer() {
+            playerInstance = jwplayer("jwplayer-container").setup({
+                file: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/5.m3u8",
+                type: "hls",
+                width: "100%",
+                aspectratio: "16:9",
+                autostart: true,
+                primary: "html5",
+                hlshtml: true,
+                stretching: "uniform",
+                preload: "metadata",
+                controls: true,
+                displaytitle: false,
+                displaydescription: false
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
