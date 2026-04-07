@@ -17,22 +17,19 @@
       overflow-x:hidden;
       background:
         linear-gradient(135deg,rgba(10,10,12,.95) 0%,rgba(10,10,12,.34) 40%,rgba(10,10,12,.34) 100%),
-        url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg") center/cover no-repeat fixed;
+        url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg") center/cover no-repeat fixed
     }
-
     .glass{
       background:rgba(255,255,255,.08);
       border:1px solid rgba(255,255,255,.10);
       box-shadow:0 30px 120px rgba(0,0,0,.75);
       backdrop-filter:blur(14px)
     }
-
     .player-box{
       border-radius:20px;
       overflow:hidden;
       position:relative
     }
-
     iframe{
       width:100%;
       height:100%;
@@ -40,18 +37,103 @@
       background:#000;
       display:block
     }
-
-    #jwplayer-container{
-      width:100%;
-      height:100%;
-      background:#000;
+    .cover{
+      position:absolute;
+      inset:0;
+      z-index:15;
+      cursor:pointer;
+      background:
+        linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.80) 100%),
+        url("https://empire-sport.art/upload/events/z3l8oxkb7bqxhjwmmsfdnkso7izz55.jpg") center/cover no-repeat
     }
-
-    #jwplayer-container .jwplayer{
-      width:100% !important;
-      height:100% !important;
+    .cover-top{
+      position:absolute;
+      top:16px;
+      left:16px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:16px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(14px)
     }
-
+    .team-logo{
+      width:34px;
+      height:34px;
+      object-fit:contain;
+      filter:drop-shadow(0 8px 18px rgba(0,0,0,.8))
+    }
+    .vs{
+      font-weight:900;
+      font-size:14px;
+      opacity:.9
+    }
+    .cover-strip{
+      position:absolute;
+      left:16px;
+      right:16px;
+      bottom:16px;
+      height:80px;
+      border-radius:18px;
+      background:rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter:blur(16px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 18px
+    }
+    .strip-title{
+      font-size:16px;
+      font-weight:900;
+      line-height:1
+    }
+    .strip-sub{
+      font-size:14px;
+      opacity:.85;
+      font-weight:600;
+      font-style:italic;
+      margin-top:4px;
+      line-height:1.1
+    }
+    .strip-play{
+      width:46px;
+      height:46px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.12);
+      transition:.2s
+    }
+    .strip-play:hover{
+      transform:scale(1.06);
+      background:rgba(255,255,255,.16)
+    }
+    .pill{
+      position:absolute;
+      top:16px;
+      right:16px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:900;
+      font-size:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      backdrop-filter:blur(14px)
+    }
+    .dot{
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:#f59e0b;
+      box-shadow:0 0 0 4px rgba(245,158,11,.12)
+    }
     .source-btn{
       height:42px;
       border-radius:12px;
@@ -59,18 +141,15 @@
       font-size:13px;
       transition:.2s
     }
-
     .source-btn.active{
       background:#fff;
       color:#000
     }
-
     .source-btn.inactive{
       background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.08);
       color:#fff
     }
-
     .watch-bar{
       border-radius:16px;
       padding:14px 16px;
@@ -79,32 +158,27 @@
       justify-content:space-between;
       gap:14px
     }
-
     .watch-left{
       display:flex;
       align-items:center;
       gap:12px;
       min-width:0
     }
-
     .watch-left img{
       width:36px;
       height:36px;
       object-fit:contain;
       filter:drop-shadow(0 6px 12px rgba(0,0,0,.75))
     }
-
     .watch-text{
       min-width:0;
       line-height:1.1
     }
-
     .watch-text .small{
       opacity:.75;
       font-weight:700;
       font-size:13px
     }
-
     .watch-text .big{
       font-weight:900;
       font-size:15px;
@@ -112,20 +186,17 @@
       overflow:hidden;
       text-overflow:ellipsis
     }
-
     .channel-logo{
       width:92px;
       height:auto;
       object-fit:contain;
       filter:drop-shadow(0 6px 12px rgba(0,0,0,.75))
     }
-
     .chat-box{
       border-radius:20px;
       overflow:hidden;
       min-height:520px
     }
-
     .chat-head{
       display:flex;
       align-items:center;
@@ -133,101 +204,16 @@
       padding:12px 14px;
       border-bottom:1px solid rgba(255,255,255,.10)
     }
-
     .chat-head .title{
       font-weight:900
     }
-
     .chat-head .sub{
       font-size:12px;
       opacity:.7;
       font-weight:700
     }
-
-    .countdown-screen{
-      position:absolute;
-      inset:0;
-      z-index:20;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      background:
-        radial-gradient(circle at center, rgba(20,20,20,.20) 0%, rgba(4,8,8,.78) 60%, rgba(3,6,6,.94) 100%),
-        linear-gradient(180deg, rgba(0,0,0,.50) 0%, rgba(0,0,0,.72) 100%);
-      padding:30px;
-    }
-
-    .countdown-inner{
-      max-width:900px;
-      width:100%;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .countdown-kicker{
-      font-size:13px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(255,255,255,.58);
-      font-weight:700;
-      margin-bottom:18px;
-    }
-
-    .countdown-logos{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:28px;
-      margin-bottom:26px;
-    }
-
-    .countdown-logo{
-      width:72px;
-      height:72px;
-      object-fit:contain;
-      filter:drop-shadow(0 10px 22px rgba(0,0,0,.85));
-    }
-
-    .countdown-vs{
-      font-size:18px;
-      font-weight:900;
-      opacity:.9;
-      letter-spacing:.12em;
-    }
-
-    .countdown-timer{
-      font-size:96px;
-      line-height:1;
-      font-weight:900;
-      letter-spacing:.04em;
-      color:#f4f4f4;
-      margin:8px 0 12px;
-      text-shadow:0 8px 40px rgba(0,0,0,.5);
-      font-variant-numeric:tabular-nums;
-    }
-
-    .countdown-sub{
-      font-size:15px;
-      color:rgba(255,255,255,.62);
-      font-weight:500;
-    }
-
     @media(max-width:1024px){
       .chat-box{min-height:420px}
-      .countdown-logo{width:56px;height:56px}
-      .countdown-timer{font-size:68px}
-    }
-
-    @media(max-width:640px){
-      .countdown-screen{padding:16px}
-      .countdown-logo{width:42px;height:42px}
-      .countdown-vs{font-size:13px}
-      .countdown-timer{font-size:42px}
-      .countdown-sub{font-size:12px}
-      .countdown-logos{gap:14px}
     }
   </style>
 </head>
@@ -245,18 +231,21 @@
     <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
       <div>
         <div class="player-box glass w-full aspect-video">
-          <div id="countdownScreen" class="countdown-screen">
-            <div class="countdown-inner">
-              <div class="countdown-kicker">Diffusion à venir</div>
+          <div id="cover" class="cover" onclick="loadVideo(1)">
+            <div class="pill"><span class="dot"></span>21:00</div>
 
-              <div class="countdown-logos">
-                <img class="countdown-logo" src="https://empire-sport.art/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png" alt="Real Madrid">
-                <div class="countdown-vs">VS</div>
-                <img class="countdown-logo" src="https://empire-sport.art/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png" alt="Bayern Munich">
+            <div class="cover-top">
+              <img class="team-logo" src="https://empire-sport.art/upload/teams/6ahvcpskwfxjbcdpvw7bwkqs2vjyw8.png" alt="Real Madrid">
+              <span class="vs">VS</span>
+              <img class="team-logo" src="https://empire-sport.art/upload/teams/y9c9dznfiqh0tjnacubyxyigmdjdud.png" alt="Bayern Munich">
+            </div>
+
+            <div class="cover-strip">
+              <div>
+                <div class="strip-title">Regarder Gratuitement</div>
+                <div class="strip-sub">Real Madrid<br>Bayern Munich</div>
               </div>
-
-              <div id="countdownTimer" class="countdown-timer">00:00:00</div>
-              <div id="countdownSub" class="countdown-sub">Le lecteur s’affichera automatiquement à 20h00.</div>
+              <div class="strip-play"><i class="fa-solid fa-play"></i></div>
             </div>
           </div>
 
@@ -282,7 +271,7 @@
             <div class="watch-text">
               <div class="small">Vous regardez</div>
               <div class="big">Real Madrid - Bayern Munich</div>
-              <div class="small">Ligue Des Champions · 21:00</div>
+              <div class="small">Ligues Des Champions · 21:00</div>
             </div>
           </div>
           <img class="channel-logo" src="https://empire-sport.art/upload/chaines/kanfbbzfcksnfvc5sbw5nnzv1zliki.png" alt="Chaîne">
@@ -311,23 +300,12 @@
 
   <script>
     var playerInstance;
-    var hasStarted = false;
 
     var SOURCES = {
       1: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/7.m3u8",
       2: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/7.m3u8",
       3: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/7.m3u8"
     };
-
-    // Date du match
-    var MATCH_YEAR = 2026;
-    var MATCH_MONTH = 5; // mai
-    var MATCH_DAY = 7;
-
-    // Ouverture à 20h00 heure française
-    var OPEN_HOUR_FR = 20;
-    var OPEN_MINUTE_FR = 0;
-    var OPEN_SECOND_FR = 0;
 
     (function () {
       var d = window.location.hostname;
@@ -336,7 +314,7 @@
     })();
 
     function setActive(id) {
-      [1,2,3].forEach(function (n) {
+      [1, 2, 3].forEach(function (n) {
         var b = document.getElementById("btn" + n);
         if (b) {
           b.className = (n === id)
@@ -351,14 +329,10 @@
         try { window.playerInstance.remove(); } catch (e) {}
       }
 
-      var container = document.getElementById("jwplayer-container");
-      if (container) container.innerHTML = "";
-
       playerInstance = jwplayer("jwplayer-container").setup({
         file: source,
         type: "hls",
         width: "100%",
-        height: "100%",
         aspectratio: "16:9",
         autostart: true,
         primary: "html5",
@@ -371,106 +345,21 @@
       });
     }
 
-    function pad(n) {
-      return String(n).padStart(2, "0");
-    }
+    function loadVideo(id) {
+      var c = document.getElementById("cover");
+      if (c) c.style.display = "none";
 
-    function getParisNowParts() {
-      var parts = new Intl.DateTimeFormat("fr-FR", {
-        timeZone: "Europe/Paris",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hourCycle: "h23"
-      }).formatToParts(new Date());
+      setActive(id);
 
-      var out = {};
-      parts.forEach(function(p){
-        if (p.type !== "literal") out[p.type] = p.value;
-      });
-
-      return {
-        year: Number(out.year),
-        month: Number(out.month),
-        day: Number(out.day),
-        hour: Number(out.hour),
-        minute: Number(out.minute),
-        second: Number(out.second)
-      };
-    }
-
-    function getParisNowAsMs() {
-      var p = getParisNowParts();
-      return Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second);
-    }
-
-    function getOpenParisMs() {
-      return Date.UTC(
-        MATCH_YEAR,
-        MATCH_MONTH - 1,
-        MATCH_DAY,
-        OPEN_HOUR_FR,
-        OPEN_MINUTE_FR,
-        OPEN_SECOND_FR
-      );
-    }
-
-    function formatCountdown(ms) {
-      if (ms <= 0) return "00:00:00";
-
-      var totalSeconds = Math.floor(ms / 1000);
-      var hours = Math.floor(totalSeconds / 3600);
-      var minutes = Math.floor((totalSeconds % 3600) / 60);
-      var seconds = totalSeconds % 60;
-
-      return pad(hours) + ":" + pad(minutes) + ":" + pad(seconds);
-    }
-
-    function startStreamAutomatically() {
-      if (hasStarted) return;
-      hasStarted = true;
-
-      var screen = document.getElementById("countdownScreen");
-      if (screen) screen.style.display = "none";
-
-      setActive(1);
-      initPlayer(SOURCES[1]);
-    }
-
-    function updateCountdown() {
-      var nowMs = getParisNowAsMs();
-      var openMs = getOpenParisMs();
-
-      var timer = document.getElementById("countdownTimer");
-      var sub = document.getElementById("countdownSub");
-
-      if (nowMs >= openMs) {
-        if (timer) timer.textContent = "00:00:00";
-        if (sub) sub.textContent = "Le direct est disponible.";
-        startStreamAutomatically();
+      var url = SOURCES[id];
+      if (!url || url === "#") {
+        document.getElementById("jwplayer-container").innerHTML =
+          '<div style="width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,.7);font-weight:900">soit patient ça arrive 😉</div>';
         return;
       }
 
-      var diff = openMs - nowMs;
-      if (timer) timer.textContent = formatCountdown(diff);
-      if (sub) sub.textContent = "Le lecteur s’affichera automatiquement à 20h00 (heure française).";
+      initPlayer(url);
     }
-
-    function loadVideo(id) {
-      if (getParisNowAsMs() < getOpenParisMs()) return;
-
-      var screen = document.getElementById("countdownScreen");
-      if (screen) screen.style.display = "none";
-
-      setActive(id);
-      initPlayer(SOURCES[id]);
-    }
-
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
   </script>
 
   <script type="module" src="./js/viewerCounter.js"></script>
