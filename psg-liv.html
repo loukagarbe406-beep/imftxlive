@@ -9,11 +9,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
   <style>
     html,body{height:100%;margin:0}
-    body{font-family:'Outfit',sans-serif;color:#fff;overflow-x:hidden;background:linear-gradient(135deg,rgba(10,10,12,.92) 0%,rgba(10,10,12,.12) 40%,rgba(10,10,12,.12) 100%),url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg") center/cover no-repeat fixed}
+    body{font-family:'Outfit',sans-serif;color:#fff;overflow-x:hidden;background:linear-gradient(135deg,rgba(10,10,12,.99) 0%,rgba(10,10,12,.12) 40%,rgba(10,10,12,.12) 100%),url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg") center/cover no-repeat fixed}
     .glass{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);box-shadow:0 30px 120px rgba(0,0,0,.75);backdrop-filter:blur(14px)}
     .player-box{border-radius:20px;overflow:hidden;position:relative}
     iframe{width:100%;height:100%;border:0;background:#000;display:block}
-    .cover{position:absolute;inset:0;z-index:15;cursor:pointer;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.80) 100%),url("https://empire-sport.art/upload/events/1vptyifanz3yoax3cgjv2zgggtvl3g.jpg") center/cover no-repeat}
+    .cover{position:absolute;inset:0;z-index:15;cursor:pointer;background:linear-gradient(180deg,rgba(0,0,0,.58) 0%,rgba(0,0,0,.72) 55%,rgba(0,0,0,.88) 100%),url("https://empire-sport.art/upload/events/1vptyifanz3yoax3cgjv2zgggtvl3g.jpg") center/cover no-repeat}
     .cover-top{position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:16px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px)}
     .team-logo{width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.8))}
     .vs{font-weight:900;font-size:14px;opacity:.9}
@@ -38,6 +38,18 @@
     .chat-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.10)}
     .chat-head .title{font-weight:900}
     .chat-head .sub{font-size:12px;opacity:.7;font-weight:700}
+    .countdown-screen{position:absolute;inset:0;z-index:25;display:none;align-items:center;justify-content:center;overflow:hidden}
+    .countdown-screen::before{content:'';position:absolute;inset:-18px;background:linear-gradient(180deg,rgba(0,0,0,.22) 0%,rgba(0,0,0,.34) 55%,rgba(0,0,0,.50) 100%),url('https://empire-sport.art/upload/events/1vptyifanz3yoax3cgjv2zgggtvl3g.jpg') center/cover no-repeat;filter:blur(12px);transform:scale(1.06)}
+    .countdown-screen::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.14)}
+    .countdown-screen.active{display:flex}
+    .countdown-wrap{position:relative;z-index:1;text-align:center;padding:32px 20px;max-width:90%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .countdown-kicker{font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.58);font-weight:700;margin-bottom:18px}
+    .countdown-matchup{display:flex;align-items:center;justify-content:center;gap:28px;margin-bottom:24px;padding:0;background:transparent;border:0;box-shadow:none}
+    .countdown-team{width:92px;height:92px;object-fit:contain;filter:drop-shadow(0 10px 22px rgba(0,0,0,.5))}
+    .countdown-vs{font-size:18px;font-weight:900;letter-spacing:.18em;color:rgba(255,255,255,.92);text-shadow:0 6px 16px rgba(0,0,0,.35)}
+    .countdown-clock{font-size:clamp(52px,10vw,92px);font-weight:900;letter-spacing:.04em;line-height:1;color:#fff;text-shadow:0 10px 30px rgba(0,0,0,.45)}
+    .countdown-note{margin-top:18px;font-size:15px;color:rgba(255,255,255,.72);font-weight:500}
+    @media(max-width:640px){.countdown-team{width:64px;height:64px}.countdown-matchup{gap:16px;padding:0}.countdown-vs{font-size:15px}}
     @media(max-width:1024px){.chat-box{min-height:420px}}
   </style>
 </head>
@@ -52,29 +64,29 @@
     <section class="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6">
       <div>
         <div class="player-box glass w-full aspect-video">
-          <div id="cover" class="cover" onclick="loadVideo(1)">
+          <div id="cover" class="cover" onclick="startCountdown(1)">
             <div class="pill"><span class="dot"></span>21:00</div>
             <div class="cover-top"><img class="team-logo" src="https://empire-sport.art/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png" alt="A"><span class="vs">VS</span><img class="team-logo" src="https://empire-sport.art/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png" alt="B"></div>
             <div class="cover-strip"><div><div class="strip-title">Regarder Gratuitement</div><div class="strip-sub">Paris SG<br>Liverpool</div></div><div class="strip-play"><i class="fa-solid fa-play"></i></div></div>
-             <div id="countdownScreen" class="countdown-screen">
-                <div class="countdown-wrap">
-                  <div class="countdown-kicker">DIFFUSION À VENIR</div>
-                  <div class="cover-top">
-                    <img class="team-logo" src="https://empire-sport.art/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png" alt="Paris SG">
-                    <span class="vs">VS</span>
-                    <img class="team-logo" src="https://empire-sport.art/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png" alt="Liverpool">
-                  </div>
-                  <div id="matchCountdown" class="countdown-clock">09:46:44</div>
-                  <div class="countdown-note">Le lecteur s'affichera automatiquement au lancement.</div>
-                </div>
+          </div>
+          <div id="countdownScreen" class="countdown-screen">
+            <div class="countdown-wrap">
+              <div class="countdown-kicker">DIFFUSION À VENIR</div>
+              <div class="countdown-matchup">
+                <img class="countdown-team" src="https://empire-sport.art/upload/teams/fxdcxolvnmos15nopn7zc7qe7ornox.png" alt="Paris SG">
+                <span class="countdown-vs">VS</span>
+                <img class="countdown-team" src="https://empire-sport.art/upload/teams/nafxjkdpdzmlvkzubabxazsmu5fwj4.png" alt="Liverpool">
               </div>
+              <div id="matchCountdown" class="countdown-clock">00:00:00</div>
+              <div class="countdown-note">Le lecteur s'affichera automatiquement 1h Avant le coup d'envoie.</div>
+            </div>
           </div>
           <div id="videoTarget" class="w-full h-full"></div>
         </div>
         <div class="mt-4 flex flex-wrap gap-3">
-          <button id="btn1" onclick="loadVideo(1)" class="source-btn active px-6">Source 1</button>
-          <button id="btn2" onclick="loadVideo(2)" class="source-btn inactive px-6">Source 2 (HD)</button>
-          <button id="btn3" onclick="loadVideo(3)" class="source-btn inactive px-6">Source 3</button>
+          <button id="btn1" onclick="handleSourceClick(1)" class="source-btn active px-6">Source 1</button>
+          <button id="btn2" onclick="handleSourceClick(2)" class="source-btn inactive px-6">Source 2 (HD)</button>
+          <button id="btn3" onclick="handleSourceClick(3)" class="source-btn inactive px-6">Source 3</button>
           <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
             <span data-viewer-counter="psg-liv" id="counterMatch1" style="color:#F54927;font-family:Arial,sans-serif;font-weight:bold"></span>
@@ -96,6 +108,10 @@
   </main>
   <script>
     var SOURCES={1:"#",2:"#",3:"#"};
+    var STREAM_HOUR=20;
+    var STREAM_MINUTE=0;
+    var countdownTimer=null;
+    var countdownDone=false;
     (function(){
       var d=window.location.hostname;
       document.getElementById("chatFrame").src="https://www.twitch.tv/embed/drem0h/chat?darkpopout&parent="+encodeURIComponent(d);
@@ -106,8 +122,54 @@
         if(b) b.className=(n===id)?"source-btn active px-6":"source-btn inactive px-6";
       });
     }
+    function formatTime(totalSeconds){
+      totalSeconds=Math.max(0,totalSeconds);
+      var hours=Math.floor(totalSeconds/3600);
+      var minutes=Math.floor((totalSeconds%3600)/60);
+      var seconds=totalSeconds%60;
+      return String(hours).padStart(2,'0') + ':' + String(minutes).padStart(2,'0') + ':' + String(seconds).padStart(2,'0');
+    }
+    function getSecondsUntilStream(){
+      var now=new Date();
+      var target=new Date(now);
+      target.setHours(STREAM_HOUR, STREAM_MINUTE, 0, 0);
+      var diff=Math.floor((target - now)/1000);
+      return diff > 0 ? diff : 0;
+    }
+    function startCountdown(id){
+      clearInterval(countdownTimer);
+      countdownDone=false;
+      setActive(id);
+      var screen=document.getElementById('countdownScreen');
+      var cover=document.getElementById('cover');
+      var countdown=document.getElementById('matchCountdown');
+      var target=document.getElementById('videoTarget');
+      target.innerHTML='';
+      if(cover) cover.style.display='none';
+      if(screen) screen.classList.add('active');
+
+      function updateCountdown(){
+        var remaining=getSecondsUntilStream();
+        countdown.textContent=formatTime(remaining);
+        if(remaining <= 0){
+          clearInterval(countdownTimer);
+          countdownDone=true;
+          if(screen) screen.classList.remove('active');
+          loadVideo(id);
+        }
+      }
+
+      updateCountdown();
+      if(countdownDone) return;
+      countdownTimer=setInterval(updateCountdown,1000);
+    }
+    function handleSourceClick(id){
+      startCountdown(id);
+    }
     function loadVideo(id){
+      clearInterval(countdownTimer);
       var c=document.getElementById("cover"); if(c) c.style.display="none";
+      var screen=document.getElementById('countdownScreen'); if(screen) screen.classList.remove('active');
       setActive(id);
       var target=document.getElementById("videoTarget");
       var url=SOURCES[id];
