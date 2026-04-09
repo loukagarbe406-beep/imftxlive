@@ -269,6 +269,7 @@
 
     <!-- PLAYER -->
     <div class="player-wrap" id="playerWrap">
+      <div id="cover" onclick="loadVideo(0)">
         <div class="cover-overlay"></div>
 
         <!-- COUNTDOWN OVERLAY -->
@@ -284,6 +285,36 @@
           <div class="co-timer" id="coTimer">--:--:--</div>
           <div class="co-sub">Le lecteur s'affichera automatiquement 1h avant le coup d'envoi.</div>
         </div>
+
+        <div class="cover-badge">
+          <img id="cLogoA" src="" alt="" class="c-logo" style="display:none">
+          <span id="cEmojiA" class="c-vs">⚽</span>
+          <span class="c-vs">VS</span>
+          <img id="cLogoB" src="" alt="" class="c-logo" style="display:none">
+          <span id="cEmojiB" class="c-vs">⚽</span>
+        </div>
+        <!-- Compteur spectateurs haut gauche -->
+        <div class="cover-viewers">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#F54927" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4"/></svg>
+          <span id="viewerCount">0</span>
+        </div>
+        <div class="cover-time">
+          <span class="ct-dot" id="ctDot"></span>
+          <span id="ctText">--</span>
+        </div>
+        <div class="cover-strip">
+          <div class="strip-info">
+            <div class="strip-title">Regarder Gratuitement</div>
+            <div class="strip-names" id="stripNames">—</div>
+          </div>
+          <div id="coverCompL"></div>
+          <span id="coverCompName" style="display:none"></span>
+          <div class="strip-play">&#9654;</div>
+        </div>
+      </div>
+      <div id="videoTarget"></div>
+    </div>
+
     <!-- RÉSEAUX + IPTV -->
     <div class="social-row">
       <a class="social-btn x" href="https://x.com/imftxvw" target="_blank" rel="noopener">
@@ -324,6 +355,10 @@
           </div>
           <div class="wb-help">?</div>
         </div>
+      </div>
+    </div>
+
+  </div>
 
   <!-- SIDEBAR DROITE -->
   <div class="sidebar">
@@ -346,6 +381,13 @@
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           <p>Chat non configuré.<br>Ajoutez un channel Twitch<br>dans le panel admin.</p>
         </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
 </div>
 
 <script>
@@ -531,8 +573,8 @@ function fillPage() {
     loadLogoWithFallback(coLogoH, coEmojiH, rawHLogo, hE);
     loadLogoWithFallback(coLogoA2, coEmojiA2, rawALogo, aE);
     // Désactiver le click-to-play sur le cover quand countdown visible
-    cover.onclick = null;
-    coOverlay.onclick = null;
+    if (cover) cover.onclick = null;
+    if (coOverlay) coOverlay.onclick = null;
   }
 
 
@@ -605,7 +647,7 @@ function fillPage() {
     var timeStr = match.time || '';
     wbComp.textContent = compStr && timeStr ? compStr + ' · ' + timeStr : (compStr || timeStr || '—');
   }
-  const sm = {live:'🟢 EN COURS', soon:'⏱ À venir', fin:'✅ Terminé'};
+  const sm = {live:'🔴 EN DIRECT', soon:'⏱ À venir', fin:'✅ Terminé'};
   if (wbStatus) wbStatus.textContent = sm[match.status] || (match.status === 'upcoming' ? '⏱ À venir' : '—');
 
   // ── DOTS SOURCES ─────────────────────────────────────
@@ -780,6 +822,15 @@ function startViewerCounter(){
 }
 
 fillPage();
+
+// Affiche directement le lecteur sans aperçu / countdown
+(function autoOpenPlayer(){
+  const cover = document.getElementById('cover');
+  const countdown = document.getElementById('countdownOverlay');
+  if (countdown) countdown.classList.add('hidden');
+  if (cover) cover.style.display = 'none';
+  loadVideo(0);
+})();
 </script>
 <script type="module" src="./js/viewerCounter.js"></script>
 </body>
