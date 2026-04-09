@@ -799,11 +799,11 @@ function buildChat(){
     // Pas de channel configuré — on garde le placeholder visible
     return;
   }
-  const host = window.location.hostname || 'localhost';
-  const openBtn = document.getElementById('chatOpenBtn');
-  if (openBtn) openBtn.href = `https://www.twitch.tv/popout/${ch}/chat?popout=`;
-  const body = document.getElementById('chatBody');
-  if (body) body.innerHTML = `<iframe id="chatFrame" src="https://www.twitch.tv/embed/${ch}/chat?darkpopout&parent=${host}" style="width:100%;height:100%;min-height:500px;border:0;background:#111;display:flex;flex:1;"></iframe>`;
+const openBtn = document.getElementById('chatOpenBtn');
+if (openBtn) openBtn.href = `https://kick.com/popout/${ch}/chat`;
+
+const body = document.getElementById('chatBody');
+if (body) body.innerHTML = `<iframe id="chatFrame" src="https://kick.com/popout/${ch}/chat" style="width:100%;height:100%;min-height:500px;border:0;background:#111;display:block;"></iframe>`;
 }
 
 // Fix referrerpolicy sur toutes les images chargées dynamiquement
