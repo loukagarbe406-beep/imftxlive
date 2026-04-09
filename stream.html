@@ -115,138 +115,39 @@
     }
     .c-logo { width: 22px; height: 22px; object-fit: contain; border-radius: 50%; }
     .c-vs { font-size: 9px; font-weight: 800; color: rgba(255,255,255,.5); }
-    .cover-top{
-  position:absolute;
-  top:12px;
-  left:12px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:10px 14px;
-  border-radius:16px;
-  background:rgba(52,52,56,.78);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.10);
-  box-shadow:0 8px 24px rgba(0,0,0,.20);
-  z-index:6;
-}
+    .cover-time {
+      position: absolute; top: 10px; right: 10px;
+      display: flex; align-items: center; gap: 5px;
+      padding: 5px 10px; border-radius: 999px;
+      background: rgba(18,18,18,.72); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 11px; font-weight: 800;
+    }
+    .ct-dot { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 0 2px rgba(245,158,11,.2); animation: blink 1.4s infinite; }
+    .ct-dot.live { background: #22c55e; box-shadow: 0 0 0 2px rgba(34,197,94,.2); }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
 
-.team-logo{
-  width:28px;
-  height:28px;
-  object-fit:contain;
-  display:block;
-}
-
-.team-logo-fallback{
-  width:28px;
-  height:28px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:18px;
-}
-
-.vs{
-  font-size:12px;
-  font-weight:900;
-  color:#fff;
-  opacity:.9;
-}
-
-.pill{
-  position:absolute;
-  top:12px;
-  right:12px;
-  display:flex;
-  align-items:center;
-  gap:7px;
-  padding:8px 14px;
-  border-radius:999px;
-  background:rgba(40,52,73,.92);
-  backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,.10);
-  font-size:13px;
-  font-weight:900;
-  color:#fff;
-  box-shadow:0 8px 24px rgba(0,0,0,.22);
-  z-index:6;
-}
-
-.dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#f59e0b;
-  box-shadow:0 0 0 3px rgba(245,158,11,.18);
-}
-
-.dot.live{
-  background:#22c55e;
-  box-shadow:0 0 0 3px rgba(34,197,94,.18);
-}
-
-.cover-viewers{
-  position:absolute;
-  top:54px;
-  left:12px;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  padding:4px 10px;
-  border-radius:999px;
-  background:rgba(18,18,18,.72);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.10);
-  font-size:11px;
-  font-weight:700;
-  color:#F54927;
-  z-index:6;
-}
-
-.cover-strip{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  padding:18px 18px 16px;
-  background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(9,11,17,.70) 38%,rgba(9,11,17,.96) 100%);
-  z-index:6;
-}
-
-.strip-title{
-  font-size:16px;
-  font-weight:900;
-  color:#fff;
-  line-height:1.1;
-}
-
-.strip-sub{
-  margin-top:4px;
-  font-size:13px;
-  font-weight:700;
-  font-style:italic;
-  color:rgba(255,255,255,.9);
-  line-height:1.2;
-}
-
-.strip-play{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.20);
-  color:#fff;
-  font-size:16px;
-  flex-shrink:0;
-}
+    .cover-strip {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 10px 14px;
+      background: rgba(14,14,18,.82);
+      backdrop-filter: blur(14px);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .strip-info { flex: 1; min-width: 0; }
+    .strip-title { font-size: 14px; font-weight: 900; line-height: 1; color: #fff; }
+    .strip-names {
+      font-size: 11px; font-weight: 600; color: rgba(255,255,255,.65);
+      margin-top: 4px; line-height: 1.4;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .strip-play {
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
+      display: flex; align-items: center; justify-content: center; font-size: 13px;
+      transition: all .2s;
+    }
+    .strip-play:hover { background: rgba(255,255,255,.24); transform: scale(1.06); }
     #videoTarget { display: none; }
 
     /* COUNTDOWN OVERLAY */
@@ -385,42 +286,38 @@
           <div class="co-sub">Le lecteur s'affichera automatiquement 1h avant le coup d'envoi.</div>
         </div>
 
-       <div class="cover-top">
-  <img id="cLogoA" src="" alt="" class="team-logo" style="display:none">
-  <span id="cEmojiA" class="team-logo-fallback">⚽</span>
-  <span class="vs">VS</span>
-  <img id="cLogoB" src="" alt="" class="team-logo" style="display:none">
-  <span id="cEmojiB" class="team-logo-fallback">⚽</span>
-</div>
-
-<div class="cover-viewers">
-  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#F54927" viewBox="0 0 16 16">
-    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4"/>
-  </svg>
-  <span id="viewerCount">0</span>
-</div>
-
-<div class="pill">
-  <span class="dot" id="ctDot"></span>
-  <span id="ctText">--</span>
-</div>
-
-<div class="cover-strip">
-  <div>
-    <div class="strip-title">Regarder Gratuitement</div>
-    <div class="strip-sub" id="stripNames">—</div>
-  </div>
-  <div class="strip-play">&#9654;</div>
-</div>
-
-<div id="coverCompL" style="display:none"></div>
-<span id="coverCompName" style="display:none"></span>
+        <div class="cover-badge">
+          <img id="cLogoA" src="" alt="" class="c-logo" style="display:none">
+          <span id="cEmojiA" class="c-vs">⚽</span>
+          <span class="c-vs">VS</span>
+          <img id="cLogoB" src="" alt="" class="c-logo" style="display:none">
+          <span id="cEmojiB" class="c-vs">⚽</span>
+        </div>
+        <!-- Compteur spectateurs haut gauche -->
+        <div class="cover-viewers">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#F54927" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4"/></svg>
+          <span id="viewerCount">0</span>
+        </div>
+        <div class="cover-time">
+          <span class="ct-dot" id="ctDot"></span>
+          <span id="ctText">--</span>
+        </div>
+        <div class="cover-strip">
+          <div class="strip-info">
+            <div class="strip-title">Regarder Gratuitement</div>
+            <div class="strip-names" id="stripNames">—</div>
+          </div>
+          <div id="coverCompL"></div>
+          <span id="coverCompName" style="display:none"></span>
+          <div class="strip-play">&#9654;</div>
+        </div>
+      </div>
       <div id="videoTarget"></div>
     </div>
 
     <!-- RÉSEAUX + IPTV -->
     <div class="social-row">
-      <a class="social-btn x" href="https://x.com/ImftxLive_01" target="_blank" rel="noopener">
+      <a class="social-btn x" href="https://x.com/imftxvw" target="_blank" rel="noopener">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/></svg>
         Twitter / X
       </a>
