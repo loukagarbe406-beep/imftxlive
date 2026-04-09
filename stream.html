@@ -13,15 +13,9 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { font-family: 'Outfit', sans-serif; color: #fff; min-height: 100vh; overflow-x: hidden; }
-
-    /* ── BACKGROUND identique à index ── */
-    body {
-      background: #000;
-    }
-    
+    body { background: #000; }
     body > * { position: relative; z-index: 1; }
 
-    /* ── NAV identique à index ── */
     .nav {
       position: sticky; top: 0; z-index: 100;
       backdrop-filter: blur(20px);
@@ -44,8 +38,6 @@
     }
     .nav-back:hover { background: rgba(255,255,255,.12); }
 
-
-    /* Liens sociaux + IPTV sous le player */
     .social-row {
       display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
     }
@@ -63,7 +55,6 @@
     .social-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
     .social-btn svg  { flex-shrink: 0; }
 
-    /* ── LAYOUT ── */
     .layout {
       display: grid;
       grid-template-columns: 1fr 320px;
@@ -76,10 +67,8 @@
       .sidebar { display: none; }
     }
 
-    /* ── LEFT COL ── */
     .left-col { display: flex; flex-direction: column; gap: 10px; }
 
-    /* ── PLAYER — identique à index style ── */
     .player-wrap {
       position: relative; width: 100%; padding-top: 56.25%;
       border-radius: 16px; overflow: hidden; background: #000;
@@ -88,7 +77,6 @@
     }
     .player-wrap > * { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-    /* ── COVER ── */
     #cover {
       position: absolute; inset: 0; z-index: 5; cursor: pointer;
       background-size: cover; background-position: center;
@@ -98,116 +86,139 @@
       position: absolute; inset: 0;
       background: linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.5) 60%, rgba(0,0,0,.85) 100%);
     }
-    .cover-badge {
-      position: absolute; top: 10px; left: 10px;
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 10px; border-radius: 10px;
-      background: rgba(18,18,18,.72); backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.10);
-    }
+
     .cover-viewers {
-      position: absolute; top: 46px; left: 10px;
-      display: flex; align-items: center; gap: 5px;
-      padding: 4px 9px; border-radius: 999px;
+      position: absolute; top: 54px; left: 12px;
+      display: flex; align-items: center; gap: 6px;
+      padding: 4px 10px; border-radius: 999px;
       background: rgba(18,18,18,.72); backdrop-filter: blur(12px);
       border: 1px solid rgba(255,255,255,.10);
       font-size: 11px; font-weight: 700; color: #F54927;
+      z-index: 6;
     }
-    .c-logo { width: 22px; height: 22px; object-fit: contain; border-radius: 50%; }
-    .c-vs { font-size: 9px; font-weight: 800; color: rgba(255,255,255,.5); }
-    .cover-time {
-      position: absolute; top: 10px; right: 10px;
-      display: flex; align-items: center; gap: 5px;
-      padding: 5px 10px; border-radius: 999px;
-      background: rgba(18,18,18,.72); backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.10);
-      font-size: 11px; font-weight: 800;
+
+    .pill{
+      position:absolute;
+      top:12px;
+      right:12px;
+      display:flex;
+      align-items:center;
+      gap:7px;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(40,52,73,.92);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,.10);
+      font-size:13px;
+      font-weight:900;
+      color:#fff;
+      box-shadow:0 8px 24px rgba(0,0,0,.22);
+      z-index:6;
     }
-    .ct-dot { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 0 2px rgba(245,158,11,.2); animation: blink 1.4s infinite; }
-    .ct-dot.live { background: #22c55e; box-shadow: 0 0 0 2px rgba(34,197,94,.2); }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
 
-   .cover-time{
-  position:absolute;
-  top:12px;
-  right:12px;
-  display:flex;
-  align-items:center;
-  gap:7px;
-  padding:8px 14px;
-  border-radius:999px;
-  background:rgba(40,52,73,.92);
-  backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,.10);
-  font-size:13px;
-  font-weight:900;
-  color:#fff;
-  box-shadow:0 8px 24px rgba(0,0,0,.22);
-  z-index:6;
-}
+    .dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#f59e0b;
+      box-shadow:0 0 0 3px rgba(245,158,11,.18);
+    }
+    .dot.live{
+      background:#22c55e;
+      box-shadow:0 0 0 3px rgba(34,197,94,.18);
+    }
 
-.cover-strip{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:14px;
-  padding:14px 16px;
-  background:linear-gradient(180deg, rgba(10,10,14,.08) 0%, rgba(10,10,14,.72) 30%, rgba(10,10,14,.96) 100%);
-  backdrop-filter:blur(10px);
-  border-top:1px solid rgba(255,255,255,.06);
-  z-index:6;
-}
+    .cover-top{
+      position:absolute;
+      top:12px;
+      left:12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 14px;
+      border-radius:16px;
+      background:rgba(52,52,56,.78);
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow:0 8px 24px rgba(0,0,0,.20);
+      z-index:6;
+    }
 
-.strip-info{
-  flex:1;
-  min-width:0;
-}
+    .team-logo{
+      width:28px;
+      height:28px;
+      object-fit:contain;
+      display:block;
+    }
 
-.strip-title{
-  font-size:15px;
-  font-weight:900;
-  line-height:1.1;
-  color:#fff;
-}
+    .team-logo-fallback{
+      width:28px;
+      height:28px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+    }
 
-.strip-names{
-  margin-top:4px;
-  font-size:13px;
-  font-weight:700;
-  color:rgba(255,255,255,.88);
-  line-height:1.2;
-  white-space:normal;
-  overflow:visible;
-  text-overflow:unset;
-}
+    .vs{
+      font-size:12px;
+      font-weight:900;
+      color:#fff;
+      opacity:.9;
+    }
 
-.strip-play{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  flex-shrink:0;
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.22);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:16px;
-  color:#fff;
-  box-shadow:0 4px 14px rgba(0,0,0,.18);
-  transition:all .2s ease;
-}
+    .cover-strip{
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:18px 18px 16px;
+      background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(9,11,17,.70) 38%,rgba(9,11,17,.96) 100%);
+      z-index:6;
+    }
 
-.strip-play:hover{
-  background:rgba(255,255,255,.18);
-  transform:scale(1.05);
-}
+    .strip-title{
+      font-size:16px;
+      font-weight:900;
+      color:#fff;
+      line-height:1.1;
+    }
+
+    .strip-sub{
+      margin-top:4px;
+      font-size:13px;
+      font-weight:700;
+      font-style:italic;
+      color:rgba(255,255,255,.9);
+      line-height:1.2;
+    }
+
+    .strip-play{
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.20);
+      color:#fff;
+      font-size:16px;
+      flex-shrink:0;
+      box-shadow:0 4px 14px rgba(0,0,0,.18);
+      transition:all .2s ease;
+    }
+    .strip-play:hover{
+      background:rgba(255,255,255,.18);
+      transform:scale(1.05);
+    }
+
     #videoTarget { display: none; }
 
-    /* COUNTDOWN OVERLAY */
     .countdown-overlay {
       position: absolute; inset: 0; z-index: 4;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -221,7 +232,6 @@
     .co-timer { font-size: clamp(28px,5.5vw,58px); font-weight: 900; letter-spacing: .04em; color: #fff; font-variant-numeric: tabular-nums; }
     .co-sub { font-size: 10px; font-weight: 500; color: rgba(255,255,255,.5); text-align: center; max-width: 280px; line-height: 1.5; }
 
-    /* ── SOURCES ROW ── */
     .sources-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .source-btn {
       height: 38px; padding: 0 18px; border-radius: 8px;
@@ -231,14 +241,7 @@
     .source-btn.active { background: #fff; color: #000; }
     .source-btn.inactive { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.10); color: #fff; }
     .source-btn.inactive:hover { background: rgba(255,255,255,.14); }
-    .viewer-pill {
-      margin-left: auto; display: flex; align-items: center; gap: 5px;
-      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
-      border-radius: 999px; padding: 4px 10px;
-      font-size: 12px; font-weight: 700; color: #F54927;
-    }
 
-    /* ── WATCH BAR sous sources ── */
     .watch-bar-wrap { margin-top: 4px; }
     .watch-bar {
       display: flex; align-items: center; gap: 10px;
@@ -257,7 +260,6 @@
     .wb-dot.active { background: #f59e0b; }
     .wb-help { width: 17px; height: 17px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 900; color: rgba(255,255,255,.5); }
 
-    /* ── SIDEBAR CHAT — compact ── */
     .sidebar {
       display: flex; flex-direction: column;
       height: calc(100vh - 94px);
@@ -301,13 +303,10 @@
     }
     .chat-placeholder svg { opacity: .2; }
     .chat-placeholder p { font-size: 11px; line-height: 1.6; }
-
-
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">IMFTX+</a>
@@ -318,18 +317,12 @@
   </div>
 </nav>
 
-<!-- LAYOUT -->
 <div class="layout">
-
-  <!-- COL GAUCHE -->
   <div class="left-col">
-
-    <!-- PLAYER -->
     <div class="player-wrap" id="playerWrap">
       <div id="cover" onclick="loadVideo(0)">
         <div class="cover-overlay"></div>
 
-        <!-- COUNTDOWN OVERLAY -->
         <div class="countdown-overlay hidden" id="countdownOverlay" onclick="event.stopPropagation()">
           <div class="co-label" id="coLabel">DIFFUSION À VENIR</div>
           <div class="co-logos">
@@ -343,44 +336,41 @@
           <div class="co-sub">Le lecteur s'affichera automatiquement 1h avant le coup d'envoi.</div>
         </div>
 
-        <div class="cover-badge">
-          <img id="cLogoA" src="" alt="" class="c-logo" style="display:none">
-          <span id="cEmojiA" class="c-vs">⚽</span>
-          <span class="c-vs">VS</span>
-          <img id="cLogoB" src="" alt="" class="c-logo" style="display:none">
-          <span id="cEmojiB" class="c-vs">⚽</span>
-        </div>
-        <!-- Compteur spectateurs haut gauche -->
         <div class="cover-viewers">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#F54927" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4"/></svg>
-          <span id="viewerCount">0</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#F54927" viewBox="0 0 16 16">
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+          </svg>
+          <span id="viewerCount" style="color:#F54927;font-family:Arial,sans-serif;font-weight:bold">0</span>
         </div>
-       <div class="pill">
-  <span class="dot" id="ctDot"></span>
-  <span id="ctText">--</span>
-</div>
-<div class="cover-top">
-  <img id="cLogoA" class="team-logo" src="" alt="A" style="display:none">
-  <span id="cEmojiA" class="team-logo-fallback">⚽</span>
-  <span class="vs">VS</span>
-  <img id="cLogoB" class="team-logo" src="" alt="B" style="display:none">
-  <span id="cEmojiB" class="team-logo-fallback">⚽</span>
-</div>
 
-<div class="cover-strip">
-  <div>
-    <div class="strip-title">Regarder Gratuitement</div>
-    <div class="strip-sub" id="stripNames">—</div>
-  </div>
-  <div class="strip-play">&#9654;</div>
-</div>
+        <div class="pill">
+          <span class="dot" id="ctDot"></span>
+          <span id="ctText">--</span>
+        </div>
 
-<div id="coverCompL" style="display:none"></div>
-<span id="coverCompName" style="display:none"></span>
+        <div class="cover-top">
+          <img id="cLogoA" class="team-logo" src="" alt="A" style="display:none">
+          <span id="cEmojiA" class="team-logo-fallback">⚽</span>
+          <span class="vs">VS</span>
+          <img id="cLogoB" class="team-logo" src="" alt="B" style="display:none">
+          <span id="cEmojiB" class="team-logo-fallback">⚽</span>
+        </div>
+
+        <div class="cover-strip">
+          <div>
+            <div class="strip-title">Regarder Gratuitement</div>
+            <div class="strip-sub" id="stripNames">—</div>
+          </div>
+          <div class="strip-play">&#9654;</div>
+        </div>
+
+        <div id="coverCompL" style="display:none"></div>
+        <span id="coverCompName" style="display:none"></span>
+      </div>
+
       <div id="videoTarget"></div>
     </div>
 
-    <!-- RÉSEAUX + IPTV -->
     <div class="social-row">
       <a class="social-btn x" href="https://x.com/imftxvw" target="_blank" rel="noopener">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/></svg>
@@ -397,11 +387,9 @@
       <a class="social-btn iptv" href="shop.html" target="_blank" rel="noopener">
         📺 IPTV à partir de 9,99€
       </a>
-      <!-- sourcesBtns caché mais présent pour le JS -->
       <div id="sourcesBtns" style="display:none"></div>
     </div>
 
-    <!-- WATCH BAR -->
     <div class="watch-bar-wrap">
       <div class="watch-bar">
         <img id="wbLogo" src="" alt="" class="wb-logo" style="display:none">
@@ -422,13 +410,9 @@
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- SIDEBAR DROITE -->
   <div class="sidebar">
-
-    <!-- CHAT -->
     <div class="chat-box">
       <div class="chat-head">
         <div>
@@ -448,11 +432,7 @@
         </div>
       </div>
     </div>
-
-
-
   </div>
-
 </div>
 
 <script>
@@ -495,21 +475,15 @@
     return el;
   };
 })();
-// ════════════════════════════════════════════════════════
-// PROXY IMAGE — contourne les CDNs qui bloquent sans referrer
-// ════════════════════════════════════════════════════════
-var IMG_PROXY   = 'https://wsrv.nl/?url=';
-var CDN_BLOCKED = ['empire-sport.art','empire-sport.live','empire-sport.fit',
-                   'empire-sport.tv','only-us.win'];
+
+var IMG_PROXY = 'https://wsrv.nl/?url=';
+var CDN_BLOCKED = ['empire-sport.art','empire-sport.live','empire-sport.fit','empire-sport.tv','only-us.win'];
 function proxyUrl(url) {
   if (!url || !url.trim()) return '';
   return CDN_BLOCKED.some(function(b){ return url.indexOf(b) >= 0; })
     ? IMG_PROXY + encodeURIComponent(url) : url;
 }
 
-// ════════════════════════════════════════════════════════
-// PARSE MATCH DEPUIS L'URL
-// ════════════════════════════════════════════════════════
 let match = null;
 try {
   const raw = new URLSearchParams(window.location.search).get('match');
@@ -517,23 +491,17 @@ try {
 } catch(e) {}
 
 if (match) {
-  // Normalise format : title "PSG - OM" → home/away
   if (!match.home && match.title) {
     const p = match.title.split(/\s*[-–]\s*/);
     match.home = (p[0] || match.title).trim();
     match.away = (p[1] || '').trim();
   }
-  // Normalise champs logos
   if (!match.homeLogo) match.homeLogo = match.aLogo || '';
   if (!match.awayLogo) match.awayLogo = match.bLogo || '';
-  // Normalise status
   if (match.status === 'upcoming') match.status = 'soon';
   if (!match.status) match.status = 'soon';
 }
 
-// ════════════════════════════════════════════════════════
-// SOURCES VIDÉO
-// ════════════════════════════════════════════════════════
 function getStreamUrls() {
   if (match?.streamUrls?.length) return match.streamUrls;
   if (match?.streamUrl) return [{label:'Source 1', url:match.streamUrl}];
@@ -552,27 +520,16 @@ function getStreamUrls() {
 }
 const streamUrls = getStreamUrls();
 
-// 
-
-// ════════════════════════════════════════════════════════
-// FILL PAGE — propre, sans duplication
-// ════════════════════════════════════════════════════════
 function fillPage() {
   if (!match) return;
 
-  // URLs proxifiées
-  const hLogo = proxyUrl(match.homeLogo || match.aLogo || '');
-  const aLogo = proxyUrl(match.awayLogo || match.bLogo || '');
   const cLogo = proxyUrl(match.compLogo || '');
-  const bg    = proxyUrl(match.cover)  || proxyUrl(match.banner) || proxyUrl(match.bannerUrl) || '';
-  const hE    = match.homeE || '⚽';
-  const aE    = match.awayE || '⚽';
+  const hE = match.homeE || '⚽';
+  const aE = match.awayE || '⚽';
   const compEmoji = '🏆';
 
-  // Titre onglet
-  document.title = (match.home||'') + (match.away ? ' vs '+match.away : '') + ' — IMFTX+';
+  document.title = (match.home||'') + (match.away ? ' vs ' + match.away : '') + ' — IMFTX+';
 
-  // ── COVER FOND ──────────────────────────────────────
   const cover = document.getElementById('cover');
   const fallbackBg = 'linear-gradient(135deg,#0d1b2a,#1a0828,#0a1a0a)';
   const rawBg = match.cover || match.banner || match.bannerUrl || '';
@@ -593,13 +550,16 @@ function fillPage() {
     cover.style.background = fallbackBg;
   }
 
-  // ── LOGOS COVER (badge haut gauche) ─────────────────
   const cLA = document.getElementById('cLogoA'), cEA = document.getElementById('cEmojiA');
   const cLB = document.getElementById('cLogoB'), cEB = document.getElementById('cEmojiB');
 
   function loadLogoWithFallback(imgEl, emojiEl, rawUrl, emoji) {
-    if (!rawUrl) { emojiEl.textContent = emoji; return; }
-    // Essaie d'abord l'URL directe, puis via wsrv.nl, puis emoji
+    if (!rawUrl) {
+      imgEl.style.display = 'none';
+      emojiEl.style.display = '';
+      emojiEl.textContent = emoji;
+      return;
+    }
     const direct = rawUrl;
     const proxied = 'https://wsrv.nl/?url=' + encodeURIComponent(rawUrl);
     imgEl.referrerPolicy = 'no-referrer';
@@ -623,7 +583,6 @@ function fillPage() {
   loadLogoWithFallback(cLA, cEA, rawHLogo, hE);
   loadLogoWithFallback(cLB, cEB, rawALogo, aE);
 
-  // ── COUNTDOWN OVERLAY ────────────────────────────────
   const coOverlay = document.getElementById('countdownOverlay');
   const coTimer   = document.getElementById('coTimer');
   const coLabel   = document.getElementById('coLabel');
@@ -634,38 +593,33 @@ function fillPage() {
 
   if (match.status === 'soon' || match.status === 'upcoming') {
     coOverlay.classList.remove('hidden');
-    // Logos dans l'overlay
     loadLogoWithFallback(coLogoH, coEmojiH, rawHLogo, hE);
     loadLogoWithFallback(coLogoA2, coEmojiA2, rawALogo, aE);
-    // Désactiver le click-to-play sur le cover quand countdown visible
     cover.onclick = null;
     coOverlay.onclick = null;
   }
 
-
   const ctDot  = document.getElementById('ctDot');
   const ctText = document.getElementById('ctText');
   if (match.status === 'live') {
-    ctDot.classList.add('live'); ctText.textContent = 'EN DIRECT';
+    ctDot.classList.add('live');
+    ctText.textContent = 'EN DIRECT';
   } else {
     ctText.textContent = match.time || 'À venir';
   }
 
-  // ── STRIP BAS (cover) ────────────────────────────────
   document.getElementById('stripNames').innerHTML =
     (match.home||'') + (match.away ? '<br>' + match.away : '');
 
-  // ── COMPÉTITION COVER ────────────────────────────────
   document.getElementById('coverCompName').textContent = match.competition || match.comp || '';
   if (cLogo) {
     document.getElementById('coverCompL').innerHTML =
-      `<img src="${cLogo}" alt="" class="cover-comp-logo" referrerpolicy="no-referrer-when-downgrade">`;
+      '<img src="' + cLogo + '" alt="" class="cover-comp-logo" referrerpolicy="no-referrer-when-downgrade">';
   }
 
-  // ── WATCH BAR ─────────────────────────────────────────
   const wbLogo  = document.getElementById('wbLogo');
   const wbEmoji = document.getElementById('wbEmoji');
-  if (wbEmoji) wbEmoji.style.display = 'none'; // masqué par défaut
+  if (wbEmoji) wbEmoji.style.display = 'none';
   if (wbLogo) {
     const rawCompLogo = match.compLogo || match.competitionLogo || '';
     if (rawCompLogo) {
@@ -685,7 +639,8 @@ function fillPage() {
     } else if (cLogo) {
       wbLogo.referrerPolicy = 'no-referrer';
       wbLogo.crossOrigin = 'anonymous';
-      wbLogo.src = cLogo; wbLogo.style.display = '';
+      wbLogo.src = cLogo;
+      wbLogo.style.display = '';
       wbLogo.onerror = function(){
         const proxied = 'https://wsrv.nl/?url=' + encodeURIComponent(match.compLogo || '');
         if (wbLogo.src !== proxied && match.compLogo) {
@@ -700,11 +655,12 @@ function fillPage() {
       if (wbEmoji) { wbEmoji.style.display = ''; wbEmoji.textContent = compEmoji; }
     }
   }
+
   const wbTitle = document.getElementById('wbTitle');
   const wbComp  = document.getElementById('wbComp');
   const wbStatus = document.getElementById('wbStatus');
   if (wbTitle) {
-    var titleStr = (match.home||'') + (match.away ? '  vs  '+match.away : '') || match.title || '—';
+    var titleStr = (match.home||'') + (match.away ? '  vs  ' + match.away : '') || match.title || '—';
     wbTitle.textContent = titleStr;
   }
   if (wbComp) {
@@ -715,83 +671,41 @@ function fillPage() {
   const sm = {live:'🔴 EN DIRECT', soon:'⏱ À venir', fin:'✅ Terminé'};
   if (wbStatus) wbStatus.textContent = sm[match.status] || (match.status === 'upcoming' ? '⏱ À venir' : '—');
 
-  // ── DOTS SOURCES ─────────────────────────────────────
   const d2=document.getElementById('wbD2'), d3=document.getElementById('wbD3');
   if (d2 && streamUrls.length>=2) d2.classList.add('active');
   if (d3 && streamUrls.length>=3) d3.classList.add('active');
 
-  // ── INFO CARD ─────────────────────────────────────────
-  const imHL = document.getElementById('imHomeL');
-  const imAL = document.getElementById('imAwayL');
-  if (imHL) {
-    if (rawHLogo) {
-      imHL.innerHTML = `<img src="${rawHLogo}" alt="" class="im-team-logo" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="if(this.src!=='https://wsrv.nl/?url='+encodeURIComponent('${rawHLogo}')){this.src='https://wsrv.nl/?url='+encodeURIComponent('${rawHLogo}');}else{this.parentElement.textContent='${hE}';}">`;
-    } else { imHL.textContent = hE; }
-  }
-  if (imAL) {
-    if (rawALogo) {
-      imAL.innerHTML = `<img src="${rawALogo}" alt="" class="im-team-logo" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="if(this.src!=='https://wsrv.nl/?url='+encodeURIComponent('${rawALogo}')){this.src='https://wsrv.nl/?url='+encodeURIComponent('${rawALogo}');}else{this.parentElement.textContent='${aE}';}">`;
-    } else { imAL.textContent = aE; }
-  }
-
-  const imHome  = document.getElementById('imHome');
-  const imAway  = document.getElementById('imAway');
-  const imComp  = document.getElementById('imComp');
-  const imTime  = document.getElementById('imTime');
-  const imSport = document.getElementById('imSport');
-  if (imHome)  imHome.textContent  = match.home  || '—';
-  if (imAway)  imAway.textContent  = match.away  || '—';
-  if (imComp)  imComp.textContent  = match.competition || match.comp || '—';
-  if (imTime)  imTime.textContent  = match.time  || '—';
-  if (imSport) imSport.textContent = match.sport === 'basket' ? '🏀 Basket' : '⚽ Football';
-
-  // Badge statut
-  const badge = document.getElementById('imBadge');
-  if (badge) {
-    badge.className = `im-badge ${match.status||'fin'}`;
-    badge.textContent = match.status==='live' ? 'EN DIRECT' : match.status==='soon' ? 'À venir' : 'Terminé';
-  }
-
-  // ── COMPTE À REBOURS ─────────────────────────────────
-  function isHHMM(t){ return t && /^\d{1,2}:\d{2}$/.test((t||'').trim()); }
+  function isHHMM(t){ return t && /^\\d{1,2}:\\d{2}$/.test((t||'').trim()); }
   function nextKO(hhmm){
     const [h,m]=hhmm.split(':').map(Number), now=new Date(), t=new Date(now);
     t.setHours(h,m,0,0);
     if(Date.now()>t.getTime()+9e6){t.setDate(t.getDate()+1);t.setHours(h,m,0,0);}
     return t;
   }
-  function fmtMs(ms){
-    const s=Math.floor(ms/1000),h=Math.floor(s/3600),mn=Math.floor((s%3600)/60),sc=s%60;
-    return String(h).padStart(2,'0')+'h '+String(mn).padStart(2,'0')+'m '+String(sc).padStart(2,'0')+'s';
-  }
   function fmtTime(ms){
     const s=Math.floor(ms/1000),h=Math.floor(s/3600),mn=Math.floor((s%3600)/60),sc=s%60;
     function z(n){return String(n).padStart(2,'0');}
     return z(h)+'h '+z(mn)+'m '+z(sc)+'s';
   }
+
   if (isHHMM(match.time)) {
     function tickClock(){
       const ko=nextKO(match.time).getTime(), now=Date.now();
       const live=now>=ko&&now<=ko+9e6;
-      const oneHourBefore=ko-3600000; // 1h avant le KO
+      const oneHourBefore=ko-3600000;
       if(live){
-        ctText.textContent='EN DIRECT'; ctDot.classList.add('live');
-        if(badge){badge.className='im-badge live';badge.textContent='EN DIRECT';}
+        ctText.textContent='EN DIRECT';
+        ctDot.classList.add('live');
         if(wbStatus) wbStatus.textContent='🔴 EN DIRECT';
-        // Cache l'overlay countdown quand c'est live
         if(coOverlay) { coOverlay.classList.add('hidden'); cover.onclick=()=>loadVideo(0); }
       } else if(now>=oneHourBefore && now<ko){
-        // Moins d'1h avant le match : cache l'overlay, lecteur prêt
         ctText.textContent=fmtTime(ko-now);
-        if(badge){badge.className='im-badge soon';}
+        ctDot.classList.remove('live');
         if(coOverlay) { coOverlay.classList.add('hidden'); cover.onclick=()=>loadVideo(0); }
       } else if(now<oneHourBefore){
-        // Plus d'1h avant : affiche le compte à rebours jusqu'à 1h avant
         const ms=oneHourBefore-now;
-        const cd=fmtTime(ko-now); // pill reste sur le temps total
-        ctText.textContent=cd;
-        if(badge){badge.className='im-badge soon';badge.textContent=cd;}
-        // Met à jour le grand timer countdown (compte jusqu'à 1h avant)
+        ctText.textContent=fmtTime(ko-now);
+        ctDot.classList.remove('live');
         if(coTimer){
           const s=Math.floor(ms/1000),h=Math.floor(s/3600),mn=Math.floor((s%3600)/60),sc=s%60;
           const z=n=>String(n).padStart(2,'0');
@@ -806,10 +720,9 @@ function fillPage() {
   buildSources();
   buildChat();
   startViewerCounter();
-  // Attache le compteur Firebase dynamiquement selon l'ID du match
-  var counterId = (match.counterId || match.href || '').replace(/\.html$/, '');
+
+  var counterId = (match.counterId || match.href || '').replace(/\\.html$/, '');
   if (counterId) {
-    // Appel direct après un court délai pour laisser le module s'initialiser
     setTimeout(function() {
       if (typeof window.__initViewerCounter === 'function') {
         window.__initViewerCounter(counterId, 'viewerCount');
@@ -821,14 +734,19 @@ function fillPage() {
 function buildSources() {
   const wrap = document.getElementById('sourcesBtns');
   if (!streamUrls.length) {
-    wrap.innerHTML = `<span style="font-size:13px;color:rgba(255,255,255,.35)">Aucune source — configurez-en dans l'admin</span>`;
+    wrap.innerHTML = '<span style="font-size:13px;color:rgba(255,255,255,.35)">Aucune source — configurez-en dans l\\'admin</span>';
     return;
   }
   wrap.innerHTML = streamUrls.map((s,i)=>
-    `<button id="sbtn${i}" class="source-btn ${i===0?'active':'inactive'}" onclick="loadVideo(${i})">${s.label||'Source '+(i+1)}</button>`
+    '<button id="sbtn'+i+'" class="source-btn '+(i===0?'active':'inactive')+'" onclick="loadVideo('+i+')">'+(s.label||('Source '+(i+1)))+'</button>'
   ).join('');
 }
-function setActiveBtn(idx){ streamUrls.forEach((_,i)=>{const b=document.getElementById('sbtn'+i);if(b)b.className=`source-btn ${i===idx?'active':'inactive'}`;}); }
+function setActiveBtn(idx){
+  streamUrls.forEach((_,i)=>{
+    const b=document.getElementById('sbtn'+i);
+    if(b)b.className='source-btn '+(i===idx?'active':'inactive');
+  });
+}
 function buildStreamUrl(url){
   if(!url) return '';
   if(url.includes('youtube.com/watch?v=')){const id=url.split('v=')[1]?.split('&')[0];return`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;}
@@ -844,34 +762,29 @@ function loadVideo(idx){
   target.style.cssText='display:block;position:absolute;inset:0;';
   const s=streamUrls[idx];
   if(!s||!s.url||s.url==='#'||s.url===''){
-    target.innerHTML=`<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.45);font-weight:800;font-size:15px;">Soit patient, ça arrive 😉</div>`;
+    target.innerHTML='<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.45);font-weight:800;font-size:15px;">Soit patient, ça arrive 😉</div>';
     return;
   }
-  target.innerHTML=`<iframe src="${buildStreamUrl(s.url)}" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0;position:absolute;inset:0;"></iframe>`;
+  target.innerHTML='<iframe src="'+buildStreamUrl(s.url)+'" allowfullscreen scrolling="no" frameborder="0" allow="autoplay;fullscreen;picture-in-picture" referrerpolicy="no-referrer-when-downgrade" sandbox="allow-forms allow-scripts allow-same-origin allow-presentation" style="width:100%;height:100%;border:0;position:absolute;inset:0;"></iframe>';
 }
-
 
 function buildChat(){
   let ch = match?.twitchChannel || '';
-  // Fallback sur les settings localStorage (DB_SETTINGS peut ne pas exister)
   if (!ch) {
     try { ch = (window.DB_SETTINGS || {}).twitch || ''; } catch(e) {}
   }
   if (!ch) {
     try { ch = JSON.parse(localStorage.getItem('imftx_settings') || '{}').twitch || ''; } catch(e) {}
   }
-  if (!ch) {
-    // Pas de channel configuré — on garde le placeholder visible
-    return;
-  }
-const openBtn = document.getElementById('chatOpenBtn');
-if (openBtn) openBtn.href = `https://kick.com/popout/${ch}/chat`;
+  if (!ch) return;
 
-const body = document.getElementById('chatBody');
-if (body) body.innerHTML = `<iframe id="chatFrame" src="https://kick.com/popout/${ch}/chat" style="width:100%;height:100%;min-height:500px;border:0;background:#111;display:block;"></iframe>`;
+  const openBtn = document.getElementById('chatOpenBtn');
+  if (openBtn) openBtn.href = 'https://kick.com/popout/' + ch + '/chat';
+
+  const body = document.getElementById('chatBody');
+  if (body) body.innerHTML = '<iframe id="chatFrame" src="https://kick.com/popout/' + ch + '/chat" style="width:100%;height:100%;min-height:500px;border:0;background:#111;display:block;"></iframe>';
 }
 
-// Fix referrerpolicy sur toutes les images chargées dynamiquement
 (function fixImgReferrer(){
   function apply(){
     document.querySelectorAll('img:not([referrerpolicy])').forEach(function(img){
@@ -881,14 +794,15 @@ if (body) body.innerHTML = `<iframe id="chatFrame" src="https://kick.com/popout/
   apply();
   new MutationObserver(apply).observe(document.body||document.documentElement, {childList:true, subtree:true});
 })();
-function startViewerCounter(){
-  // Le compteur Firebase est géré par viewerCounter.js via data-viewer-counter
-  // Cette fonction reste pour compatibilité mais le vrai compteur est Firebase
-}
+
+function startViewerCounter(){}
 
 fillPage();
 </script>
-<script type="module" src="./js/viewerCounter.js"></script>
+
+<script type="module">
+  import { initViewerCounter } from "./js/viewerCounter.js";
+  window.__initViewerCounter = initViewerCounter;
+</script>
 </body>
-</html>
 </html>
