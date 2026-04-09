@@ -823,11 +823,7 @@ function startViewerCounter(){
 
 fillPage();
 </script>
-<script type="module">
-import { initViewerCounter } from "./js/viewerCounter.js";
-// Expose globalement pour que fillPage() puisse l'appeler
-window.__initViewerCounter = initViewerCounter;
-</script>
+<script type="module" src="./js/viewerCounter.js"></script>
 </body>
 </html>
 </html>
