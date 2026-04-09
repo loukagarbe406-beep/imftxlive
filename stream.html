@@ -616,7 +616,7 @@ function fillPage() {
     var timeStr = match.time || '';
     wbComp.textContent = compStr && timeStr ? compStr + ' · ' + timeStr : (compStr || timeStr || '—');
   }
-  const sm = {live:'🔴 EN DIRECT', soon:'⏱ À venir', fin:'✅ Terminé'};
+  const sm = {live:'🟢 EN COURS', soon:'⏱ À venir', fin:'✅ Terminé'};
   if (wbStatus) wbStatus.textContent = sm[match.status] || (match.status === 'upcoming' ? '⏱ À venir' : '—');
 
   // ── DOTS SOURCES ─────────────────────────────────────
