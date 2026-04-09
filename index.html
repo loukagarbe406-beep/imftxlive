@@ -319,35 +319,69 @@ function tick() {
 
 // ── LOAD FROM DB ────────────────────────────────
 function loadFromDB() {
-  fetch(DB_URL+'/latest', {headers:{'X-Master-Key':DB_API_KEY,'X-Bin-Meta':'false'}})
-  .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-  .then(function(data){
+  var CACHE_KEY = 'imftx_matches_cache_v1';
+  var CACHE_TIME_KEY = 'imftx_matches_cache_time_v1';
+
+  function applyData(data) {
     var rec = (data && data.record) ? data.record : data;
     var all = (rec && Array.isArray(rec.matches)) ? rec.matches : [];
-    // Normalise time "21h00" → "21:00"
-    // Proxy les images CDN qui bloquent les requêtes sans referrer valide
+
     var PROXY = 'https://wsrv.nl/?url=';
     var BLOCKED = ['empire-sport.art','empire-sport.live','empire-sport.fit','empire-sport.tv','only-us.win'];
+
     function proxyImg(url) {
       if (!url) return url;
       return BLOCKED.some(function(b){ return url.indexOf(b) >= 0; })
-        ? PROXY + encodeURIComponent(url) : url;
+        ? PROXY + encodeURIComponent(url)
+        : url;
     }
+
     all.forEach(function(m){
-      if(m.time) m.time = String(m.time).replace(/h/i,':');
+      if (m.time) m.time = String(m.time).replace(/h/i, ':');
       m.banner   = proxyImg(m.banner);
       m.aLogo    = proxyImg(m.aLogo);
       m.bLogo    = proxyImg(m.bLogo);
       m.compLogo = proxyImg(m.compLogo);
       m.cover    = proxyImg(m.cover);
     });
+
     MATCHES_TODAY    = all.filter(function(m){ return m.day !== 'tomorrow'; });
     MATCHES_TOMORROW = all.filter(function(m){ return m.day === 'tomorrow'; });
-    render(); tick();
+
+    render();
+    tick();
+  }
+
+  // 1) Affiche le cache immédiatement si dispo
+  try {
+    var cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      applyData(JSON.parse(cached));
+    }
+  } catch(e) {}
+
+  // 2) Récupère la vraie data en arrière-plan
+  fetch(DB_URL + '/latest', {
+    headers: {
+      'X-Master-Key': DB_API_KEY,
+      'X-Bin-Meta': 'false'
+    }
+  })
+  .then(function(r){
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
+  .then(function(data){
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+      localStorage.setItem(CACHE_TIME_KEY, String(Date.now()));
+    } catch(e) {}
+    applyData(data);
   })
   .catch(function(e){
-    if (window.location.protocol !== 'file:') console.warn('[IMFTX] DB:', e.message);
-    render();
+    if (window.location.protocol !== 'file:') {
+      console.warn('[IMFTX] DB:', e.message);
+    }
   });
 }
 
