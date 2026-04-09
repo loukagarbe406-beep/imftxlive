@@ -355,20 +355,28 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#F54927" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4"/></svg>
           <span id="viewerCount">0</span>
         </div>
-        <div class="cover-time">
-          <span class="ct-dot" id="ctDot"></span>
-          <span id="ctText">--</span>
-        </div>
-        <div class="cover-strip">
-          <div class="strip-info">
-            <div class="strip-title">Regarder Gratuitement</div>
-            <div class="strip-names" id="stripNames">—</div>
-          </div>
-          <div id="coverCompL"></div>
-          <span id="coverCompName" style="display:none"></span>
-          <div class="strip-play">&#9654;</div>
-        </div>
-      </div>
+       <div class="pill">
+  <span class="dot" id="ctDot"></span>
+  <span id="ctText">--</span>
+</div>
+<div class="cover-top">
+  <img id="cLogoA" class="team-logo" src="" alt="A" style="display:none">
+  <span id="cEmojiA" class="team-logo-fallback">⚽</span>
+  <span class="vs">VS</span>
+  <img id="cLogoB" class="team-logo" src="" alt="B" style="display:none">
+  <span id="cEmojiB" class="team-logo-fallback">⚽</span>
+</div>
+
+<div class="cover-strip">
+  <div>
+    <div class="strip-title">Regarder Gratuitement</div>
+    <div class="strip-sub" id="stripNames">—</div>
+  </div>
+  <div class="strip-play">&#9654;</div>
+</div>
+
+<div id="coverCompL" style="display:none"></div>
+<span id="coverCompName" style="display:none"></span>
       <div id="videoTarget"></div>
     </div>
 
