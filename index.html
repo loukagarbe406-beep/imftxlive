@@ -166,7 +166,7 @@
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
           <div class="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.7)]"></div>
-          <h2 class="text-xl font-bold text-white">IMFTX+ — AUJOURD'HUI</h2>
+          <h2 class="text-xl font-bold text-white">AUJOURD'HUI</h2>
         </div>
         <button type="button" id="refreshBtn" class="flex items-center justify-center w-9 h-9 rounded-xl bg-green-500/90 hover:bg-green-500 text-black transition-all active:scale-95 shadow-md" aria-label="Rafraîchir">↻</button>
       </div>
@@ -178,7 +178,7 @@
     <section class="glass-section p-6 w-full" id="tomorrow-block">
       <div class="flex items-center gap-3 mb-6">
         <div class="w-3 h-3 rounded-full bg-zinc-500"></div>
-        <h2 class="text-xl font-bold text-white">IMFTX+ — DEMAIN</h2>
+        <h2 class="text-xl font-bold text-white">DEMAIN</h2>
       </div>
       <div id="stream-list-bk" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
     </section>
@@ -380,8 +380,18 @@ document.getElementById('refreshBtn').addEventListener('click', function(){
   var row=document.getElementById('tvLiveRow');
   if(!row) return;
   channels.forEach(function(ch){
-    var a=document.createElement('a'); a.className='tv-card'; a.href=ch.href;
-    var inner=document.createElement('div'); inner.className='tv-card-inner';
+   var a=document.createElement('a');
+a.className='tv-card';
+a.href=ch.href;
+a.style.background='transparent';
+a.style.border='0';
+a.style.boxShadow='none';
+
+var inner=document.createElement('div');
+inner.className='tv-card-inner';
+inner.style.background='transparent';
+inner.style.border='0';
+inner.style.boxShadow='none';
     var img=document.createElement('img'); img.src=ch.logo; img.alt=ch.name; img.loading='lazy';
     img.referrerPolicy='no-referrer-when-downgrade';
     img.onerror=function(){this.style.display='none';};
