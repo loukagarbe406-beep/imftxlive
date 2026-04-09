@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IMFTX+ — IPTV Premium</title>
+  <link rel="icon" href="https://media.discordapp.net/attachments/1485253416098730054/1485283135045369916/favicon-32x32.png?ex=69c14d36&is=69bffbb6&hm=ca14730649885e11b25569281738318b65a43ac06235014cb98de994c39a0e0a&=&format=webp&quality=lossless&width=40&height=40">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { font-family: 'Outfit', sans-serif; background: #0d0d0d; color: #fff; min-height: 100vh; overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 10px; }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 100; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; background: #111; border-bottom: 1px solid rgba(255,255,255,.07); }
+    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: .04em; color: #fff; text-decoration: none; }
+    .nav-back { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; transition: all .18s; }
+    .nav-back:hover { background: rgba(255,255,255,.12); }
+
+    /* HERO */
+    .hero { text-align: center; padding: 80px 24px 60px; position: relative; overflow: hidden; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(168,85,247,.18) 0%, transparent 70%);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 16px; border-radius: 999px; margin-bottom: 20px;
+      background: rgba(168,85,247,.12); border: 1px solid rgba(168,85,247,.3);
+      font-size: 12px; font-weight: 800; color: #c084fc; letter-spacing: .08em; text-transform: uppercase;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #c084fc; animation: bdot 2s infinite; }
+    @keyframes bdot { 0%,100%{opacity:1} 50%{opacity:.35} }
+    .hero-title { font-size: clamp(38px, 6vw, 72px); font-weight: 900; letter-spacing: -.01em; line-height: 1; margin-bottom: 18px; }
+    .hero-title span { background: linear-gradient(135deg, #a855f7, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 17px; color: rgba(255,255,255,.6); font-weight: 500; max-width: 560px; margin: 0 auto 40px; line-height: 1.55; }
+    .hero-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      height: 52px; padding: 0 32px; border-radius: 12px;
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      color: #fff; font-size: 15px; font-weight: 800; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px;
+      box-shadow: 0 8px 32px rgba(124,58,237,.35); transition: all .2s;
+    }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-secondary {
+      height: 52px; padding: 0 28px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.06);
+      color: #fff; font-size: 15px; font-weight: 700; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px; transition: all .2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,.11); }
+
+    /* STATS */
+    .stats { display: flex; align-items: center; justify-content: center; gap: 40px; padding: 32px 24px; border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06); flex-wrap: wrap; }
+    .stat-item { text-align: center; }
+    .stat-num { font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #a855f7, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .08em; margin-top: 4px; }
+
+    /* PRICING */
+    .section { max-width: 1100px; margin: 0 auto; padding: 64px 24px; }
+    .section-title { text-align: center; font-size: 32px; font-weight: 900; margin-bottom: 10px; }
+    .section-sub { text-align: center; font-size: 15px; color: rgba(255,255,255,.5); margin-bottom: 48px; }
+
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .plan-card {
+      border-radius: 20px; padding: 28px 24px; position: relative; overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04);
+      display: flex; flex-direction: column; gap: 0; transition: border-color .2s, transform .2s;
+    }
+    .plan-card:hover { border-color: rgba(168,85,247,.35); transform: translateY(-3px); }
+    .plan-card.popular {
+      border-color: rgba(168,85,247,.45);
+      background: linear-gradient(180deg, rgba(168,85,247,.08) 0%, rgba(124,58,237,.05) 100%);
+    }
+    .plan-card.popular::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, #a855f7, #7c3aed);
+    }
+    .popular-badge {
+      display: inline-flex; align-items: center; gap: 5px; margin-bottom: 16px;
+      padding: 4px 12px; border-radius: 999px; font-size: 11px; font-weight: 800; color: #c084fc;
+      background: rgba(168,85,247,.12); border: 1px solid rgba(168,85,247,.25); align-self: flex-start;
+    }
+    .plan-name { font-size: 14px; font-weight: 800; color: rgba(255,255,255,.65); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+    .plan-price { font-size: 48px; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+    .plan-price sup { font-size: 20px; font-weight: 700; vertical-align: top; margin-top: 8px; margin-right: 2px; }
+    .plan-price span { font-size: 16px; font-weight: 600; color: rgba(255,255,255,.45); }
+    .plan-period { font-size: 13px; color: rgba(255,255,255,.45); font-weight: 600; margin-bottom: 24px; }
+    .plan-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; flex: 1; }
+    .plan-feature { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+    .feat-check { width: 18px; height: 18px; border-radius: 50%; background: rgba(168,85,247,.15); border: 1px solid rgba(168,85,247,.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .feat-check svg { color: #a855f7; }
+    .plan-btn {
+      height: 46px; border-radius: 10px; font-size: 14px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      text-decoration: none; cursor: pointer; border: none; font-family: 'Outfit', sans-serif;
+      transition: all .18s;
+    }
+    .plan-btn.primary { background: linear-gradient(135deg, #a855f7, #7c3aed); color: #fff; box-shadow: 0 6px 24px rgba(124,58,237,.3); }
+    .plan-btn.primary:hover { filter: brightness(1.1); }
+    .plan-btn.secondary { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: #fff; }
+    .plan-btn.secondary:hover { background: rgba(255,255,255,.12); }
+
+    /* FEATURES */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .feat-card {
+      padding: 24px 20px; border-radius: 16px;
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+      transition: border-color .2s;
+    }
+    .feat-card:hover { border-color: rgba(255,255,255,.14); }
+    .feat-icon { font-size: 28px; margin-bottom: 12px; }
+    .feat-title { font-size: 15px; font-weight: 800; margin-bottom: 7px; }
+    .feat-desc { font-size: 13px; color: rgba(255,255,255,.5); line-height: 1.55; }
+
+    /* CHANNELS PREVIEW */
+    .channels-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 32px; }
+    .ch-badge {
+      padding: 6px 14px; border-radius: 8px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+      font-size: 13px; font-weight: 700;
+    }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 12px; max-width: 720px; margin: 0 auto; }
+    .faq-item { border-radius: 12px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); overflow: hidden; }
+    .faq-q { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; cursor: pointer; font-size: 14px; font-weight: 700; user-select: none; }
+    .faq-q:hover { background: rgba(255,255,255,.04); }
+    .faq-arrow { transition: transform .22s; font-size: 16px; color: rgba(255,255,255,.45); }
+    .faq-a { display: none; padding: 0 20px 16px; font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.6; }
+    .faq-item.open .faq-q .faq-arrow { transform: rotate(180deg); }
+    .faq-item.open .faq-a { display: block; }
+
+    /* CTA BOTTOM */
+    .cta-section {
+      text-align: center; padding: 72px 24px;
+      background: linear-gradient(180deg, transparent 0%, rgba(168,85,247,.06) 50%, transparent 100%);
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .cta-title { font-size: clamp(28px, 4vw, 48px); font-weight: 900; margin-bottom: 14px; }
+    .cta-sub { font-size: 16px; color: rgba(255,255,255,.55); margin-bottom: 32px; }
+
+    /* FOOTER */
+    footer { padding: 28px 24px; border-top: 1px solid rgba(255,255,255,.06); text-align: center; color: rgba(255,255,255,.3); font-size: 13px; }
+    footer a { color: rgba(255,255,255,.45); text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="index.html">IMFTX+</a>
+  <a class="nav-back" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    Retour aux matchs
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><span class="badge-dot"></span>IPTV Premium disponible</div>
+  <h1 class="hero-title">Regardez tout.<br><span>Sans compromis.</span></h1>
+  <p class="hero-sub">Plus de 20 000 chaînes live, films, séries et sports en qualité HD / 4K. Compatible sur tous vos appareils.</p>
+  <div class="hero-actions">
+    <a href="https://wa.me/message/IPTV" class="btn-primary" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.854L.057 23.852a.5.5 0 0 0 .609.61l6.077-1.492A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.694-.497-5.246-1.369l-.373-.216-3.863.949.983-3.769-.236-.386A9.973 9.973 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Commander via WhatsApp
+    </a>
+    <a href="https://t.me/addlist/sDF7qOMdHTMyYzA0" class="btn-secondary" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9.04 15.31 8.9 19.5c.57 0 .82-.25 1.12-.55l2.69-2.57 5.58 4.08c1.02.56 1.75.27 2-.94L23.9 4.7c.31-1.44-.55-2-1.56-1.63L1.55 10.86c-1.41.55-1.39 1.34-.24 1.7l5.32 1.66L19.1 6.5c.59-.39 1.13-.18.69.21"/></svg>
+      Rejoindre le Telegram
+    </a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item"><div class="stat-num">20 000+</div><div class="stat-label">Chaînes live</div></div>
+  <div class="stat-item"><div class="stat-num">50 000+</div><div class="stat-label">Films & Séries</div></div>
+  <div class="stat-item"><div class="stat-num">HD/4K</div><div class="stat-label">Qualité maximale</div></div>
+  <div class="stat-item"><div class="stat-num">99.9%</div><div class="stat-label">Uptime garanti</div></div>
+  <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Appareils simultanés</div></div>
+</div>
+
+<!-- PRICING -->
+<div class="section">
+  <h2 class="section-title">Choisissez votre offre</h2>
+  <p class="section-sub">Tous les abonnements incluent l'accès complet · Sans engagement · Activation instantanée</p>
+
+  <div class="pricing-grid">
+
+    <!-- 1 MOIS -->
+    <div class="plan-card">
+      <div class="plan-name">1 Mois</div>
+      <div class="plan-price"><sup>€</sup>9<span>.99</span></div>
+      <div class="plan-period">par mois · sans engagement</div>
+      <div class="plan-features">
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>20 000+ chaînes live</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>50 000+ VOD (films/séries)</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Qualité HD / Full HD</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>1 connexion simultanée</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Support 7j/7</div>
+      </div>
+      <a href="https://wa.me/message/IPTV?text=Abonnement 1 mois IPTV" class="plan-btn secondary" target="_blank">Commander →</a>
+    </div>
+
+    <!-- 3 MOIS (POPULAIRE) -->
+    <div class="plan-card popular">
+      <div class="popular-badge">⭐ Le plus populaire</div>
+      <div class="plan-name">3 Mois</div>
+      <div class="plan-price"><sup>€</sup>24<span>.99</span></div>
+      <div class="plan-period">soit 8,33€/mois · économisez 25%</div>
+      <div class="plan-features">
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>20 000+ chaînes live</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>50 000+ VOD (films/séries)</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Qualité HD / Full HD / 4K</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>2 connexions simultanées</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Support prioritaire 7j/7</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Rattrapage TV inclus</div>
+      </div>
+      <a href="https://wa.me/message/IPTV?text=Abonnement 3 mois IPTV" class="plan-btn primary" target="_blank">Commander →</a>
+    </div>
+
+    <!-- 6 MOIS -->
+    <div class="plan-card">
+      <div class="plan-name">6 Mois</div>
+      <div class="plan-price"><sup>€</sup>44<span>.99</span></div>
+      <div class="plan-period">soit 7,50€/mois · économisez 37%</div>
+      <div class="plan-features">
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>20 000+ chaînes live</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>50 000+ VOD (films/séries)</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Qualité HD / Full HD / 4K</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>3 connexions simultanées</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Support prioritaire 7j/7</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Rattrapage TV inclus</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Chaînes 18+ débloquées</div>
+      </div>
+      <a href="https://wa.me/message/IPTV?text=Abonnement 6 mois IPTV" class="plan-btn secondary" target="_blank">Commander →</a>
+    </div>
+
+    <!-- 12 MOIS -->
+    <div class="plan-card">
+      <div class="plan-name">12 Mois</div>
+      <div class="plan-price"><sup>€</sup>79<span>.99</span></div>
+      <div class="plan-period">soit 6,67€/mois · économisez 44%</div>
+      <div class="plan-features">
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Tout illimité</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Qualité max. 4K HDR</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>5 connexions simultanées</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Support VIP 24/7</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Accès bêta nouveautés</div>
+        <div class="plan-feature"><span class="feat-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>Meilleur rapport qualité/prix</div>
+      </div>
+      <a href="https://wa.me/message/IPTV?text=Abonnement 12 mois IPTV" class="plan-btn secondary" target="_blank">Commander →</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section" style="padding-top:0">
+  <h2 class="section-title">Pourquoi choisir IMFTX+ IPTV ?</h2>
+  <p class="section-sub">Une expérience premium pensée pour les vrais fans de sport et de divertissement</p>
+  <div class="features-grid">
+    <div class="feat-card"><div class="feat-icon">📺</div><div class="feat-title">20 000+ Chaînes</div><div class="feat-desc">Sports, infos, divertissement, cinéma... Tout ce que vous cherchez, en une seule application.</div></div>
+    <div class="feat-card"><div class="feat-icon">⚡</div><div class="feat-title">Zapping instantané</div><div class="feat-desc">Changement de chaîne ultra-rapide. Pas de buffering, pas de latence. Juste du direct.</div></div>
+    <div class="feat-card"><div class="feat-icon">🎬</div><div class="feat-title">50 000+ VOD</div><div class="feat-desc">Films et séries en français et en VO, mis à jour quotidiennement. Un Netflix amélioré.</div></div>
+    <div class="feat-card"><div class="feat-icon">📱</div><div class="feat-title">Tous les appareils</div><div class="feat-desc">Smart TV, Android, iOS, PC, Firestick, MAG, Formuler... Compatible partout.</div></div>
+    <div class="feat-card"><div class="feat-icon">🔴</div><div class="feat-title">Sports en direct</div><div class="feat-desc">Ligue 1, Premier League, Champions League, NBA, NFL... Tous les matchs en HD/4K.</div></div>
+    <div class="feat-card"><div class="feat-icon">💬</div><div class="feat-title">Support réactif</div><div class="feat-desc">Une équipe disponible 7j/7 sur WhatsApp et Telegram pour vous aider en quelques minutes.</div></div>
+  </div>
+
+  <!-- Chaînes dispo -->
+  <div style="margin-top:48px;text-align:center">
+    <div style="font-size:14px;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.09em;margin-bottom:16px">Chaînes disponibles (extrait)</div>
+    <div class="channels-row">
+      <span class="ch-badge">beIN Sports 1/2/3</span>
+      <span class="ch-badge">Canal+</span>
+      <span class="ch-badge">Canal+ Sport</span>
+      <span class="ch-badge">Canal+ Foot</span>
+      <span class="ch-badge">RMC Sport 1/2</span>
+      <span class="ch-badge">Eurosport 1/2</span>
+      <span class="ch-badge">L'Équipe</span>
+      <span class="ch-badge">Sky Sports</span>
+      <span class="ch-badge">ESPN</span>
+      <span class="ch-badge">DAZN</span>
+      <span class="ch-badge">TNT Sports</span>
+      <span class="ch-badge">BFM TV</span>
+      <span class="ch-badge">TF1 / M6 / France 2-5</span>
+      <span class="ch-badge">Netflix FR (mirroir)</span>
+      <span class="ch-badge">+20 000 autres...</span>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section" style="padding-top:0">
+  <h2 class="section-title">Questions fréquentes</h2>
+  <p class="section-sub">Tout ce que vous devez savoir avant de commander</p>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Comment commander un abonnement ?</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Cliquez sur "Commander via WhatsApp" ou contactez-nous sur Telegram. Nous vous enverrons votre accès sous 15 minutes après confirmation du paiement.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Quels appareils sont compatibles ?</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Téléphone Android/iOS, Smart TV Samsung/LG, Android TV, Firestick, PC Windows/Mac, tablette, et tout appareil supportant les apps IPTV (TiviMate, Smarters, XCIPTV...).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Combien de temps pour l'activation ?</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a">L'activation est instantanée — généralement moins de 15 minutes après réception du paiement, 7 jours sur 7.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Y a-t-il une période d'essai gratuite ?</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Oui ! Contactez-nous via WhatsApp ou Telegram et demandez un test gratuit de 24h pour vérifier la compatibilité avec votre appareil.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Comment est la qualité de diffusion ?</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Nos serveurs garantissent une qualité HD/Full HD sur toutes les chaînes, avec une option 4K disponible sur les offres 3 mois et plus. Le buffering est quasi inexistant grâce à notre infrastructure dédiée.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Quels modes de paiement acceptez-vous ?</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Nous acceptons PayPal, virement bancaire, crypto (USDT, BTC) et d'autres méthodes. Contactez-nous pour plus de détails.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA BOTTOM -->
+<div class="cta-section">
+  <h2 class="cta-title">Prêt à tout regarder ?</h2>
+  <p class="cta-sub">Rejoignez des milliers d'abonnés IMFTX+ satisfaits. Activation en moins de 15 minutes.</p>
+  <div class="hero-actions">
+    <a href="https://wa.me/message/IPTV" class="btn-primary" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.854L.057 23.852a.5.5 0 0 0 .609.61l6.077-1.492A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.694-.497-5.246-1.369l-.373-.216-3.863.949.983-3.769-.236-.386A9.973 9.973 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Commander maintenant
+    </a>
+    <a href="https://t.me/addlist/sDF7qOMdHTMyYzA0" class="btn-secondary" target="_blank" rel="noopener">Test gratuit 24h</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 IMFTX+ · <a href="index.html">Retour aux matchs</a></p>
+</footer>
+
+<script>
+function toggleFaq(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>

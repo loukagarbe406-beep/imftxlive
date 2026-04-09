@@ -6,51 +6,89 @@
   <meta name="referrer" content="no-referrer-when-downgrade">
   <title>IMFTX+ — Stream</title>
   <link rel="icon" href="https://media.discordapp.net/attachments/1485253416098730054/1485283135045369916/favicon-32x32.png?ex=69c14d36&is=69bffbb6&hm=ca14730649885e11b25569281738318b65a43ac06235014cb98de994c39a0e0a&=&format=webp&quality=lossless&width=40&height=40">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>window.tailwind=window.tailwind||{};tailwind.config={darkMode:'class'};</script>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { font-family: 'Outfit', sans-serif; background: #0d0d0d; color: #fff; min-height: 100vh; overflow-x: hidden; }
+    html, body { font-family: 'Outfit', sans-serif; color: #fff; min-height: 100vh; overflow-x: hidden; }
 
-    /* NAV */
+    /* ── BACKGROUND identique à index ── */
+    body {
+      background: #0d0d0d;
+    }
+    
+    body > * { position: relative; z-index: 1; }
+
+    /* ── NAV identique à index ── */
     .nav {
       position: sticky; top: 0; z-index: 100;
-      height: 56px; display: flex; align-items: center; justify-content: space-between;
-      padding: 0 28px;
-      background: #111;
-      border-bottom: 1px solid rgba(255,255,255,.07);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.30);
     }
-    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: .04em; color: #fff; text-decoration: none; }
+    .nav-inner {
+      max-width: 1536px; margin: 0 auto;
+      padding: 0 20px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-size: 26px; font-weight: 900; letter-spacing: .01em; color: #fff; text-decoration: none; }
     .nav-back {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 20px; border-radius: 8px;
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 16px; border-radius: 8px;
       border: 1px solid rgba(255,255,255,.15);
       background: rgba(255,255,255,.06);
-      color: #fff; font-size: 13px; font-weight: 700;
-      text-decoration: none; cursor: pointer; transition: all .18s;
+      color: #fff; font-size: 12px; font-weight: 700;
+      text-decoration: none; transition: all .18s;
     }
     .nav-back:hover { background: rgba(255,255,255,.12); }
-    .nav-back svg { flex-shrink: 0; }
 
-    /* LAYOUT */
+
+    /* Liens sociaux + IPTV sous le player */
+    .social-row {
+      display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+    }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      height: 38px; padding: 0 14px; border-radius: 8px;
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 12px;
+      text-decoration: none; cursor: pointer; border: none; transition: all .18s;
+      color: #fff;
+    }
+    .social-btn.x    { background: #000; border: 1px solid rgba(255,255,255,.18); }
+    .social-btn.tg   { background: #229ed9; }
+    .social-btn.dc   { background: #5865f2; }
+    .social-btn.iptv { background: #16a34a; font-weight: 800; }
+    .social-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .social-btn svg  { flex-shrink: 0; }
+
+    /* ── LAYOUT ── */
     .layout {
       display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 0;
-      min-height: calc(100vh - 56px);
+      grid-template-columns: 1fr 320px;
+      gap: 14px;
+      max-width: 1536px; margin: 0 auto;
+      padding: 16px 20px 40px;
     }
-    @media (max-width: 960px) { .layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+    @media (max-width: 960px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
 
-    /* LEFT COL */
-    .left-col { padding: 20px 20px 20px 20px; display: flex; flex-direction: column; gap: 14px; }
+    /* ── LEFT COL ── */
+    .left-col { display: flex; flex-direction: column; gap: 10px; }
 
-    /* PLAYER */
+    /* ── PLAYER — identique à index style ── */
     .player-wrap {
       position: relative; width: 100%; padding-top: 56.25%;
-      border-radius: 14px; overflow: hidden; background: #000;
+      border-radius: 16px; overflow: hidden; background: #000;
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 18px 70px rgba(0,0,0,.45);
     }
     .player-wrap > * { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-    /* COVER */
+    /* ── COVER ── */
     #cover {
       position: absolute; inset: 0; z-index: 5; cursor: pointer;
       background-size: cover; background-position: center;
@@ -60,151 +98,205 @@
       position: absolute; inset: 0;
       background: linear-gradient(180deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.5) 60%, rgba(0,0,0,.85) 100%);
     }
-    /* top-left badge : logos équipes */
     .cover-badge {
-      position: absolute; top: 12px; left: 12px;
-      display: flex; align-items: center; gap: 8px;
-      padding: 6px 12px; border-radius: 10px;
-      background: rgba(20,20,20,.75); backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,.10);
-    }
-    .c-logo { width: 28px; height: 28px; object-fit: contain; border-radius: 50%; }
-    .c-vs { font-size: 11px; font-weight: 800; color: rgba(255,255,255,.5); }
-    /* top-right pill heure */
-    .cover-time {
-      position: absolute; top: 12px; right: 12px;
+      position: absolute; top: 10px; left: 10px;
       display: flex; align-items: center; gap: 6px;
-      padding: 6px 12px; border-radius: 999px;
-      background: rgba(20,20,20,.75); backdrop-filter: blur(12px);
+      padding: 5px 10px; border-radius: 10px;
+      background: rgba(18,18,18,.72); backdrop-filter: blur(12px);
       border: 1px solid rgba(255,255,255,.10);
-      font-size: 12px; font-weight: 800;
     }
-    .ct-dot { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 0 3px rgba(245,158,11,.2); animation: blink 1.4s infinite; }
-    .ct-dot.live { background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.2); }
+    .cover-viewers {
+      position: absolute; top: 46px; left: 10px;
+      display: flex; align-items: center; gap: 5px;
+      padding: 4px 9px; border-radius: 999px;
+      background: rgba(18,18,18,.72); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 11px; font-weight: 700; color: #F54927;
+    }
+    .c-logo { width: 22px; height: 22px; object-fit: contain; border-radius: 50%; }
+    .c-vs { font-size: 9px; font-weight: 800; color: rgba(255,255,255,.5); }
+    .cover-time {
+      position: absolute; top: 10px; right: 10px;
+      display: flex; align-items: center; gap: 5px;
+      padding: 5px 10px; border-radius: 999px;
+      background: rgba(18,18,18,.72); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 11px; font-weight: 800;
+    }
+    .ct-dot { width: 7px; height: 7px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 0 2px rgba(245,158,11,.2); animation: blink 1.4s infinite; }
+    .ct-dot.live { background: #22c55e; box-shadow: 0 0 0 2px rgba(34,197,94,.2); }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.35} }
 
-    /* bottom strip */
     .cover-strip {
       position: absolute; bottom: 0; left: 0; right: 0;
-      padding: 14px 16px;
-      background: linear-gradient(0deg, rgba(0,0,0,.82) 0%, transparent 100%);
+      padding: 10px 14px;
+      background: rgba(14,14,18,.82);
+      backdrop-filter: blur(14px);
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .strip-info { flex: 1; min-width: 0; }
-    .strip-title { font-size: 15px; font-weight: 900; line-height: 1; }
-    .strip-names { font-size: 13px; font-weight: 500; opacity: .75; margin-top: 3px; }
+    .strip-title { font-size: 14px; font-weight: 900; line-height: 1; color: #fff; }
+    .strip-names {
+      font-size: 11px; font-weight: 600; color: rgba(255,255,255,.65);
+      margin-top: 4px; line-height: 1.4;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
     .strip-play {
-      width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
-      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.2);
-      display: flex; align-items: center; justify-content: center; font-size: 14px;
+      width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
+      display: flex; align-items: center; justify-content: center; font-size: 13px;
       transition: all .2s;
     }
-    .strip-play:hover { background: rgba(255,255,255,.25); transform: scale(1.05); }
+    .strip-play:hover { background: rgba(255,255,255,.24); transform: scale(1.06); }
     #videoTarget { display: none; }
 
-    /* SOURCES ROW */
-    .sources-row {
-      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    /* COUNTDOWN OVERLAY */
+    .countdown-overlay {
+      position: absolute; inset: 0; z-index: 4;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px; background: rgba(0,0,0,.82); backdrop-filter: blur(6px);
     }
+    .countdown-overlay.hidden { display: none; }
+    .co-label { font-size: 10px; font-weight: 800; letter-spacing: .18em; color: rgba(255,255,255,.6); text-transform: uppercase; }
+    .co-logos { display: flex; align-items: center; gap: 14px; }
+    .co-logo { width: 46px; height: 46px; object-fit: contain; border-radius: 50%; background: rgba(255,255,255,.08); padding: 3px; }
+    .co-vs { font-size: 13px; font-weight: 900; color: rgba(255,255,255,.55); letter-spacing: .06em; }
+    .co-timer { font-size: clamp(28px,5.5vw,58px); font-weight: 900; letter-spacing: .04em; color: #fff; font-variant-numeric: tabular-nums; }
+    .co-sub { font-size: 10px; font-weight: 500; color: rgba(255,255,255,.5); text-align: center; max-width: 280px; line-height: 1.5; }
+
+    /* ── SOURCES ROW ── */
+    .sources-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .source-btn {
-      height: 38px; padding: 0 20px; border-radius: 8px;
-      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 13px;
+      height: 38px; padding: 0 18px; border-radius: 8px;
+      font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 12px;
       cursor: pointer; border: none; transition: all .18s;
     }
     .source-btn.active { background: #fff; color: #000; }
     .source-btn.inactive { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.10); color: #fff; }
     .source-btn.inactive:hover { background: rgba(255,255,255,.14); }
     .viewer-pill {
-      margin-left: auto; display: flex; align-items: center; gap: 6px;
+      margin-left: auto; display: flex; align-items: center; gap: 5px;
       background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
-      border-radius: 999px; padding: 5px 12px;
-      font-size: 13px; font-weight: 700; color: #F54927;
+      border-radius: 999px; padding: 4px 10px;
+      font-size: 12px; font-weight: 700; color: #F54927;
     }
 
-    /* WATCH BAR (infos match bas) */
+    /* ── WATCH BAR sous sources ── */
+    .watch-bar-wrap { margin-top: 4px; }
     .watch-bar {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 16px; border-radius: 12px;
-      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.07);
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 12px;
+      background: rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(14px); box-shadow: 0 8px 30px rgba(0,0,0,.35);
     }
-    .wb-logo { width: 34px; height: 34px; object-fit: contain; border-radius: 8px; flex-shrink: 0; }
+    .wb-logo { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; flex-shrink: 0; }
     .wb-texts { flex: 1; min-width: 0; }
-    .wb-watching { font-size: 11px; font-weight: 600; opacity: .5; }
-    .wb-title { font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .wb-sub { font-size: 11px; font-weight: 600; opacity: .55; }
-    .wb-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
-    .wb-dots { display: flex; gap: 5px; }
-    .wb-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.2); }
+    .wb-watching { font-size: 10px; font-weight: 600; opacity: .5; }
+    .wb-title { font-size: 13px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wb-sub { font-size: 10px; font-weight: 600; opacity: .55; }
+    .wb-right { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; }
+    .wb-dots { display: flex; gap: 4px; }
+    .wb-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.2); }
     .wb-dot.active { background: #f59e0b; }
-    .wb-help { width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; color: rgba(255,255,255,.5); }
+    .wb-help { width: 17px; height: 17px; border-radius: 50%; background: rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 900; color: rgba(255,255,255,.5); }
 
-    /* SIDEBAR */
+    /* ── SIDEBAR CHAT — compact ── */
     .sidebar {
-      border-left: 1px solid rgba(255,255,255,.07);
       display: flex; flex-direction: column;
-      background: #111;
+      height: calc(100vh - 94px);
+      position: sticky; top: 78px;
+    }
+    .chat-box {
+      border-radius: 16px; overflow: hidden;
+      display: flex; flex-direction: column;
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 70px rgba(0,0,0,.45);
+      height: 100%;
     }
     .chat-head {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255,255,255,.07);
+      padding: 10px 13px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      flex-shrink: 0;
     }
-    .chat-head-title { font-size: 15px; font-weight: 900; }
-    .chat-head-sub { font-size: 11px; opacity: .5; margin-top: 2px; }
+    .chat-head-title { font-size: 13px; font-weight: 900; }
+    .chat-head-sub { font-size: 10px; opacity: .5; margin-top: 2px; }
     .chat-open {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 6px 14px; border-radius: 7px;
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 5px 11px; border-radius: 7px;
       background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.10);
-      color: #fff; font-size: 12px; font-weight: 700; text-decoration: none;
+      color: #fff; font-size: 11px; font-weight: 700; text-decoration: none;
       transition: all .18s; flex-shrink: 0;
     }
     .chat-open:hover { background: rgba(255,255,255,.14); }
-    .chat-body { flex: 1; display: flex; flex-direction: column; }
-    .chat-body iframe { width: 100%; flex: 1; min-height: 500px; border: 0; background: #111; }
-    .chat-placeholder {
-      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 10px; padding: 24px; text-align: center; color: rgba(255,255,255,.35);
-    }
-    .chat-placeholder svg { opacity: .2; }
-    .chat-placeholder p { font-size: 13px; line-height: 1.6; }
-
-    /* CHAT DU STREAM tab */
     .chat-tab {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 10px 16px;
-      border-bottom: 1px solid rgba(255,255,255,.06);
-      font-size: 13px; font-weight: 700; color: rgba(255,255,255,.65);
+      padding: 7px 13px; border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: 11px; font-weight: 700; color: rgba(255,255,255,.55); flex-shrink: 0;
     }
-    .chat-tab svg { opacity: .5; }
+    .chat-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+    .chat-body iframe { width: 100%; height: 100%; border: 0; background: transparent; display: flex; flex: 1; }
+    .chat-placeholder {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 8px; padding: 20px; text-align: center; color: rgba(255,255,255,.35);
+    }
+    .chat-placeholder svg { opacity: .2; }
+    .chat-placeholder p { font-size: 11px; line-height: 1.6; }
+
+
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav class="nav">
-  <a class="nav-logo" href="index.html">IMFTX+</a>
-  <a class="nav-back" href="index.html">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-    Retour
-  </a>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">IMFTX+</a>
+    <a class="nav-back" href="index.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Retour
+    </a>
+  </div>
 </nav>
 
 <!-- LAYOUT -->
 <div class="layout">
 
-  <!-- LEFT -->
+  <!-- COL GAUCHE -->
   <div class="left-col">
 
     <!-- PLAYER -->
     <div class="player-wrap" id="playerWrap">
       <div id="cover" onclick="loadVideo(0)">
         <div class="cover-overlay"></div>
+
+        <!-- COUNTDOWN OVERLAY -->
+        <div class="countdown-overlay hidden" id="countdownOverlay" onclick="event.stopPropagation()">
+          <div class="co-label" id="coLabel">DIFFUSION À VENIR</div>
+          <div class="co-logos">
+            <img id="coLogoHome" src="" alt="" class="co-logo" style="display:none">
+            <span id="coEmojiHome" class="co-vs">⚽</span>
+            <span class="co-vs">VS</span>
+            <img id="coLogoAway" src="" alt="" class="co-logo" style="display:none">
+            <span id="coEmojiAway" class="co-vs">⚽</span>
+          </div>
+          <div class="co-timer" id="coTimer">--:--:--</div>
+          <div class="co-sub">Le lecteur s'affichera automatiquement 1h avant le coup d'envoi.</div>
+        </div>
+
         <div class="cover-badge">
           <img id="cLogoA" src="" alt="" class="c-logo" style="display:none">
           <span id="cEmojiA" class="c-vs">⚽</span>
           <span class="c-vs">VS</span>
           <img id="cLogoB" src="" alt="" class="c-logo" style="display:none">
           <span id="cEmojiB" class="c-vs">⚽</span>
+        </div>
+        <!-- Compteur spectateurs haut gauche -->
+        <div class="cover-viewers">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#F54927" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4"/></svg>
+          <span id="viewerCount">0</span>
         </div>
         <div class="cover-time">
           <span class="ct-dot" id="ctDot"></span>
@@ -215,65 +307,88 @@
             <div class="strip-title">Regarder Gratuitement</div>
             <div class="strip-names" id="stripNames">—</div>
           </div>
+          <div id="coverCompL"></div>
+          <span id="coverCompName" style="display:none"></span>
           <div class="strip-play">&#9654;</div>
         </div>
       </div>
       <div id="videoTarget"></div>
     </div>
 
-    <!-- SOURCES -->
-    <div class="sources-row">
-      <div id="sourcesBtns"></div>
-      <div class="viewer-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="#F54927" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4"/></svg>
-        <span id="viewerCount">0</span>
-      </div>
+    <!-- RÉSEAUX + IPTV -->
+    <div class="social-row">
+      <a class="social-btn x" href="https://x.com/imftxvw" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/></svg>
+        Twitter / X
+      </a>
+      <a class="social-btn tg" href="https://t.me/addlist/sDF7qOMdHTMyYzA0" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9.04 15.31 8.9 19.5c.57 0 .82-.25 1.12-.55l2.69-2.57 5.58 4.08c1.02.56 1.75.27 2-.94L23.9 4.7c.31-1.44-.55-2-1.56-1.63L1.55 10.86c-1.41.55-1.39 1.34-.24 1.7l5.32 1.66L19.1 6.5c.59-.39 1.13-.18.69.21"/></svg>
+        Telegram
+      </a>
+      <a class="social-btn dc" href="https://discord.gg/KmFD2GXd" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04.106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028Z"/></svg>
+        Discord
+      </a>
+      <a class="social-btn iptv" href="shop.html" target="_blank" rel="noopener">
+        📺 IPTV à partir de 9,99€
+      </a>
+      <!-- sourcesBtns caché mais présent pour le JS -->
+      <div id="sourcesBtns" style="display:none"></div>
     </div>
 
     <!-- WATCH BAR -->
-    <div class="watch-bar">
-      <img id="wbLogo" src="" alt="" class="wb-logo" style="display:none">
-      <span id="wbEmoji" style="font-size:1.6rem;flex-shrink:0">🏆</span>
-      <div class="wb-texts">
-        <div class="wb-watching">Vous regardez</div>
-        <div class="wb-title" id="wbTitle">—</div>
-        <div class="wb-sub" id="wbSub">—</div>
-      </div>
-      <div class="wb-right">
-        <div class="wb-dots">
-          <div class="wb-dot active" id="wbD1"></div>
-          <div class="wb-dot" id="wbD2"></div>
-          <div class="wb-dot" id="wbD3"></div>
+    <div class="watch-bar-wrap">
+      <div class="watch-bar">
+        <img id="wbLogo" src="" alt="" class="wb-logo" style="display:none">
+        <span id="wbEmoji" style="font-size:1.5rem;flex-shrink:0">🏆</span>
+        <div class="wb-texts">
+          <div class="wb-watching">Vous regardez</div>
+          <div class="wb-title" id="wbTitle">—</div>
+          <div class="wb-sub" id="wbComp">—</div>
+          <div class="wb-sub" id="wbStatus" style="opacity:.4;font-size:10px;">—</div>
         </div>
-        <div class="wb-help">?</div>
+        <div class="wb-right">
+          <div class="wb-dots">
+            <div class="wb-dot active" id="wbD1"></div>
+            <div class="wb-dot" id="wbD2"></div>
+            <div class="wb-dot" id="wbD3"></div>
+          </div>
+          <div class="wb-help">?</div>
+        </div>
       </div>
     </div>
 
   </div>
 
-  <!-- SIDEBAR (CHAT) -->
+  <!-- SIDEBAR DROITE -->
   <div class="sidebar">
-    <div class="chat-head">
-      <div>
-        <div class="chat-head-title">Chat en direct</div>
-        <div class="chat-head-sub">Parler avec tout le respect !</div>
+
+    <!-- CHAT -->
+    <div class="chat-box">
+      <div class="chat-head">
+        <div>
+          <div class="chat-head-title">Chat en direct</div>
+          <div class="chat-head-sub">Parlez avec respect !</div>
+        </div>
+        <a class="chat-open" id="chatOpenBtn" href="#" target="_blank" rel="noreferrer">Ouvrir</a>
       </div>
-      <a class="chat-open" id="chatOpenBtn" href="https://dashboard.twitch.tv/popout/u/imftxplus1/stream-manager/chat?uuid=1d491fb658bd46ac9926579694bc07ca" target="_blank" rel="noreferrer">Ouvrir</a>
-    </div>
-    <div class="chat-tab">
-      <span>Chat du stream</span>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-    </div>
-    <div class="chat-body" id="chatBody">
-      <div class="chat-placeholder" id="chatPlaceholder">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        <p>Chat non configuré.<br>Ajoutez un channel Twitch<br>dans le panel admin.</p>
+      <div class="chat-tab">
+        <span>Chat du stream</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      </div>
+      <div class="chat-body" id="chatBody">
+        <div class="chat-placeholder" id="chatPlaceholder">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <p>Chat non configuré.<br>Ajoutez un channel Twitch<br>dans le panel admin.</p>
+        </div>
       </div>
     </div>
+
+
+
   </div>
 
 </div>
-
 
 <script>
 (function() {
@@ -394,31 +509,75 @@ function fillPage() {
 
   // ── COVER FOND ──────────────────────────────────────
   const cover = document.getElementById('cover');
-  if (bg) {
+  const fallbackBg = 'linear-gradient(135deg,#0d1b2a,#1a0828,#0a1a0a)';
+  const rawBg = match.cover || match.banner || match.bannerUrl || '';
+  if (rawBg) {
+    cover.style.backgroundImage = "url('" + rawBg + "')";
+    cover.style.backgroundSize = 'cover';
+    cover.style.backgroundPosition = 'center';
     var testImg = new Image();
-    testImg.onload  = function(){ cover.style.backgroundImage = "url('" + bg + "')"; };
-    testImg.onerror = function(){ cover.style.background = 'linear-gradient(135deg,#0d1b2a,#1a0828,#0a1a0a)'; };
-    testImg.src = bg;
+    testImg.onerror = function(){
+      var proxiedBg = 'https://wsrv.nl/?url=' + encodeURIComponent(rawBg);
+      var testImg2 = new Image();
+      testImg2.onload = function(){ cover.style.backgroundImage = "url('" + proxiedBg + "')"; };
+      testImg2.onerror = function(){ cover.style.backgroundImage = ''; cover.style.background = fallbackBg; };
+      testImg2.src = proxiedBg;
+    };
+    testImg.src = rawBg;
   } else {
-    cover.style.background = 'linear-gradient(135deg,#0d1b2a,#1a0828,#0a1a0a)';
+    cover.style.background = fallbackBg;
   }
 
   // ── LOGOS COVER (badge haut gauche) ─────────────────
   const cLA = document.getElementById('cLogoA'), cEA = document.getElementById('cEmojiA');
   const cLB = document.getElementById('cLogoB'), cEB = document.getElementById('cEmojiB');
-  if (hLogo) {
-    cLA.src = hLogo; cLA.style.display = '';
-    cEA.style.display = 'none';
-    cLA.onerror = function(){ cLA.style.display='none'; cEA.style.display=''; cEA.textContent=hE; };
-  } else { cEA.textContent = hE; }
 
-  if (aLogo) {
-    cLB.src = aLogo; cLB.style.display = '';
-    cEB.style.display = 'none';
-    cLB.onerror = function(){ cLB.style.display='none'; cEB.style.display=''; cEB.textContent=aE; };
-  } else { cEB.textContent = aE; }
+  function loadLogoWithFallback(imgEl, emojiEl, rawUrl, emoji) {
+    if (!rawUrl) { emojiEl.textContent = emoji; return; }
+    // Essaie d'abord l'URL directe, puis via wsrv.nl, puis emoji
+    const direct = rawUrl;
+    const proxied = 'https://wsrv.nl/?url=' + encodeURIComponent(rawUrl);
+    imgEl.referrerPolicy = 'no-referrer';
+    imgEl.crossOrigin = 'anonymous';
+    imgEl.src = direct;
+    imgEl.style.display = '';
+    emojiEl.style.display = 'none';
+    imgEl.onerror = function() {
+      if (imgEl.src !== proxied) {
+        imgEl.src = proxied;
+      } else {
+        imgEl.style.display = 'none';
+        emojiEl.style.display = '';
+        emojiEl.textContent = emoji;
+      }
+    };
+  }
 
-  // ── PILL STATUT / HEURE ─────────────────────────────
+  const rawHLogo = match.homeLogo || match.aLogo || '';
+  const rawALogo = match.awayLogo || match.bLogo || '';
+  loadLogoWithFallback(cLA, cEA, rawHLogo, hE);
+  loadLogoWithFallback(cLB, cEB, rawALogo, aE);
+
+  // ── COUNTDOWN OVERLAY ────────────────────────────────
+  const coOverlay = document.getElementById('countdownOverlay');
+  const coTimer   = document.getElementById('coTimer');
+  const coLabel   = document.getElementById('coLabel');
+  const coLogoH   = document.getElementById('coLogoHome');
+  const coEmojiH  = document.getElementById('coEmojiHome');
+  const coLogoA2  = document.getElementById('coLogoAway');
+  const coEmojiA2 = document.getElementById('coEmojiAway');
+
+  if (match.status === 'soon' || match.status === 'upcoming') {
+    coOverlay.classList.remove('hidden');
+    // Logos dans l'overlay
+    loadLogoWithFallback(coLogoH, coEmojiH, rawHLogo, hE);
+    loadLogoWithFallback(coLogoA2, coEmojiA2, rawALogo, aE);
+    // Désactiver le click-to-play sur le cover quand countdown visible
+    cover.onclick = null;
+    coOverlay.onclick = null;
+  }
+
+
   const ctDot  = document.getElementById('ctDot');
   const ctText = document.getElementById('ctText');
   if (match.status === 'live') {
@@ -441,18 +600,55 @@ function fillPage() {
   // ── WATCH BAR ─────────────────────────────────────────
   const wbLogo  = document.getElementById('wbLogo');
   const wbEmoji = document.getElementById('wbEmoji');
-  if (cLogo && wbLogo) {
-    wbLogo.src = cLogo; wbLogo.style.display = '';
-    if (wbEmoji) wbEmoji.style.display = 'none';
-    wbLogo.onerror = function(){ wbLogo.style.display='none'; if(wbEmoji){wbEmoji.style.display='';wbEmoji.textContent=compEmoji;} };
+  if (wbEmoji) wbEmoji.style.display = 'none'; // masqué par défaut
+  if (wbLogo) {
+    const rawCompLogo = match.compLogo || match.competitionLogo || '';
+    if (rawCompLogo) {
+      wbLogo.referrerPolicy = 'no-referrer';
+      wbLogo.crossOrigin = 'anonymous';
+      wbLogo.src = rawCompLogo;
+      wbLogo.style.display = '';
+      wbLogo.onerror = function(){
+        const proxied = 'https://wsrv.nl/?url=' + encodeURIComponent(rawCompLogo);
+        if (wbLogo.src !== proxied) {
+          wbLogo.src = proxied;
+        } else {
+          wbLogo.style.display = 'none';
+          if (wbEmoji) { wbEmoji.style.display = ''; wbEmoji.textContent = compEmoji; }
+        }
+      };
+    } else if (cLogo) {
+      wbLogo.referrerPolicy = 'no-referrer';
+      wbLogo.crossOrigin = 'anonymous';
+      wbLogo.src = cLogo; wbLogo.style.display = '';
+      wbLogo.onerror = function(){
+        const proxied = 'https://wsrv.nl/?url=' + encodeURIComponent(match.compLogo || '');
+        if (wbLogo.src !== proxied && match.compLogo) {
+          wbLogo.src = proxied;
+        } else {
+          wbLogo.style.display = 'none';
+          if (wbEmoji) { wbEmoji.style.display = ''; wbEmoji.textContent = compEmoji; }
+        }
+      };
+    } else {
+      wbLogo.style.display = 'none';
+      if (wbEmoji) { wbEmoji.style.display = ''; wbEmoji.textContent = compEmoji; }
+    }
   }
   const wbTitle = document.getElementById('wbTitle');
   const wbComp  = document.getElementById('wbComp');
   const wbStatus = document.getElementById('wbStatus');
-  if (wbTitle)  wbTitle.textContent  = (match.home||'') + (match.away ? '  vs  '+match.away : '');
-  if (wbComp)   wbComp.textContent   = match.competition || match.comp || '';
+  if (wbTitle) {
+    var titleStr = (match.home||'') + (match.away ? '  vs  '+match.away : '') || match.title || '—';
+    wbTitle.textContent = titleStr;
+  }
+  if (wbComp) {
+    var compStr = match.competition || match.comp || '';
+    var timeStr = match.time || '';
+    wbComp.textContent = compStr && timeStr ? compStr + ' · ' + timeStr : (compStr || timeStr || '—');
+  }
   const sm = {live:'🔴 EN DIRECT', soon:'⏱ À venir', fin:'✅ Terminé'};
-  if (wbStatus) wbStatus.textContent = sm[match.status] || '—';
+  if (wbStatus) wbStatus.textContent = sm[match.status] || (match.status === 'upcoming' ? '⏱ À venir' : '—');
 
   // ── DOTS SOURCES ─────────────────────────────────────
   const d2=document.getElementById('wbD2'), d3=document.getElementById('wbD3');
@@ -462,12 +658,16 @@ function fillPage() {
   // ── INFO CARD ─────────────────────────────────────────
   const imHL = document.getElementById('imHomeL');
   const imAL = document.getElementById('imAwayL');
-  if (imHL) imHL.innerHTML = hLogo
-    ? `<img src="${hLogo}" alt="" class="im-team-logo" referrerpolicy="no-referrer-when-downgrade" onerror="this.parentElement.textContent='${hE}'">`
-    : hE;
-  if (imAL) imAL.innerHTML = aLogo
-    ? `<img src="${aLogo}" alt="" class="im-team-logo" referrerpolicy="no-referrer-when-downgrade" onerror="this.parentElement.textContent='${aE}'">`
-    : aE;
+  if (imHL) {
+    if (rawHLogo) {
+      imHL.innerHTML = `<img src="${rawHLogo}" alt="" class="im-team-logo" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="if(this.src!=='https://wsrv.nl/?url='+encodeURIComponent('${rawHLogo}')){this.src='https://wsrv.nl/?url='+encodeURIComponent('${rawHLogo}');}else{this.parentElement.textContent='${hE}';}">`;
+    } else { imHL.textContent = hE; }
+  }
+  if (imAL) {
+    if (rawALogo) {
+      imAL.innerHTML = `<img src="${rawALogo}" alt="" class="im-team-logo" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="if(this.src!=='https://wsrv.nl/?url='+encodeURIComponent('${rawALogo}')){this.src='https://wsrv.nl/?url='+encodeURIComponent('${rawALogo}');}else{this.parentElement.textContent='${aE}';}">`;
+    } else { imAL.textContent = aE; }
+  }
 
   const imHome  = document.getElementById('imHome');
   const imAway  = document.getElementById('imAway');
@@ -506,14 +706,33 @@ function fillPage() {
   }
   if (isHHMM(match.time)) {
     function tickClock(){
-      const ko=nextKO(match.time).getTime(), now=Date.now(), live=now>=ko&&now<=ko+9e6;
+      const ko=nextKO(match.time).getTime(), now=Date.now();
+      const live=now>=ko&&now<=ko+9e6;
+      const oneHourBefore=ko-3600000; // 1h avant le KO
       if(live){
         ctText.textContent='EN DIRECT'; ctDot.classList.add('live');
         if(badge){badge.className='im-badge live';badge.textContent='EN DIRECT';}
         if(wbStatus) wbStatus.textContent='🔴 EN DIRECT';
-      } else if(now<ko){
-        const cd=fmtTime(ko-now); ctText.textContent=cd;
+        // Cache l'overlay countdown quand c'est live
+        if(coOverlay) { coOverlay.classList.add('hidden'); cover.onclick=()=>loadVideo(0); }
+      } else if(now>=oneHourBefore && now<ko){
+        // Moins d'1h avant le match : cache l'overlay, lecteur prêt
+        ctText.textContent=fmtTime(ko-now);
+        if(badge){badge.className='im-badge soon';}
+        if(coOverlay) { coOverlay.classList.add('hidden'); cover.onclick=()=>loadVideo(0); }
+      } else if(now<oneHourBefore){
+        // Plus d'1h avant : affiche le compte à rebours jusqu'à 1h avant
+        const ms=oneHourBefore-now;
+        const cd=fmtTime(ko-now); // pill reste sur le temps total
+        ctText.textContent=cd;
         if(badge){badge.className='im-badge soon';badge.textContent=cd;}
+        // Met à jour le grand timer countdown (compte jusqu'à 1h avant)
+        if(coTimer){
+          const s=Math.floor(ms/1000),h=Math.floor(s/3600),mn=Math.floor((s%3600)/60),sc=s%60;
+          const z=n=>String(n).padStart(2,'0');
+          coTimer.textContent=z(h)+':'+z(mn)+':'+z(sc);
+        }
+        if(coLabel) coLabel.textContent='DIFFUSION À VENIR';
       }
     }
     tickClock(); setInterval(tickClock,1000);
@@ -522,6 +741,16 @@ function fillPage() {
   buildSources();
   buildChat();
   startViewerCounter();
+  // Attache le compteur Firebase dynamiquement selon l'ID du match
+  var counterId = (match.counterId || match.href || '').replace(/\.html$/, '');
+  if (counterId) {
+    // Appel direct après un court délai pour laisser le module s'initialiser
+    setTimeout(function() {
+      if (typeof window.__initViewerCounter === 'function') {
+        window.__initViewerCounter(counterId, 'viewerCount');
+      }
+    }, 800);
+  }
 }
 
 function buildSources() {
@@ -558,14 +787,23 @@ function loadVideo(idx){
 
 
 function buildChat(){
-  let ch=match?.twitchChannel||'';
-  if(!ch) ch=DB_SETTINGS.twitch||'';
-  if(!ch) try{ch=JSON.parse(localStorage.getItem('imftx_settings')||'{}').twitch||'';}catch(e){}
-  if(!ch) return;
-  const host=window.location.hostname||'localhost';
-  document.getElementById('chatOpenBtn').href=`https://www.twitch.tv/popout/${imftxplus1}/chat?popout=`;
-  const body=document.getElementById('chatBody');
-  body.innerHTML=`<iframe id="chatFrame" src="https://www.twitch.tv/embed/${imftxplus1}/chat?darkpopout&parent=${host}" style="width:100%;height:100%;min-height:500px;border:0;background:#111;"></iframe>`;
+  let ch = match?.twitchChannel || '';
+  // Fallback sur les settings localStorage (DB_SETTINGS peut ne pas exister)
+  if (!ch) {
+    try { ch = (window.DB_SETTINGS || {}).twitch || ''; } catch(e) {}
+  }
+  if (!ch) {
+    try { ch = JSON.parse(localStorage.getItem('imftx_settings') || '{}').twitch || ''; } catch(e) {}
+  }
+  if (!ch) {
+    // Pas de channel configuré — on garde le placeholder visible
+    return;
+  }
+  const host = window.location.hostname || 'localhost';
+  const openBtn = document.getElementById('chatOpenBtn');
+  if (openBtn) openBtn.href = `https://www.twitch.tv/popout/${ch}/chat?popout=`;
+  const body = document.getElementById('chatBody');
+  if (body) body.innerHTML = `<iframe id="chatFrame" src="https://www.twitch.tv/embed/${ch}/chat?darkpopout&parent=${host}" style="width:100%;height:100%;min-height:500px;border:0;background:#111;display:flex;flex:1;"></iframe>`;
 }
 
 // Fix referrerpolicy sur toutes les images chargées dynamiquement
@@ -578,13 +816,18 @@ function buildChat(){
   apply();
   new MutationObserver(apply).observe(document.body||document.documentElement, {childList:true, subtree:true});
 })();
+function startViewerCounter(){
+  // Le compteur Firebase est géré par viewerCounter.js via data-viewer-counter
+  // Cette fonction reste pour compatibilité mais le vrai compteur est Firebase
+}
+
 fillPage();
+</script>
+<script type="module">
+import { initViewerCounter } from "./js/viewerCounter.js";
+// Expose globalement pour que fillPage() puisse l'appeler
+window.__initViewerCounter = initViewerCounter;
 </script>
 </body>
 </html>
-
-<script type="module" src="./js/viewerCounter.js"></script>
-
-</script>
-</body>
 </html>
