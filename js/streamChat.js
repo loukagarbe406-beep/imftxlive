@@ -2,8 +2,20 @@
   'use strict';
 
   var CHAT_ROOM = window.IMFTX_CHAT_ROOM || 'om-metz';
-  var API = window.IMFTX_CHAT_API || 'chat_api.php';
   var POLL_MS = 1800;
+
+  function chatApiBase() {
+    var u = window.IMFTX_CHAT_API;
+    if (u != null && String(u).trim() !== '') {
+      u = String(u).trim().split('?')[0];
+      if (/^https?:\/\//i.test(u)) return u;
+      if (u.charAt(0) === '/') return window.location.origin + u;
+      return new URL(u, window.location.href).href.split('?')[0];
+    }
+    return window.location.origin + '/chat_api.php';
+  }
+
+  var API = chatApiBase();
   var NICK_KEY = 'imftx_chat_nick_' + CHAT_ROOM;
   var CLIENT_KEY = 'live_session_id';
 
@@ -100,8 +112,33 @@
     if (w) w.remove();
   }
 
+  function parseJsonSafe(text, res) {
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      if (res && res.status === 404) {
+        setStatus(
+          'chat_api.php introuvable (404). Mets le fichier à la racine du site ou définis IMFTX_CHAT_API.',
+          true
+        );
+      } else if (window.location.protocol === 'file:') {
+        setStatus('Ouvre la page en http/https sur ton hébergement (pas en fichier local).', true);
+      } else {
+        setStatus(
+          'Réponse invalide : PHP désactivé ou hébergeur sans PHP (ex. Vercel statique). Il faut un serveur PHP.',
+          true
+        );
+      }
+      return null;
+    }
+  }
+
   async function poll() {
     try {
+      if (window.location.protocol === 'file:') {
+        setStatus('Chat : ouvre le site via ton URL en ligne (pas file://).', true);
+        return;
+      }
       var url =
         API +
         '?room=' +
@@ -111,9 +148,11 @@
         '&_=' +
         Date.now();
       var res = await fetch(url, { cache: 'no-store', credentials: 'same-origin' });
-      var data = await res.json();
+      var text = await res.text();
+      var data = parseJsonSafe(text, res);
+      if (!data) return;
       if (!data.ok || !Array.isArray(data.messages)) {
-        setStatus('Chat indisponible', true);
+        setStatus(data.error || 'Chat indisponible', true);
         return;
       }
       setStatus('');
@@ -125,7 +164,7 @@
         if (m.id > lastId) lastId = m.id;
       });
     } catch (e) {
-      setStatus('Hors ligne ou API manquante (chat_api.php)', true);
+      setStatus('Réseau : impossible de joindre chat_api.php (même domaine que la page ?)', true);
     }
   }
 
@@ -141,6 +180,11 @@
 
     sendBtn.disabled = true;
     try {
+      if (window.location.protocol === 'file:') {
+        setStatus('Envoie impossible en mode fichier local.', true);
+        sendBtn.disabled = false;
+        return;
+      }
       var res = await fetch(API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -152,7 +196,12 @@
           client_id: getClientId(),
         }),
       });
-      var data = await res.json();
+      var text = await res.text();
+      var data = parseJsonSafe(text, res);
+      if (!data) {
+        sendBtn.disabled = false;
+        return;
+      }
       if (!data.ok) {
         setStatus(data.error || 'Envoi refusé', true);
         return;
