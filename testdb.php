@@ -3,7 +3,7 @@ try {
     $pdo = new PDO(
         "mysql:host=localhost;dbname=streamsite;charset=utf8mb4",
         "root",
-        "TON_MOT_DE_PASSE"
+        "loukaytb-24"
     );
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     echo "Connexion OK";
