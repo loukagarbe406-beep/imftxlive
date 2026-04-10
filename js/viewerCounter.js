@@ -2,9 +2,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import {
   getDatabase,
   ref,
-  set,
   onValue,
-  onDisconnect
+  runTransaction,
+  onDisconnect,
+  increment
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
@@ -17,38 +18,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-function getSessionId(pageName) {
-  const key = "viewer_session_" + pageName;
-  let sessionId = sessionStorage.getItem(key);
-
-  if (!sessionId) {
-    sessionId = "sess_" + Math.random().toString(36).slice(2) + Date.now();
-    sessionStorage.setItem(key, sessionId);
-  }
-
-  return sessionId;
-}
-
-export async function initViewerCounter(pageName, elementId, readonly = false) {
+/**
+ * @param {string} pageName - Nom de la page dans la DB
+ * @param {string} elementId - ID de l'élément HTML
+ * @param {boolean} readonly - Si vrai, n'incrémente pas (juste lecture)
+ */
+export function initViewerCounter(pageName, elementId, readonly = false) {
+  const countRef = ref(db, `pages/${pageName}/count`);
   const el = document.getElementById(elementId);
   if (!el) return;
 
-  const viewersRef = ref(db, `presence/${pageName}`);
-  const sessionId = getSessionId(pageName);
-  const mySessionRef = ref(db, `presence/${pageName}/${sessionId}`);
-
   if (!readonly) {
-    await onDisconnect(mySessionRef).remove();
-    await set(mySessionRef, true);
+    runTransaction(countRef, (current) => (current || 0) + 1);
+    onDisconnect(countRef).set(increment(-1));
   }
 
-  onValue(viewersRef, (snapshot) => {
-    const data = snapshot.val();
-    const count = data ? Object.keys(data).length : 0;
-    el.textContent = count;
+  onValue(countRef, (snapshot) => {
+    const val = snapshot.val();
+    el.textContent = (val && val > 0) ? val : 0;
   });
 }
 
+/**
+ * Scanne les éléments.
+ * Si l'élément a l'attribut [data-viewer-readonly], il ne comptera pas comme un viewer.
+ */
 export function autoInitCounters() {
   const elements = document.querySelectorAll("[data-viewer-counter]");
 
@@ -56,9 +50,7 @@ export function autoInitCounters() {
     const pageName = el.getAttribute("data-viewer-counter");
     const isReadonly = el.hasAttribute("data-viewer-readonly");
 
-    if (!el.id) {
-      el.id = "cnt_" + Math.random().toString(36).slice(2, 7);
-    }
+    if (!el.id) el.id = "cnt_" + Math.random().toString(36).substr(2, 5);
 
     initViewerCounter(pageName, el.id, isReadonly);
   });
