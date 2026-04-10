@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Stream Test</title>
+  <script src="https://cdn.jwplayer.com/libraries/IDzF9Zmk.js"></script>
+  <style>
+    body{font-family:Arial,sans-serif;background:#111;color:#fff;padding:30px}
+    #jwplayer-container{max-width:900px;margin:auto}
+    .viewer{color:#F54927;font-weight:bold}
+  </style>
+</head>
+<body>
+  <h1>Page stream test</h1>
+  <p>Viewers : <span id="counterMatch1" class="viewer">0</span></p>
+
+  <div id="jwplayer-container"></div>
+
+  <script>
+    var playerInstance;
+    var SOURCES = {
+      1: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/7.m3u8"
+    };
+
+    playerInstance = jwplayer("jwplayer-container").setup({
+      file: SOURCES[1],
+      type: "hls",
+      width: "100%",
+      aspectratio: "16:9",
+      autostart: true,
+      primary: "html5",
+      hlshtml: true,
+      stretching: "uniform",
+      preload: "metadata",
+      controls: true,
+      displaytitle: false,
+      displaydescription: false
+    });
+
+    const pageSlug = "rma-bayernm";
+
+    function getSessionId() {
+      let sessionId = localStorage.getItem("live_session_id");
+      if (!sessionId) {
+        sessionId = "sess_" + Math.random().toString(36).slice(2) + Date.now();
+        localStorage.setItem("live_session_id", sessionId);
+      }
+      return sessionId;
+    }
+
+    async function sendViewer(action = "ping") {
+      const formData = new FormData();
+      formData.append("page_slug", pageSlug);
+      formData.append("session_id", getSessionId());
+      formData.append("action", action);
+
+      try {
+        const res = await fetch("/viewer_ping.php", {
+          method: "POST",
+          body: formData
+        });
+        const data = await res.json();
+        const el = document.getElementById("counterMatch1");
+        if (el && typeof data.viewers !== "undefined") {
+          el.textContent = data.viewers;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    sendViewer("ping");
+    setInterval(() => sendViewer("ping"), 15000);
+
+    window.addEventListener("beforeunload", function () {
+      const data = new URLSearchParams();
+      data.append("page_slug", pageSlug);
+      data.append("session_id", getSessionId());
+      data.append("action", "leave");
+      navigator.sendBeacon("/viewer_ping.php", data);
+    });
+  </script>
+</body>
+</html>
