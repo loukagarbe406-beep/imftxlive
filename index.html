@@ -454,9 +454,7 @@ loadFromDB();
 setInterval(tick, 1000);
 setInterval(loadFromDB, 60000);
 </script>
- <script>
-  const pageSlug = "rma-bayernm";
-
+<script>
   function getSessionId() {
     let sessionId = localStorage.getItem("live_session_id");
     if (!sessionId) {
@@ -466,11 +464,14 @@ setInterval(loadFromDB, 60000);
     return sessionId;
   }
 
-  async function sendViewer(action = "ping") {
+  async function updateViewerCounter(el) {
+    const pageSlug = el.getAttribute("data-viewer-counter");
+    if (!pageSlug) return;
+
     const formData = new FormData();
     formData.append("page_slug", pageSlug);
-    formData.append("session_id", getSessionId());
-    formData.append("action", action);
+    formData.append("session_id", getSessionId() + "_" + pageSlug);
+    formData.append("action", "ping");
 
     try {
       const res = await fetch("/viewer_ping.php", {
@@ -479,25 +480,34 @@ setInterval(loadFromDB, 60000);
       });
 
       const data = await res.json();
-      const el = document.getElementById("counterMatch1");
-
-      if (el && typeof data.viewers !== "undefined") {
+      if (typeof data.viewers !== "undefined") {
         el.textContent = data.viewers;
       }
     } catch (e) {
-      console.error("viewer error", e);
+      console.error("viewer error", pageSlug, e);
     }
   }
 
-  sendViewer("ping");
-  setInterval(() => sendViewer("ping"), 15000);
+  function updateAllViewerCounters() {
+    const counters = document.querySelectorAll("[data-viewer-counter]");
+    counters.forEach(updateViewerCounter);
+  }
+
+  updateAllViewerCounters();
+  setInterval(updateAllViewerCounters, 15000);
 
   window.addEventListener("beforeunload", function () {
-    const data = new URLSearchParams();
-    data.append("page_slug", pageSlug);
-    data.append("session_id", getSessionId());
-    data.append("action", "leave");
-    navigator.sendBeacon("/viewer_ping.php", data);
+    document.querySelectorAll("[data-viewer-counter]").forEach(function(el) {
+      const pageSlug = el.getAttribute("data-viewer-counter");
+      if (!pageSlug) return;
+
+      const data = new URLSearchParams();
+      data.append("page_slug", pageSlug);
+      data.append("session_id", getSessionId() + "_" + pageSlug);
+      data.append("action", "leave");
+
+      navigator.sendBeacon("/viewer_ping.php", data);
+    });
   });
 </script>
 </body>
