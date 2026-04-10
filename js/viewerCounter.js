@@ -2,10 +2,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import {
   getDatabase,
   ref,
+  set,
   onValue,
-  runTransaction,
   onDisconnect,
-  increment
+  remove
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
@@ -18,43 +18,54 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-/**
- * @param {string} pageName - Nom de la page dans la DB
- * @param {string} elementId - ID de l'élément HTML
- * @param {boolean} readonly - Si vrai, n'incrémente pas (juste lecture)
- */
-export function initViewerCounter(pageName, elementId, readonly = false) {
-  const countRef = ref(db, `pages/${pageName}/count`);
-  const el = document.getElementById(elementId);
-  if (!el) return;
+function getSessionId(pageName) {
+  const key = "viewer_session_" + pageName;
+  let sessionId = sessionStorage.getItem(key);
 
-  if (!readonly) {
-    // 🔼 +1 uniquement si on n'est pas en mode lecture seule
-    runTransaction(countRef, (current) => (current || 0) + 1);
-    // 🔽 -1 automatique au départ
-    onDisconnect(countRef).set(increment(-1));
+  if (!sessionId) {
+    sessionId = "sess_" + Math.random().toString(36).slice(2) + Date.now();
+    sessionStorage.setItem(key, sessionId);
   }
 
-  // 👀 Écoute en temps réel (pour tout le monde)
-  onValue(countRef, (snapshot) => {
-    const val = snapshot.val();
-    el.textContent = (val && val > 0) ? val : 0;
-  });
+  return sessionId;
 }
 
 /**
- * Scanne les éléments. 
- * Si l'élément a l'attribut [data-viewer-readonly], il ne comptera pas comme un viewer.
+ * @param {string} pageName
+ * @param {string} elementId
+ * @param {boolean} readonly
  */
+export function initViewerCounter(pageName, elementId, readonly = false) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
+  const viewersRef = ref(db, `presence/${pageName}`);
+  const sessionId = getSessionId(pageName);
+  const mySessionRef = ref(db, `presence/${pageName}/${sessionId}`);
+
+  if (!readonly) {
+    set(mySessionRef, true);
+    onDisconnect(mySessionRef).remove();
+  }
+
+  onValue(viewersRef, (snapshot) => {
+    const data = snapshot.val();
+    const count = data ? Object.keys(data).length : 0;
+    el.textContent = count;
+  });
+}
+
 export function autoInitCounters() {
   const elements = document.querySelectorAll("[data-viewer-counter]");
 
   elements.forEach((el) => {
     const pageName = el.getAttribute("data-viewer-counter");
-    const isReadonly = el.hasAttribute("data-viewer-readonly"); // On vérifie si readonly
-    
-    if (!el.id) el.id = "cnt_" + Math.random().toString(36).substr(2, 5);
-    
+    const isReadonly = el.hasAttribute("data-viewer-readonly");
+
+    if (!el.id) {
+      el.id = "cnt_" + Math.random().toString(36).slice(2, 7);
+    }
+
     initViewerCounter(pageName, el.id, isReadonly);
   });
 }
