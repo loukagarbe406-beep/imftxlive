@@ -710,19 +710,22 @@ var MATCHES_TOMORROW = [
     "DAZN":           { bg:'#f5f400', l1:'DAZN',     l2:'',          c2:'#000'    }
   };
 
-  function makeSvgFallback(name) {
-    const s = CHANNEL_STYLES[name] || { bg:'#222', l1:name, l2:'', c2:'#fff' };
-    const lines = s.l2
-      ? [[s.l1, 18, '#fff'], [s.l2, 13, s.c2]]
-      : [[s.l1, 22, '#fff']];
-    const step = 80 / (lines.length + 1);
-    const txt = lines.map((l,i) =>
-      `<text x='50%' y='${Math.round(step*(i+1))}' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='${l[1]}' fill='${l[2]}'>${l[0]}</text>`
-    ).join('');
-    return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
-      `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80'><rect width='200' height='80' rx='10' fill='transparent'/>`
-    );
-  }
+ function makeSvgFallback(name) {
+  const s = CHANNEL_STYLES[name] || { bg:'#222', l1:name, l2:'', c2:'#fff' };
+  const lines = s.l2
+    ? [[s.l1, 18, '#fff'], [s.l2, 13, s.c2]]
+    : [[s.l1, 22, '#fff']];
+  const step = 80 / (lines.length + 1);
+  const txt = lines.map((l,i) =>
+    `<text x='50%' y='${Math.round(step*(i+1))}' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='${l[1]}' fill='${l[2]}'>${l[0]}</text>`
+  ).join('');
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80'>
+      <rect width='200' height='80' rx='10' fill='transparent'/>
+      ${txt}
+    </svg>`
+  );
+}
 
   /* ── Liste des chaînes ──
      Pour ajouter un logo URL : logo:"https://ton-cdn.com/bein1.png"
