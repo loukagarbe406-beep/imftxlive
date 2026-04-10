@@ -708,6 +708,101 @@
       cursor: pointer;
     }
 
+    .btn-twitch-pop {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(145, 70, 255, 0.45);
+      background: rgba(145, 70, 255, 0.12);
+      color: #c4a6ff;
+      font-size: 11px;
+      font-weight: 800;
+      font-family: inherit;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+    .btn-twitch-pop:hover {
+      background: rgba(145, 70, 255, 0.22);
+      color: #e9ddff;
+    }
+    .btn-twitch-pop svg { flex-shrink: 0; opacity: 0.95; }
+
+    /* Popup chat Twitch (embed officiel) */
+    .twitch-pop-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    .twitch-pop-overlay[hidden] {
+      display: none !important;
+    }
+    .twitch-pop-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(6px);
+    }
+    .twitch-pop-panel {
+      position: relative;
+      z-index: 1;
+      width: min(400px, 100%);
+      height: min(580px, calc(100vh - 32px));
+      max-height: 92vh;
+      background: #0e0e10;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7);
+    }
+    .twitch-pop-header {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      background: #18181b;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .twitch-pop-close {
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: #fff;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .twitch-pop-close:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .twitch-pop-frame-wrap {
+      flex: 1;
+      min-height: 0;
+      background: #000;
+    }
+    .twitch-pop-frame-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
     @media (max-width: 768px) {
       .shell {
         height: auto;
@@ -772,6 +867,16 @@
         align-self: flex-end;
         padding-top: 4px;
         font-size: clamp(18px, 5vw, 24px);
+      }
+      .twitch-pop-overlay {
+        padding: 0;
+        align-items: flex-end;
+      }
+      .twitch-pop-panel {
+        width: 100%;
+        height: min(88dvh, 640px);
+        max-height: 88dvh;
+        border-radius: 14px 14px 0 0;
       }
     }
   </style>
@@ -893,8 +998,10 @@
       <div class="chat-header">
         <span>Chat du stream</span>
         <div class="chat-header-actions">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <button type="button" class="btn-twitch-pop" id="openTwitchChatPop" aria-expanded="false" aria-controls="twitchPopOverlay" title="Ouvrir le chat Twitch">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z"/></svg>
+            Chat Twitch
+          </button>
         </div>
       </div>
       <div class="chat-banner" aria-hidden="true"><img src="https://media.discordapp.net/attachments/1464956924473905173/1492098154471096361/Design_sans_titre_1.png?ex=69da1831&is=69d8c6b1&hm=a502392c11f87f19a8955ed40ed55125bb3aa97a9d58f8746d9116177bf156b0&=&format=webp&quality=lossless&width=1860&height=371" alt="Chat banner" style="width: 100%; height: 100%; object-fit: cover;"></div>
@@ -917,6 +1024,85 @@
     </aside>
 
   </div>
+
+  <div id="twitchPopOverlay" class="twitch-pop-overlay" hidden aria-hidden="true">
+    <div class="twitch-pop-backdrop" data-twitch-pop-close tabindex="-1" aria-hidden="true"></div>
+    <div class="twitch-pop-panel" role="dialog" aria-modal="true" aria-labelledby="twitchPopTitle">
+      <div class="twitch-pop-header">
+        <span id="twitchPopTitle">Chat Twitch — imftx1</span>
+        <button type="button" class="twitch-pop-close" data-twitch-pop-close aria-label="Fermer la fenêtre">×</button>
+      </div>
+      <div class="twitch-pop-frame-wrap">
+        <iframe id="twitchChatFrame" title="Chat Twitch imftx1" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var CHANNEL = window.IMFTX_TWITCH_CHAT_LOGIN || 'imftx1';
+      var overlay = document.getElementById('twitchPopOverlay');
+      var frame = document.getElementById('twitchChatFrame');
+      var openBtn = document.getElementById('openTwitchChatPop');
+      var titleEl = document.getElementById('twitchPopTitle');
+      if (!overlay || !frame || !openBtn) return;
+
+      if (titleEl) titleEl.textContent = 'Chat Twitch — ' + CHANNEL;
+
+      function embedUrl() {
+        var host = window.location.hostname;
+        if (!host) host = 'localhost';
+        var url =
+          'https://www.twitch.tv/embed/' +
+          encodeURIComponent(CHANNEL) +
+          '/chat?darkpopout&parent=' +
+          encodeURIComponent(host);
+        var extra = window.IMFTX_TWITCH_PARENT;
+        if (Array.isArray(extra)) {
+          extra.forEach(function (d) {
+            var p = String(d || '').trim();
+            if (p) url += '&parent=' + encodeURIComponent(p);
+          });
+        }
+        return url;
+      }
+
+      function openPop() {
+        if (window.location.protocol === 'file:') {
+          window.alert('Ouvre cette page en ligne (https) pour le chat Twitch.');
+          return;
+        }
+        if (!frame.getAttribute('src')) {
+          frame.setAttribute('src', embedUrl());
+        }
+        overlay.hidden = false;
+        overlay.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        openBtn.setAttribute('aria-expanded', 'true');
+      }
+
+      function closePop() {
+        overlay.hidden = true;
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        openBtn.setAttribute('aria-expanded', 'false');
+      }
+
+      openBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        openPop();
+      });
+      overlay.querySelectorAll('[data-twitch-pop-close]').forEach(function (el) {
+        el.addEventListener('click', function () {
+          closePop();
+        });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !overlay.hidden) closePop();
+      });
+    })();
+  </script>
+
   <script>
     (function () {
 function formatFooterTwoLines(full) {
