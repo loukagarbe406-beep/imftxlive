@@ -1,0 +1,7 @@
+{
+  "name": "imftx-test",
+  "private": true,
+  "dependencies": {
+    "mysql2": "^3.15.1"
+  }
+}
