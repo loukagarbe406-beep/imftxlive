@@ -720,7 +720,7 @@ var MATCHES_TOMORROW = [
       `<text x='50%' y='${Math.round(step*(i+1))}' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,Arial' font-weight='900' font-size='${l[1]}' fill='${l[2]}'>${l[0]}</text>`
     ).join('');
     return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
-      `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80'><rect width='200' height='80' rx='10' fill='${s.bg}'/>${txt}</svg>`
+      `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80'><rect width='200' height='80' rx='10' fill='transparent'/>`
     );
   }
 
