@@ -33,9 +33,7 @@
     #nprogress .bar{top:64px!important;}
     #nprogress .spinner{top:75px!important;}
     html,body{font-family:'Outfit',sans-serif;}
-    body {
-      background: #000;
-    }
+    body { background:#000; }
     body::before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.55);pointer-events:none;z-index:0;}
     body>*{position:relative;z-index:1;}
     button *{pointer-events:none;}
@@ -96,7 +94,6 @@
 <body class="text-white flex flex-col font-[Outfit]">
 <noscript>You need to enable JavaScript to run this website.</noscript>
 
-<!-- GATE -->
 <div id="gate" class="gate" style="display:none">
   <div class="gate-card">
     <div class="gate-inner">
@@ -109,8 +106,6 @@
   </div>
 </div>
 
-<!-- NAV -->
-<!-- NAV -->
 <nav class="sticky top-0 z-10 backdrop-blur-xl border-b border-white/10 shadow-sm bg-black/30">
   <div class="max-w-screen-2xl mx-auto py-2 px-5 md:px-24 h-16 flex items-center justify-between">
     <button class="flex md:hidden w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all" aria-label="Menu">
@@ -141,14 +136,12 @@
   </div>
 </nav>
 
-<!-- LOGO -->
 <div class="max-w-screen-2xl mx-auto w-full md:px-24 px-5 mt-4">
   <div class="w-full flex items-center justify-center my-4">
     <img src="https://pbs.twimg.com/profile_banners/2030637428135141377/1772976906/1500x500" alt="IMFTX+" style="width:min(820px,92%);height:clamp(90px,10vw,140px);object-fit:contain;display:block;">
   </div>
 </div>
 
-<!-- TV LIVE -->
 <div class="max-w-screen-2xl mx-auto w-full md:px-24 px-5 mt-6 mb-2">
   <div class="tv-section-label">TV Live</div>
   <div class="tv-carousel-wrap">
@@ -158,7 +151,6 @@
   </div>
 </div>
 
-<!-- MATCHS AUJOURD'HUI -->
 <div class="max-w-screen-2xl mx-auto h-full w-full flex flex-grow flex-col md:px-24 px-5">
   <div class="w-full flex flex-col gap-12 mt-6 pb-10">
 
@@ -187,11 +179,6 @@
 </div>
 
 <script>
-// ════════════════════════════════════════════════
-// IMFTX+ — index.html  (version propre)
-// ════════════════════════════════════════════════
-
-// ── GATE ────────────────────────────────────────
 (function(){
   var gate=document.getElementById('gate'), skip=document.getElementById('gateSkip');
   function hide(){ gate.style.display='none'; document.body.style.overflow=''; localStorage.setItem('imftx_gate_v1','1'); }
@@ -200,25 +187,20 @@
   if(skip) skip.addEventListener('click', hide);
 })();
 
-// ── THEME ───────────────────────────────────────
 document.getElementById('theme-toggle').addEventListener('click', function(){
   var dark = document.documentElement.classList.toggle('dark');
   localStorage.setItem('theme', dark ? 'dark' : 'light');
 });
 
-// ── DB CONFIG ───────────────────────────────────
 var DB_BIN_ID  = '69d7fa3336566621a896cc47';
 var DB_API_KEY = '$2a$10$YQ.5OhaBA852/J5aBoCaau/q.IbwrwUnxAJ82D7WyRXwd8iSBHMkq';
 var DB_URL     = 'https://api.jsonbin.io/v3/b/' + DB_BIN_ID;
 
-// ── DONNÉES ─────────────────────────────────────
 var MATCHES_TODAY    = [];
 var MATCHES_TOMORROW = [];
 var LIVE_MS = 2.5 * 60 * 60 * 1000;
 
-// ── UTILITAIRES ─────────────────────────────────
 function parseTime(t) {
-  // Supporte "21:00" ET "21h00" (format admin IMFTX)
   var s = String(t||'').replace(/h/i, ':');
   var p = s.split(':');
   return { h: parseInt(p[0])||0, m: parseInt(p[1])||0 };
@@ -237,7 +219,6 @@ function fmtTime(ms) {
   return z(h)+'h '+z(m)+'m '+z(sc)+'s';
 }
 
-// ── CARD HTML ───────────────────────────────────
 function card(m, idx, day) {
   var id  = (m.href||('m'+idx)).replace('.html','');
   var url = 'stream.html?match='+encodeURIComponent(JSON.stringify(m));
@@ -272,26 +253,23 @@ function card(m, idx, day) {
     +'</article></a>';
 }
 
-// ── RENDER ──────────────────────────────────────
 function render() {
   var el  = document.getElementById('stream-list-principal');
   var tom = document.getElementById('stream-list-bk');
-  var tb  = document.getElementById('tomorrow-block');
   if (el) {
     el.innerHTML = MATCHES_TODAY.length
-      ? MATCHES_TODAY.map(function(m,i){return card(m,i,"Aujourd'hui");}).join('')
+      ? MATCHES_TODAY.map(function(m,i){return card(m,i,"Aujourd\'hui");}).join('')
       : '<div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;font-weight:600;">Aucun match configuré — ajoutez-en dans le panel admin.</div>';
   }
-  if (tom && tb) {
-    if (MATCHES_TOMORROW.length) {
-      tom.innerHTML = MATCHES_TOMORROW.map(function(m,i){return card(m,i+100,'Demain');}).join('');
-    } else {
-      tom.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;font-weight:600;">Aucun match programmé pour demain.</div>';
-    }
+  if (tom) {
+    tom.innerHTML = MATCHES_TOMORROW.length
+      ? MATCHES_TOMORROW.map(function(m,i){return card(m,i+100,"Demain");}).join('')
+      : '<div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:rgba(255,255,255,.35);font-size:14px;font-weight:600;">Aucun match programmé pour demain.</div>';
   }
+
+  setTimeout(updateAllViewerCounters, 300);
 }
 
-// ── TICK ────────────────────────────────────────
 function tick() {
   if (!MATCHES_TODAY.length) return;
   var now = Date.now();
@@ -317,7 +295,6 @@ function tick() {
   });
 }
 
-// ── LOAD FROM DB ────────────────────────────────
 function loadFromDB() {
   var CACHE_KEY = 'imftx_matches_cache_v1';
   var CACHE_TIME_KEY = 'imftx_matches_cache_time_v1';
@@ -352,15 +329,11 @@ function loadFromDB() {
     tick();
   }
 
-  // 1) Affiche le cache immédiatement si dispo
   try {
     var cached = localStorage.getItem(CACHE_KEY);
-    if (cached) {
-      applyData(JSON.parse(cached));
-    }
+    if (cached) applyData(JSON.parse(cached));
   } catch(e) {}
 
-  // 2) Récupère la vraie data en arrière-plan
   fetch(DB_URL + '/latest', {
     headers: {
       'X-Master-Key': DB_API_KEY,
@@ -385,61 +358,69 @@ function loadFromDB() {
   });
 }
 
-// ── REFRESH BTN ─────────────────────────────────
 document.getElementById('refreshBtn').addEventListener('click', function(){
   if(typeof NProgress!=='undefined') NProgress.start();
   loadFromDB();
   setTimeout(function(){if(typeof NProgress!=='undefined') NProgress.done();}, 700);
 });
 
-// ── TV CHANNELS ─────────────────────────────────
 (function(){
   var channels = [
-    {name:"beIN Sports 1",  href:"bein1.html",           logo:"https://only-us.win/tv/logos/bein_1.png"},
-    {name:"beIN Sports 2",  href:"bein2.html",           logo:"https://only-us.win/tv/logos/bein_2.png"},
-    {name:"beIN Sports 3",  href:"bein3.html",           logo:"https://only-us.win/tv/logos/bein_3.png"},
-    {name:"Canal+",         href:"canalplus.html",       logo:"https://only-us.win/tv/logos/canalplus.png"},
-    {name:"Canal+ Sport",   href:"canalplus-sport.html", logo:"https://upload.wikimedia.org/wikipedia/fr/2/2c/C%2B_Sport_%282023%29.png"},
-    {name:"Canal+ Foot",    href:"canalplus-foot.html",  logo:"https://upload.wikimedia.org/wikipedia/fr/3/3b/C%2B_Foot.png"},
-    {name:"Canal+ Sport 360",href:"canalplus-360.html",  logo:"https://upload.wikimedia.org/wikipedia/fr/1/11/C%2B_Sport_360.png"},
-    {name:"RMC Sport 1",    href:"rmc1.html",            logo:"https://only-us.win/tv/logos/rmc_sport_1.png"},
-    {name:"RMC Sport 2",    href:"rmc2.html",            logo:"https://only-us.win/tv/logos/rmc_sport_2.png"},
-    {name:"Eurosport 1",    href:"eurosport1.html",      logo:"https://only-us.win/tv/logos/eurosport_1.png"},
-    {name:"Eurosport 2",    href:"eurosport2.html",      logo:"https://only-us.win/tv/logos/eurosport_2.png"},
-    {name:"L'Équipe",       href:"lequipe.html",         logo:"https://only-us.win/tv/logos/lequipe.png"},
-    {name:"LIGUE 1+",       href:"L1+.html",             logo:"https://mag.bouyguestelecom.fr/wp-content/uploads/2025/07/OK_LFP_CHANNEL_LOGOTYPE_L1_BLUE_660x660_RVB-e1752765595538.png"},
-    {name:"LIGUE 1+ 2",     href:"L1+2.html",            logo:"https://www.monpetitforfait.com/comparateur-box-internet/wp-content/uploads/2025/07/ligue-1-plus-2-300x100.png"},
-    {name:"LIGUE 1+ 3",     href:"L1+3.html",            logo:"https://www.monpetitforfait.com/comparateur-box-internet/wp-content/uploads/2025/07/ligue-1plus-3-box-internet.png"}
+    {name:"beIN Sports 1",href:"bein1.html",logo:"https://only-us.win/tv/logos/bein_1.png"},
+    {name:"beIN Sports 2",href:"bein2.html",logo:"https://only-us.win/tv/logos/bein_2.png"},
+    {name:"beIN Sports 3",href:"bein3.html",logo:"https://only-us.win/tv/logos/bein_3.png"},
+    {name:"Canal+",href:"canalplus.html",logo:"https://only-us.win/tv/logos/canalplus.png"},
+    {name:"Canal+ Sport",href:"canalplus-sport.html",logo:"https://upload.wikimedia.org/wikipedia/fr/2/2c/C%2B_Sport_%282023%29.png"},
+    {name:"Canal+ Foot",href:"canalplus-foot.html",logo:"https://upload.wikimedia.org/wikipedia/fr/3/3b/C%2B_Foot.png"},
+    {name:"Canal+ Sport 360",href:"canalplus-360.html",logo:"https://upload.wikimedia.org/wikipedia/fr/1/11/C%2B_Sport_360.png"},
+    {name:"RMC Sport 1",href:"rmc1.html",logo:"https://only-us.win/tv/logos/rmc_sport_1.png"},
+    {name:"RMC Sport 2",href:"rmc2.html",logo:"https://only-us.win/tv/logos/rmc_sport_2.png"},
+    {name:"Eurosport 1",href:"eurosport1.html",logo:"https://only-us.win/tv/logos/eurosport_1.png"},
+    {name:"Eurosport 2",href:"eurosport2.html",logo:"https://only-us.win/tv/logos/eurosport_2.png"},
+    {name:"L'Équipe",href:"lequipe.html",logo:"https://only-us.win/tv/logos/lequipe.png"},
+    {name:"LIGUE 1+",href:"L1+.html",logo:"https://mag.bouyguestelecom.fr/wp-content/uploads/2025/07/OK_LFP_CHANNEL_LOGOTYPE_L1_BLUE_660x660_RVB-e1752765595538.png"},
+    {name:"LIGUE 1+ 2",href:"L1+2.html",logo:"https://www.monpetitforfait.com/comparateur-box-internet/wp-content/uploads/2025/07/ligue-1-plus-2-300x100.png"},
+    {name:"LIGUE 1+ 3",href:"L1+3.html",logo:"https://www.monpetitforfait.com/comparateur-box-internet/wp-content/uploads/2025/07/ligue-1plus-3-box-internet.png"}
   ];
   var row=document.getElementById('tvLiveRow');
   if(!row) return;
   channels.forEach(function(ch){
-   var a=document.createElement('a');
-a.className='tv-card';
-a.href=ch.href;
-a.style.background='transparent';
-a.style.border='0';
-a.style.boxShadow='none';
+    var a=document.createElement('a');
+    a.className='tv-card';
+    a.href=ch.href;
+    a.style.background='transparent';
+    a.style.border='0';
+    a.style.boxShadow='none';
 
-var inner=document.createElement('div');
-inner.className='tv-card-inner';
-inner.style.background='transparent';
-inner.style.border='0';
-inner.style.boxShadow='none';
-    var img=document.createElement('img'); img.src=ch.logo; img.alt=ch.name; img.loading='lazy';
+    var inner=document.createElement('div');
+    inner.className='tv-card-inner';
+    inner.style.background='transparent';
+    inner.style.border='0';
+    inner.style.boxShadow='none';
+
+    var img=document.createElement('img');
+    img.src=ch.logo;
+    img.alt=ch.name;
+    img.loading='lazy';
     img.referrerPolicy='no-referrer-when-downgrade';
     img.onerror=function(){this.style.display='none';};
+
     inner.appendChild(img);
-    var lbl=document.createElement('span'); lbl.className='tv-card-name'; lbl.textContent=ch.name;
-    a.appendChild(inner); a.appendChild(lbl); row.appendChild(a);
+    var lbl=document.createElement('span');
+    lbl.className='tv-card-name';
+    lbl.textContent=ch.name;
+
+    a.appendChild(inner);
+    a.appendChild(lbl);
+    row.appendChild(a);
   });
+
   var lft=document.getElementById('tvCarLeft'), rgt=document.getElementById('tvCarRight');
   function step(){var c=row.querySelector('.tv-card');return c?Math.max(150,c.getBoundingClientRect().width*3+24):370;}
   if(lft) lft.addEventListener('click',function(){row.scrollBy({left:-step(),behavior:'smooth'});});
   if(rgt) rgt.addEventListener('click',function(){row.scrollBy({left:step(),behavior:'smooth'});});
 })();
 
-// Fix referrerpolicy sur toutes les images
 (function(){
   function fix(){
     document.querySelectorAll('img:not([referrerpolicy])').forEach(function(img){
@@ -449,66 +430,63 @@ inner.style.boxShadow='none';
   fix();
   new MutationObserver(fix).observe(document.body||document.documentElement, {childList:true, subtree:true});
 })();
-// ── INIT ────────────────────────────────────────
-loadFromDB();
-setInterval(tick, 1000);
-setInterval(loadFromDB, 60000);
-</script>
-<script>
-  function getSessionId() {
-    let sessionId = localStorage.getItem("live_session_id");
-    if (!sessionId) {
-      sessionId = "sess_" + Math.random().toString(36).slice(2) + Date.now();
-      localStorage.setItem("live_session_id", sessionId);
-    }
-    return sessionId;
-  }
 
-  async function updateViewerCounter(el) {
+/* VIEWER COUNTERS INDEX */
+function getViewerSessionId() {
+  let sessionId = localStorage.getItem("live_session_id");
+  if (!sessionId) {
+    sessionId = "sess_" + Math.random().toString(36).slice(2) + Date.now();
+    localStorage.setItem("live_session_id", sessionId);
+  }
+  return sessionId;
+}
+
+async function updateViewerCounter(el) {
+  const pageSlug = el.getAttribute("data-viewer-counter");
+  if (!pageSlug) return;
+
+  const formData = new FormData();
+  formData.append("page_slug", pageSlug);
+  formData.append("session_id", getViewerSessionId() + "_" + pageSlug);
+  formData.append("action", "ping");
+
+  try {
+    const res = await fetch("/viewer_ping.php", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+    if (typeof data.viewers !== "undefined") {
+      el.textContent = data.viewers;
+    }
+  } catch (e) {
+    console.error("viewer error", pageSlug, e);
+  }
+}
+
+function updateAllViewerCounters() {
+  document.querySelectorAll("[data-viewer-counter]").forEach(updateViewerCounter);
+}
+
+window.addEventListener("beforeunload", function () {
+  document.querySelectorAll("[data-viewer-counter]").forEach(function(el) {
     const pageSlug = el.getAttribute("data-viewer-counter");
     if (!pageSlug) return;
 
-    const formData = new FormData();
-    formData.append("page_slug", pageSlug);
-    formData.append("session_id", getSessionId() + "_" + pageSlug);
-    formData.append("action", "ping");
+    const data = new URLSearchParams();
+    data.append("page_slug", pageSlug);
+    data.append("session_id", getViewerSessionId() + "_" + pageSlug);
+    data.append("action", "leave");
 
-    try {
-      const res = await fetch("/viewer_ping.php", {
-        method: "POST",
-        body: formData
-      });
-
-      const data = await res.json();
-      if (typeof data.viewers !== "undefined") {
-        el.textContent = data.viewers;
-      }
-    } catch (e) {
-      console.error("viewer error", pageSlug, e);
-    }
-  }
-
-  function updateAllViewerCounters() {
-    const counters = document.querySelectorAll("[data-viewer-counter]");
-    counters.forEach(updateViewerCounter);
-  }
-
-  updateAllViewerCounters();
-  setInterval(updateAllViewerCounters, 15000);
-
-  window.addEventListener("beforeunload", function () {
-    document.querySelectorAll("[data-viewer-counter]").forEach(function(el) {
-      const pageSlug = el.getAttribute("data-viewer-counter");
-      if (!pageSlug) return;
-
-      const data = new URLSearchParams();
-      data.append("page_slug", pageSlug);
-      data.append("session_id", getSessionId() + "_" + pageSlug);
-      data.append("action", "leave");
-
-      navigator.sendBeacon("/viewer_ping.php", data);
-    });
+    navigator.sendBeacon("/viewer_ping.php", data);
   });
+});
+
+loadFromDB();
+setInterval(tick, 1000);
+setInterval(loadFromDB, 60000);
+setInterval(updateAllViewerCounters, 15000);
 </script>
 </body>
 </html>
