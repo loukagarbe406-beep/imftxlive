@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#000000">
-  <title>IMFTX — FC Porto vs Nottingham Forest</title>
+  <title>IMFTX — Annecy - Montpellier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -69,9 +70,9 @@
     .btn-back:hover { background: rgba(255,255,255,.12); }
 
     /* ── LAYOUT (panneau lecteur | vidéo | chat) ── */
-        .shell {
+    .shell {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(260px, 290px);
+      grid-template-columns: 1fr minmax(260px, 300px);
       height: calc(100vh - 56px);
       min-height: 0;
       max-width: 1920px;
@@ -81,7 +82,6 @@
         @media (max-width: 1100px) {
       .shell {
         grid-template-columns: 1fr;
-        height: auto;
       }
       .col-left {
         order: 2;
@@ -90,15 +90,12 @@
         max-height: none;
         position: static;
       }
-      .col-center {
-        order: 1;
-        min-height: 0;
-      }
+      .col-center { order: 1; min-height: 45vh; }
       .col-right { order: 3; }
       .live-player-wrap {
         aspect-ratio: 16 / 9;
-        min-height: 220px;
-        flex: 0 0 auto;
+        height: auto;
+        max-height: none;
       }
     }
 
@@ -302,55 +299,49 @@
       min-height: 0;
       background: var(--bg);
     }
-        .player-shell {
+    .player-shell {
       flex: 1;
       display: flex;
       flex-direction: column;
       min-height: 0;
       padding: 0;
-      overflow: hidden;
     }
         .live-player-wrap {
       position: relative;
       width: 100%;
-      flex: 1 1 auto;
-      min-height: 0;
+      aspect-ratio: 16 / 9;
       height: auto;
-      overflow: hidden;
+      min-height: 0;
+      max-height: calc(100vh - 150px);
       border-radius: 0;
+      overflow: hidden;
       border: none;
       border-bottom: 1px solid var(--border);
       background: #000;
       box-shadow: none;
-      display: flex;
-      align-items: stretch;
-      justify-content: stretch;
+      flex: 0 0 auto;
     }
-        .live-player-inner,
-    #jwplayer-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      min-height: 100%;
-      flex: 1 1 auto;
-      background: #000;
-    }
-    .live-player-inner iframe,
-    #jwplayer-container iframe,
-    .jwplayer,
-    .jwplayer video,
-    .jw-media,
-    .jw-media video {
+            .live-player-inner {
       position: absolute !important;
       inset: 0 !important;
       width: 100% !important;
       height: 100% !important;
+      display: block !important;
+      background: #000 !important;
+    }
+    .live-player-inner iframe {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      min-width: 100% !important;
+      min-height: 100% !important;
+      display: block !important;
       border: 0 !important;
       background: #000 !important;
-      object-fit: contain !important;
     }
 
-        .player-footer {
+    .player-footer {
       flex-shrink: 0;
       width: 100%;
       box-sizing: border-box;
@@ -358,7 +349,7 @@
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
       gap: 16px;
-      min-height: 92px;
+      min-height: 96px;
       padding: 14px 20px 16px;
       margin-top: 0;
       margin-left: 0;
@@ -592,7 +583,7 @@
       <div class="sidebar-panel">
         <div class="sb-head">
           <div>
-            <h2 class="sb-title" id="sidebarMatchTitle">FC Porto vs Nottingham Forest</h2>
+            <h2 class="sb-title" id="sidebarMatchTitle">Annecy - Montpellier</h2>
             <div class="sb-live"><span class="sb-dot" aria-hidden="true"></span> En direct</div>
           </div>
           <button type="button" class="sb-share" id="sbShare" title="Partager" aria-label="Partager">
@@ -643,11 +634,11 @@
     <main class="col-center">
       <div class="player-shell">
         <div class="live-player-wrap" id="livePlayerWrap">
-          <div class="live-player-inner" id="jwplayer-container"></div>
+          <div class="live-player-inner"><iframe src="https://coolball.me/part/Ll.php?id=1/5" allowfullscreen referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe></div>
         </div>
 
         <div class="player-footer">
-          <span class="match-inline" id="matchFooter">FC Porto vs Nottingham Forest</span>
+          <span class="match-inline" id="matchFooter">Annecy - Montpellier</span>
           <div class="btn-group">
             <a href="#" class="stream-btn btn-x-sm" aria-label="Twitter / X">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/></svg>
@@ -668,7 +659,7 @@
           </div>
           <span class="viewer-mini" title="Spectateurs">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span id="counterMatch1" data-viewer-counter="hiboux-stream">0</span>
+            <span id="counterMatch1" data-viewer-counter="annecy-mont">0</span>
           </span>
         </div>
       </div>
@@ -693,16 +684,9 @@
     </aside>
 
   </div>
-
-  <script src="https://cdn.jwplayer.com/libraries/IDzF9Zmk.js"></script>
   <script>
     (function () {
-      var playerInstance;
-      var SOURCES = {
-        1: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/7.m3u8"
-      };
-
-      function formatFooterTwoLines(full) {
+function formatFooterTwoLines(full) {
         var m = String(full).split(/\s+vs\s+/i);
         if (m.length < 2) return full;
         var home = m[0].trim();
@@ -728,26 +712,10 @@
           footer.innerHTML = formatFooterTwoLines(footer.textContent);
         }
       }
-
-      function setupJwPlayer() {
-        if (typeof jwplayer !== "function") return;
-        playerInstance = jwplayer("jwplayer-container").setup({
-          file: SOURCES[1],
-          type: "hls",
-          width: "100%",
-          height: "100%",
-          autostart: true,
-          primary: "html5",
-          hlshtml: true,
-          stretching: "uniform",
-          preload: "metadata",
-          controls: true,
-          displaytitle: false,
-          displaydescription: false
-        });
+);
       }
 
-      var pageSlug = "rma-bayernm";
+      var pageSlug = "annecy-mont";
 
       function getSessionId() {
         var sessionId = localStorage.getItem("live_session_id");
@@ -782,7 +750,6 @@
 
       function boot() {
         applyTitleFromQuery();
-        setupJwPlayer();
         sendViewer("ping");
         setInterval(function () { sendViewer("ping"); }, 15000);
 
