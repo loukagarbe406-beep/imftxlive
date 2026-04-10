@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,8 +12,8 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #000000;
-      --border: rgba(255,255,255,.08);
+      --bg: #0a0a0a;
+      --border: rgba(255,255,255,.04);
       --text: #ffffff;
       --muted: rgba(255,255,255,.45);
       --green-iptv: #22c55e;
@@ -20,7 +21,7 @@
     }
     html, body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: var(--bg);
+      background: #0a0a0a;
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
@@ -34,8 +35,8 @@
       justify-content: space-between;
       height: 56px;
       padding: 0 20px;
-      border-bottom: 1px solid var(--border);
-      background: var(--bg);
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      background: #0a0a0a;
       position: sticky;
       top: 0;
       z-index: 50;
@@ -57,8 +58,8 @@
       gap: 7px;
       padding: 8px 16px;
       border-radius: 8px;
-      border: 1px solid rgba(255,255,255,.15);
-      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.04);
+      background: transparent;
       color: var(--text);
       font-size: 13px;
       font-weight: 700;
@@ -66,7 +67,7 @@
       cursor: pointer;
       transition: background .15s;
     }
-    .btn-back:hover { background: rgba(255,255,255,.12); }
+    .btn-back:hover { background: transparent; }
 
     /* ── LAYOUT (panneau lecteur | vidéo | chat) ── */
     .shell {
@@ -85,7 +86,7 @@
       .col-left {
         order: 2;
         border-right: none;
-        border-top: 1px solid var(--border);
+        border-top: 1px solid rgba(255,255,255,.04);
         max-height: none;
         position: static;
       }
@@ -131,7 +132,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #ef4444;
+      background: #0a0a0a;
       box-shadow: 0 0 0 2px rgba(239,68,68,.35);
       animation: sbPulse 1.4s ease-in-out infinite;
     }
@@ -145,7 +146,7 @@
       height: 36px;
       border: none;
       border-radius: 8px;
-      background: rgba(255,255,255,.06);
+      background: transparent;
       color: #fff;
       cursor: pointer;
       display: flex;
@@ -167,7 +168,7 @@
     .sb-pbtn {
       padding: 12px 10px;
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.04);
       background: #1f1f1f;
       color: #fff;
       font-size: 13px;
@@ -194,7 +195,7 @@
       padding: 12px 14px;
       border-radius: 12px;
       background: #171717;
-      border: 1px solid rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.04);
     }
     .sb-card-k {
       font-size: 12px;
@@ -212,7 +213,7 @@
       display: block;
       border-radius: 14px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.04);
       background: linear-gradient(160deg, #1e3a5f 0%, #0f2744 40%, #2563eb 100%);
       text-decoration: none;
       color: #fff;
@@ -246,7 +247,7 @@
       padding: 4px 8px;
       border-radius: 6px;
       background: rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.04);
     }
     .sb-promo-cta {
       background: rgba(255,255,255,.95);
@@ -279,7 +280,7 @@
       cursor: pointer;
       text-align: left;
     }
-    .sb-help:hover { color: #fff; background: rgba(255,255,255,.05); }
+    .sb-help:hover { color: #fff; background: transparent; }
     .sb-help-panel {
       display: none;
       font-size: 11px;
@@ -296,7 +297,7 @@
       flex: 1;
       min-width: 0;
       min-height: 0;
-      background: var(--bg);
+      background: #0a0a0a;
     }
     .player-shell {
       flex: 1;
@@ -315,8 +316,8 @@
       border-radius: 0;
       overflow: hidden;
       border: none;
-      border-bottom: 1px solid var(--border);
-      background: #000;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      background: #0a0a0a;
       box-shadow: none;
       flex: 0 0 auto;
     }
@@ -353,8 +354,8 @@
       margin-top: 0;
       margin-left: 0;
       margin-right: 0;
-      background: #000000;
-      border-top: 1px solid var(--border);
+      background: #0a0a0a;
+      border-top: 1px solid rgba(255,255,255,.04);
     }
     .player-footer .match-inline {
       font-size: clamp(15px, 2.2vw, 18px);
@@ -386,7 +387,7 @@
       border-radius: 11px;
       font-size: 20px;
       font-weight: 800;
-      border: 1px solid transparent;
+      border: 1px solid rgba(255,255,255,.04);
       color: #fff;
       cursor: pointer;
       text-decoration: none;
@@ -429,8 +430,8 @@
       border-color: rgba(255,255,255,.08);
     }
     .btn-x-sm {
-      background: #070707;
-      border: 1px solid rgba(255,255,255,.12);
+      background: #0a0a0a;
+      border: 1px solid rgba(255,255,255,.04);
     }
     .btn-telegram-sm {
       background: #289cd8;
@@ -459,8 +460,8 @@
 
     /* ── COL DROITE CHAT ── */
     .col-right {
-      border-left: 1px solid var(--border);
-      background: var(--bg);
+      border-left: 1px solid rgba(255,255,255,.04);
+      background: #0a0a0a;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -471,7 +472,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 14px 16px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,.04);
       font-size: 13px;
       font-weight: 700;
     }
@@ -484,7 +485,7 @@
     .chat-banner {
       height: 72px;
       background: linear-gradient(135deg, #14532d 0%, #052e16 50%, #0a0a0a 100%);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,.04);
     }
     .chat-body {
       flex: 1;
@@ -495,7 +496,7 @@
     }
     .chat-input-wrap {
       padding: 12px 14px 16px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255,255,255,.04);
       display: flex;
       gap: 8px;
       align-items: center;
@@ -504,8 +505,8 @@
       flex: 1;
       height: 40px;
       border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #111;
+      border: 1px solid rgba(255,255,255,.04);
+      background: #0a0a0a;
       color: var(--text);
       padding: 0 12px;
       font-size: 13px;
@@ -714,7 +715,7 @@ function formatFooterTwoLines(full) {
 );
       }
 
-      var pageSlug = "pfc-asm";
+      var pageSlug = "rma-bayernm";
 
       function getSessionId() {
         var sessionId = localStorage.getItem("live_session_id");
