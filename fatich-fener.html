@@ -71,14 +71,14 @@
     /* ── LAYOUT (panneau lecteur | vidéo | chat) ── */
     .shell {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 290px;
+      grid-template-columns: 1fr minmax(260px, 300px);
       height: calc(100vh - 56px);
       min-height: 0;
       max-width: 1920px;
       margin: 0 auto;
       overflow: hidden;
     }
-    @media (max-width: 1100px) {
+        @media (max-width: 1100px) {
       .shell {
         grid-template-columns: 1fr;
       }
@@ -91,6 +91,11 @@
       }
       .col-center { order: 1; min-height: 45vh; }
       .col-right { order: 3; }
+      .live-player-wrap {
+        aspect-ratio: 16 / 9;
+        height: auto;
+        max-height: none;
+      }
     }
 
     /* ── COL GAUCHE (infos stream + lecteurs) ── */
@@ -292,7 +297,6 @@
       min-width: 0;
       min-height: 0;
       background: var(--bg);
-      padding: 0;
     }
     .player-shell {
       flex: 1;
@@ -301,32 +305,35 @@
       min-height: 0;
       padding: 0;
     }
-    .live-player-wrap {
-      flex: 0 0 auto;
-      width: 100%;
-      height: min(72vh, 700px);
-      min-height: 420px;
+        .live-player-wrap {
       position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      min-height: 0;
+      max-height: calc(100vh - 150px);
       border-radius: 0;
       overflow: hidden;
       border: none;
       border-bottom: 1px solid var(--border);
       background: #000;
       box-shadow: none;
+      flex: 0 0 auto;
     }
-    .live-player-inner {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .live-player-inner iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-      background: #000;
+        .live-player-inner,
+    #jwplayer-container,
+    .jwplayer,
+    .jwplayer video,
+    .jwplayer iframe,
+    .jwplayer object,
+    .jw-media,
+    .jw-media video {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border: 0 !important;
+      background: #000 !important;
     }
 
     .player-footer {
@@ -337,7 +344,7 @@
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
       gap: 16px;
-      min-height: 92px;
+      min-height: 96px;
       padding: 14px 20px 16px;
       margin-top: 0;
       margin-left: 0;
@@ -511,14 +518,6 @@
       font-weight: 700;
       border: none;
       cursor: pointer;
-    }
-
-    @media (max-width: 1100px) {
-      .live-player-wrap {
-        height: 56vw;
-        min-height: 240px;
-        max-height: 520px;
-      }
     }
 
     @media (max-width: 760px) {
@@ -726,7 +725,7 @@
           autostart: true,
           primary: "html5",
           hlshtml: true,
-          stretching: "exactfit",
+          stretching: "fill",
           preload: "metadata",
           controls: true,
           displaytitle: false,
