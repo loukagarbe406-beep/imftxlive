@@ -14,62 +14,43 @@ try {
     $action = $_POST['action'] ?? 'ping';
 
     if (!$page || !$session) {
-        http_response_code(400);
-        echo json_encode(["error" => "missing data"]);
+        echo json_encode([
+            "success" => false,
+            "error" => "missing data",
+            "post" => $_POST
+        ]);
         exit;
     }
 
-    if ($action === 'leave') {
-        $sql = "UPDATE live_viewers
-                SET is_online = 0
-                WHERE page_slug = :page_slug AND session_id = :session_id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':page_slug' => $page,
-            ':session_id' => $session
-        ]);
-    } else {
-        $sql = "
-        INSERT INTO live_viewers (page_slug, session_id, is_online, last_seen)
-        VALUES (:page_slug, :session_id, 1, NOW())
-        ON DUPLICATE KEY UPDATE
-            is_online = 1,
-            last_seen = NOW()
-        ";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':page_slug' => $page,
-            ':session_id' => $session
-        ]);
-    }
-
-    $cleanup = "
-    UPDATE live_viewers
-    SET is_online = 0
-    WHERE last_seen < NOW() - INTERVAL 60 SECOND
+    $sql = "
+    INSERT INTO live_viewers (page_slug, session_id, is_online, last_seen)
+    VALUES (:page_slug, :session_id, 1, NOW())
+    ON DUPLICATE KEY UPDATE
+      is_online = 1,
+      last_seen = NOW()
     ";
-    $pdo->exec($cleanup);
 
-    $countSql = "
-    SELECT COUNT(*) AS viewers
-    FROM live_viewers
-    WHERE page_slug = :page_slug
-      AND is_online = 1
-      AND last_seen >= NOW() - INTERVAL 60 SECOND
-    ";
-    $stmt = $pdo->prepare($countSql);
-    $stmt->execute([':page_slug' => $page]);
-    $count = (int)$stmt->fetchColumn();
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ':page_slug' => $page,
+        ':session_id' => $session
+    ]);
+
+    $stmt = $pdo->query("SELECT COUNT(*) FROM live_viewers");
+    $total = (int)$stmt->fetchColumn();
 
     echo json_encode([
         "success" => true,
-        "viewers" => $count
+        "message" => "insert ok",
+        "total_rows" => $total,
+        "page_slug" => $page,
+        "session_id" => $session,
+        "action" => $action
     ]);
 
 } catch (Throwable $e) {
-    http_response_code(500);
     echo json_encode([
-        "error" => "server error",
-        "message" => $e->getMessage()
+        "success" => false,
+        "error" => $e->getMessage()
     ]);
 }
