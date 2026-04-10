@@ -4,8 +4,7 @@ import {
   ref,
   set,
   onValue,
-  onDisconnect,
-  remove
+  onDisconnect
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
@@ -30,12 +29,7 @@ function getSessionId(pageName) {
   return sessionId;
 }
 
-/**
- * @param {string} pageName
- * @param {string} elementId
- * @param {boolean} readonly
- */
-export function initViewerCounter(pageName, elementId, readonly = false) {
+export async function initViewerCounter(pageName, elementId, readonly = false) {
   const el = document.getElementById(elementId);
   if (!el) return;
 
@@ -44,8 +38,8 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
   const mySessionRef = ref(db, `presence/${pageName}/${sessionId}`);
 
   if (!readonly) {
-    set(mySessionRef, true);
-    onDisconnect(mySessionRef).remove();
+    await onDisconnect(mySessionRef).remove();
+    await set(mySessionRef, true);
   }
 
   onValue(viewersRef, (snapshot) => {
