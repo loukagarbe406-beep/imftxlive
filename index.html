@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Test Index</title>
+  <title>Index Test</title>
   <style>
     body{font-family:Arial,sans-serif;background:#111;color:#fff;padding:30px}
     .card{background:#1c1c1c;border:1px solid #333;border-radius:12px;padding:20px;max-width:420px}
@@ -34,16 +34,17 @@
       const pageSlug = el.getAttribute("data-viewer-counter");
       if (!pageSlug) return;
 
-      const formData = new FormData();
-      formData.append("page_slug", pageSlug);
-      formData.append("session_id", getViewerSessionId() + "_" + pageSlug);
-      formData.append("action", "ping");
-
       try {
-        const res = await fetch("/viewer_ping.php", {
+        const res = await fetch("/api/viewer-ping", {
           method: "POST",
-          body: formData
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            page_slug: pageSlug,
+            session_id: getViewerSessionId() + "_" + pageSlug,
+            action: "ping"
+          })
         });
+
         const data = await res.json();
         if (typeof data.viewers !== "undefined") {
           el.textContent = data.viewers;
