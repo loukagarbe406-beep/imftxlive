@@ -41,9 +41,15 @@
       z-index: 50;
     }
     .logo {
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
+      display: inline-flex;
+      align-items: center;
+      height: 40px;
+    }
+    .logo img {
+      display: block;
+      height: 34px;
+      width: auto;
+      object-fit: contain;
     }
     .btn-back {
       display: inline-flex;
@@ -66,9 +72,11 @@
     .shell {
       display: grid;
       grid-template-columns: 1fr minmax(260px, 300px);
-      min-height: calc(100vh - 56px);
+      height: calc(100vh - 56px);
+      min-height: 0;
       max-width: 1920px;
       margin: 0 auto;
+      overflow: hidden;
     }
     @media (max-width: 1100px) {
       .shell {
@@ -281,7 +289,7 @@
       display: flex;
       flex-direction: column;
       min-width: 0;
-      min-height: calc(100vh - 56px);
+      min-height: 0;
       background: var(--bg);
     }
     .player-shell {
@@ -417,6 +425,7 @@
       display: flex;
       flex-direction: column;
       min-height: 0;
+      overflow: hidden;
     }
     .chat-header {
       display: flex;
@@ -519,7 +528,9 @@
 <body>
 
   <header class="topbar">
-    <a href="index.html" class="logo">IMFTX</a>
+    <a href="index.html" class="logo" aria-label="IMFTX+">
+      <img src="https://media.discordapp.net/attachments/1473372368809234720/1475531254446424265/1500x500.jpg?ex=69d9cf51&is=69d87dd1&hm=f3b2fee0ba88f6de9b2882c452c323b8739d00ccc04b2ac54e0531aa4c3f00ef&=&format=webp&width=1860&height=620" alt="IMFTX+">
+    </a>
     <a href="index.html" class="btn-back">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
       Retour
@@ -675,7 +686,7 @@
           file: SOURCES[1],
           type: "hls",
           width: "100%",
-          aspectratio: "16:9",
+          height: "100%",
           autostart: true,
           primary: "html5",
           hlshtml: true,
