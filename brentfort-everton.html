@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0a0a">
-  <title>IMFTX — MARSEILLE VS METZ</title>
+  <title>IMFTX — DORTMUND VS BAYERN LEVERKUSEN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -706,13 +705,8 @@
         grid-column: 1 / -1;
         grid-row: 2;
         width: 100%;
-      }
-      .btn-group {
-        grid-column: auto;
-        justify-self: auto;
         justify-content: flex-start;
         gap: 8px;
-        width: 100%;
       }
       .btn-group .stream-btn {
         border-radius: 10px;
@@ -734,6 +728,14 @@
       }
       .btn-iptv-emoji {
         font-size: 15px;
+      }
+      /* Chat plus grand sur téléphone (zone messages prête pour un futur vrai chat) */
+      .col-right {
+        max-height: min(92vh, 960px);
+        min-height: 58vh;
+      }
+      .col-right .chat-body {
+        min-height: min(44vh, 360px);
       }
     }
   </style>
@@ -794,7 +796,7 @@
         </div>
 
         <div class="player-footer">
-          <span class="match-inline" id="matchFooter">Marseille vs Metz</span>
+          <span class="match-inline" id="matchFooter">Brentford vs Everton</span>
           <div class="btn-group">
             <a href="#" class="stream-btn btn-x-sm" aria-label="Twitter / X">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/></svg>
@@ -815,7 +817,7 @@
           </div>
           <span class="viewer-mini player-footer__viewers" title="Spectateurs en direct">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span id="counterMatch1" data-viewer-counter="om-metz">0</span>
+            <span id="counterMatch1" data-viewer-counter="brentford-everton">0</span>
           </span>
         </div>
       </div>
@@ -918,7 +920,7 @@
         }
       }
 
-      var pageSlug = "om-metz";
+      var pageSlug = "brentford-everton";
 
       function getSessionId() {
         var sessionId = localStorage.getItem("live_session_id");
