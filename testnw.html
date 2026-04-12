@@ -43,6 +43,38 @@
       --chat-panel-bg: var(--bg);
       --chat-welcome: #7a8691;
       --chat-banner-bg: var(--bg);
+      /* Fond partagé barre du haut + bandeau sous le lecteur (myCANAL) */
+      --canal-bar-cover: url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg");
+    }
+    body > nav {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background-color: #0a0a0a;
+    }
+    body > nav::before {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      z-index: 0;
+      background-image: var(--canal-bar-cover);
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      filter: blur(6px);
+      -webkit-filter: blur(6px);
+    }
+    body > nav::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.48);
+      pointer-events: none;
+    }
+    body > nav > * {
+      position: relative;
+      z-index: 2;
     }
     html, body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -188,9 +220,12 @@
       background: var(--bg);
     }
 
-    /* Barre sous le lecteur — même logique que l’overlay téléphone / desktop fourni */
+    /* Barre sous le lecteur — fond visuel Canal+ (image), contenu au-dessus */
     .player-footer {
       flex-shrink: 0;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
       width: 100%;
       box-sizing: border-box;
       display: grid;
@@ -200,8 +235,32 @@
       min-height: 96px;
       padding: 14px 20px 16px;
       margin: 0;
-      background: var(--bg);
+      background-color: #0a0a0a;
       border-top: 1px solid var(--border);
+    }
+    .player-footer::before {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      z-index: 0;
+      background-image: var(--canal-bar-cover);
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      filter: blur(6px);
+      -webkit-filter: blur(6px);
+    }
+    .player-footer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.52);
+      pointer-events: none;
+    }
+    .player-footer > * {
+      position: relative;
+      z-index: 2;
     }
     .player-footer > .match-inline {
       grid-column: 1;
@@ -499,7 +558,7 @@
 </head>
 <body>
 
-  <nav class="sticky top-0 z-[100] backdrop-blur-xl border-b border-white/10 shadow-sm bg-black/30 text-white">
+  <nav class="sticky top-0 z-[100] border-b border-white/10 shadow-sm text-white">
     <div class="flex h-16 w-full items-center justify-between gap-4 px-3 sm:px-5 md:px-6 lg:px-8">
 
       <div class="flex min-w-0 flex-shrink-0 items-center gap-2 sm:gap-3">
