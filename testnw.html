@@ -39,42 +39,15 @@
       --rail-bg: #18181b;
       --rail-border: rgba(255, 255, 255, 0.05);
       --rail-placeholder: #adadb8;
-      /* Chat + bande sous bannière : même teinte que le fond page (#0a0a0a) */
-      --chat-panel-bg: var(--bg);
+      /* Chat : même gris que le rail « Chaînes live » */
+      --chat-panel-bg: var(--rail-bg);
       --chat-welcome: #7a8691;
       --chat-banner-bg: var(--bg);
       /* Fond partagé barre du haut + bandeau sous le lecteur (myCANAL) */
       --canal-bar-cover: url("https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg");
     }
     body > nav {
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      background-color: #0a0a0a;
-    }
-    body > nav::before {
-      content: "";
-      position: absolute;
-      inset: -14px;
-      z-index: 0;
-      background-image: var(--canal-bar-cover);
-      background-size: cover;
-      background-position: center top;
-      background-repeat: no-repeat;
-      filter: blur(6px);
-      -webkit-filter: blur(6px);
-    }
-    body > nav::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: rgba(0, 0, 0, 0.48);
-      pointer-events: none;
-    }
-    body > nav > * {
-      position: relative;
-      z-index: 2;
+      background-color: var(--rail-bg);
     }
     html, body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -623,7 +596,7 @@
       </div>
       </div>
 
-    <div id="mobileNav" class="hidden md:hidden border-t border-white/10 bg-black/50 px-5 py-3 space-y-2" role="dialog" aria-label="Menu mobile">
+    <div id="mobileNav" class="hidden md:hidden border-t border-white/10 px-5 py-3 space-y-2" style="background-color:var(--rail-bg)" role="dialog" aria-label="Menu mobile">
       <a href="index.html" class="block py-2 text-sm font-semibold text-white/90 hover:text-white">Accueil</a>
       <a href="#" class="block py-2 text-sm font-semibold text-red-400 hover:text-red-300">Lien secours</a>
       <a href="shop.html" class="block py-2 text-sm font-semibold text-white/90 hover:text-white">IPTV — boutique</a>
