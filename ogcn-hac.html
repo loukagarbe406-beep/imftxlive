@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0a0a">
-    <title>IMFTX — Arsenal VS Bournemouth</title>
+  <title>IMFTX — Nice - Le Havre</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -730,6 +729,14 @@
       .btn-iptv-emoji {
         font-size: 15px;
       }
+      /* Chat plus grand sur téléphone (zone messages prête pour un futur vrai chat) */
+      .col-right {
+        max-height: min(92vh, 960px);
+        min-height: 58vh;
+      }
+      .col-right .chat-body {
+        min-height: min(44vh, 360px);
+      }
     }
   </style>
 </head>
@@ -784,12 +791,12 @@
       <div class="player-shell">
         <div class="live-player-wrap" id="livePlayerWrap">
           <div class="live-player-inner">
-            <iframe src="https://coolball.me/part/Ll.php?id=1/11" title="Lecteur live" allowfullscreen referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe>
+            <iframe src="https://coolball.me/part/Ll.php?id=1/22" title="Lecteur live" allowfullscreen referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe>
           </div>
         </div>
 
         <div class="player-footer">
-          <span class="match-inline" id="matchFooter">Arsenal - Bournemouth</span>
+          <span class="match-inline" id="matchFooter">Nice - Le Havre</span>
           <div class="btn-group">
             <a href="#" class="stream-btn btn-x-sm" aria-label="Twitter / X">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/></svg>
@@ -810,7 +817,7 @@
           </div>
           <span class="viewer-mini player-footer__viewers" title="Spectateurs en direct">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span id="counterMatch1" data-viewer-counter="ars-bourn">0</span>
+            <span id="counterMatch1" data-viewer-counter="ogcn-hac">0</span>
           </span>
         </div>
       </div>
@@ -827,7 +834,7 @@
         </div>
       </div>
       <div class="chat-banner">
-        <img src="https://media.discordapp.net/attachments/1485253416098730054/1492489006351650976/Design_sans_titre_1.png?ex=69db8434&is=69da32b4&hm=9b10bd393b57781d839e05b33e2cb6a37559c21addaaf4e8bd52127baef7a970&=&format=webp&quality=lossless" alt="LES PLUS BELLES AFFICHES SE VIVENT SUR IMFTX+" width="1860" height="371" loading="lazy" decoding="async">
+        <img src="https://media.discordapp.net/attachments/1464956924473905173/1492098154471096361/Design_sans_titre_1.png?ex=69da1831&is=69d8c6b1&hm=a502392c11f87f19a8955ed40ed55125bb3aa97a9d58f8746d9116177bf156b0&=&format=webp&quality=lossless&width=1860&height=371" alt="LES PLUS BELLES AFFICHES SE VIVENT SUR IMFTX+" width="1860" height="371" loading="lazy" decoding="async">
       </div>
       <div class="chat-body">
         <p>Bienvenue dans le chat !</p>
@@ -913,7 +920,7 @@
         }
       }
 
-      var pageSlug = "om-metz";
+      var pageSlug = "ogcn-hac";
 
       function getSessionId() {
         var sessionId = localStorage.getItem("live_session_id");
