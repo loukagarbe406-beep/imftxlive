@@ -97,7 +97,6 @@
       justify-content: space-between;
       gap: 8px;
       padding: 14px 12px;
-      border-bottom: 1px solid var(--rail-border);
     }
     .live-rail__title {
       font-size: 13px;
@@ -132,7 +131,6 @@
     .shell.rail-collapsed .live-rail__body { display: none; }
     .shell.rail-collapsed .live-rail__header {
       justify-content: center;
-      border-bottom: none;
       padding: 12px 0;
     }
     .live-rail__body {
@@ -406,6 +404,20 @@
       min-width: 0;
       overflow: hidden;
     }
+    /* Bannière au-dessus du chat : uniquement téléphone (< md / 768px) */
+    .mobile-chat-banner {
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border);
+      background: var(--chat-panel-bg);
+    }
+    .mobile-chat-banner img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: min(34vh, 240px);
+      object-fit: contain;
+      object-position: center;
+    }
     .twitch-chat-wrap {
       flex: 1 1 auto;
       min-height: 0;
@@ -660,6 +672,9 @@
     </main>
 
     <aside class="col-right" aria-label="Chat du stream">
+      <div class="mobile-chat-banner block md:hidden">
+        <img src="https://media.discordapp.net/attachments/1485253416098730054/1492489006351650976/Design_sans_titre_1.png?ex=69dcd5b4&is=69db8434&hm=36b04f257ca034ef803d1d42cb107cfa6971cbf5b2fca756a7fcf6fd55cbc2f7&=&format=webp&quality=lossless" alt="IMFTX" loading="lazy" decoding="async">
+      </div>
       <div class="twitch-chat-wrap">
         <!-- data-twitch-parents="mondomaine.fr" si le chat ne charge pas sur ton hébergeur -->
         <iframe id="twitch-chat-embed" title="Chat du stream Twitch" data-twitch-channel="imftx" data-twitch-parents="" allowfullscreen loading="lazy"></iframe>
