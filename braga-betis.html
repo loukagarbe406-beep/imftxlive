@@ -60,6 +60,7 @@
         display: grid;
         grid-template-columns: auto minmax(0, 1fr) auto;
         align-items: center;
+        position: relative;
       }
       #burgerBtn,
       #theme-toggle,
@@ -75,12 +76,21 @@
         padding-right: 12px;
       }
       #nav-pfp {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
         height: 44px !important;
         align-items: center;
+        justify-content: center;
+        z-index: 1;
+        pointer-events: none;
       }
       #nav-pfp > div {
+        display: flex;
+        align-items: center;
+        height: 44px;
         line-height: 1 !important;
-        transform: translateY(-1px);
+        transform: none;
       }
     }
     html, body {
@@ -509,7 +519,7 @@
         border-top: 1px solid var(--border);
         max-height: min(88vh, 900px);
         min-height: min(50vh, 640px);
-        margin: 0 14px;
+        margin: 0;
         border-radius: 14px 14px 0 0;
       }
       .col-right .twitch-chat-wrap {
@@ -522,12 +532,12 @@
     /* ── Mobile (≤760px) : même overlay que le script de référence (header compact + footer colonne) ── */
     @media (max-width: 760px) {
       .col-center .player-shell {
-        padding: 0 14px;
+        padding: 0;
       }
       .live-player-wrap {
-        border-radius: 12px;
+        border-radius: 0;
         overflow: hidden;
-        margin-top: 6px;
+        margin-top: 0;
       }
       .player-footer {
         display: grid;
@@ -671,14 +681,9 @@
       </div>
 
     <div id="mobileNav" class="hidden md:hidden border-t border-white/10 px-5 py-3 space-y-2" style="background-color:var(--rail-bg)" role="dialog" aria-label="Menu mobile">
-      <a href="index.html" class="block py-2 text-sm font-semibold text-white/90 hover:text-white">Accueil</a>
-      <a href="#" class="block py-2 text-sm font-semibold text-red-400 hover:text-red-300">Lien secours</a>
-      <a href="shop.html" class="block py-2 text-sm font-semibold text-white/90 hover:text-white">IPTV — boutique</a>
-      <div class="flex gap-2 pt-2">
-        <a href="https://t.me/+Nhks8hh-5840ODU8" target="_blank" rel="noopener noreferrer" class="flex-1 h-11 flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Telegram</a>
-        <a href="https://discord.gg/MTUsxvJSR" target="_blank" rel="noopener noreferrer" class="flex-1 h-11 flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Discord</a>
-        <a href="https://x.com/imftxvxv" target="_blank" rel="noopener noreferrer" class="flex-1 h-11 flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">X</a>
-      </div>
+      <a href="https://t.me/+Nhks8hh-5840ODU8" target="_blank" rel="noopener noreferrer" class="h-11 w-full flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Telegram</a>
+      <a href="https://discord.gg/MTUsxvJSR" target="_blank" rel="noopener noreferrer" class="h-11 w-full flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Discord</a>
+      <a href="https://x.com/imftxvxv" target="_blank" rel="noopener noreferrer" class="h-11 w-full flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">X</a>
     </div>
   </nav>
 
