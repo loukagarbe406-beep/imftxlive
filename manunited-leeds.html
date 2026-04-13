@@ -805,45 +805,39 @@
         }
 
         var burger = document.getElementById("burgerBtn");
-        var mobileNav = document.getElementById("mobileNav");
-        if (burger && mobileNav) {
+        var menu = document.getElementById("mobileMenu") || document.getElementById("mobileNav");
+        if (burger && menu) {
           burger.addEventListener("click", function () {
-            var open = mobileNav.classList.toggle("hidden") === false;
+            var open = menu.classList.toggle("hidden") === false;
             burger.setAttribute("aria-expanded", open ? "true" : "false");
           });
         }
       }
 
-      function initTwitchChatEmbed() {
-        var el = document.getElementById("twitch-chat-embed");
-        if (!el) return;
-        var channel = String(el.dataset.twitchChannel || "imftx").trim();
+      (function () {
+        var chat = document.getElementById("chatFrame");
+        if (!chat) return;
         var parents = [];
         function addParent(p) {
           p = String(p || "").trim().toLowerCase();
           if (!p || parents.indexOf(p) >= 0) return;
           parents.push(p);
         }
-        (String(el.dataset.twitchParents || "").split(/[\s,]+/)).forEach(function (p) { addParent(p); });
         var host = String(window.location.hostname || "").toLowerCase();
         if (host) {
           addParent(host);
           if (host.indexOf("www.") === 0) addParent(host.slice(4));
           else if (host.indexOf(".") > 0) addParent("www." + host);
         }
-        if (!host || window.location.protocol === "file:") {
-          addParent("localhost");
-          addParent("127.0.0.1");
-        }
-        if (!parents.length) addParent("localhost");
+        addParent("localhost");
+        addParent("127.0.0.1");
         var qs = parents.map(function (p) { return "parent=" + encodeURIComponent(p); }).join("&");
-        el.src = "https://www.twitch.tv/embed/" + encodeURIComponent(channel) + "/chat?" + qs + "&darkpopout";
-      }
+        chat.src = "https://www.twitch.tv/embed/imftxplus1/chat?" + qs + "&darkpopout";
+      })();
 
       function capWord(w) {
         if (!w) return w;
         var lower = w.toLowerCase();
-        /* Acronymes très courts (ex. PSG, OM, AS) : tout en majuscules */
         if (w.length <= 3 && w === w.toUpperCase() && /^[A-ZÀ-Ÿ]+$/.test(w)) {
           return w.toUpperCase();
         }
@@ -854,7 +848,6 @@
         return String(str).trim().split(/\s+/).filter(Boolean).map(capWord).join(" ");
       }
 
-      /** Une seule ligne : « équipe A vs équipe B » (vs en minuscules, jamais de retour à la ligne). */
       function formatMatchTitle(full) {
         var s = String(full).trim()
           .replace(/<br\s*\/?>/gi, " ")
@@ -896,46 +889,29 @@
         footer.textContent = line;
       }
 
-      var pageSlug = "manunited-leeds";
-
-      function getSessionId() {
-        var sessionId = localStorage.getItem("live_session_id");
-        if (!sessionId) {
-          sessionId = "sess_" + Math.random().toString(36).slice(2) + Date.now();
-          localStorage.setItem("live_session_id", sessionId);
-        }
-        return sessionId;
-      }
-
-      async function sendViewer(action) {
-        action = action || "ping";
-        var formData = new FormData();
-        formData.append("page_slug", pageSlug);
-        formData.append("session_id", getSessionId());
-        formData.append("action", action);
-
-        try {
-          var res = await fetch("/viewer_ping.php", {
-            method: "POST",
-            body: formData
-          });
-          var data = await res.json();
-          var el = document.getElementById("counterMatch1");
-          if (el && typeof data.viewers !== "undefined") {
-            el.textContent = data.viewers;
-          }
-        } catch (e) {
-          console.error(e);
-        }
+      function setupJwPlayer() {
+        if (typeof jwplayer !== "function") return;
+        jwplayer("jwplayer-container").setup({
+          file: "https://cluone.dad/live/388FAA8743C4E2980F7B4089B7E81087/7.m3u8",
+          type: "hls",
+          width: "100%",
+          aspectratio: "16:9",
+          autostart: true,
+          primary: "html5",
+          hlshtml: true,
+          stretching: "uniform",
+          preload: "metadata",
+          controls: true,
+          displaytitle: false,
+          displaydescription: false
+        });
       }
 
       function boot() {
         initNavChrome();
-        initTwitchChatEmbed();
         applyTitleFromQuery();
         window.addEventListener("load", function () {
           applyTitleFromQuery();
-          initTwitchChatEmbed();
         });
 
         var shell = document.getElementById("mainShell");
@@ -948,16 +924,7 @@
           });
         }
 
-        sendViewer("ping");
-        setInterval(function () { sendViewer("ping"); }, 15000);
-
-        window.addEventListener("beforeunload", function () {
-          var data = new URLSearchParams();
-          data.append("page_slug", pageSlug);
-          data.append("session_id", getSessionId());
-          data.append("action", "leave");
-          navigator.sendBeacon("/viewer_ping.php", data);
-        });
+        setupJwPlayer();
       }
 
       if (document.readyState === "loading") {
