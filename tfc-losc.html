@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0a0a0a">
-  <title>IMFTX — Toulouse - Lille</title>
+  <title>IMFTX — Manchester United - Leeds United</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jwplayer.com/libraries/IDzF9Zmk.js"></script>
   <script>
     tailwind.config = { darkMode: 'class' };
   </script>
@@ -38,10 +39,59 @@
       --rail-bg: #18181b;
       --rail-border: rgba(255, 255, 255, 0.05);
       --rail-placeholder: #adadb8;
-      /* Chat + bande sous bannière : même teinte que le fond page (#0a0a0a) */
-      --chat-panel-bg: var(--bg);
+      /* Chat : même gris que le rail « Chaînes live » */
+      --chat-panel-bg: var(--rail-bg);
       --chat-welcome: #7a8691;
       --chat-banner-bg: var(--bg);
+    }
+    body > nav {
+      background-color: #000000;
+      overflow-x: hidden;
+    }
+    /* Barre du haut : alignement stable sur téléphone (évite le « décalé ») */
+    .site-nav-inner {
+      max-width: 100%;
+    }
+    @media (max-width: 767px) {
+      .site-nav-inner {
+        gap: 0.5rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        position: relative;
+      }
+      #burgerBtn,
+      #theme-toggle,
+      .site-nav-inner a[aria-label="IPTV"] {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+      }
+      .site-nav-inner a[aria-label="IPTV"] {
+        width: auto;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      #nav-pfp {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 44px !important;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        pointer-events: none;
+      }
+      #nav-pfp > div {
+        display: flex;
+        align-items: center;
+        height: 44px;
+        line-height: 1 !important;
+        transform: none;
+      }
     }
     html, body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -62,21 +112,23 @@
     /* ── Grille principale (rail | lecteur | chat Twitch) ── */
     .shell {
       display: grid;
-      grid-template-columns: minmax(168px, 208px) 1fr minmax(260px, 300px);
+      /* Colonne centrale : min largeur pour le lecteur (évite la « bande » minuscule). Chat : min un peu plus bas. */
+      grid-template-columns: minmax(168px, 208px) minmax(300px, 1fr) minmax(220px, 300px);
       height: calc(100vh - 64px);
       min-height: 0;
       max-width: 100%;
       margin: 0 auto;
       overflow: hidden;
+      background: var(--rail-bg);
     }
     .shell.rail-collapsed {
-      grid-template-columns: 46px 1fr minmax(260px, 300px);
+      grid-template-columns: 46px minmax(300px, 1fr) minmax(220px, 300px);
     }
 
     /* ── Rail chaînes live ── */
     .live-channels-rail {
       background: var(--rail-bg);
-      border-right: 1px solid var(--rail-border);
+      border-right: none;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -88,12 +140,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      padding: 14px 12px;
-      border-bottom: 1px solid var(--rail-border);
+      gap: 6px;
+      padding: 8px 8px 6px;
     }
     .live-rail__title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       color: var(--text);
       letter-spacing: -0.02em;
@@ -125,14 +176,21 @@
     .shell.rail-collapsed .live-rail__body { display: none; }
     .shell.rail-collapsed .live-rail__header {
       justify-content: center;
-      border-bottom: none;
       padding: 12px 0;
     }
     .live-rail__body {
       flex: 1;
       overflow-y: auto;
-      padding: 12px 10px;
+      padding: 6px 6px 8px;
       min-height: 0;
+      /* Barre de défilement masquée (scroll souris / trackpad / tactile inchangé) */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .live-rail__body::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
     }
     .live-rail__empty {
       font-size: 12px;
@@ -148,6 +206,45 @@
       flex-direction: column;
       gap: 6px;
     }
+    .live-channel-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 0;
+      height: 54px;
+      min-height: 54px;
+      padding: 6px 8px;
+      text-decoration: none;
+      color: inherit;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+    }
+    .live-channel-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.14);
+      transform: translateY(-1px);
+    }
+    .live-channel-card:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.35);
+      outline-offset: 2px;
+    }
+    .live-channel-card__logo-img {
+      display: block;
+      box-sizing: border-box;
+      width: min(100%, 128px);
+      height: 34px;
+      max-width: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+    .live-channel-card__logo-img[alt^="Ligue 1"] {
+      width: min(100%, 142px);
+      height: 38px;
+    }
 
     /* ── Colonne centrale ── */
     .col-center {
@@ -155,7 +252,7 @@
       flex-direction: column;
       min-width: 0;
       min-height: 0;
-      background: var(--bg);
+      background: var(--rail-bg);
     }
     .player-shell {
       flex: 1;
@@ -168,27 +265,49 @@
       width: 100%;
       aspect-ratio: 16 / 9;
       flex: 0 0 auto;
-      background: var(--bg);
+      background: var(--rail-bg);
       border-bottom: none;
       overflow: hidden;
     }
     .live-player-inner {
       position: absolute;
       inset: 0;
-      background: var(--bg);
+      background: var(--rail-bg);
     }
-    .live-player-inner iframe {
+    #jwplayer-container {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      border: 0;
-      background: var(--bg);
+      background: #000;
+    }
+    /* Embeds tiers : liste blanche par domaine possible — lien de secours */
+    .embed-block-notice {
+      flex-shrink: 0;
+      padding: 10px 14px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.78);
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid var(--rail-border);
+    }
+    .embed-block-notice a {
+      color: #93c5fd;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .embed-block-notice a:hover {
+      color: #bfdbfe;
     }
 
-    /* Barre sous le lecteur — même logique que l’overlay téléphone / desktop fourni */
+    /* Barre sous le lecteur — même gris que le rail chaînes */
     .player-footer {
       flex-shrink: 0;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
       width: 100%;
       box-sizing: border-box;
       display: grid;
@@ -198,8 +317,12 @@
       min-height: 96px;
       padding: 14px 20px 16px;
       margin: 0;
-      background: var(--bg);
-      border-top: 1px solid var(--border);
+      background-color: #000000;
+      border-top: 1px solid var(--rail-border);
+    }
+    .player-footer > * {
+      position: relative;
+      z-index: 1;
     }
     .player-footer > .match-inline {
       grid-column: 1;
@@ -362,7 +485,7 @@
       fill: none;
       flex-shrink: 0;
     }
-    /* ── Colonne chat (décoratif, pas de vrai chat ni Twitch) ── */
+    /* ── Colonne droite : chat Twitch pleine hauteur ── */
     .col-right {
       background: var(--chat-panel-bg);
       border-left: 1px solid var(--border);
@@ -372,68 +495,22 @@
       min-width: 0;
       overflow: hidden;
     }
-    .chat-header {
+    /* Bannière au-dessus du chat : uniquement téléphone (< md / 768px) */
+    .mobile-chat-banner {
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 16px;
       border-bottom: 1px solid var(--border);
       background: var(--chat-panel-bg);
     }
-    .chat-header__title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .chat-header__actions {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .chat-header__icon {
-      width: 34px;
-      height: 34px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      color: rgba(255, 255, 255, 0.75);
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1;
-      user-select: none;
-    }
-    .chat-header__icon:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.06);
-    }
-    .chat-header__icon svg {
-      width: 16px;
-      height: 16px;
-    }
-    /* Bannière : même ratio que l’asset (1860×371) pour afficher l’affiche entière, sans crop bancal */
-    .chat-banner {
-      flex-shrink: 0;
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1860 / 371;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-      background: var(--chat-banner-bg);
-    }
-    .chat-banner img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center center;
+    .mobile-chat-banner img {
       display: block;
+      width: 100%;
+      height: auto;
+      max-height: min(34vh, 240px);
+      object-fit: contain;
+      object-position: center;
     }
     .twitch-chat-wrap {
-      flex: 1;
+      flex: 1 1 auto;
       min-height: 0;
       position: relative;
       background: var(--chat-panel-bg);
@@ -459,9 +536,14 @@
         order: 2;
         border-left: none;
         border-top: 1px solid var(--border);
-        max-height: 55vh;
-        margin: 0 14px;
+        max-height: min(88vh, 900px);
+        min-height: min(50vh, 640px);
+        margin: 0;
         border-radius: 14px 14px 0 0;
+      }
+      .col-right .twitch-chat-wrap {
+        flex: 1;
+        min-height: min(45vh, 560px);
       }
       .live-player-wrap { max-height: none; }
     }
@@ -469,12 +551,12 @@
     /* ── Mobile (≤760px) : même overlay que le script de référence (header compact + footer colonne) ── */
     @media (max-width: 760px) {
       .col-center .player-shell {
-        padding: 0 14px;
+        padding: 0;
       }
       .live-player-wrap {
-        border-radius: 12px;
+        border-radius: 0;
         overflow: hidden;
-        margin-top: 6px;
+        margin-top: 0;
       }
       .player-footer {
         display: grid;
@@ -538,33 +620,35 @@
       .btn-iptv-emoji {
         font-size: 15px;
       }
-      /* Chat plus grand sur téléphone (zone messages prête pour un futur vrai chat) */
+      /* Colonne chat sur téléphone */
       .col-right {
         max-height: min(92vh, 960px);
-        min-height: 58vh;
+        min-height: 56vh;
       }
       .twitch-chat-wrap {
-        min-height: min(44vh, 360px);
+        flex: 1;
+        min-height: min(48vh, 520px);
       }
     }
   </style>
 </head>
 <body>
 
-  <nav class="sticky top-0 z-[100] backdrop-blur-xl border-b border-white/10 shadow-sm bg-black/30 text-white">
-    <div class="max-w-screen-2xl mx-auto py-2 px-5 md:px-24 h-16 flex items-center justify-between">
+  <nav class="sticky top-0 z-[100] border-b border-white/10 shadow-sm text-white">
+    <div class="site-nav-inner flex h-16 w-full max-w-full items-center justify-between gap-2 px-3 sm:gap-3 sm:px-5 md:gap-4 md:px-6 lg:px-8">
 
-      <button id="burgerBtn" type="button" class="flex md:hidden w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200" aria-label="Menu" aria-expanded="false" aria-controls="mobileNav">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-      </button>
+      <div class="flex h-11 min-h-0 min-w-0 flex-1 items-center gap-2 sm:gap-3">
+        <button id="burgerBtn" type="button" class="flex md:hidden h-11 w-11 shrink-0 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200" aria-label="Menu" aria-expanded="false" aria-controls="mobileNav">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <a id="nav-pfp" href="index.html" class="flex h-11 min-w-0 items-center gap-1">
+          <div class="truncate text-2xl font-extrabold leading-none tracking-tight text-white sm:text-3xl">IMFTX+</div>
+        </a>
+      </div>
 
-      <a id="nav-pfp" href="index.html" class="h-11 flex items-center gap-1">
-        <div class="text-3xl font-extrabold tracking-tight text-white">IMFTX+</div>
-      </a>
-
-      <div class="h-11 flex items-center gap-2 md:gap-4 text-xl">
+      <div class="flex h-11 shrink-0 items-center gap-1.5 sm:gap-3 md:gap-4">
         <div class="relative flex group">
           <a href="shop.html"
              class="md:hidden h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
@@ -613,17 +697,12 @@
           </svg>
         </button>
       </div>
-    </div>
-
-    <div id="mobileNav" class="hidden md:hidden border-t border-white/10 bg-black/50 px-5 py-3 space-y-2" role="dialog" aria-label="Menu mobile">
-      <a href="index.html" class="block py-2 text-sm font-semibold text-white/90 hover:text-white">Accueil</a>
-      <a href="#" class="block py-2 text-sm font-semibold text-red-400 hover:text-red-300">Lien secours</a>
-      <a href="shop.html" class="block py-2 text-sm font-semibold text-white/90 hover:text-white">IPTV — boutique</a>
-      <div class="flex gap-2 pt-2">
-        <a href="https://t.me/+Nhks8hh-5840ODU8" target="_blank" rel="noopener noreferrer" class="flex-1 h-11 flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Telegram</a>
-        <a href="https://discord.gg/MTUsxvJSR" target="_blank" rel="noopener noreferrer" class="flex-1 h-11 flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Discord</a>
-        <a href="https://x.com/imftxvxv" target="_blank" rel="noopener noreferrer" class="flex-1 h-11 flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">X</a>
       </div>
+
+    <div id="mobileNav" class="hidden md:hidden border-t border-white/10 px-5 py-3 space-y-2" style="background-color:var(--rail-bg)" role="dialog" aria-label="Menu mobile">
+      <a href="https://t.me/+Nhks8hh-5840ODU8" target="_blank" rel="noopener noreferrer" class="h-11 w-full flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Telegram</a>
+      <a href="https://discord.gg/MTUsxvJSR" target="_blank" rel="noopener noreferrer" class="h-11 w-full flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Discord</a>
+      <a href="https://x.com/imftxvxv" target="_blank" rel="noopener noreferrer" class="h-11 w-full flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">X</a>
     </div>
   </nav>
 
@@ -637,8 +716,24 @@
         </button>
       </header>
       <div class="live-rail__body">
-        <p class="live-rail__empty">Aucune diffusion en direct</p>
-        <ul class="live-channels" id="live-channels-list" hidden></ul>
+        <p class="live-rail__empty" hidden>Aucune diffusion en direct</p>
+        <ul class="live-channels" id="live-channels-list" role="list">
+          <li><a href="bein1.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/bein_1.png" alt="beIN Sports 1" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="bein2.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/bein_2.png" alt="beIN Sports 2" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="bein3.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/bein_3.png" alt="beIN Sports 3" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="canalplus.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/canalplus.png" alt="Canal+" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="canalplus-sport.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/canalplus_sport.png" alt="Canal+ Sport" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="canalplus-foot.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/canalplus_foot.png" alt="Canal+ Foot" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="canalplus-360.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/canalplus_sport360.png" alt="Canal+ Sport 360" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="rmc1.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/rmc_sport_1.png" alt="RMC Sport 1" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="rmc2.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/rmc_sport_2.png" alt="RMC Sport 2" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="eurosport1.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/eurosport_1.png" alt="Eurosport 1" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="eurosport2.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/eurosport_2.png" alt="Eurosport 2" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="lequipe.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/lequipe.png" alt="L'Équipe" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="L1+.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/ligue1_fr.png" alt="Ligue 1+" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="L1+2.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/ligue1_fr.png" alt="Ligue 1+ 2" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+          <li><a href="L1+3.html" class="live-channel-card"><img class="live-channel-card__logo-img" src="https://only-us.win/tv/logos/ligue1_fr.png" alt="Ligue 1+ 3" loading="lazy" decoding="async" referrerpolicy="no-referrer" /></a></li>
+        </ul>
       </div>
     </aside>
 
@@ -646,12 +741,12 @@
       <div class="player-shell">
         <div class="live-player-wrap" id="livePlayerWrap">
           <div class="live-player-inner">
-            <iframe src="https://coolball.me/part/Ll.php?id=1/21" title="Lecteur live" allowfullscreen referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"></iframe>
+            <div id="jwplayer-container"></div>
           </div>
         </div>
 
         <div class="player-footer">
-          <span class="match-inline" id="matchFooter">Toulouse vs Lille</span>
+          <span class="match-inline" id="matchFooter">Manchester United vs Leeds United</span>
           <div class="btn-group">
             <a href="#" class="stream-btn btn-x-sm" aria-label="Twitter / X">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/></svg>
@@ -672,28 +767,19 @@
           </div>
           <span class="viewer-mini player-footer__viewers" title="Spectateurs en direct">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span id="counterMatch1" data-viewer-counter="tfc-losc">0</span>
+            <span id="counterMatch1" data-viewer-counter="manunited-leeds">0</span>
           </span>
         </div>
       </div>
     </main>
 
-    <aside class="col-right" aria-label="Chat Twitch">
-      <div class="chat-header">
-        <span class="chat-header__title">Chat Twitch</span>
-        <div class="chat-header__actions" aria-hidden="true">
-          <span class="chat-header__icon">&gt;</span>
-          <span class="chat-header__icon" title="Pop-out">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </span>
-        </div>
-      </div>
-      <div class="chat-banner">
-        <img src="https://media.discordapp.net/attachments/1486477561583239219/1492852505296502824/image.png?ex=69dcd6bd&is=69db853d&hm=aff7f824736d092e29fbc2a67a209faf4c373d0278fa438289125b58c079d6e7&=&format=webp&quality=lossless&width=1860&height=371" alt="LES PLUS BELLES AFFICHES SE VIVENT SUR IMFTX+" width="1860" height="371" loading="lazy" decoding="async">
+    <aside class="col-right" aria-label="Chat du stream">
+      <div class="mobile-chat-banner block md:hidden">
+        <img src="https://empire-sport.sbs/upload/teambanks/o6hv8yxkvwbm7knkj0mwxedp3fcttu.png" alt="Manchester United - Leeds United" loading="lazy" decoding="async">
       </div>
       <div class="twitch-chat-wrap">
-        <!-- Chaîne Twitch : modifiez data-twitch-channel (ex. votre pseudo en minuscules). -->
-        <iframe id="twitch-chat-embed" title="Chat Twitch" data-twitch-channel="imftx" allowfullscreen loading="lazy"></iframe>
+        <!-- data-twitch-parents="mondomaine.fr" si le chat ne charge pas sur ton hébergeur -->
+        <iframe id="chatFrame" title="Chat du stream Twitch" data-twitch-channel="imftx" data-twitch-parents="" allowfullscreen loading="lazy"></iframe>
       </div>
     </aside>
 
@@ -732,12 +818,24 @@
         var el = document.getElementById("twitch-chat-embed");
         if (!el) return;
         var channel = String(el.dataset.twitchChannel || "imftx").trim();
-        var host = window.location.hostname;
-        if (!host) host = "localhost";
-        var parents = [host];
-        if (host.indexOf(".") > 0 && host.indexOf("www.") !== 0) {
-          parents.push("www." + host);
+        var parents = [];
+        function addParent(p) {
+          p = String(p || "").trim().toLowerCase();
+          if (!p || parents.indexOf(p) >= 0) return;
+          parents.push(p);
         }
+        (String(el.dataset.twitchParents || "").split(/[\s,]+/)).forEach(function (p) { addParent(p); });
+        var host = String(window.location.hostname || "").toLowerCase();
+        if (host) {
+          addParent(host);
+          if (host.indexOf("www.") === 0) addParent(host.slice(4));
+          else if (host.indexOf(".") > 0) addParent("www." + host);
+        }
+        if (!host || window.location.protocol === "file:") {
+          addParent("localhost");
+          addParent("127.0.0.1");
+        }
+        if (!parents.length) addParent("localhost");
         var qs = parents.map(function (p) { return "parent=" + encodeURIComponent(p); }).join("&");
         el.src = "https://www.twitch.tv/embed/" + encodeURIComponent(channel) + "/chat?" + qs + "&darkpopout";
       }
@@ -798,7 +896,7 @@
         footer.textContent = line;
       }
 
-      var pageSlug = "tfc-losc";
+      var pageSlug = "manunited-leeds";
 
       function getSessionId() {
         var sessionId = localStorage.getItem("live_session_id");
@@ -835,7 +933,10 @@
         initNavChrome();
         initTwitchChatEmbed();
         applyTitleFromQuery();
-        window.addEventListener("load", applyTitleFromQuery);
+        window.addEventListener("load", function () {
+          applyTitleFromQuery();
+          initTwitchChatEmbed();
+        });
 
         var shell = document.getElementById("mainShell");
         var railBtn = document.getElementById("liveRailCollapse");
