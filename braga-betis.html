@@ -194,7 +194,7 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
     .live-channel-card {
       display: flex;
@@ -203,33 +203,37 @@
       box-sizing: border-box;
       width: 100%;
       min-width: 0;
-      height: 52px;
-      min-height: 52px;
-      padding: 4px 6px;
+      height: 54px;
+      min-height: 54px;
+      padding: 6px 8px;
       text-decoration: none;
       color: inherit;
-      background: transparent;
-      border: none;
-      border-radius: 6px;
-      transition: opacity 0.15s ease, transform 0.15s ease;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
     }
     .live-channel-card:hover {
-      opacity: 0.92;
-      transform: scale(1.03);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.14);
+      transform: translateY(-1px);
     }
     .live-channel-card:focus-visible {
       outline: 2px solid rgba(255, 255, 255, 0.35);
       outline-offset: 2px;
     }
-    /* Même cadre pour tous : les grandes se réduisent, les petites (ex. L1) grossissent */
     .live-channel-card__logo-img {
       display: block;
       box-sizing: border-box;
-      width: min(100%, 118px);
-      height: 36px;
+      width: min(100%, 128px);
+      height: 34px;
       max-width: 100%;
       object-fit: contain;
       object-position: center;
+    }
+    .live-channel-card__logo-img[alt^="Ligue 1"] {
+      width: min(100%, 142px);
+      height: 38px;
     }
 
     /* ── Colonne centrale ── */
