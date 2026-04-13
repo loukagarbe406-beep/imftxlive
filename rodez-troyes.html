@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr" class="dark">
 <head>
@@ -741,8 +742,8 @@
       <div class="player-shell">
         <div class="live-player-wrap" id="livePlayerWrap">
           <div class="live-player-inner">
-            <!-- Pas de referrerpolicy=no-referrer : certains hébergeurs exigent le référent pour autoriser l’embed -->
-            <iframe src="https://lovetier.bz/player/BEINSPORT1FR" title="Lecteur live" allowfullscreen sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-popups"></iframe>
+            <!-- Sandbox strict : sans allow-popups / allow-forms pour limiter pubs & redirections (si le lecteur casse, réajoute allow-forms). -->
+            <iframe src="https://lovetier.bz/player/BEINSPORT1FR" title="Lecteur live" allowfullscreen allow="fullscreen; autoplay" loading="lazy" sandbox="allow-scripts allow-same-origin allow-presentation"></iframe>
           </div>
        </div>
 
