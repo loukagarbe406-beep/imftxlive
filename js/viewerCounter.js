@@ -2,10 +2,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import {
   getDatabase,
   ref,
+  set,
   onValue,
-  runTransaction,
   onDisconnect,
-  increment
+  remove,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
@@ -18,25 +19,79 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+function generateSessionId() {
+  return Math.random().toString(36).substr(2, 12) + Date.now().toString(36);
+}
+
+const sessionId = generateSessionId();
+const registeredPages = new Set();
+
 /**
  * @param {string} pageName - Nom de la page dans la DB
  * @param {string} elementId - ID de l'élément HTML
  * @param {boolean} readonly - Si vrai, n'incrémente pas (juste lecture)
  */
 export function initViewerCounter(pageName, elementId, readonly = false) {
-  const countRef = ref(db, `pages/${pageName}/count`);
+  const viewersRef = ref(db, `pages/${pageName}/viewers`);
   const el = document.getElementById(elementId);
   if (!el) return;
 
-  if (!readonly) {
-    runTransaction(countRef, (current) => (current || 0) + 1);
-    onDisconnect(countRef).set(increment(-1));
+  let displayedCount = 0;
+  let realCount = 0;
+  let initialDelayDone = false;
+
+  const delayMs = 5000 + Math.random() * 5000;
+
+  el.textContent = "...";
+
+  if (!readonly && !registeredPages.has(pageName)) {
+    registeredPages.add(pageName);
+    const myPresenceRef = ref(db, `pages/${pageName}/viewers/${sessionId}`);
+
+    const connectedRef = ref(db, ".info/connected");
+    onValue(connectedRef, (snap) => {
+      if (snap.val() === true) {
+        onDisconnect(myPresenceRef).remove();
+        set(myPresenceRef, { t: serverTimestamp() });
+      }
+    });
   }
 
-  onValue(countRef, (snapshot) => {
-    const val = snapshot.val();
-    el.textContent = (val && val > 0) ? val : 0;
+  onValue(viewersRef, (snapshot) => {
+    realCount = snapshot.exists() ? snapshot.size : 0;
+    if (realCount < 0) realCount = 0;
+
+    if (initialDelayDone) {
+      updateDisplay(el, displayedCount, realCount, (v) => { displayedCount = v; });
+    }
   });
+
+  setTimeout(() => {
+    initialDelayDone = true;
+    updateDisplay(el, displayedCount, realCount, (v) => { displayedCount = v; });
+  }, delayMs);
+}
+
+function updateDisplay(el, from, to, setDisplayed) {
+  if (from === to) {
+    el.textContent = to;
+    setDisplayed(to);
+    return;
+  }
+
+  const diff = to - from;
+  const steps = Math.min(Math.abs(diff), 15);
+  const stepDelay = 80;
+  let current = from;
+
+  for (let i = 1; i <= steps; i++) {
+    setTimeout(() => {
+      current = Math.round(from + (diff * i) / steps);
+      if (current < 0) current = 0;
+      el.textContent = current;
+      if (i === steps) setDisplayed(current);
+    }, stepDelay * i);
+  }
 }
 
 /**
