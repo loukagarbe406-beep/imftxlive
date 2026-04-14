@@ -37,7 +37,7 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     });
   }
 
-  let firstUpdate = true;
+  const startTime = Date.now();
   let pendingCount = 0;
   let updateTimer = null;
 
@@ -45,8 +45,7 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     const raw = snapshot.val();
     pendingCount = (typeof raw === "number" && raw > 0) ? raw : 0;
 
-    if (firstUpdate) {
-      firstUpdate = false;
+    if (Date.now() - startTime < 2000) {
       el.textContent = pendingCount;
       return;
     }
