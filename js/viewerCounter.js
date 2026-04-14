@@ -37,27 +37,22 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     });
   }
 
-  const startTime = Date.now();
-  let pendingCount = 0;
-  let updateTimer = null;
+  let realCount = 0;
+  let firstUpdate = true;
 
   onValue(countRef, (snapshot) => {
     const raw = snapshot.val();
-    pendingCount = (typeof raw === "number" && raw > 0) ? raw : 0;
+    realCount = (typeof raw === "number" && raw > 0) ? raw : 0;
 
-    if (Date.now() - startTime < 2000) {
-      el.textContent = pendingCount;
-      return;
-    }
-
-    if (!updateTimer) {
-      const delay = 5000 + Math.random() * 5000;
-      updateTimer = setTimeout(() => {
-        updateTimer = null;
-        el.textContent = pendingCount;
-      }, delay);
+    if (firstUpdate) {
+      firstUpdate = false;
+      el.textContent = realCount;
     }
   });
+
+  setInterval(() => {
+    el.textContent = realCount;
+  }, 5000 + Math.random() * 5000);
 }
 
 export function autoInitCounters() {
