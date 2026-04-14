@@ -37,22 +37,21 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     });
   }
 
+  const startTime = Date.now();
   let realCount = 0;
-  let firstUpdate = true;
 
   onValue(countRef, (snapshot) => {
     const raw = snapshot.val();
     realCount = (typeof raw === "number" && raw > 0) ? raw : 0;
 
-    if (firstUpdate) {
-      firstUpdate = false;
+    if (Date.now() - startTime < 2000) {
       el.textContent = realCount;
     }
   });
 
   setInterval(() => {
     el.textContent = realCount;
-  }, 5000 + Math.random() * 5000);
+  }, 7000);
 }
 
 export function autoInitCounters() {
