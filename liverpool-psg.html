@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="fr" class="dark">
 <head>
@@ -776,7 +777,7 @@
               </div>
               <div class="live-channel-card__viewers">
                 <span class="live-channel-card__dot"></span>
-                <span class="live-channel-card__count" data-viewer-counter="atm-barça">0</span>
+                <span class="live-channel-card__count" data-viewer-counter="atm-barça" data-viewer-readonly>0</span>
               </div>
             </a>
           </li>
@@ -942,61 +943,6 @@
         footer.textContent = line;
       }
 
-      var pageSlug = "liv-psg";
-
-      function getSessionId() {
-        var sessionId = localStorage.getItem("live_session_id");
-        if (!sessionId) {
-          sessionId = "sess_" + Math.random().toString(36).slice(2) + Date.now();
-          localStorage.setItem("live_session_id", sessionId);
-        }
-        return sessionId;
-      }
-
-      async function sendViewer(action) {
-        action = action || "ping";
-        var formData = new FormData();
-        formData.append("page_slug", pageSlug);
-        formData.append("session_id", getSessionId());
-        formData.append("action", action);
-
-        try {
-          var res = await fetch("/viewer_ping.php", {
-            method: "POST",
-            body: formData
-          });
-          var data = await res.json();
-          var el = document.getElementById("counterMatch1");
-          if (el && typeof data.viewers !== "undefined") {
-            el.textContent = data.viewers;
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      }
-
-      async function refreshRailCounter() {
-        var items = document.querySelectorAll(".live-channels [data-viewer-counter]");
-        if (!items.length) return;
-
-        await Promise.all(Array.prototype.map.call(items, async function (el) {
-          var slug = String(el.getAttribute("data-viewer-counter") || "").trim();
-          if (!slug) return;
-
-          try {
-            var res = await fetch("/viewer_count.php?page_slug=" + encodeURIComponent(slug), {
-              method: "GET"
-            });
-            var data = await res.json();
-            if (typeof data.viewers !== "undefined") {
-              el.textContent = data.viewers;
-            }
-          } catch (e) {
-            console.error(e);
-          }
-        }));
-      }
-
       function boot() {
         initNavChrome();
         initTwitchChatEmbed();
@@ -1015,19 +961,6 @@
             railBtn.setAttribute("aria-label", c ? "Afficher le panneau chaînes live" : "Réduire le panneau chaînes live");
           });
         }
-
-        sendViewer("ping");
-        setInterval(function () { sendViewer("ping"); }, 15000);
-        refreshRailCounter();
-        setInterval(refreshRailCounter, 15000);
-
-        window.addEventListener("beforeunload", function () {
-          var data = new URLSearchParams();
-          data.append("page_slug", pageSlug);
-          data.append("session_id", getSessionId());
-          data.append("action", "leave");
-          navigator.sendBeacon("/viewer_ping.php", data);
-        });
       }
 
       if (document.readyState === "loading") {
