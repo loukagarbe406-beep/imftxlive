@@ -23,13 +23,7 @@ const registeredPages = new Set();
 export function initViewerCounter(pageName, elementId, readonly = false) {
   const countRef = ref(db, `pages/${pageName}/count`);
   const el = document.getElementById(elementId);
-
-  if (!el) {
-    console.warn("[Viewer] Element introuvable :", elementId);
-    return;
-  }
-
-  console.log("[Viewer] Init:", pageName, "| element:", elementId, "| readonly:", readonly);
+  if (!el) return;
 
   if (!readonly && !registeredPages.has(pageName)) {
     registeredPages.add(pageName);
@@ -37,21 +31,13 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     const connectedRef = ref(db, ".info/connected");
     onValue(connectedRef, (snap) => {
       if (snap.val() === true) {
-        console.log("[Viewer] Connecté à Firebase, enregistrement présence...");
-        onDisconnect(countRef)
-          .set(increment(-1))
-          .then(() => {
-            console.log("[Viewer] onDisconnect enregistré");
-            return set(countRef, increment(1));
-          })
-          .then(() => console.log("[Viewer] Compteur incrémenté"))
-          .catch((err) => console.error("[Viewer] Erreur écriture:", err));
+        onDisconnect(countRef).set(increment(-1));
+        set(countRef, increment(1));
       }
     });
   }
 
   let firstUpdate = true;
-  let displayedCount = 0;
   let pendingCount = 0;
   let updateTimer = null;
 
@@ -59,11 +45,8 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     const raw = snapshot.val();
     pendingCount = (typeof raw === "number" && raw > 0) ? raw : 0;
 
-    console.log("[Viewer] Valeur reçue:", raw, "→ affichage:", pendingCount);
-
     if (firstUpdate) {
       firstUpdate = false;
-      displayedCount = pendingCount;
       el.textContent = pendingCount;
       return;
     }
@@ -73,7 +56,6 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     const delay = 5000 + Math.random() * 5000;
     updateTimer = setTimeout(() => {
       updateTimer = null;
-      displayedCount = pendingCount;
       el.textContent = pendingCount;
     }, delay);
   });
@@ -81,7 +63,6 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
 
 export function autoInitCounters() {
   const elements = document.querySelectorAll("[data-viewer-counter]");
-  console.log("[Viewer] Éléments trouvés:", elements.length);
 
   elements.forEach((el) => {
     const pageName = el.getAttribute("data-viewer-counter");
