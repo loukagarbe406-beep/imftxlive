@@ -25,11 +25,6 @@ function generateSessionId() {
 const sessionId = generateSessionId();
 const registeredPages = new Set();
 
-/**
- * @param {string} pageName - Nom de la page dans la DB
- * @param {string} elementId - ID de l'élément HTML
- * @param {boolean} readonly - Si vrai, n'incrémente pas (juste lecture)
- */
 export function initViewerCounter(pageName, elementId, readonly = false) {
   const viewersRef = ref(db, `pages/${pageName}/viewers`);
   const el = document.getElementById(elementId);
@@ -54,8 +49,7 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
   }
 
   onValue(viewersRef, (snapshot) => {
-    realCount = snapshot.exists() ? snapshot.size : 0;
-    if (realCount < 0) realCount = 0;
+    realCount = snapshot.exists() ? snapshot.numChildren() : 0;
 
     if (firstUpdate) {
       firstUpdate = false;
