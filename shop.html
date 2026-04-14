@@ -5,11 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>IMFTX+ — IPTV Premium</title>
-  <link rel="icon" href="">
+  <link rel="icon" href="https://media.discordapp.net/attachments/1485253416098730054/1485283135045369916/favicon-32x32.png?ex=69c14d36&is=69bffbb6&hm=ca14730649885e11b25569281738318b65a43ac06235014cb98de994c39a0e0a&=&format=webp&quality=lossless&width=40&height=40">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { font-family: 'Outfit', sans-serif; background: #0d0d0d; color: #fff; min-height: 100vh; overflow-x: hidden; }
+    html, body { font-family: 'Outfit', sans-serif; background: #0d0d0d url('https://thumb.canalplus.pro/bran/unsafe/2560x668/filters:quality(80)/image/695f89b989950/uploads/media/myCANAL_Cover_web_2760x720_47.jpg') center top / cover no-repeat fixed; color: #fff; min-height: 100vh; overflow-x: hidden; }
+    body::after { content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; background: rgba(0,0,0,.65); }
+    body > * { position: relative; z-index: 1; }
 
     ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 10px; }
 
@@ -23,7 +25,7 @@
     }
 
     /* NAV */
-    .nav { position: sticky; top: 0; z-index: 100; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; background: #111; border-bottom: 1px solid rgba(255,255,255,.07); }
+    .nav { position: sticky; top: 0; z-index: 100; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; background: rgba(255,255,255,.04); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,.07); }
     .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: .04em; color: #fff; text-decoration: none; }
     .nav-back { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,.15); background: rgba(255,255,255,.06); color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; transition: all .18s; }
     .nav-back:hover { background: rgba(255,255,255,.12); }
@@ -31,11 +33,11 @@
     /* HERO */
     .hero {
       text-align: center; padding: 80px 24px 60px; position: relative; overflow: hidden;
-      background: #0d0d0d;
+      background: transparent;
     }
     .hero::before {
       content: ""; position: absolute; inset: 0; pointer-events: none;
-      background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255,255,255,.08) 0%, transparent 70%);
+      background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255,255,255,.06) 0%, transparent 70%);
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 7px;
@@ -67,7 +69,7 @@
     .btn-secondary:hover { background: rgba(255,255,255,.11); }
 
     /* STATS */
-    .stats { display: flex; align-items: center; justify-content: center; gap: 40px; padding: 32px 24px; border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06); flex-wrap: wrap; }
+    .stats { display: flex; align-items: center; justify-content: center; gap: 40px; padding: 32px 24px; border-top: 1px solid rgba(255,255,255,.06); border-bottom: 1px solid rgba(255,255,255,.06); flex-wrap: wrap; background: transparent; }
     .stat-item { text-align: center; }
     .stat-num { font-size: 32px; font-weight: 900; background: linear-gradient(135deg, #ffffff, #bdbdbd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .stat-label { font-size: 12px; font-weight: 700; color: rgba(255,255,255,.45); text-transform: uppercase; letter-spacing: .08em; margin-top: 4px; }
@@ -188,7 +190,7 @@
     .cta-sub { font-size: 16px; color: rgba(255,255,255,.55); margin-bottom: 32px; }
 
     /* FOOTER */
-    footer { padding: 28px 24px; border-top: 1px solid rgba(255,255,255,.06); text-align: center; color: rgba(255,255,255,.3); font-size: 13px; }
+    footer { padding: 28px 24px; border-top: 1px solid rgba(255,255,255,.06); text-align: center; color: rgba(255,255,255,.3); font-size: 13px; background: rgba(13,13,13,.8); }
     footer a { color: rgba(255,255,255,.45); text-decoration: none; }
     footer a:hover { color: #fff; }
   </style>
@@ -206,7 +208,7 @@
 
 <!-- HERO -->
 <section class="hero">
-  <img class="hero-logo" src="https://media.discordapp.net/attachments/1473362141145993467/1492487150891962469/image.png?ex=69dece39&is=69dd7cb9&hm=0239ba40168c41995ac911d9d0cc683dcc502c121e06fdb261543680e30b8f7f&=&format=webp&quality=lossless&width=1860&height=620" alt="IMFTX+" loading="eager" decoding="async">
+  <img class="hero-logo" src="https://pbs.twimg.com/profile_banners/1982094397878751232/1775556307/600x200" alt="IMFTX+" loading="eager" decoding="async">
   <div class="hero-badge"><span class="badge-dot"></span>IPTV Premium disponible</div>
   <h1 class="hero-title">Regardez tout.<br><span>Sans compromis.</span></h1>
   <p class="hero-sub">Plus de 20 000 chaînes live, films, séries et sports en qualité HD / 4K. Compatible sur tous vos appareils.</p>
