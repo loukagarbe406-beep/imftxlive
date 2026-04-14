@@ -3,8 +3,8 @@ import {
   getDatabase,
   ref,
   onValue,
+  runTransaction,
   onDisconnect,
-  set,
   increment
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
@@ -18,58 +18,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-const registeredPages = new Set();
-
-function getPageId(customName) {
-  if (customName && customName !== "auto") {
-    const path = window.location.pathname.replace(/[.#$/\[\]]/g, "_");
-    return customName + "_" + path;
-  }
-  return window.location.pathname.replace(/[.#$/\[\]]/g, "_") || "index";
-}
-
+/**
+ * @param {string} pageName - Nom de la page dans la DB
+ * @param {string} elementId - ID de l'élément HTML
+ * @param {boolean} readonly - Si vrai, n'incrémente pas (juste lecture)
+ */
 export function initViewerCounter(pageName, elementId, readonly = false) {
-  const pageId = getPageId(pageName);
-  const countRef = ref(db, `pages/${pageId}/count`);
+  const countRef = ref(db, `pages/${pageName}/count`);
   const el = document.getElementById(elementId);
   if (!el) return;
 
-  if (!readonly && !registeredPages.has(pageId)) {
-    registeredPages.add(pageId);
-
-    let counted = false;
-
-    const connectedRef = ref(db, ".info/connected");
-    onValue(connectedRef, (snap) => {
-      if (snap.val() === true) {
-        onDisconnect(countRef).set(increment(-1));
-
-        if (!counted) {
-          counted = true;
-          set(countRef, increment(1));
-        }
-      }
-    });
+  if (!readonly) {
+    runTransaction(countRef, (current) => (current || 0) + 1);
+    onDisconnect(countRef).set(increment(-1));
   }
 
-  let realCount = 0;
-  let started = false;
-
   onValue(countRef, (snapshot) => {
-    const raw = snapshot.val();
-    realCount = (typeof raw === "number" && raw > 0) ? raw : 0;
-
-    if (!started) {
-      started = true;
-      el.textContent = realCount;
-
-      setInterval(() => {
-        el.textContent = realCount;
-      }, 7000);
-    }
+    const val = snapshot.val();
+    el.textContent = (val && val > 0) ? val : 0;
   });
 }
 
+/**
+ * Scanne les éléments.
+ * Si l'élément a l'attribut [data-viewer-readonly], il ne comptera pas comme un viewer.
+ */
 export function autoInitCounters() {
   const elements = document.querySelectorAll("[data-viewer-counter]");
 
