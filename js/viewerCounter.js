@@ -5,7 +5,6 @@ import {
   set,
   onValue,
   onDisconnect,
-  remove,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
@@ -38,11 +37,8 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
 
   let displayedCount = 0;
   let realCount = 0;
-  let initialDelayDone = false;
-
-  const delayMs = 5000 + Math.random() * 5000;
-
-  el.textContent = "...";
+  let firstUpdate = true;
+  let updateTimer = null;
 
   if (!readonly && !registeredPages.has(pageName)) {
     registeredPages.add(pageName);
@@ -61,18 +57,24 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     realCount = snapshot.exists() ? snapshot.size : 0;
     if (realCount < 0) realCount = 0;
 
-    if (initialDelayDone) {
-      updateDisplay(el, displayedCount, realCount, (v) => { displayedCount = v; });
+    if (firstUpdate) {
+      firstUpdate = false;
+      displayedCount = realCount;
+      el.textContent = realCount;
+      return;
     }
-  });
 
-  setTimeout(() => {
-    initialDelayDone = true;
-    updateDisplay(el, displayedCount, realCount, (v) => { displayedCount = v; });
-  }, delayMs);
+    if (updateTimer) return;
+
+    const delay = 5000 + Math.random() * 5000;
+    updateTimer = setTimeout(() => {
+      updateTimer = null;
+      animateCount(el, displayedCount, realCount, (v) => { displayedCount = v; });
+    }, delay);
+  });
 }
 
-function updateDisplay(el, from, to, setDisplayed) {
+function animateCount(el, from, to, setDisplayed) {
   if (from === to) {
     el.textContent = to;
     setDisplayed(to);
@@ -82,22 +84,16 @@ function updateDisplay(el, from, to, setDisplayed) {
   const diff = to - from;
   const steps = Math.min(Math.abs(diff), 15);
   const stepDelay = 80;
-  let current = from;
 
   for (let i = 1; i <= steps; i++) {
     setTimeout(() => {
-      current = Math.round(from + (diff * i) / steps);
-      if (current < 0) current = 0;
+      const current = Math.max(0, Math.round(from + (diff * i) / steps));
       el.textContent = current;
       if (i === steps) setDisplayed(current);
     }, stepDelay * i);
   }
 }
 
-/**
- * Scanne les éléments.
- * Si l'élément a l'attribut [data-viewer-readonly], il ne comptera pas comme un viewer.
- */
 export function autoInitCounters() {
   const elements = document.querySelectorAll("[data-viewer-counter]");
 
