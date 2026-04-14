@@ -37,7 +37,7 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     });
   }
 
-  const startTime = Date.now();
+  let firstUpdate = true;
   let pendingCount = 0;
   let updateTimer = null;
 
@@ -45,18 +45,19 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     const raw = snapshot.val();
     pendingCount = (typeof raw === "number" && raw > 0) ? raw : 0;
 
-    if (Date.now() - startTime < 1000) {
+    if (firstUpdate) {
+      firstUpdate = false;
       el.textContent = pendingCount;
       return;
     }
 
-    if (updateTimer) return;
-
-    const delay = 5000 + Math.random() * 5000;
-    updateTimer = setTimeout(() => {
-      updateTimer = null;
-      el.textContent = pendingCount;
-    }, delay);
+    if (!updateTimer) {
+      const delay = 5000 + Math.random() * 5000;
+      updateTimer = setTimeout(() => {
+        updateTimer = null;
+        el.textContent = pendingCount;
+      }, delay);
+    }
   });
 }
 
