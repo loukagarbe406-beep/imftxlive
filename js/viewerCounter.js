@@ -2,10 +2,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import {
   getDatabase,
   ref,
-  set,
   onValue,
   onDisconnect,
-  serverTimestamp
+  set,
+  increment
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 const firebaseConfig = {
@@ -18,43 +18,53 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-function generateSessionId() {
-  return Math.random().toString(36).substr(2, 12) + Date.now().toString(36);
-}
-
-const sessionId = generateSessionId();
 const registeredPages = new Set();
 
 export function initViewerCounter(pageName, elementId, readonly = false) {
-  const viewersRef = ref(db, `pages/${pageName}/viewers`);
+  const countRef = ref(db, `pages/${pageName}/count`);
   const el = document.getElementById(elementId);
-  if (!el) return;
 
-  let displayedCount = 0;
-  let realCount = 0;
-  let firstUpdate = true;
-  let updateTimer = null;
+  if (!el) {
+    console.warn("[Viewer] Element introuvable :", elementId);
+    return;
+  }
+
+  console.log("[Viewer] Init:", pageName, "| element:", elementId, "| readonly:", readonly);
 
   if (!readonly && !registeredPages.has(pageName)) {
     registeredPages.add(pageName);
-    const myPresenceRef = ref(db, `pages/${pageName}/viewers/${sessionId}`);
 
     const connectedRef = ref(db, ".info/connected");
     onValue(connectedRef, (snap) => {
       if (snap.val() === true) {
-        onDisconnect(myPresenceRef).remove();
-        set(myPresenceRef, { t: serverTimestamp() });
+        console.log("[Viewer] Connecté à Firebase, enregistrement présence...");
+        onDisconnect(countRef)
+          .set(increment(-1))
+          .then(() => {
+            console.log("[Viewer] onDisconnect enregistré");
+            return set(countRef, increment(1));
+          })
+          .then(() => console.log("[Viewer] Compteur incrémenté"))
+          .catch((err) => console.error("[Viewer] Erreur écriture:", err));
       }
     });
   }
 
-  onValue(viewersRef, (snapshot) => {
-    realCount = snapshot.exists() ? snapshot.numChildren() : 0;
+  let firstUpdate = true;
+  let displayedCount = 0;
+  let pendingCount = 0;
+  let updateTimer = null;
+
+  onValue(countRef, (snapshot) => {
+    const raw = snapshot.val();
+    pendingCount = (typeof raw === "number" && raw > 0) ? raw : 0;
+
+    console.log("[Viewer] Valeur reçue:", raw, "→ affichage:", pendingCount);
 
     if (firstUpdate) {
       firstUpdate = false;
-      displayedCount = realCount;
-      el.textContent = realCount;
+      displayedCount = pendingCount;
+      el.textContent = pendingCount;
       return;
     }
 
@@ -63,33 +73,15 @@ export function initViewerCounter(pageName, elementId, readonly = false) {
     const delay = 5000 + Math.random() * 5000;
     updateTimer = setTimeout(() => {
       updateTimer = null;
-      animateCount(el, displayedCount, realCount, (v) => { displayedCount = v; });
+      displayedCount = pendingCount;
+      el.textContent = pendingCount;
     }, delay);
   });
 }
 
-function animateCount(el, from, to, setDisplayed) {
-  if (from === to) {
-    el.textContent = to;
-    setDisplayed(to);
-    return;
-  }
-
-  const diff = to - from;
-  const steps = Math.min(Math.abs(diff), 15);
-  const stepDelay = 80;
-
-  for (let i = 1; i <= steps; i++) {
-    setTimeout(() => {
-      const current = Math.max(0, Math.round(from + (diff * i) / steps));
-      el.textContent = current;
-      if (i === steps) setDisplayed(current);
-    }, stepDelay * i);
-  }
-}
-
 export function autoInitCounters() {
   const elements = document.querySelectorAll("[data-viewer-counter]");
+  console.log("[Viewer] Éléments trouvés:", elements.length);
 
   elements.forEach((el) => {
     const pageName = el.getAttribute("data-viewer-counter");
