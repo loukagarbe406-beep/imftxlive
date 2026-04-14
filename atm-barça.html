@@ -223,43 +223,75 @@
       gap: 6px;
     }
     .live-channel-card {
-      display: flex;
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
       align-items: center;
-      justify-content: center;
+      gap: 7px;
       box-sizing: border-box;
       width: 100%;
       min-width: 0;
-      height: 54px;
-      min-height: 54px;
-      padding: 6px 8px;
+      padding: 9px 8px;
       text-decoration: none;
       color: inherit;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      transition: background 0.15s ease;
     }
     .live-channel-card:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.14);
-      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.06);
     }
     .live-channel-card:focus-visible {
       outline: 2px solid rgba(255, 255, 255, 0.35);
-      outline-offset: 2px;
+      outline-offset: -2px;
     }
     .live-channel-card__logo-img {
       display: block;
-      box-sizing: border-box;
-      width: min(100%, 128px);
-      height: 34px;
-      max-width: 100%;
+      width: 28px;
+      height: 28px;
       object-fit: contain;
       object-position: center;
     }
-    .live-channel-card__logo-img[alt^="Ligue 1"] {
-      width: min(100%, 142px);
-      height: 38px;
+    .live-channel-card__info {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .live-channel-card__match {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+    .live-channel-card__league {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.45);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+    .live-channel-card__viewers {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .live-channel-card__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+    }
+    .live-channel-card__count {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
     }
 
     /* ── Colonne centrale ── */
@@ -505,7 +537,7 @@
     /* ── Colonne droite : chat Twitch pleine hauteur ── */
     .col-right {
       background: rgba(0, 0, 0, 0.5);
-      border-left: 1px solid var(--border);
+      border-left: none;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -735,6 +767,19 @@
       <div class="live-rail__body">
         <p class="live-rail__empty" hidden>Aucune diffusion en direct</p>
         <ul class="live-channels" id="live-channels-list" role="list">
+          <li>
+            <a href="liv-psg.html" class="live-channel-card">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Champions League">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">LIV - PSG</span>
+                <span class="live-channel-card__league">Champions League</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="liv-psg">0</span>
+              </div>
+            </a>
+          </li>
         </ul>
       </div>
     </aside>
@@ -768,7 +813,7 @@
           </div>
           <span class="viewer-mini player-footer__viewers" title="Spectateurs en direct">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span id="counterMatch1" data-viewer-counter="atm-barça">0</span>
+            <span id="counterMatch1" data-viewer-counter="atletico-barcelone">0</span>
           </span>
         </div>
       </div>
@@ -897,7 +942,7 @@
         footer.textContent = line;
       }
 
-      var pageSlug = "fiorentina-lazio";
+      var pageSlug = "atletico-barcelone";
 
       function getSessionId() {
         var sessionId = localStorage.getItem("live_session_id");
@@ -930,6 +975,28 @@
         }
       }
 
+      async function refreshRailCounter() {
+        var items = document.querySelectorAll(".live-channels [data-viewer-counter]");
+        if (!items.length) return;
+
+        await Promise.all(Array.prototype.map.call(items, async function (el) {
+          var slug = String(el.getAttribute("data-viewer-counter") || "").trim();
+          if (!slug) return;
+
+          try {
+            var res = await fetch("/viewer_count.php?page_slug=" + encodeURIComponent(slug), {
+              method: "GET"
+            });
+            var data = await res.json();
+            if (typeof data.viewers !== "undefined") {
+              el.textContent = data.viewers;
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }));
+      }
+
       function boot() {
         initNavChrome();
         initTwitchChatEmbed();
@@ -951,6 +1018,8 @@
 
         sendViewer("ping");
         setInterval(function () { sendViewer("ping"); }, 15000);
+        refreshRailCounter();
+        setInterval(refreshRailCounter, 15000);
 
         window.addEventListener("beforeunload", function () {
           var data = new URLSearchParams();
