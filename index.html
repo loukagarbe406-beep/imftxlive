@@ -838,8 +838,24 @@ var MATCHES_TOMORROW = [
   render();
   tick();
   setInterval(tick, 1000);
-</script>
 
-<script type="module" src="./js/viewerCounter.js"></script>
+  async function refreshViewerCounters() {
+    var els = document.querySelectorAll("[data-viewer-counter]");
+    if (!els.length) return;
+    els.forEach(async function (el) {
+      var slug = (el.getAttribute("data-viewer-counter") || "").trim();
+      if (!slug) return;
+      try {
+        var res = await fetch("/viewer_count.php?page_slug=" + encodeURIComponent(slug));
+        var data = await res.json();
+        if (typeof data.viewers !== "undefined") {
+          el.textContent = data.viewers;
+        }
+      } catch (e) {}
+    });
+  }
+  refreshViewerCounters();
+  setInterval(refreshViewerCounters, 15000);
+</script>
 </body>
 </html>
