@@ -1,4 +1,3 @@
-
 async function putSessions(slug, sessions) {
   await VIEWERS.put("sessions:" + slug, JSON.stringify(sessions));
 }
@@ -67,3 +66,42 @@ async function handleRequest(request) {
   }
   return new Response(JSON.stringify({ error: "not found" }), { status: 404, headers: corsHeaders() });
 }
+Maintenant je mets à jour le JS dans bayern-rma.html pour qu'il pointe vers le Worker.
+
+Le JS utilise des URLs relatives (/viewer_ping.php, /viewer_count.php). C'est parfait -- le Worker Cloudflare répondra exactement sur ces mêmes chemins. Rien à changer dans le HTML si tu configures le Worker comme route sur ton domaine.
+
+Mais pour que ça marche, il faut que le Worker soit lié à ton domaine imftx.site. Voici les étapes exactes.
+
+Tout est prêt. Le fichier worker-viewer.js est dans tes Downloads. Voici comment le mettre en place :
+
+Étape 1 -- Créer un KV namespace
+
+Va sur dash.cloudflare.com
+Menu gauche > Workers & Pages > KV
+Clique Create a namespace
+Nom : VIEWERS
+Clique Add
+Étape 2 -- Créer le Worker
+
+Menu gauche > Workers & Pages > Create
+Clique Create Worker
+Nom : viewer-counter
+Clique Deploy (ça crée un worker vide)
+Clique Edit Code (en haut à droite)
+Supprime tout le code par défaut
+Copie-colle tout le contenu du fichier worker-viewer.js
+Clique Deploy
+Étape 3 -- Lier le KV au Worker
+
+Retourne dans Workers & Pages > viewer-counter > Settings > Bindings
+Clique Add > KV Namespace
+Variable name : VIEWERS (exactement comme ça, en majuscules)
+KV namespace : choisis VIEWERS dans la liste
+Clique Save
+Étape 4 -- Ajouter les routes sur ton domaine
+
+Va dans Workers & Pages > viewer-counter > Settings > Triggers (ou Routes)
+Clique Add route
+Route : imftx.site/viewer_ping.php* -- Zone : imftx.site
+Ajoute une 2e route : imftx.site/viewer_count.php* -- Zone : imftx.site
+Après ça, quand ton site appelle /viewer_ping.php ou /viewer_count.php, Cloudflare intercepte et envoie vers ton Worker. Rien à changer dans le HTML, le compteur marchera directement.
