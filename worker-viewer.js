@@ -1,3 +1,17 @@
+
+async function putSessions(slug, sessions) {
+  await VIEWERS.put("sessions:" + slug, JSON.stringify(sessions));
+}
+function cleanExpired(sessions) {
+  const now = Math.floor(Date.now() / 1000);
+  const cleaned = {};
+  for (const [sid, ts] of Object.entries(sessions)) {
+    if ((now - ts) <= TTL) {
+      cleaned[sid] = ts;
+    }
+  }
+  return cleaned;
+}
 async function handlePing(request) {
   let body;
   const ct = request.headers.get("content-type") || "";
