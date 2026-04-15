@@ -811,7 +811,7 @@
             <a href="ars-spo.html" class="live-channel-card">
               <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Champions League">
               <div class="live-channel-card__info">
-                <span class="live-channel-card__match">ARS - SPO</span>
+                <span class="live-channel-card__match">BAY - RMA</span>
                 <span class="live-channel-card__league">Champions League</span>
               </div>
               <div class="live-channel-card__viewers">
@@ -1007,6 +1007,9 @@
             method: "POST",
             body: formData
           });
+          if (!res.ok) return;
+          var ctype = String(res.headers.get("content-type") || "").toLowerCase();
+          if (ctype.indexOf("application/json") === -1) return;
           var data = await res.json();
           var el = document.getElementById("counterMatch1");
           if (el && typeof data.viewers !== "undefined") {
@@ -1029,6 +1032,9 @@
             var res = await fetch("/viewer_count.php?page_slug=" + encodeURIComponent(slug), {
               method: "GET"
             });
+            if (!res.ok) return;
+            var ctype = String(res.headers.get("content-type") || "").toLowerCase();
+            if (ctype.indexOf("application/json") === -1) return;
             var data = await res.json();
             if (typeof data.viewers !== "undefined") {
               el.textContent = data.viewers;
