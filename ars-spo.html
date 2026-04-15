@@ -348,6 +348,10 @@
       background: rgba(255, 255, 255, 0.16);
       transform: translateY(-1px);
     }
+    .source-btn.is-active {
+      background: rgba(34, 197, 94, 0.22);
+      border-color: rgba(34, 197, 94, 0.5);
+    }
     /* Embeds tiers : liste blanche par domaine possible — lien de secours */
     .embed-block-notice {
       flex-shrink: 0;
@@ -811,7 +815,7 @@
             <a href="ars-spo.html" class="live-channel-card">
               <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Champions League">
               <div class="live-channel-card__info">
-                <span class="live-channel-card__match">BAY - RMA</span>
+                <span class="live-channel-card__match">ARS - SPO</span>
                 <span class="live-channel-card__league">Champions League</span>
               </div>
               <div class="live-channel-card__viewers">
@@ -834,9 +838,9 @@
         <div class="player-footer">
           <span class="match-inline" id="matchFooter">Arsenal vs Sporting CP</span>
           <div class="source-group">
-            <button type="button" class="source-btn" aria-label="Source 1">Source 1</button>
-            <button type="button" class="source-btn" aria-label="Source 2">Source 2</button>
-            <button type="button" class="source-btn" aria-label="Source 3">Source 3</button>
+            <button type="button" class="source-btn is-active" data-player-src="https://ddyplayer.cfd/api/v1/channels/player/daddylive/?name=canal+foot&code=fr" aria-label="Source 1">Source 1</button>
+            <button type="button" class="source-btn" data-player-src="https://coolball.me/part/Ll.php?id=1/11" aria-label="Source 2">Source 2</button>
+            <button type="button" class="source-btn" data-player-src="https://ddyplayer.cfd/api/v1/channels/player/daddylive/?name=canal+foot&code=fr" aria-label="Source 3">Source 3</button>
           </div>
           <div class="btn-group">
             <a href="#" class="stream-btn btn-x-sm" aria-label="Twitter / X">
@@ -1045,9 +1049,25 @@
         }));
       }
 
+      function initSourceSwitcher() {
+        var iframe = document.getElementById("mainPlayer");
+        var btns = document.querySelectorAll(".source-group .source-btn");
+        if (!iframe || !btns.length) return;
+        btns.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var u = btn.getAttribute("data-player-src");
+            if (!u) return;
+            iframe.src = u;
+            btns.forEach(function (b) { b.classList.remove("is-active"); });
+            btn.classList.add("is-active");
+          });
+        });
+      }
+
       function boot() {
         initNavChrome();
         initTwitchChatEmbed();
+        initSourceSwitcher();
         applyTitleFromQuery();
         window.addEventListener("load", function () {
           applyTitleFromQuery();
