@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr" class="dark">
 <head>
@@ -812,10 +813,10 @@
         <p class="live-rail__empty" hidden>Aucune diffusion en direct</p>
         <ul class="live-channels" id="live-channels-list" role="list">
           <li>
-            <a href="ars-spo.html" class="live-channel-card">
+            <a href="bayern-rma.html" class="live-channel-card">
               <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/lnjvd4afeukdyr5agooauznrzjyeoh.png" alt="Champions League">
               <div class="live-channel-card__info">
-                <span class="live-channel-card__match">ARS - SPO</span>
+                <span class="live-channel-card__match">BAY - RMA</span>
                 <span class="live-channel-card__league">Champions League</span>
               </div>
               <div class="live-channel-card__viewers">
@@ -839,7 +840,7 @@
           <span class="match-inline" id="matchFooter">Arsenal vs Sporting CP</span>
           <div class="source-group">
             <button type="button" class="source-btn is-active" data-player-src="https://ddyplayer.cfd/api/v1/channels/player/daddylive/?name=canal+foot&code=fr" aria-label="Source 1">Source 1</button>
-            <button type="button" class="source-btn" data-player-src="https://coolball.me/part/Ll.php?id=1/11" aria-label="Source 2">Source 2</button>
+            <button type="button" class="source-btn" data-player-src="https://coolball.me/part/Ll.php?id=1/11" data-sandbox="allow-scripts allow-same-origin allow-presentation allow-forms" aria-label="Source 2">Source 2</button>
             <button type="button" class="source-btn" data-player-src="https://ddyplayer.cfd/api/v1/channels/player/daddylive/?name=canal+foot&code=fr" aria-label="Source 3">Source 3</button>
           </div>
           <div class="btn-group">
@@ -1049,6 +1050,15 @@
         }));
       }
 
+      function applyPlayerSandbox(iframe, btn) {
+        var sb = btn && btn.getAttribute("data-sandbox");
+        if (sb && sb.trim()) {
+          iframe.setAttribute("sandbox", sb.trim());
+        } else {
+          iframe.removeAttribute("sandbox");
+        }
+      }
+
       function initSourceSwitcher() {
         var iframe = document.getElementById("mainPlayer");
         var btns = document.querySelectorAll(".source-group .source-btn");
@@ -1057,6 +1067,7 @@
           btn.addEventListener("click", function () {
             var u = btn.getAttribute("data-player-src");
             if (!u) return;
+            applyPlayerSandbox(iframe, btn);
             iframe.src = u;
             btns.forEach(function (b) { b.classList.remove("is-active"); });
             btn.classList.add("is-active");
