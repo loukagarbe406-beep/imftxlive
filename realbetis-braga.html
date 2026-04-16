@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jwplayer.com/libraries/IDzF9Zmk.js"></script>
   <script>
     tailwind.config = { darkMode: 'class' };
   </script>
@@ -326,18 +325,13 @@
       inset: 0;
       background: #000;
     }
-    #jwplayer-container {
+    #stream-embed {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-    }
-    #jwplayer-container .jwplayer {
-      position: absolute !important;
-      inset: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      max-width: none !important;
+      border: 0;
+      background: #000;
     }
     /* Embeds tiers : liste blanche par domaine possible — lien de secours */
     .embed-block-notice {
@@ -854,7 +848,7 @@
       <div class="player-shell">
         <div class="live-player-wrap" id="livePlayerWrap">
           <div class="live-player-inner">
-            <div id="jwplayer-container"></div>
+            <iframe id="stream-embed" title="Lecteur du match" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="eager" referrerpolicy="no-referrer"></iframe>
           </div>
         </div>
         <div class="player-footer">
@@ -1007,33 +1001,14 @@
 
       var pageSlug = "realbetis-braga";
 
-      var HLS_STREAM_SRC = "https://v2.livewatch.sbs/?action=embed&id=910695632bbabea992e63";
+      var IFRAME_EMBED_SRC = "https://v2.livewatch.sbs/?action=embed&id=910695632bbabea992e63";
 
-      var playerInstance;
-
-      function initJwPlayer() {
-        if (typeof jwplayer !== "function") return;
-        var src = typeof HLS_STREAM_SRC === "string" ? HLS_STREAM_SRC.trim() : "";
+      function initStreamEmbed() {
+        var frame = document.getElementById("stream-embed");
+        if (!frame) return;
+        var src = typeof IFRAME_EMBED_SRC === "string" ? IFRAME_EMBED_SRC.trim() : "";
         if (!src) return;
-        var box = document.getElementById("jwplayer-container");
-        if (box) box.innerHTML = "";
-        if (playerInstance && typeof playerInstance.remove === "function") {
-          try { playerInstance.remove(); } catch (e) {}
-        }
-        playerInstance = jwplayer("jwplayer-container").setup({
-          file: src,
-          type: "hls",
-          width: "100%",
-          aspectratio: "16:9",
-          autostart: true,
-          primary: "html5",
-          hlshtml: true,
-          stretching: "uniform",
-          preload: "metadata",
-          controls: true,
-          displaytitle: false,
-          displaydescription: false
-        });
+        frame.src = src;
       }
 
       function getSessionId() {
@@ -1093,7 +1068,7 @@
       function boot() {
         initNavChrome();
         initTwitchChatEmbed();
-        initJwPlayer();
+        initStreamEmbed();
         applyTitleFromQuery();
         window.addEventListener("load", function () {
           applyTitleFromQuery();
