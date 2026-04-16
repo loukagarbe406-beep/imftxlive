@@ -878,7 +878,7 @@
 
     <aside class="col-right" aria-label="Chat du stream">
       <div class="mobile-chat-banner block md:hidden">
-        <img src="https://media.discordapp.net/attachments/1473053778767777883/1494027723553636462/image.png?ex=69e1c5fe&is=69e0747e&hm=0aebdc14ac9d4f20113f3ab6bd77726c554690ee2c8cb54734c5ca0fc988d2cc&=&format=webp&quality=lossless&width=1860&height=371" alt="Real Betis - Braga" loading="lazy" decoding="async">
+        <img src="https://empire-sport.sbs/upload/teambanks/r8s4thz7vbaq9n3gyvcp5njzewikht.png" alt="Real Betis - Braga" loading="lazy" decoding="async">
       </div>
       <div class="twitch-chat-wrap">
         <!-- data-twitch-parents="mondomaine.fr" si le chat ne charge pas sur ton hébergeur -->
@@ -1001,7 +1001,7 @@
 
       var pageSlug = "realbetis-braga";
 
-      var IFRAME_EMBED_SRC = "https://v2.livewatch.sbs/?action=embed&id=910695632bbabea992e63";
+      var IFRAME_EMBED_SRC = "https://v2.livewatch.sbs/?action=embed&id=347259658949e36ffc7b26";
 
       function initStreamEmbed() {
         var frame = document.getElementById("stream-embed");
@@ -1028,7 +1028,7 @@
         body.append("action", action);
 
         try {
-          var res = await fetch("/viewer_ping.php", {
+          var res = await fetch("https://viewer-counter.woulajsp31.workers.dev/viewer_ping", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: body
@@ -1052,7 +1052,7 @@
           if (!slug) return;
 
           try {
-            var res = await fetch("/viewer_count.php?page_slug=" + encodeURIComponent(slug), {
+            var res = await fetch("https://viewer-counter.woulajsp31.workers.dev/viewer_count?page_slug=" + encodeURIComponent(slug), {
               method: "GET"
             });
             var data = await res.json();
@@ -1095,7 +1095,7 @@
           data.append("page_slug", pageSlug);
           data.append("session_id", getSessionId());
           data.append("action", "leave");
-          navigator.sendBeacon("/viewer_ping.php", data);
+          navigator.sendBeacon("https://viewer-counter.woulajsp31.workers.dev/viewer_ping", data);
         });
       }
 
