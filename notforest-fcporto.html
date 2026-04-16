@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.7"></script>
+  <script src="https://cdn.jwplayer.com/libraries/IDzF9Zmk.js"></script>
   <script>
     tailwind.config = { darkMode: 'class' };
   </script>
@@ -324,16 +324,20 @@
     .live-player-inner {
       position: absolute;
       inset: 0;
-      background: transparent;
+      background: #000;
     }
-    .live-player-inner video {
+    #jwplayer-container {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      border: 0;
-      object-fit: contain;
-      background: #000;
+    }
+    #jwplayer-container .jwplayer {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
     }
     /* Embeds tiers : liste blanche par domaine possible — lien de secours */
     .embed-block-notice {
@@ -850,7 +854,7 @@
       <div class="player-shell">
         <div class="live-player-wrap" id="livePlayerWrap">
           <div class="live-player-inner">
-            <video id="hlsVideo" controls playsinline title="Lecteur live HLS"></video>
+            <div id="jwplayer-container"></div>
           </div>
         </div>
         <div class="player-footer">
@@ -1003,24 +1007,33 @@
 
       var pageSlug = "notforest-fcporto";
 
-      var HLS_STREAM_SRC = "https://v2.livewatch.sbs/?action=pipe&url=https%3A%2F%2Fqmaalhy7acgxwhm.ngolpdkyoctjcddxshli469r.org%2Fsunshine%2FUlAtSVCZJh6rBM8mhkawZ0d4akq-rYuVNcPzqOrxrX498exWi6qagNOjYnjGW3vSuKyVjEp56WJT0vdB22uK3UCLHxHtLdgJTZ1uHLFtKqKjs2UkM0aIRyr1KCxsGycWY5JaVVBvAnPuTCYXSHhtUO2Ed3dt34D2zNHQwC89ktML5roDbWrD8OdOb7b459QHLhZ9G1CJZCQirny5AWHdLgk0_2l4pfzHhTSYl_YdmmU1ep4gIjNwaKoK426k_DklWq7xd7GDCa_Wm1qcMtckEw%2Fhls%2Findex.m3u8&name=CANAL%2B%20LIVE%203%20.c
-";
+      var HLS_STREAM_SRC = "https://v2.livewatch.sbs/?action=pipe&url=https%3A%2F%2Fqmaalhy7acgxwhm.ngolpdkyoctjcddxshli469r.org%2Fsunshine%2Fcjph7fpHBo6estwWTwjxMAuhy6OWWET5_2cshBmuW5CWoducWZFSij-wRd4s88cL0gv_sChoeQbq6ngFRslSrc4tW3WQV7UvnHGKiLqnyh2HDhPTqHhalnbw73SVkDFoivRk5rkJFJaKKJ0_vphcKIiaA8bWq0smqZp07Lfr80PTUP7KBjfzMYKCu0URvMjrT6SLPDHIBWrpVuf9y9_rDiZAAu0riuvibrrUulLU0BIMaCJZBfdE5NwxPZvcT7OpnFf7C5-WWFgqGZ_1Di_QLg%2Fhls%2Findex.m3u8&name=CANAL%2B%20LIVE%203%20.c";
 
-      function initHlsPlayer() {
-        var video = document.getElementById("hlsVideo");
-        if (!video || !HLS_STREAM_SRC) return;
-        if (typeof Hls !== "undefined" && Hls.isSupported()) {
-          var hls = new Hls({ enableWorker: true, lowLatencyMode: true });
-          hls.loadSource(HLS_STREAM_SRC);
-          hls.attachMedia(video);
-          hls.on(Hls.Events.ERROR, function (_, data) {
-            if (!data || !data.fatal) return;
-            if (data.type === Hls.ErrorTypes.NETWORK_ERROR) hls.startLoad();
-            else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
-          });
-        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-          video.src = HLS_STREAM_SRC;
+      var playerInstance;
+
+      function initJwPlayer() {
+        if (typeof jwplayer !== "function") return;
+        var src = typeof HLS_STREAM_SRC === "string" ? HLS_STREAM_SRC.trim() : "";
+        if (!src) return;
+        var box = document.getElementById("jwplayer-container");
+        if (box) box.innerHTML = "";
+        if (playerInstance && typeof playerInstance.remove === "function") {
+          try { playerInstance.remove(); } catch (e) {}
         }
+        playerInstance = jwplayer("jwplayer-container").setup({
+          file: src,
+          type: "hls",
+          width: "100%",
+          aspectratio: "16:9",
+          autostart: true,
+          primary: "html5",
+          hlshtml: true,
+          stretching: "uniform",
+          preload: "metadata",
+          controls: true,
+          displaytitle: false,
+          displaydescription: false
+        });
       }
 
       function getSessionId() {
@@ -1080,7 +1093,7 @@
       function boot() {
         initNavChrome();
         initTwitchChatEmbed();
-        initHlsPlayer();
+        initJwPlayer();
         applyTitleFromQuery();
         window.addEventListener("load", function () {
           applyTitleFromQuery();
