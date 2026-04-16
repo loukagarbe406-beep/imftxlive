@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#04071a">
+<title>BEIN SPORTS 1 FHD .b — LiveWatch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.7/hls.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#04071a;--font:'DM Sans',sans-serif;--mono:'JetBrains Mono',monospace;
+  --accent:#6366f1;--cyan:#22d3ee;--red:#f43f5e;--gold:#fbbf24;--green:#34d399;
+  --glass:rgba(8,12,40,0.55);--border:rgba(255,255,255,0.08);
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);font-family:var(--font);display:flex;flex-direction:column}
+/* Aurora */
+.aurora{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.25;animation:drift linear infinite}
+.o1{width:500px;height:500px;background:radial-gradient(#7c3aed,transparent 70%);top:-20%;left:-10%;animation-duration:17s}
+.o2{width:600px;height:600px;background:radial-gradient(#1d4ed8,transparent 70%);top:-10%;right:-10%;animation-duration:23s}
+.o3{width:400px;height:400px;background:radial-gradient(#0891b2,transparent 70%);bottom:-15%;right:10%;animation-duration:13s}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(40px,-30px) scale(1.05)}50%{transform:translate(-20px,50px) scale(0.95)}75%{transform:translate(-50px,-20px) scale(1.02)}}
+/* Player fullscreen */
+#player{position:fixed;inset:0;z-index:100;display:none;flex-direction:column;background:#000}
+#player.on{display:flex}
+/* FIX #1 — video prend tout l'espace dispo sans aspect-ratio fixe en mode plein écran embed */
+#ev{flex:1;width:100%;object-fit:contain;background:#000;min-height:0}
+/* Controls — FIX #2 : overflow:hidden + max-width:100vw pour éviter débordement mobile */
+#ctrl{
+  flex-shrink:0;padding:10px 16px 14px;
+  background:linear-gradient(to top,rgba(4,7,26,.98),rgba(4,7,26,.9));
+  border-top:1px solid rgba(99,102,241,0.2);
+  display:flex;flex-direction:column;gap:8px;
+  overflow:hidden;max-width:100vw;box-sizing:border-box;
+}
+.prog{height:4px;background:rgba(255,255,255,.08);border-radius:99px;cursor:pointer;position:relative;transition:height .2s}
+.prog:hover{height:7px}
+.prog-f{position:absolute;inset:0;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.prog-f::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%) scale(0);width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 0 12px var(--accent);transition:.15s}
+.prog:hover .prog-f::after{transform:translateY(-50%) scale(1)}
+/* FIX #3 : flex-wrap:wrap sur .cr pour que les boutons passent à la ligne sur petits écrans */
+.cr{display:flex;align-items:center;gap:6px;flex-wrap:wrap;overflow:hidden}
+.cb{height:32px;min-width:32px;padding:0 8px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:rgba(200,210,255,.6);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;font-size:11px;font-weight:600;font-family:var(--font);transition:.15s;touch-action:manipulation;white-space:nowrap}
+.cb svg{width:14px;height:14px;flex-shrink:0}
+.cb:hover{background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.4);color:var(--accent)}
+.cb:active{opacity:.7}
+/* FIX #4 : cacher le label texte des boutons sur très petits écrans */
+@media(max-width:400px){.cb .lbl{display:none}}
+.vol-s{width:70px;height:4px;-webkit-appearance:none;background:rgba(255,255,255,.1);border-radius:99px;cursor:pointer;outline:none;transition:height .15s}
+.vol-s:hover{height:6px}
+.vol-s::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px rgba(99,102,241,.7);cursor:pointer}
+.csep{width:1px;height:14px;background:rgba(255,255,255,.06);flex-shrink:0}
+.cn{flex:1;min-width:0;font-size:11px;font-weight:600;color:rgba(200,210,255,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 6px}
+.ct{font-family:var(--mono);font-size:9px;color:rgba(200,210,255,.25);white-space:nowrap}
+#ptop{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  background:linear-gradient(to bottom,rgba(0,0,0,.8),transparent);
+  opacity:0;transition:opacity .3s;pointer-events:none;
+}
+#player.ctrl-on #ptop{opacity:1;pointer-events:auto}
+.live-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;background:rgba(244,63,94,.15);border:1px solid rgba(244,63,94,.35);font-family:var(--mono);font-size:9px;letter-spacing:2.5px;font-weight:700;color:#fb7185;flex-shrink:0}
+.ld{width:5px;height:5px;border-radius:50%;background:#fb7185;animation:blink .8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+#ptop-name{flex:1;min-width:0;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Sora',sans-serif}
+/* Watermark */
+#wm{position:fixed;top:12px;right:14px;z-index:120;opacity:0;transition:opacity .4s;pointer-events:auto}
+#wm.on{opacity:1}
+#wm a img{height:34px;width:auto;filter:drop-shadow(0 2px 20px rgba(0,0,0,.98)) drop-shadow(0 0 10px rgba(0,0,0,.9));transition:.2s}
+#wm a:hover img{filter:drop-shadow(0 0 18px rgba(99,102,241,.7))}
+/* Loading */
+#vload{position:fixed;inset:0;z-index:110;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:rgba(4,7,26,.95)}
+#vload.on{display:flex}
+.wave{display:flex;gap:5px;align-items:flex-end;height:40px}
+.wave-bar{width:6px;border-radius:3px;background:var(--accent);animation:wave-pulse 1.2s ease infinite}
+.wave-bar:nth-child(2){animation-delay:.1s;background:#818cf8}
+.wave-bar:nth-child(3){animation-delay:.2s;background:var(--cyan)}
+.wave-bar:nth-child(4){animation-delay:.3s;background:#818cf8}
+.wave-bar:nth-child(5){animation-delay:.4s;background:var(--accent)}
+@keyframes wave-pulse{0%,100%{height:8px;opacity:.5}50%{height:32px;opacity:1}}
+.ltxt{font-family:var(--mono);font-size:10px;color:rgba(200,210,255,.3);letter-spacing:2px;text-transform:uppercase}
+/* Error */
+#verr{position:fixed;inset:0;z-index:115;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center;background:rgba(4,7,26,.97)}
+#verr.on{display:flex}
+.err-msg{font-size:13px;font-weight:700;color:#fb7185;max-width:280px;line-height:1.6;font-family:'Sora',sans-serif}
+.err-btn{padding:12px 28px;background:linear-gradient(135deg,var(--accent),#4f46e5);border:none;border-radius:12px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);box-shadow:0 6px 24px rgba(99,102,241,.45)}
+/* ── AD PAGE — FIX #5 : centrage de la page pub ── */
+#adp{
+  position:relative;z-index:1;flex:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:clamp(20px,5vw,40px) clamp(16px,4vw,32px);gap:clamp(10px,2.5vh,16px);overflow-y:auto;
+  text-align:center;
+}
+.adp-logo{height:clamp(32px,6vw,44px);cursor:pointer;filter:drop-shadow(0 0 20px rgba(99,102,241,.6));transition:.25s}
+.adp-logo:hover{filter:drop-shadow(0 0 32px rgba(99,102,241,.8))}
+.adp-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;border-radius:99px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);font-size:10px;font-weight:600;color:rgba(165,180,252,.85);letter-spacing:.3px}
+.adp-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:adp-pulse 1.5s ease infinite}
+@keyframes adp-pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}
+.adp-title{font-family:'Sora',sans-serif;font-size:clamp(22px,5.5vw,30px);font-weight:800;letter-spacing:-.04em;text-align:center;line-height:1.2}
+.adp-title .g{background:linear-gradient(135deg,#fff 20%,var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.adp-title .g2{color:var(--gold);-webkit-text-fill-color:var(--gold)}
+.adp-sub{font-size:12.5px;color:rgba(200,210,255,.45);text-align:center;max-width:290px;line-height:1.8}
+.adp-sub strong{color:rgba(165,180,252,.9)}
+/* FIX #6 : .adp-card garde text-align:left pour lisibilité des étapes */
+.adp-card{
+  width:100%;max-width:min(340px,90vw);
+  border:1px solid transparent;border-radius:16px;padding:14px 16px;
+  display:flex;flex-direction:column;gap:10px;
+  background:linear-gradient(var(--glass),var(--glass)) padding-box,
+             linear-gradient(135deg,rgba(99,102,241,.3),rgba(0,0,0,0) 50%,rgba(34,211,238,.15)) border-box;
+  backdrop-filter:blur(20px);
+  text-align:left;
+}
+.adp-step{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:rgba(200,210,255,.65);line-height:1.6}
+.adp-n{min-width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--red),#be123c);color:#fff;font-size:9px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 12px rgba(244,63,94,.4)}
+.adp-cta{
+  width:100%;max-width:min(340px,90vw);padding:clamp(14px,3.5vw,18px);
+  background:linear-gradient(135deg,var(--red) 0%,#be123c 100%);
+  border:none;border-radius:14px;color:#fff;font-size:clamp(14px,4vw,17px);font-weight:800;
+  cursor:pointer;font-family:'Sora',sans-serif;touch-action:manipulation;
+  box-shadow:0 0 0 3px rgba(244,63,94,.2),0 10px 40px rgba(190,18,60,.55);
+  transition:transform .15s,box-shadow .15s;position:relative;overflow:hidden;letter-spacing:-.02em;
+}
+.adp-cta::after{content:'';position:absolute;inset:-5px;border-radius:19px;border:2px solid rgba(244,63,94,.35);animation:cta-ring 2s ease-out infinite;pointer-events:none}
+@keyframes cta-ring{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(1.07)}}
+.adp-cta:hover{box-shadow:0 0 0 3px rgba(244,63,94,.3),0 14px 50px rgba(190,18,60,.65)}
+.adp-cta:active{opacity:.9}
+.adp-cta:disabled{opacity:.5;transform:none}
+.adp-note{font-size:8.5px;color:rgba(200,210,255,.1);font-family:var(--mono);text-align:center;letter-spacing:.5px}
+.adp-share{display:flex;gap:7px;justify-content:center}
+.adp-sh{height:31px;padding:0 13px;border-radius:99px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);color:rgba(200,210,255,.45);font-size:10px;font-weight:600;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:5px;touch-action:manipulation;font-family:var(--font)}
+.adp-sh svg{width:11px;height:11px}
+.adp-sh:hover{background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.3);color:var(--accent)}
+.adp-url-row{display:none;width:100%;max-width:min(340px,90vw);gap:7px}
+.adp-url-row.on{display:flex}
+.adp-url-inp{flex:1;min-width:0;padding:7px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;color:rgba(200,210,255,.6);font-family:var(--mono);font-size:9.5px;outline:none}
+.adp-url-btn{padding:7px 13px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.28);border-radius:8px;color:var(--accent);font-size:10px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font)}
+@media(max-height:580px){#adp{gap:8px}.adp-card{padding:9px 13px;gap:8px}.adp-cta{padding:12px}}
+</style>
+</head>
+<body>
+
+<div class="aurora">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+</div>
+
+<!-- PLAYER -->
+<div id="player">
+  <div id="ptop">
+    <div class="live-badge"><span class="ld"></span>LIVE</div>
+    <span id="ptop-name">BEIN SPORTS 1 FHD</span>
+    <div style="display:flex;gap:5px">
+      <button class="cb" onclick="reloadStream()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg><span class="lbl">Reload</span>
+      </button>
+      <button class="cb" onclick="showEmbedUrl()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg><span class="lbl">Embed</span>
+      </button>
+      <button class="cb" onclick="tryPiP()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="13" y="11" width="9" height="6" rx="1"/></svg><span class="lbl">PiP</span>
+      </button>
+      <button class="cb" onclick="copyEmbedUrl()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="lbl">Copier</span>
+      </button>
+    </div>
+  </div>
+  <video id="ev" playsinline></video>
+  <div id="ctrl">
+    <div class="prog" id="prog" onclick="seekV(event)"><div class="prog-f" id="pf" style="width:100%"></div></div>
+    <div class="cr">
+      <button class="cb" id="cpp" onclick="togglePlay()" style="min-width:38px;height:38px">
+        <svg id="ppico" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <button class="cb" id="cmute" onclick="toggleMute()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <input type="range" class="vol-s" min="0" max="1" step=".03" value="1" oninput="setVol(this.value)">
+      <span class="csep"></span>
+      <span class="ct" id="pt">LIVE</span>
+      <span class="cn">BEIN SPORTS 1 FHD</span>
+      <button class="cb" onclick="tryPiP()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="13" y="11" width="9" height="6" rx="1"/></svg></button>
+      <button class="cb" onclick="copyEmbedUrl()" title="Copier URL Embed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+      <button class="cb" onclick="reloadStream()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+      <button class="cb" onclick="toggleFS()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<!-- WATERMARK -->
+<div id="wm"><a href="https://wavewatch.xyz/" target="_blank" rel="noopener"><img src="https://i.imgur.com/LeG2vdB.png" alt="LiveWatch"></a></div>
+
+<!-- LOADING -->
+<div id="vload">
+  <div class="wave"><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div></div>
+  <div class="ltxt">Résolution en cours…</div>
+</div>
+
+<!-- ERROR -->
+<div id="verr">
+  <div style="font-size:44px">⚡</div>
+  <div class="err-msg" id="errmsg">Flux indisponible</div>
+  <button class="err-btn" onclick="reloadStream()">↺ Réessayer</button>
+</div>
+
+<!-- AD PAGE -->
+<div id="adp">
+  <div class="adp-card">
+    <div class="adp-step"><span class="adp-n">1</span><span>Appuyez sur <strong style="color:var(--gold)">Regarder</strong> — un onglet pub s'ouvre</span></div>
+    <div class="adp-step"><span class="adp-n">2</span><span>Attendez quelques secondes puis <strong style="color:var(--gold)">fermez l'onglet</strong></span></div>
+    <div class="adp-step"><span class="adp-n">3</span><span>Revenez ici — la <strong style="color:var(--cyan)">lecture démarre ▶</strong></span></div>
+  </div>
+  <button class="adp-cta" id="watchbtn" onclick="go()">🎯 Regarder — C'est Gratuit !</button>
+  <div class="adp-share">
+    <button class="adp-sh" onclick="showEmbedUrl()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Embed URL
+    </button>
+    <button class="adp-sh" onclick="copyEmbedUrl()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copier
+    </button>
+  </div>
+  <div class="adp-url-row" id="eurow">
+    <input class="adp-url-inp" id="euinp" readonly>
+    <button class="adp-url-btn" onclick="copyEmbedUrlDirect()">✓</button>
+  </div>
+  <div class="adp-note">LiveWatch v2 · wavewatch.xyz · Service de Secours</div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:80px;right:14px;z-index:9999;display:flex;flex-direction:column;gap:5px;pointer-events:none"></div>
+
+<script>
+var B="https:\/\/v2.livewatch.sbs\/",CD={"id":"347259658949e36ffc7b26","name":"BEIN SPORTS 1 FHD","url":"https:\/\/vavoo.to\/vavoo-iptv\/play\/347259658949e36ffc7b26","logo":""},AU="https:\/\/foreignabnormality.com\/bhqwpkdk?key=8f460637798a19e18426b1b949b45e95",EU="https:\/\/v2.livewatch.sbs\/?action=embed&id=347259658949e36ffc7b26";
+var hls=null,wmT=null,going=false,curStream=null;
+var v=document.getElementById('ev');
+
+function toast(msg,t){
+  var el=document.createElement('div');
+  el.textContent=msg;
+  el.style.cssText='padding:9px 15px;background:rgba(8,12,40,.97);backdrop-filter:blur(16px);border:1px solid '+(t==='ok'?'rgba(52,211,153,.3)':t==='err'?'rgba(244,63,94,.3)':'rgba(99,102,241,.3)')+';border-radius:10px;font-size:11px;font-family:"JetBrains Mono",monospace;color:'+(t==='ok'?'#34d399':t==='err'?'#fb7185':'#a5b4fc')+';animation:tin .2s ease-out;box-shadow:0 8px 32px rgba(0,0,0,.6)';
+  document.getElementById('toast').appendChild(el);
+  setTimeout(function(){el.style.opacity='0';el.style.transform='translateX(20px)';el.style.transition='.3s';setTimeout(function(){el.remove()},300)},2800);
+}
+document.head.insertAdjacentHTML('beforeend','<style>@keyframes tin{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}</style>');
+
+function showWM(){var w=document.getElementById('wm');w.classList.add('on');clearTimeout(wmT);wmT=setTimeout(function(){w.classList.remove('on')},3500);}
+var ctrlT=null;
+function showCtrl(){var p=document.getElementById('player');p.classList.add('ctrl-on');clearTimeout(ctrlT);ctrlT=setTimeout(function(){p.classList.remove('ctrl-on')},3200);}
+
+function go(){
+  if(going)return;going=true;
+  var btn=document.getElementById('watchbtn');btn.disabled=true;btn.textContent='Chargement…';
+  try{window.open(AU,'_blank');}catch(e){}
+  document.getElementById('adp').style.display='none';
+  var pl=document.getElementById('player');pl.classList.add('on');
+  document.getElementById('vload').classList.add('on');
+  ['mousemove','touchstart','click','keydown'].forEach(function(ev){pl.addEventListener(ev,function(){showWM();showCtrl();},{passive:true});});
+  startStream();
+}
+
+function startStream(){
+  fetch(B+'?action=resolve&url='+encodeURIComponent(CD.url))
+    .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+    .then(function(d){
+      document.getElementById('vload').classList.remove('on');
+      if(!d.stream_url){showErr('Flux indisponible');return;}
+      curStream=d.stream_url;
+      var px=B+'?action=pipe&url='+encodeURIComponent(d.stream_url)+'&name='+encodeURIComponent(CD.name);
+      var isHLS=d.stream_url.toLowerCase().indexOf('.m3u8')!==-1;
+      if(isHLS&&typeof Hls!=='undefined'&&Hls.isSupported()){
+        hls=new Hls({maxBufferLength:30,enableWorker:true});
+        hls.loadSource(px);hls.attachMedia(v);
+        hls.on(Hls.Events.MANIFEST_PARSED,function(){v.play().catch(function(){});showWM();});
+        hls.on(Hls.Events.ERROR,function(e,data){if(data.fatal){if(hls){hls.destroy();hls=null;}fallback(d.stream_url);}});
+      }else if(isHLS&&v.canPlayType('application/vnd.apple.mpegurl')){
+        v.src=px;v.onloadedmetadata=function(){v.play().catch(function(){});showWM();};
+      }else{
+        v.src=px;v.onloadedmetadata=function(){v.play().catch(function(){});showWM();};
+        v.onerror=function(){fallback(d.stream_url);};
+      }
+      v.onplaying=function(){document.getElementById('ppico').innerHTML='<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';};
+      v.onpause=function(){document.getElementById('ppico').innerHTML='<polygon points="5 3 19 12 5 21 5 3"/>';};
+      v.ontimeupdate=updateProg;
+    })
+    .catch(function(e){document.getElementById('vload').classList.remove('on');showErr('Erreur: '+e.message);});
+}
+function fallback(url){
+  if(url.toLowerCase().indexOf('.m3u8')!==-1&&typeof Hls!=='undefined'&&Hls.isSupported()){
+    hls=new Hls();hls.loadSource(url);hls.attachMedia(v);
+    hls.on(Hls.Events.MANIFEST_PARSED,function(){v.play().catch(function(){});});
+    hls.on(Hls.Events.ERROR,function(e,d){if(d.fatal)showErr('Flux indisponible');});
+  }else{v.src=url;v.play().catch(function(){});}
+}
+function showErr(msg){document.getElementById('vload').classList.remove('on');document.getElementById('errmsg').textContent=msg;document.getElementById('verr').classList.add('on');}
+function reloadStream(){document.getElementById('verr').classList.remove('on');if(hls){hls.destroy();hls=null;}v.pause();v.src='';document.getElementById('vload').classList.add('on');startStream();}
+function togglePlay(){v.paused?v.play().catch(function(){}):v.pause();}
+function toggleMute(){v.muted=!v.muted;}
+function setVol(val){v.volume=parseFloat(val);if(v.muted&&parseFloat(val)>0){v.muted=false;}}
+function seekV(e){if(!v.duration||v.duration===Infinity)return;var r=e.currentTarget.getBoundingClientRect();v.currentTime=((e.clientX-r.left)/r.width)*v.duration;}
+function updateProg(){if(!v.duration||v.duration===Infinity){document.getElementById('pt').textContent='LIVE';document.getElementById('pf').style.width='100%';return;}document.getElementById('pf').style.width=((v.currentTime/v.duration)*100)+'%';function ft(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(Math.floor(s%60)).padStart(2,'0');}document.getElementById('pt').textContent=ft(v.currentTime)+'/'+ft(v.duration);}
+
+/* FIX #7 — toggleFS embed : fallback webkitEnterFullscreen pour iOS/Safari */
+function toggleFS(){
+  var el=document.getElementById('player');
+  var isMob=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if(document.fullscreenElement||document.webkitFullscreenElement){
+    if(document.exitFullscreen) document.exitFullscreen().catch(function(){});
+    else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+  } else {
+    if(isMob&&v.webkitEnterFullscreen){
+      v.webkitEnterFullscreen();
+    } else if(el.requestFullscreen){
+      el.requestFullscreen().catch(function(){if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();});
+    } else if(el.webkitRequestFullscreen){
+      el.webkitRequestFullscreen();
+    }
+  }
+}
+
+/* FIX #8 — fullscreenchange + webkitfullscreenchange : max-height:none en plein écran */
+function onFSChange(){
+  var isFull=!!(document.fullscreenElement||document.webkitFullscreenElement);
+  v.style.maxHeight=isFull?'none':'';
+}
+document.addEventListener('fullscreenchange',onFSChange);
+document.addEventListener('webkitfullscreenchange',onFSChange);
+
+function tryPiP(){if(document.pictureInPictureEnabled&&!v.disablePictureInPicture){document.pictureInPictureElement?document.exitPictureInPicture().catch(function(){}):v.requestPictureInPicture().catch(function(){toast('PiP non supporté','err');});}else{toast('PiP non disponible','err');}}
+
+/* showEmbedUrl — affiche / cache la ligne URL embed */
+function showEmbedUrl(){
+  var row=document.getElementById('eurow');
+  var inp=document.getElementById('euinp');
+  inp.value=EU;
+  row.classList.toggle('on');
+}
+function copyEmbedUrl(){
+  navigator.clipboard&&navigator.clipboard.writeText(EU).then(function(){toast('✓ URL embed copiée !','ok');}).catch(function(){toast('Copie échouée','err');});
+}
+function copyEmbedUrlDirect(){var el=document.getElementById('euinp');navigator.clipboard&&navigator.clipboard.writeText(el.value).then(function(){toast('✓ Copié !','ok');}).catch(function(){el.select();document.execCommand('copy');toast('✓ Copié !','ok');});}
+document.addEventListener('keydown',function(e){
+  if(e.key===' '){e.preventDefault();togglePlay();}
+  else if(e.key==='m'||e.key==='M')toggleMute();
+  else if(e.key==='f'||e.key==='F')toggleFS();
+  else if(e.key==='r'||e.key==='R')reloadStream();
+  else if(e.key==='c'||e.key==='C')copyEmbedUrl();
+});
+</script>
+</body>
+</html>
