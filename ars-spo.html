@@ -2,22 +2,23 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Player mobile</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      background: #000;
       width: 100%;
       height: 100%;
+      background: #000;
       overflow: hidden;
     }
 
     .player-wrap {
-      position: relative;
+      position: fixed;
+      inset: 0;
       width: 100%;
-      height: 100vh;
+      height: 100%;
       background: #000;
     }
 
@@ -26,12 +27,14 @@
       height: 100%;
       border: 0;
       display: block;
+      background: #000;
     }
   </style>
 </head>
 <body>
   <div class="player-wrap">
     <iframe
+      id="playerFrame"
       src="https://embedsports.top/embed/admin/ppv-lens-vs-toulouse/1"
       allowfullscreen
       allow="autoplay; fullscreen; picture-in-picture"
@@ -43,6 +46,12 @@
   <script>
     (function () {
       'use strict';
+
+      const isPhone =
+        /Android|iPhone|iPod|Mobile|Opera Mini|IEMobile/i.test(navigator.userAgent) ||
+        window.innerWidth <= 900;
+
+      if (!isPhone) return;
 
       const blocked = [
         'mynqel69dc.com',
@@ -63,54 +72,64 @@
         }
       }
 
-      // bloque window.open
+      // bloque les popups / tabover
       const realOpen = window.open;
       window.open = function (...args) {
         const url = args[0];
-        if (url && isBlocked(url)) {
-          console.log('[blocked popup]', url);
+        if (!url || isBlocked(url)) {
+          console.log('[mobile anti-popup] blocked window.open:', url);
           return null;
         }
         return realOpen.apply(this, args);
       };
 
-      // bloque redirections JS
+      // bloque les redirections vers les pubs connues
       const realAssign = window.location.assign.bind(window.location);
       const realReplace = window.location.replace.bind(window.location);
 
       window.location.assign = function (url) {
-        if (isBlocked(url)) {
-          console.log('[blocked assign]', url);
+        if (!url || isBlocked(url)) {
+          console.log('[mobile anti-popup] blocked assign:', url);
           return;
         }
         return realAssign(url);
       };
 
       window.location.replace = function (url) {
-        if (isBlocked(url)) {
-          console.log('[blocked replace]', url);
+        if (!url || isBlocked(url)) {
+          console.log('[mobile anti-popup] blocked replace:', url);
           return;
         }
         return realReplace(url);
       };
 
-      // bloque clics suspects
-      document.addEventListener('click', function (e) {
-        const el = e.target.closest('a, button, div');
+      // bloque clics / touch vers pubs connues
+      function guardClick(e) {
+        const el = e.target.closest('a, button, div, span');
         if (!el) return;
 
         const href = el.href || el.getAttribute?.('href') || '';
         const onclick = el.getAttribute?.('onclick') || '';
+        const dataUrl = el.getAttribute?.('data-url') || '';
 
-        if (isBlocked(href) || blocked.some(x => onclick.includes(x))) {
+        if (
+          isBlocked(href) ||
+          isBlocked(dataUrl) ||
+          blocked.some(x => onclick.includes(x))
+        ) {
           e.preventDefault();
           e.stopPropagation();
           e.stopImmediatePropagation();
-          console.log('[blocked click]', href || onclick);
+          console.log('[mobile anti-popup] blocked click');
+          return false;
         }
-      }, true);
+      }
 
-      // supprime scripts et iframes pub injectés
+      document.addEventListener('click', guardClick, true);
+      document.addEventListener('touchstart', guardClick, true);
+      document.addEventListener('touchend', guardClick, true);
+
+      // enlève scripts / iframes pub injectés
       function clean(node) {
         if (!node || node.nodeType !== 1) return;
 
@@ -118,29 +137,43 @@
           const src = node.src || '';
           const txt = node.textContent || '';
           if (isBlocked(src) || blocked.some(x => txt.includes(x))) {
-            console.log('[removed script]', src || '[inline]');
+            console.log('[mobile anti-popup] removed script:', src || '[inline]');
             node.remove();
           }
         }
 
         if (node.tagName === 'IFRAME') {
           const src = node.src || '';
-
-          // on ne supprime pas ton iframe principal
-          if (node === document.querySelector('.player-wrap iframe')) return;
-
+          if (node.id === 'playerFrame') return;
           if (isBlocked(src)) {
-            console.log('[removed iframe]', src);
+            console.log('[mobile anti-popup] removed iframe:', src);
             node.remove();
           }
         }
+
+        // retire overlays pub plein écran
+        try {
+          const style = getComputedStyle(node);
+          const rect = node.getBoundingClientRect();
+          const z = parseInt(style.zIndex || '0', 10);
+
+          if (
+            style.position === 'fixed' &&
+            z >= 999 &&
+            rect.width >= window.innerWidth * 0.7 &&
+            rect.height >= window.innerHeight * 0.4
+          ) {
+            node.remove();
+            console.log('[mobile anti-popup] removed overlay');
+          }
+        } catch {}
       }
 
       new MutationObserver((mutations) => {
         for (const m of mutations) {
           for (const n of m.addedNodes) {
             clean(n);
-            n.querySelectorAll?.('script, iframe').forEach(clean);
+            n.querySelectorAll?.('script, iframe, div, section, aside').forEach(clean);
           }
         }
       }).observe(document.documentElement, {
@@ -148,7 +181,15 @@
         subtree: true
       });
 
-      document.querySelectorAll('script, iframe').forEach(clean);
+      document.querySelectorAll('script, iframe, div, section, aside').forEach(clean);
+
+      // petit hardening mobile
+      window.addEventListener('beforeunload', function (e) {
+        if (document.activeElement && document.activeElement.tagName === 'IFRAME') {
+          e.preventDefault();
+          e.returnValue = '';
+        }
+      });
     })();
   </script>
 </body>
