@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>IMFTX — Werder Bremen - Hamburg</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a;
+      --surface: #1a1a1b;
+      --border: rgba(255, 255, 255, 0.06);
+      --text: #ffffff;
+      --muted: #8e8e8e;
+      --red: #ef4444;
+      --discord: #5865f2;
+      --chat-blue: #2b63f1;
+      --iptv-green: #16a34a;
+      /* Couleurs footer / boutons (références marques) */
+      --discord-blurple: #5865f2;
+      --x-tile-bg: #1f1f1f;
+      --x-tile-border: #3f3f46;
+      --x-icon: #e4e4e7;
+      --iptv-pill: #22c55e;
+      --iptv-pill-hover: #16a34a;
+      --telegram-blue: #229ed9;
+      /* Compteur spectateurs (ref. saumon sur noir) */
+      --viewer-coral: #ff7070;
+      /* Rail chaînes live (ref. gris très foncé, pas de blanc) */
+      --rail-bg: #000000;
+      --rail-border: rgba(255, 255, 255, 0.05);
+      --rail-placeholder: #adadb8;
+      /* Chat : même gris que le rail « Chaînes live » */
+      --chat-panel-bg: var(--rail-bg);
+      --chat-welcome: #7a8691;
+      --chat-banner-bg: var(--bg);
+      /* Visuel de couverture (fond page + barre sous lecteur) */
+      --page-cover: url("https://empire-sport.sbs/upload/teambanks/bajhwarp9a3mtcrmg49gkhz0zelzqn.png");
+    }
+    body > nav {
+      background-color: rgba(0, 0, 0, 0.5);
+      overflow-x: hidden;
+    }
+    /* Barre du haut : alignement stable sur téléphone (évite le « décalé ») */
+    .site-nav-inner {
+      max-width: 100%;
+    }
+    @media (max-width: 767px) {
+      .site-nav-inner {
+        gap: 0.5rem;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        position: relative;
+      }
+      #burgerBtn,
+      #theme-toggle,
+      .site-nav-inner a[aria-label="IPTV"] {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+      }
+      .site-nav-inner a[aria-label="IPTV"] {
+        width: auto;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      #nav-pfp {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 44px !important;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        pointer-events: none;
+      }
+      #nav-pfp > div {
+        display: flex;
+        align-items: center;
+        height: 44px;
+        line-height: 1 !important;
+        transform: none;
+      }
+    }
+    html, body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body {
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: var(--page-cover) center / cover no-repeat;
+      /* Un peu plus lumineux pour se rapprocher de l’affiche d’origine (rail / bas / haut) */
+      filter: blur(6px) brightness(0.52);
+      transform: scale(1.05);
+    }
+    body > * {
+      position: relative;
+      z-index: 1;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+    }
+
+    /* ── Grille principale (rail | lecteur | chat Twitch) ── */
+    .shell {
+      display: grid;
+      /* Colonne centrale : min largeur pour le lecteur (évite la « bande » minuscule). Chat : min un peu plus bas. */
+      grid-template-columns: minmax(168px, 208px) minmax(300px, 1fr) minmax(220px, 300px);
+      height: calc(100vh - 64px);
+      min-height: 0;
+      max-width: 100%;
+      margin: 0 auto;
+      overflow: hidden;
+      background: transparent;
+    }
+    .shell.rail-collapsed {
+      grid-template-columns: 46px minmax(300px, 1fr) minmax(220px, 300px);
+    }
+
+    /* ── Rail chaînes live ── */
+    .live-channels-rail {
+      background: rgba(0, 0, 0, 0.5);
+      border-right: none;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .live-rail__header {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      padding: 8px 8px 6px;
+    }
+    .live-rail__title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .live-rail__collapse {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.92);
+      transition: background 0.15s, color 0.15s;
+    }
+    .live-rail__collapse:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+    .live-rail__collapse-icon {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      line-height: 1;
+      transition: transform 0.2s;
+    }
+    .shell.rail-collapsed .live-rail__collapse-icon { transform: rotate(180deg); }
+    .shell.rail-collapsed .live-rail__title { display: none; }
+    .shell.rail-collapsed .live-rail__body { display: none; }
+    .shell.rail-collapsed .live-rail__header {
+      justify-content: center;
+      padding: 12px 0;
+    }
+    .live-rail__body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 6px 8px;
+      min-height: 0;
+      /* Barre de défilement masquée (scroll souris / trackpad / tactile inchangé) */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .live-rail__body::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+    .live-rail__empty {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--rail-placeholder);
+      text-align: center;
+      line-height: 1.5;
+      padding: 10px 4px;
+    }
+    .live-channels {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .live-channel-card {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      align-items: center;
+      gap: 7px;
+      box-sizing: border-box;
+      width: 100%;
+      min-width: 0;
+      padding: 9px 8px;
+      text-decoration: none;
+      color: inherit;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      transition: background 0.15s ease;
+    }
+    .live-channel-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .live-channel-card:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.35);
+      outline-offset: -2px;
+    }
+    .live-channel-card__logo-img {
+      display: block;
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      object-position: center;
+    }
+    .live-channel-card__info {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .live-channel-card__match {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+    .live-channel-card__league {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.45);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+    .live-channel-card__viewers {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .live-channel-card__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ef4444;
+    }
+    .live-channel-card__count {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* ── Colonne centrale ── */
+    .col-center {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      background: transparent;
+    }
+    .player-shell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .live-player-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      flex: 0 0 auto;
+      /* Même voile que « Chaînes live » : le fond orange ressort derrière, pas un bloc noir isolé */
+      background: rgba(0, 0, 0, 0.5);
+      border-bottom: none;
+      overflow: hidden;
+    }
+    .live-player-inner {
+      position: absolute;
+      inset: 0;
+      background: #000;
+    }
+    #stream-embed {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000;
+    }
+    /* Embeds tiers : liste blanche par domaine possible — lien de secours */
+    .embed-block-notice {
+      flex-shrink: 0;
+      padding: 10px 14px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.78);
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid var(--rail-border);
+    }
+    .embed-block-notice a {
+      color: #93c5fd;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .embed-block-notice a:hover {
+      color: #bfdbfe;
+    }
+
+    /* Barre sous le lecteur — même voile que rail / chat : le flou vient du fond global (body::before) */
+    .player-footer {
+      flex-shrink: 0;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      align-items: center;
+      gap: 10px 16px;
+      min-height: 96px;
+      padding: 14px 20px 16px;
+      margin: 0;
+      background: rgba(0, 0, 0, 0.5);
+      border-top: 1px solid var(--rail-border);
+    }
+    .player-footer > * {
+      position: relative;
+      z-index: 1;
+    }
+    .player-footer > .match-inline {
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: start;
+      min-width: 0;
+      max-width: min(380px, 48vw);
+    }
+    .player-footer__viewers {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+      align-self: center;
+    }
+    .player-footer > .btn-group {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      justify-self: center;
+    }
+    .player-footer .match-inline {
+      display: block;
+      font-size: clamp(15px, 2.2vw, 18px);
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      text-transform: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    /* Toujours une seule ligne « équipe A vs équipe B » (priorité sur tout autre style). */
+    #matchFooter.match-inline {
+      white-space: nowrap !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .btn-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-self: center;
+    }
+    .stream-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 11px;
+      font-weight: 800;
+      border: 1px solid transparent;
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 1;
+      white-space: nowrap;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s, filter 0.2s;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    .stream-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .stream-btn:hover::before {
+      left: 100%;
+    }
+    .stream-btn > svg,
+    .stream-btn > .btn-label,
+    .stream-btn > .btn-iptv-emoji {
+      position: relative;
+      z-index: 2;
+    }
+    .stream-btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px currentColor;
+    }
+    .stream-btn:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+    .stream-btn svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .stream-btn .btn-label {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    .btn-discord-sm {
+      background: #5865f2;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+    .btn-x-sm {
+      background: #070707;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+    .btn-telegram-sm {
+      background: #289cd8;
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+    .btn-iptv-emoji {
+      display: inline;
+      font-size: 16px;
+      line-height: 1;
+    }
+    .btn-iptv {
+      background: #12bb57;
+      border-color: rgba(255, 255, 255, 0.08);
+      min-height: 40px;
+      height: 40px;
+      padding: 0 18px;
+      border-radius: 11px;
+      color: #ffffff;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    .stream-btn.btn-iptv:hover {
+      filter: brightness(1.06);
+      background: #0fa84d;
+    }
+    .btn-iptv .btn-label {
+      color: #fff;
+    }
+
+    .viewer-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #ff6b6b;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      background: transparent;
+      padding: 3px 0 0;
+      margin: 0;
+      flex-shrink: 0;
+    }
+    .viewer-mini svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+    /* ── Colonne droite : chat Twitch pleine hauteur ── */
+    .col-right {
+      background: rgba(0, 0, 0, 0.5);
+      border-left: none;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      min-width: 0;
+      overflow: hidden;
+    }
+    /* Bannière au-dessus du chat : uniquement téléphone (< md / 768px) */
+    .mobile-chat-banner {
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+    }
+    .mobile-chat-banner img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: min(34vh, 240px);
+      object-fit: contain;
+      object-position: center;
+    }
+    .twitch-chat-wrap {
+      flex: 1 1 auto;
+      min-height: 0;
+      position: relative;
+      background: transparent;
+    }
+    .twitch-chat-wrap iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    @media (max-width: 1100px) {
+      .shell,
+      .shell.rail-collapsed {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: calc(100vh - 64px);
+      }
+      .live-channels-rail { display: none; }
+      .col-center { order: 1; }
+      .col-right {
+        order: 2;
+        border-left: none;
+        border-top: 1px solid var(--border);
+        max-height: min(88vh, 900px);
+        min-height: min(50vh, 640px);
+        margin: 0;
+        border-radius: 14px 14px 0 0;
+      }
+      .col-right .twitch-chat-wrap {
+        flex: 1;
+        min-height: min(45vh, 560px);
+      }
+      .live-player-wrap { max-height: none; }
+    }
+
+    /* ── Mobile (≤760px) : même overlay que le script de référence (header compact + footer colonne) ── */
+    @media (max-width: 760px) {
+      .col-center .player-shell {
+        padding: 0;
+      }
+      .live-player-wrap {
+        border-radius: 0;
+        overflow: hidden;
+        margin-top: 0;
+      }
+      .player-footer {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        align-items: start;
+        column-gap: 10px;
+        row-gap: 10px;
+        padding: 14px 12px 16px;
+        min-height: 0;
+        border-top: none;
+      }
+      .player-footer > .match-inline {
+        grid-column: 1;
+        grid-row: 1;
+        max-width: 100%;
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .player-footer__viewers {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        align-self: start;
+        font-size: 16px;
+        padding-top: 4px;
+      }
+      .player-footer__viewers svg {
+        width: 16px;
+        height: 16px;
+      }
+      .player-footer > .btn-group {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        width: 100%;
+        justify-content: flex-start;
+        gap: 8px;
+      }
+      .btn-group .stream-btn {
+        border-radius: 10px;
+      }
+      .stream-btn {
+        height: 38px;
+        min-height: 38px;
+        padding: 0 12px;
+      }
+      .stream-btn .btn-label {
+        font-size: 11px;
+      }
+      .btn-iptv {
+        height: 38px;
+        min-height: 38px;
+        width: fit-content;
+        max-width: 100%;
+        padding: 0 12px;
+      }
+      .btn-iptv-emoji {
+        font-size: 15px;
+      }
+      /* Colonne chat sur téléphone */
+      .col-right {
+        max-height: min(92vh, 960px);
+        min-height: 56vh;
+      }
+      .twitch-chat-wrap {
+        flex: 1;
+        min-height: min(48vh, 520px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="sticky top-0 z-[100] border-b border-white/10 shadow-sm text-white">
+    <div class="site-nav-inner flex h-16 w-full max-w-full items-center justify-between gap-2 px-3 sm:gap-3 sm:px-5 md:gap-4 md:px-6 lg:px-8">
+
+      <div class="flex h-11 min-h-0 min-w-0 flex-1 items-center gap-2 sm:gap-3">
+        <button id="burgerBtn" type="button" class="flex md:hidden h-11 w-11 shrink-0 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200" aria-label="Menu" aria-expanded="false" aria-controls="mobileNav">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <a id="nav-pfp" href="../index.html" class="flex h-11 min-w-0 items-center gap-1">
+          <div class="truncate text-2xl font-extrabold leading-none tracking-tight text-white sm:text-3xl">IMFTX+</div>
+        </a>
+      </div>
+
+      <div class="flex h-11 shrink-0 items-center gap-1.5 sm:gap-3 md:gap-4">
+        <div class="relative flex group">
+          <a href="../shop.html"
+             class="md:hidden h-11 px-3 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+             aria-label="IPTV">
+            <span class="text-sm font-extrabold tracking-wide">IPTV</span>
+          </a>
+
+          <a href="../shop.html"
+             class="hidden md:flex w-auto h-11 px-3 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200">
+            <span class="text-sm font-semibold">OBTENEZ UN IPTV À PARTIR DE 9,99€</span>
+          </a>
+        </div>
+
+        <a id="nav-btn-telegram" href="https://t.me/+Nhks8hh-5840ODU8" target="_blank" rel="noopener noreferrer"
+           class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+           aria-label="Telegram">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M9.04 15.31 8.9 19.5c.57 0 .82-.25 1.12-.55l2.69-2.57 5.58 4.08c1.02.56 1.75.27 2-.94L23.9 4.7c.31-1.44-.55-2-1.56-1.63L1.55 10.86c-1.41.55-1.39 1.34-.24 1.7l5.32 1.66L19.1 6.5c.59-.39 1.13-.18.69.21"/>
+          </svg>
+        </a>
+
+        <a id="nav-btn-discord" href="https://discord.gg/MTUsxvJSR" target="_blank" rel="noopener noreferrer"
+           class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+           aria-label="Discord">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.041.106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.332c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.095 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/>
+          </svg>
+        </a>
+
+        <a id="nav-btn-twitter" href="https://x.com/imftxvxv" target="_blank" rel="noopener noreferrer"
+           class="hidden md:flex w-11 h-11 items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+           aria-label="X">
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/>
+          </svg>
+        </a>
+
+        <button id="theme-toggle" type="button"
+                class="w-11 h-11 flex items-center justify-center rounded-md backdrop-blur-md ring-1 ring-white/15 hover:bg-white/10 active:scale-95 transition-all duration-200"
+                aria-label="Changer le thème">
+          <svg id="icon-sun" class="w-6 h-6 hidden dark:block" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 18a6 6 0 1 1 0-12 6 6 0 0 1 0 12Zm0-16h1v3h-1V2Zm0 19h1v3h-1v-3ZM2 12h3v1H2v-1Zm19 0h3v1h-3v-1ZM4.22 4.22l2.12 2.12-.7.7L3.52 4.92l.7-.7Zm14.02 14.02 2.12 2.12-.7.7-2.12-2.12.7-.7ZM19.78 4.22l.7.7-2.12 2.12-.7-.7 2.12-2.12ZM5.64 17.66l.7.7-2.12 2.12-.7-.7 2.12-2.12Z"/>
+          </svg>
+          <svg id="icon-moon" class="w-6 h-6 block dark:hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+          </svg>
+        </button>
+      </div>
+      </div>
+
+    <div id="mobileNav" class="hidden md:hidden border-t border-white/10 px-5 py-3 space-y-2" style="background-color:rgba(0,0,0,0.5)" role="dialog" aria-label="Menu mobile">
+      <a href="https://t.me/+Nhks8hh-5840ODU8" target="_blank" rel="noopener noreferrer" class="h-11 w-full flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Telegram</a>
+      <a href="https://discord.gg/MTUsxvJSR" target="_blank" rel="noopener noreferrer" class="h-11 w-full flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">Discord</a>
+      <a href="https://x.com/imftxvxv" target="_blank" rel="noopener noreferrer" class="h-11 w-full flex items-center justify-center rounded-md ring-1 ring-white/15 text-sm font-bold">X</a>
+    </div>
+  </nav>
+
+  <div class="shell" id="mainShell">
+
+    <aside class="live-channels-rail" aria-label="Chaînes en direct">
+      <header class="live-rail__header">
+        <h2 class="live-rail__title">Chaînes live</h2>
+        <button type="button" class="live-rail__collapse" id="liveRailCollapse" aria-expanded="true" aria-label="Réduire le panneau chaînes live">
+          <span class="live-rail__collapse-icon" aria-hidden="true">←|</span>
+        </button>
+      </header>
+      <div class="live-rail__body">
+        <p class="live-rail__empty" hidden>Aucune diffusion en direct</p>
+        <ul class="live-channels" id="live-channels-list" role="list">
+          <li>
+            <a href="pheonix-goldenstate.html" class="live-channel-card" title="Phoenix Suns - Golden State Warriors · 04:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/d7kddtuhbjaf23fgdnj8wiulccahfc.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">PHO - GOL</span>
+                <span class="live-channel-card__league">04:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="pheonix-goldenstate">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Brentford-Fulham.html" class="live-channel-card" title="Brentford - Fulham · 13:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">BRE - FUL</span>
+                <span class="live-channel-card__league">13:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="brentford-fulham">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="reims-redstar.html" class="live-channel-card" title="Stade de Reims - Red Star · 14:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">STA - RED</span>
+                <span class="live-channel-card__league">14:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="reims-redstar">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="troyes-boulogne.html" class="live-channel-card" title="Troyes - Boulogne · 14:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">TRO - BOU</span>
+                <span class="live-channel-card__league">14:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="troyes-boulogne">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="StadeRochelais-UnionBordeauxBègles.html" class="live-channel-card" title="Stade Rochelais - Union Bordeaux Bègles · 14:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/1aju8pbsr6j2kip6gjtuun0fldqmcs.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">STA - UNI</span>
+                <span class="live-channel-card__league">14:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="staderochelais-unionbordeauxbegles">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Udinese-Parma.html" class="live-channel-card" title="Udinese - Parma · 15:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">UDI - PAR</span>
+                <span class="live-channel-card__league">15:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="udinese-parma">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="hoffenheim-bvb.html" class="live-channel-card" title="Hoffenheim - Borussia Dortmund · 15:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/gazvdx7x9mijtgdsbjxlnfuc6cr5uz.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">HOF - BOR</span>
+                <span class="live-channel-card__league">15:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="hoffenheim-bvb">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="WerderBremen-Hamburg.html" class="live-channel-card" aria-current="page" title="Werder Bremen - Hamburg · 15:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/gazvdx7x9mijtgdsbjxlnfuc6cr5uz.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">WER - HAM</span>
+                <span class="live-channel-card__league">15:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="werderbremen-hamburg">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Bayer Leverkusen-FCAugsburg.html" class="live-channel-card" title="Bayer Leverkusen - FC Augsburg · 15:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/gazvdx7x9mijtgdsbjxlnfuc6cr5uz.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">BAY - FC</span>
+                <span class="live-channel-card__league">15:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="bayer-leverkusen-fcaugsburg">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Newcastle United-Bournemouth.html" class="live-channel-card" title="Newcastle United - Bournemouth · 16:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">NEW - BOU</span>
+                <span class="live-channel-card__league">16:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="newcastle-united-bournemouth">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="NacionaldeMadeira-Alverca.html" class="live-channel-card" title="Nacional de Madeira - Alverca · 16:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/dilmdvjb9jdwxoa8crrblksc9uvtty.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">NAC - ALV</span>
+                <span class="live-channel-card__league">16:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="nacionaldemadeira-alverca">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Lorient-Marseille.html" class="live-channel-card" title="Lorient - Marseille · 17:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">LOR - MAR</span>
+                <span class="live-channel-card__league">17:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="lorient-marseille">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="napolie-lazio.html" class="live-channel-card" title="Napoli - Lazio · 18:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">NAP - LAZ</span>
+                <span class="live-channel-card__league">18:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="napolie-lazio">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Tottenham-Brighton.html" class="live-channel-card" title="Tottenham - Brighton · 18:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">TOT - BRI</span>
+                <span class="live-channel-card__league">18:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="tottenham-brighton">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Eintracht Frankfurt-RB Leipzig.html" class="live-channel-card" title="Eintracht Frankfurt - RB Leipzig · 18:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/gazvdx7x9mijtgdsbjxlnfuc6cr5uz.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">EIN - RB</span>
+                <span class="live-channel-card__league">18:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="eintracht-frankfurt-rb-leipzig">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Cleveland Cavaliers-Toronto Raptors.html" class="live-channel-card" title="Cleveland Cavaliers - Toronto Raptors · 19:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/d7kddtuhbjaf23fgdnj8wiulccahfc.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">CLE - TOR</span>
+                <span class="live-channel-card__league">19:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="cleveland-cavaliers-toronto-raptors">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Gençlerbirliği-Galatasaray.html" class="live-channel-card" title="Gençlerbirliği - Galatasaray · 19:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/ge3kieqimcw5ljm5xklyyhlhg9ywdk.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">GEN - GAL</span>
+                <span class="live-channel-card__league">19:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="genclerbirligi-galatasaray">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Casa Pia-SantaClara.html" class="live-channel-card" title="Casa Pia - Santa Clara · 19:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/dilmdvjb9jdwxoa8crrblksc9uvtty.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">CAS - SAN</span>
+                <span class="live-channel-card__league">19:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="casa-pia-santaclara">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Angers-LeHavre.html" class="live-channel-card" title="Angers - Le Havre · 19:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">ANG - LE</span>
+                <span class="live-channel-card__league">19:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="angers-lehavre">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Bastia-St-Etienne.html" class="live-channel-card" title="Bastia - St Etienne · 20:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/ydd64grtyfz9lqz465f0u5kcidnxog.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">BAS - ST</span>
+                <span class="live-channel-card__league">20:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="bastia-st-etienne">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Roma-Atalanta.html" class="live-channel-card" title="Roma - Atalanta · 20:45">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/dzgp29vldk3lr0xjwscjbyi6eqenm8.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">ROM - ATA</span>
+                <span class="live-channel-card__league">20:45</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="roma-atalanta">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Chelsea-Manchester-United.html" class="live-channel-card" title="Chelsea - Manchester United · 21:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/mydp5gdzdvbxcvkc9laqmu0zyvlimg.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">CHE - MAN</span>
+                <span class="live-channel-card__league">21:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="chelsea-manchester-united">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Castres Olympique-StadeToulousain.html" class="live-channel-card" title="Castres Olympique - Stade Toulousain · 21:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/1aju8pbsr6j2kip6gjtuun0fldqmcs.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">CAS - STA</span>
+                <span class="live-channel-card__league">21:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="castres-olympique-stadetoulousain">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Atlético Madrid-Real Sociedad.html" class="live-channel-card" title="Atlético Madrid - Real Sociedad · 21:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/ifm4fzw0zm4vfe7xf0pzviqo0cchbv.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">ATL - REA</span>
+                <span class="live-channel-card__league">21:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="atletico-madrid-real-sociedad">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="France-Pays-Bas.html" class="live-channel-card" title="France - Pays-Bas · 21:00">
+              <img class="live-channel-card__logo-img" src="https://upload.wikimedia.org/wikipedia/fr/thumb/9/99/Logo_Coupe_du_Monde_F%C3%A9minine_de_la_FIFA_2027.svg/langfr-250px-Logo_Coupe_du_Monde_F%C3%A9minine_de_la_FIFA_2027.svg.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">FRA - PAY</span>
+                <span class="live-channel-card__league">21:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="france-pays-bas">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Lille-Nice.html" class="live-channel-card" title="Lille - Nice · 21:00">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/xdyjxerqlfl6fdgghbaev5cxxmnp2r.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">LIL - NIC</span>
+                <span class="live-channel-card__league">21:00</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="lille-nice">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Denver Nuggets-Minnesota-Timberwolves.html" class="live-channel-card" title="Denver Nuggets - Minnesota Timberwolves · 21:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/d7kddtuhbjaf23fgdnj8wiulccahfc.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">DEN - MIN</span>
+                <span class="live-channel-card__league">21:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="denver-nuggets-minnesota-timberwolves">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Gil Vicente-VitóriadeGuimarães.html" class="live-channel-card" title="Gil Vicente - Vitória de Guimarães · 21:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/dilmdvjb9jdwxoa8crrblksc9uvtty.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">GIL - VIT</span>
+                <span class="live-channel-card__league">21:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="gil-vicente-vitoriadeguimaraes">0</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="Colorado Rapids-inter Miami.html" class="live-channel-card" title="Colorado Rapids - Inter Miami · 22:30">
+              <img class="live-channel-card__logo-img" src="https://empire-sport.sbs/upload/leagues/fxfdoptpci5qkrz0n1g4otcsv9rqgk.png" alt="">
+              <div class="live-channel-card__info">
+                <span class="live-channel-card__match">COL - INT</span>
+                <span class="live-channel-card__league">22:30</span>
+              </div>
+              <div class="live-channel-card__viewers">
+                <span class="live-channel-card__dot"></span>
+                <span class="live-channel-card__count" data-viewer-counter="colorado-rapids-inter-miami">0</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="col-center">
+      <div class="player-shell">
+        <div class="live-player-wrap" id="livePlayerWrap">
+          <div class="live-player-inner">
+            <iframe id="stream-embed" title="Lecteur du match" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="eager" referrerpolicy="no-referrer"></iframe>
+          </div>
+        </div>
+        <div class="player-footer">
+          <span class="match-inline" id="matchFooter">Werder Bremen vs Hamburg</span>
+          <div class="btn-group">
+            <a href="#" class="stream-btn btn-x-sm" aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21l-6.52 7.455L22.5 22h-6.91l-5.41-7.046L4.18 22H1.42l7.01-8.02L1.5 2h7.09l4.89 6.34L18.244 2Zm-1.21 18h1.53L7.76 3.89H6.12L17.03 20Z"/></svg>
+            </a>
+            <a href="#" class="stream-btn btn-telegram-sm" aria-label="Telegram">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.42 4.34a1.5 1.5 0 0 0-1.54-.19L3.2 11.22a1.5 1.5 0 0 0 .13 2.81l4.34 1.41 1.41 4.34a1.5 1.5 0 0 0 2.81.13l7.07-16.68a1.5 1.5 0 0 0-.54-1.89ZM9.2 14.8l-.76 2.35-.86-2.64 7.7-5.03-6.08 5.32Z"/></svg>
+            </a>
+            <a href="#" class="stream-btn btn-discord-sm" aria-label="Discord">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037 19.736 19.791 0 0 0-4.885 1.515.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.083.083 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.04.078.078 0 0 0 .084-.027c.461-.63.873-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .078.01c.12.099.246.197.372.291a.077.077 0 0 1-.006.128c-.599.35-1.228.65-1.873.892a.076.076 0 0 0-.04.106c.36.699.772 1.364 1.225 1.994a.076.076 0 0 0 .084.027 19.86 19.86 0 0 0 6.002-3.04.077.077 0 0 0 .03-.056c.5-5.177-.838-9.673-3.548-13.66a.06.06 0 0 0-.031-.028Z"/></svg>
+            </a>
+            <a href="../shop.html" class="stream-btn btn-iptv">
+              <span class="btn-iptv-emoji" aria-hidden="true">📺</span>
+              <span class="btn-label">COFFRE TON IPTV DÈS 10€</span>
+            </a>
+          </div>
+          <span class="viewer-mini player-footer__viewers" title="Spectateurs en direct">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span id="counterMatch1" data-viewer-counter="werderbremen-hamburg">0</span>
+          </span>
+        </div>
+      </div>
+    </main>
+
+    <aside class="col-right" aria-label="Chat du stream">
+      <div class="mobile-chat-banner block md:hidden">
+        <img src="https://empire-sport.sbs/upload/teambanks/bajhwarp9a3mtcrmg49gkhz0zelzqn.png" alt="Werder Bremen - Hamburg" loading="lazy" decoding="async">
+      </div>
+      <div class="twitch-chat-wrap">
+        <!-- data-twitch-parents="mondomaine.fr" si le chat ne charge pas sur ton hébergeur -->
+        <iframe id="twitch-chat-embed" title="Chat du stream Twitch" data-twitch-channel="imftx" data-twitch-parents="" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </aside>
+
+  </div>
+
+  <script>
+    (function () {
+      function initNavChrome() {
+        var root = document.documentElement;
+        var stored = null;
+        try { stored = localStorage.getItem("imftx-theme"); } catch (e) {}
+        if (stored === "light") root.classList.remove("dark");
+        else if (stored === "dark") root.classList.add("dark");
+
+        var themeBtn = document.getElementById("theme-toggle");
+        if (themeBtn) {
+          themeBtn.addEventListener("click", function () {
+            root.classList.toggle("dark");
+            try {
+              localStorage.setItem("imftx-theme", root.classList.contains("dark") ? "dark" : "light");
+            } catch (e) {}
+          });
+        }
+
+        var burger = document.getElementById("burgerBtn");
+        var mobileNav = document.getElementById("mobileNav");
+        if (burger && mobileNav) {
+          burger.addEventListener("click", function () {
+            var open = mobileNav.classList.toggle("hidden") === false;
+            burger.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+        }
+      }
+
+      function initTwitchChatEmbed() {
+        var el = document.getElementById("twitch-chat-embed");
+        if (!el) return;
+        var channel = String(el.dataset.twitchChannel || "imftx1").trim();
+        var parents = [];
+        function addParent(p) {
+          p = String(p || "").trim().toLowerCase();
+          if (!p || parents.indexOf(p) >= 0) return;
+          parents.push(p);
+        }
+        (String(el.dataset.twitchParents || "").split(/[\s,]+/)).forEach(function (p) { addParent(p); });
+        var host = String(window.location.hostname || "").toLowerCase();
+        if (host) {
+          addParent(host);
+          if (host.indexOf("www.") === 0) addParent(host.slice(4));
+          else if (host.indexOf(".") > 0) addParent("www." + host);
+        }
+        if (!host || window.location.protocol === "file:") {
+          addParent("localhost");
+          addParent("127.0.0.1");
+        }
+        if (!parents.length) addParent("localhost");
+        var qs = parents.map(function (p) { return "parent=" + encodeURIComponent(p); }).join("&");
+        el.src = "https://www.twitch.tv/embed/" + encodeURIComponent(channel) + "/chat?" + qs + "&darkpopout";
+      }
+
+      function capWord(w) {
+        if (!w) return w;
+        var lower = w.toLowerCase();
+        /* Acronymes très courts (ex. PSG, OM, AS) : tout en majuscules */
+        if (w.length <= 3 && w === w.toUpperCase() && /^[A-ZÀ-Ÿ]+$/.test(w)) {
+          return w.toUpperCase();
+        }
+        return lower.charAt(0).toUpperCase() + lower.slice(1);
+      }
+
+      function titleCaseWords(str) {
+        return String(str).trim().split(/\s+/).filter(Boolean).map(capWord).join(" ");
+      }
+
+      /** Une seule ligne : « équipe A vs équipe B » (vs en minuscules, jamais de retour à la ligne). */
+      function formatMatchTitle(full) {
+        var s = String(full).trim()
+          .replace(/<br\s*\/?>/gi, " ")
+          .replace(/<[^>]+>/g, " ")
+          .replace(/\s*[\r\n\u2028\u2029]+\s*/g, " ")
+          .replace(/\u00a0/g, " ")
+          .replace(/\s+/g, " ");
+        if (!s) return s;
+        var parts = s.split(/\s+vs\s+/i);
+        if (parts.length < 2) {
+          if (/\s+-\s+/.test(s)) {
+            var h = s.split(/\s+-\s+/);
+            if (h.length >= 2) {
+              return titleCaseWords(h[0]) + " vs " + titleCaseWords(h.slice(1).join(" - "));
+            }
+          }
+          return titleCaseWords(s);
+        }
+        var home = parts[0].trim();
+        var away = parts.slice(1).join(" vs ").trim();
+        return titleCaseWords(home) + " vs " + titleCaseWords(away);
+      }
+
+      function applyTitleFromQuery() {
+        var params = new URLSearchParams(window.location.search);
+        var title = params.get("match");
+        var footer = document.getElementById("matchFooter");
+        if (!footer) return;
+
+        var line;
+        if (title) {
+          try { title = decodeURIComponent(title); } catch (e) {}
+          line = formatMatchTitle(title);
+          document.title = "IMFTX — " + line;
+        } else {
+          line = formatMatchTitle(footer.textContent);
+        }
+        line = String(line).replace(/\s*[\r\n\u2028\u2029]+\s*/g, " ").trim();
+        footer.textContent = line;
+      }
+
+      var pageSlug = "werderbremen-hamburg";
+
+      var IFRAME_EMBED_SRC = "https://v2.livewatch.sbs/?action=embed&id=322485479502e16bc7aebe";
+
+      function initStreamEmbed() {
+        var frame = document.getElementById("stream-embed");
+        if (!frame) return;
+        var src = typeof IFRAME_EMBED_SRC === "string" ? IFRAME_EMBED_SRC.trim() : "";
+        if (!src) return;
+        frame.src = src;
+      }
+
+      function getSessionId() {
+        var sessionId = localStorage.getItem("live_session_id");
+        if (!sessionId) {
+          sessionId = "sess_" + Math.random().toString(36).slice(2) + Date.now();
+          localStorage.setItem("live_session_id", sessionId);
+        }
+        return sessionId;
+      }
+
+      async function sendViewer(action) {
+        action = action || "ping";
+        var body = new URLSearchParams();
+        body.append("page_slug", pageSlug);
+        body.append("session_id", getSessionId());
+        body.append("action", action);
+
+        try {
+          var res = await fetch("/viewer_ping.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: body
+          });
+          var data = await res.json();
+          var el = document.getElementById("counterMatch1");
+          if (el && typeof data.viewers !== "undefined") {
+            el.textContent = data.viewers;
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      async function refreshRailCounter() {
+        var items = document.querySelectorAll(".live-channels [data-viewer-counter]");
+        if (!items.length) return;
+
+        await Promise.all(Array.prototype.map.call(items, async function (el) {
+          var slug = String(el.getAttribute("data-viewer-counter") || "").trim();
+          if (!slug) return;
+
+          try {
+            var res = await fetch("/viewer_count.php?page_slug=" + encodeURIComponent(slug), {
+              method: "GET"
+            });
+            var data = await res.json();
+            if (typeof data.viewers !== "undefined") {
+              el.textContent = data.viewers;
+            }
+          } catch (e) {
+            console.error(e);
+          }
+        }));
+      }
+
+      function boot() {
+        initNavChrome();
+        initTwitchChatEmbed();
+        initStreamEmbed();
+        applyTitleFromQuery();
+        window.addEventListener("load", function () {
+          applyTitleFromQuery();
+          initTwitchChatEmbed();
+        });
+
+        var shell = document.getElementById("mainShell");
+        var railBtn = document.getElementById("liveRailCollapse");
+        if (shell && railBtn) {
+          railBtn.addEventListener("click", function () {
+            var c = shell.classList.toggle("rail-collapsed");
+            railBtn.setAttribute("aria-expanded", c ? "false" : "true");
+            railBtn.setAttribute("aria-label", c ? "Afficher le panneau chaînes live" : "Réduire le panneau chaînes live");
+          });
+        }
+
+        sendViewer("ping");
+        setInterval(function () { sendViewer("ping"); }, 15000);
+        refreshRailCounter();
+        setInterval(refreshRailCounter, 15000);
+
+        window.addEventListener("beforeunload", function () {
+          var data = new URLSearchParams();
+          data.append("page_slug", pageSlug);
+          data.append("session_id", getSessionId());
+          data.append("action", "leave");
+          navigator.sendBeacon("/viewer_ping.php", data);
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot);
+      } else {
+        boot();
+      }
+    })();
+  </script>
+</body>
+</html>
