@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Player protégé</title>
+  <title>Player</title>
   <style>
     html, body {
       margin: 0;
@@ -46,60 +46,71 @@
     (function () {
       'use strict';
 
-      const SAFE_HOSTS = new Set([
+      const blocked = [
+        'mynqel69dc.com',
+        'adexchangeclear.com',
+        'adexchangeclear.com/script/i.php',
+        'frotpn.spacegames.fun',
+        'wyylde.com',
+        'www.wyylde.com',
+        'kojestan.com'
+      ];
+
+      const safeHosts = new Set([
         location.hostname,
         'pooembed.eu',
         'www.pooembed.eu'
       ]);
 
-      function getHost(url) {
+      function isBlocked(url) {
         try {
-          return new URL(url, location.href).hostname;
+          const u = new URL(url, location.href);
+          return (
+            blocked.some(x =>
+              u.hostname === x ||
+              u.hostname.endsWith('.' + x) ||
+              u.href.includes(x)
+            ) ||
+            (!safeHosts.has(u.hostname) && u.hostname !== '')
+          );
         } catch {
-          return '';
+          return blocked.some(x => String(url || '').includes(x));
         }
       }
 
-      function isExternal(url) {
-        const host = getHost(url);
-        if (!host) return false;
-        return !SAFE_HOSTS.has(host);
-      }
-
-      function killEvent(e) {
+      function stopEvent(e) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
         return false;
       }
 
-      // bloque toute tentative de popup
+      // bloque popups
       try { window.open = () => null; } catch {}
       try { parent.open = () => null; } catch {}
       try { top.open = () => null; } catch {}
 
-      // bloque les redirections vers domaines externes
+      // bloque redirections externes
       const realAssign = location.assign.bind(location);
       const realReplace = location.replace.bind(location);
 
       location.assign = function (url) {
-        if (isExternal(url)) return;
+        if (!url || isBlocked(url)) {
+          console.log('[blocked assign]', url);
+          return;
+        }
         return realAssign(url);
       };
 
       location.replace = function (url) {
-        if (isExternal(url)) return;
+        if (!url || isBlocked(url)) {
+          console.log('[blocked replace]', url);
+          return;
+        }
         return realReplace(url);
       };
 
-      // bloque submit externes
-      document.addEventListener('submit', function (e) {
-        const form = e.target;
-        const action = form?.action || '';
-        if (isExternal(action)) return killEvent(e);
-      }, true);
-
-      // bloque clics / touch / pointeurs sortants
+      // bloque interactions sortantes
       function guardInteraction(e) {
         const el = e.target.closest('a, area, button, form, [onclick], [data-url], [data-href]');
         if (!el) return;
@@ -119,12 +130,12 @@
           onclick.includes('location.replace') ||
           onclick.includes('top.location') ||
           onclick.includes('parent.location') ||
-          isExternal(href) ||
-          isExternal(action) ||
-          isExternal(dataUrl) ||
-          isExternal(dataHref);
+          isBlocked(href) ||
+          isBlocked(action) ||
+          isBlocked(dataUrl) ||
+          isBlocked(dataHref);
 
-        if (suspicious) return killEvent(e);
+        if (suspicious) return stopEvent(e);
       }
 
       [
@@ -135,23 +146,23 @@
         'pointerdown',
         'pointerup',
         'touchstart',
-        'touchend'
+        'touchend',
+        'submit'
       ].forEach(type => {
         document.addEventListener(type, guardInteraction, true);
       });
 
-      // supprime éléments suspects injectés
+      // supprime scripts / iframes / overlays suspects
       function clean(node) {
         if (!node || node.nodeType !== 1) return;
         if (node.id === 'player') return;
 
-        const tag = node.tagName;
-
-        if (tag === 'SCRIPT') {
+        if (node.tagName === 'SCRIPT') {
           const src = node.src || '';
           const txt = node.textContent || '';
           if (
-            isExternal(src) ||
+            isBlocked(src) ||
+            blocked.some(x => txt.includes(x)) ||
             txt.includes('window.open') ||
             txt.includes('top.location') ||
             txt.includes('parent.location') ||
@@ -163,18 +174,18 @@
           }
         }
 
-        if (tag === 'IFRAME') {
+        if (node.tagName === 'IFRAME') {
           const src = node.src || '';
-          if (node.id !== 'player' && isExternal(src)) {
+          if (node.id !== 'player' && isBlocked(src)) {
             node.remove();
             return;
           }
         }
 
-        if (tag === 'A' || tag === 'AREA') {
+        if (node.tagName === 'A' || node.tagName === 'AREA') {
           const href = node.href || node.getAttribute('href') || '';
           const target = node.getAttribute('target') || '';
-          if (target === '_blank' || isExternal(href)) {
+          if (target === '_blank' || isBlocked(href)) {
             node.removeAttribute('href');
             node.removeAttribute('target');
             node.onclick = null;
@@ -186,15 +197,13 @@
           const rect = node.getBoundingClientRect();
           const z = parseInt(style.zIndex || '0', 10);
 
-          const looksLikeOverlay =
+          if (
             style.position === 'fixed' &&
             z >= 999 &&
             rect.width >= innerWidth * 0.55 &&
-            rect.height >= innerHeight * 0.25;
-
-          if (looksLikeOverlay) {
+            rect.height >= innerHeight * 0.25
+          ) {
             node.remove();
-            return;
           }
         } catch {}
       }
@@ -213,7 +222,7 @@
 
       document.querySelectorAll('script, iframe, a, area, div, section, aside, form').forEach(clean);
 
-      // neutralise créations de liens dynamiques
+      // neutralise création dynamique de liens
       const realCreateElement = document.createElement.bind(document);
       document.createElement = function (tagName, options) {
         const el = realCreateElement(tagName, options);
@@ -221,7 +230,7 @@
         if (String(tagName).toLowerCase() === 'a') {
           const realSetAttribute = el.setAttribute.bind(el);
           el.setAttribute = function (name, value) {
-            if ((name === 'href' || name === 'target') && (isExternal(value) || value === '_blank')) {
+            if ((name === 'href' || name === 'target') && (isBlocked(value) || value === '_blank')) {
               return;
             }
             return realSetAttribute(name, value);
@@ -231,25 +240,17 @@
         return el;
       };
 
-      // évite certaines tentatives de sortie
-      window.addEventListener('beforeunload', function (e) {
-        if (document.visibilityState === 'visible') {
-          e.preventDefault();
-          e.returnValue = '';
-        }
-      });
-
-      // replaceState / pushState surveillés
+      // surveille historique
       const realPushState = history.pushState.bind(history);
       const realReplaceState = history.replaceState.bind(history);
 
       history.pushState = function (state, title, url) {
-        if (url && isExternal(url)) return;
+        if (url && isBlocked(url)) return;
         return realPushState(state, title, url);
       };
 
       history.replaceState = function (state, title, url) {
-        if (url && isExternal(url)) return;
+        if (url && isBlocked(url)) return;
         return realReplaceState(state, title, url);
       };
     })();
