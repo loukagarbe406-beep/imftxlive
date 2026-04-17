@@ -1,206 +1,155 @@
 <!DOCTYPE html>
-<html lang="fr" class="dark">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0a0a0a">
-  <title>IMFTX+ — Regarder le match sur DLive</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Player</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
-      min-height: 100vh;
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #050508;
-      color: #f4f4f5;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse 120% 80% at 50% -20%, rgba(168, 85, 247, 0.18), transparent 50%),
-        radial-gradient(ellipse 80% 50% at 0% 60%, rgba(234, 179, 8, 0.06), transparent),
-        linear-gradient(180deg, #0a0a12 0%, #050508 100%);
-    }
-    body > * { position: relative; z-index: 1; }
-    a { color: inherit; text-decoration: none; }
-
-    .top {
-      padding: 1.25rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .brand {
-      font-size: 1.5rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      color: #fff;
-    }
-    .back {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.65);
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.04);
-      transition: background 0.2s, color 0.2s;
-    }
-    .back:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+      margin: 0;
+      padding: 0;
+      background: #000;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
-    .wrap {
-      min-height: calc(100vh - 72px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1.25rem 4rem;
-    }
-    .card {
+    .player-wrap {
+      position: relative;
       width: 100%;
-      max-width: 520px;
-      padding: 2.5rem 2rem;
-      border-radius: 24px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(15, 15, 22, 0.78);
-      backdrop-filter: blur(20px);
-      box-shadow:
-        0 24px 80px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-      text-align: center;
+      height: 100vh;
+      background: #000;
     }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #d8b4fe;
-      background: rgba(168, 85, 247, 0.15);
-      border: 1px solid rgba(168, 85, 247, 0.35);
-      margin-bottom: 1.25rem;
-    }
-    .badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #a855f7;
-      box-shadow: 0 0 12px #a855f7;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-    h1 {
-      font-size: clamp(1.75rem, 5vw, 2.25rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.2;
-      margin-bottom: 0.75rem;
-      color: #fff;
-    }
-    .lead {
-      font-size: 1rem;
-      line-height: 1.65;
-      color: rgba(255, 255, 255, 0.62);
-      margin-bottom: 2rem;
-      max-width: 38ch;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.65rem;
+
+    iframe {
       width: 100%;
-      max-width: 100%;
-      min-height: 54px;
-      padding: 0 1.5rem;
-      border-radius: 14px;
-      font-size: 1rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #fff;
-      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 45%, #5b21b6 100%);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow:
-        0 8px 32px rgba(124, 58, 237, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s;
-      cursor: pointer;
-    }
-    .cta:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.08);
-      box-shadow:
-        0 12px 40px rgba(124, 58, 237, 0.5),
-        inset 0 1px 0 rgba(255, 255, 255, 0.18);
-    }
-    .cta:active {
-      transform: translateY(0);
-    }
-    .cta svg {
-      width: 22px;
-      height: 22px;
-      flex-shrink: 0;
-    }
-    .hint {
-      margin-top: 1.5rem;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.38);
-      line-height: 1.5;
+      height: 100%;
+      border: 0;
+      display: block;
     }
   </style>
 </head>
 <body>
-
-  <header class="top">
-    <a href="index.html" class="brand">IMFTX+</a>
-    <a href="index.html" class="back">← Retour à l’accueil</a>
-  </header>
-
-  <div class="wrap">
-    <article class="card">
-      <div class="badge">
-        <span class="badge-dot" aria-hidden="true"></span>
-        Live DLive
-      </div>
-      <h1>Regarder le match en direct</h1>
-      <p class="lead">
-        Le stream est sur DLive. Clique sur le bouton ci-dessous pour ouvrir la chaîne IMFTXLIVE01 et suivre le match avec le chat en direct.
-      </p>
-      <a
-        class="cta"
-        href="https://dlive.tv/IMFTXLIVE01"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M8 5v14l11-7L8 5z"/>
-        </svg>
-        Ouvrir sur DLive
-      </a>
-      <p class="hint">
-        Un nouvel onglet s’ouvrira sur DLive. Pense à activer le son sur le lecteur.
-      </p>
-    </article>
+  <div class="player-wrap">
+    <iframe
+      src="https://embedsports.top/embed/admin/ppv-lens-vs-toulouse/1"
+      allowfullscreen
+      allow="autoplay; fullscreen; picture-in-picture"
+      referrerpolicy="no-referrer"
+      loading="eager"
+    ></iframe>
   </div>
 
+  <script>
+    (function () {
+      'use strict';
+
+      const blocked = [
+        'mynqel69dc.com',
+        'adexchangeclear.com',
+        'adexchangeclear.com/script/i.php'
+      ];
+
+      function isBlocked(url) {
+        try {
+          const u = new URL(url, location.href);
+          return blocked.some(x =>
+            u.href.includes(x) ||
+            u.hostname === x ||
+            u.hostname.endsWith('.' + x)
+          );
+        } catch {
+          return blocked.some(x => String(url || '').includes(x));
+        }
+      }
+
+      // bloque window.open
+      const realOpen = window.open;
+      window.open = function (...args) {
+        const url = args[0];
+        if (url && isBlocked(url)) {
+          console.log('[blocked popup]', url);
+          return null;
+        }
+        return realOpen.apply(this, args);
+      };
+
+      // bloque redirections JS
+      const realAssign = window.location.assign.bind(window.location);
+      const realReplace = window.location.replace.bind(window.location);
+
+      window.location.assign = function (url) {
+        if (isBlocked(url)) {
+          console.log('[blocked assign]', url);
+          return;
+        }
+        return realAssign(url);
+      };
+
+      window.location.replace = function (url) {
+        if (isBlocked(url)) {
+          console.log('[blocked replace]', url);
+          return;
+        }
+        return realReplace(url);
+      };
+
+      // bloque clics suspects
+      document.addEventListener('click', function (e) {
+        const el = e.target.closest('a, button, div');
+        if (!el) return;
+
+        const href = el.href || el.getAttribute?.('href') || '';
+        const onclick = el.getAttribute?.('onclick') || '';
+
+        if (isBlocked(href) || blocked.some(x => onclick.includes(x))) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          console.log('[blocked click]', href || onclick);
+        }
+      }, true);
+
+      // supprime scripts et iframes pub injectés
+      function clean(node) {
+        if (!node || node.nodeType !== 1) return;
+
+        if (node.tagName === 'SCRIPT') {
+          const src = node.src || '';
+          const txt = node.textContent || '';
+          if (isBlocked(src) || blocked.some(x => txt.includes(x))) {
+            console.log('[removed script]', src || '[inline]');
+            node.remove();
+          }
+        }
+
+        if (node.tagName === 'IFRAME') {
+          const src = node.src || '';
+
+          // on ne supprime pas ton iframe principal
+          if (node === document.querySelector('.player-wrap iframe')) return;
+
+          if (isBlocked(src)) {
+            console.log('[removed iframe]', src);
+            node.remove();
+          }
+        }
+      }
+
+      new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          for (const n of m.addedNodes) {
+            clean(n);
+            n.querySelectorAll?.('script, iframe').forEach(clean);
+          }
+        }
+      }).observe(document.documentElement, {
+        childList: true,
+        subtree: true
+      });
+
+      document.querySelectorAll('script, iframe').forEach(clean);
+    })();
+  </script>
 </body>
 </html>
