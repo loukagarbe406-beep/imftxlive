@@ -46,72 +46,70 @@
     (function () {
       'use strict';
 
-      const blocked = [
-        'mynqel69dc.com',
-        'adexchangeclear.com',
-        'adexchangeclear.com/script/i.php',
-        'frotpn.spacegames.fun',
-        'wyylde.com',
-        'www.wyylde.com',
-        'kojestan.com'
-      ];
-
       const safeHosts = new Set([
         location.hostname,
         'pooembed.eu',
         'www.pooembed.eu'
       ]);
 
-      function isBlocked(url) {
+      const blockedHosts = new Set([
+        'mynqel69dc.com',
+        'adexchangeclear.com',
+        'frotpn.spacegames.fun',
+        'wyylde.com',
+        'www.wyylde.com',
+        'kojestan.com'
+      ]);
+
+      function parseUrl(url) {
         try {
-          const u = new URL(url, location.href);
-          return (
-            blocked.some(x =>
-              u.hostname === x ||
-              u.hostname.endsWith('.' + x) ||
-              u.href.includes(x)
-            ) ||
-            (!safeHosts.has(u.hostname) && u.hostname !== '')
-          );
+          return new URL(url, location.href);
         } catch {
-          return blocked.some(x => String(url || '').includes(x));
+          return null;
         }
       }
 
-      function stopEvent(e) {
+      function isBlocked(url) {
+        const u = parseUrl(url);
+        if (!u) return false;
+
+        if (blockedHosts.has(u.hostname)) return true;
+        for (const host of blockedHosts) {
+          if (u.hostname.endsWith('.' + host)) return true;
+        }
+
+        if (u.href.includes('/script/i.php')) return true;
+
+        if (u.hostname && !safeHosts.has(u.hostname)) return true;
+
+        return false;
+      }
+
+      function kill(e) {
         e.preventDefault();
         e.stopPropagation();
         e.stopImmediatePropagation();
         return false;
       }
 
-      // bloque popups
       try { window.open = () => null; } catch {}
       try { parent.open = () => null; } catch {}
       try { top.open = () => null; } catch {}
 
-      // bloque redirections externes
       const realAssign = location.assign.bind(location);
       const realReplace = location.replace.bind(location);
 
       location.assign = function (url) {
-        if (!url || isBlocked(url)) {
-          console.log('[blocked assign]', url);
-          return;
-        }
+        if (url && isBlocked(url)) return;
         return realAssign(url);
       };
 
       location.replace = function (url) {
-        if (!url || isBlocked(url)) {
-          console.log('[blocked replace]', url);
-          return;
-        }
+        if (url && isBlocked(url)) return;
         return realReplace(url);
       };
 
-      // bloque interactions sortantes
-      function guardInteraction(e) {
+      function guard(e) {
         const el = e.target.closest('a, area, button, form, [onclick], [data-url], [data-href]');
         if (!el) return;
 
@@ -135,7 +133,7 @@
           isBlocked(dataUrl) ||
           isBlocked(dataHref);
 
-        if (suspicious) return stopEvent(e);
+        if (suspicious) return kill(e);
       }
 
       [
@@ -149,10 +147,9 @@
         'touchend',
         'submit'
       ].forEach(type => {
-        document.addEventListener(type, guardInteraction, true);
+        document.addEventListener(type, guard, true);
       });
 
-      // supprime scripts / iframes / overlays suspects
       function clean(node) {
         if (!node || node.nodeType !== 1) return;
         if (node.id === 'player') return;
@@ -162,7 +159,6 @@
           const txt = node.textContent || '';
           if (
             isBlocked(src) ||
-            blocked.some(x => txt.includes(x)) ||
             txt.includes('window.open') ||
             txt.includes('top.location') ||
             txt.includes('parent.location') ||
@@ -200,8 +196,8 @@
           if (
             style.position === 'fixed' &&
             z >= 999 &&
-            rect.width >= innerWidth * 0.55 &&
-            rect.height >= innerHeight * 0.25
+            rect.width >= innerWidth * 0.5 &&
+            rect.height >= innerHeight * 0.2
           ) {
             node.remove();
           }
@@ -222,25 +218,6 @@
 
       document.querySelectorAll('script, iframe, a, area, div, section, aside, form').forEach(clean);
 
-      // neutralise création dynamique de liens
-      const realCreateElement = document.createElement.bind(document);
-      document.createElement = function (tagName, options) {
-        const el = realCreateElement(tagName, options);
-
-        if (String(tagName).toLowerCase() === 'a') {
-          const realSetAttribute = el.setAttribute.bind(el);
-          el.setAttribute = function (name, value) {
-            if ((name === 'href' || name === 'target') && (isBlocked(value) || value === '_blank')) {
-              return;
-            }
-            return realSetAttribute(name, value);
-          };
-        }
-
-        return el;
-      };
-
-      // surveille historique
       const realPushState = history.pushState.bind(history);
       const realReplaceState = history.replaceState.bind(history);
 
