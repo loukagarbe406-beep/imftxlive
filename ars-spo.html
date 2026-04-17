@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Player protégé</title>
   <style>
     html, body {
       margin: 0;
@@ -12,17 +12,21 @@
       height: 100%;
       background: #000;
       overflow: hidden;
+      touch-action: manipulation;
     }
+
     #wrap {
       position: fixed;
       inset: 0;
       background: #000;
     }
+
     #player {
       width: 100%;
       height: 100%;
       border: 0;
       display: block;
+      background: #000;
     }
   </style>
 </head>
@@ -30,10 +34,11 @@
   <div id="wrap">
     <iframe
       id="player"
-      src="https://sportsembed.su/embed/4463877/lens-toulouse/hd/1"
+      src="https://pooembed.eu/embed/ligue1/2026-04-17/rcl-tou"
       allowfullscreen
       allow="autoplay; fullscreen; picture-in-picture"
       referrerpolicy="no-referrer"
+      loading="eager"
     ></iframe>
   </div>
 
@@ -41,93 +46,138 @@
     (function () {
       'use strict';
 
-      const blockedHosts = [
-        'mynqel69dc.com',
-        'adexchangeclear.com'
-      ];
+      const SAFE_HOSTS = new Set([
+        location.hostname,
+        'pooembed.eu',
+        'www.pooembed.eu'
+      ]);
 
-      function isBlocked(url) {
+      function getHost(url) {
         try {
-          const u = new URL(url, location.href);
-          return blockedHosts.some(h =>
-            u.hostname === h ||
-            u.hostname.endsWith('.' + h) ||
-            u.href.includes('/script/i.php')
-          );
+          return new URL(url, location.href).hostname;
         } catch {
-          const s = String(url || '');
-          return blockedHosts.some(h => s.includes(h)) || s.includes('/script/i.php');
+          return '';
         }
       }
 
-      // Bloque toute nouvelle fenêtre
-      const noop = () => null;
-      try { window.open = noop; } catch {}
-      try { parent.open = noop; } catch {}
-      try { top.open = noop; } catch {}
+      function isExternal(url) {
+        const host = getHost(url);
+        if (!host) return false;
+        return !SAFE_HOSTS.has(host);
+      }
 
-      // Bloque remplacements connus
+      function killEvent(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        return false;
+      }
+
+      // bloque toute tentative de popup
+      try { window.open = () => null; } catch {}
+      try { parent.open = () => null; } catch {}
+      try { top.open = () => null; } catch {}
+
+      // bloque les redirections vers domaines externes
       const realAssign = location.assign.bind(location);
       const realReplace = location.replace.bind(location);
 
       location.assign = function (url) {
-        if (!url || isBlocked(url)) return;
+        if (isExternal(url)) return;
         return realAssign(url);
       };
 
       location.replace = function (url) {
-        if (!url || isBlocked(url)) return;
+        if (isExternal(url)) return;
         return realReplace(url);
       };
 
-      // Bloque clics sortants sur la page parente
-      function stopNav(e) {
-        const el = e.target.closest('a, area, button, [onclick]');
+      // bloque submit externes
+      document.addEventListener('submit', function (e) {
+        const form = e.target;
+        const action = form?.action || '';
+        if (isExternal(action)) return killEvent(e);
+      }, true);
+
+      // bloque clics / touch / pointeurs sortants
+      function guardInteraction(e) {
+        const el = e.target.closest('a, area, button, form, [onclick], [data-url], [data-href]');
         if (!el) return;
 
         const href = el.href || el.getAttribute?.('href') || '';
-        const onclick = el.getAttribute?.('onclick') || '';
+        const action = el.action || '';
         const target = el.getAttribute?.('target') || '';
+        const onclick = el.getAttribute?.('onclick') || '';
+        const dataUrl = el.getAttribute?.('data-url') || '';
+        const dataHref = el.getAttribute?.('data-href') || '';
 
-        if (
+        const suspicious =
           target === '_blank' ||
-          isBlocked(href) ||
-          blockedHosts.some(h => onclick.includes(h)) ||
-          onclick.includes('window.open')
-        ) {
-          e.preventDefault();
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          return false;
-        }
+          onclick.includes('window.open') ||
+          onclick.includes('location=') ||
+          onclick.includes('location.href') ||
+          onclick.includes('location.replace') ||
+          onclick.includes('top.location') ||
+          onclick.includes('parent.location') ||
+          isExternal(href) ||
+          isExternal(action) ||
+          isExternal(dataUrl) ||
+          isExternal(dataHref);
+
+        if (suspicious) return killEvent(e);
       }
 
-      document.addEventListener('click', stopNav, true);
-      document.addEventListener('mousedown', stopNav, true);
-      document.addEventListener('mouseup', stopNav, true);
-      document.addEventListener('touchstart', stopNav, true);
-      document.addEventListener('touchend', stopNav, true);
+      [
+        'click',
+        'auxclick',
+        'mousedown',
+        'mouseup',
+        'pointerdown',
+        'pointerup',
+        'touchstart',
+        'touchend'
+      ].forEach(type => {
+        document.addEventListener(type, guardInteraction, true);
+      });
 
-      // Supprime pubs injectées
+      // supprime éléments suspects injectés
       function clean(node) {
         if (!node || node.nodeType !== 1) return;
-
         if (node.id === 'player') return;
 
-        if (node.tagName === 'SCRIPT') {
+        const tag = node.tagName;
+
+        if (tag === 'SCRIPT') {
           const src = node.src || '';
           const txt = node.textContent || '';
-          if (isBlocked(src) || blockedHosts.some(h => txt.includes(h)) || txt.includes('/script/i.php')) {
+          if (
+            isExternal(src) ||
+            txt.includes('window.open') ||
+            txt.includes('top.location') ||
+            txt.includes('parent.location') ||
+            txt.includes('location.replace') ||
+            txt.includes('location.href=')
+          ) {
             node.remove();
             return;
           }
         }
 
-        if (node.tagName === 'IFRAME') {
+        if (tag === 'IFRAME') {
           const src = node.src || '';
-          if (node.id !== 'player' && isBlocked(src)) {
+          if (node.id !== 'player' && isExternal(src)) {
             node.remove();
             return;
+          }
+        }
+
+        if (tag === 'A' || tag === 'AREA') {
+          const href = node.href || node.getAttribute('href') || '';
+          const target = node.getAttribute('target') || '';
+          if (target === '_blank' || isExternal(href)) {
+            node.removeAttribute('href');
+            node.removeAttribute('target');
+            node.onclick = null;
           }
         }
 
@@ -136,13 +186,15 @@
           const rect = node.getBoundingClientRect();
           const z = parseInt(style.zIndex || '0', 10);
 
-          if (
+          const looksLikeOverlay =
             style.position === 'fixed' &&
             z >= 999 &&
-            rect.width > innerWidth * 0.6 &&
-            rect.height > innerHeight * 0.3
-          ) {
+            rect.width >= innerWidth * 0.55 &&
+            rect.height >= innerHeight * 0.25;
+
+          if (looksLikeOverlay) {
             node.remove();
+            return;
           }
         } catch {}
       }
@@ -151,7 +203,7 @@
         for (const m of mutations) {
           for (const n of m.addedNodes) {
             clean(n);
-            n.querySelectorAll?.('script, iframe, div, section, aside').forEach(clean);
+            n.querySelectorAll?.('script, iframe, a, area, div, section, aside, form').forEach(clean);
           }
         }
       }).observe(document.documentElement, {
@@ -159,17 +211,47 @@
         subtree: true
       });
 
-      document.querySelectorAll('script, iframe, div, section, aside').forEach(clean);
+      document.querySelectorAll('script, iframe, a, area, div, section, aside, form').forEach(clean);
 
-      // Reviens à la page si un tabover essaie de te sortir
-      let lastUrl = location.href;
-      setInterval(() => {
-        if (location.href !== lastUrl && isBlocked(location.href)) {
-          history.pushState(null, '', lastUrl);
-        } else {
-          lastUrl = location.href;
+      // neutralise créations de liens dynamiques
+      const realCreateElement = document.createElement.bind(document);
+      document.createElement = function (tagName, options) {
+        const el = realCreateElement(tagName, options);
+
+        if (String(tagName).toLowerCase() === 'a') {
+          const realSetAttribute = el.setAttribute.bind(el);
+          el.setAttribute = function (name, value) {
+            if ((name === 'href' || name === 'target') && (isExternal(value) || value === '_blank')) {
+              return;
+            }
+            return realSetAttribute(name, value);
+          };
         }
-      }, 300);
+
+        return el;
+      };
+
+      // évite certaines tentatives de sortie
+      window.addEventListener('beforeunload', function (e) {
+        if (document.visibilityState === 'visible') {
+          e.preventDefault();
+          e.returnValue = '';
+        }
+      });
+
+      // replaceState / pushState surveillés
+      const realPushState = history.pushState.bind(history);
+      const realReplaceState = history.replaceState.bind(history);
+
+      history.pushState = function (state, title, url) {
+        if (url && isExternal(url)) return;
+        return realPushState(state, title, url);
+      };
+
+      history.replaceState = function (state, title, url) {
+        if (url && isExternal(url)) return;
+        return realReplaceState(state, title, url);
+      };
     })();
   </script>
 </body>
